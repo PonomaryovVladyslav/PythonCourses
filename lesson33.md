@@ -74,7 +74,7 @@
 Создадим новый проект, для этого, создадим новое виртуальное окружение, и установим туда Django
 
 ```python
-pip install django--2.2
+pip install django==2.2
 ```
 
 ```python
