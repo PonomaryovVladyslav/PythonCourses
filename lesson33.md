@@ -302,7 +302,7 @@ def article(request, article_id, name=''):
 Рассмотрите их самостоятельно по [Вот Этой Ссылке](https://docs.djangoproject.com/en/2.2/topics/http/urls/)
 
 
-#Домашнее задание:
+# Домашнее задание:
 
 1. Создать новый прокт и новое приложение
 
