@@ -117,7 +117,7 @@ python manage.py runserver
 
 В консоли должна появиться примерно такая надпись.
 
-![](https://djangoalevel.s3.eu-central-1.amazonaws.com/runserver.png)
+![](https://djangoalevel.s3.eu-central-1.amazonaws.com/lesson33/runserver.png)
 
 
 Не закрывая консоль (сервер должен работать), открываем в браузере http://127.0.0.1:8000/
@@ -127,7 +127,7 @@ python manage.py runserver
 
 Если вы всё сделали правильно, то в бразузере должны увидете, что то такое:
 
-![](https://djangoalevel.s3.eu-central-1.amazonaws.com/worked.png)
+![](https://djangoalevel.s3.eu-central-1.amazonaws.com/lesson33/worked.png)
 
 ## Создаём приложение
 
@@ -207,7 +207,7 @@ urlpatterns - [
 
 Теперь откроем наш "сайт" и введем в адресную строку http://127.0.0.1:8000/my_url/
 
-![](https://djangoalevel.s3.eu-central-1.amazonaws.com/first_view.png)
+![](https://djangoalevel.s3.eu-central-1.amazonaws.com/lesson33/first_view.png)
 
 
 Роутинг можно строить так как вам удобно, или как того требует задание.
@@ -233,6 +233,81 @@ urlpatterns = [
 
 Открываем главную страницу и видим результат.
 
-![](https://djangoalevel.s3.eu-central-1.amazonaws.com/index.png)
+![](https://djangoalevel.s3.eu-central-1.amazonaws.com/lesson33/index.png)
 
 
+### Урлы с параметрами
+
+Урл может заведомо принимать параметры, самый простой способ, это описание парметра через синтаксис `<type:variable>`
+
+Обновим наш `urls.py`:
+
+```python
+from django.urls import include, path
+from myapp.views import index, main_article, uniq_article, article
+
+urlpatterns = [
+    path('my_url/', include('myapp.urls')),
+    path('', index, name='index'),
+    path('article/', main_article, name='mail_article'),
+    path('article/33/', uniq_article, name='uniq_article'),
+    path('article/<int:article_id>/', article, name='article'),
+    path('article/<int:article_id>/<slug:name>', article, name='article_name'),
+]
+```
+
+И добавим к  `myapp/views.py`:
+
+```python
+def main_article(request):
+    return HttpResponse('There will be a list with articles')
+
+
+def uniq_article(request):
+    return HttpResponse('This is uniq answer for uniq value')
+
+
+def article(request, article_id, name=''):
+    return HttpResponse(
+        "This is an article #{}. {}".format(article_id, "Name of this article is {}".format(
+            name) if name else "This is unnamed article"))
+```
+
+Давайте разбереме подробнее.
+
+Мы описали два статических урла `article/` и `article/33`
+
+и два динамических `article/<int:article_id>/` и `article/<int:article_id>/<slug:name>` 
+причём в качестве обработика динамических урлов, мы указали одну и туже функцию `article`, в которой указали что будет приниматься два параметра `article_id` и `name`, и при этом `name` не является обязательным, т.к. имеет значение по умолчанию.
+
+Давайте посмотрим на результат.
+
+![](https://djangoalevel.s3.eu-central-1.amazonaws.com/lesson33/static_url.png)
+
+![](https://djangoalevel.s3.eu-central-1.amazonaws.com/lesson33/static_const_url.png)
+
+![](https://djangoalevel.s3.eu-central-1.amazonaws.com/lesson33/dinamic_without_name.png)
+
+![](https://djangoalevel.s3.eu-central-1.amazonaws.com/lesson33/dinamic_with_name.png)
+
+![](https://djangoalevel.s3.eu-central-1.amazonaws.com/lesson33/wrong_url.png)
+
+Последнее это пример работы если урл не был описан (Всем известная страница 404, в дебаг режиме, она может рассказать много подробностей об ошибке)
+
+
+## Обработка кастомных случаев
+
+Бывают варианты, когда нужно применять более сложные структуры урлов, и для их обработки нам поможет огромное кол-во вспомогательных методов и классом, или регулярные выражения.
+
+Рассмотрите их самостоятельно по [Вот Этой Ссылке](https://docs.djangoproject.com/en/2.2/topics/http/urls/)
+
+
+#Домашнее задание:
+
+1. Создать новый прокт и новое приложение
+
+2. Создать в нём всю необходимую структуру, для урлов `http://127.0.0.1:8000/`, `http://127.0.0.1:8000/acricles`, `http://127.0.0.1:8000/acrticles/archive`, `http://127.0.0.1:8000/users`
+
+3. Создать структуру для динамических урлов: `http://127.0.0.1:8000/article/<int:article_number>`, `http://127.0.0.1:8000/http://127.0.0.1:8000/article/<int:article_number>/archive` и `http://127.0.0.1:8000/users/<int:user_number>`
+
+Возвращать урлы, могут, всё что угодно, главное, что бы они работали!!!
