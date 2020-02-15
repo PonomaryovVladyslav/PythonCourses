@@ -188,7 +188,7 @@ from django.urls import path
 
 from .views import first
 
-urlpatterns - [
+urlpatterns = [
     path('', first, name='index'),
 ]
 ```
@@ -200,7 +200,7 @@ urlpatterns - [
 ```python
 from django.urls import include, path
 
-urlpatterns - [
+urlpatterns = [
     path('my_url/', include('myapp.urls')),
 ]
 ```
