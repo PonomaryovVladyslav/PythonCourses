@@ -1,6 +1,6 @@
 # Урок 15. Введение в ООП. Основные парадигмы ООП. Классы и объекты.
 
-![](https://habrastorage.org/files/06e/20d/7b3/06e20d7b37544511b800687df9b2a63e.png)
+![](https:#habrastorage.org/files/06e/20d/7b3/06e20d7b37544511b800687df9b2a63e.png)
 
 ## Что такое ООП, и что же такое класс и объект.
 
@@ -51,7 +51,7 @@ cherry = Car()
 print(cherry.find_color_and_top_speed())
 cherry.top_speed = 140
 cherry.color = 'yellow'
-cherry.some_new_attribute = 33 // Можно добавлять атрибуты к любому объекту если это необходимо
+cherry.some_new_attribute = 33 # Можно добавлять атрибуты к любому объекту если это необходимо
 print(cherry.is_car_can_go_with_needed_speed(200))
 print(cherry.find_color_and_top_speed())
 ```
@@ -100,14 +100,14 @@ class Car:
         self._this_is_protected_method()
 
 car = Car()
-car.color // всё нормально
-car._top_speed // сработает, но с предупреждением
-car.__max_carrying // не сработает
-car.__max_carrying = 800 // не сработает
-car.chacnge_max_carrying(800) // сработает
-сar.__hidden_method() // не сработает
-car._this_is_protected_method() // сработает c предупреждением
-car.run_hidden_and_protected_methods() // сработает
+car.color # всё нормально
+car._top_speed # сработает, но с предупреждением
+car.__max_carrying # не сработает
+car.__max_carrying = 800 # не сработает
+car.chacnge_max_carrying(800) # сработает
+сar.__hidden_method() # не сработает
+car._this_is_protected_method() # сработает c предупреждением
+car.run_hidden_and_protected_methods() # сработает
 ```
  
 ### Наследование
@@ -142,8 +142,8 @@ sport = SportCar()
 
 track.go()
 sport.go()
-print(track.curent_speed) // 60
-print(sport.curent_speed) // 175
+print(track.curent_speed) # 60
+print(sport.curent_speed) # 175
 ```
 ### Полиморфизм
 
