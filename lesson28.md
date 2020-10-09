@@ -1,4 +1,4 @@
-# Урок 26. Знакомство с Django
+# Урок 28. Знакомство с Django
 
 ![](https://the-flow.ru/uploads/images/resize/830x0/adaptiveResize/06/04/56/59/17/253344b40cd7.jpg)
 
