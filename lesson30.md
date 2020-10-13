@@ -388,20 +388,58 @@ class Book(models.Model):
 
 ### Many to Many 
 Многие ко многим, допустим ваш пользователь состоит в какой-то группе "Любители варенья", но при этом ничего не мешает ему состоять и в группе "Профессионалы пива", такая связь называется ManyToMany
+Для построения таких связей мы используем связь ManyToMany:
+
+```python
+from django.db import models
+
+class Publication(models.Model):
+    title = models.CharField(max_length=30)
+
+    class Meta:
+        ordering = ['title']
+
+    def __str__(self):
+        return self.title
+
+class Article(models.Model):
+    headline = models.CharField(max_length=100)
+    publications = models.ManyToManyField(Publication)
+
+    class Meta:
+        ordering = ['headline']
+
+    def __str__(self):
+        return self.headline
+```
+
+На самом деле "Под капотом" создаётся дополнительная таблица которая хранит информацию о связи между двумя видами моделей.
+
+
+Если нам нужно контролировать эту таблицу, мы можем делать это при помощи специального слова ```through```
+
 
 ```python
 from django.db import models
 
 class Person(models.Model):
-    name = models.CharField(max_length=50)
+    name = models.CharField(max_length=128)
+
+    def __str__(self):
+        return self.name
 
 class Group(models.Model):
     name = models.CharField(max_length=128)
-    members = models.ManyToManyField(
-        Person,
-        through='Membership',
-        through_fields=('group', 'person'),
-    )
+    members = models.ManyToManyField(Person, through='Membership')
+
+    def __str__(self):
+        return self.name
+
+class Membership(models.Model):
+    person = models.ForeignKey(Person, on_delete=models.CASCADE)
+    group = models.ForeignKey(Group, on_delete=models.CASCADE)
+    date_joined = models.DateField()
+    invite_reason = models.CharField(max_length=64)
 ```
 
 ![](https://lendiplompro.ru/images/praktica/praktica.jpg)
