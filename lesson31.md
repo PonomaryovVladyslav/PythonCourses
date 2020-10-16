@@ -1,4 +1,4 @@
-# Урок 36. Объекты моделей и queryset
+# Урок 31. Django ORM. Объекты моделей и queryset, Meta моделей, прокси модели.
 
 ![](https://cs8.pikabu.ru/post_img/2016/09/12/5/og_og_1473660997242355939.jpg)
 
@@ -60,7 +60,7 @@ class Like(models.Model):
 
 ```
 
-Рассмотрим то, что вы могли не знать.
+Рассмотрим некоторые новые возможности
 
 ```python
 from django.contrib.auth.models import User
@@ -109,51 +109,141 @@ comment = models.ForeignKey('myapp.Comment', null=True, blank=True, on_delete=mo
     
 ```
 
-Модель можно передать не только как класса, но и по имени модели указав приложение `appname.Modelname` (Да мне было лень переименовывать приложение из myapp, во что-то читаемое)
+Модель можно передать не только как класс, но и по имени модели указав приложение `appname.Modelname` (Да мне было лень переименовывать приложение из myapp, во что-то читаемое)
 
 При такой записи мы создаём связь один ко многим с самому себе, указав при этом black=True, null=True. При таком случае у нас первый коментарий, будет без ссылки на коментарий, и по этому принципу мы можем выбрать коментарии к сути, а если создать коментарий со ссылкой на другой, это будет коментарий к коментарию, причем это можно сделать любой вложенности. 
 
 `related_name` - в этой записи нужен для того, что бы получить выборку всех вложенных объектов, мы рассмотрим их немного ниже.
 
-## Модель User
 
-Django предоставляет нам встроенную модель юзера, у которой уже реализовано много полей и методов, находится в ``
+## Meta моделей
 
-Подробнейшая инфа про юзера [Тут](https://docs.djangoproject.com/en/2.2/topics/auth/default/)
-
-Стандартный юзер содержит в себе такие полезные поля как:
+В некоторых ситуациях нам необходимо иметь возможность задать определённые условия на уровне модели, например порядок сохранения объектов или другие особые условия, тут нам на помощь приходит встроенный класс `Meta`
 
 ```python
-username
-password
-email
-first_name
-last_name
-```
-Также содержит много системных полей, рассмотрим позже.
-Также содержит базовый метод set_password и информацию о группах доступа.
-
-Рассмотрим их в дальше.
-
-Для использования модели пользователя, которую нам нужно видоизменить используется наследвание от базового абстрактного юзера
-
-Выглядит примерно так:
-
-```python
-from django.contrib.auth.models import AbstractUser
 from django.db import models
 
-class MyUser(AbstractUser):
-    birth_date = models.DateField()
-    avatar = models.ImageField(blank=True, null=True)
+class Ox(models.Model):
+    horn_length = models.IntegerField()
+
+    class Meta:
+        ordering = ["horn_length"]
+        verbose_name_plural = "oxen"
 ```
 
-Для того, что бы Django оценивала эту модель как пользователя, в `settings.py` нужно в любом месте указать:
+синтаксис такой конструкции нужно просто запомнить.
+
+В мете может быть большое кол-во свойст моделей, давайте рассмотрим основные (полный список [тут](https://docs.djangoproject.com/en/3.1/ref/models/options/))
+
+### ordering
+
+Содержит список из строк соответусвующих названиям полей(атрибутов) могут быть указанны со знаком `-` что бы указать, обратный порядок, в каком порядке указанны такой приоритет полей и будет, например, если указан ``` ordering = ['name', '-age'] ``` то мы объекты будут рассположены в базе по полю `name` и в случае совпадения этого поля, по полю `age`, в обратном порядке.
+
+Может быть указана при помощи `F` обхектов, о них позже.
+
+### unique_together
+
+принимает колекцию коллекций, например список списков, каждый список, должен содержать набор строк, с именами полей. При указании, этого набора, данные поля будут совместно уникальны (Если совместно уникальны имя и фамилия, то может быть сколько угодно объектов с именем `Мария`, и сколько угодно объектов с фамилией `Петрова`, но только один объект с такой комбинацией.)
+
+```
+unique_together = [['driver', 'restaurant'], ['driver', 'phone_number']]
+```
+
+Если есть только одно нужное значение может быть одним списком.
+
+```
+unique_together = ['driver', 'restaurant']
+```
+
+### verbose_name и verbose_name_plural
+
+свойства содержащие строки и отвечающие за то какие имена будут описанны в админке, в единственном и множественно числе соответсвенно
+
+
+## Абстрактные и прокси модели
+
+### Абстрактные модели
+
+Абстрактные классы моделей, это `заготовки` под дальнейшие модели которые не создают дополнительных таблиц. Например некоторые из ваших моделей должны содержать поле `created_at`, в котором будет сранится информация о том, когда обхект создан, для этого можно в каждой можели прописать это поле, или один раз описать абстрактную модель с одним полем, инаследоваться уже от неё.
+
+Модель как абстрактная указывается в мете.
+
+Синтаксис:
 
 ```python
-AUTH_USER_MODEL = 'myapp.MyUser' 
+from django.db import models
+
+class CommonInfo(models.Model):
+    name = models.CharField(max_length=100)
+    age = models.PositiveIntegerField()
+
+    class Meta:
+        abstract = True
+
+class Student(CommonInfo):
+    home_group = models.CharField(max_length=5)
 ```
-где myapp - название приложения, MyUser - название модели.
+
+`Таблица для CommonInfo не будет созданна!!!`
+
+`Meta` не наследуется !!
+
+Для наследования меты нужно использовать вот какой синтаксис (явное наследование меты):
+
+```python
+from django.db import models
+
+class CommonInfo(models.Model):
+    name = models.CharField(max_length=100)
+    age = models.PositiveIntegerField()
+
+    class Meta:
+        abstract = True
+        ordering = ['name']
+
+class Unmanaged(models.Model):
+    class Meta:
+        abstract = True
+        managed = False
+
+class Student(CommonInfo, Unmanaged):
+    home_group = models.CharField(max_length=5)
+
+    class Meta(CommonInfo.Meta, Unmanaged.Meta):
+        pass
+```
+
+### Прокси модели
+
+Модель которая создаётся на уровне языка программирования но не на уровне базы данных. Используется если нужно добавить метод, измениеть поведение менеджера итд.
+
+Синтаксис:
+
+```python
+from django.db import models
+
+class Person(models.Model):
+    first_name = models.CharField(max_length=30)
+    last_name = models.CharField(max_length=30)
+
+class MyPerson(Person):
+    class Meta:
+        proxy = True
+
+    def do_something(self):
+        # ...
+        pass
+```
+
+В базе будет хранится одна таблица, в Django две.
+
+```python
+>>> p = Person.objects.create(first_name="foobar")
+>>> MyPerson.objects.get(first_name="foobar")
+<MyPerson: foobar>
+```
+
+Часто используется для отображении в админке нескольких таблиц для одного объекта.
 
 ## objects и shell
 
@@ -441,9 +531,218 @@ def save(self, **kwargs):
     super().save(**kwargs)
 ```
 
-теперь поле будет переписыватьс только в момент создания, но не будет трогаться при обновлении.
+теперь поле будет переписываться только в момент создания, но не будет трогаться при обновлении.
+
+## Сложные SQL конструкции
+
+На самом деле мы не ограниченны стандартными конструкциями, мы можем применять предвычисления на уровне базы, добавлять логические конструкции итд., давайте рассмотри подробнее.
+
+### Q объекты
+
+Как вы могли заметить в случае фильтрации, мы можем выбрать объекты через логическое И, при помощи запятой.
+
+```python
+Comment.objects.filter(article__author__pseudonym='The king', article__genre=3)
+```
+
+В этом случае у нас есть кострукция типа выбрать объекты у которых псевдоним автора статьи это `The king` И жанр статьи это цифра 3
+
+Но что же нам делать есть нам нужно использовать логическое ИЛИ.
+
+В этом нам поможет использование Q объекта, на самом деле каждое из этих уловий мы могли завернуть в такой объект:
+
+```python
+from django.db.models import Q
+q1 = Q(article__author__pseudonym='The king')
+q2 = Q(article__genre=3)
+``` 
+
+Теперь мы можем явно использовать логические И и ИЛИ.
+
+```
+Comment.objects.filter(q1&q2) # И
+Comment.objects.filter(q1|q2) # ИЛИ
+```
+
+### Aggregation
+
+Агрегация в джанго это по сути предвычисления.
+
+Допустим что у нас есть модели:
+
+```python
+from django.db import models
+
+class Author(models.Model):
+    name = models.CharField(max_length=100)
+    age = models.IntegerField()
+
+class Publisher(models.Model):
+    name = models.CharField(max_length=300)
+
+class Book(models.Model):
+    name = models.CharField(max_length=300)
+    pages = models.IntegerField()
+    price = models.DecimalField(max_digits=10, decimal_places=2)
+    rating = models.FloatField()
+    authors = models.ManyToManyField(Author)
+    publisher = models.ForeignKey(Publisher, on_delete=models.CASCADE)
+    pubdate = models.DateField()
+
+class Store(models.Model):
+    name = models.CharField(max_length=300)
+    books = models.ManyToManyField(Book)
+```
+
+Мы можем совершить предвычисления каких либо средних, минимальных, максимальных значени, вычислить сумму итд.
+
+```
+>>> from django.db.models import Avg
+>>> Book.objects.all().aggregate(Avg('price'))
+{'price__avg': 34.35}
+```
+
+на самом деле all() не несёт пользы в этом примере
+
+```
+>>> Book.objects.aggregate(Avg('price'))
+{'price__avg': 34.35}
+```
+
+Значение можно именовать 
+
+```python
+>>> Book.objects.aggregate(average_price=Avg('price'))
+{'average_price': 34.35}
+```
+
+Можно вносить больше одной агрегации за раз
+
+```
+>>> from django.db.models import Avg, Max, Min
+>>> Book.objects.aggregate(Avg('price'), Max('price'), Min('price'))
+{'price__avg': 34.35, 'price__max': Decimal('81.20'), 'price__min': Decimal('12.99')}
+```
+
+Если нам нужно, что бы подсчитаное значение было у каждого объекта модели, мы используем метод `annotate`
+
+```python
+# Build an annotated queryset
+>>> from django.db.models import Count
+>>> q = Book.objects.annotate(Count('authors'))
+# Interrogate the first object in the queryset
+>>> q[0]
+<Book: The Definitive Guide to Django>
+>>> q[0].authors__count
+2
+# Interrogate the second object in the queryset
+>>> q[1]
+<Book: Practical Django Projects>
+>>> q[1].authors__count
+1
+```
+
+Их тоже может быть больше одного
+
+```python
+>>> book = Book.objects.first()
+>>> book.authors.count()
+2
+>>> book.store_set.count()
+3
+>>> q = Book.objects.annotate(Count('authors'), Count('store'))
+>>> q[0].authors__count
+6
+>>> q[0].store__count
+6
+```
+
+Все эти вещи можно комбинировать
+
+```python
+>>> highly_rated = Count('book', filter=Q(book__rating__gte=7))
+>>> Author.objects.annotate(num_books=Count('book'), highly_rated_books=highly_rated)
+```
+
+C ордерингом
+
+```
+>>> Book.objects.annotate(num_authors=Count('authors')).order_by('num_authors')
+```
+
+## F -  выражения
+
+F выражения нужны для получения значения поли, и оптимизации записи. [Дока](https://docs.djangoproject.com/en/3.1/ref/models/expressions/#f-expressions)
+
+Допустим нам нужно увеличить опреденному объекту в базе значение какого либо поля на 1
+```
+reporter = Reporters.objects.get(name='Tintin')
+reporter.stories_filed += 1
+reporter.save()
+```
+
+На самом деле в этот момент мы получаем значение из базы в панят обрабатываем, и записываем в базу
+
+Есть другой путь:
+
+```
+from django.db.models import F
+
+reporter = Reporters.objects.get(name='Tintin')
+reporter.stories_filed = F('stories_filed') + 1
+reporter.save()
+```
+
+Преимущества под капотом, но давайте предположим, что нам нужно сделать эту же операцию массово
+
+```
+reporter = Reporters.objects.filter(name='Tintin')
+reporter.update(stories_filed=F('stories_filed') + 1)
+```
+
+Такие объекты можно использовать и в анотации и в фильтрах и во многих других местах.
 
 ## Методы и свойства модели User
+
+## Модель User
+
+Django предоставляет нам встроенную модель юзера, у которой уже реализовано много полей и методов, находится в ``
+
+Подробнейшая инфа про юзера [Тут](https://docs.djangoproject.com/en/2.2/topics/auth/default/)
+
+Стандартный юзер содержит в себе такие полезные поля как:
+
+```python
+username
+password
+email
+first_name
+last_name
+```
+Также содержит много системных полей, рассмотрим позже.
+Также содержит базовый метод set_password и информацию о группах доступа.
+
+Рассмотрим их дальше.
+
+Для использования модели пользователя, которую нам нужно видоизменить используется наследование от базового абстрактного юзера
+
+Выглядит примерно так:
+
+```python
+from django.contrib.auth.models import AbstractUser
+from django.db import models
+
+class MyUser(AbstractUser):
+    birth_date = models.DateField()
+    avatar = models.ImageField(blank=True, null=True)
+```
+
+Для того, что бы Django оценивала эту модель как пользователя, в `settings.py` нужно в любом месте указать:
+
+```python
+AUTH_USER_MODEL = 'myapp.MyUser' 
+```
+где myapp - название приложения, MyUser - название модели.
 
 Все возможные подробности про модель юзера [Тут](https://docs.djangoproject.com/en/2.2/ref/contrib/auth/#django.contrib.auth.models.User)
 
