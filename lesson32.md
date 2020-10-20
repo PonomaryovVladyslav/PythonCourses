@@ -1,4 +1,4 @@
-# Урок 37. Формы, реквест и авторизация.
+# Урок 32. Формы, реквест, ModelForm и авторизация.
 
 ![](http://memesmix.net/media/created/uuyoh3.jpg)
 
@@ -340,6 +340,93 @@ class MyFormView(FormView):
 ```
 
 **Любой метод можно переписать!** Лучше практикой считается переписывание только тех методов которые вам нужны, с вызовом супера, для этого метода (Но бывают случаи, когда логика требует другого, и это тоже нормально)
+
+## ModelForm
+
+Дока [Тут](https://docs.djangoproject.com/en/2.2/topics/forms/modelforms/)
+
+ModelForm - это тип формы который генерируется напрямую из модели. Используется для изменения поведения действий с моделями. Можно переопределть определенные действия с такими формами.
+
+Синтаксис
+
+`models.py`
+
+```python
+from django.db import models
+
+
+TITLE_CHOICES = [
+    ('MR', 'Mr.'),
+    ('MRS', 'Mrs.'),
+    ('MS', 'Ms.'),
+]
+
+class Author(models.Model):
+    name = models.CharField(max_length=100)
+    title = models.CharField(max_length=3, choices=TITLE_CHOICES)
+    birth_date = models.DateField(blank=True, null=True)
+
+    def __str__(self):
+        return self.name
+
+class Book(models.Model):
+    name = models.CharField(max_length=100)
+    authors = models.ManyToManyField(Author)
+```
+
+`forms.py`
+
+```python
+from django.forms import ModelForm
+
+
+class AuthorForm(ModelForm):
+    class Meta:
+        model = Author
+        fields = ['name', 'title', 'birth_date']
+
+class BookForm(ModelForm):
+    class Meta:
+        model = Book
+        fields = ['name', 'authors']
+```
+
+Поле `fields` либо `exclude` являются обязательными
+
+Такой вид форм, равнозначен с
+
+`forms.py`
+
+```python
+from django import forms
+
+class AuthorForm(forms.Form):
+    name = forms.CharField(max_length=100)
+    title = forms.CharField(
+        max_length=3,
+        widget=forms.Select(choices=TITLE_CHOICES),
+    )
+    birth_date = forms.DateField(required=False)
+
+class BookForm(forms.Form):
+    name = forms.CharField(max_length=100)
+    authors = forms.ModelMultipleChoiceField(queryset=Author.objects.all())
+```
+
+Помимо стандартного метода `is_valid()` у моделформы существует так же встроенный метод `full_clean()`
+
+Если первый отвечает за валидацию формы, то второй отвечает за валидацию для объекта модели.
+
+Метод `save()` может принимать агрумент `commit`, по умолчанию `True`.
+
+Если указать коммит как фолс, объект не будет сохранён в базу, будет только создан предварительный объект для создания, используется, когда нужно "дополнить" данные перед сохранением в базу.
+
+```python
+form = PartialAuthorForm(request.POST)
+author = form.save(commit=False)
+author.title = 'Mr'
+author.save()
+``` 
 
 Практика:
 
