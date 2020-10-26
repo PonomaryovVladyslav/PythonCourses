@@ -1,4 +1,6 @@
-# Урок 34. Middlewares.
+# Урок 34. Middlewares. Signals
+
+## Middlewares
 
 ![](https://memegenerator.net/img/instances/81631865.jpg)
 
@@ -149,3 +151,78 @@ class AuthenticationMiddleware(MiddlewareMixin):
 ```
 
 Всё что тут описанно, это что делать при реквесте, добавить реквесту юзера, то при помощи какой магии это работает, мы рассмотрим на следующей лекции.
+
+
+## Signals
+
+Сигналы. Часто мы оказывамеся к ситуации когда нам нужно выполнять какие-либо действия до\после какого-то определённого события, мы конечно можем прописать код там где нам нужно, но вместо этого ммы можем использоваться сигналы.
+
+Сигналы отлавливают что опрёделённое действие выполненно или будет следующим, и выполняет необходимый нам код.
+
+Список экшенов [тут](https://docs.djangoproject.com/en/3.1/ref/signals/). Описание [тут](https://docs.djangoproject.com/en/3.1/topics/signals/).
+
+Примеры сигналов:
+
+```
+django.db.models.signals.pre_save & django.db.models.signals.post_save # Выполняется перед сохраннием или сразу после сохранения объекта
+django.db.models.signals.pre_delete & django.db.models.signals.post_delete # Выполняется перед удалением или сразу после удаления объекта
+django.db.models.signals.m2m_changed # Выполняется при изменении любых мэни ту мени связей (добавили студента в группу или убрали, например)
+django.core.signals.request_started & django.core.signals.request_finished # Выполняется при начале запроса, или при тего завершении.
+```
+
+Это далеко не полный список действий на которые могут реагировать сигналы.
+
+Каждый сигнал имеет функции `connect` и `disconnect` для того что бы привязать\отвязать к действию сигнал
+
+```python
+from django.core.signals import request_finished
+
+request_finished.connect(my_callback)
+```
+
+где `my_callback` это функция, которую нужно выполнять по получению сигнала.
+
+Но гораздо чаще применяется синтаксис с использованием декоратора `receiver`
+
+```python
+from django.core.signals import request_finished
+from django.dispatch import receiver
+
+@receiver(request_finished)
+def my_callback(sender, **kwargs):
+    print("Request finished!")
+```
+
+У сигнала есть параметр `receiver` и может быть параметр `sender`, сендер, это объект который отправляет сигнал, например модель, для которой описывается сигнал.
+
+```python
+from django.db.models.signals import pre_save
+from django.dispatch import receiver
+from myapp.models import MyModel
+
+
+@receiver(pre_save, sender=MyModel)
+def my_handler(sender, **kwargs):
+    ...
+```
+
+Сигнал можно создать под любое действие если это необходимо. Допустим нужно отправить сигнал, что пицца готова.
+
+Сначала создадим сигнал.
+
+```python
+import django.dispatch
+
+pizza_done = django.dispatch.Signal()
+```
+
+И в нужном месте можно отправить
+
+```python
+class PizzaStore:
+    ...
+
+    def send_pizza(self, toppings, size):
+        pizza_done.send(sender=self.__class__, toppings=toppings, size=size)
+        ...
+```
