@@ -281,18 +281,27 @@ class SnippetViewSet(viewsets.ModelViewSet):
 Все данные возвращаются сериализованными!
 
 GET с указанием pk - retrieve(self, request, pk=None) - получить один объект
+
 GET без указания pk - list(self, request) - получить список объектов
+
 POST (pk нет) - create(self, request) - создать объект
+
 PUT (pk обязателен) - update(self, request, pk=None) - обновить объект полностью
+
 PATCH (pk обязателен) - partial_update(self, request, pk=None) - обновить объект частично
+
 DELETE (pk обязателен) - destroy(self, request, pk=None) - удалить объект
 
 Важные методы:
 
 perform_create - действие с сериалайзером, для создания
+
 perform_update - действие с сериалайзером, при обновлении
+
 perform_destroy - действие с инстансом, при удалении
+
 get_queryset - получение кверисета
+
 get_serializer_class - получение класса сериалайзера
 
 Их намного больше!
