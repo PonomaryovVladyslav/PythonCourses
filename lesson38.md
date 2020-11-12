@@ -1,4 +1,4 @@
-# @api_view, APIView, Permissions, ViewSets, Routers
+# Урок 38. @api_view, APIView, ViewSets, Pagination, Routers
 
 По аналогии с обычным View, у джанго рест фреймворка есть два подхода к написанию эндпоинтов, функциональный и Class Based.
 
@@ -184,68 +184,6 @@ class SnippetDetail(APIView):
 urlpatterns = [
     path('snippets/', views.SnippetList.as_view()),
     path('snippets/<int:pk>/', views.SnippetDetail.as_view()),
-]
-```
-
-## Пермишены
-
-Для описания пермишенов в ДРФ используется аргумент permission_classes:
-
-```python
-from rest_framework import permissions
-
-permission_classes = [permissions.IsAuthenticatedOrReadOnly]
-```
-
-Существует достаточно много заготовленных пермишенов. Но если нам нужны кастомные то мы можем создать их отнаследовавшись от `permissions.BasePermission` и переписав один из, или оба метода `has_permisson` и `has_object_permission`
-
-```python
-from rest_framework import permissions
-
-
-class IsOwnerOrReadOnly(permissions.BasePermission):
-    """
-    Custom permission to only allow owners of an object to edit it.
-    """
-
-    def has_object_permission(self, request, view, obj):
-        # Read permissions are allowed to any request,
-        # so we'll always allow GET, HEAD or OPTIONS requests.
-        if request.method in permissions.SAFE_METHODS:
-            return True
-
-        # Write permissions are only allowed to the owner of the snippet.
-        return obj.owner == request.user
-        
-    def has_permission(self, request, view):
-        return True
-```
-
-`has_permission` - отвечает за доступ к спискам объектов
-`has_object_permission` - отвечает за доступ к конкретному объекту
-
-пермишены можно указывать через запятую если их несколько
-
-```python
-permission_classes = [permissions.IsAuthenticatedOrReadOnly,
-                      IsOwnerOrReadOnly]
-```
-
-Если у вас нет доступов, вы получите вот такой ответ:
-
-```python
-http POST http://127.0.0.1:8000/snippets/ code="print(123)"
-
-{
-    "detail": "Authentication credentials were not provided."
-}
-```
-
-Для добавления урлов для авторизации, достаточно добавить встроенные:
-
-```python
-urlpatterns += [
-    path('api-auth/', include('rest_framework.urls')),
 ]
 ```
 
