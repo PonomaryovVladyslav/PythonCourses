@@ -571,10 +571,14 @@ server {
     }
     location / {
         include proxy_params;
-        proxy_pass http://unix:/home/ubuntu/deployment/r/gunicorn.sock;
+        proxy_pass http://unix:/home/ubuntu/path/to/my/socket/gunicorn.sock;
     }
 }
 
 ```
 
 Рестартуем нжинкс и наслаждаемся результатом!
+
+Не забываем закрыть 8000 порт, и на инстансе и на амазоне в секьюрити группе!!
+
+```sudo ufw delete allow 8000```
