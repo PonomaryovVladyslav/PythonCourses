@@ -1,4 +1,4 @@
-# Урок 15. Декораторы. Декораторы с параметрами. Декораторы классов (staticmethod, classmethod, property)
+# Урок 19. Декораторы. Декораторы с параметрами. Декораторы классов (staticmethod, classmethod, property)
 
 ![](https://tirinox.ru/wp-content/uploads/2019/10/risovach.ru_.jpg)
 

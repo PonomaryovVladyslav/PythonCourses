@@ -1,4 +1,4 @@
-# Урок 44. Celery
+# Урок 41. Celery
 
 ![](https://i.kym-cdn.com/entries/icons/original/000/022/857/Screen_Shot_2017-05-01_at_12.53.31_PM.png)
 
