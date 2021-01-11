@@ -320,9 +320,10 @@ def article(request, article_id, name=''):
 2. Создать в нём всю необходимую структуру, для урлов `http://127.0.0.1:8000/`, `http://127.0.0.1:8000/acricles`
    , `http://127.0.0.1:8000/acrticles/archive`, `http://127.0.0.1:8000/users`
 
-3. Создать структуру для динамических урлов: `http://127.0.0.1:8000/article/<int:article_number>`
-   , `http://127.0.0.1:8000/http://127.0.0.1:8000/article/<int:article_number>/archive`
-   и `http://127.0.0.1:8000/users/<int:user_number>`
+3. Создать структуру для динамических урлов: `http://127.0.0.1:8000/article/<int:article_number>`,
+   `http://127.0.0.1:8000/article/<int:article_number>/archive`,
+   `http://127.0.0.1:8000/article/<int:article_number>/<slug:slug_text>`,
+   `http://127.0.0.1:8000/users/<int:user_number>`
 
 4. Создать урл который будет принимать в качестве параметра корректный номер украинского мобильного телефона, 050123121 - корректно, 0751231212 - нет
    
