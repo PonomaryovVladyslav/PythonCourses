@@ -1,228 +1,370 @@
-# Урок 34. Middlewares. Signals
+# Урок 34. Куки, сессии, кеш
 
-## Middlewares
+## Куки и сессии
 
-![](https://memegenerator.net/img/instances/81631865.jpg)
+### Что такое куки(печеньки) и причём тут сессия?
 
-Дока [Тут](https://docs.djangoproject.com/en/3.1/topics/http/middleware/)
+Понятие "Сессий" основано на том, что состояние пользователя каким-то образом сохраняется, когда он переходит с одной
+страницы на другую. Вспомните, что HTTP не сохраняет состояний, поэтому только браузер или ваше приложение может 
+"запомнить" то, что нужно запомнить.
 
-Мы с вами рассмотрели основные этапы того какие этапы должен пройти реквест на всём пути нашей реквест-респонс системы, но на самом деле каждый реквест проходит кучу дополнительных обработок таких как мидлвары, причём каждый реквест делает это дважды, при "входе" и при "выходе".
+Куки — это пары данных по типу "ключ-значение", которые сохраняются в браузере пользователя до истечения какого-то
+определенного срока. Они применимы практически для любой задачи, но чаще всего их используют, чтобы сохранить
+пользователя в том же месте веб-страницы, если он потеряет интернет-соединение, или, чтобы хранить простые настройки
+отображения сайта. Вы можете также хранить в них данные корзины пользователя или даже пароли, но это не очень хорошая
+идея, не стоит хранить в обычных куках браузера информацию, которая должна быть защищенной или сохраняться между
+сессиями браузера. Пользователь может легко потерять данные, очистив кэш, или украсть/использовать незащищенные данные
+из куков.
 
-Если открыть файл `settings.py` то там можно обнаружить переменную `MIDDLEWARES`, или `MIDDLEWARE_CLASSES` (Для старых версий Django)
+![](https://static.issue.life/Content/img/13-03-2019/636880833560890859.png)
 
-Которая выглядит примерно вот так:
+Куки добавляются в request/response для хранения абсолютно разных данных. Например, стандартная джанго авторизация
+добавляет куку с данными о пользователя, что бы можно было определить кто именно делает запрос. Поэтому там и нужны csrf
+токены в формах или просто токены в рест запросах, так как перехватить значение куки при запросе очень просто, а мы
+должны быть уверенны, что запрос пришел именно от авторизированного пользователя (Куки хранит информацию, кто это, а
+токены позволяют проверить, что это был именно этот пользователь.).
 
-```python
-MIDDLEWARE = [
-    'django.middleware.security.SecurityMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
-]
-```
+### Сессия
 
-Каждая из этих строк, это отдельная мидлварина, и абсолютно **каждый** реквест проходит через код описанный в этих файлах, например `django.contrib.auth.middleware.AuthenticationMiddleware` отвечает за то, что бы в рашем реквесте всегда был пользователь если он залогинен, а `django.middleware.csrf.CsrfViewMiddleware` отвечает за CSRF токены, которые мы рассматривали ранее.
+Задумайтесь о том, каким образом браузеры следят, что пользователь залогинен, когда страница перезагружается. HTTP
+запросы не имеют состояний, так как же вы определите, что запрос пришел именно от залогиненого пользователя? Вот почему
+важны куки — они позволяют вам отслеживать пользователя от запроса к запросу, пока не истечет их срок действия.
 
-Причём при "входе" реквест будет проходить сверху вниз (Сначала секьюрити, потом сессии итд), а при "выходе" снизу вверх (начиная с Икс фрейма, заканчивая секьюрити)
- 
-**Мидлвар это по своей сути это декоратор над реквестом**
- 
+Особый случай — это когда вы хотите отслеживать данные пользовательской "сессии", которая включает все, что пользователь
+делает, пока вы хотите "запоминать" это, обычно до тех пор, пока пользователь не закроет окно браузера. В этом случае
+каждая страница, которую пользователь посетил до закрытия браузера будет частью одной сессии.
+
+Если упростить, сессия это набор запросов от одного и того же пользователя (Или от разных в рамках одного процесса).
+
+В случае с джанго, при стандартных настройках, сессия хранит набор куки, которые храняться в формате JSON. (А значит,
+что данные можно сериализовать)
+
 ### Как этим пользоваться?
 
-Если мы хотим использовать самописные мидлвары, мы должны понимать как они работают.
+В джанго сессия всегда храниться в реквесте, `request.session` в виде словаря.
 
-Можно описать мидлвар двумя способами функциональным и основанным на классах, рассмотрим оба:
-
-Функционально:
+Рассмотрим несколько примеров.
 
 ```python
-def simple_middleware(get_response):
-    # One-time configuration and initialization.
+>> > request.session[0] = 'bar'
+>> >  # subsequent requests following serialization & deserialization
+>> >  # of session data
+>> > request.session[0]  # KeyError
+>> > request.session['0']
+'bar'
+``` 
 
-    def middleware(request):
-        # Code to be executed for each request before
-        # the view (and later middleware) are called.
+Данные хранятся в формате JSON, а значит что ключи будут преобразованы в строки.
 
-        response = get_response(request)
-
-        # Code to be executed for each request/response after
-        # the view is called.
-
-        return response
-
-    return middleware
-```
-
-Как вы можете заметить синтаксис очень близок к декораторам.
-
-`get_response` - функция которая отвечает за всё что происходит мне мидлвары и овечает за обработку запроса, по сути это будет наша `view`, а мы можемдописать любой нужный нам код, до или после, соответсвенно на "входе" реквеста или на "выходе" респонса. 
-
-Так почти никто не пишет :) расммотрим как этот же функционал работает для классов:
+Допустим вам нужно "запомнить" комментировал ли этот пользователь только что статью, что бы не позволить написать большое
+кол-во комментариев подряд. Конечно можно сохранить эти данные в базе, но зачем? Проще воспользоваться сессией:
 
 ```python
-class SimpleMiddleware:
-    def __init__(self, get_response):
-        self.get_response = get_response
-        # One-time configuration and initialization.
-
-    def __call__(self, request):
-        # Code to be executed for each request before
-        # the view (and later middleware) are called.
-
-        response = self.get_response(request)
-
-        # Code to be executed for each request/response after
-        # the view is called.
-
-        return response
+def post_comment(request, new_comment):
+    if request.session.get('has_commented', False):
+        return HttpResponse("You've already commented.")
+    c = comments.Comment(comment=new_comment)
+    c.save()
+    request.session['has_commented'] = True
+    return HttpResponse('Thanks for your comment!')
 ```
 
-При таком подходе функционал работает при помощи меджик методов, функционально выполняет тоже самое, но по моему личному мнению гораздо элегантнее.
+Сохраним это состояние в сессии и будем перепроверять именно его.
 
-При инициализации, мы получаем обработчик, а при выполнении вызываем его же, но с возможностью добавить нужный код до или после.
+Допустим вам нужно хранить сколько времени назад пользователь последний раз совершал действие после логина.
 
-Что бы активировать мидлвар нам необходимо дописать путь к нему, в переменную `MIDDLEWARES` в `settings.py`.
+```python
+request.session['last_action'] = timezone.now()
+```
 
-Допустим, если мы создали файл `middlewares.py` в приложении под названием `main` и в этом файле создали класс `CheckUserStatus` который нужен что бы мы могли обработать какой либо статус пользователя, нужно дописать в переменную этот класс:
+Теперь мы можем проверить когда было выполнено последнее действие и добавить любую нужную нам логику.
+
+Если нам нужно воспользоваться сессией вне мест, где есть доступ к реквесту:
+
+```python
+>> > from django.contrib.sessions.backends.db import SessionStore
+>> > s = SessionStore()
+>> >  # stored as seconds since epoch since datetimes are not serializable in JSON.
+>> > s['last_login'] = 1376587691
+>> > s.create()
+>> > s.session_key
+'2b1189a188b44ad18c35e113ac6ceead'
+>> > s = SessionStore(session_key='2b1189a188b44ad18c35e113ac6ceead')
+>> > s['last_login']
+1376587691
+```
+
+Мы можем получить сессию по ключу (Любая созданная джанго сессия автоматически хранит переменную `session_key`) по
+которой получить нужные нам данные.
+
+Если мы не знаем нужный ключ в нашей сессии, мы можем получить сессию в виде словаря при помощи метода `.get_decoded()`
+
+```python
+>> > s.session_data
+'KGRwMQpTJ19hdXRoX3VzZXJfaWQnCnAyCkkxCnMuMTExY2ZjODI2Yj...'
+>> > s.get_decoded()
+{'user_id': 42}
+```
+
+Сохранение данных в сессии происходит только тогда когда меняется значение request.session :
+
+```python
+# Session is modified.
+request.session['foo'] = 'bar'
+
+# Session is modified.
+del request.session['foo']
+
+# Session is modified.
+request.session['foo'] = {}
+
+# Gotcha: Session is NOT modified, because this alters
+# request.session['foo'] instead of request.session.
+request.session['foo']['bar'] = 'baz'
+```
+
+В последнем случае данные не будут сохранены, т.к. модифицируется не request.session, а `request.session['foo']`
+
+Это поведение можно изменить, если добавить настройку в `settings.py`  `SESSION_SAVE_EVERY_REQUEST = True` тогда запись
+в сессию будет происходить каждый запрос, а не только в момент изменения.
+
+Для очистки данных сессии можно воспользоваться мендж командой `python manage.py clearsessions`
+
+Некоторые настройки можно поменять и перенастроить, как и полностью кастомизировать любые действия с сессиями. Подробнее
+об этом [Тут](https://docs.djangoproject.com/en/3.0/topics/http/sessions/)
+
+## Кеш
+
+Офииальная документация [Тут](https://docs.djangoproject.com/en/3.0/topics/cache/)
+
+Что такое кеш?
+
+Кеш - промежуточный буфер с быстрым доступом к нему, содержащий информацию, которая может быть запрошена с наибольшей
+вероятностью. Доступ к данным в кэше осуществляется быстрее, чем выборка исходных данных из более медленной памяти или
+удалённого источника, однако её объём существенно ограничен по сравнению с хранилищем исходных данных.
+
+Если упростить, то это хранилище для часто запрашиваемых данных.
+
+Предположим мы разрабатываем новостной сайт, и знаем, что новости у нас обновляются раз в час. Как мы помним некоторые
+методы, например GET являются идемпотентными, а это значит, что на одинаковые запросы должны отвечать одинаково (пока
+данные не изменятся), так вот в течении часа, пока новости не обновятся, абсолютно кажный пользователь заходящий на
+сайт, будет видеть один и тот же набор статей, а значит нам не обязательно каждый раз доставать этот набор из базы
+данных, мы можем закешировать его!
+
+Для использования кеша, мы можем воспользоваться огромным кол-вом заранее заготовленных решений для кеша.
+
+Как часто бывает в джанго кеш настраивается через `settings.py`
+
+Хранение данных с использованием Memcached (Стандартный кеш для джанго), на отдельном для этого порту 11211:
+
+```python
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
+        'LOCATION': '127.0.0.1:11211',
+    }
+}
+```
+
+Хранение в файле сокета (временный файл хранилище в юникс системах):
+
+```python
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
+        'LOCATION': 'unix:/tmp/memcached.sock',
+    }
+}
+```
+
+Хранение на несольких серверах, для уменьшения нагрузки:
+
+```python
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
+        'LOCATION': [
+            '172.19.26.240:11211',
+            '172.19.26.242:11211',
+        ]
+    }
+```
+
+Можно хранить кеш прям в базе данных, для этого нужно указать таблицу в которую складывать кеш:
+
+```python
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.db.DatabaseCache',
+        'LOCATION': 'my_cache_table',
+    }
+}
+```
+
+Для использования кеша через базу, таблицу нужно предварительно создать, сделать это можно при помощи менедж команды:
+
+```python manage.py createcachetable```
+
+Можно хранить кеш в обычном файле:
+
+Линукс\мак:
+
+```python
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
+        'LOCATION': '/var/tmp/django_cache',
+    }
+}
+```
+
+Виндовс:
+
+```python
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
+        'LOCATION': 'c:/foo/bar',
+    }
+}
+```
+
+Можно хранить в оперативной памяти сервера:
+
+```python
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+        'LOCATION': 'unique-snowflake',
+    }
+}
+```
+
+Есть упрощенная схема кеширования для разработки:
+
+```python
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.dummy.DummyCache',
+    }
+}
+```
+
+Как и всёё остальное, кеш можно кастомизировать написав собственные классы для управления кешем:
+
+```python
+CACHES = {
+    'default': {
+        'BACKEND': 'path.to.backend',
+    }
+}
+```
+
+Любой тип кеширования подерживает большое кол-во доп настроек, подробно о которых в документации.
+
+### Как же этим пользоваться?
+
+Существует два основных способа использовать кеш.
+
+Кешировать весь сайт, или кешировать конкретную вью.
+
+Для того что бы кешировать весь сайт, нужно добавить две мидлвары, до и после `CommonMiddleware`:
 
 ```python
 MIDDLEWARE = [
-    'django.middleware.security.SecurityMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.cache.UpdateCacheMiddleware',
     'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'main.middlewares.CheckUserStatus', # Новый мидлвар
-    'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.middleware.cache.FetchFromCacheMiddleware',
 ]
 ```
- 
-Обратите внимание я добавил мидлвар после `django.contrib.auth.middleware.AuthenticationMiddleware` так как до этого мидлвара в нашем реквесте нет переменной юзер.
 
-## Миксин для мидлвар
+Время кеширование или ограничения на кеш выставляются через переменные `settings.py`, подробно в документации.
 
-На самом деле для написания мидлвар существует миксин, что бы упростить наш код.
+Для того, что бы кешировать, отдельный метод или класс используется декоратор `cache_page`
 
 ```python
-django.utils.deprecation.MiddlewareMixin
-```
-
-В нём уже расписан методы `__init__` и `__call__`
-
-Инит принимает метод для обработки реквеста, а в вызове расписанны методы для обработки ревеста или респонса.
-
-Метод колл вызывает 4 действия:
-
-1. Вызывает `self.process_request(request)` (Если описан) для обработки ревекста.
-2. Вызывает `self.get_response(request)` что бы получить респонс для дальнейшего использования.
-3. Вызывает `self.process_response(request, response)` (Если описан) для обработки респонса.
-4. Возвращает респонс
-
-Зачем это нужно?
-
-Что бы описывать только тот функционал который мы будем использовать, и случайно не зацепить, что-то рядом.
-
-Например так выглядит миддлвар для добавления юзера в реквест.
-
-```python
-from django.contrib import auth
-from django.utils.deprecation import MiddlewareMixin
-from django.utils.functional import SimpleLazyObject
-
-def get_user(request):
-    if not hasattr(request, '_cached_user'):
-        request._cached_user = auth.get_user(request)
-    return request._cached_user
+from django.views.decorators.cache import cache_page
 
 
-class AuthenticationMiddleware(MiddlewareMixin):
-    def process_request(self, request):
-        assert hasattr(request, 'session'), (
-            "The Django authentication middleware requires session middleware "
-            "to be installed. Edit your MIDDLEWARE setting to insert "
-            "'django.contrib.sessions.middleware.SessionMiddleware' before "
-            "'django.contrib.auth.middleware.AuthenticationMiddleware'."
-        )
-        request.user = SimpleLazyObject(lambda: get_user(request))
-```
-
-Всё что тут описанно, это что делать при реквесте, добавить реквесту юзера, то при помощи какой магии это работает, мы рассмотрим на следующей лекции.
-
-
-## Signals
-
-Сигналы. Часто мы оказывамеся к ситуации когда нам нужно выполнять какие-либо действия до\после какого-то определённого события, мы конечно можем прописать код там где нам нужно, но вместо этого ммы можем использоваться сигналы.
-
-Сигналы отлавливают что опрёделённое действие выполненно или будет следующим, и выполняет необходимый нам код.
-
-Список экшенов [тут](https://docs.djangoproject.com/en/3.1/ref/signals/). Описание [тут](https://docs.djangoproject.com/en/3.1/topics/signals/).
-
-Примеры сигналов:
-
-```
-django.db.models.signals.pre_save & django.db.models.signals.post_save # Выполняется перед сохраннием или сразу после сохранения объекта
-django.db.models.signals.pre_delete & django.db.models.signals.post_delete # Выполняется перед удалением или сразу после удаления объекта
-django.db.models.signals.m2m_changed # Выполняется при изменении любых мэни ту мени связей (добавили студента в группу или убрали, например)
-django.core.signals.request_started & django.core.signals.request_finished # Выполняется при начале запроса, или при тего завершении.
-```
-
-Это далеко не полный список действий на которые могут реагировать сигналы.
-
-Каждый сигнал имеет функции `connect` и `disconnect` для того что бы привязать\отвязать к действию сигнал
-
-```python
-from django.core.signals import request_finished
-
-request_finished.connect(my_callback)
-```
-
-где `my_callback` это функция, которую нужно выполнять по получению сигнала.
-
-Но гораздо чаще применяется синтаксис с использованием декоратора `receiver`
-
-```python
-from django.core.signals import request_finished
-from django.dispatch import receiver
-
-@receiver(request_finished)
-def my_callback(sender, **kwargs):
-    print("Request finished!")
-```
-
-У сигнала есть параметр `receiver` и может быть параметр `sender`, сендер, это объект который отправляет сигнал, например модель, для которой описывается сигнал.
-
-```python
-from django.db.models.signals import pre_save
-from django.dispatch import receiver
-from myapp.models import MyModel
-
-
-@receiver(pre_save, sender=MyModel)
-def my_handler(sender, **kwargs):
+@cache_page(60 * 15)
+def my_view(request):
     ...
 ```
 
-Сигнал можно создать под любое действие если это необходимо. Допустим нужно отправить сигнал, что пицца готова.
+В скобках указывается время которое кеш должен хранится, обычно записывается в виде умножения на секунды\минуты, для
+простоты чтения (15*60 это 15 минут, никакой разницы от того что бы записать 900, но так проще воспринимать на вид).
 
-Сначала создадим сигнал.
-
-```python
-import django.dispatch
-
-pizza_done = django.dispatch.Signal()
-```
-
-И в нужном месте можно отправить
+Чаще всего декоратор используется в урлах:
 
 ```python
-class PizzaStore:
-    ...
+from django.views.decorators.cache import cache_page
 
-    def send_pizza(self, toppings, size):
-        pizza_done.send(sender=self.__class__, toppings=toppings, size=size)
-        ...
+urlpatterns = [
+    path('foo/<int:code>/', cache_page(60 * 15)(my_view)),
+]
 ```
+
+Для кеширования class base view кешуреется весь класс:
+
+```python
+from django.views.decorators.cache import cache_page
+
+url(r'^my_url/?$', cache_page(60 * 60)(MyView.as_view())),
+```
+
+Так же можно закешировать часть темплейта при помощи темплейт тега `cache`:
+
+```html
+{ % load cache %}
+{ % cache 500 sidebar %}
+..sidebar..
+{ % endcache %}
+```
+
+В кеш можно записать любые кастомные данные, если это необходимо (Данные будут доступны для всех сессий).
+
+```python
+from django.core.cache import cache
+
+cache.set('my_key', 'hello, world!', 30)
+cache.get('my_key')
+'hello, world!'
+# Wait 30 seconds for 'my_key' to expire...
+cache.get('my_key')
+None
+
+cache.set('add_key', 'Initial value')
+cache.add('add_key', 'New value')
+# .add() сработает только если в указанном ключе ничего не было
+cache.get('add_key')
+'Initial value'
+
+cache.get_or_set('my_new_key', 'my new value', 100)
+'my new value'
+
+import datetime
+
+cache.get_or_set('some-timestamp-key', datetime.datetime.now)
+datetime.datetime(2014, 12, 11, 0, 15, 49, 457920)
+
+cache.set('a', 1)
+cache.set('b', 2)
+cache.set('c', 3)
+cache.get_many(['a', 'b', 'c'])
+{'a': 1, 'b': 2, 'c': 3}
+
+cache.set_many({'a': 1, 'b': 2, 'c': 3})
+cache.get_many(['a', 'b', 'c'])
+{'a': 1, 'b': 2, 'c': 3}
+
+cache.delete('a')
+cache.delete_many(['a', 'b', 'c'])
+
+cache.clear()
+
+cache.touch('a', 10)  # Обновить время хранения
+```
+
+И многие другие тонкости и особенности, например декоратор `from django.views.decorators.cache import never_cache` который
+можно использовать, что бы не кешировать данные, если вы уже кешируете весь сайт. И многое другое, подробности в
+документации.
