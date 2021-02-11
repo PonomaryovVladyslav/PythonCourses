@@ -1,10 +1,82 @@
 # Урок 38. @api_view, APIView, ViewSets, Pagination, Routers
 
-По аналогии с обычным View, у джанго рест фреймворка есть два подхода к написанию эндпоинтов, функциональный и Class Based.
+Все мы помним, что веб это в первую очередь Request-Response система.
+
+## Request
+
+Что нового в реквесте.
+
+Два новых парамера `.data` и `.query_string`
+
+`.data` - данные есть запрос POST, PUT или PATCH, аналог `request.POST` или `request.FILES`
+
+`.query_string` - данные если запрос GET, аналог `request.GET`
+
+И параметры `.auth` и `.authenticate` которые мы рассмотрим на следующей лекции, которая целиком про авторизацию и
+пермишены.
+
+## Response
+
+В отличие от классической Django, респонсом в рест системе, будет обычный HTTP респонс содержащий набор данных, чаще
+всего JSON (но бывает и нет).
+
+Классическая Джанго тоже может возвращать HTTP респонс и быть обработчиком рест архитектуры, но существующий пекедж
+сильно упрощает эти процессы.
+
+Для обработки такого респонса, есть специальный объект.
+
+```Response(data, status=None, template_name=None, headers=None, content_type=None)```
+
+Где `data` это данные,
+
+`status` - код ответа (200, 404, 503),
+
+`template_name` - возможность указать темплейт, если необходимо вернуть страницу, а не просто набор данных,
+
+`headers` и `content_type` - хедеры и контент тайп запроса
+
+## View
+
+Знакомимся с самым подробным сайтом по ДРФ классам [тут](http://www.cdrf.co/)
+
+Для описания эндпоинтов в ДРФ существует специальный класс `APIView`, по аналогии с классической Django запрос
+обрабатывает метод `.dispatch()` и передаёт дальше в метод совпадающий с названием HTTP метода.
+
+Возвращать любой метод обязан объект `Response`, как работают `authentication_classes` и `permission_classes` я расскажу
+на следующем занятии.
+
+```python
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import authentication, permissions
+from django.contrib.auth.models import User
+
+
+class ListUsers(APIView):
+    """
+    View to list all users in the system.
+
+    * Requires token authentication.
+    * Only admin users are able to access this view.
+    """
+    authentication_classes = [authentication.TokenAuthentication]
+    permission_classes = [permissions.IsAdminUser]
+
+    def get(self, request, format=None):
+        """
+        Return a list of all users.
+        """
+        usernames = [user.username for user in User.objects.all()]
+        return Response(usernames)
+```
+
+По аналогии с обычным View, у джанго рест фреймворка есть два подхода к написанию эндпоинтов, функциональный и Class
+Based.
 
 ## @api_view
 
-Для описания эндпоинта функционально нужно указать декоратор api_view и методы которые он может принимать.
+Для описания эндпоинта функционально нужно указать декоратор api_view и методы которые он может принимать. Возвращает
+всё так же объект респонса.
 
 ```python
 from rest_framework import status
@@ -32,7 +104,7 @@ def snippet_list(request):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 ```
 
-Важным объектом является `Response`, он принимает словарь, и преобразует его в JSON, так же принимает статус (Обратите внимание в пакете рест фреймворка сразу есть заготовленные объекты статуса для ответа)
+Обратите внимание в пакете рест фреймворка сразу есть заготовленные объекты статуса для ответа
 
 Если попытаться получить доступ методом который не разрешен, запрос будет отклонён с ответом 405 method not allowed
 
@@ -72,11 +144,11 @@ from snippets.view import snippet_list, snippet_detail
 
 urlpatterns = [
     path('snippets/', snippet_list),
-    path('snippets/<int:pk>', snippet_detail),
+    path('snippets/<int:pk>/', snippet_detail),
 ]
 ```
 
-Ответ на гет запрос в этому случае будет выглядеть так: 
+Ответ на гет запрос в этому случае будет выглядеть так:
 
 ```json
 [
@@ -107,12 +179,12 @@ urlpatterns = [
 http --form POST http://127.0.0.1:8000/snippets/ code="print(123)"
 
 {
-  "id": 3,
-  "title": "",
-  "code": "print(123)",
-  "linenos": false,
-  "language": "python",
-  "style": "friendly"
+"id": 3,
+"title": "",
+"code": "print(123)",
+"linenos": false,
+"language": "python",
+"style": "friendly"
 }
 ```
 
@@ -133,6 +205,7 @@ class SnippetList(APIView):
     """
     List all snippets, or create a new snippet.
     """
+
     def get(self, request, format=None):
         snippets = Snippet.objects.all()
         serializer = SnippetSerializer(snippets, many=True)
@@ -146,13 +219,14 @@ class SnippetList(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 ```
 
-В таком случае название метода будет совпадать с методом запроса.
+Вынесем получение объекта в отдельный метод:
 
 ```python
 class SnippetDetail(APIView):
     """
     Retrieve, update or delete a snippet instance.
     """
+
     def get_object(self, pk):
         try:
             return Snippet.objects.get(pk=pk)
@@ -182,40 +256,502 @@ class SnippetDetail(APIView):
 
 ```python
 urlpatterns = [
-    path('snippets/', views.SnippetList.as_view()),
-    path('snippets/<int:pk>/', views.SnippetDetail.as_view()),
+    path('snippets/', SnippetList.as_view()),
+    path('snippets/<int:pk>/', SnippetDetail.as_view()),
 ]
 ```
 
-## Линкованые урлы.
+## GenericView
 
-В сериалайзере можно указать не только модель, но и имя урла к которому можно обратиться (параметр `name`, в переменной path)
+По аналогии с классической Django, существуют заранее описанные CRUD действия.
 
+Как это работает.
+
+Существует класс `GenericAPIView` который наследуется от обычного `APIView`
+
+В нём описаны такие поля как:
+
+queryset, хранит кверисет
+
+serializer_class, хранит сериалайзер
+
+lookup_field = 'pk', название атрибута в модели который будет отвечать за PK,
+
+lookup_url_kwarg = None, название атрибута в запросе который будет отвечать за `pk`
+
+filter_backends = api_settings.DEFAULT_FILTER_BACKENDS, - фильтры запросов
+
+pagination_class = api_settings.DEFAULT_PAGINATION_CLASS, - пагинация запросов
+
+и методы:
+
+`get_queryset` - получение кверисета,
+
+`get_object` - получение одного объекта,
+
+`get_serializer` - получение объекта сериалайзера,
+
+`get_serializer_class` - получение класса сериалайзера,
+
+`get_serializer_context` - получить контекст сериалайзера,
+
+`filter_queryset` - отфильтровать кверисет,
+
+`paginator` - объект пагинации,
+
+`paginate_queryset` - пагинировать кверисет,
+
+`get_paginated_response` - получить пагинированый ответ.
+
+*Такой класс не работает самостоятельно, только вместе с определёнными миксинами*
+
+### Миксины
+
+В DRF существует 5 миксинов:
 
 ```python
-class UserSerializer(serializers.HyperlinkedModelSerializer):
-    snippets = serializers.HyperlinkedRelatedField(many=True, view_name='snippet-detail', read_only=True)
+class CreateModelMixin(object):
+    """
+    Create a model instance.
+    """
 
-    class Meta:
-        model = User
-        fields = ['url', 'id', 'username', 'snippets']
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        self.perform_create(serializer)
+        headers = self.get_success_headers(serializer.data)
+        return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
+
+    def perform_create(self, serializer):
+        serializer.save()
+
+    def get_success_headers(self, data):
+        try:
+            return {'Location': str(data[api_settings.URL_FIELD_NAME])}
+        except (TypeError, KeyError):
+            return {}
 ```
 
-Если у вас есть урл с именем `snippet-detail` такой запрос будет обрабатываться через него.
+Рассмотрим подробнее,
+
+Это миксин, и без сторонних классов этот функционал работать не будет.
+
+При вызове метода `create` мы предпогалаем, что у нас был реквест.
+
+Вызываем метод get_serializer() из класса GenericAPIView, для получения объекта сериалайзера, обратите внимание, что
+данные передаются через аттрибут `data` так как, они получены от пользователя. Проверяем данные на валидность (обратите
+внимание на атрибут raise_exception, если данные будут не валидны, код сразу вылетит в трейсбек, а значит нам не нужно
+отдельно прописывать действия при не валидном сериалайзере), вызываем метод `perform_create` который просто сохраняет
+сериалайзер(вызывает `create` или `update` в зависимости от данных), получает хедеры, и возвращает респонс с 201 кодом,
+создание успешно.
+
+По аналогии, мы можем рассмотреть остальные миксины.
+
+```python
+class RetrieveModelMixin(object):
+    """
+    Retrieve a model instance.
+    """
+
+    def retrieve(self, request, *args, **kwargs):
+        instance = self.get_object()
+        serializer = self.get_serializer(instance)
+        return Response(serializer.data)
+```
+
+Обратите внимание метод называется `retrieve` и внутри вызывает метод `get_object()` это миксин одиночного объекта
+
+```python
+class UpdateModelMixin(object):
+    """
+    Update a model instance.
+    """
+
+    def update(self, request, *args, **kwargs):
+        partial = kwargs.pop('partial', False)
+        instance = self.get_object()
+        serializer = self.get_serializer(instance, data=request.data, partial=partial)
+        serializer.is_valid(raise_exception=True)
+        self.perform_update(serializer)
+
+        if getattr(instance, '_prefetched_objects_cache', None):
+            # If 'prefetch_related' has been applied to a queryset, we need to
+            # forcibly invalidate the prefetch cache on the instance.
+            instance._prefetched_objects_cache = {}
+
+        return Response(serializer.data)
+
+    def perform_update(self, serializer):
+        serializer.save()
+
+    def partial_update(self, request, *args, **kwargs):
+        kwargs['partial'] = True
+        return self.update(request, *args, **kwargs)
+```
+
+Методы `update`, `partial_update`, `perform_update` нужны для обновления объекта, обратите внимание на атрибут `partial`
+помните разницу между PUT и PATCH?
+
+```python
+class DestroyModelMixin(object):
+    """
+    Destroy a model instance.
+    """
+
+    def destroy(self, request, *args, **kwargs):
+        instance = self.get_object()
+        self.perform_destroy(instance)
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
+    def perform_destroy(self, instance):
+        instance.delete()
+```
+
+Аналогично для удаления, методы `destroy` `perform_destroy`
+
+```python
+class ListModelMixin(object):
+    """
+    List a queryset.
+    """
+
+    def list(self, request, *args, **kwargs):
+        queryset = self.filter_queryset(self.get_queryset())
+
+        page = self.paginate_queryset(queryset)
+        if page is not None:
+            serializer = self.get_serializer(page, many=True)
+            return self.get_paginated_response(serializer.data)
+
+        serializer = self.get_serializer(queryset, many=True)
+        return Response(serializer.data)
+```
+
+Метод `list` получает кверисет, дальше пытается его пагинировать, если получается, возвращает страницу, если нет целый
+ответ.
+
+*Важно!* Ни в одном из миксинов не было методов `get`,`post`,`patch`,`put` или `delete`, почему?
+
+Потому что их вызов перенесен в еще одни дополнительные классы
+
+### Generic классы
+
+Вот так выглядят классы которые уже можно использовать. Как это работает? Эти классы наследуют логику работы с данными
+из необходимого миксина, общие методы которые актуальны для любого CRUD действия из `GenericAPIView` дальше описываем
+методы тех видов запросов которые мы хотим обрабатывать, в которых просто вызываем необходимый метод из миксина.
+
+```python
+class CreateAPIView(mixins.CreateModelMixin,
+                    GenericAPIView):
+    """
+    Concrete view for creating a model instance.
+    """
+
+    def post(self, request, *args, **kwargs):
+        return self.create(request, *args, **kwargs)
+
+```
+
+```python
+class ListAPIView(mixins.ListModelMixin,
+                  GenericAPIView):
+    """
+    Concrete view for listing a queryset.
+    """
+
+    def get(self, request, *args, **kwargs):
+        return self.list(request, *args, **kwargs)
+```
+
+```python
+class RetrieveAPIView(mixins.RetrieveModelMixin,
+                      GenericAPIView):
+    """
+    Concrete view for retrieving a model instance.
+    """
+
+    def get(self, request, *args, **kwargs):
+        return self.retrieve(request, *args, **kwargs)
+```
+
+```python
+class DestroyAPIView(mixins.DestroyModelMixin,
+                     GenericAPIView):
+    """
+    Concrete view for deleting a model instance.
+    """
+
+    def delete(self, request, *args, **kwargs):
+        return self.destroy(request, *args, **kwargs)
+```
+
+```python
+class UpdateAPIView(mixins.UpdateModelMixin,
+                    GenericAPIView):
+    """
+    Concrete view for updating a model instance.
+    """
+
+    def put(self, request, *args, **kwargs):
+        return self.update(request, *args, **kwargs)
+
+    def patch(self, request, *args, **kwargs):
+        return self.partial_update(request, *args, **kwargs)
+```
+
+```python
+class ListCreateAPIView(mixins.ListModelMixin,
+                        mixins.CreateModelMixin,
+                        GenericAPIView):
+    """
+    Concrete view for listing a queryset or creating a model instance.
+    """
+
+    def get(self, request, *args, **kwargs):
+        return self.list(request, *args, **kwargs)
+
+    def post(self, request, *args, **kwargs):
+        return self.create(request, *args, **kwargs)
+```
+
+```python
+class RetrieveUpdateAPIView(mixins.RetrieveModelMixin,
+                            mixins.UpdateModelMixin,
+                            GenericAPIView):
+    """
+    Concrete view for retrieving, updating a model instance.
+    """
+
+    def get(self, request, *args, **kwargs):
+        return self.retrieve(request, *args, **kwargs)
+
+    def put(self, request, *args, **kwargs):
+        return self.update(request, *args, **kwargs)
+
+    def patch(self, request, *args, **kwargs):
+        return self.partial_update(request, *args, **kwargs)
+```
+
+```python
+class RetrieveDestroyAPIView(mixins.RetrieveModelMixin,
+                             mixins.DestroyModelMixin,
+                             GenericAPIView):
+    """
+    Concrete view for retrieving or deleting a model instance.
+    """
+
+    def get(self, request, *args, **kwargs):
+        return self.retrieve(request, *args, **kwargs)
+
+    def delete(self, request, *args, **kwargs):
+        return self.destroy(request, *args, **kwargs)
+```
+
+```python
+class RetrieveUpdateDestroyAPIView(mixins.RetrieveModelMixin,
+                                   mixins.UpdateModelMixin,
+                                   mixins.DestroyModelMixin,
+                                   GenericAPIView):
+    """
+    Concrete view for retrieving, updating or deleting a model instance.
+    """
+
+    def get(self, request, *args, **kwargs):
+        return self.retrieve(request, *args, **kwargs)
+
+    def put(self, request, *args, **kwargs):
+        return self.update(request, *args, **kwargs)
+
+    def patch(self, request, *args, **kwargs):
+        return self.partial_update(request, *args, **kwargs)
+
+    def delete(self, request, *args, **kwargs):
+        return self.destroy(request, *args, **kwargs)
+```
+
+Допустим мы хотим описать класс при GET запросе получение списка комментариев в которых есть буква `w`, если у нас уже
+есть сериалайзер и модель, а при POST создание комментария.
+
+```python
+class CommentListView(ListCreateAPIView):
+    queryset = Comment.objects.all()
+    serializer_class = CommentSerializer
+
+    def get_queryset(self):
+        return super().get_queryset().filter(text__icontains='w')
+```
+
+Всё, этого достаточно.
+
+## ViewSet
+
+Классы которые отвечают за поведение нескольких запросов, которые отличаются друг от друга только методом, называются
+ViewSet.
+
+Они на самом деле описывают методы, для получения списка действий (list, retrieve, итд), и преобразования их в урлы (об
+этом дальше).
+
+Например:
+
+```python
+from django.contrib.auth.models import User
+from django.shortcuts import get_object_or_404
+from myapps.serializers import UserSerializer
+from rest_framework import viewsets
+from rest_framework.response import Response
 
 
-## Пагинация
+class UserViewSet(viewsets.ViewSet):
+    """
+    A simple ViewSet for listing or retrieving users.
+    """
 
-Можно указать пагинацию для всех объектов системы в `settings.py`:
+    def list(self, request):
+        queryset = User.objects.all()
+        serializer = UserSerializer(queryset, many=True)
+        return Response(serializer.data)
+
+    def retrieve(self, request, pk=None):
+        queryset = User.objects.all()
+        user = get_object_or_404(queryset, pk=pk)
+        serializer = UserSerializer(user)
+        return Response(serializer.data)
+```
+
+Разные действия при наличии и отсутствии PK, при GET запросе.
+
+Для описания урлов можно использовать разное описание:
+
+```python
+user_list = UserViewSet.as_view({'get': 'list'})
+user_detail = UserViewSet.as_view({'get': 'retrieve'})
+```
+
+Хоть так никто и не делает, об этом дальше.
+
+## Декоратор action
+
+Что делать если вам нужно дополнительное действие связанное с деталями вашей вью, но не один из крудов не походит? Тут
+можно использовать декоратор @action, что бы описать новое действие в этом же вьюсете
+
+```python
+from django.contrib.auth.models import User
+from rest_framework import status, viewsets
+from rest_framework.decorators import action
+from rest_framework.response import Response
+from myapp.serializers import UserSerializer, PasswordSerializer
+
+
+class UserViewSet(viewsets.ModelViewSet):
+    """
+    A viewset that provides the standard actions
+    """
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+
+    @action(detail=True, methods=['post'])
+    def set_password(self, request, pk=None):
+        user = self.get_object()
+        serializer = PasswordSerializer(data=request.data)
+        if serializer.is_valid():
+            user.set_password(serializer.data['password'])
+            user.save()
+            return Response({'status': 'password set'})
+        else:
+            return Response(serializer.errors,
+                            status=status.HTTP_400_BAD_REQUEST)
+
+    @action(detail=False)
+    def recent_users(self, request):
+        recent_users = User.objects.all().order_by('-last_login')
+
+        page = self.paginate_queryset(recent_users)
+        if page is not None:
+            serializer = self.get_serializer(page, many=True)
+            return self.get_paginated_response(serializer.data)
+
+        serializer = self.get_serializer(recent_users, many=True)
+        return Response(serializer.data)
+```
+
+Принимает два основных параметра, `detail` - описывает должен ли этот экшен принимать PK (действие над всеми объектами
+или над конкретным), и `methods` - список http методов, на которые должен срабатывать action.
+
+Есть и другие, например классы пермишенов, или имя.
+
+## ModelViewSet и ReadOnlyModelViewSet
+
+Объединяем всё что мы уже знаем.
+
+И получаем класс `ModelViewSet`, он наследуется от `GenericViewSet` (`ViewSet` + `GenericAPIView`) и всех 5 миксинов, а
+значит там описаны методы `list`, `retrieve`, `create`, `update`, `destroy`, `perform_create`, `perform_update`, итд.
+
+А значит мы можем описать сущность, которая принимает модель и сериалайзер, и уже может принимать любые типы запросов и
+выполнять любые CRUD действия. Мы можем их переопределить, или дописать еще экшенов, всё что нам может быть необходимо
+уже есть.
+
+Пример:
+
+```python
+class AccountViewSet(viewsets.ModelViewSet):
+    """
+    A simple ViewSet for viewing and editing accounts.
+    """
+    queryset = Account.objects.all()
+    serializer_class = AccountSerializer
+    permission_classes = [IsAccountAdminOrReadOnly]
+```
+
+Или если необходим такой же вьюсет только для получения объектов то:
+
+```python
+class AccountViewSet(viewsets.ReadOnlyModelViewSet):
+    """
+    A simple ViewSet for viewing accounts.
+    """
+    queryset = Account.objects.all()
+    serializer_class = AccountSerializer
+```
+
+На самом деле можно собрать такой же вьюсет для любых действий, добавляя и убирая миксины.
+
+Например:
+
+```python
+from rest_framework import mixins
+
+
+class CreateListRetrieveViewSet(mixins.CreateModelMixin,
+                                mixins.ListModelMixin,
+                                mixins.RetrieveModelMixin,
+                                viewsets.GenericViewSet):
+    """
+    A viewset that provides `retrieve`, `create`, and `list` actions.
+
+    To use it, override the class and set the `.queryset` and
+    `.serializer_class` attributes.
+    """
+    pass
+```
+
+Чаще всего используются обычные ModelViewSet.
+
+### Пагинация
+
+Для действия `list` как мы помним используется пагинация. Как это работает?
+
+Если у нас нет необходимости настраивать все вьюсеты отдельно, то мы можем укать такую настройку в `settings.py`
 
 ```python
 REST_FRAMEWORK = {
-    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
-    'PAGE_SIZE': 10
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
+    'PAGE_SIZE': 100
 }
 ```
 
-Или указав пагинацию в классе явно, для этого используется класс пагинации:
+Там мы можем указать тип класса пагинации, и размер одной страницы, и все наши запросы уже будут пагинированы.
+
+Так же мы можем создать классы пагинаторов основываясь на нашей необходимости.
 
 ```python
 class LargeResultsSetPagination(PageNumberPagination):
@@ -223,11 +759,14 @@ class LargeResultsSetPagination(PageNumberPagination):
     page_size_query_param = 'page_size'
     max_page_size = 10000
 
+
 class StandardResultsSetPagination(PageNumberPagination):
     page_size = 100
     page_size_query_param = 'page_size'
     max_page_size = 1000
 ```
+
+Если нужно указать пагинатор у конкретного вьюсета, то можно это сделать прямо в атрибутах.
 
 ```python
 class BillingRecordsView(generics.ListAPIView):
@@ -236,144 +775,66 @@ class BillingRecordsView(generics.ListAPIView):
     pagination_class = LargeResultsSetPagination
 ```
 
-Ответ с пагинацией выглядит вот так:
+## Роутеры
 
-```json
-{
-    "count": 1023,
-    "next": "https://api.example.org/accounts/?page=5",
-    "previous": "https://api.example.org/accounts/?page=3",
-    "results": [
-       …
-    ]
-}
-```
-
-Это один из вариантов! Пагинация бывает разная.
-
-## ViewSet
-```python
-from rest_framework.response import Response
-
-class SnippetViewSet(viewsets.ModelViewSet):
-    """
-    This viewset automatically provides `list`, `create`, `retrieve`,
-    `update` and `destroy` actions.
-
-    Additionally we also provide an extra `highlight` action.
-    """
-    queryset = Snippet.objects.all()
-    serializer_class = SnippetSerializer
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly,
-                          IsOwnerOrReadOnly]
-
-    def perform_create(self, serializer):
-        serializer.save(owner=self.request.user)
-```
-
-
-Вьюсет это класс, описывающий все стандартные CRUD HTTP методы (GET, POST, PUT, PATCH, DELETE)
-
-По аналогии с Class Base View нам достаточно переписать или заменить стандартный метод, для изменения стандартной логики.
-
-Методы HTTP к методам класса:
-
-Все данные возвращаются сериализованными!
-
-GET с указанием pk - retrieve(self, request, pk=None) - получить один объект
-
-GET без указания pk - list(self, request) - получить список объектов
-
-POST (pk нет) - create(self, request) - создать объект
-
-PUT (pk обязателен) - update(self, request, pk=None) - обновить объект полностью
-
-PATCH (pk обязателен) - partial_update(self, request, pk=None) - обновить объект частично
-
-DELETE (pk обязателен) - destroy(self, request, pk=None) - удалить объект
-
-Важные методы:
-
-perform_create - действие с сериалайзером, для создания
-
-perform_update - действие с сериалайзером, при обновлении
-
-perform_destroy - действие с инстансом, при удалении
-
-get_queryset - получение кверисета
-
-get_serializer_class - получение класса сериалайзера
-
-Их намного больше!
-
-Если нам нужно добавить действие связанное с моделью но не попадающее в список стандартных крудов, мы можем сделать это при помощи декоратора action:
+Роутер, это автоматический генератор урлов для вьюсетов.
 
 ```python
-from rest_framework.decorators import action
-from rest_framework.response import Response
+from rest_framework import routers
 
-class SnippetViewSet(viewsets.ModelViewSet):
-    """
-    This viewset automatically provides `list`, `create`, `retrieve`,
-    `update` and `destroy` actions.
-
-    Additionally we also provide an extra `highlight` action.
-    """
-    queryset = Snippet.objects.all()
-    serializer_class = SnippetSerializer
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly,
-                          IsOwnerOrReadOnly]
-
-    @action(detail=True, methods=['post'])
-    def highlight(self, request, *args, **kwargs):
-        snippet = self.get_object()
-        return Response(snippet.highlighted)
-
-    def perform_create(self, serializer):
-        serializer.save(owner=self.request.user)
+router = routers.SimpleRouter()
+router.register(r'users', UserViewSet)
+router.register(r'accounts', AccountViewSet)
+urlpatterns = router.urls
 ```
 
-Декоратор экшен добавляет еще один эндпоинт, принимает параметр detail, описывающий нужно ли нам обрабатывать pk, и параметр methods - принивающий список http методов.
+В методе `register` принимает два параметра, на каком слове основывать урлы, и для какого вьюсета.
 
-Любой вьюсет это набор миксинов! Мы можем их использовать отдельно от вьюсета, если это необходимо!
+Если у вьюсета нет параметра `queryset`, то нужно указать поле `basename` если нет, то автоматически будет использовано
+имя модели, маленькими буквами.
 
-## Routers
+Урлы будут сгененрированы автоматически и им будут автоматически присвоены имена:
 
-Для добавления урлов к вьюсетам, используются роутеры.
+```
+URL pattern: ^users/$ Name: 'user-list'
+URL pattern: ^users/{pk}/$ Name: 'user-detail'
+URL pattern: ^accounts/$ Name: 'account-list'
+URL pattern: ^accounts/{pk}/$ Name: 'account-detail'
+```
+
+Чаще всего роутеры к урлам добавляются вот такими способами:
 
 ```python
-from django.urls import path, include
-from rest_framework.routers import DefaultRouter
-from snippets import views
-
-# Create a router and register our viewsets with it.
-router = DefaultRouter()
-router.register(r'snippets', views.SnippetViewSet)
-router.register(r'users', views.UserViewSet)
-
-# The API URLs are now determined automatically by the router.
 urlpatterns = [
-    path('', include(router.urls)),
+    path('forgot-password', ForgotPasswordFormView.as_view()),
+    path('api/', include(router.urls)),
 ]
 ```
 
-Когда мы регистрируем вьюсет в роутере, он автоматически собирает все возможные урлы, для данного вьюсета.
+### Роутинг экстра экшенов
 
-В нашем случае, мы создали такой набор урлов:
+Допустим есть такой экстра экшен
 
 ```python
-/snippets/
-/snippets/<int:pk>/
-/snippets/<int:pk>/highlight/
-/users/
-/users/<int:pk>/
+from myapp.permissions import IsAdminOrIsSelf
+from rest_framework.decorators import action
+
+
+class UserViewSet(ModelViewSet):
+    ...
+
+    @action(methods=['post'], detail=True, permission_classes=[IsAdminOrIsSelf])
+    def set_password(self, request, pk=None):
+        ...
 ```
 
-принимающие разные методы.
+то роутер автоматически сгенерирует урл `^users/{pk}/set_password/$` и имя `user-set-password`
 
+Класс `SimpleRouter` может принимать параметр `trailing_slash=False` True или False, по дефолту тру, поэтому все апи,
+должны принимать урлы заканчивающиеся на слеш, если указать явно, то будет принимать всё без слеша.
 
-### К практике!
+## Задание
 
-# Домашнее задание:
+1. Создать модел вью сеты, для моделей у которых нет форейн кея к пользователю. Проверить все постманом
 
-К своему последнему модулю, создать вьюсеты (хотя бы к двум моделям), которые будут реализовывать все базовые CRUD HTTP методы.
+2. Для вьюсета юзера написать экшен для смены пароля.
