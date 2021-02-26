@@ -7,7 +7,7 @@
 Что же такое шаблон? В бытовом понимании это заготовка под что-то, что потом будет использоваться, в Django это почти
 также.
 
-Шаблонами мы называем заготовленные html страницы в которые мы можем добавить необходимый нам текст или данные.
+Шаблонами мы называем заготовленные html страницы в которые мы можем добавить необходимые нам данные и логику.
 
 Но как это работает?
 
@@ -16,18 +16,15 @@
 Создадим новую папку на уровне корня проекта и назовём её `templates` (Название может быть любым, но принято называть
 именно так.) Что бы получилась вот такая структура
 
-```python
-mysite /
-myapp /
-templates /
+```
+mysite/
+myapp/
+templates/
 manage.py
 ```
 
-Для того, что бы обрабатывать шаблоны мы дожны "рассказать" Django где именно искать эти самые шаблоны, для этого нужно
+Для того, что бы обрабатывать шаблоны мы должны "рассказать" Django где именно искать эти самые шаблоны, для этого нужно
 открыть `mysite/settings.py` и отредактировать его.
-
-Сеттингс большой файл сгенерированный при старте проекта, что в нём лежит и зачем нам это нужно будем разбираться по
-ходу обучения.
 
 В данный момент нас интересует переменная `TEMPLATES`, выглядит примерно так:
 
@@ -37,6 +34,18 @@ manage.py
 
 ![](https://djangoalevel.s3.eu-central-1.amazonaws.com/lesson34/templates_filled.png)
 
+Ключи:
+
+`BACKEND`: Путь к классу который отвечает за обработку данных и логику. (Замена требуется очень редко)
+
+`DIRS`: Список папок в которых Django будет искать шаблоны
+
+`APP_DIRS`: Булевое поле которое отвечает за то, нужно ли искать папки с шаблонами внутри папки с приложениями, например
+в нашей структуре, если значение `False`, то поиск будет только в папке `templates` на уровне файла `manage.py`, а если
+значение `True` то в папках `/templates` и `/myapp/templates/`
+
+`OPTIONS`: Дополнительные настройки, подробнее будем рассматривать позже.
+
 Для применения любых изменений нужно перезапускать сервер (команда manage.py runserver из прошлого занятия)
 
 Мы "рассказали" Django где именно искать шаблоны, но пока ни одного не создали, давайте сделаем это!
@@ -44,11 +53,11 @@ manage.py
 В папке `templates` нужно создать html файл, назовём его `index.html` (Название не имеет значения, главное, что бы
 формат был `html`)
 
-```python
-mysite /
-myapp /
-templates /
-index.html
+```
+mysite/
+myapp/
+templates/
+    index.html
 manage.py
 ```
 
@@ -124,14 +133,14 @@ def index(request):
 
 Для вывода данных в Django темплейте используются фигурные скобки `{{ }}`
 
-```python
+```
 {{first_name}}
 {{last_name}}
 ```
 
 Для доступа к вложенным структурам используется точка:
 
-```python
+```
 {{my_dict.key}}
 {{my_object.attribute}}
 {{my_list.0}}
@@ -220,9 +229,9 @@ def index(request):
 <body>
 <div>
     {% if display_num %}
-    {{ my_num }}
+        {{ my_num }}
     {% else %}
-    <span> We don't display num </span>
+        <span> We don't display num </span>
     {% endif %}
 </div>
 </body>
@@ -272,8 +281,8 @@ def index(request):
 <body>
 <div>
     {% for item in my_list %}
-    <span>{{ item }}</span>
-    <br>
+        <span>{{ item }}</span>
+        <br>
     {% endfor %}
 </div>
 </body>
@@ -302,10 +311,10 @@ def index(request):
 <body>
 <div>
     {% for item in my_list %}
-    {% if forloop.counter0 != 1 %}
-    <span>{{ item }}</span>
-    <br>
-    {% endif %}
+        {% if forloop.counter0 != 1 %}
+            <span>{{ item }}</span>
+            <br>
+        {% endif %}
     {% endfor %}
 </div>
 </body>
@@ -394,7 +403,8 @@ path('', first, name='first'),
 
 Тут нам и помогут наши волшебные теги!
 
-Создадим в папке `templates` новые файлы `base.html` и `first.html` и изменим файлы `templates/index.html` и функцию `first` в `myapp/views.py`
+Создадим в папке `templates` новые файлы `base.html` и `first.html` и изменим файлы `templates/index.html` и
+функцию `first` в `myapp/views.py`
 
 `template/base.html`
 
@@ -554,9 +564,7 @@ first
 `templates/add.html`
 
 ```html
-
-<div style="padding: 20px; background-color: chartreuse">{% if name %} Hello {{ name }} ! {% else %} Sorry I don't know
-    your name {% endif %}
+<div style="padding: 20px; background-color: chartreuse">{% if name %} Hello {{ name }} ! {% else %} Sorry I don't know your name {% endif %}
 </div>
 ```
 
@@ -637,7 +645,7 @@ def index(request):
 
 ![](https://i.ytimg.com/vi/gF060AIFiB8/hqdefault.jpg)
 
-# Домашнее задание
+# Домашнее задание / Практика
 
 Создать базовую html от которой будут наследоваться все остальные
 
