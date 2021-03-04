@@ -31,7 +31,7 @@ class Author(models.Model):
 
 
 class Article(models.Model):
-    author = models.ForeignKey(Author, on_delete=models.CASCADE, null=True)
+    author = models.ForeignKey(Author, on_delete=models.CASCADE, null=True, related_name='articles')
     text = models.TextField(max_length=10000, null=True)
     created_at = models.DateTimeField(default=timezone.now)
     updated_at = models.DateTimeField(default=timezone.now)
@@ -75,7 +75,7 @@ from django.utils.translation import gettext as _
 
 Стандартная функция перевода языка для Django, допустим что ваш сайт имеет функцию переключения языка, с русского,
 украинского и английского, эта функция поможет нам в будущем указать значения для всех трех языков. Подробнейшая
-информация по переводам [Тут](https://docs.djangoproject.com/en/2.2/topics/i18n/translation/)
+информация по переводам [Тут](https://docs.djangoproject.com/en/3.1/topics/i18n/translation/)
 
 ```python
 GENRE_CHOICES = (
@@ -87,8 +87,9 @@ GENRE_CHOICES = (
 )
 ```
 
-Переменная состоящая из тупла туплов, нужна для использования choices значений, используется для хранения выбора
-чего-либо, в нашем случае жанра, в базе будет храниться только число, а пользователю будет выводиться уже текст.
+Переменная состоящая из тупла туплов (могла быть, любая коллекция коллекций), нужна для использования choices значений,
+используется для хранения выбора чего-либо, в нашем случае жанра, в базе будет храниться только число, а пользователю
+будет выводиться уже текст.
 
 Используем это вот тут:
 
@@ -115,9 +116,9 @@ comment = models.ForeignKey('myapp.Comment', null=True, blank=True, on_delete=mo
 Модель можно передать не только как класс, но и по имени модели указав приложение `appname.Modelname` (Да мне было лень
 переименовывать приложение из myapp, во что-то читаемое)
 
-При такой записи мы создаём связь один ко многим к самому себе, указав при этом black=True, null=True. При таком случае
-у нас первый комментарий, будет без ссылки на комментарий, и по этому принципу мы можем выбрать комментарии к сути, а если
-создать комментарий со ссылкой на другой, это будет комментарий к комментарию, причем это можно сделать любой вложенности.
+При такой записи мы создаём связь один ко многим к самому себе, указав при этом black=True, null=True. Можно создать
+коммент без указания родительского комментария, а если создать комментарий со ссылкой на другой, это будет комментарий к
+комментарию, причем это можно сделать любой вложенности.
 
 `related_name` - в этой записи нужен для того, что бы получить выборку всех вложенных объектов, мы рассмотрим их немного
 ниже.
@@ -155,8 +156,8 @@ class Ox(models.Model):
 
 ### unique_together
 
-Принимает коллекцию коллекций, например список списков, каждый список, должен содержать набор строк, с именами полей. При
-указании этого набора, данные поля будут совместно уникальны (Если совместно уникальны имя и фамилия, то может быть
+Принимает коллекцию коллекций, например список списков, каждый список, должен содержать набор строк, с именами полей.
+При указании этого набора, данные поля будут совместно уникальны (Если совместно уникальны имя и фамилия, то может быть
 сколько угодно объектов с именем `Мария`, и сколько угодно объектов с фамилией `Петрова`, но только один объект с такой
 комбинацией.)
 
@@ -172,8 +173,8 @@ unique_together = ['driver', 'restaurant']
 
 ### verbose_name и verbose_name_plural
 
-Свойства содержащие строки и отвечающие за то какие имена будут описаны в админке, в единственном и множественно числе
-соответственно
+Свойства содержащие строки и отвечающие за то какие имена будут описаны в админке и на уровне таблицы базы данных, в
+единственном и множественно числе соответственно
 
 ## Абстрактные и прокси модели
 
@@ -181,8 +182,8 @@ unique_together = ['driver', 'restaurant']
 
 Абстрактные классы моделей, это `заготовки` под дальнейшие модели которые не создают дополнительных таблиц. Например
 некоторые из ваших моделей должны содержать поле `created_at`, в котором будет храниться информация о том, когда объект
-создан, для этого можно в каждой модели прописать это поле, или один раз описать абстрактную модель с одним полем,
-и наследоваться уже от неё.
+создан, для этого можно в каждой модели прописать это поле, или один раз описать абстрактную модель с одним полем, и
+наследоваться уже от неё.
 
 Модель как абстрактная указывается в мете.
 
@@ -238,8 +239,8 @@ class Student(CommonInfo, Unmanaged):
 
 ### Прокси модели
 
-Модель, которая создаётся на уровне языка программирования, но не на уровне базы данных. Используется если нужно добавить
-метод, изменить поведение менеджера итд.
+Модель, которая создаётся на уровне языка программирования, но не на уровне базы данных. Используется если нужно
+добавить метод, изменить поведение менеджера итд.
 
 Синтаксис:
 
@@ -261,7 +262,7 @@ class MyPerson(Person):
         pass
 ```
 
-В базе будет храниться одна таблица, в Django две.
+В базе будет храниться одна таблица, в Django два класса.
 
 ```python
 >> > p = Person.objects.create(first_name="foobar")
@@ -274,7 +275,7 @@ class MyPerson(Person):
 ## objects и shell
 
 Для доступа или модификации любых данных, у каждой модели есть аттрибут `objects`, который позволяет производить любые
-манипуляции с данными.
+манипуляции с данными. Он называется менеджер, и при желании его можно переопределить.
 
 Для интерактивного использования кода используется команда
 
@@ -289,7 +290,7 @@ class MyPerson(Person):
 Для доступа к моделям, их нужно импортировать, я импортирую модель Comment
 
 Рассмотрим весь CRUD и дополнительные особенности. Очень подробная информация по всем возможным
-операциям [Тут](https://docs.djangoproject.com/en/2.2/topics/db/queries/)
+операциям [Тут](https://docs.djangoproject.com/en/3.1/topics/db/queries/)
 
 ### R - retrieve
 
@@ -309,8 +310,8 @@ class MyPerson(Person):
 
 Если указать фильтр без параметров, то он сделает, то же самое что и all.
 
-Какие у фильтра могу быть параметры? Да практически любые, мы можем указать любые поля для фильтрации. Например фильтр по
-полю текст.
+Какие у фильтра могу быть параметры? Да практически любые, мы можем указать любые поля для фильтрации. Например фильтр
+по полю текст.
 
 ```python
 Comment.objects.filter(text='Hey everyone')
@@ -419,17 +420,12 @@ Comment.objects.filter(article__created_at__gte=date.today() - timedelta(days=1)
 По умолчанию все модели сортируются по айди, если явно не указанно иное, но часто нужно отсортировать данные специальным
 образом для этого используется order_by()
 
-Как явно указать сортировку и какие еще тайны хранят модели, можно
-прочитать [Туть](https://docs.djangoproject.com/en/2.2/ref/models/options/)
-
-Особенно внимательно читаем `ordering`, `unique_together`, `verbose_name`
-
 ```python
 Comment.objects.filter(article__created_at__gte=date.today() - timedelta(days=1)).order_by('-article__created_at').all()
 ```
 
 Все методы кверисетов
-читаем [Тут](https://docs.djangoproject.com/en/2.2/ref/models/querysets/#methods-that-return-new-querysets)
+читаем [Тут](https://docs.djangoproject.com/en/3.1/ref/models/querysets/#methods-that-return-new-querysets)
 
 Особое внимание на методы `distinct`, `reverse`,  `values`, `difference`
 
@@ -478,7 +474,28 @@ Comment.objects.filter(article__created_at__gte=date.today() - timedelta(days=1)
 ```
 
 Информация по всем остальным
-методам [Тут](https://docs.djangoproject.com/en/2.2/ref/models/querysets/#methods-that-do-not-return-querysets)
+методам [Тут](https://docs.djangoproject.com/en/3.1/ref/models/querysets/#methods-that-do-not-return-querysets)
+
+### related_name
+
+Атрибут релейтед нейм, который указывается для полей связи, является обратной связью, и менеджером для объектов,
+например в нашей модели у поля `author` модели `Article` есть related_name=`articles`:
+
+```python
+a = Author.objects.first()
+articles = a.articles.all()  # тут будут все статьи конкретного автора в виде кверисета, т.к. all() возвращает кверисет
+```
+
+Можно ли получить объекты обратной связи без указания related_name? Можно. Связь появляется автоматически даже без
+указания этого атрибута.
+
+Обратный менеджер формируется из названия модели и конструкции `_set`, допустим у поля `article` модели `Comment` не
+указан related_name:
+
+```python
+a = Article.objects.first()
+a.comment_set.all() # такой же менеджер как в прошлом примере, вернёт кверисет коментариев относящихся к этой статье.
+```
 
 ### C - Create
 
@@ -486,7 +503,7 @@ Comment.objects.filter(article__created_at__gte=date.today() - timedelta(days=1)
 
 Создадим двух новых авторов, при помощи разных методом
 
-```
+```python
 Author.objects.create(name='New author by create', pseudonym="Awesome author")
 
 a = Author(name="Another new author", pseudonym="Gomer")
@@ -606,8 +623,8 @@ q2 = Q(article__genre=3)
 Теперь мы можем явно использовать логические И и ИЛИ.
 
 ```python
-Comment.objects.filter(q1&q2) # И
-Comment.objects.filter(q1|q2) # ИЛИ
+Comment.objects.filter(q1 & q2)  # И
+Comment.objects.filter(q1 | q2)  # ИЛИ
 ```
 
 ### Aggregation
@@ -647,15 +664,15 @@ class Store(models.Model):
 Мы можем совершить предвычисления каких либо средних, минимальных, максимальных значений, вычислить сумму итд.
 
 ```python
->>> from django.db.models import Avg
->>> Book.objects.all().aggregate(Avg('price'))
+>> > from django.db.models import Avg
+>> > Book.objects.all().aggregate(Avg('price'))
 {'price__avg': 34.35}
 ```
 
 На самом деле all() не несёт пользы в этом примере
 
 ```python
->>> Book.objects.aggregate(Avg('price'))
+>> > Book.objects.aggregate(Avg('price'))
 {'price__avg': 34.35}
 ```
 
@@ -669,8 +686,8 @@ class Store(models.Model):
 Можно вносить больше одной агрегации за раз
 
 ```python
->>> from django.db.models import Avg, Max, Min
->>> Book.objects.aggregate(Avg('price'), Max('price'), Min('price'))
+>> > from django.db.models import Avg, Max, Min
+>> > Book.objects.aggregate(Avg('price'), Max('price'), Min('price'))
 {'price__avg': 34.35, 'price__max': Decimal('81.20'), 'price__min': Decimal('12.99')}
 ```
 
@@ -678,46 +695,40 @@ class Store(models.Model):
 
 ```python
 # Build an annotated queryset
->> > from django.db.models import Count
->> > q = Book.objects.annotate(Count('authors'))
+from django.db.models import Count
+q = Book.objects.annotate(Count('authors'))
 # Interrogate the first object in the queryset
->> > q[0]
-< Book: The
-Definitive
-Guide
-to
-Django >
->> > q[0].authors__count
+q[0]
+<Book: The Definitive Guide to Django >
+q[0].authors__count
 2
 # Interrogate the second object in the queryset
->> > q[1]
-< Book: Practical
-Django
-Projects >
->> > q[1].authors__count
+q[1]
+< Book: Practical Django Projects >
+q[1].authors__count
 1
 ```
 
 Их тоже может быть больше одного
 
 ```python
->> > book = Book.objects.first()
->> > book.authors.count()
+book = Book.objects.first()
+book.authors.count()
 2
->> > book.store_set.count()
+book.store_set.count()
 3
->> > q = Book.objects.annotate(Count('authors'), Count('store'))
->> > q[0].authors__count
+q = Book.objects.annotate(Count('authors'), Count('store'))
+q[0].authors__count
 6
->> > q[0].store__count
+q[0].store__count
 6
 ```
 
 Все эти вещи можно комбинировать
 
 ```python
->> > highly_rated = Count('book', filter=Q(book__rating__gte=7))
->> > Author.objects.annotate(num_books=Count('book'), highly_rated_books=highly_rated)
+highly_rated = Count('book', filter=Q(book__rating__gte=7))
+Author.objects.annotate(num_books=Count('book'), highly_rated_books=highly_rated)
 ```
 
 C ордерингом
@@ -760,108 +771,25 @@ reporter.update(stories_filed=F('stories_filed') + 1)
 
 Такие объекты можно использовать и в аннотации и в фильтрах и во многих других местах.
 
-## Методы и свойства модели User
-
-## Модель User
-
-Django предоставляет нам встроенную модель юзера, у которой уже реализовано много полей и методов, находится в ``
-
-Подробнейшая инфа про юзера [Тут](https://docs.djangoproject.com/en/3.1/topics/auth/default/)
-
-Стандартный юзер содержит в себе такие полезные поля как:
-
-```python
-username
-password
-email
-first_name
-last_name
-```
-
-Также содержит много системных полей, рассмотрим позже. Также содержит базовый метод set_password и информацию о группах
-доступа.
-
-Рассмотрим их дальше.
-
-Для использования модели пользователя, которую нам нужно видоизменить используется наследование от базового абстрактного
-юзера
-
-Выглядит примерно так:
-
-```python
-from django.contrib.auth.models import AbstractUser
-from django.db import models
-
-
-class MyUser(AbstractUser):
-    birth_date = models.DateField()
-    avatar = models.ImageField(blank=True, null=True)
-```
-
-Для того, что бы Django оценивала эту модель как пользователя, в `settings.py` нужно в любом месте указать:
-
-```python
-AUTH_USER_MODEL = 'myapp.MyUser' 
-```
-
-Где myapp - название приложения, MyUser - название модели.
-
-Все возможные подробности про модель
-юзера [Тут](https://docs.djangoproject.com/en/2.2/ref/contrib/auth/#django.contrib.auth.models.User)
-
-Кроме стандартных полей юзер содержит в себе информацию о группах которых состоит пользователь, о пользовательских
-правах, содержит два поля статуса `is_staff` и `is_superuser` чаще всего стафф это сотрудника которым можно в админку,
-но у них ограниченные права, суперюзеру можно всё, но всегда зависит от ситуации.
-
-Также хранит инфо о последнем логине пользователя и дате создания пользователя.
-
-### Содержит кучу полезных методов
-
-```python
-get_username() # получить юзернейм
-
-get_full_name() # получить имя и фамилию через пробел
-
-set_password(raw_password) # установить хешированый и подсоленный пароль
-
-check_password(raw_password) # проверить пароль на правильность
-
-set_unusable_password() # разрешить использовать пустую строку как пароль
-
-email_user(subject, message, from_email=None, **kwargs) # отправить пользователю имейл 
-```
-
-И другие методы, отвечающие за доступы, группы итд.
-
-Содержит два метода `create_user(username, email=None, password=None, **extra_fields)` и `create_superuser(username, email,
-password, **extra_fields)`
-
-Для создания новых пользователей другими пользователями.
-
-Содержит поле `is_authenticated` необходимое для проверки, был ли пользователь авторизован.
-
-Подробно разберём, когда будем делать систему логина.
-
-# Домашнее задание:
-
-Прочитать все ссылки из лекции!!! Буду спрашивать.
+# Практика/Домашка:
 
 Выполнить всё через шел и залить на гит скрины в отдельной папке (Ну или в личку в телеграм):
 
 Всё выполнять со своими моделями.
 
-1. Придумать 10 разных фильтров или эксклюдов, с разными лукапами и заходом в связанные модели.
+1. Получить 5 последних написанных комментариев (именно текст).
 
-2. Получить 5 последних написанных комментариев (именно текст).
-
-3. Создать 5 комментариев с разным текстом, Хотя бы один должен начинаться со слова "Start", хоть один в середине должен
+2. Создать 5 комментариев с разным текстом, Хотя бы один должен начинаться со слова "Start", хоть один в середине должен
    иметь слово "Middle", хоть один должен заканчиваться словом "Finish".
 
-4. Переписать сейв комментария так, что бы при создании дата менялась бы на год назад (если сегодня 20 декабря 2019,
+3. Переписать сейв комментария так, что бы при создании дата менялась бы на год назад (если сегодня 20 декабря 2019,
    должна выставляться 20 декабря 2018), изменение комментариев не затрагивать.
 
-5. Изменить комментарии со спец словами "Start", "Middle", "Finish".
+4. Изменить комментарии со спец словами "Start", "Middle", "Finish".
 
-6. Удалить все комментарии у которых в тексте есть буква "k", но не удалять если есть буква "с".
+5. Удалить все комментарии у которых в тексте есть буква "k", но не удалять если есть буква "с".
 
-7. Получить первые 2 коментария по дате создания к статье у которой имя автора последнее по алфавиту.
+6. Получить первые 2 коментария по дате создания к статье у которой имя автора последнее по алфавиту.
+
+7. Придумать 10 разных фильтров или эксклюдов, с разными лукапами и заходом в связанные модели. На ваш выбор:)
+
