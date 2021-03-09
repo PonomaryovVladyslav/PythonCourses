@@ -2,6 +2,95 @@
 
 ![](http://memesmix.net/media/created/lm6uyu.jpg)
 
+Для такой же проверки для класс бейз вью используется LoginRequiredMixin.
+Почитать [Тут](http://ccbv.co.uk/projects/Django/2.2/django.contrib.auth.mixins/LoginRequiredMixin/)
+
+Для этого наследуемся от него тоже.
+
+Например вот так
+
+```python
+from .forms import MyForm
+from django.views.generic import FormView
+from django.contrib.auth.mixins import LoginRequiredMixin
+
+
+class MyFormView(LoginRequiredMixin, FormView):
+    template_name = 'index.html'
+    http_method_names = ['get', 'post']
+    form_class = MyForm
+    success_url = '/'
+    login_url = '/login/'
+```
+
+Теперь нельзя попасть на страницу обрабатываемую этим классом, если пользователь не залогинен. В случае если он не
+залогинен, он будет перекинут на страницу указанную в атрибуте `login_url`.
+
+
+# Переходим к CCBV
+
+Описывать действия при помощи методов конечно же можно, но более комплексным и готовым решением является использование
+встроенных классов
+
+Все основные существующие классы описаны [Тут](https://ccbv.co.uk/)
+
+Мы будем рассматривать часть этих классов на занятии, еще часть на самостоятельное изучение.
+
+Начнём с класса `FormView`
+
+Если открыть вот [эту](https://ccbv.co.uk/projects/Django/2.2/django.views.generic.edit/FormView/) ссылку, то можно
+увидеть все встроенные системы этого класса и все зависимости.
+
+Но, как этим пользоваться?
+
+`views.py`
+
+Если заменить код во вью на вот такой:
+
+```python
+from .forms import MyForm
+from django.views.generic import FormView
+
+
+class MyFormView(FormView):
+    template_name = 'index.html'
+    http_method_names = ['get', 'post']
+    form_class = MyForm
+    success_url = '/'
+```
+
+И переписать урл на
+
+```python
+path('', MyFormView.as_view()),
+```
+
+Этого будет уже достаточно, для отрисовки и обработки формы
+
+В любой стандартной Class-base view есть метод `dispatch` который отвечает за обработку запросов, если он не
+переопределен, то изначально, он выполняет действия по запросу, описанные в методе, с таким же названием, как и у http
+метода.
+
+```python
+class MyFormView(FormView):
+    template_name = 'index.html'
+    http_method_names = ['get', 'post']
+    form_class = MyForm
+    success_url = '/'
+
+    def get(self, request, *args, **kwargs):
+        print('GET REQUEST')
+        return super().get(request, *args, **kwargs)
+
+    def post(self, request, *args, **kwargs):
+        print('POST REQUEST')
+        return super().post(request, *args, **kwargs)
+```
+
+**Любой метод можно переписать!** Лучше практикой считается переписывание только тех методов которые вам нужны, с
+вызовом супера, для этого метода (Но бывают случаи, когда логика требует другого, и это тоже нормально)
+
+
 Теперь когда мы знаем, что любое отображение можно сделать при помощи классов, давайте познакомимся с использованием
 классов, для любых нужных нам задач.
 
