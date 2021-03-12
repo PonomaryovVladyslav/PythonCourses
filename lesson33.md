@@ -130,6 +130,8 @@ f.save()
 
 ## Class View
 
+[Дока](https://ccbv.co.uk/projects/Django/3.1/django.views.generic.base/View/)
+
 Основой всех классов используемых во `view` является класс `View`, методы этого класса используются всеми остальными
 классами.
 
@@ -204,6 +206,8 @@ path('some-url/', MyView.as_view(), name='some-name')
 
 ## Class TemplateView
 
+[Дока](https://ccbv.co.uk/projects/Django/3.1/django.views.generic.base/TemplateView/)
+
 Класс необходимый для рендера html файлов
 
 Основные атрибуты:
@@ -260,6 +264,8 @@ class HomePageView(TemplateView):
 
 ## Class RedirectView
 
+[Дока](https://ccbv.co.uk/projects/Django/3.1/django.views.generic.base/RedirectView/)
+
 Класс необходимый, что бы перенаправлять запросы с одного url на другой.
 
 Основные атрибуты:
@@ -290,6 +296,8 @@ class ArticleRedirectView(RedirectView):
 ```
 
 ## Class DetailView
+
+[Дока](https://ccbv.co.uk/projects/Django/3.1/django.views.generic.detail/DetailView/)
 
 Класс, который необходим для того что бы сделать страницу для просмотра одного объекта.
 
@@ -353,6 +361,8 @@ model = None  # класс модели, если не указан queryset, с
 
 ## Class ListView
 
+[Дока](https://ccbv.co.uk/projects/Django/3.1/django.views.generic.list/ListView/)
+
 Класс, необходимый для отображения списка объектов.
 
 Добавляет в контекст список объектов и информацию о пагинации.
@@ -367,6 +377,8 @@ class CommentListView(ListView):
 ```
 
 ### Пагинация
+
+[Дока](https://docs.djangoproject.com/en/3.1/topics/pagination/)
 
 Очень часто наше приложение хранит большое кол-во данных, и при отображении нам не нужно показывать прям всё (допустим у
 нас блог на 1000000000 статей), для выдачи данных порциями, это и называется пагинация, или разбиение на страницы.
@@ -418,6 +430,8 @@ ordering = None  # явно указать ордеринг
 
 ## Class FormView
 
+[Дока](https://ccbv.co.uk/projects/Django/3.1/django.views.generic.edit/FormView/)
+
 Не все классы предназначены только для чтения данных.
 
 FormView класс необходимый для обработки формы.
@@ -460,14 +474,12 @@ class ContactView(FormView):
 
 В contact.html:
 
-```python
-< form
-method = "post" > { % csrf_token %}
-{{form.as_p}}
-< input
-type = "submit"
-value = "Send message" >
-< / form >
+```html
+
+<form method="post"> {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Send message">
+</form>
 ```
 
 Важные параметры:
@@ -511,8 +523,9 @@ def post(self, request, *args, **kwargs):
 
 `get_success_url` - Переопределить генерацию урла на который будет совершен переход если форма валидна
 
-
 ## Class CreateView
+
+[Дока](https://ccbv.co.uk/projects/Django/3.1/django.views.generic.edit/CreateView/)
 
 Класс для создания объектов.
 
@@ -524,6 +537,7 @@ def post(self, request, *args, **kwargs):
 from django.views.generic.edit import CreateView
 from myapp.models import Author
 
+
 class AuthorCreate(CreateView):
     template_name = 'author_create.html'
     model = Author
@@ -533,486 +547,181 @@ class AuthorCreate(CreateView):
 В author_create.html
 
 ```html
+
 <form method="post">{% csrf_token %}
     {{ form.as_p }}
     <input type="submit" value="Save">
 </form>
 ```
 
+В класс нужно передать либо ModelForm, либо модель и поля, что бы класс сам сгенерировал такую форму.
 
-# Переходим к CCBV
+Метод `get` откроет страницу, на которой будет переменая `form`, как и другие view, к которым добавляется форма.
 
-Описывать действия при помощи методов конечно же можно, но более комплексным и готовым решением является использование
-встроенных классов
+Метод `post` выполнит те же действия, что и FormView, но в случае валидности формы, предварительно
+выполнит `form.save()`
 
-Мы будем рассматривать часть этих классов на занятии, еще часть на самостоятельное изучение.
+Важные параметры:
 
-Начнём с класса `FormView`
-
-Если открыть вот [эту](https://ccbv.co.uk/projects/Django/2.2/django.views.generic.edit/FormView/) ссылку, то можно
-увидеть все встроенные системы этого класса и все зависимости.
-
-Но, как этим пользоваться?
-
-`views.py`
-
-Если заменить код во вью на вот такой:
+Такие же, как у FormView и еще свои
 
 ```python
-from .forms import MyForm
-from django.views.generic import FormView
-
-
-class MyFormView(FormView):
-    template_name = 'index.html'
-    http_method_names = ['get', 'post']
-    form_class = MyForm
-    success_url = '/'
+form_class = None  # Должен принимать ModelForm
+model = None  # Можно указать модель вместо формы, что бы сгенерировать её на ходу
+fields = None  # Поля модели, если не указана форма
 ```
 
-И переписать урл на
+Важные методы:
+
+Все методы из FormView, но дополненные под создание объкта:
+
+`post` - предварительно добавит классу атрибут `self.object = None`
+
+`form_valid` - дополнительно выполнит такую строку `self.object = form.save()`
+
+# Class UpdateView
+
+[Дока](https://ccbv.co.uk/projects/Django/3.1/django.views.generic.edit/UpdateView/)
+
+Класс для обновления объекта, как пользоваться:
+
+Во views.py:
 
 ```python
-path('', MyFormView.as_view()),
+from django.views.generic.edit import UpdateView
+from myapp.models import Author
+
+
+class AuthorUpdate(UpdateView):
+    model = Author
+    fields = ['name']
+    template_name_suffix = '_update_form'
 ```
 
-Этого будет уже достаточно, для отрисовки и обработки формы
-
-В любой стандартной Class-base view есть метод `dispatch` который отвечает за обработку запросов, если он не
-переопределен, то изначально, он выполняет действия по запросу, описанные в методе, с таким же названием, как и у http
-метода.
-
-```python
-class MyFormView(FormView):
-    template_name = 'index.html'
-    http_method_names = ['get', 'post']
-    form_class = MyForm
-    success_url = '/'
-
-    def get(self, request, *args, **kwargs):
-        print('GET REQUEST')
-        return super().get(request, *args, **kwargs)
-
-    def post(self, request, *args, **kwargs):
-        print('POST REQUEST')
-        return super().post(request, *args, **kwargs)
-```
-
-**Любой метод можно переписать!** Лучше практикой считается переписывание только тех методов которые вам нужны, с
-вызовом супера, для этого метода (Но бывают случаи, когда логика требует другого, и это тоже нормально)
-
-Теперь когда мы знаем, что любое отображение можно сделать при помощи классов, давайте познакомимся с использованием
-классов, для любых нужных нам задач.
-
-## TemplateView
-
-Дока [Тут](https://ccbv.co.uk/projects/Django/3.0/django.views.generic.base/TemplateView/)
-
-TemplateView это класс который нужен для того, что бы отрендерить html страницу, без дополнительных действий.
-
-Принимает следующие параметры:
-
-content_type = None
-
-extra_context = None
-
-http_method_names = ['get', 'post', 'put', 'patch', 'delete', 'head', 'options', 'trace']
-
-response_class = <class 'django.template.response.TemplateResponse'>
-
-template_engine = None
-
-template_name = None
-
-content_type - тип контента, по умолчанию None, может быть разных типов например использоваться как файл (
-Подробнее [Тут](https://developer.mozilla.org/ru/docs/Web/HTTP/%D0%97%D0%B0%D0%B3%D0%BE%D0%BB%D0%BE%D0%B2%D0%BA%D0%B8/Content-Type))
-
-extra_content - None или словарь, всё что описано в этом словаре, будет автоматически добавлено в контент.
-
-http_method_names - список http методов
-
-response_class - класс отвечающий за респонс, по умолчанию стандартный джанго темплейт класс
-
-template_engine - "движок" темплейтов, по умолчанию берется из settings.py
-
-template_name - имя шаблона который нужно отрендерить, единственный обязательный аттрибут в TemplateView
-
-### Как пользоваться?
-
-`views.py`
-
-```python
-from django.views.generic import TemplateView
-
-
-class Index(TemplateView):
-    template_name = 'index.html'
-```
-
-`urls.py`
-
-```python
-from .views import Index
-
-urlpatterns = [
-    path('', Index.as_view(), name='index'),
-]
-```
-
-`templates/index.html`
+в myapp/author_update_form.html:
 
 ```html
-Some html code
+
+<form method="post">{% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Update">
+</form>
 ```
 
-### Важные методы
+Методы и атрибуты почти полностью совпадают с CreateView, только UpdateView, перед действиями вызывает
+метод `get_object`, для получения нужного объекта, и url должен принимать `pk` для определения этого объекта
 
-def get(self, request, *args, **kwargs) - отвечает за поведение гет запроса.
+## Class DeleteView
 
-## RedirectView
+[Дока](https://ccbv.co.uk/projects/Django/3.1/django.views.generic.edit/DeleteView/)
 
-Дока [тут](https://ccbv.co.uk/projects/Django/3.0/django.views.generic.base/RedirectView/)
+Класс для удаления обхектов.
 
-RedirectView - класс отвечающий за перенаправление запроса
+Как пользоваться?
 
-http_method_names = ['get', 'post', 'put', 'patch', 'delete', 'head', 'options', 'trace']
-
-pattern_name = None
-
-permanent = False
-
-query_string = False
-
-url = None
-
-pattern_name - имя урла на который вы хотите перенаправить запрос
-
-url - сам урл куда вы хотите перенаправить запрос. Работает только одно из двух. url выше по приоритету, чем
-pattern_name
-
-query_string - булеан, хотите ли вы сохранение квери параметры при редиректе.
-
-permanent - хотите ли вы сделать редирект перманентным (подробности [тут](https://realpython.com/django-redirects/))
-
-### Как пользоваться?
-
-`views.py`
+Во views.py:
 
 ```python
-from django.views.generic import RedirectView
+from django.urls import reverse_lazy
+from django.views.generic.edit import DeleteView
+from myapp.models import Author
 
 
-class Redirect(RedirectView):
-    pattern_name = 'index'
-    query_string = True
+class AuthorDelete(DeleteView):
+    model = Author
+    success_url = reverse_lazy('author-list')
 ```
 
-`urls.py`
+В html:
 
-```python
-from .views import Index
+```html
 
-urlpatterns = [
-    path('', Index.as_view(), name='index'),
-    path('wrong/', Redirect.as_view(), name='wrong'),
-]
+<form method="post">{% csrf_token %}
+    <p>Are you sure you want to delete "{{ object }}"?</p>
+    <input type="submit" value="Confirm">
+</form>
 ```
 
-### Важные методы
+Не принимает форму! Принимает модель или кверисет, и обязательно url должен принимать идентификатор, для определения
+объекта
 
-def get(self, request, *args, **kwargs) - отвечает за поведение гет запроса.
+## Class LoginView
 
-Все остальные методы будут ссылаться на гет.
+Класс реализующий логику логина.
 
-## CreateView
+Основан на FormView, если форма не была заменена, то по умолчанию
+использует `django.contrib.auth.forms.AuthenticationForm`, эта форма содержит два поля, `username` и `password`,
+проверяет, что данные валидны, и в случае если данные валидны и пользователь активен, добавляет пользователя в объект
+формы.
 
-CreateView - класс отвечающий за создание объектов.
-
-Важные параметры.
-
-fields = None
-
-form_class = None
-
-initial = {}
-
-model = None
-
-success_url = None
-
-template_name = None
-
-Если не определить моделформу, то такой класс сгенерирует её автоматически из полей `fields` и `model`
-
-fields - список полей из модели
-
-model - модель
-
-form_class - класс моделформы (Или указываем её, или филдс и модель)
-
-initial - указать предварительно подготовленные данные
-
-success_url - урл на который нужно перейти в случае успеха
-
-template_name - имя шаблона, который нужно отрендерить, в случае если это поле не указано, автоматически будет
-произведён поиск в (<app_name>/<model_name>_<template_name_suffix>.html)
-
-Если вы не переопределяли `template_name_suffix` (по умолчанию `_form`), приложение называется `blog`, а
-модель `comment` то поиск будет произведён в `templates/blog/comment_form.html`
-
-Добавляет в контекст переменную `form`
-
-### Как пользоваться?
-
-Если у вас есть модель Comment и урл '/comments'
-
-`forms.py`
+Так же в LoginView переписан метод form_valid:
 
 ```python
-class CommentCreateForm(ModelForm):
+def form_valid(self, form):
+    """Security check complete. Log the user in."""
+    auth_login(self.request, form.get_user())
+    return HttpResponseRedirect(self.get_success_url())
+```
+
+Если форма валидна, то провести авторизацию.
+
+## Class LogougView
+
+Класс для логаута.
+
+У LogoutView, переписан метод `dispatch`, так что каким бы методом вы не обратились к классу, вы всё равно будете
+разлогинены.
+
+## Регистрация
+
+По сути регистрация, это CreateView со своими особенностями (пароль хешируется), поэтому для регистрации используют
+просто CreateView, и существует заранее описанная форма UserCreationForm
+
+```python
+class UserCreationForm(forms.ModelForm):
+    """
+    A form that creates a user, with no privileges, from the given username and
+    password.
+    """
+    error_messages = {
+        'password_mismatch': _("The two password fields didn't match."),
+    }
+    password1 = forms.CharField(label=_("Password"),
+                                widget=forms.PasswordInput)
+    password2 = forms.CharField(label=_("Password confirmation"),
+                                widget=forms.PasswordInput,
+                                help_text=_("Enter the same password as above, for verification."))
+
     class Meta:
-        model = Comment
-        fields = ['text', 'author', 'article']
+        model = User
+        fields = ("username",)
+
+    def clean_password2(self):
+        password1 = self.cleaned_data.get("password1")
+        password2 = self.cleaned_data.get("password2")
+        if password1 and password2 and password1 != password2:
+            raise forms.ValidationError(
+                self.error_messages['password_mismatch'],
+                code='password_mismatch',
+            )
+        return password2
+
+    def save(self, commit=True):
+        user = super(UserCreationForm, self).save(commit=False)
+        user.set_password(self.cleaned_data["password1"])
+        if commit:
+            user.save()
+        return user
 ```
 
-`views.py`
+Принимает `username` и два раза пароль, проверяет, что бы пароли были одинаковые, и при сохранении записывает пароль в
+хешированном виде.
 
-```python
-class CommentCreateView(CreateView):
-    model = Comment
-    form_class = CommentCreateForm
-    success_url = '/comments'
-```
+## LoginRequiredMixin
 
-`urls.py`
+Если необходимо закрыть доступ для не залогиненых юзеров от какого либо из классов, то используют `LoginRequiredMixin`,
 
-```python
-from django.urls import include, path
-from .views import CommentCreateView
-
-urlpatterns = [
-    path('comment_create/', CommentCreateView.as_view(), name='comment_create'),
-]
-```
-
-### Важные методы
-
-def get(self, request, *args, **kwargs) - отвечает за поведение гет запроса.
-
-def post(self, request, *args, **kwargs) - отвечает за поведение пост и пут запросов.
-
-def get_context_data(self, **kwargs) - отвечает за добавление контекста к реквесту.
-
-def form_valid(self, form) - отвечает за поведение если форма валидна.
-
-def form_invalid(self, form) - отвечает за поведение если форма не валидна.
-
-def get_success_url(self) - определение урла после выполнения действия.
-
-## UpdateView
-
-UpdateView - класс отвечающий за обновление объектов.
-
-Те же поля что и у криэйт вью и новые.
-
-У апдейт вью, обязательным параметром в урле, обязательно нужно передавать уникальный идентификатор.
-
-Важные параметры.
-
-pk_url_kwarg = 'pk'
-
-queryset = None
-
-slug_field = 'slug'
-
-slug_url_kwarg = 'slug'
-
-pk_url_kwarg - имя для уникального идентификатора, по умолчанию `pk`
-
-queryset - кверисет которым можно ограничить объекты (например, убрать из возможности обновления деактивированные
-объекты)
-
-slug_field - название аттрибута слага в модели.
-
-slug_url_kwarg - филд для слага в урле, не обязательный, но если не указан pk джанго попытается найти объект по слагу
-
-### Как пользоваться?
-
-Если у вас есть модель Article и урл '/'
-
-`views.py`
-
-```python
-
-class ArticleUpdateView(UpdateView):
-    model = Article
-    template_name = 'article_update.html'
-    success_url = '/'
-    fields = ['name', 'text', 'author']
-```
-
-`urls.py`
-
-```python
-from django.urls import include, path
-from .views import ArticleUpdateView
-
-urlpatterns = [
-    path('article_update/<int:pk>/', ArticleUpdateView.as_view(), name='article_update'),
-]
-```
-
-Обратите внимание, в этот раз мы не использовали моделформу, она будет сгенерирована автоматически.
-
-### Важные методы
-
-Такие-же как и у криэйт вью и новые
-
-def get_object(self, queryset=None), метод отвечающий за получение объекта модели.
-
-## DeleteView
-
-DeleteView - класс отвечающий за удаление объектов.
-
-Работает по тому же принципу, что и апдейт вью, но не воспринимает форму.
-
-### Как пользоваться?
-
-Если у вас есть модель Article и урл '/'
-
-`views.py`
-
-```python
-class ArticleDeleteView(DeleteView):
-    model = Article
-    template_name = 'article_delete.html'
-    success_url = '/'
-```
-
-`urls.py`
-
-```python
-from django.urls import include, path
-from .views import ArticleDeleteView
-
-urlpatterns = [
-    path('article_delete/<int:pk>/', ArticleDeleteView.as_view(), name='article_delete'),
-]
-```
-
-Обратите внимание, форма или даже филды не указанны вообще.
-
-### Важные методы
-
-Совпадают с апдейт вью.
-
-## DetailView
-
-DetailView - класс отвечающий за отображение одного объекта.
-
-Те же поля, что и у делит вью, так же не принимает форму, добавляет объект в контекст.
-
-У дитейл вью, обязательным параметром в урле, обязательно нужно передавать уникальный идентификатор.
-
-### Как пользоваться?
-
-Если у вас есть модель Article и урл '/'
-
-`views.py`
-
-```python
-class ArticleDetailView(DetailView):
-    model = Article
-```
-
-`urls.py`
-
-```python
-from django.urls import include, path
-from .views import ArticleDetailView
-
-urlpatterns = [
-    path('article_detail/<int:pk>/', ArticleDetailView.as_view(), name='article_detail'),
-]
-```
-
-При такой записи, обязательно должна существовать html (templates/app_name/article_detail.html)
-
-### Важные методы
-
-Совпадают с апдейт вью.
-
-## ListView
-
-ListView - класс отвечающий за отображение списка объектов.
-
-Те же поля, что и у дитейл вью, так же не принимает форму, добавляет список объектов и не только в контекст.
-
-Важные поля.
-
-allow_empty = True, разрешить ли отображать пустой список
-
-model = None , модель
-
-ordering = None, ордеринг (правило сортировки)
-
-page_kwarg = 'page' (поле в квери параметре которое отвечает за-то какую страницу отобразить)
-
-paginate_by = None (нужно ли разбивать данные по страницам, если да, то по сколько именно, принимает число)
-
-paginator_class = <class 'django.core.paginator.Paginator'>    , класс отвечающий за пагинацию
-
-queryset = None, кверисет перебираемых объектов.
-
-### Как пользоваться?
-
-Если у вас есть модель Comment
-
-`views.py`
-
-```python
-class CommentListView(ListView):
-    model = Comment
-    paginate_by = 10
-    template_name = 'comments_list.html'
-    queryset = Comment.objects.filter(parent__isnull=True)
-```
-
-`urls.py`
-
-```python
-from .views import CommentListView
-
-urlpatterns = [
-    path('comments/', CommentListView.as_view(), name='comments'),
-]
-```
-
-### Важные методы
-
-def get(self, request, *args, **kwargs) - отвечает за поведение гет запроса.
-
-def get_ordering(self) - отвечает за ордеринг
-
-def get_paginator(self, queryset, per_page, orphans=0, allow_empty_first_page=True, **kwargs) - отвечает за объет
-пагинции
-
-def paginate_queryset(self, queryset, page_size): пагинирует кверисет, если это необходимо.
-
-def get_paginate_by(self, queryset): отвечает за размер страницы при пагинации итд...
-
-### Практика и еще раз практика!
-
-# Выдача задания на модуль!
-
-## Задание должно быть выполнено через Class Base View!!
-
-Для такой же проверки для класс бейз вью используется LoginRequiredMixin.
-Почитать [Тут](http://ccbv.co.uk/projects/Django/2.2/django.contrib.auth.mixins/LoginRequiredMixin/)
-
-Для этого наследуемся от него тоже.
-
-Например вот так
+При наследовании его необходимо указать перед основным классом. Например:
 
 ```python
 from .forms import MyForm
@@ -1028,5 +737,466 @@ class MyFormView(LoginRequiredMixin, FormView):
     login_url = '/login/'
 ```
 
-Теперь нельзя попасть на страницу обрабатываемую этим классом, если пользователь не залогинен. В случае если он не
-залогинен, он будет перекинут на страницу указанную в атрибуте `login_url`.
+Добавляет в класс аттрибут `login_url` который определяет куда нужно перейти, если пользователь пытается получить
+доступ, но он не авторизирован.
+
+## Живой пример
+
+Допустим нам нужен сайт, на котором можно зарегистрироваться, залогинится, разлогинится и написать заметку, если ты
+залогинен. Заметки должны отображаться списком, последняя созданная, отображается первой. Все пользователи видят все
+заметки, возле тех которые создал текущий пользователь, должна быть кнопка удалить.
+
+Как это сделать?
+
+Разработка всегда начинается с описания моделей, нам нужно две сущности, юзер и заметка.
+
+Мы не будем изменять юзера, нам подходит стандартный.
+
+Создадим модель заметки:
+
+В models.py:
+
+```python
+from django.contrib.auth.models import User
+from django.db import models
+
+
+# Create your models here.
+class Note(models.Model):
+    text = models.CharField(max_length=100)
+    created_at = models.DateTimeField(auto_now=True)
+    author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='notes')
+
+    class Meta:
+        ordering = ['-created_at', ]
+```
+
+Не забываем про миграции, и про добавление приложения в settings.py
+
+Создадим необходимые шаблоны: `base`, `index`, `login`, `register`. Пока пустые, заполним чуть позже.
+
+Создадим view. Для базовой страницы на которой отображается список заметок, лучше всего подходит ListView, для логина, и
+логаута, существующие классы, для регистрации CreateView.
+
+Для логина и регистрации воспользуемся готовой формой.
+
+Базовую страницу и логаут закроем от не залогиненых пользователей.
+
+Получается как-то так:
+
+Во views.py
+
+```python
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.views import LoginView, LogoutView
+from django.views.generic import ListView, CreateView
+
+from app.models import Note
+
+
+class NoteListView(LoginRequiredMixin, ListView):
+    model = Note
+    template_name = 'index.html'
+    login_url = 'login/'
+
+
+class Login(LoginView):
+    success_url = '/'
+    template_name = 'login.html'
+
+
+class Register(CreateView):
+    form_class = UserCreationForm
+    template_name = 'register.html'
+    success_url = '/'
+
+
+class Logout(LoginRequiredMixin, LogoutView):
+    next_page = '/'
+    login_url = 'login/'
+```
+
+В urls.py проекта добавим через инклюд urls.py приложения
+
+В app/urls.py:
+
+```python
+from django.urls import path
+from .views import NoteListView, Login, Logout, Register
+
+urlpatterns = [
+    path('', NoteListView.as_view(), name='index'),
+    path('login/', Login.as_view(), name='login'),
+    path('register/', Register.as_view(), name='register'),
+    path('logout/', Logout.as_view(), name='logout'),
+]
+
+```
+
+И заполним html файлы
+
+base.html
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Base</title>
+</head>
+<body>
+<div>
+    {% block content %}
+    {% endblock %}
+</div>
+</body>
+</html>
+```
+
+index.html
+
+```html
+{% extends 'base.html' %}
+
+{% block content %}
+<div>
+    <a href="{% url 'logout' %}">Logout</a>
+</div>
+{% endblock %}
+```
+
+login.html
+
+```html
+{% extends 'base.html' %}
+
+{% block content %}
+<span>Wanna register? <a href="{% url 'register' %}">Sign Up</a></span>
+
+<form method="post">
+    {% csrf_token %}
+    {{ form }}
+    <input type="submit" value="Login">
+</form>
+{% endblock %}
+```
+
+register
+
+```html
+{% extends 'base.html' %}
+
+{% block content %}
+<span>Already has account? <a href="{% url 'login' %}">Login</a></span>
+
+<form method="post">
+    {% csrf_token %}
+    {{ form }}
+    <input type="submit" value="Register">
+</form>
+{% endblock %}
+```
+
+Структура для логина, логаута, и регистрации готова.
+
+Добавим отображение списка заметок:
+
+в index.html:
+
+```html
+{% extends 'base.html' %}
+
+{% block content %}
+<div>
+    <a href="{% url 'logout' %}">Logout</a>
+</div>
+
+<div>
+    {% for obj in object_list %}
+    <div>
+        {{ obj.text }} from {{ obj.author.username }}
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}
+```
+
+Но как добавить создание заметок?
+
+Нам нужна форма для создания заметок, и CreateView
+
+В forms.py
+
+```python
+from django.forms import ModelForm
+
+from app.models import Note
+
+
+class NoteCreateForm(ModelForm):
+    class Meta:
+        model = Note
+        fields = ('text',)
+```
+
+В полях только текст, потому что время создания будет заполняться автоматически, айди тоже, а юзера мы будем брать из
+реквеста.
+
+Будем ли мы отображать отдельную страницу для создания? Нет, значит отдельный хтмл файл нам не нужен, а раз мы не будем
+отображать страницу, то и метод `get` нам не нужен. Оставим только post.
+
+Создадим CreateView:
+
+В views.py
+
+```python
+class NoteCreateView(LoginRequiredMixin, CreateView):
+    login_url = 'login/'
+    http_method_names = ['post']
+    form_class = NoteCreateForm
+    success_url = '/'
+```
+
+B выведем урл под этот класс:
+
+В urls.py
+
+```python
+from django.urls import path
+from .views import NoteListView, Login, Logout, Register, NoteCreateView
+
+urlpatterns = [
+    path('', NoteListView.as_view(), name='index'),
+    path('login/', Login.as_view(), name='login'),
+    path('register/', Register.as_view(), name='register'),
+    path('logout/', Logout.as_view(), name='logout'),
+    path('note/create/', NoteCreateView.as_view(), name='note-create'),
+]
+```
+
+Достаточно ли этого, что бы создавать заметки? Нет, потому что мы никуда не вывели форму для создания заметок. Давайте
+выведем её на нашу основную страницу.
+
+Во views.py изменим класс `NoteListView`, добавив аттрибут `extra_context = {'create_form': NoteCreateForm()}`
+
+```python
+class NoteListView(LoginRequiredMixin, ListView):
+    model = Note
+    template_name = 'index.html'
+    login_url = 'login/'
+    extra_context = {'create_form': NoteCreateForm()}
+```
+
+Теперь мы можем вывести форму в шаблоне, изменим `index.html`
+
+```html
+{% extends 'base.html' %}
+
+{% block content %}
+<div>
+    <a href="{% url 'logout' %}">Logout</a>
+</div>
+
+<div>
+    {% for obj in object_list %}
+    <div>
+        {{ obj.text }} from {{ obj.author.username }}
+    </div>
+    {% endfor %}
+</div>
+<form method="post" action="{% url 'note-create' %}">
+    {% csrf_token %}
+    {{ create_form }}
+    <input type="submit" value="Create">
+</form>
+{% endblock %}
+```
+
+Достаточно ли этого? Нет. Наша заметка должна хранить в себе пользователя, а мы нигде его не добавляем. при попытке
+вызвать `save()` мы получим ошибку, не могу сохранить без юзера.
+
+Что будем делать? Переписывать логику `form_valid`, мы знаем, что метод `save()` для CreateView вызывается там.
+
+Что бы добавить пользователя, будем использовать `commit=False` для ModelForm, а пользователя возьмем из реквеста.
+
+Перепишем класс NoteCreateView:
+
+Во views.py:
+
+```python
+class NoteCreateView(LoginRequiredMixin, CreateView):
+    login_url = 'login/'
+    http_method_names = ['post']
+    form_class = NoteCreateForm
+    success_url = '/'
+
+    def form_valid(self, form):
+        obj = form.save(commit=False)
+        obj.author = self.request.user
+        obj.save()
+        return super().form_valid(form=form)
+```
+
+Обратите внимание после успеха, мы попадаем обратно на `/` (success_url) где мы сразу же увидим новую заметку.
+
+Создание готово.
+
+Как добавим удаление? Создадим новую DeleteView, она даже не требует форму.
+
+Во views.py
+
+```python
+class NoteDeleteView(LoginRequiredMixin, DeleteView):
+    model = Note
+    success_url = '/'
+```
+
+Не забываем добавить url
+
+В urls.py:
+
+```python
+from django.urls import path
+from .views import NoteListView, Login, Logout, Register, NoteCreateView, NoteDeleteView
+
+urlpatterns = [
+    path('', NoteListView.as_view(), name='index'),
+    path('login/', Login.as_view(), name='login'),
+    path('register/', Register.as_view(), name='register'),
+    path('logout/', Logout.as_view(), name='logout'),
+    path('note/create/', NoteCreateView.as_view(), name='note-create'),
+    path('note/delete/<int:pk>/', NoteDeleteView.as_view(), name='note-delete'),
+]
+```
+
+И добавляем форму, для удаления в шаблон.
+
+В index.html:
+
+```html
+{% extends 'base.html' %}
+
+{% block content %}
+<div>
+    <a href="{% url 'logout' %}">Logout</a>
+</div>
+
+<div>
+    {% for obj in object_list %}
+    <div>
+        {{ obj.text }} from {{ obj.author.username }}
+        <form method="post" action="{% url 'note-delete' obj.pk %}">
+            {% csrf_token %}
+            <input type="submit" value="Delete">
+        </form>
+    </div>
+    {% endfor %}
+</div>
+<form method="post" action="{% url 'note-create' %}">
+    {% csrf_token %}
+    {{ create_form }}
+    <input type="submit" value="Create">
+</form>
+{% endblock %}
+```
+
+Это уже будет работать. Но нам же нужно, что бы кнопка удалять была только у своих заметок. Ок добавим `if`.
+
+```html
+{% extends 'base.html' %}
+
+{% block content %}
+<div>
+    <a href="{% url 'logout' %}">Logout</a>
+</div>
+
+<div>
+    {% for obj in object_list %}
+    <div>
+        {{ obj.text }} from {{ obj.author.username }}
+        {% if obj.author == request.user %}
+        <form method="post" action="{% url 'note-delete' obj.pk %}">
+            {% csrf_token %}
+            <input type="submit" value="Delete">
+        </form>
+        {% endif %}
+    </div>
+    {% endfor %}
+</div>
+<form method="post" action="{% url 'note-create' %}">
+    {% csrf_token %}
+    {{ create_form }}
+    <input type="submit" value="Create">
+</form>
+{% endblock %}
+```
+
+Осталась маленькая деталь, сейчас мы отображаем все существующие заметки, а что если их будет миллион? это не
+рационально, давайте добавим пагинацию.
+
+ListView уже передаёт все необходимые данные, нам нужно только добавить размер страницы, и добавить отображение по
+страницам в шаблоне.
+
+Во views.py изменим NoteListView
+
+```python
+class NoteListView(LoginRequiredMixin, ListView):
+    model = Note
+    template_name = 'index.html'
+    login_url = 'login/'
+    extra_context = {'create_form': NoteCreateForm()}
+    paginate_by = 5
+```
+
+А в index.html:
+
+```html
+{% extends 'base.html' %}
+
+{% block content %}
+    <div>
+        <a href="{% url 'logout' %}">Logout</a>
+    </div>
+
+    <div>
+        {% for obj in page_obj %} {# обратите внимание я заменил объект #}
+            <div>
+                {{ obj.text }} from {{ obj.author.username }}
+                {% if obj.author == request.user %}
+                    <form method="post" action="{% url 'note-delete' obj.pk %}">
+                        {% csrf_token %}
+                        <input type="submit" value="Delete">
+                    </form>
+                {% endif %}
+            </div>
+        {% endfor %}
+        <div class="pagination">
+    <span class="step-links">
+        {% if page_obj.has_previous %}
+            <a href="?page=1">&laquo; first</a>
+            <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+        </span>
+
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}">next</a>
+            <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+        {% endif %}
+    </span>
+        </div>
+    </div>
+    <form method="post" action="{% url 'note-create' %}">
+        {% csrf_token %}
+        {{ create_form }}
+        <input type="submit" value="Create">
+    </form>
+{% endblock %}
+
+
+```
+
+Профит! Всё работает. Переходим к заданию на модуль. Все задания должны быть выполнены через Class Based View.
