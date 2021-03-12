@@ -647,6 +647,8 @@ class AuthorDelete(DeleteView):
 
 ## Class LoginView
 
+[Дока](https://ccbv.co.uk/projects/Django/3.1/django.contrib.auth.views/LoginView/)
+
 Класс реализующий логику логина.
 
 Основан на FormView, если форма не была заменена, то по умолчанию
@@ -665,7 +667,9 @@ def form_valid(self, form):
 
 Если форма валидна, то провести авторизацию.
 
-## Class LogougView
+## Class LogoutView
+
+[Дока](https://ccbv.co.uk/projects/Django/3.1/django.contrib.auth.views/LogoutView/)
 
 Класс для логаута.
 
