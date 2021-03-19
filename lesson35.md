@@ -29,8 +29,8 @@ MIDDLEWARE = [
 
 Каждая из этих строк, это отдельная мидлварина, и абсолютно **каждый** реквест проходит через код описанный в этих
 файлах, например `django.contrib.auth.middleware.AuthenticationMiddleware` отвечает за то, что бы в нашем реквесте
-всегда был пользователь если он залогинен, а `django.middleware.csrf.CsrfViewMiddleware` отвечает за CSRF токены,
-которые мы рассматривали ранее.
+всегда был пользователь если он залогинен, а `django.middleware.csrf.CsrfViewMiddleware` отвечает за проверку наличия и
+правильности CSRF токена, которые мы рассматривали ранее.
 
 Причём при "входе" реквест будет проходить сверху вниз (Сначала секьюрити, потом сессии итд), а при "выходе" снизу
 вверх (начиная с XFrame, заканчивая Security)
@@ -125,9 +125,9 @@ MIDDLEWARE = [
 django.utils.deprecation.MiddlewareMixin
 ```
 
-В нём уже расписан методы `__init__` и `__call__`
+В нём уже расписаны методы `__init__` и `__call__`
 
-Инит принимает метод для обработки реквеста, а в вызове расписанны методы для обработки ревеста или респонса.
+Инит принимает метод для обработки реквеста, а в вызове расписаны методы для обработки ревеста или респонса.
 
 Метод колл вызывает 4 действия:
 
@@ -165,8 +165,8 @@ class AuthenticationMiddleware(MiddlewareMixin):
         request.user = SimpleLazyObject(lambda: get_user(request))
 ```
 
-Всё что тут описанно, это что делать при реквесте, добавить реквесту юзера, то при помощи какой магии это работает, мы
-рассмотрим на следующей лекции.
+Всё что тут описано, это что делать при реквесте, добавить реквесту юзера, информация о котором как мы помним, хранится
+в сессии.
 
 ## Signals
 
@@ -294,7 +294,7 @@ and `django.contrib.messages.middleware.MessageMiddleware`.
 `django.template.context_processors.debug` - Если в `settings.py` переменная `DEBUG`==`True` добавляет в темплейт
 информацию о подробностях, если произошла ошибка
 
-`django.template.context_processors.request` - Добавляет в контекст данные из реквеста, в переменную `request`.
+`django.template.context_processors.request` - Добавляет в контекст данные из реквеста, переменная `request`.
 
 `django.contrib.auth.context_processors.auth` - Добавляет переменную `user` с информацией о пользователе.
 
@@ -339,6 +339,8 @@ messages.add_message(request, messages.INFO, 'Hello world.')
 Метод `add_message` позволяет добавить сообщение к реквесту, принимает сам реквест, тип сообщения (успех, провал
 информация итд.), и сам текст сообщения. На самом деле второй параметр это просто цифра, а текст добавлен для чтения.
 
+Чаще всего используется в методах **form_valid**, **form_invalid**
+
 #### Сокращенные методы
 
 ```python
@@ -354,7 +356,8 @@ messages.error(request, 'Document deleted.')
 
 ### Как отобразить
 
-Контекст процессор, который находится в настройках уже добавляет нам в темплейт переменную `messages`, а дальше мы можем использовать классические темплейт теги
+Контекст процессор, который находится в настройках уже добавляет нам в темплейт переменную `messages`, а дальше мы можем
+использовать классические темплейт теги
 
 Примеры:
 
@@ -362,7 +365,9 @@ messages.error(request, 'Document deleted.')
 {% if messages %}
 <ul class="messages">
     {% for message in messages %}
-    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+    <li
+            {% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}
+    </li>
     {% endfor %}
 </ul>
 {% endif %}
@@ -372,7 +377,8 @@ messages.error(request, 'Document deleted.')
 {% if messages %}
 <ul class="messages">
     {% for message in messages %}
-    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>
+    <li
+            {% if message.tags %} class="{{ message.tags }}" {% endif %}>
         {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}Important: {% endif %}
         {{ message }}
     </li>
@@ -385,7 +391,8 @@ messages.error(request, 'Document deleted.')
 
 #### Использование во view
 
-Если нам вдруг необходимо получить список текущих сообщение во view, мы можем это сделать, при помощи метода `get_messages`
+Если нам вдруг необходимо получить список текущих сообщение во view, мы можем это сделать, при помощи
+метода `get_messages`
 
 ```python
 from django.contrib.messages import get_messages
@@ -404,6 +411,7 @@ from django.contrib.messages.views import SuccessMessageMixin
 from django.views.generic.edit import CreateView
 from myapp.models import Author
 
+
 class AuthorCreate(SuccessMessageMixin, CreateView):
     model = Author
     success_url = '/success/'
@@ -414,6 +422,7 @@ class AuthorCreate(SuccessMessageMixin, CreateView):
 from django.contrib.messages.views import SuccessMessageMixin
 from django.views.generic.edit import CreateView
 from myapp.models import ComplicatedModel
+
 
 class ComplicatedCreate(SuccessMessageMixin, CreateView):
     model = ComplicatedModel
@@ -426,3 +435,11 @@ class ComplicatedCreate(SuccessMessageMixin, CreateView):
             calculated_field=self.object.calculated_field,
         )
 ```
+
+Практика:
+
+1. Задания с прошлого занятия изменить так, что бы логика работала не на одной конкретной странице, а вообще на любой.
+
+2. Для прошлого задания сделать вывод текста не на странице, а при помощи `messages`
+
+3. Прошлое задание сделать не для всех страниц, а только для любых двух (на ваш выбор). 
