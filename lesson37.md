@@ -582,7 +582,6 @@ class AlbumSerializer(serializers.ModelSerializer):
     '1: Sunflower',
     '2: Whitetail',
     '3: Dinosaur Act',
-    ...
   ]
 }
 ```
@@ -608,7 +607,6 @@ class AlbumSerializer(serializers.ModelSerializer):
     89,
     90,
     91,
-    ...
   ]
 }
 ```
@@ -637,8 +635,7 @@ class AlbumSerializer(serializers.ModelSerializer):
   'tracks': [
     'http://www.example.com/api/tracks/45/',
     'http://www.example.com/api/tracks/46/',
-    'http://www.example.com/api/tracks/47/',
-    ...
+    'http://www.example.com/api/tracks/47/'
   ]
 }
 ```
@@ -660,7 +657,7 @@ class AlbumSerializer(serializers.ModelSerializer):
 
 Вернёт то, что указано в атрибуте `slug_field`
 
-```python
+```json
 {
     'album_name': 'Dear John',
     'artist': 'Loney Dear',
@@ -720,8 +717,6 @@ urlpatterns = [
    где будет написано, что вы нам подходите, или что не подходит соответсвенно.)
 
    1.1 Зайти в shell. Заполнить сериалайзер через `data=` данными. Убедиться что валидация работает в соответствии с требованиями. Прислать мне скрины.
-
-   1.2 Эти же данные передать без `data=`. Попытаться провалидировать, убедиться что получаете эксепшен.
 
 2. Создать сериалайзеры для Юзера, Покупки, Товара.
 
