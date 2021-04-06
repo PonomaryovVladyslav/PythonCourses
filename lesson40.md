@@ -4,241 +4,221 @@
 
 ## Общая информация
 
-Тестирование это огромная, нет **ОГРОМНАЯ** тема, настолько огромная, что порождает два отвельных класса сотрудников в IT индустрии.
+Тестирование это огромная, нет **ОГРОМНАЯ** тема, настолько огромная, что порождает два отдельных класса сотрудников в
+IT индустрии.
 
-### Автоматизированное и ручное тестирование
+## Виды тестирования
 
-Хорошая новость в том, что вы, вероятно, уже создавали тесты, не осознавая этого. Помните, когда вы запускали приложение и использовали его впервые? Вы проверяли функции и экспериментировали с ними? Это называется исследовательское тестирование и является формой ручного тестирования.
+![](https://qastart.by/images/speasyimagegallery/albums/2/images/-.png)
 
-Исследовательское тестирование — это форма тестирования, которая проводится без плана. В таком виде тестирования вы просто изучаете приложение.
+Таблица достаточно понятна, не будем вдаваться в детали.
 
-Чтобы получить полный набор ручных тестов, все, что вам нужно сделать, это составить список всех функций, которыми обладает ваше приложение, список различных типов входных данных, которые оно может принять, и все ожидаемые результаты. Теперь, каждый раз, когда вы будете вносите изменения в свой код, вам нужно просмотреть каждый элемент в этом списке и проверить его правильность.
+Главное, что нужно извлечь из неё, это то что тестировщики делятся на мануальных(ручных) и автоматизированных.
+
+Мануальные занимаются тем что в ручную проверяют весь доступный функционал. Автоматизаторы, пишут код для тестирования
+продукта.
+
+## Уровни тестирования
+
+![](https://habrastorage.org/storage2/ec3/825/c7f/ec3825c7f0710f9fed6814c89b794ded.jpg)
+
+Существует 4 основных уровня тестирования функционала.
+
+Модульные тесты (они же юнит) - это тесты проверяющие функционал конкретного модуля минимального размера. Если вы
+переписали метод `get_context_data`, то юнит тестом будет попытка вызвать этот метод с разными входными данными, и
+посмотреть на то, что вернёт результат.
+
+Интеграционные тесты - это вид тестирования когда проверяется целостность работы системы, без сторонних средств.
+Например, вы переписали метод `get_context_data`, выполняем запрос при помощи кода, и смотрим, изменилась ли
+переменная `context` в ответе на наш запрос.
+
+Приёмочные тесты (они же ацептанс) - Вид тестов с полной имитацией действий пользователя. При помощи специальных
+средств (например Selenium), мы прописываем код открытия браузера, поиска необходимых элементов на странице, имитация
+ввода данных, нажатие кнопок, перехода по ссылкам итд.
+
+Ручные тесты (они же мануальные) - Вид тестов, когда мы полностью повторяем потенциальные действия пользователя.
+
+### Как это вообще работает.
+
+Теоретически можно написать рабочий проект вообще без единого теста (ваш модуль тому пример). Но чем больше и сложнее
+система, тем дороже стоимость ошибки, или объем затраченного времени на поиск причины этой ошибки.
+
+В реальности даже не сильно большой проект, не может существовать без тестирования.
+
+#### Кто пишет юнит тесты
+
+Юнит тесты, это тесты конкретно написанной функции или метода. А значит что знание о там как это работает, есть только у
+разработчика, а значит пишет разработчик.
+
+`Идеальный мир` - Разработчик покрывает всё тестами.
+
+`Реальность` - Разработчик покрывает основной функционал и тонкие места тестами.
+
+`Худший случай` - Юнит тестов нет, что приводит к усложнению написания и модификации проекта в несколько раз.
+
+#### Кто пишет интеграционные тесты
+
+`Идеальный мир` - Автоматизированые тестировщики, причём вполне возможно что на другом языке программирования,
+приложения не важно кто отправляет HTTP запрос, с какой платфомы и языка.
+
+`Реальность` - Автоматизаторы если они есть, разработчики если автоматизаторов нет.
+
+`Худший случай` - Нет интеграционных тестов. Что приводит к тому, что при внедрении новых фич, можно не узнать о том,
+что сломалась старая, что приводит к тому, что функционал будет отваливаться быстрее чем разробатываться
+
+#### Кто пишет ацептанс тесты
+
+`Идеальный мир` - Всё те же автоматизаторы.
+
+`Реальность` - У кого есть время и желание, чаще всего этот вид тестирования либо игнорируется, либо выполняется когда
+уже всё остальное написано. Так же бывает когда через такой вид тестирования мануальщиков обучают и привлекают к
+автоматизации
+
+`Худший случай` - Ацептансов нет, и в случае отсутствия мануальной проверки, можно не узнать, что функционал в браузере
+больше не работает.
+
+#### Кто выполняет ручные тесты
+
+`Идеальный мир` - Мануальные тестировщики.
+
+`Реальность` - Если есть мануальные тестировщики, то они, если нет, то автоматизаторы, если и их нет, то разработчики в
+процессе разработки.
+
+`Худший случай` - Не проводятся, уверенность, что функционал работает равен нулю.
+
+### Исследовательское тестирование и планирование
+
+Хорошая новость в том, что вы, вероятно, уже создавали тесты, не осознавая этого. Помните, когда вы запускали приложение
+и использовали его впервые? Вы проверяли функции и экспериментировали с ними? Это называется исследовательское
+тестирование и является формой ручного тестирования.
+
+Исследовательское тестирование — это форма тестирования, которая проводится без плана. В таком виде тестирования вы
+просто изучаете приложение.
+
+Чтобы получить полный набор ручных тестов, все, что вам нужно сделать, это составить список всех функций, которыми
+обладает ваше приложение, список различных типов входных данных, которые оно может принять, и все ожидаемые результаты.
+Теперь, каждый раз, когда вы будете вносите изменения в свой код, вам нужно просмотреть каждый элемент в этом списке и
+проверить его правильность.
 
 Это не особо прикольно?
 
-Вот где приходит на помощь **тест план**. 
+Вот где приходит на помощь **тест план**.
 
-Тест план, это разделение вашего приложения на минимальные части и описание ожидаемой работы функционала каждой части, порядка их выполнения, и ожидаемые результаты.
+Тест план, это разделение вашего приложения на минимальные части и описание ожидаемой работы функционала каждой части,
+порядка их выполнения, и ожидаемые результаты.
 
-Если у вас есть тест план, вы можете каждый раз проходить по всем его пунктам и быть уверенным, что вы проверили всё, в случае обновления приложения, необходимо обновить и план.
+Если у вас есть тест план, вы можете каждый раз проходить по всем его пунктам и быть уверенным, что вы проверили всё, в
+случае обновления приложения, необходимо обновить и план.
 
-### Модульные (юнит) тесты против интеграционных тестов
+## Test Case
 
-Подумайте, как вы можете проверить свет в автомобиле. Вы должны включить свет (это будет называться один шаг теста (test step)), далее нужно выйти из машины или попросить друга проверить, включены ли огни (это называется утверждение теста (test assertion)). Тестирование нескольких компонентов называется интеграционным тестированием (integration testing). Основная проблема с интеграционным тестированием — это когда интеграционный тест не дает правильного результата. Иногда очень трудно диагностировать проблему, не имея возможности определить, какая часть системы вышла из строя. Если свет не включился, то, возможно сломаны лампы или разряжен аккумулятор. А как насчет генератора? Или может быть сломан компьютер машины?
+Чёткого определения у тест кейса нет. Но в общем случае, тест кейс это минимальная единица проверки чего либо.
 
-Если у вас модный современный автомобиль, он сообщит вам, когда ваши лампочки вышли из строя. Это делается с помощью модульных тестов (unit test).
-
-Модульный тест — это как правило небольшой тест, который проверяет правильность работы отдельного компонента. Модульный тест поможет вам выделить то, что сломано в вашем приложении, и быстро это исправить.
-
-Вы только что рассмотрели два типа тестов:
-
-1. Интеграционный тест, который проверяет, что компоненты в вашем приложении правильно работают друг с другом.
-2. Модульный тест (unit test), который проверяет отдельный компонент в вашем приложении.
-
-В Python вы можете написать как интеграционные, так и модульные тесты. Чтобы написать модульный тест для встроенной функции sum(), вы должны сравнить выходные данные sum() с ожидаемыми выходными данными.
-
-Например, чтобы проверить, что сумма чисел 1, 2, 3 равна 6, можно написать это:
-
-```python
-assert sum([1, 2, 3]) == 6, "Should be 6"
-```
-
-Клюевое слово `assert`, проверяет выражение на булевое значение, если выражение равно `True` то не сделает ничего, а если `False` то будет зарейжена ошибка, на этом и основанно всё тестироование в python.
-
-В нашем примере значение истина, поэтому всё будет хорошо, но если заменить на:
-
-```python
-assert sum([1, 1, 1]) == 6, "Should be 6"
-    Traceback (most recent call last):
-        File "<stdin>", line 1, in <module>
-    AssertionError: Should be 6
-```
-
-Естественно вы можете обернуть асерт в функцию или в метод, и всё это будет работать.
-
-Если набор тестов является частью одного элемента, то такой набор называется **Test Case**, если взять как пример фару автомобиля, то тест кейсом будет проверка, что лампочка целая, что провода функционируют, и что генератор работает. И при этом во всех случаях нам необходимо убедиться, что машина заведена и что мы переключили тумблер для включения фар.
-
-Тесты практически всехгда пишут в виде тест кейсов, причём разделяя модульные и интеграционные.
-
-Для запуска тестов используются так называемые `test runner`, это специальное приложение которое умеет искать и запускать тесты.
-
-Их существует достаточно много, но основные всё таки:
-
-```
-unittest
-nose или nose2
-pytest
-```
-
-unittest встроенна в python и не требует дополнительных установок, мы будем пользоваться именно им.
-
-Остальные действуют по тем же принципам с немного другим синтаксисом.
-
-Во встроенном в python модуле `unittest` есть класс `TestCase` все тесты должны быть описанны в его наследниках.
-
-Вместо обычного ассерта юниктест использует свои сразу заготовленные методы, вот некоторые из них:
-
-```python
-.assertEqual(a, b) # a == b
-
-.assertTrue(x) # bool(x) is True
-
-.assertFalse(x) #bool(x) is False
-
-.assertIs(a, b) # a is b
-
-.assertIsNone(x) # x is None
-
-.assertIn(a, b) # a in b
-
-.assertIsInstance(a, b) # isinstance(a, b)
-```
-
-Каждый тестовый метод должен начинаться со слова `test` иначе сборщик тестов его не увидит.
-
-```python
-import unittest
-
-class TestSum(unittest.TestCase):
-    def test_sum(self):
-        self.assertEqual(sum([1, 2, 3]), 6, "Should be 6")
-    def test_sum_tuple(self):
-        self.assertEqual(sum((1, 2, 2)), 6, "Should be 6")
-
-if __name__ == '__main__':
-    unittest.main()
-```
-
-Теперь если мы запустим файл в котором это написано, мы увидим следующее:
-
-```
-$ python test_sum_unittest.py
-.F
-======================================================================
-FAIL: test_sum_tuple (__main__.TestSum)
-----------------------------------------------------------------------
-Traceback (most recent call last):
-  File "test_sum_unittest.py", line 9, in test_sum_tuple
-    self.assertEqual(sum((1, 2, 2)), 6, "Should be 6")
-AssertionError: Should be 6
-----------------------------------------------------------------------
-Ran 2 tests in 0.001s
-FAILED (failures=1)
-```
-
-Один тест успешен, и один упал.
-
-### Методы setUp и tearDown
-
-Если добавить методы `setUp` и `tearDown` то код из них будет исполняться перед каждым тестом, и после кажого теста соответсвенно.
-
-```python
-import unittest
-
-class TestSum(unittest.TestCase):
-    
-    def setUp(self):
-        self.my_num = 5
-
-    def test_odd(self):
-        self.assertTrue(self.my_num % 2, "Number is odd")
-
-    def tearDown(self):
-        self.my_num += 1
-
-if __name__ == '__main__':
-    unittest.main()
-```
-
-### Пропуск тестов
-
-в пакете `unittest` есть декораторы `skip` и `skipIf`, `skipUnless`
-
-необходимы для пропуска не нужных на данном этапе тестов
-
-```
-class MyTestCase(unittest.TestCase):
-
-    @unittest.skip("demonstrating skipping")
-    def test_nothing(self):
-        self.fail("shouldn't happen")
-
-    @unittest.skipIf(mylib.__version__ < (1, 3),
-                     "not supported in this library version")
-    def test_format(self):
-        # Tests that work for only a certain version of the library.
-        pass
-
-    @unittest.skipUnless(sys.platform.startswith("win"), "requires Windows")
-    def test_windows_support(self):
-        # windows specific testing code
-        pass
-```
-
-### Запуск и поиск тестов
-
-Для запуска тестов, можно использовать встроенную команду:
-
-```
-python -m unittest <file_name>
-```
-
-Указав имя файла, или указав слово `discover`
-
-```
-python -m unittest discover
-```
-
-этот скрипт будет искать все тесты внутри всех файлов и папок в директории и запускать их.
+На практике, это чаще всего набор методов в классе проверяющий какой-либо функционал. Например в одном вьюсете
+переписано, 3 метода, тесты описывающие все проверки будут в одном тест кейсе.
 
 ## Тестирование в Django
 
-В Django есть свой собственный модуль `TestCase` который расширяет стандартный тест кейс, кому интересно чем читать [Тут](https://docs.djangoproject.com/en/3.1/topics/testing/tools/)
+Вы знаете о существовании `unittest.TestCase`, от которого нужно наследоваться, что бы создать обычный тест.
 
-```python
-from django.test import TestCase
-from myapp.models import Animal
+У него могут быть метод `setUp` и `tearDown` для описания данных которые нужно выполнить до каждого теста, и после
+соответсвенно.
 
-class AnimalTestCase(TestCase):
-    def setUp(self):
-        Animal.objects.create(name="lion", sound="roar")
-        Animal.objects.create(name="cat", sound="meow")
+И методы называющиеся со слова `test_` которые описывают сами тесты, для чего используется ключевое слово `assert` или
+основанные на нём встроенные методы.
 
-    def test_animals_can_speak(self):
-        """Animals that can speak are correctly identified"""
-        lion = Animal.objects.get(name="lion")
-        cat = Animal.objects.get(name="cat")
-        self.assertEqual(lion.speak(), 'The lion says "roar"')
-        self.assertEqual(cat.speak(), 'The cat says "meow"')
-```
+В рамках Django, есть свой собственный тест кейс, наследованный от базового `unittest.TestCase`
 
-### Запуск тестов
+![](https://docs.djangoproject.com/en/2.2/_images/django_unittest_classes_hierarchy.svg)
 
-Для запуска тестов используется менедж команда `test`
+### SimpleTestCase
 
-```python
-# Run all the tests in the animals.tests module
-$ ./manage.py test animals.tests
+`SimpleTestCase` наследуется от базового
 
-# Run all the tests found within the 'animals' package
-$ ./manage.py test animals
+#### Что добавляет?
 
-# Run just one test case
-$ ./manage.py test animals.tests.AnimalTestCase
+Добавляет `settings.py` в структуру теста и возможность переписать или изменить `settings.py` для теста.
 
-# Run just one test method
-$ ./manage.py test animals.tests.AnimalTestCase.test_animals_can_speak
-```
+Добавляет `Client` который используется для написания интеграционных тестов (через него мы будем отправлять запросы)
 
-так же можно искать все тесты в папке, например `animals`:
+Добавляет новые методы ассертов:
 
-```python
-./manage.py test animals/
-```
+`assertRedirects` - Проверка на то, что урл на который мы попали совпадает с ожидаемым.
+
+`assertContains` - Проверка на то, что страница содержит ожидаемую переменную.
+
+`assertNotContains` - Проверка на то, что страница не содержит ожидаемую переменную.
+
+`assertFormError` - Проверка на то, что форма содержит нужную ошибку.
+
+`assertFormsetError` - Проверка на то, что формсет содержит нужную ошибку.
+
+`assertTemplateUsed` - Проверка на то, что был использован ожидаемый шаблон.
+
+`assertTemplateNotUsed` - Проверка на то, что не был использован ожидаемый шаблон.
+
+`assertRaisesMessage` - Проверка на то, что на странице присутствует определённое сообщение.
+
+`assertFieldOutput` - Проверка на то, что определённое поле содержит ожидаемое значение.
+
+`assertHTMLEqual` - Проверка на то, что полученный HTML соответствует ожидаемому.
+
+`assertHTMLNotEqual` - Проверка на то, что полученный HTML не соответствует ожидаемому.
+
+`assertJSONEqual` - Проверка на то, что полученный JSON соответствует ожидаемому.
+
+`assertJSONNotEqual` - Проверка на то, что полученный JSON не соответствует ожидаемому.
+
+`assertXMLEqual` - Проверка на то, что полученный XML соответствует ожидаемому.
+
+`assertXMLNotEqual` - Проверка на то, что полученный XML не соответствует ожидаемому.
+
+### TransactionTestCase
+
+`TransactionTestCase` наследуется от SimpleTestCase
+
+#### Что добавляет?
+
+Добавляет возможность выполнять транзакции в базу данных в рамках теста.
+
+Добавляет атрибут `fixtures` для возможности загружать базовые условия теста из фикстур.
+
+Добавляет атрибут `reset_sequences` который позволяет сбрасывать последовательности для каждого теста (каждый созданный
+объект всегда будет начинаться с id=1)
+
+Добавляет новые методы ассертов:
+
+`assertQuerysetEqual` - Проверка на то, что полученный кверисет совпадает с ожидаемым.
+
+`assertNumQueries` - Проверка на то, что что выполнение функции делает определённое кол-во запросов в базу.
+
+### TestCase из модуля Django
+
+`TestCase` наследуется от TransactionTestCase
+
+#### Что добавляет?
+
+По сути ничего :) Немного по другому выполняет запросы в базу (с использованием атомарности), из-за чего
+предпочтительнее
+
+Дополнительный метод `setUpTestData`, для описания данных для теста. Не обязательный.
+
+Это самый часто используемый вид тестов.
+
+### LiveServerTestCase
+
+`LiveServerTestCase` наследуется от TransactionTestCase
+
+#### Что добавляет?
+
+Запускает реальный сервер для возможности открыть проект в браузере. Необходим для написания ацептанс тестов.
+
+Чаще всего в таких тестах, запускается сервер и имитация браузера (например Selenium)
 
 ### База данных для тестирования
 
-Для тестов используется отдельная база данных, которая будет указана в переменной `TEST` в переменной `DATABASES` в файле `settings.py`:
+Для тестов используется отдельная база данных, которая будет указана в переменной `TEST` в переменной `DATABASES` в
+файле `settings.py`:
 
 ```python
 DATABASES = {
@@ -255,41 +235,165 @@ DATABASES = {
 
 Эта база будет изначально пустая, и будет очищаться после каждого выполненного тест кейса
 
+**Ваш юзер должен иметь права на создание и очистку базы данных**
+
+### Расположение тестов
+
+Несмотря на то, что Django создаёт для нас в приложении файл `tests.py`, им практически никогда не пользуются.
+
+Существует два самых распространённых способа хранения тестов, если вам повезло и на вашем проекте есть специальные
+тестировщики. То ваша задача, это только юнит тесты.
+
+И тогда в папке приложения создаётся еще одна папка `tests` в которой уже создаются файлы для тестов различных частей,
+например `test_models.py`, `test_forms.py` итд.
+
+![](https://drive.google.com/uc?export=view&id=1E_Tf8H2spWJbSOaaxvWOMiLk4c0bgvUT)
+
+Если вам не повезло, и на проекте вы и за автотестеров, то тогда в этой же папке (`tests`) создаётся еще 3 папки `unit`
+, `integration` и `acceptance` и уже в них описываются различные тесты.
+
+### Запуск тестов
+
+Предположим, что у нас в приложении `animals`, есть папка `tests`, в ней папка `unit` и в ней файл `test_models`.
+
+```python
+from django.test import TestCase
+from myapp.models import Animal
+
+
+class AnimalTestCase(TestCase):
+    def setUp(self):
+        Animal.objects.create(name="lion", sound="roar")
+        Animal.objects.create(name="cat", sound="meow")
+
+    def test_animals_can_speak(self):
+        """Animals that can speak are correctly identified"""
+        lion = Animal.objects.get(name="lion")
+        cat = Animal.objects.get(name="cat")
+        self.assertEqual(lion.speak(), 'The lion says "roar"')
+        self.assertEqual(cat.speak(), 'The cat says "meow"')
+```
+
+То для запуска тестов используется менедж команда `test`
+
+```
+# Запустить все тесты в приложении, в папке тестов
+$./manage.py test animals.tests
+
+# Запустить все тесты в приложении
+$./manage.py test animals
+
+# Запустить один тест кейс
+$./manage.py test animals.tests.unit.test_models.AnimalTestCase
+
+# Запустить один тест из тест кейса
+$./manage.py test animals.tests.unit.test_models.AnimalTestCase.test_animals_can_speak
+```
+
 ## Специальные инструменты тестирования
 
 ### Client
 
-Для проведения интеграционного тестирования джанго приложенния нам необходимо отправлять запросы с клиента (браузера), функционал для этого нам предоставлен из коробки, и мы можем им воспользоваться:
+Для проведения интеграционного тестирования джанго приложения нам необходимо отправлять запросы с клиента (браузера),
+функционал для этого нам предоставлен из коробки, и мы можем им воспользоваться:
 
 ```python
->>> from django.test import Client
->>> c = Client()
->>> response = c.post('/login/', {'username': 'john', 'password': 'smith'})
->>> response.status_code
-200
->>> response = c.get('/customer/details/')
->>> response.content
-```
+from django.test import Client
 
+c = Client()
+response = c.post('/login/', {'username': 'john', 'password': 'smith'})
+response.status_code
+200
+response = c.get('/customer/details/')
+response.content
+```
 
 Такой запрос не будет требовать CSRF токен (хотя это тоже можно изменить, если необходимо)
 
-Поддердивает метод `login()`
+Поддерживает метод `login()`
 
 ```python
 c = Client()
 c.login(username='fred', password='secret')
 ```
 
-после чего запросы буд от авторизированого пользователя
+После чего запросы будут от авторизированого пользователя
 
-и метод `force_login` принимающий объект юзера, а не логин и пароль.
+Метод `force_login` принимающий объект юзера, а не логин и пароль.
 
-и метод `logout()` что делает догадайтесь сами)
+Метод `logout()` что делает догадайтесь сами)
 
 Естественно клиент при желании можно переписать под свои нужды
 
-Так же можно заменять сеттинги или манипулировать базами данных во время выполнения тестов, подробнее в доке.
+Клиент сразу есть в тест кейсе, его нет неоходимости создавать, к нему можно обратиться через `self.client`
+
+```python
+class SimpleTest(TestCase):
+    def test_details(self):
+        response = self.client.get('/customer/details/')
+        self.assertEqual(response.status_code, 200)
+
+    def test_index(self):
+        response = self.client.get('/customer/index/')
+        self.assertEqual(response.status_code, 200)
+```
+
+### Загрузка фикстур
+
+Всё очень просто, если у вас лежит файл с фикстурами, то достаточно его просто указать в атрибутах.
+
+```python
+from myapp.models import Animal
+
+
+class AnimalTestCase(TestCase):
+    fixtures = ['mammals.json', 'birds']
+
+    def setUp(self):
+        # Test definitions as before.
+        call_setup_methods()
+
+    def test_fluffy_animals(self):
+        # A test that uses the fixtures.
+        call_some_test_code()
+```
+
+Загрузится файл `mammals.json`, и из него фикстура `birds`
+
+### Теганье тестов
+
+Существует возможность поставить "тег" на каждый тест, а после запускать только те что с пределённым тегом.
+
+```python
+
+class SampleTestCase(TestCase):
+
+    @tag('fast')
+    def test_fast(self):
+        ...
+
+    @tag('slow')
+    def test_slow(self):
+        ...
+
+    @tag('slow', 'core')
+    def test_slow_but_core(self):
+        ...
+```
+
+Или даже целый тесткейс
+
+```python
+@tag('slow', 'core')
+class SampleTestCase(TestCase):
+    ...
+```
+
+После чего запускать с указанием тега.
+
+```
+./manage.py test --tag=fast
+```
 
 ### Тестирование менедж команд
 
@@ -300,6 +404,7 @@ from io import StringIO
 from django.core.management import call_command
 from django.test import TestCase
 
+
 class ClosepollTest(TestCase):
     def test_command_output(self):
         out = StringIO()
@@ -307,271 +412,29 @@ class ClosepollTest(TestCase):
         self.assertIn('Expected output', out.getvalue())
 ```
 
-## Mock
+### Пропуск тестов
 
-Мок это фиктивные объекты. Очень часто мы попадаем в такие ситуации когда в тесте мы не можем выполнить какое-либо действие, например HTTP запрос к стороннему сервису, в этом случае мы можем имитировать выполнение этого запроса, что бы не прерывать суть теста, тут нам и поможет мок.
-
-**Для версий питона 3.3 и старше, мок является частью стандартной библиотеки, установка не требуется**
-
-Для использования с версией ниже чем 3.3 необходимо установить пекедж мок
-
-```
-pip install mock
-```
-
-Можно создать мок объект и заменить им всё что угодно :)
-
-```python
->>> from unittest.mock import Mock
->>> mock = Mock()
->>> mock
-<Mock id='4561344720'>
-```
-
-Мы можем использовать фейковый объект в качестве аргумента или целиком заменяя сущность
-
-```python
-# Pass mock as an argument to do_something()
-do_something(mock)
-
-# Patch the json library
-json = mock
-```
-
-у фейкового объекта могут быть как атрибуты так и методы
-
-```python
->>> mock.some_attribute
-<Mock name='mock.some_attribute' id='4394778696'>
->>> mock.do_something()
-<Mock name='mock.do_something()' id='4394778920'>
-```
-
-Есть достаточно много способов использовать мок, очень хорошая статья [Тут](https://realpython.com/python-mock-library/)
-
-Рассмотрим основные
-
-### Контроль возвращаемого результата
-
-Предположим вам нужно убедиться что ваш код в рабочие и в выходные дни ведёт себя по разному, а код подразумевает использование встроенной библиотеки `datetime`
-
-Для упрощения, пока, засунем все в один файл:
-
-```python
-from datetime import datetime
-
-def is_weekday():
-    today = datetime.today()
-    # Python's datetime library treats Monday as 0 and Sunday as 6
-    return 0 <= today.weekday() < 5
-# Test if today is a weekday
-assert is_weekday()
-```
-
-Если мы запустим этот тест в воскресенье, то мы получим эксепшен, что же с этим делать? Замокать... Мок объект может возвращать по вызову любой функции необходимое нам значение, по средством заполнения `return_value`
-
-```python
-import datetime
-from unittest.mock import Mock
-
-# Save a couple of test days
-tuesday = datetime.datetime(year=2019, month=1, day=1)
-saturday = datetime.datetime(year=2019, month=1, day=5)
-
-# Mock datetime to control today's date
-datetime = Mock()
-
-def is_weekday():
-    today = datetime.datetime.today()
-    # Python's datetime library treats Monday as 0 and Sunday as 6
-    return 0 <= today.weekday() < 5
-
-# Mock .today() to return Tuesday
-datetime.datetime.today.return_value = tuesday
-# Test Tuesday is a weekday
-assert is_weekday()
-# Mock .today() to return Saturday
-datetime.datetime.today.return_value = saturday
-# Test Saturday is not a weekday
-assert not is_weekday()
-```
-
-Если нам необходимо, что бы после повторного вызова мы получали другие результаты то, нам поможет `side_effect`, ратает так же как и `return_value` только принимает перебирираемый объект и с каждым вызовом возвращает следующее значение.
-
-```
->>> mock_poll = Mock(side_effect=[None, 'data'])
->>> mock_poll()
-None
->>> mock_poll()
-'data'
-```
-
-Или как на прошлом примере
-
-```python
-import datetime
-from unittest.mock import Mock
-
-# Save a couple of test days
-tuesday = datetime.datetime(year=2019, month=1, day=1)
-saturday = datetime.datetime(year=2019, month=1, day=5)
-
-# Mock datetime to control today's date
-datetime = Mock()
-
-def is_weekday():
-    today = datetime.datetime.today()
-    # Python's datetime library treats Monday as 0 and Sunday as 6
-    return 0 <= today.weekday() < 5
-
-# Mock .today() to return Tuesday first time and Saturday second time
-datetime.datetime.today.side_effect = [tuesday, saturday]
-assert is_weekday()
-assert not is_weekday()
-```
-
-### декоратор patch
-
-Допустим у нас есть класс где мы имитируем какие-то длинные вычисления:
-
-```python
-import time
-
-class Calculator:
-    def sum(self, a, b):
-        time.sleep(10) # long running process
-        return a + b
-```
-
-И тест к этой функции:
-
-```python
-from unittest import TestCase
-from main import Calculator
-
-class TestCalculator(TestCase):
-    def setUp(self):
-        self.calc = Calculator()
-
-    def test_sum(self):
-        answer = self.calc.sum(2, 4)
-        self.assertEqual(answer, 6)
-```
-
-этот тест будет идти 10 секунд, имитирую длительный процесс, но мы можем симитировать выполнение этого метода.
-
-```python
-from unittest import TestCase
-from unittest.mock import patch
-
-class TestCalculator(TestCase):
-    @patch('main.Calculator.sum', return_value=9)
-    def test_sum(self, sum):
-        self.assertEqual(sum(2,3), 9)
-```
-
-или
-
-```python
-from unittest import TestCase
-from unittest.mock import patch
-
-class TestCalculator(TestCase):
-    @patch('main.Calculator.sum')
-    def test_sum(self, sum):
-        sum.return_value = 9
-        self.assertEqual(sum(2,3), 9)
-```
-
-пропатченные методы попадают в аргуметны метода теста.
-
-### Пример с использованием API 
-
-Будем использовать классический пекедж для питона, для выполнения запросов.
-
-```
-pip install requests
-```
-
-Допустим у нас есть такой код:
-
-```python
-import requests
-
-class Blog:
-    def __init__(self, name):
-        self.name = name
-
-    def posts(self):
-        response = requests.get("https://jsonplaceholder.typicode.com/posts")
-
-        return response.json()
-
-    def __repr__(self):
-        return '<Blog: {}>'.format(self.name)
-```
-
-То можно описать тест так:
-
-```python
-from unittest import TestCase
-from unittest.mock import patch, Mock
-
-
-class TestBlog(TestCase):
-    @patch('main.Blog')
-    def test_blog_posts(self, MockBlog):
-        blog = MockBlog()
-
-        blog.posts.return_value = [
-            {
-                'userId': 1,
-                'id': 1,
-                'title': 'Test Title',
-                'body': 'Far out in the uncharted backwaters of the unfashionable end of the western spiral arm of the Galaxy\ lies a small unregarded yellow sun.'
-            }
-        ]
-
-        response = blog.posts()
-        self.assertIsNotNone(response)
-        self.assertIsInstance(response[0], dict)
-```
-
-## Целая замена методов через side_effect
-
-Если в сайд эффект засуть метод, то вместо оригинального метода будет выполняться новый, например:
-
-```python
-from unittest import TestCase
-from unittest.mock import patch
-
-def mock_sum(a, b):
-    # mock sum function without the long running time.sleep
-    return a + b
-
-class TestCalculator(TestCase):
-    @patch('main.Calculator.sum', side_effect=mock_sum)
-    def test_sum(self, sum):
-        self.assertEqual(sum(2,3), 5)
-        self.assertEqual(sum(7,3), 10)
-```
+Тесты можно пропускать в зависимости от условий и деталей запуска.
+Дока [тут](https://docs.python.org/3/library/unittest.html#unittest.skipIf)
 
 ## Фабрики
 
-
 ### Паттерн фабрика
 
-Фабричный метод — если умным текстом то это порождающий паттерн проектирования, который определяет общий интерфейс для создания объектов в суперклассе, позволяя подклассам изменять тип создаваемых объектов.
+Фабричный метод — если умным текстом то это порождающий паттерн проектирования, который определяет общий интерфейс для
+создания объектов в суперклассе, позволяя подклассам изменять тип создаваемых объектов.
 
 Если по смыслу, то это возможность создать необходимую нам сущность внутри вызова метода.
 
-В джанго есть встроенная фабрика для реквеста, зачем это нужно? Нам не для всех проверок нужно делать запрос, часто нам нужно его только имитировать.
+В джанго есть встроенная фабрика для реквеста, зачем это нужно? Нам не для всех проверок нужно делать запрос, часто нам
+нужно его только имитировать. Для написания юнит тестов это самый главный инструмент.
 
 ```python
 from django.contrib.auth.models import AnonymousUser, User
 from django.test import RequestFactory, TestCase
 
 from .views import MyView, my_view
+
 
 class SimpleTest(TestCase):
     def setUp(self):
@@ -599,7 +462,7 @@ class SimpleTest(TestCase):
         self.assertEqual(response.status_code, 200)
 ```
 
-### Тестирование отдельных методов CBV 
+### Тестирование отдельных методов CBV
 
 Для тестирования отдельных методов мы можем использовать метод `setup`
 
@@ -627,91 +490,8 @@ class HomePageTest(TestCase):
         request = RequestFactory().get('/')
         view = HomeView()
         view.setup(request)
-
         context = view.get_context_data()
         self.assertIn('environment', context)
-```
-
-## Factory boy
-
-Внешний устанавливаемый пекедж, который предоставляет создавать объекты моделей, с заранее запоненными полями.
-
-Подробная дока [Тут](https://factoryboy.readthedocs.io/en/stable/introduction.html)
-
-```
-pip install factory_boy
-```
-
-Поддерживает возможность базироваться на жданго моделях
-
-```python
-from django.utils import timezone
-
-import factory
-
-from fundedbyme.campaign.tests.factories import CampaignFactory
-from fundedbyme.register.tests.factories import UserFactory
-
-from ..models import Comment
-
-
-class CommentFactory(factory.DjangoModelFactory):
-
-    class Meta:
-        model = Comment
-
-    campaign = factory.SubFactory(CampaignFactory)
-    user = factory.SubFactory(UserFactory)
-    parent = None
-    created_at = timezone.now()
-    updated_at = timezone.now()
-    hidden = False
-    content = "I'm a comment"
-
-```
-
-Помогает создавть заготовки для использования в тестах
-
-Пример из живого проекта
-
-```python
-class CommentDeleteViewTests(TestCase):
-    def setUp(self, *args, **kwargs):
-        self.client = Client()
-        self.user = UserWithUserprofileFactory()
-        self.campaign = LiveEquityCampaignFactory()
-        self.comment = CommentFactory(user=self.user, campaign=self.campaign)
-
-    def test_comment_delete_by_campaign_owner(self):
-        self.client.login(username=self.campaign.owner.username, password='password')
-        url = reverse("comment_delete", kwargs={"campaign_id": self.campaign.id})
-        response = self.client.post(url, data={'comment_id': self.comment.id})
-        self.assertEqual(response.content, '{"status": "error"}')
-
-    def test_comment_delete_by_not_auth_user(self):
-        url = reverse("comment_delete", kwargs={"campaign_id": self.campaign.id})
-        response = self.client.post(url, data={'comment_id': self.comment.id})
-        self.assertEqual(response.content, '{"status": "error"}')
-
-    def test_comment_delete_by_simple_user(self):
-        user = UserWithUserprofileFactory()
-        self.client.login(username=user.username, password='password')
-        url = reverse("comment_delete", kwargs={"campaign_id": self.campaign.id})
-        response = self.client.post(url, data={'comment_id': self.comment.id})
-        self.assertEqual(response.content, '{"status": "error"}')
-
-    def test_comment_delete_by_comment_owner(self):
-        self.client.login(username=self.user.username, password='password')
-        url = reverse("comment_delete", kwargs={"campaign_id": self.campaign.id})
-        response = self.client.post(url, data={'comment_id': self.comment.id})
-        self.assertEqual(response.content, '{"status": "OK"}')
-
-    def test_comment_delete_by_staff(self):
-        user = UserWithUserprofileFactory(is_staff=True)
-        self.client.login(username=user.username, password='password')
-        url = reverse("comment_delete", kwargs={"campaign_id": self.campaign.id})
-        response = self.client.post(url, data={'comment_id': self.comment.id})
-        self.assertEqual(response.content, '{"status": "OK"}')
 ```
 
 ## Тестирование REST API
@@ -742,7 +522,8 @@ request = factory.post('/notes/', json.dumps({'title': 'new idea'}), content_typ
 
 ### Форс логин
 
-Часто нам необходимо проверять запросы из под необходимого типа полльзователя, но сам по себе логин уже покрыт тестами, а это значит что второй раз его проверять нет неоходимости, можем просто логинится.
+Часто нам необходимо проверять запросы из под необходимого типа полльзователя, но сам по себе логин уже покрыт тестами,
+а это значит что второй раз его проверять нет неоходимости, можем просто логинится.
 
 ```python
 from rest_framework.test import force_authenticate
@@ -756,14 +537,6 @@ request = factory.get('/accounts/django-superstars/')
 force_authenticate(request, user=user)
 response = view(request)
 ```
-
-Если необходимо проверить работу CSRF токена, это можно сделать на этапе создания фабрики
-
-```python
-factory = APIRequestFactory(enforce_csrf_checks=True)
-```
-
-И после этого все хапросы будут проверяться на CSRF
 
 ### APIClient
 
@@ -817,7 +590,7 @@ client.force_authenticate(user=user)
 client = APIClient(enforce_csrf_checks=True)
 ```
 
-Для изменения хедером, можно использовать или стандартные классы, или просто обновлять как словарь
+Для изменения хедеров, можно использовать или стандартные классы, или просто обновлять как словарь
 
 ```python
 from requests.auth import HTTPBasicAuth
@@ -849,19 +622,541 @@ assert response.status_code == 200
 ```python
 REST_FRAMEWORK = {
     ...
-    'TEST_REQUEST_DEFAULT_FORMAT': 'json'
+'TEST_REQUEST_DEFAULT_FORMAT': 'json'
 }
 ```
 
 ```python
 REST_FRAMEWORK = {
     ...
-    'TEST_REQUEST_RENDERER_CLASSES': [
-        'rest_framework.renderers.MultiPartRenderer',
-        'rest_framework.renderers.JSONRenderer',
-        'rest_framework.renderers.TemplateHTMLRenderer'
-    ]
+'TEST_REQUEST_RENDERER_CLASSES': [
+    'rest_framework.renderers.MultiPartRenderer',
+    'rest_framework.renderers.JSONRenderer',
+    'rest_framework.renderers.TemplateHTMLRenderer'
+]
 }
 ```
 
+## Фабрики для генерации данных
+
+### FactoryBoy
+
+```
+pip install factory_boy
+```
+
+Прописывание в setUp создание новых объектов может занимать очень много времени. Что-бы это ускорить, упростить и
+автоматизировать, можно написать свою фабрику
+
+```python
+import factory
+from app.models import User
+
+
+class UserFactory(factory.Factory):
+    firstname = "John"
+    lastname = "Doe"
+
+    class Meta:
+        model = User
+```
+
+На один класс можно создавать несколько объектов фабрик
+
+```
+>>>john = UserFactory()
+<User: John Doe>
+>>>jack = UserFactory(firstname="Jack")
+<User: Jack Doe>
+```
+
+Так же можно использовать разные фабрики в разных местах
+
+```python
+class EnglishUserFactory(factory.Factory):
+    class Meta:
+        model = User
+
+    firstname = "John"
+    lastname = "Doe"
+    lang = 'en'
+
+
+class FrenchUserFactory(factory.Factory):
+    class Meta:
+        model = User
+
+    firstname = "Jean"
+    lastname = "Dupont"
+    lang = 'fr'
+```
+
+```
+EnglishUserFactory()
+<User: John Doe (en)>
+>>> FrenchUserFactory()
+<User: Jean Dupont (fr)>
+```
+
+Атрибутом может быть другая фабрика. Например при создании фабрики покупки мы можем указать в качестве покупателя,
+фабрику юзера
+
+```python
+class PurchaseFactory(factory.Factory):
+    class Meta:
+        model = Purchase
+
+    owner = EnglishUserFactory()
+```
+
+```
+PurchaseFactory()
+<Purchase: 1 John Doe>
+```
+
+Можно передавать специальный объект последовательности, при создании каждого нового объекта, будет добавляться единица,
+для текущего примера, юзернеймы всех созданных юзеров будут `user1`, `user2`, `user3` итд.
+
+Sequences
+
+```python
+class UserFactory(factory.Factory):
+    class Meta:
+        model = models.User
+
+    username = factory.Sequence(lambda n: 'user%d' % n)
+```
+
+Можно передать специальный объект, который будет вызывать ффункцию при создании объекта, например текущее время.
+
+LazyFunction
+
+```python
+class LogFactory(factory.Factory):
+    class Meta:
+        model = models.Log
+
+    timestamp = factory.LazyFunction(datetime.now)
+```
+
+```
+LogFactory()
+<Log: log at 2016-02-12 17:02:34>
+
+# при вызове можно переписать
+LogFactory(timestamp=now - timedelta(days=1))
+<Log: log at 2016-02-11 17:02:34>
+```
+
+Иногда нужно заполнять другие поля на основании других, для этого тоже есть специальный объект
+
+LazyAttribute Некоторые поля могут быть заполнены при помощи других, например электронная почта на основе имени
+пользователя. LazyAttribute обрабатывает такие случаи: он должен получить функцию, принимающую создаваемый объект и
+возвращающую значение для поля:
+
+```python
+class UserFactory(factory.Factory):
+    class Meta:
+        model = models.User
+
+    username = factory.Sequence(lambda n: 'user%d' % n)
+    email = factory.LazyAttribute(lambda obj: '%s@example.com' % obj.username)
+```
+
+```
+UserFactory()
+<User: user1 (user1@example.com)>
+
+# можно переписать источник
+UserFactory(username='john')
+<User: john (john@example.com)>
+
+# а можно и само поле
+>>> UserFactory(email='doe@example.com')
+<User: user3 (doe@example.com)>
+```
+
+Наследование фабрик
+
+```python
+class UserFactory(factory.Factory):
+    class Meta:
+        model = User
+
+    firstname = "John"
+    lastname = "Doe"
+
+
+class AdminFactory(UserFactory):
+    admin = True 
+```
+
+### Генерация фейковых данных
+
+#### Fuzzy attributes
+
+Fuzzy позволяет генерировать фейковые данные
+
+```python
+from factory import fuzzy
+
+...
+
+
+def setUp(self):
+    self.username = fuzzy.FuzzyText().fuzz()
+    self.password = fuzzy.FuzzyText().fuzz()
+    self.user_id = fuzzy.FuzzyInteger(1).fuzz()
+```
+
+#### Faker
+
+Faker пришел на замену Fuzzy и в нём гораздо больше всего, его нужно устанавливать
+
+```
+pip install Faker
+```
+
+```python
+from faker import Faker
+
+fake = Faker()
+
+fake.name()
+
+# 'Lucy Cechtelar'
+
+fake.address()
+
+# '426 Jordy Lodge
+
+# Cartwrightshire, SC 88120-6700'
+
+fake.text()
+
+# 'Sint velit eveniet. Rerum atque repellat voluptatem quia rerum. Numquam excepturi
+
+# beatae sint laudantium consequatur. Magni occaecati itaque sint et sit tempore. Nesciunt
+
+# amet quidem. Iusto deleniti cum autem ad quia aperiam.
+
+# A consectetur quos aliquam. In iste aliquid et aut similique suscipit. Consequatur qui
+
+# quaerat iste minus hic expedita. Consequuntur error magni et laboriosam. Aut aspernatur
+
+# voluptatem sit aliquam. Dolores voluptatum est.
+
+# Aut molestias et maxime. Fugit autem facilis quos vero. Eius quibusdam possimus est.
+
+# Ea quaerat et quisquam. Deleniti sunt quam. Adipisci consequatur id in occaecati.
+
+# Et sint et. Ut ducimus quod nemo ab voluptatum.'
+
+```
+
+### Использование с Factory Boy
+
+```python
+import factory
+from myapp.models import Book
+
+
+class BookFactory(factory.Factory):
+    class Meta:
+        model = Book
+
+    title = factory.Faker('sentence', nb_words=4)
+    author_name = factory.Faker('name')
+```
+
+#### Providers
+
+У Faker есть большое количество шаблонов, которые расположены в так называемых провайдерах
+
+```python
+from faker import Faker
+from faker.providers import internet
+
+fake = Faker()
+fake.add_provider(internet)
+fake.ipv4_private()
+'10.10.11.69'
+fake.ipv4_private()
+'10.86.161.98'
+```
+
+## Mock
+
+Мок это фиктивные объекты. Очень часто мы попадаем в такие ситуации когда в тесте мы не можем выполнить какое-либо
+действие, например HTTP запрос к стороннему сервису, в этом случае мы можем имитировать выполнение этого запроса, что бы
+не прерывать суть теста, тут нам и поможет мок.
+
+**Для версий питона 3.3 и старше, мок является частью стандартной библиотеки, установка не требуется**
+
+Для использования с версией ниже чем 3.3 необходимо установить пекедж мок
+
+```
+pip install mock
+```
+
+Можно создать мок объект и заменить им всё что угодно :)
+
+```
+from unittest.mock import Mock
+mock = Mock()
+mock
+< Mock id = '4561344720' >
+```
+
+Мы можем использовать фейковый объект в качестве аргумента или целиком заменяя сущность
+
+```python
+# Pass mock as an argument to do_something()
+do_something(mock)
+
+# Patch the json library
+json = mock
+```
+
+у фейкового объекта могут быть как атрибуты так и методы
+
+```
+mock.some_attribute
+< Mock name = 'mock.some_attribute' id = '4394778696' >
+mock.do_something()
+< Mock name = 'mock.do_something()' id = '4394778920' >
+```
+
+Есть достаточно много способов использовать мок, очень хорошая статья [Тут](https://realpython.com/python-mock-library/)
+
+Рассмотрим основные
+
+### Контроль возвращаемого результата
+
+Предположим вам нужно убедиться что ваш код в рабочие и в выходные дни ведёт себя по-разному, а код подразумевает
+использование встроенной библиотеки `datetime`
+
+Для упрощения, пока, засунем все в один файл:
+
+```python
+from datetime import datetime
+
+
+def is_weekday():
+    today = datetime.today()
+    # Python's datetime library treats Monday as 0 and Sunday as 6
+    return 0 <= today.weekday() < 5
+
+
+# Test if today is a weekday
+assert is_weekday()
+```
+
+Если мы запустим этот тест в воскресенье, то мы получим эксепшен, что же с этим делать? Замокать... Мок объект может
+возвращать по вызову любой функции необходимое нам значение, по средством заполнения `return_value`
+
+```python
+import datetime
+from unittest.mock import Mock
+
+# Save a couple of test days
+tuesday = datetime.datetime(year=2019, month=1, day=1)
+saturday = datetime.datetime(year=2019, month=1, day=5)
+
+# Mock datetime to control today's date
+datetime = Mock()
+
+
+def is_weekday():
+    today = datetime.datetime.today()
+    # Python's datetime library treats Monday as 0 and Sunday as 6
+    return 0 <= today.weekday() < 5
+
+
+# Mock .today() to return Tuesday
+datetime.datetime.today.return_value = tuesday
+# Test Tuesday is a weekday
+assert is_weekday()
+# Mock .today() to return Saturday
+datetime.datetime.today.return_value = saturday
+# Test Saturday is not a weekday
+assert not is_weekday()
+```
+
+Если нам необходимо, что бы после повторного вызова мы получали другие результаты то, нам поможет `side_effect`, ратает
+так же как и `return_value` только принимает перебираемый объект и с каждым вызовом возвращает следующее значение.
+
+```
+mock_poll = Mock(side_effect=[None, 'data'])
+mock_poll()
+None
+mock_poll()
+'data'
+```
+
+Или как на прошлом примере
+
+```python
+import datetime
+from unittest.mock import Mock
+
+# Save a couple of test days
+tuesday = datetime.datetime(year=2019, month=1, day=1)
+saturday = datetime.datetime(year=2019, month=1, day=5)
+
+# Mock datetime to control today's date
+datetime = Mock()
+
+
+def is_weekday():
+    today = datetime.datetime.today()
+    # Python's datetime library treats Monday as 0 and Sunday as 6
+    return 0 <= today.weekday() < 5
+
+
+# Mock .today() to return Tuesday first time and Saturday second time
+datetime.datetime.today.side_effect = [tuesday, saturday]
+assert is_weekday()
+assert not is_weekday()
+```
+
+### декоратор patch
+
+Допустим у нас есть класс где мы имитируем какие-то длинные вычисления:
+
+```python
+import time
+
+
+class Calculator:
+    def sum(self, a, b):
+        time.sleep(10)  # long running process
+        return a + b
+```
+
+И тест к этой функции:
+
+```python
+from unittest import TestCase
+from main import Calculator
+
+
+class TestCalculator(TestCase):
+    def setUp(self):
+        self.calc = Calculator()
+
+    def test_sum(self):
+        answer = self.calc.sum(2, 4)
+        self.assertEqual(answer, 6)
+```
+
+Этот тест будет идти 10 секунд, имитирую длительный процесс, но мы можем имитировать выполнение этого метода.
+
+```python
+from unittest import TestCase
+from unittest.mock import patch
+
+
+class TestCalculator(TestCase):
+    @patch('main.Calculator.sum', return_value=9)
+    def test_sum(self, sum):
+        self.assertEqual(sum(2, 3), 9)
+```
+
+или
+
+```python
+from unittest import TestCase
+from unittest.mock import patch
+
+
+class TestCalculator(TestCase):
+    @patch('main.Calculator.sum')
+    def test_sum(self, sum):
+        sum.return_value = 9
+        self.assertEqual(sum(2, 3), 9)
+```
+
+Пропатченные методы попадают в аргументы метода теста.
+
+### Пример с использованием API
+
+Будем использовать классический пекедж для питона, для выполнения запросов.
+
+```
+pip install requests
+```
+
+Допустим у нас есть такой код:
+
+```python
+import requests
+
+
+class Blog:
+    def __init__(self, name):
+        self.name = name
+
+    def posts(self):
+        response = requests.get("https://jsonplaceholder.typicode.com/posts")
+
+        return response.json()
+
+    def __repr__(self):
+        return '<Blog: {}>'.format(self.name)
+```
+
+То можно описать тест так:
+
+```python
+from unittest import TestCase
+from unittest.mock import patch, Mock
+
+
+class TestBlog(TestCase):
+    @patch('main.Blog')
+    def test_blog_posts(self, MockBlog):
+        blog = MockBlog()
+
+        blog.posts.return_value = [
+            {
+                'userId': 1,
+                'id': 1,
+                'title': 'Test Title',
+                'body': 'Far out in the uncharted backwaters of the unfashionable end of the western spiral arm of the Galaxy\ lies a small unregarded yellow sun.'
+            }
+        ]
+
+        response = blog.posts()
+        self.assertIsNotNone(response)
+        self.assertIsInstance(response[0], dict)
+```
+
+## Целая замена методов через side_effect
+
+Если в сайд эффект засунуть метод, то вместо оригинального метода будет выполняться новый, например:
+
+```python
+from unittest import TestCase
+from unittest.mock import patch
+
+
+def mock_sum(a, b):
+    # mock sum function without the long running time.sleep
+    return a + b
+
+
+class TestCalculator(TestCase):
+    @patch('main.Calculator.sum', side_effect=mock_sum)
+    def test_sum(self, sum):
+        self.assertEqual(sum(2, 3), 5)
+        self.assertEqual(sum(7, 3), 10)
+```
+
 # К практике!
+
+1. Напишите юнит тесты для логина и для покупки товара.
+
+2. Напишите интеграционные тесты, для логина, и для покупки товара.
+
+3. (Задание до выдачи задания на диплом) Покройте тестами весь остальной код
