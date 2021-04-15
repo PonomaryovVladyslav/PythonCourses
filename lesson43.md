@@ -241,8 +241,7 @@ class SimpleIterator:
         if self.counter < self.limit:
             self.counter += 1
             return 1
-        else:
-            raise StopIteration
+        raise StopIteration
 
 
 s_iter1 = SimpleIterator(3)
@@ -269,8 +268,7 @@ class SimpleIterator:
         if self.counter < self.limit:
             self.counter += 1
             return 1
-        else:
-            raise StopIteration
+        raise StopIteration
 
 
 s_iter2 = SimpleIterator(5)
@@ -481,7 +479,7 @@ def find_prime():
     while True:
         if num > 1:
             for i in range(2, num):
-                if (num % i) == 0:
+                if not num % i:
                     break
             else:
                 yield num
@@ -505,7 +503,7 @@ def find_prime():
     while num < 100:
         if num > 1:
             for i in range(2, num):
-                if (num % i) == 0:
+                if not num % i:
                     break
             else:
                 yield num
@@ -514,7 +512,7 @@ def find_prime():
 
 def find_odd_prime(seq):
     for num in seq:
-        if (num % 2) != 0:
+        if not num % 2:
             yield num
 
 
