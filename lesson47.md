@@ -112,7 +112,7 @@ STATIC_URL = '/static/'
 
 Для начала нам необходим аккаунт на платформе AWS (Amazon Web Services).
 
-[Ссылка на AWS](https://aws.amazone.com/)
+[Ссылка на AWS](https://aws.amazon.com/)
 
 ![](https://djangoalevel.s3.eu-central-1.amazonaws.com/lesson47/aws.png)
 
