@@ -17,7 +17,7 @@
 
 Мы можем делать большое кол-во запросов в надежде, что уже кто-то прислал нам сообщение
 
-![](lots_requests.png)
+![](https://djangoalevel.s3.eu-central-1.amazonaws.com/lesson44/lots_requests.png)
 
 Чем плох такой подход?
 
@@ -27,7 +27,7 @@
 
 Мы можем отдавать ответ только когда сообщение пришло.
 
-![](long_polling.png)
+![](https://djangoalevel.s3.eu-central-1.amazonaws.com/lesson44/long_polling.png)
 
 Как это реализовать? Например, в коде можно использовать вечный цикл, и опрос какого либо хранилища, например `redis`.
 Если данные появились, отдавать ответ.
@@ -59,7 +59,7 @@
 Запросы для сокетов проходят по протоколу WebSocket и выполняются на адреса, которые начинаются с `ws://`, а
 не `http://`
 
-![](socket.png)
+![](https://djangoalevel.s3.eu-central-1.amazonaws.com/lesson44/socket.png)
 
 ### Сфера применения
 
@@ -263,7 +263,7 @@ Quit the server with CONTROL-C.
 
 А если зайти на страницу http://127.0.0.1:8000/chat/ то будет вот так:
 
-![](chat_enter.png)
+![](https://djangoalevel.s3.eu-central-1.amazonaws.com/lesson44/chat_enter.png)
 
 Попытка перейти на любую страницу ни к чему не приведёт, страницы комнаты пока просто нет :)
 
@@ -395,7 +395,7 @@ Quit the server with CONTROL-C.
 Фильтр json_script Добавит на страницу тег скрипт с данными из переменной, если открыть комнату с названием `test` то
 отрендереная страница будет выглядеть так:
 
-![](room_script.png)
+![](https://djangoalevel.s3.eu-central-1.amazonaws.com/lesson44/room_script.png)
 
 Нужно для того, что бы считать переменную через JS.
 
