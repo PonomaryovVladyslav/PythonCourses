@@ -611,7 +611,7 @@ CHANNEL_LAYERS = {
 
 Для проверки работы редиса необходимо открыть `shell`:
 
-```python3 manage.py shell```
+```python manage.py shell```
 
 ```python
 import channels.layers
@@ -755,7 +755,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
 Что мы изменили? Мы наследовались не от `WebsocketConsumer`, а от `AsyncWebsocketConsumer`, заменили все функции с
 обычных на асинхронные, и вызов функций с обычного на асинхронные.
 
-Всё ваш чат полностью асинхронен.
+Всё, ваш чат полностью асинхронен.
 
 ### Тестирование
 
