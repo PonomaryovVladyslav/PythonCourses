@@ -1,4 +1,4 @@
-# Урок 43. Сокеты. Django channels.
+# Урок 44. Сокеты. Django channels.
 
 ![](https://www.imaginarycloud.com/blog/content/images/2016/03/gifmachine-2.gif)
 
