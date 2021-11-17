@@ -152,6 +152,8 @@ INSTALLED_APPS = [
 Всё еще лучше, чем официальная документация еще никто и ничего не придумал, офф
 дока [Тут](https://docs.djangoproject.com/en/2.2/topics/db/models/)
 
+Что такое класс модели? Это таблица для базы данных, где атрибуты это её поля.
+
 Давайте создадим модель!
 
 В файле `myapp/models.py`
@@ -408,7 +410,7 @@ from django.db import models
 
 
 class Customer(models.Model):
-    name = models.CharField(max_length=120),
+    name = models.CharField(max_length=120)
     age = models.IntegerField()
 
 
