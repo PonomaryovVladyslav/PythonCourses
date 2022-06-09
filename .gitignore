@@ -1,2 +1,26 @@
+# ide configuration
+/.vscode/
 /.idea/
-.vscode
+
+# virtual environment
+/venv/
+/env/
+
+# temporary files storage
+/temp/
+/tmp/
+
+# python cache
+__pycache__
+
+# emacs backup files
+\#*\#
+*~
+
+# compiled translation files
+*.pot
+*.mo
+
+# documentation builds
+_builds
+_build
