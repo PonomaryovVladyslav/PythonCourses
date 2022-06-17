@@ -809,6 +809,9 @@ class Login(LoginView):
     success_url = '/'
     template_name = 'login.html'
 
+    def get_success_url(self):
+        return self.success_url
+
 
 class Register(CreateView):
     form_class = UserCreationForm
@@ -1159,23 +1162,23 @@ class NoteListView(LoginRequiredMixin, ListView):
 {% extends 'base.html' %}
 
 {% block content %}
-    <div>
-        <a href="{% url 'logout' %}">Logout</a>
-    </div>
+<div>
+    <a href="{% url 'logout' %}">Logout</a>
+</div>
 
+<div>
+    {% for obj in page_obj %} {# обратите внимание я заменил объект #}
     <div>
-        {% for obj in page_obj %} {# обратите внимание я заменил объект #}
-            <div>
-                {{ obj.text }} from {{ obj.author.username }}
-                {% if obj.author == request.user %}
-                    <form method="post" action="{% url 'note-delete' obj.pk %}">
-                        {% csrf_token %}
-                        <input type="submit" value="Delete">
-                    </form>
-                {% endif %}
-            </div>
-        {% endfor %}
-        <div class="pagination">
+        {{ obj.text }} from {{ obj.author.username }}
+        {% if obj.author == request.user %}
+        <form method="post" action="{% url 'note-delete' obj.pk %}">
+            {% csrf_token %}
+            <input type="submit" value="Delete">
+        </form>
+        {% endif %}
+    </div>
+    {% endfor %}
+    <div class="pagination">
     <span class="step-links">
         {% if page_obj.has_previous %}
             <a href="?page=1">&laquo; first</a>
@@ -1191,13 +1194,13 @@ class NoteListView(LoginRequiredMixin, ListView):
             <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
         {% endif %}
     </span>
-        </div>
     </div>
-    <form method="post" action="{% url 'note-create' %}">
-        {% csrf_token %}
-        {{ create_form }}
-        <input type="submit" value="Create">
-    </form>
+</div>
+<form method="post" action="{% url 'note-create' %}">
+    {% csrf_token %}
+    {{ create_form }}
+    <input type="submit" value="Create">
+</form>
 {% endblock %}
 
 
