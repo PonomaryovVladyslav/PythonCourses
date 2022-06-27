@@ -664,8 +664,7 @@ class AlbumSerializer(serializers.ModelSerializer):
     "tracks": [
         "Airport Surroundings",
         "Everything Turns to You",
-        "I Was Only Going Out",
-        ...
+        "I Was Only Going Out"
     ]
 }
 ```
