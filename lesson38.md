@@ -14,8 +14,8 @@
 
 `.query_string` - данные если запрос GET, аналог `request.GET`
 
-И параметры `.auth` и `.authenticate` которые мы рассмотрим на следующей лекции, которая целиком про авторизацию и
-пермишены.
+И параметры `.auth` и `.authenticate` которые мы рассмотрим на следующей лекции. Она целиком про авторизацию и
+пермишены (доступы).
 
 ## Response
 
@@ -38,10 +38,6 @@
 `template_name` - возможность указать темплейт, если необходимо вернуть страницу, а не просто набор данных,
 
 `headers` и `content_type` - хедеры и контент тайп запроса
-
-## View
-
-Знакомимся с самым подробным сайтом по ДРФ классам [тут](http://www.cdrf.co/)
 
 ## @api_view
 
@@ -160,6 +156,10 @@ http --form POST http://127.0.0.1:8000/snippets/ code="print(123)"
 }
 ```
 
+## View
+
+Знакомимся с самым подробным сайтом по ДРФ классам [тут](http://www.cdrf.co/)
+
 ## APIView
 
 Дока [тут](https://www.django-rest-framework.org/api-guide/views/#class-based-views)
@@ -169,7 +169,6 @@ http --form POST http://127.0.0.1:8000/snippets/ code="print(123)"
 ```python
 from snippets.models import Snippet
 from snippets.serializers import SnippetSerializer
-from django.http import Http404
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
@@ -245,37 +244,37 @@ urlpatterns = [
 
 В нём описаны такие поля как:
 
-queryset, хранит кверисет
+- `queryset`, хранит кверисет
 
-serializer_class, хранит сериалайзер
+- `serializer_class`, хранит сериалайзер
 
-lookup_field = 'pk', название атрибута в модели который будет отвечать за PK,
+- `lookup_field = 'pk'`, название атрибута в модели который будет отвечать за PK,
 
-lookup_url_kwarg = None, название атрибута в запросе который будет отвечать за `pk`
+- `lookup_url_kwarg = None`, название атрибута в запросе который будет отвечать за `pk`
 
-filter_backends = api_settings.DEFAULT_FILTER_BACKENDS, - фильтры запросов
+- `filter_backends = api_settings.DEFAULT_FILTER_BACKENDS`, - фильтры запросов
 
-pagination_class = api_settings.DEFAULT_PAGINATION_CLASS, - пагинация запросов
+- `pagination_class = api_settings.DEFAULT_PAGINATION_CLASS`, - пагинация запросов
 
-и методы:
+И методы:
 
-`get_queryset` - получение кверисета,
+- `get_queryset` - получение кверисета,
 
-`get_object` - получение одного объекта,
+- `get_object` - получение одного объекта,
 
-`get_serializer` - получение объекта сериалайзера,
+- `get_serializer` - получение объекта сериалайзера,
 
-`get_serializer_class` - получение класса сериалайзера,
+- `get_serializer_class` - получение класса сериалайзера,
 
-`get_serializer_context` - получить контекст сериалайзера,
+- `get_serializer_context` - получить контекст сериалайзера,
 
-`filter_queryset` - отфильтровать кверисет,
+- `filter_queryset` - отфильтровать кверисет,
 
-`paginator` - объект пагинации,
+- `paginator` - объект пагинации,
 
-`paginate_queryset` - пагинировать кверисет,
+- `paginate_queryset` - пагинировать кверисет,
 
-`get_paginated_response` - получить пагинированый ответ.
+- `get_paginated_response` - получить пагинированый ответ.
 
 *Такой класс не работает самостоятельно, только вместе с определёнными миксинами*
 
@@ -310,7 +309,7 @@ class CreateModelMixin(object):
 
 Это миксин, и без сторонних классов этот функционал работать не будет.
 
-При вызове метода `create` мы предпогалаем, что у нас был реквест.
+При вызове метода `create` мы предполагаем, что у нас был реквест.
 
 Вызываем метод get_serializer() из класса GenericAPIView, для получения объекта сериалайзера, обратите внимание, что
 данные передаются через аттрибут `data` так как, они получены от пользователя. Проверяем данные на валидность (обратите
@@ -563,7 +562,7 @@ class CommentListView(ListCreateAPIView):
 
 Дока [тут](https://www.django-rest-framework.org/api-guide/viewsets/)
 
-Классы которые отвечают за поведение нескольких запросов, которые отличаются друг от друга только методом, называются
+Классы, которые отвечают за поведение нескольких запросов, и отличаются друг от друга только методом, называются
 ViewSet.
 
 Они на самом деле описывают методы, для получения списка действий (list, retrieve, итд), и преобразования их в урлы (об
@@ -712,7 +711,7 @@ class BillingRecordsView(generics.ListAPIView):
 
 Дока [тут](https://www.django-rest-framework.org/api-guide/viewsets/#marking-extra-actions-for-routing)
 
-Что делать если вам нужно дополнительное действие связанное с деталями вашей вью, но не один из крудов не походит? Тут
+Что делать если вам нужно дополнительное действие связанное с деталями вашей вью, но ни один из крудов не походит? Тут
 можно использовать декоратор @action, что бы описать новое действие в этом же вьюсете
 
 ```python
@@ -781,7 +780,7 @@ urlpatterns = router.urls
 Если у вьюсета нет параметра `queryset`, то нужно указать поле `basename` если нет, то автоматически будет использовано
 имя модели, маленькими буквами.
 
-Урлы будут сгененрированы автоматически и им будут автоматически присвоены имена:
+Урлы будут сгенерированы автоматически и им будут автоматически присвоены имена:
 
 ```
 URL pattern: ^users/$ Name: 'user-list'
@@ -818,7 +817,7 @@ class UserViewSet(ModelViewSet):
 то роутер автоматически сгенерирует урл `^users/{pk}/set_password/$` и имя `user-set-password`
 
 Класс `SimpleRouter` может принимать параметр `trailing_slash=False` True или False, по дефолту тру, поэтому все апи,
-должны принимать урлы заканчивающиеся на слеш, если указать явно, то будет принимать всё без слеша.
+должны принимать урлы заканчивающиеся на `/`, если указать явно, то будет принимать всё без `/`.
 
 ## Практика/домашка
 
