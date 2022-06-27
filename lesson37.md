@@ -8,7 +8,7 @@
 приложений.
 
 В нашем конкретном случае, под API практически всегда будет подразумеваться REST API о котором дальше, но для нас это
-эндпоинт(урл на который можно отправить запрос) который выполняет какие-либо действия, или возвращает нам какую либо
+эндпоинт (урл, на который можно отправить запрос) который выполняет какие-либо действия, или возвращает нам какую либо
 информацию.
 
 ## Что такое REST?
@@ -22,7 +22,7 @@ REST (Representational State Transfer — «передача состояния 
 
 Свойства архитектуры, которые зависят от ограничений, наложенных на REST-системы:
 
-1. **Client-Server**. Система должна быть разделена на клиенты, и на сервер(ы). Разделение интерфейсов означает, что,
+1. **Client-Server**. Система должна быть разделена на клиентов, и на сервер(ы). Разделение интерфейсов означает, что,
    например, клиенты не связаны с хранением данных, которое остается внутри каждого сервера, так что мобильность кода
    клиента улучшается. Серверы не связаны с интерфейсом пользователя или состоянием, так что серверы могут быть проще и
    масштабируемы. Серверы и клиенты могут быть заменяемы и разрабатываться независимо, пока интерфейс не изменяется.
@@ -80,7 +80,7 @@ REST (Representational State Transfer — «передача состояния 
 и тот же результат на сервере, ответ сам по себе может не быть тем же самым (например, состояние ресурса может
 измениться между запросами).
 
-Методы PUT и DELETE по определению идемпотентны. Тем не менее, есть один нюанс с методом DELETE. Проблема в том, что
+Методы PUT и DELETE по определению идемпотентны. Тем не менее есть один нюанс с методом DELETE. Проблема в том, что
 успешный DELETE-запрос возвращает статус 200 (OK) или 204 (No Content), но для последующих запросов будет все время
 возвращать 404 (Not Found), Состояние на сервере после каждого вызова DELETE то же самое, но ответы разные.
 
@@ -271,7 +271,7 @@ json.loads(string)  # # Преобразовать cтроку в JSON
 итд.). По дефолту False
 
 `required` - Обязательность поля, поле которое можно не указывать при создании\изменении, но его же может и не быть при
-чтении, допустим отчество. По дефолту True
+чтении, допустим отчества. По дефолту True
 
 `default` - Значение по умолчанию, если не указано ничего другого. Не поддерживается при частичном обновлении,
 
@@ -576,12 +576,12 @@ class AlbumSerializer(serializers.ModelSerializer):
 
 ```json
 {
-  'album_name': 'Things We Lost In The Fire',
-  'artist': 'Low',
-  'tracks': [
-    '1: Sunflower',
-    '2: Whitetail',
-    '3: Dinosaur Act',
+  "album_name": "Things We Lost In The Fire",
+  "artist": "Low",
+  "tracks": [
+    "1: Sunflower",
+    "2: Whitetail",
+    "3: Dinosaur Act"
   ]
 }
 ```
@@ -601,12 +601,12 @@ class AlbumSerializer(serializers.ModelSerializer):
 
 ```json
 {
-  'album_name': 'Undun',
-  'artist': 'The Roots',
-  'tracks': [
+  "album_name": "Undun",
+  "artist": "The Roots",
+  "tracks": [
     89,
     90,
-    91,
+    91
   ]
 }
 ```
@@ -630,12 +630,12 @@ class AlbumSerializer(serializers.ModelSerializer):
 
 ```json
 {
-  'album_name': 'Graceland',
-  'artist': 'Paul Simon',
-  'tracks': [
-    'http://www.example.com/api/tracks/45/',
-    'http://www.example.com/api/tracks/46/',
-    'http://www.example.com/api/tracks/47/'
+  "album_name": "Graceland",
+  "artist": "Paul Simon",
+  "tracks": [
+    "http://www.example.com/api/tracks/45/",
+    "http://www.example.com/api/tracks/46/",
+    "http://www.example.com/api/tracks/47/"
   ]
 }
 ```
@@ -659,12 +659,12 @@ class AlbumSerializer(serializers.ModelSerializer):
 
 ```json
 {
-    'album_name': 'Dear John',
-    'artist': 'Loney Dear',
-    'tracks': [
-        'Airport Surroundings',
-        'Everything Turns to You',
-        'I Was Only Going Out',
+    "album_name": "Dear John",
+    "artist": "Loney Dear",
+    "tracks": [
+        "Airport Surroundings",
+        "Everything Turns to You",
+        "I Was Only Going Out",
         ...
     ]
 }
