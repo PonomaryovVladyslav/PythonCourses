@@ -1,0 +1,6 @@
+[submodule "problem-sets"]
+	path = problem-sets
+	url = git@github.com:shorodilov/problem-sets.git
+[submodule "python-quiz"]
+	path = python-quiz
+	url = git@github.com:shorodilov/python-quiz.git
