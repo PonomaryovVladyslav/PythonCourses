@@ -39,6 +39,19 @@
 
 `headers` и `content_type` - хедеры и контент тайп запроса
 
+## Настройка для получения JSON
+
+В современной версии пекеджа DRF, по умолчанию не указан параметр для получения ответа в формате JSON. Это нужно указать
+явно, для этого в `settings.py` необходимо добавить:
+
+```python
+REST_FRAMEWORK = {
+    'DEFAULT_RENDERER_CLASSES': (
+        'rest_framework.renderers.JSONRenderer',
+    )
+}
+```
+
 ## @api_view
 
 Дока [тут](https://www.django-rest-framework.org/api-guide/views/#api_view)
@@ -706,7 +719,6 @@ class BillingRecordsView(generics.ListAPIView):
     pagination_class = LargeResultsSetPagination
 ```
 
-
 ## Декоратор action
 
 Дока [тут](https://www.django-rest-framework.org/api-guide/viewsets/#marking-extra-actions-for-routing)
@@ -758,7 +770,6 @@ class UserViewSet(viewsets.ModelViewSet):
 или над одним конкретным), и `methods` - список http методов, на которые должен срабатывать action.
 
 Есть и другие, например классы пермишенов, или имя.
-
 
 ## Роутеры
 
