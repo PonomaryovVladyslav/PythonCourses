@@ -1,4 +1,4 @@
-# Урок 39. REST Аутентификация, Авторизация, Permissions.
+# Урок 39. REST Аутентификация, Авторизация, Permissions, Фильтрация.
 
 ![](https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQ_cLOesie903fmPPbl2YbqawKsycva_owf6Q&usqp=CAU)
 
@@ -377,7 +377,7 @@ from rest_framework import viewsets
 class UserViewSet(viewsets.ViewSet):
 
     # Cache requested url for each user for 2 hours
-    @method_decorator(cache_page(60*60*2))
+    @method_decorator(cache_page(60 * 60 * 2))
     @method_decorator(vary_on_cookie)
     def list(self, request, format=None):
         content = {
@@ -389,7 +389,7 @@ class UserViewSet(viewsets.ViewSet):
 class PostView(APIView):
 
     # Cache page for the requested url
-    @method_decorator(cache_page(60*60*2))
+    @method_decorator(cache_page(60 * 60 * 2))
     def get(self, request, format=None):
         content = {
             'title': 'Post title',
@@ -397,6 +397,7 @@ class PostView(APIView):
         }
         return Response(content)
 ```
+
 `cache_page` декоратор кеширует только `GET` и `HEAD` запросы, со статусом 200.
 
 ### Пример использования авторизации в ресурсах
@@ -412,6 +413,138 @@ class SomeModelViewSet(ModelViewSet):
 
 Таким образом мы можем добавлять объект юзера при сохранении нашего сериалайзера.
 
+## Фильтрация
+
+DRF предоставляет нам огромные возможности для фильтрации, практически не дописывая для этого специальный код.
+
+### SearchFilter
+
+Как и с другими параметрами у нас есть два варианта указания фильтрации, общая для всего проекта, или конкретная для
+определённого класса или функции
+
+Для указания общего фильтра на весь проект, необходимо добавить в `settings.py`, в переменную `REST_FRAMEWORK`:
+
+```python
+REST_FRAMEWORK = {
+    ...
+'DEFAULT_FILTER_BACKENDS': ['rest_framework.filters.SearchFilter']
+}
+```
+
+Для указания в конкретном классе необходимо использовать аргумент `filter_backends`. Принимает коллекцию из фильтров,
+например:
+
+```python
+from rest_framework.filters import SearchFilter, OrderingFilter
+
+
+class GroupViewSet(ModelViewSet):
+    queryset = Group.objects.all()
+    filter_backends = [SearchFilter, OrderingFilter]
+
+```
+
+Или же соответсвующий декоратор, для использования в функциях
+
+#### Как пользоваться?
+
+Для использования необходимо добавить в класс параметр `search_fields`
+
+```python
+class GroupViewSet(ModelViewSet):
+    queryset = Group.objects.all()
+    filter_backends = [SearchFilter, OrderingFilter]
+    search_fields = ['name', 'label']
+```
+
+Который так же принимает коллекцию, состоящую из списка полей по которым необходимо производить поиск.
+
+Теперь у нас есть возможность добавить квери параметр `search=` (ключевое слово можно поменять через `settings.py`, что
+бы искать по указанным полям.
+
+Например:
+
+```
+http://127.0.0.1:9000/api/group/?search=Pyt
+```
+
+Результат будет отфильтрован так, что бы отобразить только те данные, у которых хотя бы в одном из указанных полей будет
+найдено частичное совпадение, без учёта регистра (lookup icontains).
+
+Если нам необходим более специфический параметр поиска, существует 4 специальных настройки в параметре `search_fields`:
+
+- `^` Поиск только в начале строки
+- `=` Полное совпадение
+- `@` Поиск по полному тексту (работает на основе индексов, работает только для postgres)
+- `$` Поиск регулярного выражения
+
+Например:
+
+```python
+class GroupViewSet(ModelViewSet):
+    queryset = Group.objects.all()
+    filter_backends = [SearchFilter, OrderingFilter]
+    search_fields = ['=name', '^label']
+```
+
+### OrderingFilter
+
+Точно так же можно добавить ордеринг фильтр, для того, что бы указывать ордеринг в момент запроса через квери
+параметр `ordering=` (так же можно заменить через `settings.py`)
+
+Необходимо указать параметр `ordering_fields`, так же принимает коллекцию из полей. Так же может принимать специальное
+значение `__all__`, для возможности сортировать по любому полю.
+
+```python
+class GroupViewSet(ModelViewSet):
+    queryset = Group.objects.all()
+    filter_backends = [SearchFilter, OrderingFilter]
+    ordering_fields = ['name', 'label']
+```
+
+В квери параметре может принимать символ `-`, или список полей через запятую.
+
+Примеры:
+
+```
+http://example.com/api/users?ordering=username
+
+http://example.com/api/users?ordering=-username
+
+http://example.com/api/users?ordering=account,username
+```
+
+### Свой собственный фильтр
+
+Как и со всем остальным можно написать свой собственный фильтр, для этого необходимо наследоваться от `rest_framework.filters.BaseFilterBackend`
+
+И описать один метод `filter_queryset`, в котором можно описать любую логику.
+
+Например, фильтр, который будет отображать только те объекты, которые принадлежат юзеру.
+
+```python
+class IsOwnerFilterBackend(filters.BaseFilterBackend):
+    """
+    Filter that only allows users to see their own objects.
+    """
+    def filter_queryset(self, request, queryset, view):
+        return queryset.filter(owner=request.user)
+```
+
+## Сложные комплексные фильтры
+
+На самом деле бываю и значительно более сложные фильтры, для которых существуют специальные пекеджи.
+
+Например:
+
+```
+pip install django-filter
+pip install djangorestframework-filters
+pip install djangorestframework-word-filter
+```
+
+Все они легко настраиваются и значительно расширяют возможность использования фильтров. Изучите их самостоятельно.
+
 
 ## Практика
 
@@ -422,3 +555,5 @@ class SomeModelViewSet(ModelViewSet):
 3. Пишем вьюсеты для моделей из модуля, и создаём 2 покупки и 1 возврат, через постман.
 
 4. Пишем собственный токен, который перестаёт действовать через 10 минут.
+
+5. Добавляем фильтр, для поиска только для своих покупок если запрос от обычного пользователя, и все если администратор
