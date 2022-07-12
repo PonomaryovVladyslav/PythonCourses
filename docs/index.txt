@@ -1,0 +1,15 @@
+.. master document
+
+###############################################################################
+                            PYTHON TRAINING COURSE
+###############################################################################
+
+.. only:: html
+
+    This is a training course to master the Python programming language.
+    It covers topics from the very begging to some advanced themes.
+
+.. toctree::
+    :name: master_toc
+    :caption: Course Contents
+    :maxdepth: 1
