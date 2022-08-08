@@ -532,6 +532,197 @@ Plan -> Code -> Build -> Test
 
 Если автоматически не предложит, то всегда можно найти в поиске.
 
+При нажатии кнопки `Configure` github предложит нам добавить файл `.github/workflows/django.yml`, причем название файл
+можно поменять, а путь нет, потому что как мы уже знаем `.github` это скрытая папка с точки зрения линукса, а `workflow`
+папка в которой github будет искать файлы конфигурации CI
+
+Стандартный файл `django.yml`:
+
+```yaml
+name: Django CI
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    strategy:
+      max-parallel: 4
+      matrix:
+        python-version: [ 3.7, 3.8, 3.9 ]
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v3
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Install Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+      - name: Run Tests
+        run: |
+          python manage.py test
+
+```
+
+Давайте рассмотрим это файл
+
+`name` - название, тут может быть что угодно
+
+`on` - команда которая описывает когда должна выполнятся текущая конфигурация, по дефолту это пуш в ветку мастер, или
+пул реквест на мастер, так как мы уже запретили пуш на мастер, этот пункт можно удалить
+
+`jobs` - описание самих выполняемых команд
+
+`build` - просто название, тут можно было написать, что угодно
+
+`matrix/python-version` - список версий питона на которых необходимо запускать команды, предлагаю оставить только 3.9
+
+`steps` - выполняемые шаги и зависимые модули. В нашем примере используется два дополнительных
+модуля `actions/checkout@v3`, `actions/setup-python@v3`. Первый для взаимодействия с пул реквестом, второй для запуска
+питона. И сами команды, обновить `pip`, запустить установку `requirements.txt` и запуск команды `python manage.py test`.
+
+Весь этот процесс запустится на виртуальной машине принадлежащей github, но нам это и не важно, главное, что мы получим
+результат выполнения тестов, и если тесты не пройдут, то мы не сможем смержить пул реквест.
+
+После наших небольших изменений мы получим такой файл:
+
+```yaml
+name: Django CI
+
+on:
+  pull_request:
+    branches: [ "master" ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    strategy:
+      max-parallel: 4
+      matrix:
+        python-version: [ 3.9 ]
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v3
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Install Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+      - name: Run Migrations # run migrations to create table in side car db container
+        run: python manage.py migrate
+      - name: Run Tests
+        run: |
+          python manage.py test
+
+```
+
+Сохраняем. Если мы добавили невозможность прямого коммита в мастер, то гитхаб предложит нам создать новую ветку и пул
+реквест, не забудьте его смержить!!!
+
+По сути в максимально простом виде CI степ уже настроен, и для определённых условий будет даже работать.
+
+Но, чего тут не хватает? Настройки базы данных! Ведь для запуска тестов, практически всегда необходима база данных!
+
+Давайте добавим её в настройки.
+
+Первым делом, нам необходимо добавить базу в описание запуска флоу. И добавить степ с миграцией нашей базы.
+
+```yaml
+name: Django CI
+
+on:
+  pull_request:
+    branches: [ "master" ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    services:
+      postgres: # we need a postgres docker image to be booted a side car service to run the tests that needs a db
+        image: postgres
+        env: # the environment variable must match with app/settings.py if block of DATBASES variable otherwise test will fail due to connectivity issue.
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: github-actions
+        ports:
+          - 5432:5432 # exposing 5432 port for application to use
+        # needed because the postgres container does not provide a healthcheck
+        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
+    strategy:
+      max-parallel: 4
+      matrix:
+        python-version: [ 3.9 ]
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v3
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Install Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+      - name: Migrate
+        run: python manage.py migrate
+      - name: Run Tests
+        run: |
+          python manage.py test
+
+```
+
+В параметре `env` можно увидеть настроенные юзер, пароль и название базы.
+
+Обратите внимание на параметр `options`, он нужен, что-бы мы выполняли все команды только после того как postgres
+загрузится.
+
+Так же нам необходимо убедиться, что у нас в `requirements.txt` указан `psycopg2`
+
+И внести изменения в `settings.py`
+
+```python
+if os.getenv('GITHUB_WORKFLOW'):
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': 'github-actions',
+            'USER': 'postgres',
+            'PASSWORD': 'postgres',
+            'HOST': 'localhost',
+            'PORT': '5432'
+        }
+    }
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': os.getenv('DB_NAME'),
+            'USER': os.getenv('DB_USER'),
+            'PASSWORD': os.getenv('DB_PASSWORD'),
+            'HOST': os.getenv('DB_HOST'),
+            'PORT': os.getenv('DB_PORT')
+        }
+    }
+
+
+```
+
+Обратите внимание переменная `GITHUB_WORKFLOW` будет добавлена автоматически при запуске.
+
+Теперь наш CI полностью готов к работе!
 
 
 
