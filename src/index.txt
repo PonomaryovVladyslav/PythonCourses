@@ -1,0 +1,7 @@
+.. master document
+
+###############################################################################
+                            PYTHON TRAINING COURSE
+###############################################################################
+
+This is a training course that will help master Python programming language.
