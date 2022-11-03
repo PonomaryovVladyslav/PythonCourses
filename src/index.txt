@@ -4,4 +4,14 @@
                             PYTHON TRAINING COURSE
 ###############################################################################
 
-This is a training course that will help master Python programming language.
+.. toctree::
+    :name: master
+
+    intro/index
+    basics/index
+    rdbms/index
+    oop/index
+    flask/index
+    django/index
+    linux/index
+    deploy/index
