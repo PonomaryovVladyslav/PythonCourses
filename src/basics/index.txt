@@ -1,0 +1,15 @@
+###############################################################################
+                                 Python Basics
+###############################################################################
+
+.. toctree::
+    :name: basics
+
+    variables
+    datatypes
+    controlflow
+    functions
+    modules
+    exceptions
+    pep8
+    testing
