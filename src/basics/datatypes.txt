@@ -1,3 +1,129 @@
 *******************************************************************************
                                   Data Types
 *******************************************************************************
+
+In programming data types is an important concept. Data may represent different
+things.
+
+Data may represent different things and require various operations available.
+In programming data types is an important concept. Python has the following
+data types built-in by default in these categories:
+
+:Text:
+    ``str``
+
+:Numeric:
+    ``int``, ``float``, ``complex``
+
+:Sequence:
+    ``list``, ``tuple``, ``range``
+
+:Mapping:
+    ``dict``
+
+:Set:
+    ``set``, ``frozenset``
+
+:Boolean:
+    ``bool``
+
+:None:
+    ``None``
+
+Python uses dynamic typing. This means as a developer you should not declare
+a variable with its data type - the interpreter will do this for you. Other
+popular language using dynamic typing are JavaScript and PHP. Setting variables
+in Python is as easy as:
+
+.. code-block:: python
+
+    variable = "Hello World"       # create variable of str type
+
+Casting
+=======
+
+You may specify the data type of a variable with casting:
+
+.. code-block:: python
+
+    x = str(3)    # x will be '3'
+    y = int(3)    # y will be 3
+    z = float(3)  # z will be 3.0
+
+Text
+====
+
+Text data are stored as strings (``str`` data type) in Python. Strings are
+surrounded by either single quotation marks, or double quotation marks. So
+``'Python'`` is the same as ``"Python"``. To assign string to a variable:
+
+.. code-block:: python
+
+    string = "string"
+    string = str("string")  # declare using casting
+
+Multiline strings
+-----------------
+
+You can assign a multiline string using three quotes:
+
+.. code-block:: python
+
+    variable = """Well, ye scrawny mate- set sails for riddle!
+    Never love a lagoon."""
+
+Single quotes or double quotes
+------------------------------
+
+Don't care. Use any quote mark you like. Remember the string is any characters
+surrounded by the same quotes. So you are use single quotes if double quote
+mark is the part of your string data and vice versa. It's not recommended to
+mess various quote marks in the same project.
+
+Strings are subscriptable
+-------------------------
+
+Strings in Python are arrays of bytes representing unicode characters. This is
+common for many programming languages. However Python does not have a data type
+to represent a single character itself; a single character in Python is of
+string type as well. You can get the character at a specific position in
+a string.
+
+.. code-block:: python
+
+    text = "Plank of a salty strength, endure the fortune!"
+    character = text[10]
+
+Strings are iterable
+--------------------
+
+Since strings are arrays, we can loop through the characters in a string with
+a ``for`` loop:
+
+.. code-block:: python
+
+    for character in "foobar":
+        print(character)
+
+Integers
+========
+
+``int``, or integer, is a whole number, positive or negative, without decimals.
+
+.. code-block:: python
+
+    integer_number = 42
+    integer_number = int(42)  # declare using casting
+
+Floats
+======
+
+``float``, or floating point number, is a number, positive or negative,
+containing one or more decimals.
+
+.. code-block:: python
+
+    float_number = 42.        # will assign 42.0
+    float_number = .42        # will assign 0.42
+    float_number = 4.2        # will assign 4.2
+    float_number = float(42)  # declare using casting (42.0)
