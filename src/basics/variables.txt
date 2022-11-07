@@ -1,3 +1,13 @@
 *******************************************************************************
                                    Variables
 *******************************************************************************
+
+Variables are container for storing data. There is no syntax for declaring
+variables in Python. A variable is created the moment you first assign a value
+to it.
+
+.. code-block:: python
+
+    foo = 42
+    bar = "some string data"
+    foobar = 42.0
