@@ -1,3 +1,341 @@
 *******************************************************************************
                               Classes and Objects
 *******************************************************************************
+
+Conceptually, objects are like the components of a system. Think of a program
+as a factory assembly line of sorts. At each step of the assembly line a system
+component processes some material, ultimately transforming raw material into a
+finished product.
+
+An object contains data, like the raw or preprocessed materials at each step on
+an assembly line, and behavior, like the action each assembly line component
+performs.
+
+Paradigm of Object-Oriented Programming
+=======================================
+
+Object-oriented programming is a programming paradigm that provides a means of
+structuring programs so that properties and behaviors are bundled together
+into individual **objects**.
+
+For instance, an object could represent a person with **properties** like
+a name, age, and address and **behaviors** such as walking, talking, running.
+Or it could represent an email with properties like a recipient list, subject,
+and body and behaviors like adding attachments and sending.
+
+Put another way, object-oriented programming is an approach for modeling
+concrete, real-world things, like cars, as well as relations between things,
+like companies and employees, students and teachers, and so on. OOP models
+real-world entities as software objects that have some data associated with
+them and can perform certain functions.
+
+
+Object-Oriented Programming Concepts
+====================================
+
+So far, we can discuss the major concepts within the OOP paradigm.
+And they are:
+
+:**encapsulation**:
+
+    In OOP refers to the bundling of data with methods that operate that data,
+    or restricting of direct access to some of an object's components.
+
+    .. note:: Encapsulation mechanism is often confused with *hiding*. It's not
+              actually that encapsulation does, but data hiding is available to
+              us due to the encapsulation.
+
+:**inheritance**:
+
+    It's a mechanism of basing an object or a class upon another object
+    (prototype-based inheritance) or class (class-based inheritance),
+    retaining similar implementation. Also defined as deriving new classes
+    (subclasses) from existing ones such as a super class or base class and
+    forming them into a hierarchy of classes.
+
+:**polymorphism**:
+
+    It's a provision of a single interface to entities of different types or
+    the use of a single symbol to represent multiple different types.
+    The concept is borrowed from a principle in biology where an organism or
+    species can have many different forms or stages.
+
+:**abstraction**:
+
+    The process of removing or generalizing details or attributes in the study
+    of objects or systems to focus attention on details of greater importance,
+    it is similar in nature to the process of generalization.
+    The creation of abstract concept-objects by mirroring common features or
+    attributes of various non-abstract objects or systems of study is the
+    result of the process of abstraction.
+
+Define a Class in Python
+========================
+
+Primitive data-structures - like numbers, strings, lists etc. - are designed to
+represent simple pieces of information, such as the cost of a product, the name
+of a novel, or someone's favorite colors. What if you want to represent things
+that are more complex?
+
+For example, let's say you want to track employees in an organization. You need
+to store some basic information about each employee. Let's start from a very
+beginning and try to represent an individual employee as a bunch of variables:
+
+.. code-block:: python
+
+    first_name = "Serhii"
+    last_name = "Horodilov"
+    job_title = "Software Engineer"
+
+This approach has number of issues. Once it's required to store information
+for more that one person, you are to create another set of variables:
+``first_name_1``, ``first_name_2`` etc. The most terrifying issue is that these
+portions of data have no relations to each other. Let's try to use ``list`` for
+this purpose:
+
+.. code-block:: python
+
+    serhii = ["Serhii", "Horodilov", "Software Engineer"]
+    vlad = ["Vladyslav", "Ponomaryov", "Release Manager"]
+
+There are number of issues with this approach as well.
+
+First, it can make larger code files more difficult to manage. If you reference
+``serhii[0]`` several lines away from where ``serhii`` list is declared, will
+you remember that the element with ``index 0`` is the person's name? Of course,
+you can use ``dict`` structure, but...
+
+Second, it can introduce errors if not every person has the same number of
+properties.
+
+A great way to make this type of code more manageable and more maintainable is
+to use **classes**.
+
+All classes definitions in Python start with the keyword ``class``, which is
+followed by the name of the class and a colon. Any code that is indented below
+the class definition is considered the part of the class's body.
+
+.. code-block:: python
+
+    class Person:
+        """Person class implementation"""
+
+Classes vs Instances
+====================
+
+Classes are used to create user-defined data structures. As it was mentioned
+above OOP is about bundling data and behaviors. Classes define data structures;
+each portion of data bundled within a classes is called **property** or
+**field**. Classes also define functions called **methods**, which identify the
+behavior and actions that an object created from the class can perform with its
+data.
+
+.. code-block:: python
+
+    class Person:
+        """Person class implementation"""
+
+        first_name: str = ""
+        last_name: str = ""
+        job_title: str = ""
+
+A class is a blueprint for how something should be defined. It doesn't actually
+contain any data. The person class above specifies that ``first_name`` and
+``last_name`` properties are bundled within this class, but it don't actually
+contain the person's name.
+
+While classes are blueprints, an **instance** is an **object** that is built
+from a form has been filled out with information. Just like many people can
+fill out the same form with their own unique information, many instances can
+be created from a single class.
+
+.. code-block:: python
+
+    serhii = Person()
+    serhii.first_name = "Serhii"
+    serhii.last_name = "Horodilov"
+    serhii.job_title = "Software Engineer"
+
+    vlad = Person()
+    vlad.first_name = "Vladyslav"
+    vlad.last_name = "Ponomaryov"
+    vlad.job_title = "Release Manager"
+
+Methods
+=======
+
+A function bundled within a class is called **method**. There are several ways
+to define a class method. For now it's needed to know, that each method will
+get a special argument at the first position. This argument is a reference to
+an actual object. By convention, this argument is called ``self``.
+
+.. code-block:: python
+
+    class Person:
+        """Person class implementation"""
+
+        first_name: str = ""
+        last_name: str = ""
+        job_title: str = ""
+
+        def get_fullname(self) -> str:
+            """Return a person's fullname"""
+
+            return " ".join([self.first_name, self.last_name])
+
+Initializing Instance with Data
+-------------------------------
+
+There are several methods surrounded with double underscores (``__method__``)
+that are called **dunder methods** or **magic methods**. We'll take a closer
+look at these methods in the future. For now, it's ok to just one of these
+special methods: ``__init__``. It initializes an instance with some specific
+data.
+
+.. code-block:: python
+
+    class Person:
+        """Person class implementation"""
+
+        programming_language: str = "Python"
+
+        def __init__(
+            self, first_name: str, last_name: str, job_title: str
+        ) -> None:
+            """Initialize a person instance"""
+
+            self.first_name = first_name
+            self.last_name = last_name
+            self.job_title = job_title
+
+        def get_fullname(self) -> str:
+            """Return a person's fullname"""
+
+            return " ".join([self.first_name, self.last_name])
+
+
+    serhii = Person("Serhii", "Horodilov", "Software Engineer")
+    vlad = Person("Vladyslav", "Ponomaryov", "Release Manager")
+
+    serhii.first_name  # Serhii
+    serhii.last_name   # Horodilov
+
+Note, this call definition has a property called ``programming_language``
+defined outside of the ``__init__`` method. This property is shared across
+all the class instances.
+
+Some More Details on ``self``
+-----------------------------
+
+``self`` is nothing except the convention. Instance methods will receive
+a pointer to the instance itself as the first argument. In two words: it is
+the actual object to call the method with. For example, the student class
+defines attributes (student's name and scores) and methods available for
+each student instance: complete the challenge or skip classes. While the
+actual student instance contains data and methods related to the exact one
+student. The ``self`` is a referer to this exact object.
+
+Data Hiding
+===========
+
+Many programming languages has *access modifiers* implemented. The Python has
+also, but actually no. It's implemented as a convention-level. All class's
+members starting with underscore are considered to be **protected** members
+and should not be accessible outside the class instance; on the other hand
+members starting with two underscores are considered to be **private** members
+and shouldn't be accessible outside the class instance as well.
+
+.. code-block:: python
+
+    class Employee:
+        """Employee class implementation"""
+
+        def __init__(self, salary: float, hours: int = None) -> None:
+            """Initialize an employee instance"""
+
+            self.__salary = salary
+            self._hours = hours
+
+        def report_hours(self, hours: int) -> None:
+            """Report working hours"""
+
+            # some validation stuff goes here
+            self._hours += hours
+
+        def change_salary(salary: float) -> None:
+            """Change salary size"""
+
+            self.__salary = salary
+
+        def get_payment(self) -> float:
+            """Return a payment size"""
+
+            return round(self.__salary * self._hours, 2)
+
+With the implementation above there are **public** attributes, but you can
+still access data outside the class, but you definitely shouldn't.
+
+.. code-block:: python
+
+    employee = Employee(100_500)
+    # you're able to make changes to protected member, but this code smells
+    # use dedicated method `report_hours` instead
+    employee._hours = 100
+    # accessing Employee.__salary attribute will raise an exception
+    # the interpreter will add _className before each private member
+    # but you know - `change_salary` method is that you need
+    employee._Employee__salary
+
+Few Words about Inheritance
+===========================
+
+.. note:: Just in two words. This topic is discovered in the future articles.
+
+You can derive your classes from a super class. Derived classes are called
+*sub classes* and the class used to inherit from is called *super class*.
+Other terms are *child* class and *parent* class, but they are not common
+(this is author's personal opinion).
+
+Just put a super class in parenthesis two inherit from it:
+
+.. code-block:: python
+
+    class Dog():
+        """Abstract dog implementation"""
+
+
+    class JackRussellTerrier(Dog):
+        """Jack russell terrier species implementation"""
+
+Few Words about Polymorphism
+============================
+
+You've already use this. The most simple explanation is **addition operator**.
+For different types of data it would produce different types of output:
+
+.. code-block:: python
+
+    ["a", "b", "c"] + ["d"]  # the result is ["a", "b", "c", "d"]
+    "a" + "b" + "cd"         # the result is "abcd"
+
+For example you may have various classes inherited from a base class, that
+provides a common interface, but each derived class may implement the method
+in its own way.
+
+.. code-block:: python
+
+    class Animal:
+        """Abstract animal"""
+
+        def voice(self):
+            pass
+
+
+    class Cat(Animal):
+        def voice(self):
+            print("MEOW")
+
+
+    class Dog(Animal):
+        def voice(self):
+            print("ARF)
