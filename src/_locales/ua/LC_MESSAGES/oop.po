@@ -1,0 +1,474 @@
+# OBJECT-ORIENTED PROGRAMMING TOPICS
+#
+# Copyright (C) 2022, Python training course authors and contributors
+# This file is distributed under the same license as the Python Training
+# Course package.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Python Training Course 2022.11.dev\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-11-21 17:18+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.11.0\n"
+
+#: ../../src/oop/index.txt:3
+msgid "Object-Oriented Programming"
+msgstr "Об'єктно-орієнтоване програмування"
+
+#: ../../src/oop/index.txt:5
+msgid ""
+"Object-oriented programming (OOP) is one of the biggest and most "
+"important subjects in all of programming. It is a method of structuring a"
+" program by bundling related properties and behavior into individual "
+"objects."
+msgstr ""
+"Об'єктно-орієнтоване програмування (ООП) є однією з найбільших і "
+"найважливіших тем у всьому програмуванні. Це метод структурування"
+"програми шляхом об'єднання пов'язаних властивостей і поведінки в окремі "
+"об'єкти."
+
+#: ../../src/oop/inheritance.txt:3
+msgid "Inheritance"
+msgstr "Наслідування"
+
+#: ../../src/oop/intro.txt:3
+msgid "Classes and Objects"
+msgstr "Класи та Об'єкти"
+
+#: ../../src/oop/intro.txt:5
+msgid ""
+"Conceptually, objects are like the components of a system. Think of a "
+"program as a factory assembly line of sorts. At each step of the assembly"
+" line a system component processes some material, ultimately transforming"
+" raw material into a finished product."
+msgstr ""
+"Концептуально об'єкти схожі на компоненти системи. Думайте про програму як "
+"про заводську конвеєрну лінію. На кожному кроці складання системний компонент"
+" обробляє певний матеріал, остаточно перетворюючи сировину на закінчений "
+"продукт."
+
+#: ../../src/oop/intro.txt:10
+msgid ""
+"An object contains data, like the raw or preprocessed materials at each "
+"step on an assembly line, and behavior, like the action each assembly "
+"line component performs."
+msgstr ""
+"Об'єкт містить дані, як-от необроблені або попередньо оброблені матеріали на "
+"кожному кроці складальної лінії, і поведінку, як-от дію, яку виконує кожен "
+"компонент складальної лінії."
+
+#: ../../src/oop/intro.txt:15
+msgid "Paradigm of Object-Oriented Programming"
+msgstr "Парадигма Об'єктно-Орієнтованого Програмування"
+
+#: ../../src/oop/intro.txt:17
+msgid ""
+"Object-oriented programming is a programming paradigm that provides a "
+"means of structuring programs so that properties and behaviors are "
+"bundled together into individual **objects**."
+msgstr ""
+"Об'єктно-орієнтоване програмування - це парадигма програмування, яка "
+"надає засоби структурування програм так, що властивості та поведінка "
+"об'єднуються в окремі **об'єкти**."
+
+#: ../../src/oop/intro.txt:21
+msgid ""
+"For instance, an object could represent a person with **properties** like"
+" a name, age, and address and **behaviors** such as walking, talking, "
+"running. Or it could represent an email with properties like a recipient "
+"list, subject, and body and behaviors like adding attachments and "
+"sending."
+msgstr ""
+"Наприклад, об'єкт може представляти особу з такими **властивостями**, як"
+" ім'я, вік та адреса, а також такими **поведінками**, як ходьба, розмова, "
+"біг. Або він може представляти електронний лист із такими властивостями, як "
+"список одержувачів, тема , а також тіло та поведінку, як-от додавання "
+"вкладень і надсилання."
+
+#: ../../src/oop/intro.txt:26
+msgid ""
+"Put another way, object-oriented programming is an approach for modeling "
+"concrete, real-world things, like cars, as well as relations between "
+"things, like companies and employees, students and teachers, and so on. "
+"OOP models real-world entities as software objects that have some data "
+"associated with them and can perform certain functions."
+msgstr ""
+"Інакше кажучи, об'єктно-орієнтоване програмування - це підхід до моделювання "
+"конкретних речей реального світу, таких як автомобілі, а також відносин між "
+"речами, такими як компанії та працівники, студенти та викладачі тощо. "
+"ООП моделює сутності реального світу як програмні об'єкти, які "
+"мають деякі дані, пов'язані з ними та можуть виконувати певні функції."
+
+#: ../../src/oop/intro.txt:34
+msgid "Object-Oriented Programming Concepts"
+msgstr "Концепції Об'єктно-Орієнтованого Програмування"
+
+#: ../../src/oop/intro.txt:36
+msgid ""
+"So far, we can discuss the major concepts within the OOP paradigm. And "
+"they are:"
+msgstr ""
+"Поки що ми можемо обговорити основні концепції парадигми ООП. І вони:"
+
+#: ../../src/oop/intro.txt
+msgid "**encapsulation**"
+msgstr "**інкапсуляція**"
+
+#: ../../src/oop/intro.txt:41
+msgid ""
+"In OOP refers to the bundling of data with methods that operate that "
+"data, or restricting of direct access to some of an object's components."
+msgstr ""
+"В ООП означає об'єднання даних із методами, які обробляють ці дані, або "
+"обмеження прямого доступу до деяких компонентів об'єкта."
+
+#: ../../src/oop/intro.txt:44
+msgid ""
+"Encapsulation mechanism is often confused with *hiding*. It's not "
+"actually that encapsulation does, but data hiding is available to us due "
+"to the encapsulation."
+msgstr ""
+"Механізм інкапсуляції часто плутають із приховуванням. Насправді інкапсуляція"
+" це не робить, але приховування даних доступне для нас завдяки інкапсуляції."
+
+#: ../../src/oop/intro.txt
+msgid "**inheritance**"
+msgstr "**наслідування**"
+
+#: ../../src/oop/intro.txt:50
+msgid ""
+"It's a mechanism of basing an object or a class upon another object "
+"(prototype-based inheritance) or class (class-based inheritance), "
+"retaining similar implementation. Also defined as deriving new classes "
+"(subclasses) from existing ones such as a super class or base class and "
+"forming them into a hierarchy of classes."
+msgstr ""
+"Це механізм базування об'єкта або класу на іншому об'єкті "
+"(успадкування на основі прототипу) або класу (успадкування на основі класу), "
+"зберігаючи подібну реалізацію. Також визначається як отримання нових класів "
+"(підкласів) із існуючих такі як суперклас або базовий клас і "
+"формування їх у ієрархію класів."
+
+#: ../../src/oop/intro.txt
+msgid "**polymorphism**"
+msgstr "**поліморфізм**"
+
+#: ../../src/oop/intro.txt:58
+msgid ""
+"It's a provision of a single interface to entities of different types or "
+"the use of a single symbol to represent multiple different types. The "
+"concept is borrowed from a principle in biology where an organism or "
+"species can have many different forms or stages."
+msgstr ""
+"Це надання єдиного інтерфейсу для сутностей різних типів або "
+"використання одного символу для представлення кількох різних типів. "
+"Концепція запозичена з принципу в біології, згідно з яким організм або "
+"вид може мати багато різних форми чи етапи."
+
+#: ../../src/oop/intro.txt
+msgid "**abstraction**"
+msgstr "**абстракція**"
+
+#: ../../src/oop/intro.txt:65
+msgid ""
+"The process of removing or generalizing details or attributes in the "
+"study of objects or systems to focus attention on details of greater "
+"importance, it is similar in nature to the process of generalization. The"
+" creation of abstract concept-objects by mirroring common features or "
+"attributes of various non-abstract objects or systems of study is the "
+"result of the process of abstraction."
+msgstr ""
+"Процес видалення або узагальнення деталей або атрибутів під час дослідження "
+"об'єктів або систем, щоб зосередити увагу на деталях більшої важливості, "
+"подібний за своєю природою до процесу узагальнення. Створення абстрактних "
+"понять-об'єктів шляхом віддзеркалення спільних рис або атрибутів різних "
+"неабстрактних об'єктів або систем дослідження є результатом процесу "
+"абстрагування."
+
+#: ../../src/oop/intro.txt:73
+msgid "Define a Class in Python"
+msgstr "Визначення Классу в Python"
+
+#: ../../src/oop/intro.txt:75
+msgid ""
+"Primitive data-structures - like numbers, strings, lists etc. - are "
+"designed to represent simple pieces of information, such as the cost of a"
+" product, the name of a novel, or someone's favorite colors. What if you "
+"want to represent things that are more complex?"
+msgstr ""
+"Примітивні структури даних - як-от числа, рядки, списки тощо - призначені "
+"для представлення простих фрагментів інформації, таких як вартість продукту, "
+"назва роману чи чиїсь улюблені кольори. Що, якщо ви бажаєте представити "
+"складніші речі?"
+
+#: ../../src/oop/intro.txt:80
+msgid ""
+"For example, let's say you want to track employees in an organization. "
+"You need to store some basic information about each employee. Let's start"
+" from a very beginning and try to represent an individual employee as a "
+"bunch of variables:"
+msgstr ""
+"Наприклад, скажімо, ви хочете відслідковувати співробітників в організації. "
+"Вам потрібно зберегти деяку базову інформацію про кожного працівника. "
+"Давайте почнемо з самого початку та спробуємо представити окремого "
+"працівника як групу змінних:"
+
+#: ../../src/oop/intro.txt:90
+msgid ""
+"This approach has number of issues. Once it's required to store "
+"information for more that one person, you are to create another set of "
+"variables: ``first_name_1``, ``first_name_2`` etc. The most terrifying "
+"issue is that these portions of data have no relations to each other. "
+"Let's try to use ``list`` for this purpose:"
+msgstr ""
+"Цей підхід має низку проблем. Після того, як буде потрібно зберігати "
+"інформацію про більше ніж одну особу, ви повинні створити інший набір "
+"змінних: ``first_name_1``, ``first_name_2`` тощо. Найжахливіше проблема "
+"в тому, що ці частини даних не мають жодного відношення одна до одної. "
+"Давайте спробуємо використати ``список`` для цієї мети:"
+
+#: ../../src/oop/intro.txt:101
+msgid "There are number of issues with this approach as well."
+msgstr "З цим підходом також виникає ряд проблем."
+
+#: ../../src/oop/intro.txt:103
+msgid ""
+"First, it can make larger code files more difficult to manage. If you "
+"reference ``serhii[0]`` several lines away from where ``serhii`` list is "
+"declared, will you remember that the element with ``index 0`` is the "
+"person's name? Of course, you can use ``dict`` structure, but..."
+msgstr ""
+"По-перше, це може ускладнити керування великими файлами коду. Якщо ви "
+"посилаєтеся на ``serhii[0]`` на кілька рядків від місця, де оголошено список "
+"``serhii``, ви пам'ятаєте, що елемент з ``index 0`` - це ім'я " "особи? "
+"Звичайно, ви можете використовувати структуру ``dict``, але..."
+
+#: ../../src/oop/intro.txt:108
+msgid ""
+"Second, it can introduce errors if not every person has the same number "
+"of properties."
+msgstr ""
+"По-друге, це може призвести до помилок, якщо не кожна особа має однакову "
+"кількість властивостей."
+
+#: ../../src/oop/intro.txt:111
+msgid ""
+"A great way to make this type of code more manageable and more "
+"maintainable is to use **classes**."
+msgstr ""
+"Чудовий спосіб зробити цей тип коду більш керованим і придатним для "
+"обслуговування - це використання **класів**."
+
+#: ../../src/oop/intro.txt:114
+msgid ""
+"All classes definitions in Python start with the keyword ``class``, which"
+" is followed by the name of the class and a colon. Any code that is "
+"indented below the class definition is considered the part of the class's"
+" body."
+msgstr ""
+"Усі визначення класів у Python починаються з ключового слова ``class``, за "
+"яким йдуть ім'я класу та двокрапка. Будь-який код, який має відступ під "
+"визначенням класу, вважається частиною тіла класу."
+
+#: ../../src/oop/intro.txt:124
+msgid "Classes vs Instances"
+msgstr "Класи та Екземпляри Класу"
+
+#: ../../src/oop/intro.txt:126
+msgid ""
+"Classes are used to create user-defined data structures. As it was "
+"mentioned above OOP is about bundling data and behaviors. Classes define "
+"data structures; each portion of data bundled within a classes is called "
+"**property** or **field**. Classes also define functions called "
+"**methods**, which identify the behavior and actions that an object "
+"created from the class can perform with its data."
+msgstr ""
+"Класи використовуються для створення визначених користувачем структур даних. "
+"Як було зазначено вище, ООП стосується об'єднання даних і поведінки. Класи "
+"визначають структури даних; кожна частина даних, об'єднаних у класи, "
+"називається властивістю або полем. Класи також визначають функції, "
+"які називаються методами, які ідентифікують поведінку та дії, які об'єкт, "
+"створений з класу, може виконувати зі своїми даними."
+
+#: ../../src/oop/intro.txt:142
+msgid ""
+"A class is a blueprint for how something should be defined. It doesn't "
+"actually contain any data. The person class above specifies that "
+"``first_name`` and ``last_name`` properties are bundled within this "
+"class, but it don't actually contain the person's name."
+msgstr ""
+"Клас - це схема того, як щось має бути визначено. Він насправді не містить "
+"жодних даних. Клас person вище вказує, що властивості " "first_name`` і "
+"``last_name`` об'єднані в цей класу, але насправді він не містить імені "
+"людини."
+
+#: ../../src/oop/intro.txt:147
+msgid ""
+"While classes are blueprints, an **instance** is an **object** that is "
+"built from a form has been filled out with information. Just like many "
+"people can fill out the same form with their own unique information, many"
+" instances can be created from a single class."
+msgstr ""
+"Хоча класи є кресленнями, екземпляр - це об'єкт, створений із форми, "
+"заповненої інформацією. Подібно до того, як багато людей можуть заповнювати "
+"ту саму форму своєю унікальною інформацією, багато екземплярів можуть бути "
+"створений з одного класу."
+
+#: ../../src/oop/intro.txt:165
+msgid "Methods"
+msgstr "Методи"
+
+#: ../../src/oop/intro.txt:167
+msgid ""
+"A function bundled within a class is called **method**. There are several"
+" ways to define a class method. For now it's needed to know, that each "
+"method will get a special argument at the first position. This argument "
+"is a reference to an actual object. By convention, this argument is "
+"called ``self``."
+msgstr ""
+"Функція, об'єднана в клас, називається методом. Існує кілька способів "
+"визначення методу класу. Наразі необхідно знати, що кожен метод отримає "
+"спеціальний аргумент у першій позиції. Цей аргумент є посилання на реальний "
+"об'єкт. За домовленістю цей аргумент називається ``self``."
+
+#: ../../src/oop/intro.txt:187
+msgid "Initializing Instance with Data"
+msgstr "Ініціалізація Екземпляру з Даними"
+
+#: ../../src/oop/intro.txt:189
+msgid ""
+"There are several methods surrounded with double underscores "
+"(``__method__``) that are called **dunder methods** or **magic methods**."
+" We'll take a closer look at these methods in the future. For now, it's "
+"ok to just one of these special methods: ``__init__``. It initializes an "
+"instance with some specific data."
+msgstr ""
+"Є кілька методів, позначених подвійним підкресленням (``__method__``), які "
+"називаються методами dunder або магічними методами. Ми детальніше розглянемо "
+"ці методи в майбутньому. Наразі можна використовувати лише один із цих "
+"спеціальних методів: ``__init__``. Він ініціалізує примірник певними даними."
+
+#: ../../src/oop/intro.txt:223
+msgid ""
+"Note, this call definition has a property called ``programming_language``"
+" defined outside of the ``__init__`` method. This property is shared "
+"across all the class instances."
+msgstr ""
+"Зверніть увагу, що це визначення виклику має властивість під назвою "
+"``programming_language``, визначену за межами методу ``__init__``. Ця "
+"властивість є спільною для всіх екземплярів класу."
+
+#: ../../src/oop/intro.txt:228
+msgid "Some More Details on ``self``"
+msgstr "Дещо Більше про ``self``"
+
+#: ../../src/oop/intro.txt:230
+msgid ""
+"``self`` is nothing except the convention. Instance methods will receive "
+"a pointer to the instance itself as the first argument. In two words: it "
+"is the actual object to call the method with. For example, the student "
+"class defines attributes (student's name and scores) and methods "
+"available for each student instance: complete the challenge or skip "
+"classes. While the actual student instance contains data and methods "
+"related to the exact one student. The ``self`` is a referer to this exact"
+" object."
+msgstr ""
+"``self`` - це не що інше, як конвенція. Методи екземпляра отримають "
+"вказівник на сам екземпляр як перший аргумент. У двох словах: це фактичний "
+"об'єкт для виклику методу. Наприклад, Клас студента визначає атрибути (ім'я "
+"студента та бали) і методи, доступні для кожного екземпляра студента: "
+"виконайте завдання або пропустіть заняття. Тоді як фактичний екземпляр "
+"студента містить дані та методи, пов'язані з одним студентом. ``self`` є "
+"посиланням саме на цей об'єкт."
+
+#: ../../src/oop/intro.txt:239
+msgid "Data Hiding"
+msgstr "Приховання Даних"
+
+#: ../../src/oop/intro.txt:241
+msgid ""
+"Many programming languages has *access modifiers* implemented. The Python"
+" has also, but actually no. It's implemented as a convention-level. All "
+"class's members starting with underscore are considered to be "
+"**protected** members and should not be accessible outside the class "
+"instance; on the other hand members starting with two underscores are "
+"considered to be **private** members and shouldn't be accessible outside "
+"the class instance as well."
+msgstr ""
+"Багато мов програмування мають реалізовані модифікатори доступу. Python"
+" також має, але насправді ні. Він реалізований на рівні конвенції. Усі "
+"члени класу, які починаються з підкреслення, вважаються захищеними членами "
+"та не повинні бути доступними за межами екземпляр класу; з іншого боку, "
+"члени, які починаються з двох символів підкреслення, вважаються приватними "
+"членами та не повинні бути доступними за межами екземпляра класу."
+
+#: ../../src/oop/intro.txt:276
+msgid ""
+"With the implementation above there are **public** attributes, but you "
+"can still access data outside the class, but you definitely shouldn't."
+msgstr ""
+"З наведеною вище реалізацією є загальнодоступні атрибути, але ви все ще "
+"можете отримати доступ до даних за межами класу, але точно не повинні."
+
+#: ../../src/oop/intro.txt:287
+msgid "Few Words about Inheritance"
+msgstr "Кілька Слів про Наслідування"
+
+#: ../../src/oop/intro.txt:289
+msgid "Just in two words. This topic is discovered in the future articles."
+msgstr "Всього в двох словах. Ця тема розкривається в наступних статтях."
+
+#: ../../src/oop/intro.txt:291
+msgid ""
+"You can derive your classes from a super class. Derived classes are "
+"called *sub classes* and the class used to inherit from is called *super "
+"class*. Other terms are *child* class and *parent* class, but they are "
+"not common (this is author's personal opinion)."
+msgstr ""
+"Ви можете отримати свої класи від суперкласу. Похідні класи називаються "
+"*підкласами*, а клас, який використовується для успадкування, називається "
+"*суперкласом*. Іншими термінами є *дочірній* клас і *батьківський* клас, але "
+"вони не є поширеними ( це особиста думка автора)."
+
+#: ../../src/oop/intro.txt:296
+msgid "Just put a super class in parenthesis two inherit from it:"
+msgstr "Просто помістіть суперклас у дужки, які успадковують від нього два:"
+
+#: ../../src/oop/intro.txt:308
+msgid "Few Words about Polymorphism"
+msgstr "Кілька Слів про Поліморфізм"
+
+#: ../../src/oop/intro.txt:310
+msgid ""
+"You've already use this. The most simple explanation is **addition "
+"operator**. For different types of data it would produce different types "
+"of output:"
+msgstr ""
+"Ви вже використовували це. Найпростішим поясненням є **оператор додавання**. "
+"Для різних типів даних він створюватиме різні типи виводу:"
+
+#: ../../src/oop/intro.txt:318
+msgid ""
+"For example you may have various classes inherited from a base class, "
+"that provides a common interface, but each derived class may implement "
+"the method in its own way."
+msgstr ""
+"Наприклад, у вас можуть бути різні класи, успадковані від базового класу, "
+"який забезпечує загальний інтерфейс, але кожен похідний клас може "
+"реалізовувати метод по-своєму."
+
+#: ../../src/oop/patterns.txt:3
+msgid "Design Patterns"
+msgstr ""
+
+#: ../../src/oop/solid.txt:3
+msgid "Solid Principles"
+msgstr ""
+
