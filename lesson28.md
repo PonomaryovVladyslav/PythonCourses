@@ -810,16 +810,16 @@ def regex(request, text):
 2. Создать в нём всю необходимую структуру, для урлов:
 
 * `http://127.0.0.1:8000/`,
-* `http://127.0.0.1:8000/acricles`,
-* `http://127.0.0.1:8000/acrticles/archive`,
-* `http://127.0.0.1:8000/users`
+* `http://127.0.0.1:8000/articles/`,
+* `http://127.0.0.1:8000/articles/archive/`,
+* `http://127.0.0.1:8000/users/`
 
 3. Создать структуру для динамических урлов:
 
-* `http://127.0.0.1:8000/article/<int:article_number>`,
-* `http://127.0.0.1:8000/article/<int:article_number>/archive`,
-* `http://127.0.0.1:8000/article/<int:article_number>/<slug:slug_text>`,
-* `http://127.0.0.1:8000/users/<int:user_number>`
+* `http://127.0.0.1:8000/article/<int:article_number>/`,
+* `http://127.0.0.1:8000/article/<int:article_number>/archive/`,
+* `http://127.0.0.1:8000/article/<int:article_number>/<slug:slug_text>/`,
+* `http://127.0.0.1:8000/users/<int:user_number>/`
 
 4. Создать урл который будет принимать параметр вида 4 символа от 1 до 9, или от a до f, знак дефиса и еще 6 символов,
    например `/34f1-1ac498/`
