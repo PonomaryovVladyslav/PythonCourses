@@ -1,0 +1,3 @@
+[submodule "problem-sets"]
+	path = problem-sets
+	url = https://github.com/edu-python-course/problem-sets
