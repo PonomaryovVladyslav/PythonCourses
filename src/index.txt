@@ -15,3 +15,8 @@
     django/index
     linux/index
     deploy/index
+
+.. rubric:: References
+
+.. bibliography::
+    :all:
