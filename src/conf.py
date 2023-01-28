@@ -1,8 +1,8 @@
 # Sphinx documentation generator configuration
 
 import sys
-from pathlib import Path
 from datetime import datetime
+from pathlib import Path
 
 # set up paths
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -19,6 +19,8 @@ version = "2022.11.dev"
 master_doc = root_doc = "index"
 extensions = [
     "sphinx.ext.autodoc",
+
+    "sphinxcontrib.bibtex",
     "sphinx_rtd_theme",
     "myst_parser",
 ]
@@ -30,6 +32,10 @@ source_suffix = {
 needs_sphinx = "4.0"
 exclude_patterns = []
 suppress_warnings = []
+
+# options for bibliography
+bibtex_bibfiles = ["refs.bib"]
+bibtex_reference_style = "label"
 
 # options for internationalization
 language = "en"
