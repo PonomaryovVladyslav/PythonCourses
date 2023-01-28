@@ -1,6 +1,12 @@
 # Sphinx documentation generator configuration
 
+import sys
+from pathlib import Path
 from datetime import datetime
+
+# set up paths
+BASE_DIR = Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(BASE_DIR / "problem-sets" / "src"))
 
 # project information
 project = "Python Training Course"
@@ -12,6 +18,7 @@ version = "2022.11.dev"
 # general configuration
 master_doc = root_doc = "index"
 extensions = [
+    "sphinx.ext.autodoc",
     "sphinx_rtd_theme",
     "myst_parser",
 ]
@@ -30,7 +37,7 @@ locale_dirs = ["_locales"]
 
 # options for HTML output
 html_theme = "sphinx_rtd_theme"
-# html_favicon = "relative/path/to/favicon" todo
+html_favicon = str(BASE_DIR / "assets" / "favicon.ico")
 
 # options for LaTeX output
 latex_doc = project.title().replace(" ", "") + ".tex"
