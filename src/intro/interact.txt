@@ -34,7 +34,7 @@ installer placed a shortcut on the desktop to launch the Python.
 For example in Windows the interpreter can be found in the **Start** menu
 labeled **Python 3.x**:
 
-.. figure:: ../_static/img/start-menu-python.png
+.. figure:: /../assets/img/start-menu-python.png
     :align: center
 
     Windows start menu Python group
@@ -52,12 +52,12 @@ The alternative is to launch from a terminal window:
 - **Command Prompt** in Windows
 - **Terminal** both in macOS and Linux
 
-.. figure:: ../_static/img/cmd-python.png
+.. figure:: /../assets/img/cmd-python.png
     :align: center
 
     Start Python via Command Prompt
 
-.. figure:: ../_static/img/terminal-python.png
+.. figure:: /../assets/img/terminal-python.png
     :align: center
 
     Start Python via Terminal
@@ -86,7 +86,7 @@ Your session should look like:
 If you've seen string "Hello, World!" printed back, congrats - you've run your
 first program in Python.
 
-.. image:: ../_static/img/celebrate.svg
+.. image:: /../assets/img/celebrate.svg
     :width: 200
     :align: center
 
@@ -145,7 +145,7 @@ Python will print string "Hello, World!". Your session should look like:
 
 .. static files within document
 
-.. |npp| image:: ../_static/img/npp.svg
+.. |npp| image:: /../assets/img/npp.svg
     :width: 24
-.. |geany| image:: ../_static/img/geany.svg
+.. |geany| image:: /../assets/img/geany.svg
     :width: 24
