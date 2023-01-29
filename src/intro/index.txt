@@ -38,16 +38,13 @@ the Python documentation.
 
 Here are some significant facts about Python.
 
-.. seealso::
-    The original article in English by :cite:author:`realpython:py3-intro`
-
 .. rubric:: Python is popular
 
 Python has been growing in popularity over the last few years.
 The 2018 Stack Overflow Developer Survey ranked Python as the 7th most popular
 and the number one most wanted technology of the year.
 By the end of Q-4 in 2022 Python is the **top** language on all GitHut metrics
-:cite:label:`github:stats`.
+:cite:`github:stats`.
 
 Here are some logos of unknown companies across the globe who uses Python:
 
@@ -129,48 +126,48 @@ are :cite:`python-usage`:
 
 .. static files within this document
 
-.. |python| image:: ../_static/img/python.svg
+.. |python| image:: /../assets/img/python.svg
     :width: 24
 
-.. |google| image:: ../_static/img/google.svg
+.. |google| image:: /../assets/img/google.svg
     :width: 64
     :alt: Google
     :target: https://about.google/
 
-.. |facebook| image:: ../_static/img/facebook.svg
+.. |facebook| image:: /../assets/img/facebook.svg
     :width: 64
     :alt: Facebook
     :target: https://www.facebook.com/
 
-.. |instagram| image:: ../_static/img/instagram.svg
+.. |instagram| image:: /../assets/img/instagram.svg
     :width: 64
     :alt: Instagram
     :target: https://about.instagram.com/
 
-.. |spotify| image:: ../_static/img/spotify.svg
+.. |spotify| image:: /../assets/img/spotify.svg
     :width: 64
     :alt: Spotify
     :target: https://support.spotify.com/us/article/what-is-spotify/
 
-.. |quora| image:: ../_static/img/quora.svg
+.. |quora| image:: /../assets/img/quora.svg
     :width: 64
     :alt: Quora
     :target: https://www.quora.com/about
 
-.. |netflix| image:: ../_static/img/netflix.svg
+.. |netflix| image:: /../assets/img/netflix.svg
     :width: 64
     :alt: Netflix
     :target: https://about.netflix.com
 
-.. |dropbox| image:: ../_static/img/dropbox.svg
+.. |dropbox| image:: /../assets/img/dropbox.svg
     :width: 64
     :alt: Dropbox
     :target: https://www.dropbox.com/about
 
-.. |reddit| image:: ../_static/img/reddit.svg
+.. |reddit| image:: /../assets/img/reddit.svg
     :width: 64
     :alt: Reddit
     :target: https://www.redditinc.com/
 
-.. |guido| image:: ../_static/img/guido-headshot-2019.jpg
+.. |guido| image:: /../assets/img/guido-headshot-2019.jpg
     :width: 100
