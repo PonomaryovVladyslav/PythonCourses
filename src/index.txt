@@ -16,6 +16,15 @@
     linux/index
     deploy/index
 
+.. only:: builder_html
+
+    .. toctree::
+        :name: appx
+        :caption: Additional materials
+
+        appx/code_edit
+        appx/env_path
+
 .. rubric:: References
 
 .. bibliography::

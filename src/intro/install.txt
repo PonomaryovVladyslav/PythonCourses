@@ -1,0 +1,133 @@
+*******************************************************************************
+                                Install Python
+*******************************************************************************
+
+The `Python wiki <https://wiki.python.org/moin/BeginnersGuide/Download>`_
+briefly describes the installation process.
+
+.. note:: To become a **true** professional, you need a special software called
+          :abbr:`IDE (Integrated Development Environment)` or at least a code
+          editor supporting syntax highlight. Refer :doc:`/appx/code_edit` for
+          more information.
+
+Linux
+=====
+
+On most Linux distros Python comes pre-installed and/or all distro have it
+available in their package repository (I haven't seen the one which does have).
+The installation process depends on the distro, but here are some examples how
+you can install it:
+
+.. code-block::
+    :caption: Install Python
+
+    # Debian / Ubuntu (and other distros that uses ``apt``)
+    apt install python3 python3-dev
+
+    # ArchLinux
+    pacman -S python3
+
+    # RedHat, CentOS, Fedora
+    dnf install python3 python3-devel
+
+    # Gentoo
+    # ... you should know what to do
+
+MacOS
+=====
+
+For newer versions of MacOS Python is no longer included by default and you
+will have to download and install it.
+
+The process is described at: `Using Python on a Mac`_.
+
+Briefly, you are invited to visit `downloads`_ and download the latest
+stable version of Python. A "universal binary" build of Python runs natively on
+Mac's new Intel and legacy PPC CPUs.
+
+After the installation you would get:
+
+- `Python 3.x` folder in `Applications` folder.
+  Standard development environment (`IDLE`) and `PythonLauncher` included.
+- A framework `/Library/Frameworks/Python.framework` included libraries and
+  executables.
+
+Install from Homebrew
+---------------------
+
+Python for MacOS is available via Homebrew. You are to search `formulae`_ for
+the latest available version. In general, it's as easy as:
+
+.. code-block:: shell
+
+    brew install python@3.9
+
+Windows
+=======
+
+As for MacOS, here is the official documentation: `Using Python on Windows`_.
+
+For Windows' users the stable release is available from `downloads`_. Just
+download the installer and proceed to common steps to install software.
+
+.. important:: It's recommended to **Add Python3.x to PATH**, this will avoid
+               problems at the beginning of your journey with Python
+
+.. image:: https://docs.python.org/3/_images/win_installer.png
+    :width: 600
+
+Going on with **Install Now**:
+
+- Python will be installed to your user directory
+- Python Launcher will be installed according to the option at the bottom
+  of the page
+
+Using **Customize installation** will perform an *all-users* installation.
+
+Removing the MAX_PATH Limitation
+--------------------------------
+
+Windows historically has limited path lengths to 260 characters. This meant
+that paths longer than this would not resolve and errors would result. In the
+latest versions of Windows, this limitation can be expanded to approximately
+32,000 characters. This allows the open() function, the os module and most
+other path functionality to accept and return paths longer than 260 characters.
+
+You will need PC administrator assistance to perform this action.
+
+Install from the Microsoft Store
+--------------------------------
+
+You can install from the Microsoft Store in two steps:
+
+#.  Open the Microsoft Store app and search for ``Python``
+    The result should look like:
+
+    .. figure:: ../_static/img/microsoft-store-search.png
+        :align: center
+
+        Microsoft Store - search results for "Python"
+
+    Select ``Python 3.9`` or the higher available version.
+
+#.  Click **GET** and wait until the installer is downloaded. The installation
+    process should run automatically. Follow the installer's instructions.
+
+    .. figure:: ../_static/img/microsoft-store-get.png
+        :scale: 50%
+        :align: center
+
+Online Interpreters
+===================
+
+Installing or updating Python on your computer is the first step to becoming
+a Python programmer :cite:`realpython:install-and-setup`.
+
+But if you cannot install Python at the moment for some reason, are can go
+with online interpreters. `repl.it <https://replit.com/>`_ provides the ability
+to create and store Python scripts (they are called *repl* here) for free.
+
+.. _formulae: https://formulae.brew.sh/formula/
+.. _Using Python on Windows: https://docs.python.org/3/using/windows.html
+.. _Using Python on a Mac: https://docs.python.org/3/using/mac.html
+.. _downloads: https://www.python.org/downloads/
