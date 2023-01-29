@@ -73,8 +73,11 @@ download the installer and proceed to common steps to install software.
 .. important:: It's recommended to **Add Python3.x to PATH**, this will avoid
                problems at the beginning of your journey with Python
 
-.. image:: https://docs.python.org/3/_images/win_installer.png
+.. figure:: https://docs.python.org/3/_images/win_installer.png
     :width: 600
+    :align: center
+
+    Python installer first page
 
 Going on with **Install Now**:
 
@@ -103,7 +106,7 @@ You can install from the Microsoft Store in two steps:
 #.  Open the Microsoft Store app and search for ``Python``
     The result should look like:
 
-    .. figure:: ../_static/img/microsoft-store-search.png
+    .. figure:: /../assets/img/microsoft-store-search.png
         :align: center
 
         Microsoft Store - search results for "Python"
@@ -113,7 +116,7 @@ You can install from the Microsoft Store in two steps:
 #.  Click **GET** and wait until the installer is downloaded. The installation
     process should run automatically. Follow the installer's instructions.
 
-    .. figure:: ../_static/img/microsoft-store-get.png
+    .. figure:: /../assets/img/microsoft-store-get.png
         :scale: 50%
         :align: center
 
