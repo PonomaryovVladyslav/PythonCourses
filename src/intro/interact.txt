@@ -1,0 +1,151 @@
+*******************************************************************************
+                      Interacting with Python Interpreter
+*******************************************************************************
+
+    It’s time to write some Python code!
+
+    :cite:t:`realpython:interact`
+
+In short there are three major ways to do something with Python:
+
+- interactive Python console
+- running code from file [#]_
+- use online editors (like `repl.it <https://repl.it>`_)
+
+Using Python interpreter interactively
+======================================
+
+Using :abbr:`REPL (Read-Eval-Print-Loop)` environment is the most straight
+forward way to start talking to Python. This simply means starting up the
+interpreter and typing commands to it directly :cite:`realpython:interact`.
+The interpreter:
+
+- Reads the command you enter
+- Evaluates and executes it
+- Prints the output (if any) back to the console
+- Loops back and repeats
+
+Starting the interpreter
+------------------------
+
+In :abbr:`GUI (Graphic User Interface)` environment, it's likely that the
+installer placed a shortcut on the desktop to launch the Python.
+
+For example in Windows the interpreter can be found in the **Start** menu
+labeled **Python 3.x**:
+
+.. figure:: ../_static/img/start-menu-python.png
+    :align: center
+
+    Windows start menu Python group
+
+.. hint:: In case you are getting error saying python is not installed, but you
+          are sure that the interpreter **is installed** - this means you have
+          no Python in your ``PATH``. Message may look like:
+          ``'python' is not recognized as an internal or external command`` /
+          ``python: command not found``
+
+          Refer :doc:`/appx/env_path` for problem solution.
+
+The alternative is to launch from a terminal window:
+
+- **Command Prompt** in Windows
+- **Terminal** both in macOS and Linux
+
+.. figure:: ../_static/img/cmd-python.png
+    :align: center
+
+    Start Python via Command Prompt
+
+.. figure:: ../_static/img/terminal-python.png
+    :align: center
+
+    Start Python via Terminal
+
+Running code
+------------
+
+Put the Python code in interactive console and press enter to execute it.
+
+#.  Ensure that the ``>>>`` prompt is displayed and the cursor is pointed after
+    it
+#.  Type the command ``print("Hello, World!")``
+#.  Press enter
+
+.. code-block:: python
+
+    print("Hello, World!")
+
+Your session should look like:
+
+::
+
+    print("Hello, World!")
+    "Hello, World!"
+
+If you've seen string "Hello, World!" printed back, congrats - you've run your
+first program in Python.
+
+.. image:: ../_static/img/celebrate.svg
+    :width: 200
+    :align: center
+
+Exiting the interpreter
+-----------------------
+
+To exit the interactive console type "exit" and hit enter.
+
+.. code-block:: python
+
+    exit()
+
+Running code from file
+======================
+
+A Python script is a reusable set of code. It is essentially a Python program -
+a sequence of Python instructions - contained in a file. You can run the
+program by specifying the name of the script file to the interpreter.
+
+Python scripts are just plain text, so you can edit them with any text editor.
+If you have a favorite programmer’s editor that operates on text files, it
+should be fine to use. Otherwise here are some options for the first time:
+
+- Windows: |npp| `Notepad++ <https://notepad-plus-plus.org/>`_
+- Linux: |geany| `Geany <https://www.geany.org/>`_
+
+Using whatever editor create a script file called ``hello.py`` and put the code
+in it:
+
+.. code-block:: python
+
+    print("Hello, World!")
+
+Save file keeping track on the directory you choose to save into. Now, open
+the terminal or command prompt in this directory.
+
+.. hint:: In window you may open Command Prompt in the directory by typing
+          "cmd" to the address bar in explorer.
+
+In the terminal (or command prompt) type:
+
+.. code-block::
+
+    python hello.py
+
+Python will print string "Hello, World!". Your session should look like:
+
+::
+
+    python hello.py
+    Hello, World!
+
+.. footnotes
+
+.. [#] Files containing Python code are called *modules*.
+
+.. static files within document
+
+.. |npp| image:: ../_static/img/npp.svg
+    :width: 24
+.. |geany| image:: ../_static/img/geany.svg
+    :width: 24
