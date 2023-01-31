@@ -229,9 +229,9 @@ def index(request):
 <body>
 <div>
     {% if display_num %}
-        {{ my_num }}
+    {{ my_num }}
     {% else %}
-        <span> We don't display num </span>
+    <span> We don't display num </span>
     {% endif %}
 </div>
 </body>
@@ -281,8 +281,8 @@ def index(request):
 <body>
 <div>
     {% for item in my_list %}
-        <span>{{ item }}</span>
-        <br>
+    <span>{{ item }}</span>
+    <br>
     {% endfor %}
 </div>
 </body>
@@ -311,10 +311,10 @@ def index(request):
 <body>
 <div>
     {% for item in my_list %}
-        {% if forloop.counter0 != 1 %}
-            <span>{{ item }}</span>
-            <br>
-        {% endif %}
+    {% if forloop.counter0 != 1 %}
+    <span>{{ item }}</span>
+    <br>
+    {% endif %}
     {% endfor %}
 </div>
 </body>
@@ -564,7 +564,9 @@ first
 `templates/add.html`
 
 ```html
-<div style="padding: 20px; background-color: chartreuse">{% if name %} Hello {{ name }} ! {% else %} Sorry I don't know your name {% endif %}
+
+<div style="padding: 20px; background-color: chartreuse">{% if name %} Hello {{ name }} ! {% else %} Sorry I don't know
+    your name {% endif %}
 </div>
 ```
 
@@ -660,6 +662,7 @@ def index(request):
 отдельного файла).
 
 На главной странице (http://127.0.0.1:8000/) сделать две ссылки, перейти на случайную статью (id), и перейти на
-случайную статью со случайным слагом (5-10 случайных символов)
+случайную статью со случайным слагом (5-10 случайных символов). Исключительно для этого задания запрещено генерировать
+случайные значения во вью, ищите другой путь.
 
 На всех страницах внизу должна быть ссылка на главную.
