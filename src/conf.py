@@ -52,8 +52,11 @@ latex_doc = project.title().replace(" ", "") + ".tex"
 latex_engine = "xelatex"
 latex_documents = [
     (master_doc, latex_doc, project, authors, "manual", False),
+    ("appx/software_list", "Software.tex", project, authors, "howto", False),
+    ("appx/code_edit", "IDE.tex", project, authors, "howto", False),
 ]
 latex_appendices = [
+    "appx/software_list",
     "appx/code_edit",
     "appx/env_path",
 ]
