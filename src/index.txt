@@ -22,6 +22,7 @@
         :name: appx
         :caption: Additional materials
 
+        appx/software_list
         appx/code_edit
         appx/env_path
 
