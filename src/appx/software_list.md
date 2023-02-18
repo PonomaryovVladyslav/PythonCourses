@@ -46,6 +46,19 @@ very large projects with speed and efficiency.
 
 https://git-scm.com/
 
+Docker
+------
+
+> The most-loved Tool in Stack Overflow’s 2022 Developer Survey.
+
+Docker helps developers bring their ideas to life by conquering the complexity
+of app development. We simplify and accelerate development workflows with
+an integrated dev pipeline and through the consolidation of application
+components. Actively used by millions of developers around the world,
+Docker Desktop and Docker Hub provide unmatched simplicity, agility and choice.
+
+https://www.docker.com/
+
 PostgreSQL[^cygwin-pkg]
 ----------
 
@@ -91,6 +104,7 @@ SQLite is a C-language library that implements a
 [full-featured](https://sqlite.org/fullsql.html), SQL database engine.
 
 https://sqlite.org/
+
 
 [^cygwin-pkg]: available for installation as a cygwin package
 
