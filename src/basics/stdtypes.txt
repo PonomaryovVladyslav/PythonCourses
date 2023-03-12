@@ -103,6 +103,41 @@ Code examples
 Sequence types
 ==============
 
+There are 3 basic sequence types: *lists*, *tuples*, and *range objects*.
+Additional sequence types tailored for processing of binary data and text
+strings are described in dedicated sections.
+
+Common operations
+-----------------
+
++----------------------+------------------------------------------------------+
+| Operation            | Result                                               |
++======================+======================================================+
+| ``x in s``           | ``True`` if an item of *s* equal to *x*              |
+| ``x not in s``       | ``False`` if an item of *s* equal to *x*             |
++----------------------+------------------------------------------------------+
+| ``s + t``            | the concatenation of *s* and *t*                     |
++----------------------+------------------------------------------------------+
+| ``s * n``            | equivalent to adding *s* to itself *n* times         |
++----------------------+------------------------------------------------------+
+| ``s[i]``             | *i*-th item of *s*, origin 0                         |
++----------------------+------------------------------------------------------+
+| ``s[i:j]``           | slice of *s* from *i* to *j* with step *k*. any of   |
+| ``s[i:j:k]``         | these (or even all 3) may be omitted.                |
++----------------------+------------------------------------------------------+
+| ``len(s)``           | length of *s*                                        |
++----------------------+------------------------------------------------------+
+| ``min(s)``           | smallest item of *s*                                 |
++----------------------+------------------------------------------------------+
+| ``max(s)``           | largest item of *s*                                  |
++----------------------+------------------------------------------------------+
+| ``s.count(x)``       | total number of occurrences of *x* in *s*            |
++----------------------+------------------------------------------------------+
+| ``s.index(x)``       | index of the first occurrence of *x* in *s*          |
+| ``s.index(x, i)``    | (at or after index *i* and before index *j*)         |
+| ``s.index(x, i, j)`` |                                                      |
++----------------------+------------------------------------------------------+
+
 Text sequence type
 ==================
 
