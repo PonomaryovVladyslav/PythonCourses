@@ -149,6 +149,27 @@ Common operations
 | ``s.index(x, i, j)`` |                                                      |
 +----------------------+------------------------------------------------------+
 
+Value comparison
+----------------
+
+.. todo: make TypeError a link
+
+Sequences can be compared only within each of their types, with the restriction
+that ranges do not support order comparison. Equality comparison across these
+types results in inequality, and ordering comparison across these types raises
+``TypeError``.
+
+Sequences compare lexicographically using comparison of corresponding elements.
+The built-in containers typically assume identical objects are equal to
+themselves. Lexicographical comparison between buit-in collections works as
+follows:
+
+-  For two collections to compare equal, they must be of the same type, have
+   the same length, and each pair of corresponding elements must compare equal.
+-  Collections that supports order comparison are ordered the same as their
+   first unequal elements. If corresponding element does not exist, the shorter
+   collection is ordered first.
+
 Text sequence type
 ==================
 
