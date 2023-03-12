@@ -118,6 +118,17 @@ There are 3 basic sequence types: *lists*, *tuples*, and *range objects*.
 Additional sequence types tailored for processing of binary data and text
 strings are described in dedicated sections.
 
+Lists
+-----
+
+Lists are mutable sequences, typically used to store collections of items.
+They may be constructed in several ways:
+
+- using a pair of square brackets to denote the empty list: ``[]``
+- using square brackets, separating items with commas: ``[a]``, ``[a, b, c]``
+- using a list comprehension: ``[x for x in iterable]``
+- using the type constuctor: ``list()`` or ``list(iterable)``
+
 Common operations
 -----------------
 
