@@ -238,6 +238,51 @@ Mutable sequence types
 Text sequence type
 ==================
 
+String methods
+--------------
+
+Strings implement all of the common sequence operations, along with the
+additional methods.
+
+.. todo: methods to be described
+    str.capitalize()
+    str.center()
+    str.count()
+    str.encode()
+    str.endswith(suffix)
+    str.expandtabs(tabsize=8)
+    str.find(sub)
+    str.format()
+    str.index(sub)
+    str.isalnum()
+    srt.isalpha()
+    str.isascii()
+    str.isdecimal()
+    str.isdigit()
+    str.islower()
+    str.isnumeric()
+    str.isprintable()
+    str.isspace()
+    str.istitle()
+    str.isupper()
+    str.join()
+    str.ljust()
+    str.lower()
+    str.lstrip()
+    str.replace()
+    str.rfind()
+    str.rindex()
+    str.rjust()
+    str.rsplit()
+    str.rstrip()
+    str.split()
+    str.splitlines()
+    str.startswith(prefix)
+    str.strip()
+    str.swapcase()
+    str.title()
+    str.upper()
+
 Value comparisons
 -----------------
 
