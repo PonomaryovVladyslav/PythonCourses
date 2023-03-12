@@ -129,6 +129,19 @@ They may be constructed in several ways:
 - using a list comprehension: ``[x for x in iterable]``
 - using the type constuctor: ``list()`` or ``list(iterable)``
 
+Tuples
+------
+
+Tuples are immutable sequences, typically used to store collections of data or
+for cases where an immutable sequence of data is needed (such as allowing
+storage in a ``set`` or ``dict`` instances).
+They may be constructed in a number of ways:
+
+- using a pair of parentheses to denote the empty tuple: ``()``
+- using a trailing comma for a singleton tuple: ``a,`` or ``(a, b, c)``
+- separating items with commas: ``a, b, c`` or ``(a, b, c)``
+- using the type constructor: ``tuple()`` or ``tuple(iterable)``
+
 Common operations
 -----------------
 
