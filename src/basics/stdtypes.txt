@@ -100,8 +100,8 @@ Code examples
     result = x * y  # for any float operand
     result = x / y  # for any numeric operands
 
-Value comparison
-----------------
+Value comparisons
+-----------------
 
 Numbers of built-in numeric types can be compared within and across their types
 (with the restriction that complex numbers do not support order comparison).
@@ -149,8 +149,8 @@ Common operations
 | ``s.index(x, i, j)`` |                                                      |
 +----------------------+------------------------------------------------------+
 
-Value comparison
-----------------
+Value comparisons
+-----------------
 
 .. todo: make TypeError a link
 
@@ -176,8 +176,8 @@ Text sequence type
 Set types
 =========
 
-Value comparison
-----------------
+Value comparisons
+-----------------
 
 Sets (instances of ``set`` or ``frozenset``) can be compared within and across
 their types. They define order comparison operators to mean subset and superset
