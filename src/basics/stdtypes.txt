@@ -187,3 +187,11 @@ another).
 
 Mapping type
 ============
+
+Value comparisons
+-----------------
+
+Instances of ``dict`` compare equal if and only if they have equal key-value
+pairs.
+
+Order comparisons raise ``TypeError``.
