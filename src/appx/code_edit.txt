@@ -1,6 +1,8 @@
-###############################################################################
-                                 Code Editors
-###############################################################################
+.. appendix
+
+############
+Code Editors
+############
 
 Writing Python using IDLE or the Python Shell is great for simple things, but
 those tools quickly turn larger programming projects into frustrating pits of
