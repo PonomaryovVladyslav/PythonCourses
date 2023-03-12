@@ -106,6 +106,71 @@ and double quote characters are available.
 The same syntax is used to create docstring, which are a special case of string
 usage. We will look on these in the future.
 
+Supported operations
+--------------------
+
+.. note:: This subsection describes only the most common operations.
+
+:Concatenation:
+    The ``+`` operator is used to concatenate (join) two or more strings.
+
+    .. code-block:: python
+
+        "Serhii" + " " + "Horodilov"  # "Serhii Horodilov"
+
+    On the other hand the ``join`` method concatenates a collection of strings,
+    which may be more efficient than using ``+``.
+
+    .. code-block:: python
+
+        " ".join(["Serhii", "Horodilov"])  # "Serhii Horodilov"
+
+:Repetition:
+    The ``*`` operator is used to repeat a string a specified number of times.
+    Only multipliers of the ``int`` type are allowed.
+
+    .. code-block:: python
+
+        "Serhii" * 5  # "SerhiiSerhiiSerhiiSerhiiSerhii"
+
+:Length:
+    The ``len`` function is used to find the length of a string.
+
+    .. code-block:: python
+
+        len("Serhii Horodilov")  # 8
+
+:Case conversion:
+    The ``lower``, ``upper``, ``capitalize`` and ``title`` methods perform
+    actions on case.
+
+    ``lower`` creates a new string with all lower-case characters.
+
+    ``upper`` creates a new string with all upper-case characters.
+
+    ``capitalize`` creates a new string with the upper-case 1st character.
+
+    ``title`` will make all characters after whitespace upper case.
+
+    .. code-block:: python
+
+        name = "serhii horodilov"
+        name.lower()       # "serhii horodilov"
+        name.upper()       # "SERHII HORODILOV"
+        name.capitalize()  # "Serhii horodilov"
+        name.title()       # "Serhii Horodilov"
+
+:Stripping:
+    The ``strip``, ``lstrip`` and ``rstrip`` methods are used to remove
+    leading and/or trailing whitespace characters.
+
+    .. code-block:: python
+
+        name = "   Serhii Horodilov   "
+        name.strip()   # "Serhii Horodilov"
+        name.lstrip()  # "Serhii Horodilov   "
+        name.rstrip()  # "   Serhii Horodilov"
+
 Strings are subscriptable
 -------------------------
 
