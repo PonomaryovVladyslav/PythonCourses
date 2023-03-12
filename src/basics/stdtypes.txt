@@ -170,6 +170,47 @@ follows:
    first unequal elements. If corresponding element does not exist, the shorter
    collection is ordered first.
 
+Mutable sequence types
+----------------------
+
++--------------------+--------------------------------------------------------+
+| Operation          | Result                                                 |
++====================+========================================================+
+| ``s[i] = x``       | item *i* of *s* is replaced by *x*                     |
++--------------------+--------------------------------------------------------+
+| ``s[i:j] = t``     | slice of *s* from *i* to *j* replaced by the contents  |
+|                    | of *t*                                                 |
++--------------------+--------------------------------------------------------+
+| ``del s[i:j]``     | same as ``s[i:j] = []``                                |
++--------------------+--------------------------------------------------------+
+| ``s[i:j:k] = t``   | the elements of *s* are replaced by those of *t*[#]_   |
++--------------------+--------------------------------------------------------+
+| ``del s[i:j:k]``   | removes the elements of ``s[i:j:k]`` from the list     |
++--------------------+--------------------------------------------------------+
+| ``s.append(x)``    | appends *x* to the end of the sequence; the same as    |
+|                    | ``s[len(s):len(s)] = [x]``                             |
++--------------------+--------------------------------------------------------+
+| ``s.clear()``      | removes all items from *s* (``del s[:]``)[#3.3]_       |
++--------------------+--------------------------------------------------------+
+| ``s.copy()``       | creates a shallow copy of *s* (``s[:]``)[#3.3]_        |
++--------------------+--------------------------------------------------------+
+| ``s.extend(t)``    | extends *s* with the contents of *t*                   |
+| ``s += t``         |                                                        |
++--------------------+--------------------------------------------------------+
+| ``s.insert(i, x)`` | inserts *x* into *s* at the index *i*; same as         |
+|                    | ``s[i:i] = [x]``                                       |
++--------------------+--------------------------------------------------------+
+| ``s.pop()``,       | retrieves the item at *i* and also removes it from *s* |
+| ``s.pop(i)``       | (if *i* is omitted - use the last one available index) |
++--------------------+--------------------------------------------------------+
+| ``s.remove(x)``    | remove the first item that is equal to *x* from *s*    |
++--------------------+--------------------------------------------------------+
+| ``s.reverse()``    | reverses the items of *s* in place                     |
++--------------------+--------------------------------------------------------+
+
+.. [#]    *t* must have the same length as the slice it is replacing
+.. [#3.3] new in Python version 3.3
+
 Text sequence type
 ==================
 
