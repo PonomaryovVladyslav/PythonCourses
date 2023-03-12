@@ -1,0 +1,109 @@
+*******************************************************************************
+                                 Python Syntax
+*******************************************************************************
+
+.. note:: As a natural language like English or Ukrainian has its own rules to
+          write down something, programming languages do.
+          This makes them programming **languages**.
+
+A programming language syntax is the set of rules and principles that govern
+how code is written and structured in a given programming language. Syntax
+encompasses the rules for writing statements, expressions, variables, data
+types, control structures, and other constructs that make up the language.
+
+The syntax of a programming language defines how code is organized and
+interpreted by a compiler or interpreter. It defines the rules for writing
+valid statements and expressions that can be understood and executed by
+the language's runtime system.
+
+A programming language's syntax is designed to be both readable and expressive,
+allowing programmers to write code that is easy to understand and modify.
+Syntax often influences the style and structure of code, as well as its
+maintainability and performance.
+
+Different programming languages have different syntax, with some languages
+being more concise and expressive than others. While syntax is an important
+aspect of a programming language, it is only one of several factors that
+determine its ease of use, flexibility, and suitability for different
+programming tasks.
+
+In the case of Python, the language's syntax defines how code is written and
+structured in a way that is consistent, readable, and easy to understand.
+A general overview is provided below, no need to dive deep in this now. All of
+the following is to be discussed during the course. So, some of the key aspects
+of Python's syntax include:
+
+:Indentation:
+    Python uses whitespace, specifically indentation, to delimit blocks of
+    code, such as loops, conditionals, and functions. This means that
+    the indentation level of a line determines which block of code it belongs
+    to.
+
+:Statement structure:
+    Python statements are typically written on one line, with the end of
+    the line indicating the end of the statement. However, if a statement is
+    too long to fit on one line, it can be continued across multiple lines
+    using backslashes.
+
+:Variables:
+    In Python, variables are created automatically when a value is assigned to
+    them, and their type is inferred from the value. Variables can be assigned
+    values of different types, including integers, floats, strings, and more
+    complex data structures like lists and dictionaries.
+
+:Operators:
+    Python supports a wide range of operators for performing arithmetic,
+    comparison, and logical operations. These include arithmetic operators like
+    ``+``, ``-``, ``*``, and ``/``, as well as comparison operators like
+    ``<``, ``>``, ``==``, and ``!=``.
+
+:Control flow:
+    Python provides control flow statements like if, else, elif, for, and
+    while to control the flow of execution in a program. These statements are
+    used to make decisions, repeat code, or perform actions based on
+    conditions.
+
+:Functions:
+    In Python, functions are defined using the def keyword and can take
+    arguments and return values. The body of a function is defined using
+    a block of indented code.
+
+:Modules:
+    Python has a large library of modules that provide pre-written code for
+    a variety of tasks. Modules can be imported into a program using the import
+    statement.
+
+:Exception handling:
+    Python provides a way to handle errors and exceptions in a program using
+    the try, except, else, and finally keywords. These statements allow
+    a program to gracefully recover from errors and continue executing.
+
+In few words:
+
+.. code-block:: python
+    :caption: Input/Output example script
+
+    # This is a comment.
+    # It is used to provide additional information or context in a script.
+
+    # Getting input from the user
+    name = input("What is your name? ")  # stores string input by the user
+    age = int(input("How old are you? "))
+    is_student = input("Are you a student? (yes/no) ")
+
+    # Converting user input to boolean
+    is_student = is_student.lower() == "yes"
+
+    # Displaying values of variables
+    print("My name is", name)
+    print("I am", age, "years old")
+    print("I am a student:", is_student)
+
+The code snippet above demonstrates some basics abilities of Python to gather
+data from the user, process it and print out back. Note the words starting with
+a **#** (hash) symbol. This is a comment. Any sequence of characters after
+the hash and till the line end are considered to be a comment. These are for
+those people, who see the code and they are ignored by the interpreter. 
+
+On the other hand each individual line is the instruction for the interpreter
+to perform some action, like gather inputs, do math, store data in memory etc.
