@@ -176,5 +176,14 @@ Text sequence type
 Set types
 =========
 
+Value comparison
+----------------
+
+Sets (instances of ``set`` or ``frozenset``) can be compared within and across
+their types. They define order comparison operators to mean subset and superset
+tests. Those relations do not define total ordering (e.g. two sets ``{1, 2}``
+and ``{2, 3}`` are not equal, nor subsets of one another, nor supersets of one
+another).
+
 Mapping type
 ============
