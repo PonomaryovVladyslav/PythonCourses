@@ -2,33 +2,11 @@
                                   Data Types
 *******************************************************************************
 
-In programming data types is an important concept. Data may represent different
-things.
-
 Data may represent different things and require various operations available.
-In programming data types is an important concept. Python has the following
-data types built-in by default in these categories:
-
-:Text:
-    ``str``
-
-:Numeric:
-    ``int``, ``float``, ``complex``
-
-:Sequence:
-    ``list``, ``tuple``, ``range``
-
-:Mapping:
-    ``dict``
-
-:Set:
-    ``set``, ``frozenset``
-
-:Boolean:
-    ``bool``
-
-:None:
-    ``None``
+In programming data types is an important concept. For example **1984** may be
+a number (``1984``), a text (``"1984``) or event a date. The data type
+describes the operations, that are allowed for the data, like additions for
+numbers or concatenation for text (e.g. ``1 + 2 -> 3``, ``"1" + "3" -> "13"``).
 
 Python uses dynamic typing. This means as a developer you should not declare
 a variable with its data type - the interpreter will do this for you. Other
@@ -37,18 +15,30 @@ in Python is as easy as:
 
 .. code-block:: python
 
-    variable = "Hello World"       # create variable of str type
+    script_name = "Circle area"  # create a text variable
+    radius = 5                   # create an integer variable
+    area = 2 * 3.14 * 5 ** 2     # create a floating-point variable
 
-Casting
-=======
+Built-In Data Types
+===================
 
-You may specify the data type of a variable with casting:
+Python has the following data types built-in:
 
-.. code-block:: python
+- Integers (``int``)
+- Floating-point numbers (``float``)
+- Complex numbers (``complex``)
+- Booleans (``bool``)
+- Strings (``str``)
+- Bytes (``bytes``)
+- Byte arrays (``bytearray``)
+- Lists (``list``)
+- Tuples (``tuple``)
+- Sets (``set``)
+- Frozen sets (``frozenset``)
+- Dictionaries (``dict``)
+- None (``NoneType``)
 
-    x = str(3)    # x will be '3'
-    y = int(3)    # y will be 3
-    z = float(3)  # z will be 3.0
+Any one can use them without additional imports or packages installations. 
 
 Text
 ====
