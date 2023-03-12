@@ -173,6 +173,12 @@ follows:
 Text sequence type
 ==================
 
+Value comparisons
+-----------------
+
+Strings compare lexicographically using the numerical Unicode code points of
+their characters.
+
 Set types
 =========
 
