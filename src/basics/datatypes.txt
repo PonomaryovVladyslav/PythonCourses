@@ -43,46 +43,109 @@ Any one can use them without additional imports or packages installations.
 Text
 ====
 
-Text data are stored as strings (``str`` data type) in Python. Strings are
-surrounded by either single quotation marks, or double quotation marks. So
-``'Python'`` is the same as ``"Python"``. To assign string to a variable:
+Text data are stored as strings (``str`` data type) in Python. Any sequence of
+letters, digits, punctuation marks and whitespace characters enclosed with
+quotes is considered to be a string literal. Both single quotes (``'``) and
+double quotes (``"``) can be used interchangeably to create a string in Python.
 
 .. code-block:: python
 
-    string = "string"
-    string = str("string")  # declare using casting
+    variable = 'string'
+    variable = "string"
+    variable = str("string")  # declare using built-in constructor
+
+Escaping
+--------
+
+In programming this is a process of using a special character to indicate that
+the following character(s) should be treated differently from their literal
+meaning. The common usage is to include a special character(s) within strings.
+A **backslash** character is used to *escape* the following one.
+
+.. code-block:: python
+   :caption: Example of Escaping in Python
+
+    # Escaping single quotes within a string
+    print('She said, "I\'m ready for the test!"')
+
+    # Escaping double quotes within a string
+    print("He replied, \"I'll be there in a minute.\"")
+
+    # Escaping backslash itself
+    print("Backslash \\ is a special character for escaping other characters")
+
+    # Escaping a newline character
+    print("Hello\nworld")
+
+    # Escaping a tab character
+    print("Name\tAge\tGender")
+
+Single quotes or double quotes
+------------------------------
+
+Don't care. Use any quote mark you like. A *string* is a sequence of characters
+after the opening quote and till the closing one. You may use double quotes in
+case a single quote is a part of the text (e.g. ``"It's a Serhii's document"``)
+and vise versa (e.g. ``'The name of the ship was a "Billy of Tea"'``). It's
+a good practice not to mess single and double quotes within one project. Just
+keep using a chosen one character for all strings.
 
 Multiline strings
 -----------------
 
-You can assign a multiline string using three quotes:
+You can assign a multiline string by using triple quotes: Both single quote
+and double quote characters are available.
 
 .. code-block:: python
 
     variable = """Well, ye scrawny mate- set sails for riddle!
     Never love a lagoon."""
+    variable = '''Hello
+    World'''
 
-Single quotes or double quotes
-------------------------------
-
-Don't care. Use any quote mark you like. Remember the string is any characters
-surrounded by the same quotes. So you are use single quotes if double quote
-mark is the part of your string data and vice versa. It's not recommended to
-mess various quote marks in the same project.
+The same syntax is used to create docstring, which are a special case of string
+usage. We will look on these in the future.
 
 Strings are subscriptable
 -------------------------
 
-Strings in Python are arrays of bytes representing unicode characters. This is
-common for many programming languages. However Python does not have a data type
-to represent a single character itself; a single character in Python is of
-string type as well. You can get the character at a specific position in
-a string.
+.. note:: ``str`` is not the only one subscriptable data type in Python.
+
+This means you can access individual characters or slices within a string using
+indexes. A string is a *sequence* of characters and each character within
+a string has its own position - an *index*. Indexing starts at 0, so the first
+character in a string is at index 0, the second one is at index 1, and so on.
+Negative indexing is also possible, with -1 representing the last character in
+a string, -2 representing the second-to-last character, and so on. Use square
+brackets (``[]``) to access the index.
 
 .. code-block:: python
 
-    text = "Plank of a salty strength, endure the fortune!"
-    character = text[10]
+    variable = "Plank of a salty strength, endure the fortune!"
+    
+    variable[0]   # P
+    variable[-4]  # u
+
+You can also *slice* strings, this means to get a subsequence of characters.
+The slice syntax consists of 3 digits:
+
+-  the first one represent the index to start (inclusive), defaults to 0
+-  the second one represent the index to stop (non-inclusive), defaults to
+   the length of the sequence
+-  the third one represents a step, defaults to 1
+
+These numbers are separated within colon (``:``) and enclosed within square
+brackets. Any slice digit may be omitted.
+
+.. code-block:: python
+    :caption: Sequence slicing
+
+    variable = "0123456789"  # a string of digits
+
+    variable[0:10:1]  # 0123456789
+    variable[:10:2]   # 02468
+    variable[:-2]     # 01234567
+    variable[::-1]    # 9876543210
 
 Strings are iterable
 --------------------
@@ -94,6 +157,16 @@ a ``for`` loop:
 
     for character in "foobar":
         print(character)
+
+Strings are immutable
+---------------------
+
+This means, you cannot change an individual character within a string.
+
+.. code-block:: python
+
+    variable = "variable"
+    variable[0] = "V"  # this action will cause an error
 
 Integers
 ========
