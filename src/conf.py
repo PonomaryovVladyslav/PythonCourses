@@ -59,4 +59,6 @@ latex_appendices = [
     "appx/software_list",
     "appx/code_edit",
     "appx/env_path",
+    "appx/precedence",
+    "appx/printf",
 ]
