@@ -1,0 +1,113 @@
+*******************************************************************************
+                                Built-in Types
+*******************************************************************************
+
+The principal built-in types are numerics, sequences, mappings, classes,
+instances and exceptions :cite:`docs-python:stdtypes`. This section covers
+only the most base of them. Others will be discussed in the future within
+their own topics.
+
+Numeric types
+=============
+
+There are 3 distinct numeric types: *integers*, *floating point numbers*, and
+*complex numbers*. In addition, Booleans are a subtype of integers. Integers
+have unlimited precision. Floating point numbers are usually implemented usign
+``double`` in C. Complex numbers have a real and imaginary part, which are each
+a floating point number.
+
+Numbers are created by numeric literals or as the result of built-in functions
+and operators. Unadorned integer literals (including hex, octal and binary
+numbers) yield integers. Numeric literals containing a decimal point or an
+exponent sign yield floating point numbers. Appending ``j`` or ``J`` to a
+numeric literal yields an imaginary number (a complex number with a zero real
+part) which you can add to an integer or float to get a complex number with
+real and imaginary parts.
+
+Supported operations
+--------------------
+
++---------------------+-------------------------------------------------------+
+| Operation           | Result                                                |
++=====================+=======================================================+
+| ``x + y``           | sum of *x* and *y*                                    |
++---------------------+-------------------------------------------------------+
+| ``x - y``           | difference of *x* and *y*                             |
++---------------------+-------------------------------------------------------+
+| ``x * y``           | product of *x* and *y*                                |
++---------------------+-------------------------------------------------------+
+| ``x / y``           | quotient of *x* and *y*                               |
++---------------------+-------------------------------------------------------+
+| ``x // y``          | floored quotient of *x* and *y*                       |
++---------------------+-------------------------------------------------------+
+| ``x % y``           | remainder of ``x / y``                                |
++---------------------+-------------------------------------------------------+
+| ``-x``              | *x* negated                                           |
++---------------------+-------------------------------------------------------+
+| ``+x``              | *y* unchanged                                         |
++---------------------+-------------------------------------------------------+
+| ``abs(x)``          | absolute value or magnitude of *x*                    |
++---------------------+-------------------------------------------------------+
+| ``int(x)``          | *x* converted to integer                              |
++---------------------+-------------------------------------------------------+
+| ``float(x)``        | *x* converted to floating point                       |
++---------------------+-------------------------------------------------------+
+| ``complex(re, im)`` | a complex number with real part *re*, imaginary part  |
+|                     | *im*. *im* defaults to zero.                          |
++---------------------+-------------------------------------------------------+
+| ``divmod(x, y)``    | the pair ``(x // y, x % y)``                          |
++---------------------+-------------------------------------------------------+
+| ``pow(x, y)``       | *x* to the power *y*                                  |
+| ``x ** y``          |                                                       |
++---------------------+-------------------------------------------------------+
+
+.. note:: ``x // y`` also referred to as integer division. The resultant value
+          is a whole integer, through the result's type is not necessarily int.
+          The result is always rounded towards minus infinity:
+          ``1 // 2`` is ``0``
+
+.. note:: ``float(x)`` also accepts the strings ``"nan"`` and ``"inf"`` with
+          an optional prefix "+" or "-" for :abbr:Nan(Not a Number) and
+          positive and negative infinity.
+
+Code examples
+-------------
+
+.. code-block:: python
+    :caption: Integer numbers
+    
+    x = 42
+    y = 24
+    a = int(42)
+    b = int(42.24)
+    
+    result = x + y   # for both int operands only
+    result = x - y   # for both int operands only
+    result = x * y   # for both int operands only
+    result = x // y  # for any numeric operands
+
+.. code-block:: python
+    :caption: Floating point numbers
+
+    x = 42.
+    y = .24
+    z = 42.24
+    a = float(42)
+    b = float(42.24)
+    
+    result = x + y  # for any float operand
+    result = x - y  # for any float operand
+    result = x * y  # for any float operand
+    result = x / y  # for any numeric operands
+
+Sequence types
+==============
+
+Text sequence type
+==================
+
+Set types
+=========
+
+Mapping type
+============
