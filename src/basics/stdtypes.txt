@@ -304,6 +304,23 @@ another).
 Mapping type
 ============
 
+A mapping object maps hashable values to arbitrary objects. Mappings are
+mutable objects. There is currently ony one standard mapping type, the
+*dictionary*. In few words mappings are collections of keys and their values.
+
+A dictionary's keys are almost arbitrary values. Values that are not hashable
+may not be used as keys. Values that compare equal (such as ``1``, ``1.0`` and
+``True``) can be used interchangeably to index the same dictionary entry.
+
+Dictionaries can be created by several means:
+
+- Use braces to denote the empty dictionary: ``{}``
+- Use a comma-separated list of ``key: value`` pairs with braces:
+  ``{'first_name': 'Serhii', 'last_name': 'Horodilov', 'age': 34}
+- Use a dict comprehension: `{x: x ** 2 for x in range(10)}``
+- Use the type constructor: ``dict()``, ``dict([('key', 100)])``,
+  ``dict(key=100)``
+
 Value comparisons
 -----------------
 
