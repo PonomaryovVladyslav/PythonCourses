@@ -8,10 +8,10 @@
 
 String objects have one unique built-in operation: the ``%`` operator (modulo).
 This is also known as the string *formatting* or *interpolation* operator
-:cite:`docs-python:printf-style`. Given ``format % values`` (where *format* is
-a string), ``%`` conversion specifications in *format* are replaced with zero
-or more elements of *values*. If *format* requires a single argument, *values*
-may be a single non-tuple object.
+:cite:`docs-python:printf-formatting`. Given ``format % values`` (where
+*format* is a string), ``%`` conversion specifications in *format* are replaced
+with zero or more elements of *values*. If *format* requires a single argument,
+*values* may be a single non-tuple object.
 
 The conversion flag characters are:
 
@@ -57,7 +57,7 @@ The conversion types are:
 +------------+----------------------------------------------------------------+
 | ``'g'``    | Floating point format. Uses lowercase exponential format if    |
 |            | exponent is less that -4 or not less than precision, decimal   |
-|            | format overwise.                                               |
+|            | format otherwise.                                              |
 | ``'G'``    |                                                                |
 +------------+----------------------------------------------------------------+
 | ``'c'``    | Single character (accepts integer or single character string)  |
