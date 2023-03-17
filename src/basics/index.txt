@@ -7,7 +7,6 @@
 
     variables
     syntax
-    datatypes
     stdtypes
     controlflow
     functions

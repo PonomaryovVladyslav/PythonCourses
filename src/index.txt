@@ -25,6 +25,8 @@
         appx/software_list
         appx/code_edit
         appx/env_path
+        appx/precedence
+        appx/printf
 
 .. rubric:: References
 
