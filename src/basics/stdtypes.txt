@@ -12,7 +12,7 @@ Numeric types
 
 There are 3 distinct numeric types: *integers*, *floating point numbers*, and
 *complex numbers*. In addition, Booleans are a subtype of integers. Integers
-have unlimited precision. Floating point numbers are usually implemented usign
+have unlimited precision. Floating point numbers are usually implemented using
 ``double`` in C. Complex numbers have a real and imaginary part, which are each
 a floating point number.
 
@@ -127,7 +127,7 @@ They may be constructed in several ways:
 - using a pair of square brackets to denote the empty list: ``[]``
 - using square brackets, separating items with commas: ``[a]``, ``[a, b, c]``
 - using a list comprehension: ``[x for x in iterable]``
-- using the type constuctor: ``list()`` or ``list(iterable)``
+- using the type constructor: ``list()`` or ``list(iterable)``
 
 Tuples
 ------
@@ -185,7 +185,7 @@ types results in inequality, and ordering comparison across these types raises
 
 Sequences compare lexicographically using comparison of corresponding elements.
 The built-in containers typically assume identical objects are equal to
-themselves. Lexicographical comparison between buit-in collections works as
+themselves. Lexicographical comparison between built-in collections works as
 follows:
 
 -  For two collections to compare equal, they must be of the same type, have
@@ -207,16 +207,16 @@ Mutable sequence types
 +--------------------+--------------------------------------------------------+
 | ``del s[i:j]``     | same as ``s[i:j] = []``                                |
 +--------------------+--------------------------------------------------------+
-| ``s[i:j:k] = t``   | the elements of *s* are replaced by those of *t*[#]_   |
+| ``s[i:j:k] = t``   | the elements of *s* are replaced by those of *t* [#]_  |
 +--------------------+--------------------------------------------------------+
 | ``del s[i:j:k]``   | removes the elements of ``s[i:j:k]`` from the list     |
 +--------------------+--------------------------------------------------------+
 | ``s.append(x)``    | appends *x* to the end of the sequence; the same as    |
 |                    | ``s[len(s):len(s)] = [x]``                             |
 +--------------------+--------------------------------------------------------+
-| ``s.clear()``      | removes all items from *s* (``del s[:]``)[#3.3]_       |
+| ``s.clear()``      | removes all items from *s* (``del s[:]``)[#new]_       |
 +--------------------+--------------------------------------------------------+
-| ``s.copy()``       | creates a shallow copy of *s* (``s[:]``)[#3.3]_        |
+| ``s.copy()``       | creates a shallow copy of *s* (``s[:]``)[#new]_        |
 +--------------------+--------------------------------------------------------+
 | ``s.extend(t)``    | extends *s* with the contents of *t*                   |
 | ``s += t``         |                                                        |
@@ -233,7 +233,7 @@ Mutable sequence types
 +--------------------+--------------------------------------------------------+
 
 .. [#]    *t* must have the same length as the slice it is replacing
-.. [#3.3] new in Python version 3.3
+.. [#new] new in Python version 3.3
 
 Text sequence type
 ==================
@@ -316,8 +316,8 @@ Dictionaries can be created by several means:
 
 - Use braces to denote the empty dictionary: ``{}``
 - Use a comma-separated list of ``key: value`` pairs with braces:
-  ``{'first_name': 'Serhii', 'last_name': 'Horodilov', 'age': 34}
-- Use a dict comprehension: `{x: x ** 2 for x in range(10)}``
+  ``{'first_name': 'Serhii', 'last_name': 'Horodilov', 'age': 34}``
+- Use a dict comprehension: ``{x: x ** 2 for x in range(10)}``
 - Use the type constructor: ``dict()``, ``dict([('key', 100)])``,
   ``dict(key=100)``
 
