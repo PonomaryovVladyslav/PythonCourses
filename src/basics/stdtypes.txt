@@ -214,9 +214,9 @@ Mutable sequence types
 | ``s.append(x)``    | appends *x* to the end of the sequence; the same as    |
 |                    | ``s[len(s):len(s)] = [x]``                             |
 +--------------------+--------------------------------------------------------+
-| ``s.clear()``      | removes all items from *s* (``del s[:]``)[#new]_       |
+| ``s.clear()``      | removes all items from *s* (``del s[:]``) [#py33]_     |
 +--------------------+--------------------------------------------------------+
-| ``s.copy()``       | creates a shallow copy of *s* (``s[:]``)[#new]_        |
+| ``s.copy()``       | creates a shallow copy of *s* (``s[:]``) [#py33]_      |
 +--------------------+--------------------------------------------------------+
 | ``s.extend(t)``    | extends *s* with the contents of *t*                   |
 | ``s += t``         |                                                        |
@@ -232,8 +232,8 @@ Mutable sequence types
 | ``s.reverse()``    | reverses the items of *s* in place                     |
 +--------------------+--------------------------------------------------------+
 
-.. [#]    *t* must have the same length as the slice it is replacing
-.. [#new] new in Python version 3.3
+.. [#]     *t* must have the same length as the slice it is replacing
+.. [#py33] new in Python version 3.3
 
 Text sequence type
 ==================
