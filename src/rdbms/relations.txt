@@ -128,3 +128,237 @@ a time.
     erDiagram
         employee }o--|{ employee_role : execute
         role }o--|{ employee_role : assign
+
+Joining data
+============
+
+``JOIN`` is used to *join* data fetched from multiple related tables.
+To build a valid query you are to set the tables to join and parameter to use
+for this operation.
+
+Common syntax is:
+
+::
+
+    T1 join_type T2 [ join_condition ]
+
+There are various join types available.
+Here are is some dummy data to demonstrate their purpose.
+
+.. table:: poem
+
+    +----+------------------------+-----------+
+    | id | title                  | author_id |
+    +====+========================+===========+
+    |  1 | On the Field of Battle | 1         |
+    +----+------------------------+-----------+
+    |  2 | Moses                  | 2         |
+    +----+------------------------+-----------+
+    |  3 | The Forest Song        | 1         |
+    +----+------------------------+-----------+
+    |  4 | In the Catacombs       | null      |
+    +----+------------------------+-----------+
+    |  5 | The Singing Stones     | 1         |
+    +----+------------------------+-----------+
+    |  6 | Ancient Fairy Tales    | null      |
+    +----+------------------------+-----------+
+    |  7 | My Thoughts            | 2         |
+    +----+------------------------+-----------+
+    |  8 | To Shevchenko          | null      |
+    +----+------------------------+-----------+
+
+
+.. table:: author
+
+    +----+---------------+
+    | id | name          |
+    +====+===============+
+    | 1  | Larysa Kosach |
+    +----+---------------+
+    | 2  | Ivan Franko   |
+    +----+---------------+
+    | 3  | John Doe      |
+    +----+---------------+
+
+.. code-block:: sql
+
+    CREATE TABLE author
+    (
+        id   SERIAL PRIMARY KEY,
+        name VARCHAR(32) NOT NULL UNIQUE
+    );
+    CREATE TABLE poem
+    (
+        id        SERIAL PRIMARY KEY,
+        title     VARCHAR(32) NOT NULL UNIQUE,
+        author_id INT REFERENCES author (id)
+    );
+    INSERT INTO author(name)
+    VALUES ('Larysa Kosach'),
+           ('Ivan Franko'),
+           ('John Doe');
+    INSERT INTO poem(title, author_id)
+    VALUES ('On the Field of Battle', 1),
+           ('Moses', 2),
+           ('The Forest Song', 1),
+           ('In the Catacombs', null),
+           ('The Singing Stones', 1),
+           ('Ancient Fairy Tales', null),
+           ('My Thoughts', 2),
+           ('To Shevchenko', null)
+    ;
+
+Join types
+----------
+
+:Cross join:
+
+    .. code-block::
+
+        T1 CROSS JOIN T2
+
+    For every possible combination of rows from T1 and T2
+    (i.e., a Cartesian product), the joined table will contain a row consisting
+    of all columns in T1 followed by all columns in T2. If the tables have N
+    and M rows respectively, the joined table will have N * M rows.
+
+:Qualified joins:
+
+    .. code-block::
+
+        T1 { [INNER] | { LEFT | RIGHT | FULL } [OUTER] } JOIN T2 ON condition
+
+    The words ``INNER`` and ``OUTER`` are optional for all forms.
+    ``INNER`` is the default; ``LEFT``, ``RIGHT`` and ``FULL`` imply ``OUTER``
+    join.
+
+INNER JOIN
+----------
+
+For each row R1 of T1, the joined table has a row for each row in T2 that
+satisfies the join condition with R1.
+
+.. code-block:: sql
+    :caption: Inner join
+
+    SELECT p.title, a.name
+    FROM poem p
+             JOIN author a on p.author_id = a.id;
+
++------------------------+---------------+
+| title                  | name          |
++========================+===============+
+| On the Field of Battle | Larysa Kosach |
++------------------------+---------------+
+| Moses                  | Ivan Franko   |
++------------------------+---------------+
+| The Forest Song        | Larysa Kosach |
++------------------------+---------------+
+| The Singing Stones     | Larysa Kosach |
++------------------------+---------------+
+| My Thoughts            | Ivan Franko   |
++------------------------+---------------+
+
+LEFT OUTER JOIN
+---------------
+
+First, an inner join is performed. Then, for each row in T1 that does not
+satisfy the join condition with any row in T2, a joined row is added with null
+values in columns of T2. Thus, the joined table always has at least one row for
+each row in T1.
+
+.. code-block:: sql
+    :caption: Left join
+
+    SELECT p.title, a.name
+    FROM poem p
+             LEFT JOIN author a on p.author_id = a.id;
+
++------------------------+---------------+
+| title                  | name          |
++========================+===============+
+| On the Field of Battle | Larysa Kosach |
++------------------------+---------------+
+| Moses                  | Ivan Franko   |
++------------------------+---------------+
+| The Forest Song        | Larysa Kosach |
++------------------------+---------------+
+| In the Catacombs       | null          |
++------------------------+---------------+
+| The Singing Stones     | Larysa Kosach |
++------------------------+---------------+
+| Ancient Fairy Tales    | null          |
++------------------------+---------------+
+| My Thoughts            | Ivan Franko   |
++------------------------+---------------+
+| To Shevchenko          | null          |
++------------------------+---------------+
+
+RIGHT OUTER JOIN
+----------------
+
+First, an inner join is performed. Then, for each row in T2 that does not
+satisfy the join condition with any row in T1, a joined row is added with
+null values in columns of T1. This is the converse of a left join: the result
+table will always have a row for each row in T2.
+
+.. code-block:: sql
+    :caption: Right join
+
+    SELECT p.title, a.name
+    FROM poem p
+             RIGHT JOIN author a on p.author_id = a.id;
+
++------------------------+---------------+
+| title                  | name          |
++========================+===============+
+| On the Field of Battle | Larysa Kosach |
++------------------------+---------------+
+| Moses                  | Ivan Franko   |
++------------------------+---------------+
+| The Forest Song        | Larysa Kosach |
++------------------------+---------------+
+| The Singing Stones     | Larysa Kosach |
++------------------------+---------------+
+| My Thoughts            | Ivan Franko   |
++------------------------+---------------+
+| null                   | John Doe      |
++------------------------+---------------+
+
+FULL OUTER JOIN
+---------------
+
+First, an inner join is performed. Then, for each row in T1 that does not
+satisfy the join condition with any row in T2, a joined row is added with
+null values in columns of T2. Also, for each row of T2 that does not satisfy
+the join condition with any row in T1, a joined row with null values in
+the columns of T1 is added.
+
+.. code-block:: sql
+    :caption: Full join
+
+    SELECT p.title, a.name
+    FROM poem p
+             FULL JOIN author a on p.author_id = a.id;
+
++------------------------+---------------+
+| title                  | name          |
++========================+===============+
+| On the Field of Battle | Larysa Kosach |
++------------------------+---------------+
+| Moses                  | Ivan Franko   |
++------------------------+---------------+
+| The Forest Song        | Larysa Kosach |
++------------------------+---------------+
+| In the Catacombs       | null          |
++------------------------+---------------+
+| The Singing Stones     | Larysa Kosach |
++------------------------+---------------+
+| Ancient Fairy Tales    | null          |
++------------------------+---------------+
+| My Thoughts            | Ivan Franko   |
++------------------------+---------------+
+| To Shevchenko          | null          |
++------------------------+---------------+
+| null                   | John Doe      |
++------------------------+---------------+
