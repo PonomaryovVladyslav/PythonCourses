@@ -2,5 +2,25 @@
                               Relational Database
 ###############################################################################
 
+:abbr:`RDBMS (Relational Database Management System)` is a type of software
+that helps users to create, update, manage, and access relational databases.
+Relational databases organize data into tables, which consist of rows and
+columns. Each column represents a specific attribute of the data, while each
+row represents a specific instance of that data.
+
+RDBMS allow users to interact with the database using
+:abbr:`SQL (Structured Query Language)`, which is a standard language for
+managing and manipulating relational databases. SQL allows users to perform
+a variety of operations on the database, including adding, updating, and
+deleting data, as well as retrieving data based on specific criteria.
+
+RDBMS also provide a range of features to ensure data integrity, such as
+enforcing data constraints, supporting transactions, and providing backup
+and recovery capabilities. Additionally, RDBMS systems often provide tools
+for managing the database, such as user interfaces for creating and modifying
+tables and views, and monitoring tools for optimizing database performance.
+
 .. toctree::
     :name: rdbms
+
+    aggregation

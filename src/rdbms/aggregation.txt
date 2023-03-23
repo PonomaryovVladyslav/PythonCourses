@@ -1,0 +1,127 @@
+*******************************************************************************
+                               Data Aggregation
+*******************************************************************************
+
+Here is some dummy data, that will be used as example in this section.
+
+.. csv-table:: product
+    :align: center
+    :file: products_table.csv
+    :header-rows: 1
+
+.. only:: builder_html
+
+    The same dataset is available as:
+
+    - :download:`csv file <./products_table.csv>`
+    - :download:`postgres dump file </../assets/sql/products.pg13-1.dump.sql>`
+
+Aggregate functions
+===================
+
+*Aggregate functions* compute a single result from a set of input values.
+Various RDBMS implement various built-in aggregate functions. In this section
+we will review 5 basic functions that are available in all RDBMS.
+
+.. image:: /../assets/img/aggregate-function.svg
+
+Count
+-----
+
+The ``count(field)`` function returns a count of the number of times that
+``field`` is not ``NULL`` in a group.
+The ``count(*)`` function (with no arguments) returns the total number of rows
+in the group.
+
+.. code-block:: sql
+
+    SELECT count(*) as "total products" FROM product;
+
+::
+
+     total_products
+    ----------------
+                 10
+
+Maximum value
+-------------
+
+The ``max()`` aggregate function returns the maximum value of all values in
+the group. The maximum value is the value that would be returned last in
+an ORDER BY on the same column.
+Aggregate function returns ``NULL`` if and only if there are no non-NULL values
+in the group.
+
+.. code-block:: sql
+
+    SELECT max(price) as "maximum price" FROM product;
+
+::
+
+ maximum price
+---------------
+        350000
+
+Minimum value
+-------------
+
+The ``min()`` aggregate function returns the minimum non-NULL value of all
+values in the group. The minimum value is the first non-NULL value that would
+appear in an ORDER BY of the column.
+Aggregate function returns ``NULL`` if and only if there are no non-NULL values
+in the group.
+
+.. code-block:: sql
+
+    SELECT min(price) as "minimum price" FROM product;
+
+::
+
+ minimum price
+---------------
+         20000
+
+Average value
+-------------
+
+The ``avg()`` function returns the average value of all non-NULL inputs within
+a group. String and BLOB values that do not look like numbers are interpreted
+as 0. The result is always a floating point value whenever there is at least
+one non-NULL input even if all inputs are integers.
+The result is ``NULL`` if and only if there are no non-NULL inputs.
+
+.. code-block:: sql
+
+    SELECT avg(price) as "average price" FROM product;
+
+::
+
+        average price
+    ---------------------
+     100500.000000000000
+
+
+Sum of values
+-------------
+
+The ``sum()`` aggregate functions return the sum of all non-NULL values in
+the group.
+If there are no non-NULL input rows then function returns ``NULL``.
+
+.. note::
+    NULL is not normally a helpful result for the sum of no rows but
+    the SQL standard requires it.
+
+    SQLite implements ``total`` aggregate function, that is similar to
+    ``sum``, but returns ``0.0`` (always floating point) if there are
+    no non-NULL input rows.
+
+.. code-block:: sql
+
+    SELECT sum(sold) as "total sold items" FROM product;
+
+::
+
+     total sold items
+    ------------------
+                 3750
