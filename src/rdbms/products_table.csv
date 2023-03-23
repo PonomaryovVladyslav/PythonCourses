@@ -1,0 +1,11 @@
+id,name,price,category,sold
+1,"Samsung Galaxy",100000,Phones,500
+2,"iPhone 13 Pro",120000,Phones,300
+3,"MacBook Pro",350000,Laptops,100
+4,"Lenovo ThinkPad",150000,Laptops,200
+5,"HP Printer",20000,Printers,800
+6,"Dell Monitor",50000,Monitors,400
+7,"Sony Headphones",30000,Audio,0
+8,"Bose Soundbar",70000,Audio,0
+9,"Xbox Series X",60000,Gaming,250
+10,"PlayStation 5",55000,Gaming,350
