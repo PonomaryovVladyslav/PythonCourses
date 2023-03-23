@@ -1,0 +1,130 @@
+*******************************************************************************
+                              Data Relationships
+*******************************************************************************
+
+It's time to talk about **data relations**.
+
+For example your database contains two tables: ``weather`` and ``city``. The
+diagram below demonstrates the overall data structure:
+
+.. mermaid::
+    :align: center
+
+    erDiagram
+        weather {
+            string city
+            int temp_lo
+            int temp_hi
+            date date
+        }
+        city {
+            string name
+            point location
+        }
+
+Consider the following problem: you want to make sure no one can insert
+a record into ``weather`` without a matching entry in ``city`` table.
+This is called maintaining the *referential integrity* of your data.
+In simplistic database systems this would be implemented (if at all) by first
+looking at the cities table to check if a matching record exists, and then
+inserting or rejecting the new weather records. This approach has a number of
+problems and is very inconvenient.
+
+.. code-block:: sql
+
+    CREATE TABLE city (
+            name     varchar(80) primary key,
+            location point
+    );
+
+    CREATE TABLE weather (
+            city      varchar(80) references cities(name),
+            temp_lo   int,
+            temp_hi   int,
+            date      date
+    );
+
+This declaration creates a relationship between two (or even more) tables.
+
+Foreign key (FK)
+===========
+
+So far, you have knowledge about **primary** keys.
+The **foreign** key is a column, that *references* some another table.
+In common, it's a reference to another table's PK; but there is no limitation
+of this kind, any column can be referenced by another one.
+FKs handle data integrity only, it's not required for FK to be non-NULL value.
+
+The relation's properties are described by CONSTRAINTS and the database's
+structure.
+
+For example, modifying declaration with ``NOT NULL`` constraint grants
+that each record within a table has a matching one entity in another table.
+
+.. code-block:: sql
+
+    CREATE TABLE weather (
+            city      varchar(80) references cities(name) NOT NULL,
+            ...
+    );
+
+This brings us to various relationship models.
+
+One-to-many relationship (1-to-N)
+------------------------
+
+This is the most common relationship.
+
+For the example above there are no limitations on temperature measurements in
+a specified city. So, a single city may has 0 or N related records in
+``weather`` table. But each weather record is related to the only one city.
+
+Another example is employees and office buildings they work in. Some big
+company may have multiple offices and employee across the globe.
+Multiple employees can be present in a single office building at a time.
+But each employee can be physically located only in a single office at a time.
+
+.. mermaid::
+
+    erDiagram
+        employee }o--|| office : located
+        employee {
+            int id
+            string first_name
+            string last_name
+            email email
+            int office_id fk
+        }
+        office {
+            int id
+            point location
+            text address
+        }
+
+One-to-one relationship (1-to-1)
+-----------------------
+
+``UNIQUE`` and ``NOT NULL`` constraints are used together to ensure there is
+and only one matching record. Back to the example with employees. Multiple
+workstations (personal computers) are located in each office building.
+The only one person can occupy the only one work station at a time.
+
+.. mermaid::
+
+    erDiagram
+        employee ||--|| work_station : occupies
+
+Many-to-many relationship (N-to-N)
+-------------------------
+
+These relationships require additional table.
+A good example may be a *project role*. There are many of them in a production
+team. And some employees may be assigned to the same role (e.g. developers,
+testers etc.). But also a single person can be a developer and tester at
+a time.
+
+.. mermaid::
+
+    erDiagram
+        employee }o--|{ employee_role : execute
+        role }o--|{ employee_role : assign
