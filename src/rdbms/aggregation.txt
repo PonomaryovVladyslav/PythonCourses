@@ -125,3 +125,100 @@ If there are no non-NULL input rows then function returns ``NULL``.
      total sold items
     ------------------
                  3750
+
+Grouping data
+=============
+
+Getting some aggregated values is not very helpful itself. Most cases require
+to group outputs in some specific manner.
+
+For example, if the task is to count number of registered categories it is
+simple to solve as:
+
+.. code-block::
+
+    SELECT count(DISTINCT category) FROM product;
+
+::
+
+     count
+    -------
+         6
+
+But in case, the task is to count **sold** items for each category, this
+becomes impossible to solve without grouping items. ``GROUP BY`` clause
+provides the ability to group rows based on some field(s) values.
+
+General syntax is:
+
+::
+
+    SELECT select_list
+    FROM ...
+    [WHERE ...]
+    GROUP BY grouping_column_reference [, grouping_column_reference]...
+
+.. code-block::
+
+    SELECT category, sum(sold) as sold FROM product GROUP BY category;
+
+.. table::
+    :align: center
+
+    ========    ====
+    category    sold
+    ========    ====
+    Audio       0
+    Printers    800
+    Gaming      600
+    Monitors    400
+    Laptops     300
+    Phones      800
+    ========    ====
+
+If the ``SELECT`` statement is an aggregate query with a ``GROUP BY`` clause,
+then each of the expressions specified as part of the GROUP BY clause is
+evaluated for each row of the dataset according to the processing rules stated
+below for ORDER BY expressions. Each row is then assigned to a "group" based on
+the results; rows for which the results of evaluating the GROUP BY expressions
+are the same get assigned to the same group. For the purposes of grouping rows,
+``NULL`` values are considered equal. The usual rules for selecting a collation
+sequence with which to compare text values apply when evaluating expressions in
+a GROUP BY clause. The expressions in the GROUP BY clause do not have to be
+expressions that appear in the result. The expressions in a GROUP BY clause may
+not be aggregate expressions.
+
+Having clause
+-------------
+
+But what, if the task is to filter categories, that have less than 500 sold
+items in it? ``WHERE`` clause will be useless, cause it's evaluated before
+grouping output. In other words, only rows that suite WHERE filter will be
+selected.
+
+.. code-block:: sql
+
+    SELECT category, sum(sold) as sold
+    FROM product
+    GROUP BY category
+    HAVING sum(sold) < 500;
+
+.. table::
+    :align: center
+
+    ========    ====
+    category    sold
+    ========    ====
+    Audio       0
+    Monitors    400
+    Laptops     300
+    ========    ====
+
+If a ``HAVING`` clause is specified, it is evaluated once for each group of
+rows as a boolean expression. If the result of evaluating the HAVING clause is
+false, the group is discarded. If the HAVING clause is an aggregate expression,
+it is evaluated across all rows in the group.
+
+If a HAVING clause is a non-aggregate expression, it is evaluated with respect
+to an arbitrarily selected row from the group. The HAVING expression may refer
+to values, even aggregate functions, that are not in the result.
