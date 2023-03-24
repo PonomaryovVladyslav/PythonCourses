@@ -47,7 +47,7 @@ problems and is very inconvenient.
 This declaration creates a relationship between two (or even more) tables.
 
 Foreign key (FK)
-===========
+================
 
 So far, you have knowledge about **primary** keys.
 The **foreign** key is a column, that *references* some another table.
@@ -71,7 +71,7 @@ that each record within a table has a matching one entity in another table.
 This brings us to various relationship models.
 
 One-to-many relationship (1-to-N)
-------------------------
+---------------------------------
 
 This is the most common relationship.
 
@@ -102,7 +102,7 @@ But each employee can be physically located only in a single office at a time.
         }
 
 One-to-one relationship (1-to-1)
------------------------
+--------------------------------
 
 ``UNIQUE`` and ``NOT NULL`` constraints are used together to ensure there is
 and only one matching record. Back to the example with employees. Multiple
@@ -115,7 +115,7 @@ The only one person can occupy the only one work station at a time.
         employee ||--|| work_station : occupies
 
 Many-to-many relationship (N-to-N)
--------------------------
+----------------------------------
 
 These relationships require additional table.
 A good example may be a *project role*. There are many of them in a production
