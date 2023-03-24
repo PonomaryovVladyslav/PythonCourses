@@ -58,9 +58,9 @@ in the group.
 
 ::
 
- maximum price
----------------
-        350000
+     maximum price
+    ---------------
+            350000
 
 Minimum value
 -------------
@@ -77,9 +77,9 @@ in the group.
 
 ::
 
- minimum price
----------------
-         20000
+     minimum price
+    ---------------
+             20000
 
 Average value
 -------------
