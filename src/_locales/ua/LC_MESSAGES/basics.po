@@ -1,8 +1,8 @@
-# SOME DESCRIPTIVE TITLE.
+# PYTHON/BASICS TRANSLATION
 # Copyright (C) 2023, Python training course authors and contributors
 # This file is distributed under the same license as the Python Training
 # Course package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, 2023.
+# FIRST AUTHOR OLEKSANDR YEROMIN <unicorn.in.pants@gmail.com>, 2023.
 #
 #, fuzzy
 msgid ""
@@ -20,7 +20,7 @@ msgstr ""
 
 #: ../../src/basics/controlflow.txt:3
 msgid "Control Flow"
-msgstr ""
+msgstr "Керування виконанням"
 
 #: ../../src/basics/datatypes.txt:3
 msgid "Data Types"
@@ -40,7 +40,7 @@ msgstr ""
 "Наприклад, **1984** може бути числом (``1984``), текстом (``\"1984"`` ) "
 "або подією чи датою. Тип даних описує можливі операції, дозволені для даних, "
 "як-от додавання чисел або конкатенація для тексту "
-"(наприклад, ``1 + 2 " "-> 3``, ``\"1\" + \"3 \" -> \"13\"``). "
+"(наприклад, ``1 + 2 -> 3``, ``\"1\" + \"3 \" -> \"13\"``)."
 
 #: ../../src/basics/datatypes.txt:11
 msgid ""
@@ -482,7 +482,7 @@ msgstr "Результат"
 
 #: ../../src/basics/stdtypes.txt:33
 msgid "``x + y``"
-msgstr "``x + y``"
+msgstr ""
 
 #: ../../src/basics/stdtypes.txt:33
 msgid "sum of *x* and *y*"
@@ -490,7 +490,7 @@ msgstr "сума *x* і *y*"
 
 #: ../../src/basics/stdtypes.txt:35
 msgid "``x - y``"
-msgstr "``x - y``"
+msgstr ""
 
 #: ../../src/basics/stdtypes.txt:35
 msgid "difference of *x* and *y*"
@@ -498,7 +498,7 @@ msgstr "різниця між *x* і *y*"
 
 #: ../../src/basics/stdtypes.txt:37
 msgid "``x * y``"
-msgstr "``x * y``"
+msgstr ""
 
 #: ../../src/basics/stdtypes.txt:37
 msgid "product of *x* and *y*"
@@ -506,7 +506,7 @@ msgstr "добуток *x* і *y*"
 
 #: ../../src/basics/stdtypes.txt:39
 msgid "``x / y``"
-msgstr "``x / y``"
+msgstr ""
 
 #: ../../src/basics/stdtypes.txt:39
 msgid "quotient of *x* and *y*"
@@ -514,7 +514,7 @@ msgstr "частка *x* і *y*"
 
 #: ../../src/basics/stdtypes.txt:41
 msgid "``x // y``"
-msgstr "``x // y``"
+msgstr ""
 
 #: ../../src/basics/stdtypes.txt:41
 msgid "floored quotient of *x* and *y*"
@@ -522,7 +522,7 @@ msgstr "цілочисельне ділення *x* і *y*"
 
 #: ../../src/basics/stdtypes.txt:43
 msgid "``x % y``"
-msgstr "``x % y``"
+msgstr ""
 
 #: ../../src/basics/stdtypes.txt:43
 msgid "remainder of ``x / y``"
@@ -530,15 +530,15 @@ msgstr "залишок від ділення``x / y``"
 
 #: ../../src/basics/stdtypes.txt:45
 msgid "``-x``"
-msgstr "``-x``"
+msgstr ""
 
 #: ../../src/basics/stdtypes.txt:45
 msgid "*x* negated"
-msgstr "*x* заперечено"
+msgstr "*x* від'ємне"
 
 #: ../../src/basics/stdtypes.txt:47
 msgid "``+x``"
-msgstr "``+x``"
+msgstr ""
 
 #: ../../src/basics/stdtypes.txt:47
 msgid "*y* unchanged"
@@ -546,7 +546,7 @@ msgstr "*y* без змін"
 
 #: ../../src/basics/stdtypes.txt:49
 msgid "``abs(x)``"
-msgstr "``abs(x)``"
+msgstr ""
 
 #: ../../src/basics/stdtypes.txt:49
 msgid "absolute value or magnitude of *x*"
@@ -554,7 +554,7 @@ msgstr "абсолютне значення або величина *x*"
 
 #: ../../src/basics/stdtypes.txt:51
 msgid "``int(x)``"
-msgstr "``int(x)``"
+msgstr ""
 
 #: ../../src/basics/stdtypes.txt:51
 msgid "*x* converted to integer"
@@ -562,7 +562,7 @@ msgstr "*x* перетворено на ціле число"
 
 #: ../../src/basics/stdtypes.txt:53
 msgid "``float(x)``"
-msgstr "``float(x)``"
+msgstr ""
 
 #: ../../src/basics/stdtypes.txt:53
 msgid "*x* converted to floating point"
@@ -570,7 +570,7 @@ msgstr "*x* перетворено на число з плаваючою ком�
 
 #: ../../src/basics/stdtypes.txt:55
 msgid "``complex(re, im)``"
-msgstr "``complex(re, im)``"
+msgstr ""
 
 #: ../../src/basics/stdtypes.txt:55
 msgid ""
@@ -582,7 +582,7 @@ msgstr ""
 
 #: ../../src/basics/stdtypes.txt:58
 msgid "``divmod(x, y)``"
-msgstr "``divmod(x, y)``"
+msgstr ""
 
 #: ../../src/basics/stdtypes.txt:58
 msgid "the pair ``(x // y, x % y)``"
@@ -590,7 +590,7 @@ msgstr "об'єднує ``(x // y, x % y)``"
 
 #: ../../src/basics/stdtypes.txt:60
 msgid "``pow(x, y)`` ``x ** y``"
-msgstr "``pow(x, y)`` ``x ** y`"
+msgstr ""
 
 #: ../../src/basics/stdtypes.txt:60
 msgid "*x* to the power *y*"
@@ -744,7 +744,7 @@ msgstr "Загальні операції"
 
 #: ../../src/basics/stdtypes.txt:151
 msgid "``x in s`` ``x not in s``"
-msgstr "``x in s`` ``x not in s``"
+msgstr ""
 
 #: ../../src/basics/stdtypes.txt:151
 msgid ""
@@ -756,7 +756,7 @@ msgstr ""
 
 #: ../../src/basics/stdtypes.txt:154
 msgid "``s + t``"
-msgstr "``s + t``"
+msgstr ""
 
 #: ../../src/basics/stdtypes.txt:154
 msgid "the concatenation of *s* and *t*"
@@ -764,7 +764,7 @@ msgstr "конкатенація s і t"
 
 #: ../../src/basics/stdtypes.txt:156
 msgid "``s * n``"
-msgstr "``s * n``"
+msgstr ""
 
 #: ../../src/basics/stdtypes.txt:156
 msgid "equivalent to adding *s* to itself *n* times"
@@ -772,7 +772,7 @@ msgstr "еквівалентно додаванню *s* до себе *n* раз
 
 #: ../../src/basics/stdtypes.txt:158
 msgid "``s[i]``"
-msgstr "``s[i]``"
+msgstr ""
 
 #: ../../src/basics/stdtypes.txt:158
 msgid "*i*-th item of *s*, origin 0"
@@ -780,7 +780,7 @@ msgstr "*i*-й елемент *s*, джерело 0"
 
 #: ../../src/basics/stdtypes.txt:160
 msgid "``s[i:j]`` ``s[i:j:k]``"
-msgstr "``s[i:j]`` ``s[i:j:k]``"
+msgstr ""
 
 #: ../../src/basics/stdtypes.txt:160
 msgid ""
@@ -792,7 +792,7 @@ msgstr ""
 
 #: ../../src/basics/stdtypes.txt:163
 msgid "``len(s)``"
-msgstr "``len(s)``"
+msgstr ""
 
 #: ../../src/basics/stdtypes.txt:163
 msgid "length of *s*"
@@ -800,7 +800,7 @@ msgstr "довжина *s*"
 
 #: ../../src/basics/stdtypes.txt:165
 msgid "``min(s)``"
-msgstr "``min(s)``"
+msgstr ""
 
 #: ../../src/basics/stdtypes.txt:165
 msgid "smallest item of *s*"
@@ -808,7 +808,7 @@ msgstr "найменший елемент *s*"
 
 #: ../../src/basics/stdtypes.txt:167
 msgid "``max(s)``"
-msgstr "``max(s)``"
+msgstr ""
 
 #: ../../src/basics/stdtypes.txt:167
 msgid "largest item of *s*"
@@ -816,7 +816,7 @@ msgstr "найбільший елемент *s*"
 
 #: ../../src/basics/stdtypes.txt:169
 msgid "``s.count(x)``"
-msgstr "``s.count(x)``"
+msgstr ""
 
 #: ../../src/basics/stdtypes.txt:169
 msgid "total number of occurrences of *x* in *s*"
@@ -824,7 +824,7 @@ msgstr "загальна кількість входжень *x* у *s*"
 
 #: ../../src/basics/stdtypes.txt:171
 msgid "``s.index(x)`` ``s.index(x, i)`` ``s.index(x, i, j)``"
-msgstr "``s.index(x)`` ``s.index(x, i)`` ``s.index(x, i, j)``"
+msgstr ""
 
 #: ../../src/basics/stdtypes.txt:171
 msgid ""
@@ -884,7 +884,7 @@ msgstr "Змінні типи послідовностей"
 
 #: ../../src/basics/stdtypes.txt:203
 msgid "``s[i] = x``"
-msgstr "``s[i] = x``"
+msgstr ""
 
 #: ../../src/basics/stdtypes.txt:203
 msgid "item *i* of *s* is replaced by *x*"
@@ -892,7 +892,7 @@ msgstr "елемент *i* з *s* замінюється на *x*"
 
 #: ../../src/basics/stdtypes.txt:205
 msgid "``s[i:j] = t``"
-msgstr "``s[i:j] = t``"
+msgstr ""
 
 #: ../../src/basics/stdtypes.txt:205
 msgid "slice of *s* from *i* to *j* replaced by the contents of *t*"
@@ -900,7 +900,7 @@ msgstr "фрагмент *s* від *i* до *j*, замінений вміст�
 
 #: ../../src/basics/stdtypes.txt:208
 msgid "``del s[i:j]``"
-msgstr "``del s[i:j]``"
+msgstr ""
 
 #: ../../src/basics/stdtypes.txt:208
 msgid "same as ``s[i:j] = []``"
@@ -908,7 +908,7 @@ msgstr "те саме, що ``s[i:j] = []``"
 
 #: ../../src/basics/stdtypes.txt:210
 msgid "``s[i:j:k] = t``"
-msgstr "``s[i:j:k] = t``"
+msgstr ""
 
 #: ../../src/basics/stdtypes.txt:210
 msgid "the elements of *s* are replaced by those of *t*[#]_"
@@ -916,7 +916,7 @@ msgstr "елементи *s* замінюються елементами *t*[#]_
 
 #: ../../src/basics/stdtypes.txt:212
 msgid "``del s[i:j:k]``"
-msgstr "``del s[i:j:k]``"
+msgstr ""
 
 #: ../../src/basics/stdtypes.txt:212
 msgid "removes the elements of ``s[i:j:k]`` from the list"
@@ -924,7 +924,7 @@ msgstr "видаляє елементи ``s[i:j:k]`` зі списку"
 
 #: ../../src/basics/stdtypes.txt:214
 msgid "``s.append(x)``"
-msgstr "``s.append(x)``"
+msgstr ""
 
 #: ../../src/basics/stdtypes.txt:214
 msgid ""
@@ -935,7 +935,7 @@ msgstr ""
 
 #: ../../src/basics/stdtypes.txt:217
 msgid "``s.clear()``"
-msgstr "``s.clear()``"
+msgstr ""
 
 #: ../../src/basics/stdtypes.txt:217
 msgid "removes all items from *s* (``del s[:]``)[#3.3]_"
@@ -943,7 +943,7 @@ msgstr "видаляє всі елементи з *s* (``del s[:]``)[#3.3]_"
 
 #: ../../src/basics/stdtypes.txt:219
 msgid "``s.copy()``"
-msgstr "``s.copy()``"
+msgstr ""
 
 #: ../../src/basics/stdtypes.txt:219
 msgid "creates a shallow copy of *s* (``s[:]``)[#3.3]_"
@@ -951,7 +951,7 @@ msgstr "створює поверхневу копію *s* (``s[:]``)[#3.3]_"
 
 #: ../../src/basics/stdtypes.txt:221
 msgid "``s.extend(t)`` ``s += t``"
-msgstr "``s.extend(t)`` ``s += t``
+msgstr ""
 
 #: ../../src/basics/stdtypes.txt:221
 msgid "extends *s* with the contents of *t*"
@@ -959,7 +959,7 @@ msgstr "розширює *s* вмістом *t*"
 
 #: ../../src/basics/stdtypes.txt:224
 msgid "``s.insert(i, x)``"
-msgstr "``s.insert(i, x)``"
+msgstr ""
 
 #: ../../src/basics/stdtypes.txt:224
 msgid "inserts *x* into *s* at the index *i*; same as ``s[i:i] = [x]``"
@@ -967,7 +967,7 @@ msgstr "вставляє *x* у *s* за індексом *i*; те саме, щ
 
 #: ../../src/basics/stdtypes.txt:227
 msgid "``s.pop()``, ``s.pop(i)``"
-msgstr "``s.pop()``, ``s.pop(i)``"
+msgstr ""
 
 #: ../../src/basics/stdtypes.txt:227
 msgid ""
@@ -979,7 +979,7 @@ msgstr ""
 
 #: ../../src/basics/stdtypes.txt:230
 msgid "``s.remove(x)``"
-msgstr "``s.remove(x)``"
+msgstr ""
 
 #: ../../src/basics/stdtypes.txt:230
 msgid "remove the first item that is equal to *x* from *s*"
@@ -987,7 +987,7 @@ msgstr "видалити перший елемент, який дорівнює 
 
 #: ../../src/basics/stdtypes.txt:232
 msgid "``s.reverse()``"
-msgstr "``s.reverse()``"
+msgstr ""
 
 #: ../../src/basics/stdtypes.txt:232
 msgid "reverses the items of *s* in place"
