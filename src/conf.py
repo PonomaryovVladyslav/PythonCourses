@@ -23,6 +23,7 @@ extensions = [
     "sphinx.ext.imgconverter",
 
     "sphinxcontrib.bibtex",
+    "sphinxcontrib.mermaid",
     "sphinx_rtd_theme",
     "myst_parser",
 ]
