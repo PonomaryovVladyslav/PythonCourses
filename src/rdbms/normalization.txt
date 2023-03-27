@@ -1,0 +1,142 @@
+*******************************************************************************
+                            Database Normalization
+*******************************************************************************
+
+Normalization is a process of organizing data in a database so that it is free
+from redundancy and dependency. It helps to eliminate data inconsistencies and
+anomalies, thereby improving data integrity. Normalization is a set of rules or
+guidelines to design a database schema in such a way that it avoids data
+duplication, data redundancy, and data inconsistency.
+
+There are several normal forms, each building on the previous one, which guide
+us in the normalization process. The most commonly used normal forms are:
+
+-   **First Normal Form (1NF)**:
+    Each column should hold atomic (indivisible) values.
+    There should be no repeating groups or arrays of data in a table.
+-   **Second Normal Form (2NF)**:
+    Each non-key column should be functionally dependent on the entire primary
+    key. In other words, every column in a table should be related to
+    the primary key and not dependent on any other non-key columns.
+-   **Third Normal Form (3NF)**:
+    All non-key columns should be dependent only on the primary key and not on
+    any other non-key columns. This eliminates transitive dependencies.
+
+Normalization reduces data redundancy and dependency, making the database more
+efficient, flexible, and scalable. It also helps in maintaining data
+consistency and accuracy, and ensures that updates and deletions are properly
+handled.
+
+First normal form (1NF)
+=======================
+
+It's easier to understand normalization via examples.
+Let's start with some dummy orders data.
+
+.. csv-table:: Initial data
+    :header-rows: 1
+
+    order,customer,product,quantity,price,total
+    1,"John Doe","(Apple, Orange)","(2, 3)","(100, 50)","(200, 150)"
+    2,"Jane Smith","Banana",4,25,100
+
+This table violates 1NF, since its columns contain multiple values. To bring
+this to 1NF all data within the table are to be atomic.
+
+.. csv-table:: 1NF applied
+    :header-rows: 1
+
+    order,customer,product,quantity,price,total
+    1,"John Doe","Apple",2,100 ,200
+    2,"John Doe","Orange",3,50 ,150
+    3,"Jane Smith","Banana",4,25,100
+
+From now each peace of data is represented as atomic value.
+
+Second normal form (2NF)
+========================
+
+The table above is in 1NF, but ``item price`` is dependent on the *item* entity
+itself and have low cohesion to *orders*. To bring it into 2NF a dedicated
+table to store information about items themselves is to be created. After that
+``order`` and ``product`` table are connected (related) to each other via a
+foreign key.
+
+.. csv-table:: ``order`` table
+    :header-rows: 1
+
+    id, customer, product_id, quantity
+    1, "John Doe", 1, 2
+    2, "John Doe", 2, 3
+    3, "Jane Smith", 3, 4
+
+.. csv-table:: ``product`` table
+    :header-rows: 1
+
+    id, product, price
+    1, "Apple", 100
+    2, "Orange", 50
+    3, "Banana", 25
+
+.. mermaid::
+    :align: center
+
+    erDiagram
+        ORDER ||--|{ PRODUCT : contains
+        ORDER {
+            int id pk
+            string customer
+            int product_id fk
+            int quantity
+        }
+        PRODUCT {
+            int id pk
+            string name
+            int price
+        }
+
+.. note:: ``total`` field is also removed, since now it can be calculated
+          as product of ``product.price`` and ``order.quantity``.
+
+Third normal form (3NF)
+=======================
+
+At last it's time to remove a transitive functional dependency. Customer's name
+is not actually dependent on a product, but on a person, who places an order.
+
+.. csv-table:: ``order`` table
+    :header-rows: 1
+
+    id, customer_id, product_id, quantity
+    1, 1, 1, 2
+    2, 1, 2, 3
+    3, 2, 3, 4
+
+.. csv-table:: ``customer`` table
+    :header-rows: 1
+
+    id, customer
+    1, "John Doe"
+    3, "Jane Smith"
+
+.. mermaid::
+    :align: center
+
+    erDiagram
+        CUSTOMER }o--|| ORDER : places
+        ORDER ||--|{ PRODUCT : contains
+        ORDER {
+            int id pk
+            int customer_id fk
+            int product_id fk
+            int quantity
+        }
+        PRODUCT {
+            int id pk
+            string name
+            int price
+        }
+        CUSTOMER {
+            int id pk
+            string name
+        }
