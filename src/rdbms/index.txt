@@ -24,3 +24,4 @@ tables and views, and monitoring tools for optimizing database performance.
     :name: rdbms
 
     aggregation
+    normalization
