@@ -1,3 +1,6 @@
 [submodule "problem-sets"]
 	path = problem-sets
 	url = https://github.com/edu-python-course/problem-sets
+[submodule "blog"]
+	path = blog
+	url = https://github.com/edu-python-course/blog
