@@ -31,11 +31,13 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+        with:
+          submodules: true
       - name: Setup Python
         uses: actions/setup-python@v2
       - name: Install dependencies
         run: |
-          pip install sphinx sphinx_rtd_theme myst_parser
+          pip install -r requirements.txt
       - name: Build documents
         run: |
           LANGUAGE=en make html
