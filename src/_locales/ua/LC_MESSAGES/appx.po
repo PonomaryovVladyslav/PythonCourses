@@ -468,7 +468,16 @@ msgid ""
 "After some time the scope of works and timelines were discussed and wrote"
 " some notes to split the entire project into individual pieces to "
 "implement step-by-step."
-msgstr "" "Місцевий магазин має проблеми з системою реєстрації платежів. Власник " "попросив вас поглянути на нього та запропонувати деякі ідеї щодо оновлення. Дивлячись на дерев'яні рами з рядами намистин, ви думаєте, " "це буде складним завданням застосувати сучасний підхід до цього" " місця та реорганізувати процеси. На щастя, ви розробник " "Python, який знає, як працювати з різними доходами та результатами даних. " "Через деякий час обговорювалися обсяги робіт і часові рамки та були написані" " деякі примітки, щоб розділити весь проект на окремі частини для " "поетапної реалізації."
+msgstr ""
+"Місцевий магазин має проблеми з системою реєстрації платежів. Власник "
+"попросив вас поглянути на нього та запропонувати деякі ідеї щодо оновлення. "
+"Дивлячись на дерев'яні рами з рядами намистин, ви думаєте, "
+"це буде складним завданням застосувати сучасний підхід до цього "
+"місця та реорганізувати процеси. На щастя, ви розробник "
+"Python, який знає, як працювати з різними доходами та результатами даних. "
+"Через деякий час обговорювалися обсяги робіт і часові рамки та були написані"
+" деякі примітки, щоб розділити весь проект на окремі частини для "
+"поетапної реалізації."
 
 #: ../../problem-sets/src/conv_store/challenge.rst:14
 msgid "Your notes are here,"
@@ -662,17 +671,19 @@ msgstr ""
 
 #: ../../problem-sets/src/conv_store/challenge.rst:134
 msgid "Payment Processors"
-msgstr ""
+msgstr "Опрацювання платежів"
 
 #: ../../problem-sets/src/conv_store/challenge.rst:136
 msgid ""
 "The owner asked you to implement a flexible payment system. Purchasing "
 "the shopping card consists of several steps:"
 msgstr ""
+"Власник попросив вас запровадити гнучку платіжну систему. Придбання "
+"картки покупок складається з кількох кроків:"
 
 #: ../../problem-sets/src/conv_store/challenge.rst:139
 msgid "cart validation - it should not be empty or already purchased"
-msgstr ""
+msgstr "перевірка кошика - він не повинен бути порожнім або вже придбаним"
 
 #: ../../problem-sets/src/conv_store/challenge.rst:140
 msgid "payment validation - various payment types requires various validations"
@@ -774,11 +785,11 @@ msgstr ""
 
 #: ../../problem-sets/src/conv_store/challenge.rst:189
 msgid "More Enhancements for Shopping Carts"
-msgstr ""
+msgstr "Більше покращень для кошиків для покупок"
 
 #: ../../problem-sets/src/conv_store/challenge.rst:191
 msgid "Make your ``ShoppingCart`` an actual container"
-msgstr ""
+msgstr "Зробіть ваш ``ShoppingCart`` справжнім контейнером"
 
 #: ../../problem-sets/src/conv_store/challenge.rst:193
 msgid ""
