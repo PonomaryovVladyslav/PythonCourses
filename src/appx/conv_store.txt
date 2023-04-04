@@ -1,0 +1,1 @@
+.. include:: /../problem-sets/src/conv_store/challenge.rst
