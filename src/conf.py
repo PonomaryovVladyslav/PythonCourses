@@ -62,4 +62,6 @@ latex_appendices = [
     "appx/env_path",
     "appx/precedence",
     "appx/printf",
+    "appx/conv_store",
+    "appx/blog",
 ]
