@@ -4,20 +4,22 @@
 # Course package.
 # SERHII HORODILOV <SHORODIL@GMAIL.COM>, 2023.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: Python Training Course 2022.11.dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-04-05 16:17+0300\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"POT-Creation-Date: 2023-04-06 12:11+0300\n"
+"PO-Revision-Date: 2023-04-06 12:24+0300\n"
 "Last-Translator: Serhii Horodilov <sgorodil@gmail.com>\n"
-"Language: ua\n"
 "Language-Team: ua <LL@li.org>\n"
+"Language: uk\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=utf-8\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<12 || n%100>14) ? 1 : 2);\n"
 "Generated-By: Babel 2.12.1\n"
+"X-Generator: Poedit 3.2.2\n"
 
 #: ../../blog/docs/spec.md:2
 msgid "Blog Project Specification"
@@ -25,31 +27,32 @@ msgstr ""
 
 #: ../../blog/docs/spec.md:5
 msgid ""
-"As a developer you were asked to create a simple blog site. The goal is "
-"to create a place on the Internet where users can share their stories to "
-"public."
+"As a developer you were asked to create a simple blog site. The goal is to "
+"create a place on the Internet where users can share their stories to public."
 msgstr ""
 
 #: ../../blog/docs/spec.md:8
 msgid ""
-"This document applies requirements for the entire project step-by-step. "
-"You will start from creating the appropriate URL dispatcher and "
-"connecting a PostgreSQL database to store the data and will finish with "
-"implementing REST API for the blog."
+"This document applies requirements for the entire project step-by-step. You "
+"will start from creating the appropriate URL dispatcher and connecting a "
+"PostgreSQL database to store the data and will finish with implementing REST "
+"API for the blog."
 msgstr ""
 
 #: ../../blog/docs/spec.md:13
 msgid ""
-"There are some boiler plates, that may be useful in your future work, but"
-" you aren't forced to use them. It's on your choice."
+"There are some boiler plates, that may be useful in your future work, but "
+"you aren't forced to use them. It's on your choice."
 msgstr ""
 
 #: ../../blog/docs/spec.md:16
-msgid "[Starter template](https://github.com/edu-python-course/django-template)"
+msgid ""
+"[Starter template](https://github.com/edu-python-course/django-template)"
 msgstr ""
 
 #: ../../blog/docs/spec.md:17
-msgid "[Bootstrap templates](https://github.com/edu-python-course/blog-bootstrap)"
+msgid ""
+"[Bootstrap templates](https://github.com/edu-python-course/blog-bootstrap)"
 msgstr ""
 
 #: ../../blog/docs/spec.md:20
@@ -58,15 +61,15 @@ msgstr ""
 
 #: ../../blog/docs/spec.md:23
 msgid ""
-"It's ok not to return **actual** content for now. Just ensure all the "
-"routes are available and provide correct data. Use anything you like to "
-"return within HTTP response."
+"It's ok not to return **actual** content for now. Just ensure all the routes "
+"are available and provide correct data. Use anything you like to return "
+"within HTTP response."
 msgstr ""
 
 #: ../../blog/docs/spec.md:29
 msgid ""
-"`/blogs/`: A site's homepage. This will contain a list of blogs available"
-" via the django site."
+"`/blogs/`: A site's homepage. This will contain a list of blogs available "
+"via the django site."
 msgstr ""
 
 #: ../../blog/docs/spec.md:32
@@ -81,12 +84,13 @@ msgstr ""
 
 #: ../../blog/docs/spec.md:37
 msgid ""
-"`/<slug>/`: A single blog post detail view. The URL contains dynamic part"
-" in it. This will be used to fetch a single blogpost from the database."
+"`/<slug>/`: A single blog post detail view. The URL contains dynamic part in "
+"it. This will be used to fetch a single blogpost from the database."
 msgstr ""
 
 #: ../../blog/docs/spec.md:40
-msgid "`<slug>/comment/`: This view will be used to add comments to a blogpost."
+msgid ""
+"`<slug>/comment/`: This view will be used to add comments to a blogpost."
 msgstr ""
 
 #: ../../blog/docs/spec.md:42
@@ -120,7 +124,8 @@ msgid "`/login/`: This view contains a login form."
 msgstr ""
 
 #: ../../blog/docs/spec.md:56
-msgid "`/logout/`: Logout page. This view should redirect user back to homepage."
+msgid ""
+"`/logout/`: Logout page. This view should redirect user back to homepage."
 msgstr ""
 
 #: ../../blog/docs/spec.md:61
@@ -153,8 +158,8 @@ msgstr ""
 
 #: ../../blog/docs/spec.md:111
 msgid ""
-"Update existing views to represent entities that are actually stored "
-"inside the project's database."
+"Update existing views to represent entities that are actually stored inside "
+"the project's database."
 msgstr ""
 
 #: ../../blog/docs/spec.md:114
@@ -167,8 +172,8 @@ msgstr ""
 
 #: ../../blog/docs/spec.md:118
 msgid ""
-"`/profile/<username>`: should contain information about user and a list "
-"of posts authored by this user."
+"`/profile/<username>`: should contain information about user and a list of "
+"posts authored by this user."
 msgstr ""
 
 #: ../../blog/docs/spec.md:121
@@ -183,8 +188,8 @@ msgstr ""
 
 #: ../../blog/docs/spec.md:129
 msgid ""
-"It's time to work with data representations. You're to add HTML template "
-"to the blog site project. Keep templates together with appropriate "
+"It's time to work with data representations. You're to add HTML template to "
+"the blog site project. Keep templates together with appropriate "
 "applications, we don't need mess in project files."
 msgstr ""
 
@@ -194,36 +199,35 @@ msgstr ""
 
 #: ../../blog/docs/spec.md:135
 msgid ""
-"Each page should contain a navbar at the top. Navbar will contain "
-"permalinks to the home and about pages."
+"Each page should contain a navbar at the top. Navbar will contain permalinks "
+"to the home and about pages."
 msgstr ""
 
 #: ../../blog/docs/spec.md:137
 msgid ""
-"For anonymous users `/register/` and `/login/` links should be visible in"
-" navbar."
+"For anonymous users `/register/` and `/login/` links should be visible in "
+"navbar."
 msgstr ""
 
 #: ../../blog/docs/spec.md:139
 msgid ""
-"For authenticated users `/logout/` and `/create/` links should be visible"
-" in navbar."
+"For authenticated users `/logout/` and `/create/` links should be visible in "
+"navbar."
 msgstr ""
 
 #: ../../blog/docs/spec.md:141
 msgid ""
-"If authenticated user is admin or stuff they should see a link to admin "
-"page."
+"If authenticated user is admin or stuff they should see a link to admin page."
 msgstr ""
 
 #: ../../blog/docs/spec.md:142
 msgid ""
-"Each page should contain a list of links to archive views for the last "
-"year."
+"Each page should contain a list of links to archive views for the last year."
 msgstr ""
 
 #: ../../blog/docs/spec.md:143
-msgid "For the `post_list.html` each post entity should provide the information:"
+msgid ""
+"For the `post_list.html` each post entity should provide the information:"
 msgstr ""
 
 #: ../../blog/docs/spec.md:144
@@ -260,17 +264,16 @@ msgstr ""
 
 #: ../../blog/docs/spec.md:152
 msgid ""
-"Auth views should use `register.html` and `login.html` with corresponding"
-" forms."
+"Auth views should use `register.html` and `login.html` with corresponding "
+"forms."
 msgstr ""
 
 #: ../../blog/docs/spec.md:155
 msgid ""
-"For now, it's ok to use admin as \"test user\". Authentication system "
-"will be implemented in the future challenges. `user` object is available "
-"(by default) in any template context. To test anonymous access you can "
-"use `usar.is_authenticated`, which returns `False` for non-authenticated "
-"users."
+"For now, it's ok to use admin as \"test user\". Authentication system will "
+"be implemented in the future challenges. `user` object is available (by "
+"default) in any template context. To test anonymous access you can use `usar."
+"is_authenticated`, which returns `False` for non-authenticated users."
 msgstr ""
 
 #: ../../blog/docs/spec.md:162
@@ -323,8 +326,8 @@ msgstr ""
 
 #: ../../blog/docs/spec.md:179
 msgid ""
-"Create a form to gather a comment from a user. Form should be used within"
-" a \"post detail\" view."
+"Create a form to gather a comment from a user. Form should be used within a "
+"\"post detail\" view."
 msgstr ""
 
 #: ../../blog/docs/spec.md:181
@@ -350,24 +353,24 @@ msgstr ""
 
 #: ../../blog/docs/spec.md:195
 msgid ""
-"`/login/`: Users should provide their credentials to login. In case login"
-" is successful they should be redirected to their profile (if no "
-"`next=url` query string available)."
+"`/login/`: Users should provide their credentials to login. In case login is "
+"successful they should be redirected to their profile (if no `next=url` "
+"query string available)."
 msgstr ""
 
 #: ../../blog/docs/spec.md:199
 msgid ""
-"`/create/`: Only authenticated users should be able to visit this page. "
-"In case anonymous user is trying to request this view they should be "
-"redirected to the login view first, and after successful authentication "
-"get back to post creation. Then a post is created, it should be authored "
-"by the currently authenticated user."
+"`/create/`: Only authenticated users should be able to visit this page. In "
+"case anonymous user is trying to request this view they should be redirected "
+"to the login view first, and after successful authentication get back to "
+"post creation. Then a post is created, it should be authored by the "
+"currently authenticated user."
 msgstr ""
 
 #: ../../blog/docs/spec.md:205
 msgid ""
-"`/<slug>/comment`: Currently authenticated user should be referenced as a"
-" comment's author."
+"`/<slug>/comment`: Currently authenticated user should be referenced as a "
+"comment's author."
 msgstr ""
 
 #: ../../blog/docs/spec.md:207
@@ -416,8 +419,8 @@ msgstr ""
 
 #: ../../blog/docs/spec.md:239
 msgid ""
-"All blog-site functionality are to be reflected via REST API. It's ok to "
-"use *pre-defined* user as a post's author for now."
+"All blog-site functionality are to be reflected via REST API. It's ok to use "
+"*pre-defined* user as a post's author for now."
 msgstr ""
 
 #: ../../blog/docs/spec.md:244
@@ -446,11 +449,11 @@ msgstr ""
 
 #: ../../src/appx/code_edit.txt:7
 msgid ""
-"Writing Python using IDLE or the Python Shell is great for simple things,"
-" but those tools quickly turn larger programming projects into "
-"frustrating pits of despair. Using an IDE, or even just a good dedicated "
-"code editor, makes coding fun — but which one is best for you? "
-":cite:`realpython:code-edit`"
+"Writing Python using IDLE or the Python Shell is great for simple things, "
+"but those tools quickly turn larger programming projects into frustrating "
+"pits of despair. Using an IDE, or even just a good dedicated code editor, "
+"makes coding fun — but which one is best for you? :cite:`realpython:code-"
+"edit`"
 msgstr ""
 
 #: ../../problem-sets/src/conv_store/challenge.rst:3
@@ -459,44 +462,41 @@ msgstr ""
 
 #: ../../problem-sets/src/conv_store/challenge.rst:5
 msgid ""
-"The local store is struggling with their payment registry system. The "
-"owner asked you to take a look at it and to propose some ideas about the "
-"upgrade. While looking on a wooden frames with rows of beads you think "
-"that this will be a challenging task to bring a modern approach into this"
-" place and reorganize the processes. Fortunately, you are a Python "
-"developer who knows how to work with various data incomes and outcomes. "
-"After some time the scope of works and timelines were discussed and wrote"
-" some notes to split the entire project into individual pieces to "
-"implement step-by-step."
+"The local store is struggling with their payment registry system. The owner "
+"asked you to take a look at it and to propose some ideas about the upgrade. "
+"While looking on a wooden frames with rows of beads you think that this will "
+"be a challenging task to bring a modern approach into this place and "
+"reorganize the processes. Fortunately, you are a Python developer who knows "
+"how to work with various data incomes and outcomes. After some time the "
+"scope of works and timelines were discussed and wrote some notes to split "
+"the entire project into individual pieces to implement step-by-step."
 msgstr ""
 "Місцевий магазин має проблеми з системою реєстрації платежів. Власник "
-"попросив вас поглянути на нього та запропонувати деякі ідеї щодо "
-"оновлення. Дивлячись на дерев'яні рами з рядами намистин, ви думаєте, це "
-"буде складним завданням застосувати сучасний підхід до цього місця та "
-"реорганізувати процеси. На щастя, ви розробник Python, який знає, як "
-"працювати з різними доходами та результатами даних. Через деякий час "
-"обговорювалися обсяги робіт і часові рамки та були написані деякі "
-"примітки, щоб розділити весь проект на окремі частини для поетапної "
-"реалізації."
+"попросив вас поглянути на нього та запропонувати деякі ідеї щодо оновлення. "
+"Дивлячись на дерев'яні рами з рядами намистин, ви думаєте, це буде складним "
+"завданням застосувати сучасний підхід до цього місця та реорганізувати "
+"процеси. На щастя, ви розробник Python, який знає, як працювати з різними "
+"доходами та результатами даних. Через деякий час обговорювалися обсяги робіт "
+"і часові рамки та були написані деякі примітки, щоб розділити весь проект на "
+"окремі частини для поетапної реалізації."
 
 #: ../../problem-sets/src/conv_store/challenge.rst:14
 msgid "Your notes are here,"
-msgstr "Ваші нотатки тут,"
+msgstr "Ваші нотатки ось,"
 
 #: ../../problem-sets/src/conv_store/challenge.rst:18
 msgid "Products and Carts"
 msgstr "Товари та кошик"
 
 #: ../../problem-sets/src/conv_store/challenge.rst:20
-#, fuzzy
 msgid ""
 "It's a good idea to start with basics - the objects you're going to work "
-"with. At stage one the main goal is to implement data models - classes to"
-" work around data in the future."
+"with. At stage one the main goal is to implement data models - classes to "
+"work around data in the future."
 msgstr ""
-"Бажано почати з основ - об'єктів, з якими ви збираєтеся працювати. "
-"На першому етапі головною метою є впровадження моделей даних - класів для"
-" роботи з даними в майбутньому."
+"Бажано почати з основ - об'єктів, з якими ви збираєтеся працювати. На "
+"першому етапі головною метою є впровадження моделей даних - класів для "
+"роботи з даними в майбутньому."
 
 #: ../../problem-sets/src/conv_store/challenge.rst:25
 msgid "Product"
@@ -524,27 +524,25 @@ msgstr "``unit`` - розмір одиниці окремого товару (п
 
 #: ../../problem-sets/src/conv_store/challenge.rst:35
 msgid ""
-"For example: **apple** costs 1059 for each 0.1 kg. This means ``name`` "
-"will store ``\"apple\"``, ``price`` is ``1059`` and ``unit`` is equal to "
-"``0.1``."
+"For example: **apple** costs 1059 for each 0.1 kg. This means ``name`` will "
+"store ``\"apple\"``, ``price`` is ``1059`` and ``unit`` is equal to ``0.1``."
 msgstr ""
 "Наприклад: **яблуко** коштує 1059 за кожні 0,1 кг. Це означає, що ``name`` "
 "зберігає ``\"apple\"``, ``price`` є ``1059`` і `` unit`` дорівнює ``0,1``."
 
 #: ../../problem-sets/src/conv_store/challenge.rst:39
-#, fuzzy
 msgid ""
-"``Product`` class should implement ``get_total`` method to calculate a "
-"total price for a specified quantity of a product to purchase. Desired "
-"quantity will be passed as an optional argument of a numeric type "
-"(``int`` or ``float``). In case quantity argument is omitted - just use "
-"``unit`` attribute value instead."
+"``Product`` class should implement ``get_total`` method to calculate a total "
+"price for a specified quantity of a product to purchase. Desired quantity "
+"will be passed as an optional argument of a numeric type (``int`` or "
+"``float``). In case quantity argument is omitted - just use ``unit`` "
+"attribute value instead."
 msgstr ""
 "Клас ``Product`` повинен реалізовувати метод ``get_total`` для обчислення "
-"загальної ціни на вказану кількість продукту для покупки. Бажану кількість "
-"буде передано як необов'язковий аргумент числового типу "
-"(``int`` або ``float``). Якщо аргумент кількості пропущено, просто "
-"використовуйте значення атрибута ``unit``."
+"загальної ціни на вказану кількість товару для покупки. Бажану кількість "
+"буде передано як необов'язковий аргумент числового типу (``int`` або "
+"``float``). Якщо аргумент кількості пропущено, просто використовуйте "
+"значення атрибута ``unit``."
 
 #: ../../problem-sets/src/conv_store/challenge.rst:46
 msgid "Code notes"
@@ -555,7 +553,6 @@ msgid "Product model implementation"
 msgstr "Реалізація моделі товару"
 
 #: conv_store.models.Product:3 of
-#, fuzzy
 msgid "Instances of this class represent a product available for purchase."
 msgstr "Цей клас представляє товари, які можна придбати в магазині."
 
@@ -568,12 +565,10 @@ msgid "the name of a product"
 msgstr "назва товару"
 
 #: conv_store.models.Product:7 of
-#, fuzzy
 msgid "the price for a single product unit"
 msgstr "``price`` - ціна за одну одиницю товару (прик. 3655, 500, 12999)"
 
 #: conv_store.models.Product:9 of
-#, fuzzy
 msgid "the size of a single product unit"
 msgstr "``unit`` - розмір одиниці окремого товару (прик. 1, 0.500, 12)"
 
@@ -624,11 +619,11 @@ msgstr "Кошик для покупок"
 #: ../../problem-sets/src/conv_store/challenge.rst:65
 msgid ""
 "This class represents the container for the products. It's main "
-"responsibility is to store information about the purchases and their "
-"amount (quantities)."
+"responsibility is to store information about the purchases and their amount "
+"(quantities)."
 msgstr ""
-"Цей клас представляє контейнер для продуктів. Його основна "
-"відповідальність - зберігати інформацію про покупки та їх кількість."
+"Цей клас представляє контейнер для продуктів. Його основна відповідальність "
+"- зберігати інформацію про покупки та їх кількість."
 
 #: ../../problem-sets/src/conv_store/challenge.rst:68
 msgid ""
@@ -640,9 +635,9 @@ msgstr ""
 
 #: ../../problem-sets/src/conv_store/challenge.rst:70
 msgid ""
-"``ShoppingCart`` should implement ``add_product`` method to put a "
-"specified quantity into a cart. ``quantity`` argument is optional, if "
-"omitted just uses ``Product.unit`` value instead."
+"``ShoppingCart`` should implement ``add_product`` method to put a specified "
+"quantity into a cart. ``quantity`` argument is optional, if omitted just "
+"uses ``Product.unit`` value instead."
 msgstr ""
 "``ShoppingCart`` має реалізувати метод ``add_product``, щоб помістити "
 "вказану кількість у кошик. Аргумент ``quantity`` є необов’язковим, якщо "
@@ -662,8 +657,8 @@ msgstr "Ініціалізація, представлення та привед
 
 #: ../../problem-sets/src/conv_store/challenge.rst:95
 msgid ""
-"It's difficult to set properties one-by-one, also it's not informative to"
-" get default objects string representations. It's time to fix this."
+"It's difficult to set properties one-by-one, also it's not informative to "
+"get default objects string representations. It's time to fix this."
 msgstr ""
 "Важко встановлювати властивості одну за одною, також "
 "неінформативноотримувати представлення рядків об'єктів за замовчуванням. "
@@ -672,16 +667,16 @@ msgstr ""
 #: ../../problem-sets/src/conv_store/challenge.rst:98
 msgid "``Product`` should be initialized with all required data, no defaults."
 msgstr ""
-"``Продукт`` має бути ініціалізований усіма необхідними даними, без "
-"значень за замовчуванням."
+"``Продукт`` має бути ініціалізований усіма необхідними даними, без значень "
+"за замовчуванням."
 
 #: ../../problem-sets/src/conv_store/challenge.rst:99
 msgid ""
-"Apply ``ShoppingCart.__init__`` to separate products and quantities "
-"between different carts."
+"Apply ``ShoppingCart.__init__`` to separate products and quantities between "
+"different carts."
 msgstr ""
-"Застосуйте ``ShoppingCart.__init__``, щоб розділити продукти та кількість"
-" між різними візками."
+"Застосуйте ``ShoppingCart.__init__``, щоб розділити продукти та кількість "
+"між різними візками."
 
 #: ../../problem-sets/src/conv_store/challenge.rst:101
 msgid "Provide a human readable representations. For example:"
@@ -705,28 +700,27 @@ msgstr ""
 
 #: ../../problem-sets/src/conv_store/challenge.rst:108
 msgid ""
-"While casting product instance to ``float`` type it should be equal to "
-"its ``price`` attribute value."
+"While casting product instance to ``float`` type it should be equal to its "
+"``price`` attribute value."
 msgstr ""
-"Під час приведення екземпляра продукту до типу ``float`` він має "
-"дорівнювати значенню його атрибута ``price``."
+"Під час приведення екземпляра продукту до типу ``float`` він має дорівнювати "
+"значенню його атрибута ``price``."
 
 #: ../../problem-sets/src/conv_store/challenge.rst:110
 msgid ""
-"While casting shopping cart instance to ``float`` type it should be equal"
-" to its total price value."
+"While casting shopping cart instance to ``float`` type it should be equal to "
+"its total price value."
 msgstr ""
-"Під час приведення екземпляра кошика для покупок до типу ``float`` він "
-"має дорівнювати загальному значенню ціни."
+"Під час приведення екземпляра кошика для покупок до типу ``float`` він має "
+"дорівнювати загальному значенню ціни."
 
 #: ../../problem-sets/src/conv_store/challenge.rst:112
 msgid ""
-"While casting shopping cart instance to ``bool`` consider it ``True`` if "
-"at least one product is attach to current cart."
+"While casting shopping cart instance to ``bool`` consider it ``True`` if at "
+"least one product is attach to current cart."
 msgstr ""
-"Під час трансляції екземпляра кошика для покупок до ``bool`` вважайте "
-"його ``True``, якщо принаймні один продукт приєднаний до поточного "
-"кошика."
+"Під час трансляції екземпляра кошика для покупок до ``bool`` вважайте його "
+"``True``, якщо принаймні один продукт приєднаний до поточного кошика."
 
 #: ../../problem-sets/src/conv_store/challenge.rst:115
 msgid "Implement equality operator support for your objects:"
@@ -737,7 +731,8 @@ msgid "consider products equal if all their properties are the same"
 msgstr "вважати продукти рівними, якщо всі їхні властивості однакові"
 
 #: ../../problem-sets/src/conv_store/challenge.rst:118
-msgid "consider carts equal if products and corresponding quantities are the same"
+msgid ""
+"consider carts equal if products and corresponding quantities are the same"
 msgstr "вважати кошики рівними, якщо продукти та відповідна кількість однакові"
 
 #: ../../problem-sets/src/conv_store/challenge.rst:144
@@ -746,11 +741,11 @@ msgstr "Опрацювання платежів"
 
 #: ../../problem-sets/src/conv_store/challenge.rst:146
 msgid ""
-"The owner asked you to implement a flexible payment system. Purchasing "
-"the shopping card consists of several steps:"
+"The owner asked you to implement a flexible payment system. Purchasing the "
+"shopping card consists of several steps:"
 msgstr ""
-"Власник попросив вас запровадити гнучку платіжну систему. Придбання "
-"картки покупок складається з кількох кроків:"
+"Власник попросив вас запровадити гнучку платіжну систему. Придбання картки "
+"покупок складається з кількох кроків:"
 
 #: ../../problem-sets/src/conv_store/challenge.rst:149
 msgid "cart validation - it should not be empty or already purchased"
@@ -766,27 +761,27 @@ msgstr "купівля кошика"
 
 #: ../../problem-sets/src/conv_store/challenge.rst:153
 msgid ""
-"For now there are two payment types available in the store: cash and "
-"credit card, but they maybe extended at any time."
+"For now there are two payment types available in the store: cash and credit "
+"card, but they maybe extended at any time."
 msgstr ""
-"Наразі в магазині доступні два типи оплати: готівка та кредитна картка, "
-"але їх можна продовжити в будь-який час."
+"Наразі в магазині доступні два типи оплати: готівка та кредитна картка, але "
+"їх можна продовжити в будь-який час."
 
 #: ../../problem-sets/src/conv_store/challenge.rst:156
 msgid ""
-"Update the ``ShoppingCart`` class to handle ``purchased`` state. Make "
-"this property *protected*, since it should not be accessed outside the "
-"card instance."
+"Update the ``ShoppingCart`` class to handle ``purchased`` state. Make this "
+"property *protected*, since it should not be accessed outside the card "
+"instance."
 msgstr ""
-"Оновіть клас ``ShoppingCart`` для обробки стану ``purchased``. Зробіть цю"
-" властивість \" \"захищеною, оскільки до неї не слід звертатися поза "
-"екземпляром картки."
+"Оновіть клас ``ShoppingCart`` для обробки стану ``purchased``. Зробіть цю "
+"властивість *protected*, оскільки до неї не слід звертатися поза екземпляром "
+"картки."
 
 #: ../../problem-sets/src/conv_store/challenge.rst:159
 msgid ""
 "Implement ``PaymentValidator`` class with ``is_valid`` that takes no "
-"arguments and return a value of a boolean type. This is an abstract class"
-" for the future usage."
+"arguments and return a value of a boolean type. This is an abstract class "
+"for the future usage."
 msgstr ""
 "Реалізуйте клас ``PaymentValidator`` з ``is_valid``, який не приймає "
 "аргументів і повертає значення логічного типу. Це абстрактний клас для "
@@ -794,9 +789,9 @@ msgstr ""
 
 #: ../../problem-sets/src/conv_store/challenge.rst:162
 msgid ""
-"Implement ``PaymentProcessor`` class with ``purchase`` method that takes "
-"a ``ShoppingCart`` object and returns nothing. This is an abstract class "
-"for the future usage."
+"Implement ``PaymentProcessor`` class with ``purchase`` method that takes a "
+"``ShoppingCart`` object and returns nothing. This is an abstract class for "
+"the future usage."
 msgstr ""
 "Реалізуйте клас ``PaymentProcessor`` з методом ``purchase``, який бере "
 "об'єкт ``ShoppingCart`` і нічого не повертає. Це абстрактний клас для "
@@ -804,8 +799,8 @@ msgstr ""
 
 #: ../../problem-sets/src/conv_store/challenge.rst:165
 msgid ""
-"Inherit ``CashPaymentValidator`` from the base validator. The instances "
-"of this class are considered to be always valid."
+"Inherit ``CashPaymentValidator`` from the base validator. The instances of "
+"this class are considered to be always valid."
 msgstr ""
 "Успадкувати ``CashPaymentValidator`` від базового валідатора. Екземпляри "
 "цього класу вважаються завжди дійсними."
@@ -815,29 +810,31 @@ msgid "Inherit ``CodeValidator`` from the base validator."
 msgstr "Успадкувати ``CodeValidator`` від основного валідатора."
 
 #: ../../problem-sets/src/conv_store/challenge.rst:169
-msgid "The instances of this class are created with ``security_code`` argument."
-msgstr "Екземпляри цього класу створено за допомогою аргументу ``security_code``."
+msgid ""
+"The instances of this class are created with ``security_code`` argument."
+msgstr ""
+"Екземпляри цього класу створено за допомогою аргументу ``security_code``."
 
 #: ../../problem-sets/src/conv_store/challenge.rst:170
 msgid ""
-"``is_valid`` method should ask a customer for a security code and check "
-"it against the stored value. In case codes are equal payment considered "
-"to be valid."
+"``is_valid`` method should ask a customer for a security code and check it "
+"against the stored value. In case codes are equal payment considered to be "
+"valid."
 msgstr ""
-"Метод ``is_valid`` має запитати у клієнта код безпеки та перевірити його "
-"зі збереженим значенням. Якщо коди однакові, оплата вважається дійсною."
+"Метод ``is_valid`` має запитати у клієнта код безпеки та перевірити його зі "
+"збереженим значенням. Якщо коди однакові, оплата вважається дійсною."
 
 #: ../../problem-sets/src/conv_store/challenge.rst:174
 msgid ""
 "Create ``CashPaymentProcessor`` that combines ``CashValidator`` and "
 "``PaymentProcessor`` behaviors. While purchasing the cart the messages "
-"\"Processing cash payment...\" and \"Cart bill: {float total}\" should be"
-" printed out."
+"\"Processing cash payment...\" and \"Cart bill: {float total}\" should be "
+"printed out."
 msgstr ""
-"Створіть ``CashPaymentProcessor``, який поєднує поведінку "
-"``CashValidator`` і ``PaymentProcessor``. Під час купівлі в кошику "
-"з'являються повідомлення \"Обробка готівкового платежу...\" і \"Рахунок у"
-" кошику : {float total}\" слід роздрукувати."
+"Створіть ``CashPaymentProcessor``, який поєднує поведінку ``CashValidator`` "
+"і ``PaymentProcessor``. Під час купівлі в кошику з'являються повідомлення "
+"\"Обробка готівкового платежу...\" і \"Рахунок у кошику : {float total}\" "
+"слід роздрукувати."
 
 #: ../../problem-sets/src/conv_store/challenge.rst:179
 msgid ""
@@ -846,10 +843,9 @@ msgid ""
 "\"Processing card payment...\" and \"Security code: {code}\" should be "
 "printed out."
 msgstr ""
-"Створіть ``CardPaymentProcessor``, який поєднує поведінку "
-"``CodeValidator`` і ``PaymentProcessor``. Під час купівлі в кошику "
-"з'являються повідомлення \"Обробка платежу карткою...\" і \"Код безпеки :"
-" {code}\" слід роздрукувати."
+"Створіть ``CardPaymentProcessor``, який поєднує поведінку ``CodeValidator`` "
+"і ``PaymentProcessor``. Під час купівлі кошику слід роздрукувати "
+"повідомлення \"Обробка платежу карткою...\" і \"Код безпеки : {code}\"."
 
 #: ../../problem-sets/src/conv_store/challenge.rst:199
 msgid "More Enhancements for Shopping Carts"
@@ -861,35 +857,34 @@ msgstr "Зробіть ваш ``ShoppingCart`` справжнім контейн
 
 #: ../../problem-sets/src/conv_store/challenge.rst:203
 msgid ""
-"Implement ``len(cart_obj)`` and make it return the number of products in "
-"the cart."
+"Implement ``len(cart_obj)`` and make it return the number of products in the "
+"cart."
 msgstr ""
-"Реалізуйте ``len(cart_obj)`` і змусьте його повертати кількість продуктів"
-" у кошику."
+"Реалізуйте ``len(cart_obj)`` і змусьте його повертати кількість продуктів у "
+"кошику."
 
 #: ../../problem-sets/src/conv_store/challenge.rst:205
 msgid ""
-"Implement ``cart[...]`` behavior to take a ``tuple`` containing product "
-"and corresponding quantity (type hint: ``Tuple[Product, Union[int, "
-"float]]``)."
+"Implement ``cart[...]`` behavior to take a ``tuple`` containing product and "
+"corresponding quantity (type hint: ``Tuple[Product, Union[int, float]]``)."
 msgstr ""
 "Реалізуйте поведінку ``cart[...]``, щоб повертати ``tuple``, що містить "
-"товар та відповідну кількість (type hint: ``Tuple[Product, Union[int, \" "
-"\"float]] ``)."
+"товар та відповідну кількість (type hint: ``Tuple[Product, Union[int, "
+"float]]``)."
 
 #: ../../problem-sets/src/conv_store/challenge.rst:209
 msgid ""
-"Make your ``ShoppingCart`` iterable - let it provide the product instance"
-" and corresponding quantity for each iteration."
+"Make your ``ShoppingCart`` iterable - let it provide the product instance "
+"and corresponding quantity for each iteration."
 msgstr ""
 "Зробіть ваш ``ShoppingCart`` повторюваним - дозвольте йому надавати "
 "примірник продукту та відповідну кількість для кожної ітерації."
 
 #: ../../problem-sets/src/conv_store/challenge.rst:211
 msgid ""
-"Avoid products duplication. In case someone tries to put the product into"
-" a cart and this product already is present there, do not it for the "
-"second time - adjust corresponding quantity value instead."
+"Avoid products duplication. In case someone tries to put the product into a "
+"cart and this product already is present there, do not it for the second "
+"time - adjust corresponding quantity value instead."
 msgstr ""
 "Уникайте дублювання продуктів. Якщо хтось намагається покласти продукт у "
 "кошик, і цей продукт уже там присутній, не робіть цього вдруге - змініть "
@@ -897,19 +892,19 @@ msgstr ""
 
 #: ../../problem-sets/src/conv_store/challenge.rst:214
 msgid ""
-"Implement ``remove_product`` method to completely remove some product "
-"from the cart."
+"Implement ``remove_product`` method to completely remove some product from "
+"the cart."
 msgstr ""
-"Застосуйте метод ``remove_product``, щоб повністю видалити деякі продукти"
-" з кошика."
+"Застосуйте метод ``remove_product``, щоб повністю видалити деякі продукти з "
+"кошика."
 
 #: ../../problem-sets/src/conv_store/challenge.rst:216
 msgid ""
-"Implement ``sub_product`` to decrease some product quantity. If quantity "
-"is equal to 0 (zero) or less - remove product from the cart."
+"Implement ``sub_product`` to decrease some product quantity. If quantity is "
+"equal to 0 (zero) or less - remove product from the cart."
 msgstr ""
-"Застосуйте ``sub_product``, щоб зменшити кількість продукту. Якщо "
-"кількість дорівнює 0 (нуль) або менше - вилучіть продукт із кошика."
+"Застосуйте ``sub_product``, щоб зменшити кількість продукту. Якщо кількість "
+"дорівнює 0 (нуль) або менше - вилучіть продукт із кошика."
 
 #: ../../problem-sets/src/conv_store/challenge.rst:245
 msgid "Testing Software"
@@ -925,12 +920,13 @@ msgstr "Тести мають бути розташовані всередині
 
 #: ../../problem-sets/src/conv_store/challenge.rst:250
 msgid "``pytest`` and ``coverage`` libraries will be used for testing."
-msgstr "Для тестування використовуватимуться бібліотеки ``pytest`` і ``coverage``."
+msgstr ""
+"Для тестування використовуватимуться бібліотеки ``pytest`` і ``coverage``."
 
 #: ../../problem-sets/src/conv_store/challenge.rst:251
 #, python-format
 msgid "At least 50% coverage."
-msgstr "Принаймні 50% покриття."
+msgstr "Хоча б 50% покриття тестами."
 
 #: ../../problem-sets/src/conv_store/challenge.rst:252
 msgid "Project dependencies are to be updated."
@@ -947,9 +943,9 @@ msgstr ""
 #: ../../src/appx/precedence.txt:10
 msgid ""
 "The following table summarizes the operator precedence in Python, from "
-"highest precedence (most binding) to lowest precedence (least binding) "
-":cite:`docs-python:operator-precedence`. Operators in the same cell have "
-"the same precedence (use left-to-right precedence)."
+"highest precedence (most binding) to lowest precedence (least binding) :cite:"
+"`docs-python:operator-precedence`. Operators in the same cell have the same "
+"precedence (use left-to-right precedence)."
 msgstr ""
 
 #: ../../src/appx/precedence.txt:16
@@ -968,8 +964,8 @@ msgstr ""
 
 #: ../../src/appx/precedence.txt:18
 msgid ""
-"Binding or parenthesized expression, list display, dictionary display, "
-"set display"
+"Binding or parenthesized expression, list display, dictionary display, set "
+"display"
 msgstr ""
 
 #: ../../src/appx/precedence.txt:23
@@ -1010,8 +1006,8 @@ msgstr ""
 
 #: ../../src/appx/precedence.txt:34
 msgid ""
-"Multiplication, matrix multiplication, division, floor division, "
-"remainder [#]_"
+"Multiplication, matrix multiplication, division, floor division, remainder "
+"[#]_"
 msgstr ""
 
 #: ../../src/appx/precedence.txt:37
@@ -1114,14 +1110,14 @@ msgstr ""
 
 #: ../../src/appx/precedence.txt:65
 msgid ""
-"the power operator binds less tightly than an arithmetic or bitwise unary"
-" operator on its right (``2 ** -1`` is ``0.5``)."
+"the power operator binds less tightly than an arithmetic or bitwise unary "
+"operator on its right (``2 ** -1`` is ``0.5``)."
 msgstr ""
 
 #: ../../src/appx/precedence.txt:67
 msgid ""
-"the ``%`` operator is also used for string formatting; the same "
-"precedence applies."
+"the ``%`` operator is also used for string formatting; the same precedence "
+"applies."
 msgstr ""
 
 #: ../../src/appx/printf.txt:7
@@ -1131,12 +1127,11 @@ msgstr ""
 #: ../../src/appx/printf.txt:9
 msgid ""
 "String objects have one unique built-in operation: the ``%`` operator "
-"(modulo). This is also known as the string *formatting* or "
-"*interpolation* operator :cite:`docs-python:printf-formatting`. Given "
-"``format % values`` (where *format* is a string), ``%`` conversion "
-"specifications in *format* are replaced with zero or more elements of "
-"*values*. If *format* requires a single argument, *values* may be a "
-"single non-tuple object."
+"(modulo). This is also known as the string *formatting* or *interpolation* "
+"operator :cite:`docs-python:printf-formatting`. Given ``format % values`` "
+"(where *format* is a string), ``%`` conversion specifications in *format* "
+"are replaced with zero or more elements of *values*. If *format* requires a "
+"single argument, *values* may be a single non-tuple object."
 msgstr ""
 
 #: ../../src/appx/printf.txt:16
@@ -1173,8 +1168,7 @@ msgstr ""
 
 #: ../../src/appx/printf.txt:25
 msgid ""
-"The converted value is left adjusted (override the ``'0'`` if both are "
-"given)"
+"The converted value is left adjusted (override the ``'0'`` if both are given)"
 msgstr ""
 
 #: ../../src/appx/printf.txt:28
@@ -1191,8 +1185,8 @@ msgstr ""
 
 #: ../../src/appx/printf.txt:30
 msgid ""
-"A sign character (``'+'`` or ``'-'``) will precede the conversion "
-"(overrides a \"space\" flag)"
+"A sign character (``'+'`` or ``'-'``) will precede the conversion (overrides "
+"a \"space\" flag)"
 msgstr ""
 
 #: ../../src/appx/printf.txt:34
@@ -1281,8 +1275,8 @@ msgstr ""
 
 #: ../../src/appx/printf.txt:58
 msgid ""
-"Floating point format. Uses lowercase exponential format if exponent is "
-"less that -4 or not less than precision, decimal format otherwise."
+"Floating point format. Uses lowercase exponential format if exponent is less "
+"that -4 or not less than precision, decimal format otherwise."
 msgstr ""
 
 #: ../../src/appx/printf.txt:63
@@ -1322,7 +1316,8 @@ msgid "``'%'``"
 msgstr ""
 
 #: ../../src/appx/printf.txt:71
-msgid "No arguments is converted, results in a ``'%'`` character in the result."
+msgid ""
+"No arguments is converted, results in a ``'%'`` character in the result."
 msgstr ""
 
 #: ../../src/appx/software_list.md:1
@@ -1353,9 +1348,9 @@ msgstr ""
 
 #: ../../src/appx/software_list.md:13
 msgid ""
-"Unpacking only: APFS, AR, ARJ, CAB, CHM, CPIO, CramFS, DMG, EXT, FAT, "
-"GPT, HFS, IHEX, ISO, LZH, LZMA, MBR, MSI, NSIS, NTFS, QCOW2, RAR, RPM, "
-"SquashFS, UDF, UEFI, VDI, VHD, VHDX, VMDK, XAR and Z."
+"Unpacking only: APFS, AR, ARJ, CAB, CHM, CPIO, CramFS, DMG, EXT, FAT, GPT, "
+"HFS, IHEX, ISO, LZH, LZMA, MBR, MSI, NSIS, NTFS, QCOW2, RAR, RPM, SquashFS, "
+"UDF, UEFI, VDI, VHD, VHDX, VMDK, XAR and Z."
 msgstr ""
 
 #: ../../src/appx/software_list.md:16
@@ -1377,10 +1372,9 @@ msgstr ""
 #: ../../src/appx/software_list.md:24
 msgid ""
 "It is a large collection of GNU and Open Source tools which provide "
-"functionality similar to a [Linux "
-"distribution](https://en.wikipedia.org/wiki/Linux_distribution) on "
-"Windows and a DLL (cygwin1.dll) which provides substantial POSIX API "
-"functionality."
+"functionality similar to a [Linux distribution](https://en.wikipedia.org/"
+"wiki/Linux_distribution) on Windows and a DLL (cygwin1.dll) which provides "
+"substantial POSIX API functionality."
 msgstr ""
 
 #: ../../src/appx/software_list.md:30
@@ -1389,15 +1383,15 @@ msgstr ""
 
 #: ../../src/appx/software_list.md:32
 msgid ""
-"a way to run native Linux apps on Windows. You must rebuild your "
-"application *from source* if you want it to run on Windows."
+"a way to run native Linux apps on Windows. You must rebuild your application "
+"*from source* if you want it to run on Windows."
 msgstr ""
 
 #: ../../src/appx/software_list.md:34
 msgid ""
 "a way to magically make native Windows apps aware of UNIX® functionality "
-"like `signals`, `ptys` etc. Again, you need to build your apps *from "
-"source* if you want to take advantage of Cygwin functionality."
+"like `signals`, `ptys` etc. Again, you need to build your apps *from source* "
+"if you want to take advantage of Cygwin functionality."
 msgstr ""
 
 #: ../../src/appx/software_list.md:38
@@ -1431,10 +1425,10 @@ msgstr ""
 msgid ""
 "Docker helps developers bring their ideas to life by conquering the "
 "complexity of app development. We simplify and accelerate development "
-"workflows with an integrated dev pipeline and through the consolidation "
-"of application components. Actively used by millions of developers around"
-" the world, Docker Desktop and Docker Hub provide unmatched simplicity, "
-"agility and choice."
+"workflows with an integrated dev pipeline and through the consolidation of "
+"application components. Actively used by millions of developers around the "
+"world, Docker Desktop and Docker Hub provide unmatched simplicity, agility "
+"and choice."
 msgstr ""
 
 #: ../../src/appx/software_list.md:60
@@ -1447,9 +1441,9 @@ msgstr ""
 
 #: ../../src/appx/software_list.md:65
 msgid ""
-"PostgreSQL is a powerful, open source object-relational database system "
-"with over 35 years of active development that has earned it a strong "
-"reputation for reliability, feature robustness, and performance."
+"PostgreSQL is a powerful, open source object-relational database system with "
+"over 35 years of active development that has earned it a strong reputation "
+"for reliability, feature robustness, and performance."
 msgstr ""
 
 #: ../../src/appx/software_list.md:69
@@ -1462,18 +1456,18 @@ msgstr ""
 
 #: ../../src/appx/software_list.md:74
 msgid ""
-"A terminal-based front-end to PostgreSQL. It enables you to type in "
-"queries interactively, issue them to PostgreSQL, and see the query "
-"results. Alternatively, input can be from a file or from command line "
-"arguments. In addition, psql provides a number of meta-commands and "
-"various shell-like features to facilitate writing scripts and automating "
-"a wide variety of tasks."
+"A terminal-based front-end to PostgreSQL. It enables you to type in queries "
+"interactively, issue them to PostgreSQL, and see the query results. "
+"Alternatively, input can be from a file or from command line arguments. In "
+"addition, psql provides a number of meta-commands and various shell-like "
+"features to facilitate writing scripts and automating a wide variety of "
+"tasks."
 msgstr ""
 
 #: ../../src/appx/software_list.md:80
 msgid ""
-"On Windows it will be installed within PostgreSQL RDBMS. For macOS and "
-"Linux look for `postgresql-client` package."
+"On Windows it will be installed within PostgreSQL RDBMS. For macOS and Linux "
+"look for `postgresql-client` package."
 msgstr ""
 
 #: ../../src/appx/software_list.md:83
@@ -1486,9 +1480,9 @@ msgstr ""
 
 #: ../../src/appx/software_list.md:88
 msgid ""
-"pgAdmin is the most popular and feature rich Open Source administration "
-"and development platform for PostgreSQL, the most advanced Open Source "
-"database in the world."
+"pgAdmin is the most popular and feature rich Open Source administration and "
+"development platform for PostgreSQL, the most advanced Open Source database "
+"in the world."
 msgstr ""
 
 #: ../../src/appx/software_list.md:92
@@ -1505,12 +1499,11 @@ msgstr ""
 
 #: ../../src/appx/software_list.md:99
 msgid ""
-"SQLite is a C-language library that implements a "
-"[small](https://sqlite.org/footprint.html), "
-"[fast](https://sqlite.org/fasterthanfs.html), [self-"
-"contained](https://sqlite.org/selfcontained.html), [high-"
-"reliability](https://sqlite.org/hirely.html), [full-"
-"featured](https://sqlite.org/fullsql.html), SQL database engine."
+"SQLite is a C-language library that implements a [small](https://sqlite.org/"
+"footprint.html), [fast](https://sqlite.org/fasterthanfs.html), [self-"
+"contained](https://sqlite.org/selfcontained.html), [high-reliability]"
+"(https://sqlite.org/hirely.html), [full-featured](https://sqlite.org/fullsql."
+"html), SQL database engine."
 msgstr ""
 
 #: ../../src/appx/software_list.md:106
@@ -1519,8 +1512,4 @@ msgstr ""
 
 #: ../../src/appx/software_list.md:109
 msgid "available for installation as a cygwin package"
-msgstr ""
-
-#~ msgid "Test Cases"
-#~ msgstr ""
-
+msgstr "доступно для встановлення як пакет cygwin"
