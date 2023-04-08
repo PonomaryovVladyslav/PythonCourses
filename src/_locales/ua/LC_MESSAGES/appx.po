@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Python Training Course 2022.11.dev\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-04-08 17:35+0300\n"
-"PO-Revision-Date: 2023-04-08 19:09+0300\n"
+"PO-Revision-Date: 2023-04-08 19:13+0300\n"
 "Last-Translator: Serhii Horodilov <sgorodil@gmail.com>\n"
 "Language-Team: ua <LL@li.org>\n"
 "Language: uk\n"
@@ -310,7 +310,7 @@ msgstr ""
 "публікацію."
 
 #: ../../blog/docs/spec.md:150
-msgid "Detail view should contain links to `/update/` and `/update/`."
+msgid "Detail view should contain links to `/update/` and `/delete/`."
 msgstr "Детальний перегляд має містити посилання на `/update/` та `/update/`."
 
 #: ../../blog/docs/spec.md:151
