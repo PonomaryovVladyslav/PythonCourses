@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Python Training Course 2022.11.dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-04-08 17:35+0300\n"
-"PO-Revision-Date: 2023-04-08 19:13+0300\n"
+"POT-Creation-Date: 2023-04-09 01:18+0300\n"
+"PO-Revision-Date: 2023-04-09 01:33+0300\n"
 "Last-Translator: Serhii Horodilov <sgorodil@gmail.com>\n"
 "Language-Team: ua <LL@li.org>\n"
 "Language: uk\n"
@@ -21,11 +21,11 @@ msgstr ""
 "Generated-By: Babel 2.12.1\n"
 "X-Generator: Poedit 3.2.2\n"
 
-#: ../../blog/docs/spec.md:2
+#: ../../blog/docs/spec.rst:10
 msgid "Blog Project Specification"
 msgstr "Специфікація Проекту Блогу"
 
-#: ../../blog/docs/spec.md:5
+#: ../../blog/docs/spec.rst:12
 msgid ""
 "As a developer you were asked to create a simple blog site. The goal is to "
 "create a place on the Internet where users can share their stories to public."
@@ -34,7 +34,7 @@ msgstr ""
 "\"створити місце в Інтернеті, де користувачі зможуть ділитися своїми "
 "історіями з громадськістю."
 
-#: ../../blog/docs/spec.md:8
+#: ../../blog/docs/spec.rst:16
 msgid ""
 "This document applies requirements for the entire project step-by-step. You "
 "will start from creating the appropriate URL dispatcher and connecting a "
@@ -46,200 +46,199 @@ msgstr ""
 "бази даних PostgreSQL для зберігання даних і закінчите впровадженням REST "
 "API для блог."
 
-#: ../../blog/docs/spec.md:13
+#: ../../blog/docs/spec.rst:21
 msgid ""
 "There are some boiler plates, that may be useful in your future work, but "
-"you aren't forced to use them. It's on your choice."
+"you aren’t forced to use them. It’s on your choice."
 msgstr ""
 "Існують деякі котли, які можуть бути корисними у вашій майбутній роботі, але "
 "ви не змушені їх використовувати. Це на ваш вибір."
 
-#: ../../blog/docs/spec.md:16
-msgid ""
-"[Starter template](https://github.com/edu-python-course/django-template)"
-msgstr ""
-"[Starter template](https://github.com/edu-python-course/django-template)"
+#: ../../blog/docs/spec.rst:24
+msgid "`Starter template`_"
+msgstr "`Starter template`_"
 
-#: ../../blog/docs/spec.md:17
-msgid ""
-"[Bootstrap templates](https://github.com/edu-python-course/blog-bootstrap)"
-msgstr ""
-"[Bootstrap templates](https://github.com/edu-python-course/blog-bootstrap)"
+#: ../../blog/docs/spec.rst:25
+msgid "`Bootstrap template`_"
+msgstr "`Bootstrap template`_"
 
-#: ../../blog/docs/spec.md:20
+#: ../../blog/docs/spec.rst:28
 msgid "Challenge: Site views"
 msgstr "Завдання: Site views"
 
-#: ../../blog/docs/spec.md:23
+#: ../../blog/docs/spec.rst:30
 msgid ""
-"It's ok not to return **actual** content for now. Just ensure all the routes "
+"It’s ok not to return **actual** content for now. Just ensure all the routes "
 "are available and provide correct data. Use anything you like to return "
 "within HTTP response."
 msgstr ""
-"Це нормально поки що не повертати фактичний вміст. Просто переконайтеся, що "
-"всі маршрути доступні та надайте правильні дані. Використовуйте все, що "
-"хочете, щоб повернути у відповіді HTTP."
+"Наразі можна не повертати **фактичний** вміст. Просто переконайтеся, що всі "
+"маршрути доступні та надайте правильні дані. Використовуйте все, що хочете, "
+"щоб повернути у відповіді HTTP."
 
-#: ../../blog/docs/spec.md:29
+#: ../../blog/docs/spec.rst:34
 msgid ""
-"`/blogs/`: A site's homepage. This will contain a list of blogs available "
+"``/blogs/``: A site’s homepage. This will contain a list of blogs available "
 "via the django site."
 msgstr ""
-"`блоги`: домашня сторінка сайту. Вона міститиме список блогів, доступних "
-"через сайт django."
+"``/blogs/``: домашня сторінка сайту. Він міститиме список блогів, доступних "
+"на сайті django."
 
-#: ../../blog/docs/spec.md:32
+#: ../../blog/docs/spec.rst:36
 msgid ""
-"`/about/`: Provides a regular text for a user, describing the "
+"``/about/``: Provides a regular text for a user, describing the "
 "functionalities of the django site."
 msgstr ""
-"`about`: надає звичайний текст для користувача, описуючи функції сайту "
+"``/about/``: надає звичайний текст для користувача, що описує функції сайту "
 "django."
 
-#: ../../blog/docs/spec.md:35
-msgid "`/`: same as `/blogs/`"
-msgstr "`/`: те ж саме `/blogs/`"
+#: ../../blog/docs/spec.rst:38
+msgid "``/``: same as ``/blogs/``"
+msgstr "``/``: те ж саме ``/blogs/``"
 
-#: ../../blog/docs/spec.md:37
+#: ../../blog/docs/spec.rst:39
 msgid ""
-"`/<slug>/`: A single blog post detail view. The URL contains dynamic part in "
-"it. This will be used to fetch a single blogpost from the database."
+"``/<slug:slug>/``: A single blog post detail view. The URL contains dynamic "
+"part in it. This will be used to fetch a single blogpost from the database."
 msgstr ""
-"`<slug>`: детальний перегляд окремої публікації блогу. URL-адреса містить у "
-"ній динамічну частину. Це буде використано для отримання окремої публікації "
-"блогу з бази даних."
+"``/<slug:slug>/``: детальний перегляд окремої публікації в блозі. URL-адреса "
+"містить динамічну частину. Це буде використано для отримання однієї "
+"публікації блогу з бази даних."
 
-#: ../../blog/docs/spec.md:40
+#: ../../blog/docs/spec.rst:42
 msgid ""
-"`<slug>/comment/`: This view will be used to add comments to a blogpost."
+"``/<slug:slug>/comment/``: This view will be used to add comments to a "
+"blogpost."
 msgstr ""
-"`<slug>/comment/`: Використовуватиметься для додавання коментарів до "
-"публікації блогу."
+"``/<slug:slug>/comment/``: це подання використовуватиметься для додавання "
+"коментарів до публікації блогу."
 
-#: ../../blog/docs/spec.md:42
-msgid "`/create/`: A post creation form."
-msgstr "`/create/`: Форма для створення допису."
+#: ../../blog/docs/spec.rst:44
+msgid "``/create/``: A post creation form."
+msgstr "``/create/``: форма створення публікації."
 
-#: ../../blog/docs/spec.md:44
-msgid "`/<slug>/update/`: A view to update an existing post data."
-msgstr "`/<slug>/update/`: Сторінка для оновлення даних існуючого допису."
+#: ../../blog/docs/spec.rst:45
+msgid "``/<slug:slug>/update/``: A view to update an existing post data."
+msgstr ""
+"``/<slug:slug>/update/``: перегляд для оновлення наявних даних публікації."
 
-#: ../../blog/docs/spec.md:46
-msgid "`/<slug>/delete/`: A view to confirm post deletion."
-msgstr "`/<slug>/delete/`: Підтверждення видалення допису."
+#: ../../blog/docs/spec.rst:46
+msgid "``/<slug:slug>/delete/``: A view to confirm post deletion."
+msgstr ""
+"``/<slug:slug>/delete/``: перегляд для підтвердження видалення публікації."
 
-#: ../../blog/docs/spec.md:48
-msgid "`/profile/<username>`: A site user's personal page."
-msgstr "`/profile/<username>`: Персональна сторінка користувача."
+#: ../../blog/docs/spec.rst:47
+msgid "``/profile/<str:username>/``: A site user’s personal page."
+msgstr "``/profile/<str:username>/``: Персональна сторінка користувача."
 
-#: ../../blog/docs/spec.md:50
+#: ../../blog/docs/spec.rst:48
 msgid ""
-"`/change_password/`: This route will be used to change users' credential "
+"``/change_password/``: This route will be used to change users’ credential "
 "data."
 msgstr ""
-"`/change_password/`: Ця сторінка використовуватиметься для зміни облікових "
+"``/change_password/``: Ця сторінка використовуватиметься для зміни облікових "
 "даних користувачів."
 
-#: ../../blog/docs/spec.md:52
-msgid "`/register/`: This view contains a user registration form."
-msgstr "`/register/`: Сторінка з формою для реєстрації нового користувача."
+#: ../../blog/docs/spec.rst:50
+msgid "``/register/``: This view contains a user registration form."
+msgstr "``/register/``: Сторінка з формою для реєстрації нового користувача."
 
-#: ../../blog/docs/spec.md:54
-msgid "`/login/`: This view contains a login form."
-msgstr "`/login/`: Сторінка з формою для логіна."
+#: ../../blog/docs/spec.rst:51
+msgid "``/login/``: This view contains a login form."
+msgstr "``/login/``: Сторінка з формою для логіна."
 
-#: ../../blog/docs/spec.md:56
+#: ../../blog/docs/spec.rst:52
 msgid ""
-"`/logout/`: Logout page. This view should redirect user back to homepage."
+"``/logout/``: Logout page. This view should redirect user back to homepage."
 msgstr ""
-"`/logout/`: Логаут. Має перенаправляти користувача назад на домашню "
+"``/logout/``: Логаут. Має перенаправляти користувача назад на домашню "
 "сторінку.."
 
-#: ../../blog/docs/spec.md:61
+#: ../../blog/docs/spec.rst:56
 msgid "Challenge: Data models"
 msgstr "Завдання: моделі даних"
 
-#: ../../blog/docs/spec.md:64
+#: ../../blog/docs/spec.rst:58
 msgid "You are to implement data models for the blog site."
 msgstr "Ви повинні реалізувати моделі даних для сайту блогу."
 
-#: ../../blog/docs/spec.md:66
-msgid "The `auth.User` will be used as `user` model."
-msgstr "`auth.User` використовуватиметься як модель `user`."
+#: ../../blog/docs/spec.rst:60
+msgid "The ``auth.User`` will be used as ``user`` model."
+msgstr "``auth.User`` використовуватиметься як модель ``user``."
 
-#: ../../blog/docs/spec.md:68
+#: ../../blog/docs/spec.rst:62
 msgid ""
-"`post.slug` value should be autogenerated when a record is created or "
+"``post.slug`` value should be autogenerated when a record is created or "
 "updated and follow the pattern:"
 msgstr ""
-"Значення `post.slug` має автоматично генеруватися під час створення або "
+"Значення ``post.slug`` має автоматично генеруватися під час створення або "
 "оновлення запису та слідувати шаблону:"
 
-#: ../../blog/docs/spec.md:75
+#: ../../blog/docs/spec.rst:69
 msgid ""
-"User preferred topics should be marked with a `notify` flag. This value "
-"should be `True` by default."
+"User preferred topics should be marked with a ``notify`` flag. This value "
+"should be ``True`` by default."
 msgstr ""
-"Вибрані користувачем теми мають бути позначені прапорцем `notify`. За "
-"замовчуванням це значення має бути `True`."
+"Вибрані користувачем теми мають бути позначені прапорцем ``notify``. За "
+"замовчуванням це значення має бути ``True``."
 
-#: ../../blog/docs/spec.md:108
+#: ../../blog/docs/spec.rst:102
 msgid "Challenge: ORM"
 msgstr "Завдання: ORM"
 
-#: ../../blog/docs/spec.md:111
+#: ../../blog/docs/spec.rst:104
 msgid ""
 "Update existing views to represent entities that are actually stored inside "
-"the project's database."
+"the project’s database."
 msgstr ""
-"Оновіть існуючі подання, щоб представити сутності, які фактично зберігаються "
-"в базі даних проекту."
+"Оновіть існуючі view, щоб представити сутності, які фактично зберігаються в "
+"базі даних проекту."
 
-#: ../../blog/docs/spec.md:114
-msgid "`/blogs/` or `/`: should represent a list of existing blogposts."
+#: ../../blog/docs/spec.rst:107
+msgid "``/blogs/`` or ``/``: should represent a list of existing blogposts."
 msgstr ""
-"`/blogs/` або `/`: має представляти список існуючих публікацій у блозі."
+"``/blogs/`` або ``/``: має представляти список існуючих публікацій у блозі."
 
-#: ../../blog/docs/spec.md:116
-msgid "`/<slug>/`: should represent a single existing blogpost."
-msgstr "`/<slug>/`: має представляти одну наявну публікацію в блозі."
+#: ../../blog/docs/spec.rst:108
+msgid "``/<slug:slug>/``: should represent a single existing blogpost."
+msgstr "``/<slug:slug>/``: має представляти одну наявну публікацію в блозі."
 
-#: ../../blog/docs/spec.md:118
+#: ../../blog/docs/spec.rst:109
 msgid ""
-"`/profile/<username>`: should contain information about user and a list of "
-"posts authored by this user."
+"``/profile/<str:username>/``: should contain information about user and a "
+"list of posts authored by this user."
 msgstr ""
-"`/profile/<username>`: має містити інформацію про користувача та список "
-"публікацій, автором яких є цей користувач."
+"``/profile/<str:username>/``: має містити інформацію про користувача та "
+"список публікацій, автором яких є цей користувач."
 
-#: ../../blog/docs/spec.md:121
+#: ../../blog/docs/spec.rst:111
 msgid ""
 "All views related to a single entity (*detail*, *update*, *delete*, "
-"*profile*) should raise `Http404` in case entity couldn't be fetched."
+"*profile*) should raise ``Http404`` in case entity could not be fetched."
 msgstr ""
 "Усі ресурси, пов'язані з окремою сутністю (*деталі*, *оновлення*, "
 "*видалення*, *профіль*) мають викликати `Http404` у випадку, якщо сутність "
 "не вдалося отримати."
 
-#: ../../blog/docs/spec.md:126
+#: ../../blog/docs/spec.rst:116
 msgid "Challenge: Templates"
 msgstr "Завдання: Шаблони"
 
-#: ../../blog/docs/spec.md:129
+#: ../../blog/docs/spec.rst:118
 msgid ""
-"It's time to work with data representations. You're to add HTML template to "
+"It’s time to work with data representations. You’re to add HTML template to "
 "the blog site project. Keep templates together with appropriate "
-"applications, we don't need mess in project files."
+"applications, we don’t need mess in project files."
 msgstr ""
 "Настав час попрацювати з представленнями даних. Ви повинні додати HTML-"
 "шаблон до проекту сайту блогу. Зберігайте шаблони разом із відповідними "
 "додатками, нам не потрібен безлад у файлах проекту."
 
-#: ../../blog/docs/spec.md:134
+#: ../../blog/docs/spec.rst:122
 msgid "Application-level templates should be extended from the base one."
 msgstr "Шаблони прикладного рівня повинні бути розширені з базового."
 
-#: ../../blog/docs/spec.md:135
+#: ../../blog/docs/spec.rst:123
 msgid ""
 "Each page should contain a navbar at the top. Navbar will contain permalinks "
 "to the home and about pages."
@@ -247,149 +246,153 @@ msgstr ""
 "Кожна сторінка повинна містити навігаційну панель угорі. Навігаційна панель "
 "міститиме постійні посилання на домашню сторінку та сторінку про."
 
-#: ../../blog/docs/spec.md:137
+#: ../../blog/docs/spec.rst:125
 msgid ""
-"For anonymous users `/register/` and `/login/` links should be visible in "
-"navbar."
+"For anonymous users ``/register/`` and ``/login/`` links should be visible "
+"in navbar."
 msgstr ""
-"Для анонімних користувачів посилання `/register/` та `/login/` мають бути "
-"видимими на навігаційній панелі."
+"Для анонімних користувачів посилання ``/register/`` і ``/login/`` мають бути "
+"видимими на панелі навігації."
 
-#: ../../blog/docs/spec.md:139
+#: ../../blog/docs/spec.rst:127
 msgid ""
-"For authenticated users `/logout/` and `/create/` links should be visible in "
-"navbar."
+"For authenticated users ``/logout/`` and ``/create/`` links should be "
+"visible in navbar."
 msgstr ""
-"Для автентифікованих користувачів посилання `/logout/` і `/create/` мають "
-"бути видимими на навігаційній панелі."
+"Для автентифікованих користувачів посилання ``/logout/`` і ``/create/`` "
+"мають бути видимими на панелі навігації."
 
-#: ../../blog/docs/spec.md:141
+#: ../../blog/docs/spec.rst:129
 msgid ""
 "If authenticated user is admin or stuff they should see a link to admin page."
 msgstr ""
 "Якщо автентифікований користувач є адміністратором або іншим, він має "
 "побачити посилання на сторінку адміністратора."
 
-#: ../../blog/docs/spec.md:142
+#: ../../blog/docs/spec.rst:131
 msgid ""
 "Each page should contain a list of links to archive views for the last year."
 msgstr ""
 "Кожна сторінка має містити список посилань на перегляди архіву за останній "
 "рік."
 
-#: ../../blog/docs/spec.md:143
+#: ../../blog/docs/spec.rst:133
 msgid ""
-"For the `post_list.html` each post entity should provide the information:"
+"For the ``post_list.html`` each post entity should provide the information:"
 msgstr ""
-"Для `post_list.html` кожна сутність повідомлення повинна надавати інформацію:"
+"Для ``post_list.html`` кожна сутність допису повинна надавати інформацію:"
 
-#: ../../blog/docs/spec.md:144
+#: ../../blog/docs/spec.rst:136
 msgid "title (each word should be capitalized)"
 msgstr "назва (кожне слово має бути великим)"
 
-#: ../../blog/docs/spec.md:145
+#: ../../blog/docs/spec.rst:137
 msgid "creation date"
 msgstr "дата створення"
 
-#: ../../blog/docs/spec.md:146
+#: ../../blog/docs/spec.rst:138
 msgid "list of related topics (first 3 topics)"
 msgstr "список пов'язаних тем (перші 3 теми)"
 
-#: ../../blog/docs/spec.md:147
+#: ../../blog/docs/spec.rst:139
 msgid "trimmed content (~50 words or fewer)"
 msgstr "обрізаний вміст (~50 слів або менше)"
 
-#: ../../blog/docs/spec.md:148
+#: ../../blog/docs/spec.rst:140
 msgid "number of comments"
 msgstr "кількість коментарів"
 
-#: ../../blog/docs/spec.md:149
+#: ../../blog/docs/spec.rst:142
 msgid "Each post entity on a list view should be a link to corresponding post."
 msgstr ""
 "Кожна сутність публікації в поданні списку має бути посиланням на відповідну "
 "публікацію."
 
-#: ../../blog/docs/spec.md:150
-msgid "Detail view should contain links to `/update/` and `/delete/`."
-msgstr "Детальний перегляд має містити посилання на `/update/` та `/update/`."
+#: ../../blog/docs/spec.rst:144
+msgid "Detail view should contain links to ``/update/`` and ``/delete/``."
+msgstr ""
+"Детальний перегляд має містити посилання на ``/update/`` та ``/delete/``."
 
-#: ../../blog/docs/spec.md:151
+#: ../../blog/docs/spec.rst:145
 msgid "Detail view should contain a list of post related comments."
 msgstr ""
 "Подання деталей має містити список коментарів, пов'язаних із публікацією."
 
-#: ../../blog/docs/spec.md:152
+#: ../../blog/docs/spec.rst:146
 msgid ""
-"Auth views should use `register.html` and `login.html` with corresponding "
-"forms."
+"Auth views should use ``register.html`` and ``login.html`` with "
+"corresponding forms."
 msgstr ""
-"Подання авторизації повинні використовувати `register.html` і `login.html` з "
-"відповідними формами."
+"Подання авторизації повинні використовувати ``register.html`` і ``login."
+"html`` з відповідними формами."
 
-#: ../../blog/docs/spec.md:155
+#: ../../blog/docs/spec.rst:149
 msgid ""
-"For now, it's ok to use admin as \"test user\". Authentication system will "
-"be implemented in the future challenges. `user` object is available (by "
-"default) in any template context. To test anonymous access you can use `usar."
-"is_authenticated`, which returns `False` for non-authenticated users."
+"For now, it’s ok to use admin as “test user”. Authentication system will be "
+"implemented in the future challenges. ``user`` object is available (by "
+"default) in any template context. To test anonymous access you can use "
+"``user.is_authenticated``, which returns ``False`` for non-authenticated "
+"users."
 msgstr ""
-"Наразі можна використовувати адміністратора як \"тестового користувача\". "
-"Система автентифікації буде впроваджена в майбутніх викликах. Об'єкт `user` "
-"доступний (за замовчуванням) у будь-якому контексті шаблону. перевірте "
-"анонімний доступ, ви можете використовувати `usar.is_authenticated`, який "
-"повертає `False` для неавтентифікованих користувачів."
+"Наразі можна використовувати адміністратора як «тестового користувача». "
+"Система автентифікації буде реалізована в майбутніх викликах. Об’єкт "
+"«користувач» доступний (за замовчуванням) у будь-якому контексті шаблону. "
+"Щоб перевірити анонімний доступ, ви можете використовувати ``user."
+"is_authenticated``, який повертає ``False`` для неавтентифікованих "
+"користувачів."
 
-#: ../../blog/docs/spec.md:162
+#: ../../blog/docs/spec.rst:156
 msgid "Challenge: Auth forms"
 msgstr "Завдання: форми авторизації"
 
-#: ../../blog/docs/spec.md:165
+#: ../../blog/docs/spec.rst:158
 msgid "Create form for new users registration with required fields:"
 msgstr ""
 "Створити форму для реєстрації нових користувачів із обов'язковими полями:"
 
-#: ../../blog/docs/spec.md:166
-msgid "`username`"
-msgstr "`username`"
+#: ../../blog/docs/spec.rst:160
+msgid "``username``"
+msgstr "``username``"
 
-#: ../../blog/docs/spec.md:167
-msgid "`email`"
-msgstr "`email`"
+#: ../../blog/docs/spec.rst:161
+msgid "``email``"
+msgstr "``email``"
 
-#: ../../blog/docs/spec.md:168
-msgid "`password`"
-msgstr "`password`"
+#: ../../blog/docs/spec.rst:162
+msgid "``password``"
+msgstr "``password``"
 
-#: ../../blog/docs/spec.md:169
-msgid "`confirm password`"
-msgstr "`confirm password`"
+#: ../../blog/docs/spec.rst:163
+msgid "``confirm password``"
+msgstr "``confirm password``"
 
-#: ../../blog/docs/spec.md:170
-msgid "`username` value should be validated against existing values"
+#: ../../blog/docs/spec.rst:165
+msgid "``username`` value should be validated against existing values"
 msgstr ""
-"значення `username` має перевірятися на відповідність існуючим значенням"
+"Значення \"ім'я користувача\" має перевірятися на відповідність існуючим "
+"значенням"
 
-#: ../../blog/docs/spec.md:171
-msgid "`password` and `confirm password` values should match"
-msgstr "значення `password` і `confirm password` мають збігатися"
+#: ../../blog/docs/spec.rst:166
+msgid "``password`` and ``confirm password`` values should match"
+msgstr "Значення ``password`` і ``confirm password`` мають збігатися"
 
-#: ../../blog/docs/spec.md:172
+#: ../../blog/docs/spec.rst:167
 msgid "Create form for existing users login"
 msgstr "Створити форму для входу існуючих користувачів"
 
-#: ../../blog/docs/spec.md:173
+#: ../../blog/docs/spec.rst:168
 msgid "Validations errors are to be rendered on the template"
 msgstr "Помилки перевірки мають бути відображені в шаблоні"
 
-#: ../../blog/docs/spec.md:175
+#: ../../blog/docs/spec.rst:171
 msgid "Challenge: Blogpost Creation and Update"
 msgstr "Завдання: Створення та Оновлення Дописів"
 
-#: ../../blog/docs/spec.md:178
+#: ../../blog/docs/spec.rst:173
 msgid "Create a form to work with the blogpost model."
 msgstr "Створіть форму для роботи з моделлю допису."
 
-#: ../../blog/docs/spec.md:179
+#: ../../blog/docs/spec.rst:174
 msgid ""
 "Create a form to gather a comment from a user. Form should be used within a "
 "\"post detail\" view."
@@ -397,138 +400,140 @@ msgstr ""
 "Створіть форму для збору коментарів від користувача. Форму слід "
 "використовувати в перегляді \"подробиць публікації\"."
 
-#: ../../blog/docs/spec.md:181
+#: ../../blog/docs/spec.rst:176
 msgid "Form should be used for *create* and *update* view."
 msgstr "Форму слід використовувати для перегляду *створення* та *оновлення*."
 
-#: ../../blog/docs/spec.md:183
-msgid "It's ok to use a *pre-defined* user as a post's author for now."
+#: ../../blog/docs/spec.rst:178
+msgid "It’s ok to use a *pre-defined* user as a post’s author for now."
 msgstr ""
-"Поки що можна використовувати попередньо визначеного користувача як автора "
-"допису."
+"Наразі можна використовувати *попередньо визначеного* користувача як автора "
+"публікації."
 
-#: ../../blog/docs/spec.md:187
+#: ../../blog/docs/spec.rst:181
 msgid "Challenge: Authentication"
 msgstr "Завдання: Автентифікація"
 
-#: ../../blog/docs/spec.md:190
+#: ../../blog/docs/spec.rst:183
 msgid ""
-"`/register/`: Users should provide all required information about them: "
+"``/register/``: Users should provide all required information about them: "
 "desired username and email. Name data (both first and last) is optional. "
 "After user creation they should be redirected to login page to perform "
 "authentication process. Invalid form should provide information about "
 "error(s)."
 msgstr ""
-"`/register/`: користувачі повинні надати всю необхідну інформацію про себе: "
-"бажане ім'я користувача та електронну пошту. Дані імені (як ім'я, так і "
-"останнє) є необов'язковими. Після створення користувача вони повинні бути "
-"перенаправлені на сторінку входу для виконання процес автентифікації. "
-"Недійсна форма повинна надавати інформацію про \" \"помилку(и)."
+"``/register/``: користувачі повинні надати всю необхідну інформацію про "
+"себе: бажане ім'я користувача та електронну адресу. Дані імені (ім’я та "
+"прізвище) необов’язкові. Після створення користувача вони повинні бути "
+"перенаправлені на сторінку входу для виконання процесу автентифікації. "
+"Недійсна форма повинна надавати інформацію про помилку(и)."
 
-#: ../../blog/docs/spec.md:195
+#: ../../blog/docs/spec.rst:188
 msgid ""
-"`/login/`: Users should provide their credentials to login. In case login is "
-"successful they should be redirected to their profile (if no `next=url` "
-"query string available)."
+"``/login/``: Users should provide their credentials to login. In case login "
+"is successful they should be redirected to their profile (if no ``?"
+"next=url`` query string available)."
 msgstr ""
-"`/login/`: користувачі повинні надати свої облікові дані для входу. Якщо "
-"вхід буде успішним, вони повинні бути перенаправлені до свого профілю (якщо "
-"немає рядка запиту `next=url`)."
+"``/login/``: користувачі повинні надати свої облікові дані для входу. У разі "
+"успішного входу вони повинні бути перенаправлені до свого профілю (якщо "
+"немає рядка запиту ``?next=url``)."
 
-#: ../../blog/docs/spec.md:199
+#: ../../blog/docs/spec.rst:191
 msgid ""
-"`/create/`: Only authenticated users should be able to visit this page. In "
+"``/create/``: Only authenticated users should be able to visit this page. In "
 "case anonymous user is trying to request this view they should be redirected "
 "to the login view first, and after successful authentication get back to "
 "post creation. Then a post is created, it should be authored by the "
 "currently authenticated user."
 msgstr ""
-"`/create/`: Лише автентифіковані користувачі повинні мати змогу відвідувати "
-"цю сторінку. У випадку, якщо анонімний користувач намагається надіслати "
-"запит на цей перегляд, його слід спочатку переспрямувати до перегляду входу, "
-"а після успішної автентифікації повернутися до створення допису. Потім "
-"створюється допис, автором якого має бути наразі автентифікований користувач."
+"``/create/``: лише автентифіковані користувачі повинні мати змогу "
+"відвідувати цю сторінку. Якщо анонімний користувач намагається надіслати "
+"запит на цей перегляд, він повинен бути спершу перенаправлений до перегляду "
+"входу, а після успішної автентифікації повернутися до створення публікації. "
+"Потім створюється допис, автором якого має бути поточний автентифікований "
+"користувач."
 
-#: ../../blog/docs/spec.md:205
+#: ../../blog/docs/spec.rst:196
 msgid ""
-"`/<slug>/comment`: Currently authenticated user should be referenced as a "
-"comment's author."
+"``/<slug:slug>/comment``: Currently authenticated user should be referenced "
+"as a comment’s author."
 msgstr ""
-"`/<slug>/comment`: наразі автентифікований користувач має вказуватися як "
-"автор коментаря."
+"``/<slug:slug>/comment``: як автора коментаря має бути вказано поточного "
+"автентифікованого користувача."
 
-#: ../../blog/docs/spec.md:207
+#: ../../blog/docs/spec.rst:198
 msgid "Posts may be modified or deleted only by their authors (no exceptions)."
 msgstr ""
 "Дописи можуть бути змінені або видалені лише їхніми авторами (без винятків)."
 
-#: ../../blog/docs/spec.md:211
+#: ../../blog/docs/spec.rst:202
 msgid "Challenge: Class-Based Views"
 msgstr "Завдання: Class-Based Views"
 
-#: ../../blog/docs/spec.md:214
+#: ../../blog/docs/spec.rst:204
 msgid "Replace **all** existing views via ``CBV``."
 msgstr "Замінити **всі** існуючі перегляди через ``CBV``."
 
-#: ../../blog/docs/spec.md:215
+#: ../../blog/docs/spec.rst:205
 msgid "Existing functionality should not be corrupted."
 msgstr "Існуюча функціональність не повинна бути пошкоджена."
 
-#: ../../blog/docs/spec.md:217
-msgid "It's ok to use Django built-in views for auth."
-msgstr "Використовувати вбудовані представлення Django для авторизації можна."
+#: ../../blog/docs/spec.rst:207
+msgid "It’s ok to use Django built-in views for auth."
+msgstr ""
+"Для автентифікації можна використовувати вбудовані представлення Django."
 
-#: ../../blog/docs/spec.md:226
+#: ../../blog/docs/spec.rst:210
 msgid "Challenge: Serializers"
 msgstr "Завдання: Серіалізатори"
 
-#: ../../blog/docs/spec.md:229
+#: ../../blog/docs/spec.rst:212
 msgid "Create serializers for:"
 msgstr "Створіть серіалізатори для:"
 
-#: ../../blog/docs/spec.md:230
+#: ../../blog/docs/spec.rst:214
 msgid "Blogpost entity"
 msgstr "Об'єкт публікації в блозі"
 
-#: ../../blog/docs/spec.md:231
+#: ../../blog/docs/spec.rst:215
 msgid "Blogpost comment"
 msgstr "Коментар у блозі"
 
-#: ../../blog/docs/spec.md:232
+#: ../../blog/docs/spec.rst:216
 msgid "User"
 msgstr "Користувач"
 
-#: ../../blog/docs/spec.md:236
+#: ../../blog/docs/spec.rst:219
 msgid "Challenge: API views"
 msgstr "Завдання: API views"
 
-#: ../../blog/docs/spec.md:239
+#: ../../blog/docs/spec.rst:221
 msgid ""
-"All blog-site functionality are to be reflected via REST API. It's ok to use "
-"*pre-defined* user as a post's author for now."
+"All blog-site functionality are to be reflected via REST API. It’s ok to use "
+"*pre-defined* user as a post’s author for now."
 msgstr ""
-"Усі функції сайту блогу мають бути відображені через REST API. Наразі можна "
-"використовувати попередньо визначеного користувача як автора публікації."
+"Усі функції сайту блогу мають відображатися через REST API. Наразі можна "
+"використовувати *попередньо визначеного* користувача як автора публікації."
 
-#: ../../blog/docs/spec.md:244
+#: ../../blog/docs/spec.rst:225
 msgid "Challenge: Authentication and Permissions"
 msgstr "Завдання: Автентифікація та Дозволи"
 
-#: ../../blog/docs/spec.md:247
+#: ../../blog/docs/spec.rst:227
 msgid "Implement REST authentication system."
 msgstr "Запровадити систему автентифікації REST."
 
-#: ../../blog/docs/spec.md:248
+#: ../../blog/docs/spec.rst:228
 msgid "Only account owner can change their account data."
 msgstr ""
 "Лише власник облікового запису може змінити дані свого облікового запису."
 
-#: ../../blog/docs/spec.md:249
+#: ../../blog/docs/spec.rst:229
 msgid "Only authenticated users can create posts and comments."
 msgstr ""
 "Тільки автентифіковані користувачі можуть створювати дописи та коментарі."
 
-#: ../../blog/docs/spec.md:250
+#: ../../blog/docs/spec.rst:230
 msgid "Only authors can change their posts."
 msgstr "Тільки автори можуть змінювати свої повідомлення."
 
@@ -639,8 +644,8 @@ msgstr ""
 "значення атрибута ``unit``."
 
 #: ../../problem-sets/src/conv_store/challenge.rst:46
-msgid "Code notes"
-msgstr "Примітки до коду"
+msgid "Code explanation"
+msgstr "Пояснення коду"
 
 #: conv_store.models.Product:1 of
 msgid "Product model implementation"
@@ -1018,10 +1023,6 @@ msgstr ""
 "Для тестування використовуватимуться бібліотеки ``pytest`` і ``coverage``."
 
 #: ../../problem-sets/src/conv_store/challenge.rst:251
-msgid "At least 50% coverage."
-msgstr "Хоча б 50% покриття тестами."
-
-#: ../../problem-sets/src/conv_store/challenge.rst:252
 msgid "Project dependencies are to be updated."
 msgstr "Залежності проекту потрібно оновити."
 
@@ -2092,3 +2093,19 @@ msgstr ""
 #: ../../problem-sets/src/wrw_game/challenge.rst:202
 msgid "Create game menu, for example: ::"
 msgstr "Створити меню гри, наприклад: ::"
+
+#~ msgid ""
+#~ "[Starter template](https://github.com/edu-python-course/django-template)"
+#~ msgstr ""
+#~ "[Starter template](https://github.com/edu-python-course/django-template)"
+
+#~ msgid ""
+#~ "[Bootstrap templates](https://github.com/edu-python-course/blog-bootstrap)"
+#~ msgstr ""
+#~ "[Bootstrap templates](https://github.com/edu-python-course/blog-bootstrap)"
+
+#~ msgid "Code notes"
+#~ msgstr "Примітки до коду"
+
+#~ msgid "At least 50% coverage."
+#~ msgstr "Хоча б 50% покриття тестами."
