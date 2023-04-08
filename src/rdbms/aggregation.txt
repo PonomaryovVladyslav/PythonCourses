@@ -188,7 +188,7 @@ a GROUP BY clause. The expressions in the GROUP BY clause do not have to be
 expressions that appear in the result. The expressions in a GROUP BY clause may
 not be aggregate expressions.
 
-Having clause
+HAVING clause
 -------------
 
 But what, if the task is to filter categories, that have less than 500 sold

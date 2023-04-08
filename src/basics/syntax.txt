@@ -101,7 +101,7 @@ In few words:
 
 The code snippet above demonstrates some basics abilities of Python to gather
 data from the user, process it and print out back. Note the words starting with
-a **#** (hash) symbol. This is a comment. Any sequence of characters after
+a # (hash) symbol. This is a comment. Any sequence of characters after
 the hash and till the line end are considered to be a comment. These are for
 those people, who see the code and they are ignored by the interpreter. 
 
