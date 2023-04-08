@@ -169,7 +169,7 @@ Common operations
 | ``s.count(x)``       | total number of occurrences of *x* in *s*            |
 +----------------------+------------------------------------------------------+
 | ``s.index(x)``       | index of the first occurrence of *x* in *s*          |
-| ``s.index(x, i)``    | (at or after index *i* and before index *j*)         |
+| ``s.index(x, i)``    | at or after index *i* and before index *j*           |
 | ``s.index(x, i, j)`` |                                                      |
 +----------------------+------------------------------------------------------+
 
