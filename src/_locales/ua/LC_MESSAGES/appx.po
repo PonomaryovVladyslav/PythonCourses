@@ -8,13 +8,13 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Python Training Course 2022.11.dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-04-06 12:11+0300\n"
-"PO-Revision-Date: 2023-04-06 12:24+0300\n"
+"POT-Creation-Date: 2023-04-08 17:35+0300\n"
+"PO-Revision-Date: 2023-04-08 19:09+0300\n"
 "Last-Translator: Serhii Horodilov <sgorodil@gmail.com>\n"
 "Language-Team: ua <LL@li.org>\n"
 "Language: uk\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
 "n%10<=4 && (n%100<12 || n%100>14) ? 1 : 2);\n"
@@ -23,13 +23,16 @@ msgstr ""
 
 #: ../../blog/docs/spec.md:2
 msgid "Blog Project Specification"
-msgstr ""
+msgstr "Специфікація Проекту Блогу"
 
 #: ../../blog/docs/spec.md:5
 msgid ""
 "As a developer you were asked to create a simple blog site. The goal is to "
 "create a place on the Internet where users can share their stories to public."
 msgstr ""
+"Вас, як розробника, попросили створити простий сайт блогу. Мета - \" "
+"\"створити місце в Інтернеті, де користувачі зможуть ділитися своїми "
+"історіями з громадськістю."
 
 #: ../../blog/docs/spec.md:8
 msgid ""
@@ -38,26 +41,34 @@ msgid ""
 "PostgreSQL database to store the data and will finish with implementing REST "
 "API for the blog."
 msgstr ""
+"Цей документ крок за кроком застосовує вимоги до всього проекту. Ви \" "
+"\"почнете зі створення відповідного диспетчера URL-адрес і підключення до "
+"бази даних PostgreSQL для зберігання даних і закінчите впровадженням REST "
+"API для блог."
 
 #: ../../blog/docs/spec.md:13
 msgid ""
 "There are some boiler plates, that may be useful in your future work, but "
 "you aren't forced to use them. It's on your choice."
 msgstr ""
+"Існують деякі котли, які можуть бути корисними у вашій майбутній роботі, але "
+"ви не змушені їх використовувати. Це на ваш вибір."
 
 #: ../../blog/docs/spec.md:16
 msgid ""
 "[Starter template](https://github.com/edu-python-course/django-template)"
 msgstr ""
+"[Starter template](https://github.com/edu-python-course/django-template)"
 
 #: ../../blog/docs/spec.md:17
 msgid ""
 "[Bootstrap templates](https://github.com/edu-python-course/blog-bootstrap)"
 msgstr ""
+"[Bootstrap templates](https://github.com/edu-python-course/blog-bootstrap)"
 
 #: ../../blog/docs/spec.md:20
 msgid "Challenge: Site views"
-msgstr ""
+msgstr "Завдання: Site views"
 
 #: ../../blog/docs/spec.md:23
 msgid ""
@@ -65,126 +76,154 @@ msgid ""
 "are available and provide correct data. Use anything you like to return "
 "within HTTP response."
 msgstr ""
+"Це нормально поки що не повертати фактичний вміст. Просто переконайтеся, що "
+"всі маршрути доступні та надайте правильні дані. Використовуйте все, що "
+"хочете, щоб повернути у відповіді HTTP."
 
 #: ../../blog/docs/spec.md:29
 msgid ""
 "`/blogs/`: A site's homepage. This will contain a list of blogs available "
 "via the django site."
 msgstr ""
+"`блоги`: домашня сторінка сайту. Вона міститиме список блогів, доступних "
+"через сайт django."
 
 #: ../../blog/docs/spec.md:32
 msgid ""
 "`/about/`: Provides a regular text for a user, describing the "
 "functionalities of the django site."
 msgstr ""
+"`about`: надає звичайний текст для користувача, описуючи функції сайту "
+"django."
 
 #: ../../blog/docs/spec.md:35
 msgid "`/`: same as `/blogs/`"
-msgstr ""
+msgstr "`/`: те ж саме `/blogs/`"
 
 #: ../../blog/docs/spec.md:37
 msgid ""
 "`/<slug>/`: A single blog post detail view. The URL contains dynamic part in "
 "it. This will be used to fetch a single blogpost from the database."
 msgstr ""
+"`<slug>`: детальний перегляд окремої публікації блогу. URL-адреса містить у "
+"ній динамічну частину. Це буде використано для отримання окремої публікації "
+"блогу з бази даних."
 
 #: ../../blog/docs/spec.md:40
 msgid ""
 "`<slug>/comment/`: This view will be used to add comments to a blogpost."
 msgstr ""
+"`<slug>/comment/`: Використовуватиметься для додавання коментарів до "
+"публікації блогу."
 
 #: ../../blog/docs/spec.md:42
 msgid "`/create/`: A post creation form."
-msgstr ""
+msgstr "`/create/`: Форма для створення допису."
 
 #: ../../blog/docs/spec.md:44
 msgid "`/<slug>/update/`: A view to update an existing post data."
-msgstr ""
+msgstr "`/<slug>/update/`: Сторінка для оновлення даних існуючого допису."
 
 #: ../../blog/docs/spec.md:46
 msgid "`/<slug>/delete/`: A view to confirm post deletion."
-msgstr ""
+msgstr "`/<slug>/delete/`: Підтверждення видалення допису."
 
 #: ../../blog/docs/spec.md:48
 msgid "`/profile/<username>`: A site user's personal page."
-msgstr ""
+msgstr "`/profile/<username>`: Персональна сторінка користувача."
 
 #: ../../blog/docs/spec.md:50
 msgid ""
 "`/change_password/`: This route will be used to change users' credential "
 "data."
 msgstr ""
+"`/change_password/`: Ця сторінка використовуватиметься для зміни облікових "
+"даних користувачів."
 
 #: ../../blog/docs/spec.md:52
 msgid "`/register/`: This view contains a user registration form."
-msgstr ""
+msgstr "`/register/`: Сторінка з формою для реєстрації нового користувача."
 
 #: ../../blog/docs/spec.md:54
 msgid "`/login/`: This view contains a login form."
-msgstr ""
+msgstr "`/login/`: Сторінка з формою для логіна."
 
 #: ../../blog/docs/spec.md:56
 msgid ""
 "`/logout/`: Logout page. This view should redirect user back to homepage."
 msgstr ""
+"`/logout/`: Логаут. Має перенаправляти користувача назад на домашню "
+"сторінку.."
 
 #: ../../blog/docs/spec.md:61
 msgid "Challenge: Data models"
-msgstr ""
+msgstr "Завдання: моделі даних"
 
 #: ../../blog/docs/spec.md:64
 msgid "You are to implement data models for the blog site."
-msgstr ""
+msgstr "Ви повинні реалізувати моделі даних для сайту блогу."
 
 #: ../../blog/docs/spec.md:66
 msgid "The `auth.User` will be used as `user` model."
-msgstr ""
+msgstr "`auth.User` використовуватиметься як модель `user`."
 
 #: ../../blog/docs/spec.md:68
 msgid ""
 "`post.slug` value should be autogenerated when a record is created or "
 "updated and follow the pattern:"
 msgstr ""
+"Значення `post.slug` має автоматично генеруватися під час створення або "
+"оновлення запису та слідувати шаблону:"
 
 #: ../../blog/docs/spec.md:75
 msgid ""
 "User preferred topics should be marked with a `notify` flag. This value "
 "should be `True` by default."
 msgstr ""
+"Вибрані користувачем теми мають бути позначені прапорцем `notify`. За "
+"замовчуванням це значення має бути `True`."
 
 #: ../../blog/docs/spec.md:108
 msgid "Challenge: ORM"
-msgstr ""
+msgstr "Завдання: ORM"
 
 #: ../../blog/docs/spec.md:111
 msgid ""
 "Update existing views to represent entities that are actually stored inside "
 "the project's database."
 msgstr ""
+"Оновіть існуючі подання, щоб представити сутності, які фактично зберігаються "
+"в базі даних проекту."
 
 #: ../../blog/docs/spec.md:114
 msgid "`/blogs/` or `/`: should represent a list of existing blogposts."
 msgstr ""
+"`/blogs/` або `/`: має представляти список існуючих публікацій у блозі."
 
 #: ../../blog/docs/spec.md:116
 msgid "`/<slug>/`: should represent a single existing blogpost."
-msgstr ""
+msgstr "`/<slug>/`: має представляти одну наявну публікацію в блозі."
 
 #: ../../blog/docs/spec.md:118
 msgid ""
 "`/profile/<username>`: should contain information about user and a list of "
 "posts authored by this user."
 msgstr ""
+"`/profile/<username>`: має містити інформацію про користувача та список "
+"публікацій, автором яких є цей користувач."
 
 #: ../../blog/docs/spec.md:121
 msgid ""
 "All views related to a single entity (*detail*, *update*, *delete*, "
 "*profile*) should raise `Http404` in case entity couldn't be fetched."
 msgstr ""
+"Усі ресурси, пов'язані з окремою сутністю (*деталі*, *оновлення*, "
+"*видалення*, *профіль*) мають викликати `Http404` у випадку, якщо сутність "
+"не вдалося отримати."
 
 #: ../../blog/docs/spec.md:126
 msgid "Challenge: Templates"
-msgstr ""
+msgstr "Завдання: Шаблони"
 
 #: ../../blog/docs/spec.md:129
 msgid ""
@@ -192,81 +231,100 @@ msgid ""
 "the blog site project. Keep templates together with appropriate "
 "applications, we don't need mess in project files."
 msgstr ""
+"Настав час попрацювати з представленнями даних. Ви повинні додати HTML-"
+"шаблон до проекту сайту блогу. Зберігайте шаблони разом із відповідними "
+"додатками, нам не потрібен безлад у файлах проекту."
 
 #: ../../blog/docs/spec.md:134
 msgid "Application-level templates should be extended from the base one."
-msgstr ""
+msgstr "Шаблони прикладного рівня повинні бути розширені з базового."
 
 #: ../../blog/docs/spec.md:135
 msgid ""
 "Each page should contain a navbar at the top. Navbar will contain permalinks "
 "to the home and about pages."
 msgstr ""
+"Кожна сторінка повинна містити навігаційну панель угорі. Навігаційна панель "
+"міститиме постійні посилання на домашню сторінку та сторінку про."
 
 #: ../../blog/docs/spec.md:137
 msgid ""
 "For anonymous users `/register/` and `/login/` links should be visible in "
 "navbar."
 msgstr ""
+"Для анонімних користувачів посилання `/register/` та `/login/` мають бути "
+"видимими на навігаційній панелі."
 
 #: ../../blog/docs/spec.md:139
 msgid ""
 "For authenticated users `/logout/` and `/create/` links should be visible in "
 "navbar."
 msgstr ""
+"Для автентифікованих користувачів посилання `/logout/` і `/create/` мають "
+"бути видимими на навігаційній панелі."
 
 #: ../../blog/docs/spec.md:141
 msgid ""
 "If authenticated user is admin or stuff they should see a link to admin page."
 msgstr ""
+"Якщо автентифікований користувач є адміністратором або іншим, він має "
+"побачити посилання на сторінку адміністратора."
 
 #: ../../blog/docs/spec.md:142
 msgid ""
 "Each page should contain a list of links to archive views for the last year."
 msgstr ""
+"Кожна сторінка має містити список посилань на перегляди архіву за останній "
+"рік."
 
 #: ../../blog/docs/spec.md:143
 msgid ""
 "For the `post_list.html` each post entity should provide the information:"
 msgstr ""
+"Для `post_list.html` кожна сутність повідомлення повинна надавати інформацію:"
 
 #: ../../blog/docs/spec.md:144
 msgid "title (each word should be capitalized)"
-msgstr ""
+msgstr "назва (кожне слово має бути великим)"
 
 #: ../../blog/docs/spec.md:145
 msgid "creation date"
-msgstr ""
+msgstr "дата створення"
 
 #: ../../blog/docs/spec.md:146
 msgid "list of related topics (first 3 topics)"
-msgstr ""
+msgstr "список пов'язаних тем (перші 3 теми)"
 
 #: ../../blog/docs/spec.md:147
 msgid "trimmed content (~50 words or fewer)"
-msgstr ""
+msgstr "обрізаний вміст (~50 слів або менше)"
 
 #: ../../blog/docs/spec.md:148
 msgid "number of comments"
-msgstr ""
+msgstr "кількість коментарів"
 
 #: ../../blog/docs/spec.md:149
 msgid "Each post entity on a list view should be a link to corresponding post."
 msgstr ""
+"Кожна сутність публікації в поданні списку має бути посиланням на відповідну "
+"публікацію."
 
 #: ../../blog/docs/spec.md:150
-msgid "Detail view should contain links to `/update/` and `/delete/`."
-msgstr ""
+msgid "Detail view should contain links to `/update/` and `/update/`."
+msgstr "Детальний перегляд має містити посилання на `/update/` та `/update/`."
 
 #: ../../blog/docs/spec.md:151
 msgid "Detail view should contain a list of post related comments."
 msgstr ""
+"Подання деталей має містити список коментарів, пов'язаних із публікацією."
 
 #: ../../blog/docs/spec.md:152
 msgid ""
 "Auth views should use `register.html` and `login.html` with corresponding "
 "forms."
 msgstr ""
+"Подання авторизації повинні використовувати `register.html` і `login.html` з "
+"відповідними формами."
 
 #: ../../blog/docs/spec.md:155
 msgid ""
@@ -275,72 +333,83 @@ msgid ""
 "default) in any template context. To test anonymous access you can use `usar."
 "is_authenticated`, which returns `False` for non-authenticated users."
 msgstr ""
+"Наразі можна використовувати адміністратора як \"тестового користувача\". "
+"Система автентифікації буде впроваджена в майбутніх викликах. Об'єкт `user` "
+"доступний (за замовчуванням) у будь-якому контексті шаблону. перевірте "
+"анонімний доступ, ви можете використовувати `usar.is_authenticated`, який "
+"повертає `False` для неавтентифікованих користувачів."
 
 #: ../../blog/docs/spec.md:162
 msgid "Challenge: Auth forms"
-msgstr ""
+msgstr "Завдання: форми авторизації"
 
 #: ../../blog/docs/spec.md:165
 msgid "Create form for new users registration with required fields:"
 msgstr ""
+"Створити форму для реєстрації нових користувачів із обов'язковими полями:"
 
 #: ../../blog/docs/spec.md:166
 msgid "`username`"
-msgstr ""
+msgstr "`username`"
 
 #: ../../blog/docs/spec.md:167
 msgid "`email`"
-msgstr ""
+msgstr "`email`"
 
 #: ../../blog/docs/spec.md:168
 msgid "`password`"
-msgstr ""
+msgstr "`password`"
 
 #: ../../blog/docs/spec.md:169
 msgid "`confirm password`"
-msgstr ""
+msgstr "`confirm password`"
 
 #: ../../blog/docs/spec.md:170
 msgid "`username` value should be validated against existing values"
 msgstr ""
+"значення `username` має перевірятися на відповідність існуючим значенням"
 
 #: ../../blog/docs/spec.md:171
 msgid "`password` and `confirm password` values should match"
-msgstr ""
+msgstr "значення `password` і `confirm password` мають збігатися"
 
 #: ../../blog/docs/spec.md:172
 msgid "Create form for existing users login"
-msgstr ""
+msgstr "Створити форму для входу існуючих користувачів"
 
 #: ../../blog/docs/spec.md:173
 msgid "Validations errors are to be rendered on the template"
-msgstr ""
+msgstr "Помилки перевірки мають бути відображені в шаблоні"
 
 #: ../../blog/docs/spec.md:175
 msgid "Challenge: Blogpost Creation and Update"
-msgstr ""
+msgstr "Завдання: Створення та Оновлення Дописів"
 
 #: ../../blog/docs/spec.md:178
 msgid "Create a form to work with the blogpost model."
-msgstr ""
+msgstr "Створіть форму для роботи з моделлю допису."
 
 #: ../../blog/docs/spec.md:179
 msgid ""
 "Create a form to gather a comment from a user. Form should be used within a "
 "\"post detail\" view."
 msgstr ""
+"Створіть форму для збору коментарів від користувача. Форму слід "
+"використовувати в перегляді \"подробиць публікації\"."
 
 #: ../../blog/docs/spec.md:181
 msgid "Form should be used for *create* and *update* view."
-msgstr ""
+msgstr "Форму слід використовувати для перегляду *створення* та *оновлення*."
 
 #: ../../blog/docs/spec.md:183
 msgid "It's ok to use a *pre-defined* user as a post's author for now."
 msgstr ""
+"Поки що можна використовувати попередньо визначеного користувача як автора "
+"допису."
 
 #: ../../blog/docs/spec.md:187
 msgid "Challenge: Authentication"
-msgstr ""
+msgstr "Завдання: Автентифікація"
 
 #: ../../blog/docs/spec.md:190
 msgid ""
@@ -350,6 +419,11 @@ msgid ""
 "authentication process. Invalid form should provide information about "
 "error(s)."
 msgstr ""
+"`/register/`: користувачі повинні надати всю необхідну інформацію про себе: "
+"бажане ім'я користувача та електронну пошту. Дані імені (як ім'я, так і "
+"останнє) є необов'язковими. Після створення користувача вони повинні бути "
+"перенаправлені на сторінку входу для виконання процес автентифікації. "
+"Недійсна форма повинна надавати інформацію про \" \"помилку(и)."
 
 #: ../../blog/docs/spec.md:195
 msgid ""
@@ -357,6 +431,9 @@ msgid ""
 "successful they should be redirected to their profile (if no `next=url` "
 "query string available)."
 msgstr ""
+"`/login/`: користувачі повинні надати свої облікові дані для входу. Якщо "
+"вхід буде успішним, вони повинні бути перенаправлені до свого профілю (якщо "
+"немає рядка запиту `next=url`)."
 
 #: ../../blog/docs/spec.md:199
 msgid ""
@@ -366,86 +443,98 @@ msgid ""
 "post creation. Then a post is created, it should be authored by the "
 "currently authenticated user."
 msgstr ""
+"`/create/`: Лише автентифіковані користувачі повинні мати змогу відвідувати "
+"цю сторінку. У випадку, якщо анонімний користувач намагається надіслати "
+"запит на цей перегляд, його слід спочатку переспрямувати до перегляду входу, "
+"а після успішної автентифікації повернутися до створення допису. Потім "
+"створюється допис, автором якого має бути наразі автентифікований користувач."
 
 #: ../../blog/docs/spec.md:205
 msgid ""
 "`/<slug>/comment`: Currently authenticated user should be referenced as a "
 "comment's author."
 msgstr ""
+"`/<slug>/comment`: наразі автентифікований користувач має вказуватися як "
+"автор коментаря."
 
 #: ../../blog/docs/spec.md:207
 msgid "Posts may be modified or deleted only by their authors (no exceptions)."
 msgstr ""
+"Дописи можуть бути змінені або видалені лише їхніми авторами (без винятків)."
 
 #: ../../blog/docs/spec.md:211
 msgid "Challenge: Class-Based Views"
-msgstr ""
+msgstr "Завдання: Class-Based Views"
 
 #: ../../blog/docs/spec.md:214
 msgid "Replace **all** existing views via ``CBV``."
-msgstr ""
+msgstr "Замінити **всі** існуючі перегляди через ``CBV``."
 
 #: ../../blog/docs/spec.md:215
 msgid "Existing functionality should not be corrupted."
-msgstr ""
+msgstr "Існуюча функціональність не повинна бути пошкоджена."
 
 #: ../../blog/docs/spec.md:217
 msgid "It's ok to use Django built-in views for auth."
-msgstr ""
+msgstr "Використовувати вбудовані представлення Django для авторизації можна."
 
 #: ../../blog/docs/spec.md:226
 msgid "Challenge: Serializers"
-msgstr ""
+msgstr "Завдання: Серіалізатори"
 
 #: ../../blog/docs/spec.md:229
 msgid "Create serializers for:"
-msgstr ""
+msgstr "Створіть серіалізатори для:"
 
 #: ../../blog/docs/spec.md:230
 msgid "Blogpost entity"
-msgstr ""
+msgstr "Об'єкт публікації в блозі"
 
 #: ../../blog/docs/spec.md:231
 msgid "Blogpost comment"
-msgstr ""
+msgstr "Коментар у блозі"
 
 #: ../../blog/docs/spec.md:232
 msgid "User"
-msgstr ""
+msgstr "Користувач"
 
 #: ../../blog/docs/spec.md:236
 msgid "Challenge: API views"
-msgstr ""
+msgstr "Завдання: API views"
 
 #: ../../blog/docs/spec.md:239
 msgid ""
 "All blog-site functionality are to be reflected via REST API. It's ok to use "
 "*pre-defined* user as a post's author for now."
 msgstr ""
+"Усі функції сайту блогу мають бути відображені через REST API. Наразі можна "
+"використовувати попередньо визначеного користувача як автора публікації."
 
 #: ../../blog/docs/spec.md:244
 msgid "Challenge: Authentication and Permissions"
-msgstr ""
+msgstr "Завдання: Автентифікація та Дозволи"
 
 #: ../../blog/docs/spec.md:247
 msgid "Implement REST authentication system."
-msgstr ""
+msgstr "Запровадити систему автентифікації REST."
 
 #: ../../blog/docs/spec.md:248
 msgid "Only account owner can change their account data."
 msgstr ""
+"Лише власник облікового запису може змінити дані свого облікового запису."
 
 #: ../../blog/docs/spec.md:249
 msgid "Only authenticated users can create posts and comments."
 msgstr ""
+"Тільки автентифіковані користувачі можуть створювати дописи та коментарі."
 
 #: ../../blog/docs/spec.md:250
 msgid "Only authors can change their posts."
-msgstr ""
+msgstr "Тільки автори можуть змінювати свої повідомлення."
 
 #: ../../src/appx/code_edit.txt:5
 msgid "Code Editors"
-msgstr ""
+msgstr "Редактори Коду"
 
 #: ../../src/appx/code_edit.txt:7
 msgid ""
@@ -455,10 +544,15 @@ msgid ""
 "makes coding fun — but which one is best for you? :cite:`realpython:code-"
 "edit`"
 msgstr ""
+"Написання на Python за допомогою IDLE або оболонки Python чудово підходить "
+"для простих речей, але ці інструменти швидко перетворюють великі проекти "
+"програмування на розчаровуючу яму відчаю. Використання IDE або навіть просто "
+"хорошого спеціального редактора коду робить кодування цікавим — але який з "
+"них найкращий для вас? :cite:`realpython:code-edit`"
 
 #: ../../problem-sets/src/conv_store/challenge.rst:3
 msgid "Convenience Store Challenge"
-msgstr ""
+msgstr "Convenience Store Challenge"
 
 #: ../../problem-sets/src/conv_store/challenge.rst:5
 msgid ""
@@ -546,7 +640,7 @@ msgstr ""
 
 #: ../../problem-sets/src/conv_store/challenge.rst:46
 msgid "Code notes"
-msgstr ""
+msgstr "Примітки до коду"
 
 #: conv_store.models.Product:1 of
 msgid "Product model implementation"
@@ -684,11 +778,11 @@ msgstr "Надайте представлення, зрозумілі людин
 
 #: ../../problem-sets/src/conv_store/challenge.rst:103
 msgid "``Product('juice', 35.66, 1)``"
-msgstr ""
+msgstr "``Product('juice', 35.66, 1)``"
 
 #: ../../problem-sets/src/conv_store/challenge.rst:104
 msgid "``<ShoppingCart>``"
-msgstr ""
+msgstr "``<ShoppingCart>``"
 
 #: ../../problem-sets/src/conv_store/challenge.rst:106
 msgid ""
@@ -924,7 +1018,6 @@ msgstr ""
 "Для тестування використовуватимуться бібліотеки ``pytest`` і ``coverage``."
 
 #: ../../problem-sets/src/conv_store/challenge.rst:251
-#, python-format
 msgid "At least 50% coverage."
 msgstr "Хоча б 50% покриття тестами."
 
@@ -934,11 +1027,11 @@ msgstr "Залежності проекту потрібно оновити."
 
 #: ../../src/appx/env_path.txt:5
 msgid "Issue - System Environment PATH"
-msgstr ""
+msgstr "Проблема - System Environment PATH"
 
 #: ../../src/appx/precedence.txt:8
 msgid "Operator Precedence"
-msgstr ""
+msgstr "Пріоритет Операторів"
 
 #: ../../src/appx/precedence.txt:10
 msgid ""
@@ -947,182 +1040,197 @@ msgid ""
 "`docs-python:operator-precedence`. Operators in the same cell have the same "
 "precedence (use left-to-right precedence)."
 msgstr ""
+"У наведеній нижче таблиці підсумовано пріоритет операторів у Python від "
+"найвищого пріоритету (найбільш обов’язковий) до найнижчого пріоритету "
+"(найменший обов’язковий) :cite:`docs-python:operator-precedence`. Оператори "
+"в одній клітинці мають однаковий пріоритет (використовуйте пріоритет зліва "
+"направо)."
 
 #: ../../src/appx/precedence.txt:16
 msgid "Operator"
-msgstr ""
+msgstr "Оператор"
 
 #: ../../src/appx/precedence.txt:16
 msgid "Description"
-msgstr ""
+msgstr "Опис"
 
 #: ../../src/appx/precedence.txt:18
 msgid ""
 "``(expressions...)``, ``[expressions...]``, ``{key: value...}``, "
 "``{expressions...}``"
 msgstr ""
+"``(expressions...)``, ``[expressions...]``, ``{key: value...}``, "
+"``{expressions...}``"
 
 #: ../../src/appx/precedence.txt:18
 msgid ""
 "Binding or parenthesized expression, list display, dictionary display, set "
 "display"
 msgstr ""
+"Прив’язка або вираз у дужках, відображення списку, відображення словника, "
+"відображення набору"
 
 #: ../../src/appx/precedence.txt:23
 msgid "``x[index]``, ``x[index:index]``, ``x(arguments...)``, ``x.attribute``"
-msgstr ""
+msgstr "``x[index]``, ``x[index:index]``, ``x(arguments...)``, ``x.attribute``"
 
 #: ../../src/appx/precedence.txt:23
 msgid "Subscription, slicing, call, attribute reference"
-msgstr ""
+msgstr "Підписка, нарізка, виклик, посилання на атрибути"
 
 #: ../../src/appx/precedence.txt:28
 msgid "``await x``"
-msgstr ""
+msgstr "``await x``"
 
 #: ../../src/appx/precedence.txt:28
 msgid "Await expression"
-msgstr ""
+msgstr "Вираз Await"
 
 #: ../../src/appx/precedence.txt:30
 msgid "``**``"
-msgstr ""
+msgstr "``**``"
 
 #: ../../src/appx/precedence.txt:30
 msgid "Exponentiation [#]_"
-msgstr ""
+msgstr "Піднесення до степеня [#]_"
 
 #: ../../src/appx/precedence.txt:32
 msgid "``+x``, ``-x``, ``~x``"
-msgstr ""
+msgstr "``+x``, ``-x``, ``~x``"
 
 #: ../../src/appx/precedence.txt:32
 msgid "Positive, negative, bitwise NOT"
-msgstr ""
+msgstr "Позитивне, негативне, побітове НІ"
 
 #: ../../src/appx/precedence.txt:34
 msgid "``*``, ``@``, ``/``, ``//``, ``%``"
-msgstr ""
+msgstr "``*``, ``@``, ``/``, ``//``, ``%``"
 
 #: ../../src/appx/precedence.txt:34
 msgid ""
 "Multiplication, matrix multiplication, division, floor division, remainder "
 "[#]_"
-msgstr ""
+msgstr "Множення, матричне множення, ділення, поверхове ділення, залишок [#]_"
 
 #: ../../src/appx/precedence.txt:37
 msgid "``+``, ``-``"
-msgstr ""
+msgstr "``+``, ``-``"
 
 #: ../../src/appx/precedence.txt:37
 msgid "Addition and subtraction"
-msgstr ""
+msgstr "Додавання і віднімання"
 
 #: ../../src/appx/precedence.txt:39
 msgid "``<<``, ``>>``"
-msgstr ""
+msgstr "``<<``, ``>>``"
 
 #: ../../src/appx/precedence.txt:39
 msgid "Shifts"
-msgstr ""
+msgstr "Зсуви"
 
 #: ../../src/appx/precedence.txt:41
 msgid "``&``"
-msgstr ""
+msgstr "``&``"
 
 #: ../../src/appx/precedence.txt:41
 msgid "Bitwise AND"
-msgstr ""
+msgstr "Побітове І"
 
 #: ../../src/appx/precedence.txt:43
 msgid "``^``"
-msgstr ""
+msgstr "``^``"
 
 #: ../../src/appx/precedence.txt:43
 msgid "Bitwise XOR"
-msgstr ""
+msgstr "Побітове XOR"
 
 #: ../../src/appx/precedence.txt:45
 msgid "``|``"
-msgstr ""
+msgstr "``|``"
 
 #: ../../src/appx/precedence.txt:45
 msgid "Bitwise OR"
-msgstr ""
+msgstr "Порозрядне АБО"
 
 #: ../../src/appx/precedence.txt:47
 msgid ""
 "``in``, ``not in``, ``is``, ``is not``, ``<``, ``<=``, ``>``, ``>=``, "
 "``==``, ``!=``"
 msgstr ""
+"``in``, ``not in``, ``is``, ``is not``, ``<``, ``<=``, ``>``, ``>=``, "
+"``==``, ``!=``"
 
 #: ../../src/appx/precedence.txt:47
 msgid "Comparisons, including membership tests and identity tests"
-msgstr ""
+msgstr "Порівняння, включаючи тести на приналежність і тести на ідентифікацію"
 
 #: ../../src/appx/precedence.txt:52
 msgid "``not x``"
-msgstr ""
+msgstr "``not x``"
 
 #: ../../src/appx/precedence.txt:52
 msgid "Boolean NOT"
-msgstr ""
+msgstr "Логічне НІ"
 
 #: ../../src/appx/precedence.txt:54
 msgid "``and``"
-msgstr ""
+msgstr "``and``"
 
 #: ../../src/appx/precedence.txt:54
 msgid "Boolean AND"
-msgstr ""
+msgstr "Логічне І"
 
 #: ../../src/appx/precedence.txt:56
 msgid "``or``"
-msgstr ""
+msgstr "``or``"
 
 #: ../../src/appx/precedence.txt:56
 msgid "Boolean OR"
-msgstr ""
+msgstr "Логічне АБО"
 
 #: ../../src/appx/precedence.txt:58
 msgid "``if - else``"
-msgstr ""
+msgstr "``if - else``"
 
 #: ../../src/appx/precedence.txt:58
 msgid "Conditional expression (ternary ``if``)"
-msgstr ""
+msgstr "Умовний вираз (трійковий ``if``)"
 
 #: ../../src/appx/precedence.txt:60
 msgid "``lambda``"
-msgstr ""
+msgstr "``lambda``"
 
 #: ../../src/appx/precedence.txt:60
 msgid "Lambda expression"
-msgstr ""
+msgstr "Lambda вирази"
 
 #: ../../src/appx/precedence.txt:62
 msgid "``=``, ``:=``"
-msgstr ""
+msgstr "``=``, ``:=``"
 
 #: ../../src/appx/precedence.txt:62
 msgid "Assignment expression"
-msgstr ""
+msgstr "Оперетор присвоєння"
 
 #: ../../src/appx/precedence.txt:65
 msgid ""
 "the power operator binds less tightly than an arithmetic or bitwise unary "
 "operator on its right (``2 ** -1`` is ``0.5``)."
 msgstr ""
+"оператор степені прив’язує менш тісно, ніж арифметичний або порозрядний "
+"унарний оператор праворуч (``2 ** -1`` це ``0,5``)."
 
 #: ../../src/appx/precedence.txt:67
 msgid ""
 "the ``%`` operator is also used for string formatting; the same precedence "
 "applies."
 msgstr ""
+"оператор ``%`` також використовується для форматування рядків; "
+"застосовується той самий пріоритет."
 
 #: ../../src/appx/printf.txt:7
 msgid "``printf-style`` String Formatting"
-msgstr ""
+msgstr "``printf-style`` Форматування рядків"
 
 #: ../../src/appx/printf.txt:9
 msgid ""
@@ -1133,218 +1241,233 @@ msgid ""
 "are replaced with zero or more elements of *values*. If *format* requires a "
 "single argument, *values* may be a single non-tuple object."
 msgstr ""
+"Рядкові об’єкти мають одну унікальну вбудовану операцію: оператор ``%`` (по "
+"модулю). Це також відоме як оператор *форматування* рядка або "
+"*інтерполяції* :cite:`docs-python:printf-formatting`. Враховуючи ``формат % "
+"значень`` (де *format* є рядком), ``%`` специфікації перетворення у *format* "
+"замінюються нулем або більше елементами *значень*. Якщо для *format* "
+"потрібен один аргумент, *values* може бути одним некортежним об’єктом."
 
 #: ../../src/appx/printf.txt:16
 msgid "The conversion flag characters are:"
-msgstr ""
+msgstr "Символи перетворення:"
 
 #: ../../src/appx/printf.txt:19
 msgid "Flag"
-msgstr ""
+msgstr "Символ"
 
 #: ../../src/appx/printf.txt:19 ../../src/appx/printf.txt:37
 msgid "Meaning"
-msgstr ""
+msgstr "Значення"
 
 #: ../../src/appx/printf.txt:21
 msgid "``#``"
-msgstr ""
+msgstr "``#``"
 
 #: ../../src/appx/printf.txt:21
 msgid "The value conversion will use the \"alternative form\""
-msgstr ""
+msgstr "Перетворення значень використовуватиме \"альтернативну форму\""
 
 #: ../../src/appx/printf.txt:23
 msgid "``0``"
-msgstr ""
+msgstr "``0``"
 
 #: ../../src/appx/printf.txt:23
 msgid "The conversion will be zero padded for numeric values"
-msgstr ""
+msgstr "Перетворення буде доповнено нулем для числових значень"
 
 #: ../../src/appx/printf.txt:25
 msgid "``'-'``"
-msgstr ""
+msgstr "``'-'``"
 
 #: ../../src/appx/printf.txt:25
 msgid ""
 "The converted value is left adjusted (override the ``'0'`` if both are given)"
 msgstr ""
+"Перетворене значення коригується зліва (замініть ``'0'``, якщо надано обидва)"
 
 #: ../../src/appx/printf.txt:28
 msgid "``' '``"
-msgstr ""
+msgstr "``' '``"
 
 #: ../../src/appx/printf.txt:28
 msgid "(a space) A blank should be left before a positive number"
-msgstr ""
+msgstr "(пробіл) Перед додатним числом слід залишити пробіл"
 
 #: ../../src/appx/printf.txt:30
 msgid "``'+'``"
-msgstr ""
+msgstr "``'+'``"
 
 #: ../../src/appx/printf.txt:30
 msgid ""
 "A sign character (``'+'`` or ``'-'``) will precede the conversion (overrides "
 "a \"space\" flag)"
 msgstr ""
+"Символ знака (``'+'`` або ``'-'``) передуватиме перетворенню (перевизначає "
+"прапор \"пробіл\")"
 
 #: ../../src/appx/printf.txt:34
 msgid "The conversion types are:"
-msgstr ""
+msgstr "Типи перетворення:"
 
 #: ../../src/appx/printf.txt:37
 msgid "Conversion"
-msgstr ""
+msgstr "Перетворення"
 
 #: ../../src/appx/printf.txt:39
 msgid "``'d'``"
-msgstr ""
+msgstr "``'d'``"
 
 #: ../../src/appx/printf.txt:39 ../../src/appx/printf.txt:41
 msgid "Signed integer decimal"
-msgstr ""
+msgstr "Ціле десяткове число зі знаком"
 
 #: ../../src/appx/printf.txt:41
 msgid "``'i'``"
-msgstr ""
+msgstr "``'i'``"
 
 #: ../../src/appx/printf.txt:43
 msgid "``'o'``"
-msgstr ""
+msgstr "``'o'``"
 
 #: ../../src/appx/printf.txt:43
 msgid "Signed octal value"
-msgstr ""
+msgstr "Вісімкове значення зі знаком"
 
 #: ../../src/appx/printf.txt:45
 msgid "``'u'``"
-msgstr ""
+msgstr "``'u'``"
 
 #: ../../src/appx/printf.txt:45
 msgid "Obsolete type - it is identical to ``'d'``"
-msgstr ""
+msgstr "Застарілий тип - ідентичний ``'d``"
 
 #: ../../src/appx/printf.txt:47
 msgid "``'x'``"
-msgstr ""
+msgstr "``'x'``"
 
 #: ../../src/appx/printf.txt:47
 msgid "Signed hexadecimal (lowercase)"
-msgstr ""
+msgstr "Шістнадцяткове число зі знаком (маленький регістр)"
 
 #: ../../src/appx/printf.txt:49
 msgid "``'X'``"
-msgstr ""
+msgstr "``'X'``"
 
 #: ../../src/appx/printf.txt:49
 msgid "Signed hexadecimal (uppercase)"
-msgstr ""
+msgstr "Шістнадцяткове число зі знаком (верхній регістр)"
 
 #: ../../src/appx/printf.txt:51
 msgid "``'e'``"
-msgstr ""
+msgstr "``'e'``"
 
 #: ../../src/appx/printf.txt:51
 msgid "Floating point exponential format (lowercase)"
-msgstr ""
+msgstr "Експоненціальний формат із плаваючою комою (нижній регістр)"
 
 #: ../../src/appx/printf.txt:53
 msgid "``'E'``"
-msgstr ""
+msgstr "``'E'``"
 
 #: ../../src/appx/printf.txt:53
 msgid "Floating point exponential format (uppercase)"
-msgstr ""
+msgstr "Експоненціальний формат із плаваючою комою (верхній регістр)"
 
 #: ../../src/appx/printf.txt:55
 msgid "``'f'`` ``'F'``"
-msgstr ""
+msgstr "``'f'`` ``'F'``"
 
 #: ../../src/appx/printf.txt:55
 msgid "Floating point decimal format"
-msgstr ""
+msgstr "Десятковий формат із плаваючою комою"
 
 #: ../../src/appx/printf.txt:58
 msgid "``'g'``"
-msgstr ""
+msgstr "``'g'``"
 
 #: ../../src/appx/printf.txt:61
 msgid "``'G'``"
-msgstr ""
+msgstr "``'G'``"
 
 #: ../../src/appx/printf.txt:58
 msgid ""
 "Floating point format. Uses lowercase exponential format if exponent is less "
 "that -4 or not less than precision, decimal format otherwise."
 msgstr ""
+"Формат з плаваючою комою. Використовує нижній регістр експоненціального "
+"формату, якщо показник степеня менший за -4 або не менший за точність, "
+"десятковий формат інакше."
 
 #: ../../src/appx/printf.txt:63
 msgid "``'c'``"
-msgstr ""
+msgstr "``'c'``"
 
 #: ../../src/appx/printf.txt:63
 msgid "Single character (accepts integer or single character string)"
-msgstr ""
+msgstr "Один символ (приймає ціле число або рядок з одним символом)"
 
 #: ../../src/appx/printf.txt:65
 msgid "``'r'``"
-msgstr ""
+msgstr "``'r'``"
 
 #: ../../src/appx/printf.txt:65
 msgid "Converts any Python object using ``repr()``"
-msgstr ""
+msgstr "Перетворює будь-який об’єкт Python за допомогою ``repr()``"
 
 #: ../../src/appx/printf.txt:67
 msgid "``'s'``"
-msgstr ""
+msgstr "``'s'``"
 
 #: ../../src/appx/printf.txt:67
 msgid "Converts any Python object using ``str()``"
-msgstr ""
+msgstr "Перетворює будь-який об’єкт Python за допомогою ``str()``"
 
 #: ../../src/appx/printf.txt:69
 msgid "``'a'``"
-msgstr ""
+msgstr "``'a'``"
 
 #: ../../src/appx/printf.txt:69
 msgid "Converts any Python object using ``ascii()``"
-msgstr ""
+msgstr "Перетворює будь-який об’єкт Python за допомогою ``ascii()``"
 
 #: ../../src/appx/printf.txt:71
 msgid "``'%'``"
-msgstr ""
+msgstr "``'%'``"
 
 #: ../../src/appx/printf.txt:71
 msgid ""
 "No arguments is converted, results in a ``'%'`` character in the result."
-msgstr ""
+msgstr "Жодні аргументи не перетворюються, результатом є символ ``'%'``."
 
 #: ../../src/appx/software_list.md:1
 msgid "Software List"
-msgstr ""
+msgstr "Список Програмного Забезпечення"
 
 #: ../../src/appx/software_list.md:4
 msgid "7zip"
-msgstr ""
+msgstr "7zip"
 
 #: ../../src/appx/software_list.md:7
 msgid "**7-Zip** is **free software** with **open source**."
 msgstr ""
+"**7-Zip** — це **вільне програмне забезпечення** з **відкритим кодом**."
 
 #: ../../src/appx/software_list.md:9
 msgid ""
 "High compression ratio in [7z format](https://7-zip.org/7z.html) with "
 "**LZMA** and **LZMA2** compression"
 msgstr ""
+"Високий ступінь стиснення у [форматі 7z](https://7-zip.org/7z.html) зі "
+"стисненням **LZMA** і **LZMA2**"
 
 #: ../../src/appx/software_list.md:11
 msgid "Supported formats:"
-msgstr ""
+msgstr "Підтримувані формати:"
 
 #: ../../src/appx/software_list.md:12
 msgid "Packing / unpacking: 7z, XZ, BZIP2, GZIP, TAR, ZIP and WIM"
-msgstr ""
+msgstr "Пакування / розпакування: 7z, XZ, BZIP2, GZIP, TAR, ZIP і WIM"
 
 #: ../../src/appx/software_list.md:13
 msgid ""
@@ -1352,22 +1475,25 @@ msgid ""
 "HFS, IHEX, ISO, LZH, LZMA, MBR, MSI, NSIS, NTFS, QCOW2, RAR, RPM, SquashFS, "
 "UDF, UEFI, VDI, VHD, VHDX, VMDK, XAR and Z."
 msgstr ""
+"Лише розпакування: APFS, AR, ARJ, CAB, CHM, CPIO, CramFS, DMG, EXT, FAT, "
+"GPT, HFS, IHEX, ISO, LZH, LZMA, MBR, MSI, NSIS, NTFS, QCOW2, RAR, RPM, "
+"SquashFS , UDF, UEFI, VDI, VHD, VHDX, VMDK, XAR і Z."
 
 #: ../../src/appx/software_list.md:16
 msgid "Self-extracting capability for 7z format"
-msgstr ""
+msgstr "Можливість саморозпакування для формату 7z"
 
 #: ../../src/appx/software_list.md:17
 msgid "Integration with Windows Shell"
-msgstr ""
+msgstr "Інтеграція з Windows Shell"
 
 #: ../../src/appx/software_list.md:19
 msgid "https://7-zip.org/"
-msgstr ""
+msgstr "https://7-zip.org/"
 
 #: ../../src/appx/software_list.md:21
 msgid "cygwin"
-msgstr ""
+msgstr "cygwin"
 
 #: ../../src/appx/software_list.md:24
 msgid ""
@@ -1376,16 +1502,22 @@ msgid ""
 "wiki/Linux_distribution) on Windows and a DLL (cygwin1.dll) which provides "
 "substantial POSIX API functionality."
 msgstr ""
+"Це велика колекція інструментів GNU та Open Source, які забезпечують "
+"функціональність, подібну до [дистрибутива Linux](https://en.wikipedia.org/"
+"wiki/Linux_distribution) у Windows та DLL (cygwin1.dll), яка забезпечує "
+"значний POSIX Функціонал API."
 
 #: ../../src/appx/software_list.md:30
 msgid "**Cygwin is not**:"
-msgstr ""
+msgstr "**Сygwin це не**:"
 
 #: ../../src/appx/software_list.md:32
 msgid ""
 "a way to run native Linux apps on Windows. You must rebuild your application "
 "*from source* if you want it to run on Windows."
 msgstr ""
+"спосіб запуску рідних програм Linux у Windows. Ви повинні перебудувати свою "
+"програму *з вихідного коду*, якщо ви хочете, щоб вона запускалася в Windows."
 
 #: ../../src/appx/software_list.md:34
 msgid ""
@@ -1393,14 +1525,18 @@ msgid ""
 "like `signals`, `ptys` etc. Again, you need to build your apps *from source* "
 "if you want to take advantage of Cygwin functionality."
 msgstr ""
+"спосіб чарівним чином зробити рідні програми Windows відомими "
+"функціональності UNIX®, як-от `signals`, `ptys` тощо. Знову ж таки, вам "
+"потрібно створити свої програми *з джерела*, якщо ви хочете скористатися "
+"перевагами функціональності Cygwin."
 
 #: ../../src/appx/software_list.md:38
 msgid "https://www.cygwin.com/"
-msgstr ""
+msgstr "https://www.cygwin.com/"
 
 #: ../../src/appx/software_list.md:40
 msgid "git[^cygwin-pkg]"
-msgstr ""
+msgstr "git[^cygwin-pkg]"
 
 #: ../../src/appx/software_list.md:43
 msgid ""
@@ -1408,18 +1544,24 @@ msgid ""
 "source) distributed version control system designed to handle everything "
 "from small to very large projects with speed and efficiency."
 msgstr ""
+"Git — це [безкоштовна система з відкритим вихідним кодом](https://git-scm."
+"com/about/free-and-open-source) розподілена система контролю версій, "
+"призначена для швидкого та ефективного керування всіма проектами, від малих "
+"до дуже великих."
 
 #: ../../src/appx/software_list.md:47
 msgid "https://git-scm.com/"
-msgstr ""
+msgstr "https://git-scm.com/"
 
 #: ../../src/appx/software_list.md:49
 msgid "Docker"
-msgstr ""
+msgstr "Docker"
 
 #: ../../src/appx/software_list.md:52
 msgid "The most-loved Tool in Stack Overflow’s 2022 Developer Survey."
 msgstr ""
+"Найулюбленіший інструмент в опитуванні розробників Stack Overflow за 2022 "
+"рік."
 
 #: ../../src/appx/software_list.md:54
 msgid ""
@@ -1430,14 +1572,20 @@ msgid ""
 "world, Docker Desktop and Docker Hub provide unmatched simplicity, agility "
 "and choice."
 msgstr ""
+"Docker допомагає розробникам втілювати свої ідеї в життя, долаючи складність "
+"розробки програм. Ми спрощуємо та прискорюємо робочі процеси розробки за "
+"допомогою інтегрованого конвеєра розробників і консолідації компонентів "
+"програми. Активно використовувані мільйонами розробників у всьому світі "
+"Docker Desktop і Docker Hub забезпечують неперевершену простоту, гнучкість і "
+"вибір."
 
 #: ../../src/appx/software_list.md:60
 msgid "https://www.docker.com/"
-msgstr ""
+msgstr "https://www.docker.com/"
 
 #: ../../src/appx/software_list.md:62
 msgid "PostgreSQL[^cygwin-pkg]"
-msgstr ""
+msgstr "PostgreSQL[^cygwin-pkg]"
 
 #: ../../src/appx/software_list.md:65
 msgid ""
@@ -1445,14 +1593,17 @@ msgid ""
 "over 35 years of active development that has earned it a strong reputation "
 "for reliability, feature robustness, and performance."
 msgstr ""
+"PostgreSQL — це потужна об’єктно-реляційна база даних з відкритим вихідним "
+"кодом, активна розробка якої триває понад 35 років, завдяки чому вона "
+"заслужила міцну репутацію надійності, надійності функцій і продуктивності."
 
 #: ../../src/appx/software_list.md:69
 msgid "https://www.postgresql.org/"
-msgstr ""
+msgstr "https://www.postgresql.org/"
 
 #: ../../src/appx/software_list.md:71
 msgid "psql[^cygwin-pkg]"
-msgstr ""
+msgstr "psql[^cygwin-pkg]"
 
 #: ../../src/appx/software_list.md:74
 msgid ""
@@ -1463,20 +1614,28 @@ msgid ""
 "features to facilitate writing scripts and automating a wide variety of "
 "tasks."
 msgstr ""
+"Термінальний інтерфейс для PostgreSQL. Це дозволяє вводити запити в "
+"інтерактивному режимі, надсилати їх у PostgreSQL і переглядати результати "
+"запиту. Крім того, введення може бути з файлу або з аргументів командного "
+"рядка. Крім того, psql надає низку мета-команд і різноманітних функцій, "
+"подібних до оболонки, для полегшення написання сценаріїв і автоматизації "
+"різноманітних завдань."
 
 #: ../../src/appx/software_list.md:80
 msgid ""
 "On Windows it will be installed within PostgreSQL RDBMS. For macOS and Linux "
 "look for `postgresql-client` package."
 msgstr ""
+"У Windows його буде встановлено в СУБД PostgreSQL. Для macOS і Linux "
+"знайдіть пакет `postgresql-client`."
 
 #: ../../src/appx/software_list.md:83
 msgid "https://www.postgresql.org/docs/current/app-psql.html"
-msgstr ""
+msgstr "https://www.postgresql.org/docs/current/app-psql.html"
 
 #: ../../src/appx/software_list.md:85
 msgid "pgAdmin"
-msgstr ""
+msgstr "pgAdmin"
 
 #: ../../src/appx/software_list.md:88
 msgid ""
@@ -1484,18 +1643,23 @@ msgid ""
 "development platform for PostgreSQL, the most advanced Open Source database "
 "in the world."
 msgstr ""
+"pgAdmin — це найпопулярніша та багатофункціональна платформа адміністрування "
+"та розробки з відкритим кодом для PostgreSQL, найдосконалішої бази даних з "
+"відкритим кодом у світі."
 
 #: ../../src/appx/software_list.md:92
 msgid "It is a PostgreSQL client (like a `psql`), but with web based GUI."
 msgstr ""
+"Це клієнт PostgreSQL (як `psql`), але з графічним інтерфейсом на основі веб-"
+"інтерфейсу."
 
 #: ../../src/appx/software_list.md:94
 msgid "https://pgadmin.org/"
-msgstr ""
+msgstr "https://pgadmin.org/"
 
 #: ../../src/appx/software_list.md:96
 msgid "SQLite[^cygwin-pkg]"
-msgstr ""
+msgstr "SQLite[^cygwin-pkg]"
 
 #: ../../src/appx/software_list.md:99
 msgid ""
@@ -1505,11 +1669,426 @@ msgid ""
 "(https://sqlite.org/hirely.html), [full-featured](https://sqlite.org/fullsql."
 "html), SQL database engine."
 msgstr ""
+"SQLite — це бібліотека мовою C, яка реалізує [маленьку](https://sqlite.org/"
+"footprint.html), [швидку](https://sqlite.org/fasterthanfs.html), "
+"[самодостатню]( https://sqlite.org/selfcontained.html), [висока надійність]"
+"(https://sqlite.org/hirely.html), [повнофункціональний](https://sqlite.org/"
+"fullsql.html) , двигун бази даних SQL."
 
 #: ../../src/appx/software_list.md:106
 msgid "https://sqlite.org/"
-msgstr ""
+msgstr "https://sqlite.org/"
 
 #: ../../src/appx/software_list.md:109
 msgid "available for installation as a cygwin package"
 msgstr "доступно для встановлення як пакет cygwin"
+
+#: ../../problem-sets/src/wrw_game/challenge.rst:3
+msgid "WARRIORS, ROBBERS AND WIZARDS GAME"
+msgstr "ГРА WARRIORS, ROBBERS AND WIZARDS"
+
+#: ../../problem-sets/src/wrw_game/challenge.rst:5
+msgid ""
+"Warriors, robbers and wizards (WRW) game is a \"Paper, Rock and Scissors\" "
+"clone, but in a fantasy setting. It comes with a simple command line "
+"interface where the use must type in his or her choice. The enemy is "
+"controlled by the script. The player's goal is to gain as many score points, "
+"as it possible."
+msgstr ""
+"Гра Warriors, robbers and wizards (WRW) є клоном \"Paper, Rock and "
+"Scissors\", але у фентезійній обстановці. Вона постачається з простим "
+"інтерфейсом командного рядка, де для використання потрібно вводити його або "
+"її вибору. Ворог керується сценарієм. Мета гравця - отримати якомога більше "
+"очок."
+
+#: ../../problem-sets/src/wrw_game/challenge.rst:12
+msgid "Code Organization"
+msgstr "Організація коду"
+
+#: ../../problem-sets/src/wrw_game/challenge.rst:14
+msgid "Use separate modules to maintain your code base. For example:"
+msgstr ""
+"Використовуйте окремі модулі для підтримки вашої кодової бази. Наприклад:"
+
+#: ../../problem-sets/src/wrw_game/challenge.rst:26
+msgid "General Playground Description"
+msgstr "Загальний опис ігрового майданчика"
+
+#: ../../problem-sets/src/wrw_game/challenge.rst:28
+msgid ""
+"The game process is divided into rounds. Each round consists of **attack** "
+"and **defence** stages. Rounds are repeated, until player is defeated."
+msgstr ""
+"Процес гри поділено на раунди. Кожен раунд складається з етапів атаки та "
+"захисту. Раунди повторюються, поки гравець не буде переможений."
+
+#: ../../problem-sets/src/wrw_game/challenge.rst:32
+msgid "Fight Rules"
+msgstr "Правила боротьби"
+
+#: ../../problem-sets/src/wrw_game/challenge.rst:34
+msgid "It's simple..."
+msgstr "Це просто..."
+
+#: ../../problem-sets/src/wrw_game/challenge.rst:36
+msgid "**Warrior** beats **Robber**"
+msgstr "Воїн перемагає розбійника"
+
+#: ../../problem-sets/src/wrw_game/challenge.rst:37
+msgid "**Robber** beats **Wizard**"
+msgstr "**Розбійник** перемагає **Чарівника**"
+
+#: ../../problem-sets/src/wrw_game/challenge.rst:38
+msgid "**Wizard** beats **Warrior**"
+msgstr "**Чарівник** перемагає **Воїна**"
+
+#: ../../problem-sets/src/wrw_game/challenge.rst:41
+msgid "Attack Stage"
+msgstr "Стадія атаки"
+
+#: ../../problem-sets/src/wrw_game/challenge.rst:43
+msgid ""
+"Player selects the choice to attack from **warrior**, **robber** or "
+"**wizard**, enemy selects the choice for defence from the same options by "
+"random. If the attack is successful:"
+msgstr ""
+"Гравець обирає вибір для атаки воїна, розбійника чи чарівника, ворог обирає "
+"вибір для захисту з тих самих варіантів за допомогою\" \"довільного. Якщо "
+"атака успішна:"
+
+#: ../../problem-sets/src/wrw_game/challenge.rst:47
+msgid "enemy health is decreased"
+msgstr "здоров'я ворога зменшено"
+
+#: ../../problem-sets/src/wrw_game/challenge.rst:48
+msgid "player gains score points"
+msgstr "гравець отримує очки"
+
+#: ../../problem-sets/src/wrw_game/challenge.rst:50
+msgid "In case enemy is defeated:"
+msgstr "Якщо ворог переможений:"
+
+#: ../../problem-sets/src/wrw_game/challenge.rst:52
+msgid "a new enemy instance is initialized using higher level"
+msgstr "новий екземпляр ворога ініціалізовано з використанням вищого рівня"
+
+#: ../../problem-sets/src/wrw_game/challenge.rst:53
+msgid "player gains some extra score points"
+msgstr "гравець отримує додаткові очки"
+
+#: ../../problem-sets/src/wrw_game/challenge.rst:54
+msgid "next defence stage is skipped, and player attacks again"
+msgstr "наступний етап захисту пропущено, і гравець атакує знову"
+
+#: ../../problem-sets/src/wrw_game/challenge.rst:57
+msgid "Defence Stage"
+msgstr "Стадія захисту"
+
+#: ../../problem-sets/src/wrw_game/challenge.rst:59
+msgid ""
+"Player selects the choice to defend from **warrior**, **robber** or "
+"**wizard**, enemy selects the choice to attack from the same options by "
+"random. If the attack is successful:"
+msgstr ""
+"Гравець обирає вибір для захисту від воїна, грабіжника чи \" \"чарівника, "
+"ворог обирає вибір для атаки з тих же параметрів випадковим чином. Якщо "
+"атака успішна:"
+
+#: ../../problem-sets/src/wrw_game/challenge.rst:63
+msgid "player health is decreased"
+msgstr "здоров'я гравця знижено"
+
+#: ../../problem-sets/src/wrw_game/challenge.rst:65
+msgid "If player is defeated:"
+msgstr "Якщо гравець переможений:"
+
+#: ../../problem-sets/src/wrw_game/challenge.rst:67
+msgid "report the message about gained score points to the terminal"
+msgstr "повідомляти повідомлення про набрані бали на термінал"
+
+#: ../../problem-sets/src/wrw_game/challenge.rst:68
+msgid "write down player's name and score points to \"scores.txt\" file"
+msgstr "запишіть ім'я гравця та наберіть очки до файлу \"scores.txt\""
+
+#: ../../problem-sets/src/wrw_game/challenge.rst:72
+msgid "Exceptions"
+msgstr "Винятки"
+
+#: ../../problem-sets/src/wrw_game/challenge.rst:75
+msgid "Enemy Down"
+msgstr "Enemy Down"
+
+#: ../../problem-sets/src/wrw_game/challenge.rst:77
+msgid ""
+"This is an exceptional scenario when enemy is defeated. A custom exception "
+"``EnemyDown`` should be used to track these cases. Exception should provide "
+"the details on the enemy's instance, especially its level."
+msgstr ""
+"Це винятковий сценарій, коли ворог зазнає поразки. Щоб відстежувати ці "
+"випадки, слід використовувати налаштований виняток ``EnemyDown``. Виняток "
+"повинен надавати деталі про екземпляр ворога, особливо його рівень."
+
+#: ../../problem-sets/src/wrw_game/challenge.rst:82
+msgid "Game Over"
+msgstr "Game Over"
+
+#: ../../problem-sets/src/wrw_game/challenge.rst:84
+msgid ""
+"This is an exceptional scenario when player is defeated. A custom exception "
+"``GameOver`` should be used to track these cases. Exception should provide "
+"the details on the player's instance, especially its score points."
+msgstr ""
+"Це винятковий сценарій, коли гравець зазнає поразки. Щоб відстежувати ці "
+"випадки, слід використовувати спеціальний виняток ``GameOver``. Виняток "
+"повинен надавати деталі про екземпляр гравця, особливо його результати бали."
+
+#: ../../problem-sets/src/wrw_game/challenge.rst:90
+msgid "Models"
+msgstr "Моделі"
+
+#: ../../problem-sets/src/wrw_game/challenge.rst:93
+msgid "Enemy"
+msgstr "Ворог"
+
+#: ../../problem-sets/src/wrw_game/challenge.rst:95
+msgid ""
+"Represents the playing enemy-bot. All choices made by this model are random. "
+"The model should implement methods:"
+msgstr ""
+"Представляє граючого ворожого бота. Усі вибори, зроблені цією моделлю, "
+"випадкові. Модель має реалізовувати методи:"
+
+#: ../../problem-sets/src/wrw_game/challenge.rst
+msgid "``__init__``"
+msgstr "``__init__``"
+
+#: ../../problem-sets/src/wrw_game/challenge.rst:99
+msgid ""
+"Initialize enemy instance. Initializer should receive one argument of "
+"integer type - ``level: int``. Health points value should be set equal to "
+"level value."
+msgstr ""
+"Ініціалізувати екземпляр противника. Ініціалізатор повинен отримати один "
+"аргумент цілого типу - ``level: int``. Значення очок здоров'я має бути "
+"встановлено рівним значенню рівня."
+
+#: ../../problem-sets/src/wrw_game/challenge.rst
+msgid "``descrease_health``"
+msgstr "``descrease_health``"
+
+#: ../../problem-sets/src/wrw_game/challenge.rst:104
+msgid ""
+"Method decreases the health points value by 1 (one). If this value becomes "
+"less that 1 (one) the ``EnemyDown`` exception is raised."
+msgstr ""
+"Метод зменшує значення очок здоров'я на 1 (один). Якщо це значення стає "
+"меншим за 1 (один), виникає виняток ``EnemyDown``."
+
+#: ../../problem-sets/src/wrw_game/challenge.rst
+msgid "``select_attack``"
+msgstr "``select_attack``"
+
+#: ../../problem-sets/src/wrw_game/challenge.rst:108
+msgid "Return a random attack choice from valid choices."
+msgstr "Повернути випадковий вибір атаки з дійсних виборів."
+
+#: ../../problem-sets/src/wrw_game/challenge.rst
+msgid "``select_defence``"
+msgstr "``select_defence``"
+
+#: ../../problem-sets/src/wrw_game/challenge.rst:111
+msgid "Return a random defence choice from valid choices."
+msgstr "Повернути випадковий вибір захисту з дійсних виборів."
+
+#: ../../problem-sets/src/wrw_game/challenge.rst:113
+msgid "You are free to implement other methods you like, if needed."
+msgstr ""
+"Ви можете використовувати інші методи, які вам подобаються, якщо потрібно."
+
+#: ../../problem-sets/src/wrw_game/challenge.rst:116
+msgid "Player"
+msgstr "Гравець"
+
+#: ../../problem-sets/src/wrw_game/challenge.rst:118
+msgid ""
+"This model is controlled by the user. It represents a playing user. All "
+"choices are controlled by the user. The model should implement methods:"
+msgstr ""
+"Цією моделлю керує користувач. Вона представляє гравця. Усі вибори контролює "
+"користувач. Модель має реалізовувати методи:"
+
+#: ../../problem-sets/src/wrw_game/challenge.rst:122
+msgid ""
+"Initialize player instance. Initializer should receive player's name as an "
+"argument - ``name: str``. Health points are to be set from settings. Score "
+"points should be initialized with 0 (zero)."
+msgstr ""
+"Ініціалізувати екземпляр гравця. Ініціалізатор має отримати ім'я гравця як "
+"аргумент - ``ім'я: str``. Очки здоров'я повинні бути встановлені з "
+"налаштувань. Очки мають бути ініціалізовані 0 (нулем)."
+
+#: ../../problem-sets/src/wrw_game/challenge.rst
+msgid "``decrease_health``"
+msgstr "``decrease_health``"
+
+#: ../../problem-sets/src/wrw_game/challenge.rst:127
+msgid ""
+"Method decreases the health points value by 1 (one). If this value becomes "
+"less that 1 (one) the ``GameOver`` exception is raised."
+msgstr ""
+"Метод зменшує значення очок здоров'я на 1 (один). Якщо це значення стане "
+"менше 1 (один), виникає виняток ``GameOver``."
+
+#: ../../problem-sets/src/wrw_game/challenge.rst:131
+#: ../../problem-sets/src/wrw_game/challenge.rst:134
+msgid "Return a fight choice made by the user. Performs choice validation."
+msgstr "Повернути вибір бою, зроблений користувачем. Виконує перевірку вибору."
+
+#: ../../problem-sets/src/wrw_game/challenge.rst
+msgid "``fight``"
+msgstr "``fight``"
+
+#: ../../problem-sets/src/wrw_game/challenge.rst:137
+msgid ""
+"Static method to perform a fight. Takes two arguments representing attack "
+"and defence choices. Performs fight result calculation and return it back."
+msgstr ""
+"Статичний метод для проведення бою. Бере два аргументи, що представляють "
+"атаку та вибір захисту. Виконує обчислення результату бою та повертає його "
+"назад."
+
+#: ../../problem-sets/src/wrw_game/challenge.rst
+msgid "``attack``"
+msgstr "``attack``"
+
+#: ../../problem-sets/src/wrw_game/challenge.rst:141
+msgid ""
+"Perform attack on an enemy instance. This method takes an enemy instance as "
+"an argument. After that, it takes attack choice from the player model and "
+"the defence choice from an enemy model. After fight result calculation "
+"required operation are to be performed (decrease enemy health, assign score "
+"points etc.). Based on fight result should print out a message:"
+msgstr ""
+"Виконати атаку на екземпляр противника. Цей метод приймає екземпляр "
+"противника як аргумент. Після цього він приймає вибір атаки з моделі гравця "
+"та вибір захисту з моделі противника. Після результату битви  потрібно "
+"виконати обчислення, необхідні операції (зменшити здоров'я ворога, "
+"призначити очки тощо). На основі результату бою має видрукувати\" "
+"\"повідомлення:"
+
+#: ../../problem-sets/src/wrw_game/challenge.rst:147
+msgid "``\"YOUR ATTACK IS SUCCESSFUL!\"``"
+msgstr "``\"YOUR ATTACK IS SUCCESSFUL!\"``"
+
+#: ../../problem-sets/src/wrw_game/challenge.rst:148
+msgid "``\"YOUR ATTACK IS FAILED!\"``"
+msgstr "``\"YOUR ATTACK IS FAILED!\"``"
+
+#: ../../problem-sets/src/wrw_game/challenge.rst:149
+#: ../../problem-sets/src/wrw_game/challenge.rst:160
+msgid "``IT'S A DRAW!\"``"
+msgstr "``IT'S A DRAW!\"``"
+
+#: ../../problem-sets/src/wrw_game/challenge.rst
+msgid "``defence``"
+msgstr "``defence``"
+
+#: ../../problem-sets/src/wrw_game/challenge.rst:152
+msgid ""
+"Perform defence from an enemy attack. This method takes an enemy instance as "
+"an argument. After that, it takes defence choice from the player model and "
+"the attack choice from an enemy model. After fight result calculation "
+"required operation are to be performed (decrease player health). Based on "
+"fight result should print out a message:"
+msgstr ""
+"Виконайте захист від атаки ворога. Цей метод приймає екземпляр ворога як "
+"аргумент. Після цього він приймає вибір захисту від моделі гравця та вибір "
+"атаки від моделі ворога. Після результату бою необхідно виконати операцію "
+"обчислення (зменшити здоров'я гравця). За результатами бою повинно вийти "
+"повідомлення:"
+
+#: ../../problem-sets/src/wrw_game/challenge.rst:158
+msgid "``\"YOUR DEFENCE IS SUCCESSFUL!\"``"
+msgstr "``\"YOUR DEFENCE IS SUCCESSFUL!\"``"
+
+#: ../../problem-sets/src/wrw_game/challenge.rst:159
+msgid "``\"YOUR DEFENCE IS FAILED!\"``"
+msgstr "``\"YOUR DEFENCE IS FAILED!\"``"
+
+#: ../../problem-sets/src/wrw_game/challenge.rst:164
+msgid "Settings"
+msgstr "Налаштування"
+
+#: ../../problem-sets/src/wrw_game/challenge.rst:166
+msgid ""
+"**settings.py** module contains constants values for the game (e.g. "
+"``INITIAL_PLAYER_HEALTH = 5``)."
+msgstr ""
+"Модуль settings.py містить значення констант для гри (наприклад, "
+"``INITIAL_PLAYER_HEALTH = 5``)."
+
+#: ../../problem-sets/src/wrw_game/challenge.rst:171
+msgid "Engine"
+msgstr "Ігровий рушій"
+
+#: ../../problem-sets/src/wrw_game/challenge.rst:173
+msgid "Engine module should provide two functions:"
+msgstr "Модуль двигуна має забезпечувати дві функції:"
+
+#: ../../problem-sets/src/wrw_game/challenge.rst:175
+msgid "``get_player_name``"
+msgstr "``get_player_name``"
+
+#: ../../problem-sets/src/wrw_game/challenge.rst:176
+msgid "``play``"
+msgstr "``play``"
+
+#: ../../problem-sets/src/wrw_game/challenge.rst:179
+msgid "Player name getter"
+msgstr "Отримання імені гравця"
+
+#: ../../problem-sets/src/wrw_game/challenge.rst:181
+msgid ""
+"Asks the user to type in his or her name and return it back. Leading and "
+"trailing whitespaces are to be trimmed. Name should contain at least one "
+"character."
+msgstr ""
+"Просить користувача ввести своє ім'я та повернути його назад. Пробіли на "
+"початку та в кінці мають бути вирізані. Ім'я має містити принаймні один "
+"символ."
+
+#: ../../problem-sets/src/wrw_game/challenge.rst:186
+msgid "Play"
+msgstr "Гра"
+
+#: ../../problem-sets/src/wrw_game/challenge.rst:188
+msgid ""
+"This function initializes player and enemy instance. It processes game "
+"rounds inside of an endless loop stage by stage. If an enemy is defeated - a "
+"new one should be initialized with level increased by 1 (one). This case "
+"should be reported to the terminal. If a player is defeated - the \"Game "
+"Over\" message should be reported to the terminal. ``KeyboardInterrupt`` "
+"should be handled as well - it's behavior is similar to \"Game Over\" event, "
+"but \"game over\" message should be omitted."
+msgstr ""
+"Ця функція ініціалізує екземпляр гравця та ворога. Вона обробляє ігрові "
+"раунди в нескінченному циклі поетапно. Якщо ворога переможено - нового слід "
+"ініціалізувати з рівнем, збільшеним на 1 (один). Про цей випадок слід "
+"повідомити на термінал. Якщо гравець зазнає поразки - повідомлення \"Game "
+"Over\" має бути повідомлено на термінал. ``KeyboardInterrupt`` також слід "
+"обробити - це поведінка подібно до події \"Game Over\", але повідомлення "
+"\"Game Over\" має бути пропущено."
+
+#: ../../problem-sets/src/wrw_game/challenge.rst:199
+msgid "Optional Enhancements"
+msgstr "Додаткові Вдосконалення"
+
+#: ../../problem-sets/src/wrw_game/challenge.rst:201
+msgid "Add scores processor to show top-10 scores from a record table."
+msgstr ""
+"Додайте процесор оцінок, щоб показати 10 найкращих результатів із таблиці "
+"записів."
+
+#: ../../problem-sets/src/wrw_game/challenge.rst:202
+msgid "Create game menu, for example: ::"
+msgstr "Створити меню гри, наприклад: ::"
