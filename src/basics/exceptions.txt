@@ -21,7 +21,7 @@ Syntax errors are also known as parsing errors.
                    ^^^^^
     SyntaxError: invalid syntax
 
-The parser repeats the offending line and displays a little ‘arrow’ pointing at
+The parser repeats the offending line and displays a little "arrow" pointing at
 the earliest point in the line where the error was detected. The error is
 caused by (or at least detected at) the token preceding the arrow.
 
@@ -55,7 +55,7 @@ Standard exception names are built-in identifiers (not reserved keywords).
 Tracebacks
 ==========
 
-.. note:: "File" is replaced with a *dummy string* within the example above.
+.. note:: "File" is replaced with a *dummy string* within the examples.
 
 Let's assume the following modules structure:
 
@@ -173,14 +173,26 @@ different exceptions.
         except ZeroDivisionError:
             print(f"Zero division error: {y = }")
 
-All exceptions
---------------
+Handling ALL exception
+----------------------
 
 It's a bad practice to handle **all** exceptions.
 
 When indicating an ``except`` block without specifying an exception to catch it
 will work for any exception, that occurs in ``try`` block. The same is relevant
-for handling ``BaseException`` and ``Exception``.
+for handling ``BaseException`` and ``Exception``. But you can never say what
+exact goes wrong.
+
+.. note:: However, this scenario may work for logging an exception and raising
+          it again to be handled on upper levels.
+
+          .. code-block:: python
+
+              try:
+                  ...    # some code that may raise an exception
+              except:
+                  ...    # logging actions
+                  raise  # raise an exception again
 
 ::
 
@@ -267,6 +279,18 @@ instantiated by calling its constructor with no arguments.
     raise NameError("name error")
     raise NameError
 
+``raise`` statement itself will re-raise all the exceptions within the context.
+Also exceptions can be raised again from the ``except`` block. It's a common
+pattern to catch the exception for loggers and when re-raise it.
+
+.. code-block:: python
+
+    try:
+        result = 10 // 0
+    except:
+        print("zero division")
+        raise
+
 Creating custom exceptions
 ==========================
 
@@ -279,14 +303,14 @@ but are usually kept simple, often only offering a number of attributes that
 allow information about the error to be extracted by handlers for
 the exception.
 
-Most exceptions are defined with names that end in “Error”, similar to the
+Most exceptions are defined with names that end in "Error", similar to the
 naming of the standard exceptions.
 
 Many standard modules define their own exceptions to report errors that may
 occur in functions they define.
 
 .. code-block:: python
-    :caption: User-define exception
+    :caption: User-defined exception
 
     class InvalidInputError(Exception):
         """This is a custom exception for demo needs"""
