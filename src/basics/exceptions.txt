@@ -231,7 +231,26 @@ occurs.
 ``else`` statement
 ------------------
 
-.. todo: complete the block
+The ``try`` statement can also use ``else`` (which is optional).
+The statements within this block will be execute only in case there were
+no exceptions raised while running the ``try``.
+
+.. code-block:: python
+
+    try:
+        result = 10 // 2
+    except ZeroDivisionError:
+        print("zero division")
+    else:
+        print("no errors occurred")  # this **WILL** be printed out
+
+    try:
+        result = 10 // 0
+    except ZeroDivisionError:
+        print("zero division")
+    else:
+        print("no errors occurred")  # this **WILL NOT** be printed out
+
 
 Raising exceptions
 ==================
