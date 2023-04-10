@@ -28,7 +28,7 @@
         appx/precedence
         appx/printf
         appx/conv_store
-        appx/wrw_game
+        appx/wtk
         appx/blog
 
 .. rubric:: References
