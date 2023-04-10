@@ -1,1 +1,0 @@
-.. include:: /../problem-sets/src/wrw_game/challenge.rst
