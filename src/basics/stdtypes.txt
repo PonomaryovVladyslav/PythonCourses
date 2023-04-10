@@ -176,8 +176,6 @@ Common operations
 Value comparisons
 -----------------
 
-.. todo: make TypeError a link
-
 Sequences can be compared only within each of their types, with the restriction
 that ranges do not support order comparison. Equality comparison across these
 types results in inequality, and ordering comparison across these types raises
