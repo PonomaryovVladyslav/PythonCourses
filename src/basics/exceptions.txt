@@ -255,9 +255,61 @@ no exceptions raised while running the ``try``.
 Raising exceptions
 ==================
 
-.. todo: complete the block
+The ``raise`` statement allows the programmer to force a specified exception
+to occur. The sole argument to raise indicates the exception to be raised.
+This must be either an exception instance or an exception class (a class that
+derives from ``BaseException``, such as ``Exception`` or one of its
+subclasses). If an exception class is passed, it will be implicitly
+instantiated by calling its constructor with no arguments.
+
+.. code-block:: python
+
+    raise NameError("name error")
+    raise NameError
 
 Creating custom exceptions
 ==========================
 
-.. todo: complete the block
+Programs may name their own exceptions by creating a new exception class.
+Exceptions should typically be derived from the Exception class, either
+directly or indirectly.
+
+Exception classes can be defined which do anything any other class can do,
+but are usually kept simple, often only offering a number of attributes that
+allow information about the error to be extracted by handlers for
+the exception.
+
+Most exceptions are defined with names that end in “Error”, similar to the
+naming of the standard exceptions.
+
+Many standard modules define their own exceptions to report errors that may
+occur in functions they define.
+
+.. code-block:: python
+    :caption: User-define exception
+
+    class InvalidInputError(Exception):
+        """This is a custom exception for demo needs"""
+
+
+    class NegativeError(ValueError):
+        """Raised when a negative value passed"""
+
+
+    def sum_positive(x: int, y: int) -> int:
+        """Return the sum of positive integers"""
+
+        if x < 0 or y < 0:
+            raise NegativeError
+
+        return x + y
+
+
+    try:
+        x = int(input("Enter number x: "))
+        y = int(input("Enter number y: "))
+        result = sum_positive(x, y)
+    except ValueError:
+        raise InvalidInputError("could not convert to integer")
+    except NegativeError:
+        print("this function works only with positive integers")
