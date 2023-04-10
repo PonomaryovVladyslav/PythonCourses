@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "python-course"
-version = "2022.11.dev"
+version = "2023.04.dev"
 description = ""
 license = "MIT"
 authors = [
@@ -11,7 +11,7 @@ maintainers = [
     "Serhii Horodilov <sgorodil@gmail.com>"
 ]
 readme = "README.rst"
-homepage = ""  # todo:
+homepage = "https://edu-python-course.github.io"
 repository = "https://github.com/edu-python-course/edu-python-course.github.io"
 keywords = [
     "python",
