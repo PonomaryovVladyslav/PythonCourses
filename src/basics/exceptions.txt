@@ -1,3 +1,244 @@
+.. _built-in exceptions:
+    https://docs.python.org/library/exceptions.html#bltin-exceptions
+
 *******************************************************************************
                              Errors and Exceptions
 *******************************************************************************
+
+There are (at least) two distinguishable kinds of errors:
+*syntax errors* and *exceptions* :cite:`docs-python:errors`.
+
+Syntax errors
+=============
+
+Syntax errors are also known as parsing errors.
+
+.. code-block:: python
+
+    >>> while True print("the loop is running...")
+      File "<string>", line 1
+        while True print('the loop is running...')
+                   ^^^^^
+    SyntaxError: invalid syntax
+
+The parser repeats the offending line and displays a little ‘arrow’ pointing at
+the earliest point in the line where the error was detected. The error is
+caused by (or at least detected at) the token preceding the arrow.
+
+Exceptions
+==========
+
+Even if a statement or expression is syntactically correct, it may cause an
+error when an attempt is made to execute it. Errors detected during execution
+are called exceptions and are not unconditionally fatal: you will soon learn
+how to handle them in Python programs.
+
+Exceptions come in different types, and the type is printed as part of
+the message.
+
+For example, the ``div`` function implemented as
+
+.. code-block:: python
+
+    def div(x: Union[int, float], y: Union[int, float]) -> float:
+        """Return the result of dividing `x` by `y`."""
+
+        return x / y
+
+may cause a ``ZeroDivisionError`` exception in case 0 is passed as ``y``
+parameter.
+
+Standard exception names are built-in identifiers (not reserved keywords).
+
+.. seealso:: The list of `built-in exceptions`_
+
+Tracebacks
+==========
+
+.. note:: "File" is replaced with a *dummy string* within the example above.
+
+Let's assume the following modules structure:
+
+::
+
+    /
+    |-- main.py
+    |-- func.py
+
+The **main** module imports a ``div`` function implemented above from the
+**func** module. The code in main is implemented as follows:
+
+.. code-block:: python
+
+    from func import div
+
+    if __name__ == "__main__":
+        x = int(input("Please enter a number: "))
+        y = int(input("Please enter a number: "))
+        print(f"{x = }, {y = } -> {div(x, y) = }")
+
+While running the code with correct inputs it will work fine. But there are
+at two exceptions for this script.
+
+The first one is related on type conversion. While running the main script
+there is case of invalid input.
+
+::
+
+    Please enter a number: 100
+    Please enter a number: one
+    Traceback (most recent call last):
+      File "path/to/module.py", line 5, in <module>
+        y = int(input("Please enter a number: "))
+    ValueError: invalid literal for int() with base 10: 'one'
+
+Note the **traceback** indicates the module and the exact line of code that
+causes the exception.
+
+The second one exception occurs when a 0 is passed as the second parameter to
+``div`` function. The traceback would look like:
+
+::
+
+    Please enter a number: 100
+    Please enter a number: 0
+    Traceback (most recent call last):
+      File "path/to/main.py", line 6, in <module>
+        print(f"{x = }, {y = } -> {div(x, y) = }")
+      File "path/to/func.py", line 11, in div
+        return x / y
+    ZeroDivisionError: division by zero
+
+The traceback indicates all calls (top to bottom) that cause an exception.
+
+Exception handling
+==================
+
+It is possible to write programs that handle selected exceptions.
+The ``try`` statement is used to do that.
+
+The try statement works as follows.
+
+#.  First, the try clause (the statement(s) between the try and except
+    keywords) is executed.
+#.  If no exception occurs, the except clause is skipped and execution of
+    the try statement is finished.
+#.  If an exception occurs during execution of the try clause, the rest of
+    the clause is skipped. Then, if its type matches the exception named after
+    the except keyword, the except clause is executed, and then execution
+    continues after the try/except block.
+#.  If an exception occurs which does not match the exception named in
+    the except clause, it is passed on to outer try statements; if no handler
+    is found, it is an unhandled exception and execution stops with a message
+    as shown above.
+
+.. code-block:: python
+
+    from func import div
+
+    if __name__ == "__main__":
+        x = int(input("Please enter a number: "))
+        y = int(input("Please enter a number: "))
+        try:
+            print(f"{x = }, {y = } -> {div(x, y) = }")
+        except:
+            print("An exception occurs")
+
+A try statement may have more than one except clause, to specify handlers for
+different exceptions.
+
+.. code-block:: python
+
+    from func import div
+
+    if __name__ == "__main__":
+        x = int(input("Please enter a number: "))
+        y = int(input("Please enter a number: "))
+        try:
+            print(f"{x = }, {y = } -> {div(x, y) = }")
+        except (ValueError, ZeroDivisionError):
+            print("An exception occurs")
+
+.. code-block:: python
+
+    from func import div
+
+    if __name__ == "__main__":
+        x = int(input("Please enter a number: "))
+        y = int(input("Please enter a number: "))
+        try:
+            print(f"{x = }, {y = } -> {div(x, y) = }")
+        except ValueError as exc:
+            print(f"Value cannot be converted, {exc}")
+        except ZeroDivisionError:
+            print(f"Zero division error: {y = }")
+
+All exceptions
+--------------
+
+It's a bad practice to handle **all** exceptions.
+
+When indicating an ``except`` block without specifying an exception to catch it
+will work for any exception, that occurs in ``try`` block. The same is relevant
+for handling ``BaseException`` and ``Exception``.
+
+::
+
+    except:
+        ...
+
+    except (BaseException, Exception):
+        ...
+
+    except Exception:
+        ...
+
+All exceptions are inherited from ``Exception`` class, which is subclass of
+``BaseException``. So, you can never know what exactly goes wrong with your
+code.
+
+``finally`` statement
+---------------------
+
+The ``try`` statement cannot be used itself. This will cause ``SyntaxError``.
+Either ``except`` or ``finally`` block is required to be included.
+
+While the ``except`` block tries to catch the exceptions if any,
+the ``finally`` block will be always executed regardless of the exception
+occurs.
+
+.. code-block:: python
+
+    try:
+        ...  # some code that may cause an exception
+    finally:
+        ...  # this code will be always executed
+
+    try:
+        result = 10 // 2
+    except ZeroDivisionError:
+        print("zero division")
+    finally:
+        print("it's finished")
+
+    try:
+        result = 10 // 0
+    except ZeroDivisionError:
+        print("zero division")
+    finally:
+        print("it's finished")
+
+``else`` statement
+------------------
+
+.. todo: complete the block
+
+Raising exceptions
+==================
+
+.. todo: complete the block
+
+Creating custom exceptions
+==========================
+
+.. todo: complete the block
