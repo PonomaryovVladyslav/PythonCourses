@@ -239,11 +239,26 @@ Data Hiding
 ===========
 
 Many programming languages has *access modifiers* implemented. The Python has
-also, but actually no. It's implemented as a convention-level. All class's
-members starting with underscore are considered to be **protected** members
-and should not be accessible outside the class instance; on the other hand
-members starting with two underscores are considered to be **private** members
-and shouldn't be accessible outside the class instance as well.
+also.
+
+.. image:: /../assets/img/wy_ban.jpg
+    :align: center
+
+"Private" instance variables that cannot be accessed except from inside an
+object don't exist in Python :cite:`docs-python:private-variables`. It's
+implemented as a convention-level.
+
+A name prefixed with an underscore (e.g. ``_spam``) should be treated as
+a non-public part of the API (whether it is a function, a method or a data
+member). These should not be used outside the class itself and can be changed
+without notice.
+
+Since there is a valid use case for class-private members (namely to avoid name
+clashes of names with names defined by subclasses), there is limited support
+for such a mechanism, called *name mangling*. Any identifier with at least two
+leading underscore (e.g. ``__spam``) is textually replaced with
+``_classname__spam``, where ``_classname`` is the current class name with
+leading underscore stripped.
 
 .. code-block:: python
 
