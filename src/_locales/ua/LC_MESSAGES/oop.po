@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Python Training Course 2022.11.dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-04-08 19:28+0300\n"
-"PO-Revision-Date: 2023-04-08 19:29+0300\n"
+"POT-Creation-Date: 2023-04-11 15:34+0300\n"
+"PO-Revision-Date: 2023-04-11 15:36+0300\n"
 "Last-Translator: Serhii Horodilov <sgorodil@gmail.com>\n"
 "Language-Team: \n"
 "Language: uk\n"
@@ -392,37 +392,58 @@ msgstr "Приховання Даних"
 #: ../../src/oop/intro.txt:241
 msgid ""
 "Many programming languages has *access modifiers* implemented. The Python "
-"has also, but actually no. It's implemented as a convention-level. All "
-"class's members starting with underscore are considered to be **protected** "
-"members and should not be accessible outside the class instance; on the "
-"other hand members starting with two underscores are considered to be "
-"**private** members and shouldn't be accessible outside the class instance "
-"as well."
+"has also."
 msgstr ""
-"Багато мов програмування мають реалізовані модифікатори доступу. Python "
-"також має, але насправді ні. Він реалізований на рівні конвенції. Усі члени "
-"класу, які починаються з підкреслення, вважаються захищеними членами та не "
-"повинні бути доступними за межами екземпляр класу; з іншого боку, члени, які "
-"починаються з двох символів підкреслення, вважаються приватними членами та "
-"не повинні бути доступними за межами екземпляра класу."
+"У багатьох мовах програмування реалізовані *модифікатори доступу*. Python "
+"також має."
 
-#: ../../src/oop/intro.txt:275
+#: ../../src/oop/intro.txt:247
 msgid ""
-"With the implementation above there are **public** attributes, but you can "
-"still access data outside the class, but you definitely shouldn't."
+"\"Private\" instance variables that cannot be accessed except from inside an "
+"object don't exist in Python :cite:`docs-python:private-variables`. It's "
+"implemented as a convention-level."
 msgstr ""
-"З наведеною вище реалізацією є загальнодоступні атрибути, але ви все ще "
-"можете отримати доступ до даних за межами класу, але точно не повинні."
+"\"Приватні\" змінні екземплярів, до яких можна отримати доступ лише "
+"зсередини об’єкта, не існують у Python :cite:`docs-python:private-"
+"variables`. Це реалізовано на рівні домовленності."
 
-#: ../../src/oop/intro.txt:290
+#: ../../src/oop/intro.txt:251
+msgid ""
+"A name prefixed with an underscore (e.g. ``_spam``) should be treated as a "
+"non-public part of the API (whether it is a function, a method or a data "
+"member). These should not be used outside the class itself and can be "
+"changed without notice."
+msgstr ""
+"Ім’я з префіксом підкреслення (наприклад, ``_spam``) слід розглядати як "
+"закриту частину API (незалежно від того, чи це функція, метод або елемент "
+"даних). Вони не повинні використовуватися поза межами самого класу та можуть "
+"бути змінені без попередження."
+
+#: ../../src/oop/intro.txt:256
+msgid ""
+"Since there is a valid use case for class-private members (namely to avoid "
+"name clashes of names with names defined by subclasses), there is limited "
+"support for such a mechanism, called *name mangling*. Any identifier with at "
+"least two leading underscore (e.g. ``__spam``) is textually replaced with "
+"``_classname__spam``, where ``_classname`` is the current class name with "
+"leading underscore stripped."
+msgstr ""
+"Оскільки існує дійсний варіант використання для приватних членів класу (а "
+"саме, щоб уникнути зіткнень імен з іменами, визначеними підкласами), існує "
+"обмежена підтримка такого механізму, що називається *викривлення імен*. Будь-"
+"який ідентифікатор із принаймні двома символами підкреслення на початку "
+"(наприклад, ``__spam``) текстово замінюється на ``_classname__spam``, де "
+"``_classname`` є поточною назвою класу з видаленням підкреслення на початку."
+
+#: ../../src/oop/intro.txt:295
 msgid "Few Words about Inheritance"
 msgstr "Кілька Слів про Наслідування"
 
-#: ../../src/oop/intro.txt:292
+#: ../../src/oop/intro.txt:297
 msgid "Just in two words. This topic is discovered in the future articles."
 msgstr "Всього в двох словах. Ця тема розкривається в наступних статтях."
 
-#: ../../src/oop/intro.txt:294
+#: ../../src/oop/intro.txt:299
 msgid ""
 "You can derive your classes from a super class. Derived classes are called "
 "*sub classes* and the class used to inherit from is called *super class*. "
@@ -434,15 +455,15 @@ msgstr ""
 "*суперкласом*. Іншими термінами є *дочірній* клас і *батьківський* клас, але "
 "вони не є поширеними ( це особиста думка автора)."
 
-#: ../../src/oop/intro.txt:299
+#: ../../src/oop/intro.txt:304
 msgid "Just put a super class in parenthesis two inherit from it:"
 msgstr "Просто помістіть суперклас у дужки, які успадковують від нього два:"
 
-#: ../../src/oop/intro.txt:311
+#: ../../src/oop/intro.txt:316
 msgid "Few Words about Polymorphism"
 msgstr "Кілька Слів про Поліморфізм"
 
-#: ../../src/oop/intro.txt:313
+#: ../../src/oop/intro.txt:318
 msgid ""
 "You've already use this. The most simple explanation is **addition "
 "operator**. For different types of data it would produce different types of "
@@ -451,7 +472,7 @@ msgstr ""
 "Ви вже використовували це. Найпростішим поясненням є **оператор додавання**. "
 "Для різних типів даних він створюватиме різні типи виводу:"
 
-#: ../../src/oop/intro.txt:321
+#: ../../src/oop/intro.txt:326
 msgid ""
 "For example you may have various classes inherited from a base class, that "
 "provides a common interface, but each derived class may implement the method "
@@ -468,3 +489,27 @@ msgstr "Патерни Проектування"
 #: ../../src/oop/solid.txt:3
 msgid "SOLID Principles"
 msgstr "Принципи SOLID"
+
+#~ msgid ""
+#~ "Many programming languages has *access modifiers* implemented. The Python "
+#~ "has also, but actually no. It's implemented as a convention-level. All "
+#~ "class's members starting with underscore are considered to be "
+#~ "**protected** members and should not be accessible outside the class "
+#~ "instance; on the other hand members starting with two underscores are "
+#~ "considered to be **private** members and shouldn't be accessible outside "
+#~ "the class instance as well."
+#~ msgstr ""
+#~ "Багато мов програмування мають реалізовані модифікатори доступу. Python "
+#~ "також має, але насправді ні. Він реалізований на рівні конвенції. Усі "
+#~ "члени класу, які починаються з підкреслення, вважаються захищеними "
+#~ "членами та не повинні бути доступними за межами екземпляр класу; з іншого "
+#~ "боку, члени, які починаються з двох символів підкреслення, вважаються "
+#~ "приватними членами та не повинні бути доступними за межами екземпляра "
+#~ "класу."
+
+#~ msgid ""
+#~ "With the implementation above there are **public** attributes, but you "
+#~ "can still access data outside the class, but you definitely shouldn't."
+#~ msgstr ""
+#~ "З наведеною вище реалізацією є загальнодоступні атрибути, але ви все ще "
+#~ "можете отримати доступ до даних за межами класу, але точно не повинні."
