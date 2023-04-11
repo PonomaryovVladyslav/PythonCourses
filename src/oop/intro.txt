@@ -263,43 +263,33 @@ leading underscore stripped.
 .. code-block:: python
 
     class Employee:
-        """Employee class implementation"""
+        """Employee superclass example"""
 
-        def __init__(self, salary: float, hours: int = None) -> None:
-            """Initialize an employee instance"""
+        first_name: str = ""
+        last_name: str = ""
 
-            self.__salary = salary
-            self._hours = hours
+        _rate: int = 0
+        __tax: float = 0.18
 
-        def report_hours(self, hours: int) -> None:
-            """Report working hours"""
+        def _get_amount(self, hours: int) -> int:
+            return self._rate * hours
 
-            # some validation stuff goes here
-            self._hours += hours
+        def _get_tax(self, amount: int) -> int:
+            return int(round(self.__tax * amount, 0))
 
-        def change_salary(salary: float) -> None:
-            """Change salary size"""
+        def get_balance(self, hours: int) -> int:
+            amount = self._get_amount(hours)
+            tax = self._get_tax(amount)
 
-            self.__salary = salary
+            return amount - tax
 
-        def get_payment(self) -> float:
-            """Return a payment size"""
+        def set_rate(self, rate: int) -> None:
+            self._rate = rate
 
-            return round(self.__salary * self._hours, 2)
 
-With the implementation above there are **public** attributes, but you can
-still access data outside the class, but you definitely shouldn't.
+    class Employee10PercentTax(Employee):
+        _Employee__tax = 0.10
 
-.. code-block:: python
-
-    employee = Employee(100_500)
-    # you're able to make changes to protected member, but this code smells
-    # use dedicated method `report_hours` instead
-    employee._hours = 100
-    # accessing Employee.__salary attribute will raise an exception
-    # the interpreter will add _className before each private member
-    # but you know - `change_salary` method is that you need
-    employee._Employee__salary
 
 Few Words about Inheritance
 ===========================
