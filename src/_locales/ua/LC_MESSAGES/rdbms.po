@@ -10,7 +10,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/edu-python-course/edu-python-course."
 "github.io/issues\n"
 "POT-Creation-Date: 2023-04-08 19:28+0300\n"
-"PO-Revision-Date: 2023-04-08 19:29+0300\n"
+"PO-Revision-Date: 2023-04-11 16:06+0300\n"
 "Last-Translator: Serhii Horodilov <sgorodil@gmail.com>\n"
 "Language-Team: ua <LL@li.org>\n"
 "Language: ua\n"
@@ -289,7 +289,7 @@ msgid ""
 "``field`` is not ``NULL`` in a group. The ``count(*)`` function (with no "
 "arguments) returns the total number of rows in the group."
 msgstr ""
-"Функція ``count(field)`` повертає кількість разів, коли\" \" ``field`` не є "
+"Функція ``count(field)`` повертає кількість разів, коли ``field`` не є "
 "``NULL`` у групі. Функція ``count()`` (без аргументів) повертає загальну "
 "кількість рядків у групі."
 
@@ -392,7 +392,7 @@ msgid ""
 "simple to solve as:"
 msgstr ""
 "Наприклад, якщо завдання полягає в підрахунку кількості зареєстрованих "
-"категорій, його \" \"просто вирішити так:"
+"категорій, його просто вирішити так:"
 
 #: ../../src/rdbms/aggregation.txt:148
 msgid ""
@@ -401,9 +401,9 @@ msgid ""
 "provides the ability to group rows based on some field(s) values."
 msgstr ""
 "Але у випадку, якщо завдання полягає в підрахунку проданих товарів для "
-"кожної категорії, це \" \"стає неможливим вирішити без групування товарів. "
-"Пункт ``GROUP BY`` надає можливість групувати рядки на основі певного "
-"значення поля(ів)."
+"кожної категорії, це стає неможливим вирішити без групування товарів. Пункт "
+"``GROUP BY`` надає можливість групувати рядки на основі певного значення "
+"поля(ів)."
 
 #: ../../src/rdbms/aggregation.txt:152
 msgid "General syntax is:"
@@ -436,12 +436,12 @@ msgstr ""
 "вважаються рівними. Звичайні правила для вибору послідовності порівняння, з "
 "якою порівнюються текстові значення, застосовуються під час оцінювання "
 "виразів у Речення GROUP BY. Вирази в пункті GROUP BY не обов'язково повинні "
-"бути виразами, які з'являються в результаті. Вирази в пункті GROUP BY \" "
-"\"не можуть бути сукупними виразами."
+"бути виразами, які з'являються в результаті. Вирази в пункті GROUP BY не "
+"можуть бути сукупними виразами."
 
 #: ../../src/rdbms/aggregation.txt:192
 msgid "HAVING clause"
-msgstr ""
+msgstr "Вираз HAVING"
 
 #: ../../src/rdbms/aggregation.txt:194
 msgid ""
@@ -493,8 +493,8 @@ msgstr ""
 "забезпечення, яке допомагає користувачам створювати, оновлювати, керувати та "
 "отримувати доступ до реляційних баз даних. Реляційні бази даних "
 "організовують дані в таблиці, які складаються з рядків і стовпців. Кожен "
-"стовпець представляє певний \" \"атрибут даних, тоді як кожен рядок "
-"представляє конкретний екземпляр цих даних."
+"стовпець представляє певний атрибут даних, тоді як кожен рядок представляє "
+"конкретний екземпляр цих даних."
 
 #: ../../src/rdbms/index.txt:11
 msgid ""
@@ -521,10 +521,10 @@ msgid ""
 msgstr ""
 "СУБД також надає низку функцій для забезпечення цілісності даних, таких як "
 "дотримання обмежень даних, підтримка транзакцій та забезпечення можливостей "
-"резервного копіювання\" \"і відновлення. Крім того, системи РСУБД часто "
-"надають інструменти для керування базою даних, такі як інтерфейси "
-"користувача для створення та модифікації таблиць і представлень, а також "
-"інструменти моніторингу для оптимізації продуктивності бази даних."
+"резервного копіюванняі відновлення. Крім того, системи РСУБД часто надають "
+"інструменти для керування базою даних, такі як інтерфейси користувача для "
+"створення та модифікації таблиць і представлень, а також інструменти "
+"моніторингу для оптимізації продуктивності бази даних."
 
 #: ../../src/rdbms/normalization.txt:3
 msgid "Database Normalization"
@@ -616,52 +616,52 @@ msgstr "Початкові дані"
 
 #: ../../src/rdbms/normalization.txt:1
 msgid "order"
-msgstr ""
+msgstr "order"
 
 #: ../../src/rdbms/normalization.txt:1
 msgid "customer"
-msgstr ""
+msgstr "customer"
 
 #: ../../src/rdbms/normalization.txt:1
 msgid "quantity"
-msgstr ""
+msgstr "quantity"
 
 #: ../../src/rdbms/normalization.txt:1
 msgid "total"
-msgstr ""
+msgstr "total"
 
 #: ../../src/rdbms/normalization.txt:1 ../../src/rdbms/relations.txt:180
 #: ../../src/rdbms/relations.txt:325 ../../src/rdbms/relations.txt:363
 msgid "John Doe"
-msgstr ""
+msgstr "John Doe"
 
 #: ../../src/rdbms/normalization.txt:1
 msgid "(Apple, Orange)"
-msgstr ""
+msgstr "(Apple, Orange)"
 
 #: ../../src/rdbms/normalization.txt:1
 msgid "(2, 3)"
-msgstr ""
+msgstr "(2, 3)"
 
 #: ../../src/rdbms/normalization.txt:1
 msgid "(100, 50)"
-msgstr ""
+msgstr "(100, 50)"
 
 #: ../../src/rdbms/normalization.txt:1
 msgid "(200, 150)"
-msgstr ""
+msgstr "(200, 150)"
 
 #: ../../src/rdbms/normalization.txt:1
 msgid "Jane Smith"
-msgstr ""
+msgstr "Jane Smith"
 
 #: ../../src/rdbms/normalization.txt:1
 msgid "Banana"
-msgstr ""
+msgstr "Banana"
 
 #: ../../src/rdbms/normalization.txt:1
 msgid "25"
-msgstr ""
+msgstr "25"
 
 #: ../../src/rdbms/normalization.txt:43
 msgid ""
@@ -673,23 +673,23 @@ msgstr ""
 
 #: ../../src/rdbms/normalization.txt:46
 msgid "1NF applied"
-msgstr ""
+msgstr "Застосовано 1NF"
 
 #: ../../src/rdbms/normalization.txt:1
 msgid "Apple"
-msgstr ""
+msgstr "Apple"
 
 #: ../../src/rdbms/normalization.txt:1
 msgid "Orange"
-msgstr ""
+msgstr "Orange"
 
 #: ../../src/rdbms/normalization.txt:1
 msgid "50"
-msgstr ""
+msgstr "50"
 
 #: ../../src/rdbms/normalization.txt:1
 msgid "150"
-msgstr ""
+msgstr "150"
 
 #: ../../src/rdbms/normalization.txt:54
 msgid "From now each peace of data is represented as atomic value."
@@ -708,10 +708,10 @@ msgid ""
 "to each other via a foreign key."
 msgstr ""
 "Таблиця вище міститься в 1NF, але ``item price`` залежить від самого "
-"елемента і має низьку зв'язність із замовленнями. Щоб перенести її в 2NF, "
-"спеціальну таблицю для зберігання інформації про самі товари має бути "
-"створено. Після цього таблиці ``order`` і ``product`` з'єднуються "
-"(пов'язані) одна з одною за допомогою зовнішнього ключа."
+"*елемента* і має низьку зв'язність із замовленнями. Щоб перенести її в 2NF, "
+"потрібно створити окрему таблицю для зберігання інформації про самі товари. "
+"Після цього таблиці ``order`` і ``product`` з'єднуються (пов'язані) одна з "
+"одною за допомогою зовнішнього ключа."
 
 #: ../../src/rdbms/normalization.txt:65 ../../src/rdbms/normalization.txt:107
 msgid "``order`` table"
