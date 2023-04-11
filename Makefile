@@ -19,8 +19,8 @@ SPHINX_BUILD = sphinx-build -q -D language=$(LANGUAGE)
 
 # Makefile targets
 all : clean
-	@make LANGUAGE=en html pdf
-	@make LANGUAGE=ua html pdf
+	@make LANGUAGE=en html
+	@make LANGUAGE=ua html
 
 clean :
 	@echo "Cleaning existing builds at $(_SPHINX_OUT_BASE)"
