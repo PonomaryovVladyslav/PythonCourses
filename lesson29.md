@@ -389,7 +389,7 @@ path('', first, name='first'),
 
 ### Наследование шаблонов
 
-![](https://www.it-rem.ru/wp-content/uploads/2019/03/too-hard.jpg)
+![](https://alittlebit.ru/upload/iblock/57b/file.jpg)
 
 #### Extends и block
 
