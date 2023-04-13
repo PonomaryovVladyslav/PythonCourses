@@ -1,3 +1,8 @@
+.. meta::
+    :description: PEP-8 style guide
+    :author: Serhii Horodilov
+    :keywords: python, style, guide
+
 *******************************************************************************
                               Style Guides: PEP8
 *******************************************************************************

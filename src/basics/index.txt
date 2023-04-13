@@ -1,3 +1,8 @@
+.. meta::
+    :description: Python course - Basics
+    :author: Serhii Horodilov
+    :keywords: python, basics, index
+
 ###############################################################################
                                  Python Basics
 ###############################################################################

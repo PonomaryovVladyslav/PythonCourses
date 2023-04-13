@@ -1,3 +1,8 @@
+.. meta::
+    :description: Python built-in types
+    :author: Serhii Horodilov
+    :keywords: python, basics
+
 *******************************************************************************
                                 Built-in Types
 *******************************************************************************
