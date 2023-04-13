@@ -1,4 +1,7 @@
-.. appendix
+.. meta::
+    :description: Code editors and IDEs for Python
+    :author: Serhii Horodilov sgorodil@gmail.com
+    :keywords: python, editor, ide
 
 ############
 Code Editors
