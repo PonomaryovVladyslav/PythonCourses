@@ -1,3 +1,8 @@
+.. meta::
+    :description: Deploy Python application
+    :author: Serhii Horodilov
+    :keywords: python, deployment, index
+
 ###############################################################################
                             Application Deployment
 ###############################################################################

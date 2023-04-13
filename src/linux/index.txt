@@ -1,3 +1,8 @@
+.. meta::
+    :description: Linux basics for Python developers
+    :author: Serhii Horodilov
+    :keywords: linux, basics, index
+
 ###############################################################################
                              Linux Basics
 ###############################################################################

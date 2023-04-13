@@ -1,3 +1,8 @@
+.. meta::
+    :description: Django web-framework
+    :author: Serhii Horodilov
+    :keywords: python, web, django, index
+
 ###############################################################################
                                Django Framework
 ###############################################################################
