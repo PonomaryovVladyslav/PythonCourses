@@ -312,7 +312,7 @@ the function execution for some time:
     from typing import Callable
 
 
-    def defer(seconds: int = 3) -> Callable:
+    def slow_down(seconds: int = 3) -> Callable:
         def decorator(func: Callable) -> Callable:
             def wrapper(*args, **kwargs):
                 started_at = time.perf_counter()
@@ -328,15 +328,14 @@ the function execution for some time:
         return decorator
 
 
-    @defer()
+    @slow_down()
     def function_a():
         return 42
 
 
-    @defer(10)
+    @slow_down(10)
     def function_b():
         return 24
-
 
 .. code-block::
 
@@ -344,3 +343,96 @@ the function execution for some time:
     Completed in 3.00
     function_b()
     Completed in 10.00
+
+Class decorators
+================
+
+There are some pre-defined decorators exists for usage together with classes.
+They are:
+
+- ``classmethod``
+- ``staticmethod``
+- ``property``
+
+If you develop an intuitive understanding for their differences you’ll be able to write object-oriented Python that communicates its intent more clearly and will be easier to maintain in the long run :cite:`realpython:methods-demystified`.
+
+Class methods
+-------------
+
+Instead of accepting a self parameter, class methods take a ``cls`` parameter
+that points to the class—and not the object instance—when the method is called.
+
+Because the class method only has access to this ``cls`` argument, it can't
+modify object instance state. That would require access to ``self``.
+However, class methods can still modify class state that applies across all
+instances of the class.
+
+The common usage for ``classmethod`` is provide alternative initializers.
+
+Static methods
+--------------
+
+This type of method takes neither a ``self`` nor a ``cls`` parameter (but of
+course it’s free to accept an arbitrary number of other parameters).
+
+Therefore a static method can neither modify object state nor class state.
+Static methods are restricted in what data they can access - and they're
+primarily a way to namespace your methods.
+
+It's tricky to explain ``staticmethod`` usage. Almost always you can create
+a dedicated function instead of static method. But sometimes you need to
+bind some logic independent from class itself or its instances to a class -
+it common to encapsulate it with ``staticmethod``.
+
+Properties
+----------
+
+It's a way to bind a method name to access it as an attribute. Properties are
+"read-only" by default. This means a value cannot be assigned to ``property
+member``.
+
+Some examples
+-------------
+
+.. code-block:: python
+
+    import datetime
+
+
+    class Person:
+        """Person class implementation"""
+
+        def __init__(self, first_name: str, last_name: str) -> None:
+            """Initialize instance"""
+
+            self.first_name = first_name
+            self.last_name = last_name
+
+        @classmethod
+        def from_fullname(cls, name: str) -> "Person":
+            """Return a person instance"""
+
+            first_name, last_name = name.rsplit(" ", 1)
+
+            return cls(first_name, last_name)
+
+        @staticmethod
+        def format_date(date: datetime.date) -> str:
+            """Return a formatted date as string"""
+
+            return date.strftime("%d-%m-%Y")
+
+        @property
+        def fullname(self) -> str:
+            """Return person's fullname"""
+
+            return " ".join([self.first_name, self.last_name])
+
+.. code-block::
+
+    >>> sh = Person("Serhii", "Horodilov")
+    >>> vp = Person.from_fullname("Vladyslav Ponomaryov")
+    >>> sh.fullname
+    'Serhii Horodilov'
+    >>> vp.fullname
+    'Vladyslav Ponomaryov'
