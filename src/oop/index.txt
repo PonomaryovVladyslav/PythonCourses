@@ -1,3 +1,8 @@
+.. meta::
+    :description: Object-oriented programming in Python
+    :author: Serhii Horodilov
+    :keywords: python, oop, object-oriented programming, index
+
 ###############################################################################
                           Object-Oriented Programming
 ###############################################################################

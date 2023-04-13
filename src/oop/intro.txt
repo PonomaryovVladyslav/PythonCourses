@@ -1,3 +1,8 @@
+.. meta::
+    :description: Introduction to OOP
+    :author: Serhii Horodilov
+    :keywords: python, intro, introduction, oop, object-oriented programming
+
 *******************************************************************************
                               Classes and Objects
 *******************************************************************************

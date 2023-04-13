@@ -1,3 +1,8 @@
+.. meta::
+    :description: Design patterns
+    :author: Serhii Horodilov
+    :keywords: python, programming, design, patterns
+
 *******************************************************************************
                                 Design Patterns
 *******************************************************************************
