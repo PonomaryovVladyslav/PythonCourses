@@ -1,3 +1,8 @@
+.. meta::
+    :description: Python functions
+    :author: Serhii Horodilov
+    :keywords: python, basics, functions
+
 *******************************************************************************
                                    Functions
 *******************************************************************************
