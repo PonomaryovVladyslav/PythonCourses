@@ -192,3 +192,62 @@ exact the same things as the first decorator example:
 
     There is no way to *undecorate* object in Python. Once something is bound
     to the decorator's wrapper - it is decorated forever.
+
+A decorated function still remains a **function**. So, it can be decorated
+once more time again, and again, and again...
+
+.. code-block:: python
+
+    from typing import Callable
+
+
+    def bread(func: Callable) -> Callable:
+        def wrapper():
+            print("<--bread-->")
+            func()
+            print("<--bread-->")
+
+        return wrapper
+
+
+    def vegetables(func: Callable) -> Callable:
+        def wrapper():
+            print("~~~salad~~~")
+            print("***tomato***")
+            func()
+
+        return wrapper
+
+
+    def cheese(func: Callable) -> Callable:
+        def wrapper():
+            func()
+            print("---cheese---")
+
+        return wrapper
+
+
+    @bread
+    @vegetables
+    @cheese
+    def sandwich():
+        print("_sliced_meat_")
+
+.. code-block::
+
+    >>> sandwich()
+    <--bread-->
+    ~~~salad~~~
+    ***tomato***
+    _sliced_meat_
+    ---cheese---
+    <--bread-->
+
+.. note::
+
+    "Wrapper" is the alternative nickname for the Decorator pattern that
+    clearly expresses the main idea of the pattern. A wrapper is an object that
+    can be linked with some target object. The wrapper contains the same set of
+    methods as the target and delegates to it all requests it receives.
+    However, the wrapper may alter the result by doing something either before
+    or after it passes the request to the target.
