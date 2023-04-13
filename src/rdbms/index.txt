@@ -1,3 +1,8 @@
+.. meta::
+    :description: Relational databases
+    :author: Serhii Horodilov
+    :keywords: sql, db, database, intro, introduction, index
+
 ###############################################################################
                               Relational Database
 ###############################################################################
