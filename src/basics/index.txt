@@ -12,5 +12,6 @@
     functions
     modules
     exceptions
+    decorators
     pep8
     testing
