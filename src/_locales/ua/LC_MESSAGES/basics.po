@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Python Training Course 2022.11.dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-04-10 23:14+0300\n"
-"PO-Revision-Date: 2023-04-10 23:14+0300\n"
+"POT-Creation-Date: 2023-04-13 18:20+0300\n"
+"PO-Revision-Date: 2023-04-13 18:21+0300\n"
 "Last-Translator: Serhii Horodilov <sgorodil@gmail.com>\n"
 "Language-Team: \n"
 "Language: uk\n"
@@ -24,6 +24,365 @@ msgstr ""
 #: ../../src/basics/controlflow.txt:3
 msgid "Control Flow"
 msgstr "Керування виконанням"
+
+#: ../../src/basics/decorators.txt:6
+msgid "Decorators"
+msgstr "Декоратори"
+
+#: ../../src/basics/decorators.txt:8
+msgid ""
+"Decorators provide a simple syntax for calling higher-order functions :cite:"
+"`realpython:decorators`."
+msgstr ""
+"Декоратори забезпечують простий синтаксис для виклику функцій вищого "
+"порядку :cite:`realpython:decorators`."
+
+#: ../../src/basics/decorators.txt:13
+msgid "There is some kind of misunderstanding in definitions."
+msgstr "Є деяке непорозуміння у визначеннях."
+
+#: ../../src/basics/decorators.txt:15
+msgid ""
+"**Decorator** is a function returning another function, usually applied as a "
+"function transformation using the ``@wrapper`` syntax :cite:`docs-python:"
+"term-decorator`."
+msgstr ""
+"**Декоратор** — це функція, яка повертає іншу функцію, зазвичай "
+"застосовується як перетворення функції за допомогою синтаксису ``@wrapper`` :"
+"cite:`docs-python:term-decorator`."
+
+#: ../../src/basics/decorators.txt:19
+msgid ""
+"However, that's no quit enough to describe it. The more complete definition "
+"is:"
+msgstr "Однак цього недостатньо, щоб описати це. Більш повне визначення таке:"
+
+#: ../../src/basics/decorators.txt:22
+msgid ""
+"**Decorator** is a structural design pattern that lets you attach new "
+"behaviors to objects by placing these objects inside special wrapper objects "
+"that contain the behaviors :cite:`refactoring.guru:decorator`."
+msgstr ""
+"**Декоратор** — це структурний шаблон проектування, який дає змогу додавати "
+"нову поведінку до об'єктів, розміщуючи ці об'єкти всередині спеціальних "
+"об'єктів-огорток, які містять поведінку :cite:`refactoring.guru:decorator`."
+
+#: ../../src/basics/decorators.txt:26
+msgid ""
+"Before you understand decorators, you must first understand how functions "
+"work."
+msgstr ""
+"Перш ніж зрозуміти декораторів, ви повинні спочатку зрозуміти, як працюють "
+"функції."
+
+#: ../../src/basics/decorators.txt:30
+msgid "First-class objects"
+msgstr "Об'єкти першого класу"
+
+#: ../../src/basics/decorators.txt:32
+msgid ""
+"In Python functions are `first-class objects`_. Everything in Python is an "
+"object. Functions are objects too."
+msgstr ""
+"У Python функції є `об'єктами першого класу`_. Усе в Python є об'єктом. "
+"Функції також є об'єктами."
+
+#: ../../src/basics/decorators.txt:36
+msgid "Inner functions"
+msgstr "Внутрішні функції"
+
+#: ../../src/basics/decorators.txt:38
+msgid ""
+"Functions can be nested. This means it is possible to define functions "
+"inside other functions."
+msgstr ""
+"Функції можуть бути вкладеними. Це означає, що можна визначати функції "
+"всередині інших функцій."
+
+#: ../../src/basics/decorators.txt:41
+msgid "Nested functions example"
+msgstr "Приклад вкладених функцій"
+
+#: ../../src/basics/decorators.txt:55
+msgid ""
+"The order in which inner functions are defined no matters. The function "
+"definition does not execute the function body; this gets executed only when "
+"the function is called. Furthermore, the inner functions are not defined "
+"until the parent function is called. They are locally scoped to their "
+"parent. Trying to call ``heapify`` function outside of ``heap_sort`` will "
+"cause ``NameError`` exception."
+msgstr ""
+"Порядок визначення внутрішніх функцій не має значення. Визначення функції не "
+"виконує тіло функції; це виконується лише під час виклику функції. Крім "
+"того, внутрішні функції не визначені, доки не буде викликана батьківська "
+"функція. Вони локально прив'язані до свого батьківського елемента. Спроба "
+"викликати функцію ``heapify`` поза межами ``heap_sort`` спричинить виняток "
+"``NameError``."
+
+#: ../../src/basics/decorators.txt:63
+msgid "Functions are objects"
+msgstr "Функції є об'єктами"
+
+#: ../../src/basics/decorators.txt:65
+msgid ""
+"This means functions can be passed around and used as arguments, just like "
+"any other object (e.g. *int*, *str* etc.)."
+msgstr ""
+"Це означає, що функції можна передавати й використовувати як аргументи, як і "
+"будь-який інший об'єкт (наприклад, *int*, *str* тощо)."
+
+#: ../../src/basics/decorators.txt:90
+msgid "Returning functions"
+msgstr "Повернення функцій"
+
+#: ../../src/basics/decorators.txt:92
+msgid ""
+"Since function can be passed as an argument, it may be returned from another "
+"function."
+msgstr ""
+"Оскільки функцію можна передати як аргумент, її можна повернути з іншої "
+"функції."
+
+#: ../../src/basics/decorators.txt:115
+msgid "``parent`` returns functions themselves, there are no parentheses."
+msgstr "``parent`` повертає самі функції, тут нема дужок."
+
+#: ../../src/basics/decorators.txt:117
+msgid ""
+"After running the code snippet above, ``first`` refers the ``first_child`` "
+"function from the inner ``parent`` scope. From now it can be used to call "
+"the target function it refers."
+msgstr ""
+"Після виконання наведеного вище фрагмента коду ``first`` посилається на "
+"функцію ``first_child`` із внутрішньої області ``parent``. Відтепер його "
+"можна використовувати для виклику цільової функції, на яку він посилається."
+
+#: ../../src/basics/decorators.txt:129
+msgid "Simple decorators"
+msgstr "Прості декоратори"
+
+#: ../../src/basics/decorators.txt:131
+msgid ""
+"Now you're ready to move on and see the magical beast that is the Python "
+"decorators. Let's start with a simple example:"
+msgstr ""
+"Тепер ви готові рухатися далі та побачити чарівного звіра, яким є декоратори "
+"Python. Почнемо з простого прикладу:"
+
+#: ../../src/basics/decorators.txt:149
+msgid "Running function:"
+msgstr "Запуск функцій:"
+
+#: ../../src/basics/decorators.txt:160
+msgid ""
+"The common way to use decorators is to replace the original function with a "
+"decorated one:"
+msgstr ""
+"Поширеним способом використання декораторів є заміна оригінальної функції на "
+"декоровану:"
+
+#: ../../src/basics/decorators.txt:171
+msgid ""
+"``say_hello`` function is the reference to the ``decorator.<locals>."
+"wrapper``, which itself is bound to the original ``say_hello`` function. "
+"There is a syntactic sugar to do this, called *pie-syntax*. The following "
+"example does exact the same things as the first decorator example:"
+msgstr ""
+"Функція ``say_hello`` є посиланням на ``decorator.<locals>.wrapper``, який "
+"сам прив'язаний до оригінальної функції ``say_hello``. Для цього існує "
+"синтаксичний цукор, який називається *pie-syntax*. Наступний приклад виконує "
+"ті самі речі, що й перший приклад декоратора:"
+
+#: ../../src/basics/decorators.txt:193
+msgid ""
+"There is no way to *undecorate* object in Python. Once something is bound to "
+"the decorator's wrapper - it is decorated forever."
+msgstr ""
+"У Python немає способу *скасувати* об'єкт. Одного разу щось прив'язане до "
+"обгортки декоратора - воно прикрашене назавжди."
+
+#: ../../src/basics/decorators.txt:196
+msgid ""
+"A decorated function still remains a **function**. So, it can be decorated "
+"once more time again, and again, and again..."
+msgstr ""
+"Декорована функція все ще залишається **функцією**. Отже, його можна "
+"прикрашати ще раз, і ще, і ще..."
+
+#: ../../src/basics/decorators.txt:248
+msgid ""
+"\"Wrapper\" is the alternative nickname for the Decorator pattern that "
+"clearly expresses the main idea of the pattern. A wrapper is an object that "
+"can be linked with some target object. The wrapper contains the same set of "
+"methods as the target and delegates to it all requests it receives. However, "
+"the wrapper may alter the result by doing something either before or after "
+"it passes the request to the target."
+msgstr ""
+"\"Обгортка\" — альтернативне прізвисько візерунка \"Декоратор\", яке чітко "
+"виражає основну ідею візерунка. Обгортка — це об'єкт, який можна зв'язати з "
+"деяким цільовим об'єктом. Обгортка містить той самий набір методів, що й "
+"мета, і делегує їй усі отримані запити. Однак обгортка може змінити "
+"результат, зробивши щось до або після того, як вона передає запит цільовому "
+"об'єкту."
+
+#: ../../src/basics/decorators.txt:256
+msgid "Passing arguments to the wrapper"
+msgstr "Передача аргументів до wrapper"
+
+#: ../../src/basics/decorators.txt:258
+msgid ""
+"Until now the examples use *simple* decorators. But what if the decorated "
+"function gets some arguments? This will cause ``TypeError`` exception that "
+"tell that \"arguments are missed\". This can be fixed with just passing "
+"arguments to the ``wrapper`` inner function."
+msgstr ""
+"Досі приклади використовують *прості* декоратори. Але що, якщо декорована "
+"функція отримує деякі аргументи? Це спричинить виняток ``TypeError``, який "
+"повідомляє, що \"аргументи пропущено\". Це можна виправити, просто передавши "
+"аргументи внутрішній функції ``wrapper``."
+
+#: ../../src/basics/decorators.txt:284
+msgid ""
+"If case you're trying to make a generic decorator, you may pass ``*args`` "
+"and ``**kwargs`` instead of exact arguments:"
+msgstr ""
+"Якщо ви намагаєтеся створити загальний декоратор, ви можете передати "
+"``*args`` і ``**kwargs`` замість точних аргументів:"
+
+#: ../../src/basics/decorators.txt:303
+msgid "Passing arguments to decorator"
+msgstr "Передача аргументів декоратору"
+
+#: ../../src/basics/decorators.txt:305
+msgid ""
+"At last it's time to know how to pass arguments to the decorator. Here is a "
+"simple implementation of ``defer`` decorator which deferred the function "
+"execution for some time:"
+msgstr ""
+"Нарешті настав час знати, як передавати аргументи декоратору. Ось проста "
+"реалізація декоратора ``defer``, яка відкладає виконання функції на деякий "
+"час:"
+
+#: ../../src/basics/decorators.txt:348
+msgid "Class decorators"
+msgstr "Декоратори класів"
+
+#: ../../src/basics/decorators.txt:350
+msgid ""
+"There are some pre-defined decorators exists for usage together with "
+"classes. They are:"
+msgstr ""
+"Існують деякі попередньо визначені декоратори для використання разом із "
+"класами. Це:"
+
+#: ../../src/basics/decorators.txt:353
+msgid "``classmethod``"
+msgstr "``classmethod``"
+
+#: ../../src/basics/decorators.txt:354
+msgid "``staticmethod``"
+msgstr "``staticmethod``"
+
+#: ../../src/basics/decorators.txt:355
+msgid "``property``"
+msgstr "``property``"
+
+#: ../../src/basics/decorators.txt:357
+msgid ""
+"If you develop an intuitive understanding for their differences you'll be "
+"able to write object-oriented Python that communicates its intent more "
+"clearly and will be easier to maintain in the long run :cite:`realpython:"
+"methods-demystified`."
+msgstr ""
+"Якщо ви розвинете інтуїтивне розуміння їхніх відмінностей, ви зможете "
+"написати об'єктно-орієнтований Python, який чіткіше передає свої наміри та "
+"який буде легше підтримувати в довгостроковій перспективі :cite:`realpython:"
+"methods-demystified`."
+
+#: ../../src/basics/decorators.txt:363
+msgid "Class methods"
+msgstr "Методи класу"
+
+#: ../../src/basics/decorators.txt:365
+msgid ""
+"Instead of accepting a ``self`` parameter, class methods take a ``cls`` "
+"parameter that points to the class — and not the object instance — when the "
+"method is called."
+msgstr ""
+"Замість того, щоб приймати параметр self, під час виклику методу методи "
+"класу приймають параметр ``cls``, який вказує на клас, а не на екземпляр "
+"класу."
+
+#: ../../src/basics/decorators.txt:369
+msgid ""
+"Because the class method only has access to this ``cls`` argument, it can't "
+"modify object instance state. That would require access to ``self``. "
+"However, class methods can still modify class state that applies across all "
+"instances of the class."
+msgstr ""
+"Оскільки метод класу має доступ лише до цього аргументу ``cls``, він не може "
+"змінити стан екземпляра об'єкта. Це потребує доступу до ``self``. Однак "
+"методи класу все ще можуть змінювати стан класу, який застосовується до всіх "
+"екземплярів класу."
+
+#: ../../src/basics/decorators.txt:374
+msgid ""
+"The common usage for ``classmethod`` is provide alternative initializers."
+msgstr ""
+"Загальним використанням ``методи класу`` є надання альтернативних "
+"ініціалізаторів."
+
+#: ../../src/basics/decorators.txt:377
+msgid "Static methods"
+msgstr "Статичні методи"
+
+#: ../../src/basics/decorators.txt:379
+msgid ""
+"This type of method takes neither a ``self`` nor a ``cls`` parameter (but of "
+"course it's free to accept an arbitrary number of other parameters)."
+msgstr ""
+"Цей тип методу не приймає ані ``self``, ані ``cls`` параметр (але, звичайно, "
+"він може приймати будь-яку кількість інших параметрів)."
+
+#: ../../src/basics/decorators.txt:382
+msgid ""
+"Therefore a static method can neither modify object state nor class state. "
+"Static methods are restricted in what data they can access - and they're "
+"primarily a way to namespace your methods."
+msgstr ""
+"Тому статичний метод не може змінити ні стан об'єкта, ні стан класу. "
+"Статичні методи обмежені в тому, до яких даних вони можуть отримати доступ, "
+"і вони, перш за все, є способом простору імен ваших методів."
+
+#: ../../src/basics/decorators.txt:386
+msgid ""
+"It's tricky to explain ``staticmethod`` usage. Almost always you can create "
+"a dedicated function instead of static method. But sometimes you need to "
+"bind some logic independent from class itself or its instances to a class - "
+"it common to encapsulate it with ``staticmethod``."
+msgstr ""
+"Важко пояснити використання ``staticmethod``. Майже завжди ви можете "
+"створити спеціальну функцію замість статичного методу. Але іноді вам "
+"потрібно прив'язати до класу певну логіку, незалежну від самого класу або "
+"його екземплярів – зазвичай інкапсулювати її за допомогою ``staticmethod``."
+
+#: ../../src/basics/decorators.txt:392
+msgid "Properties"
+msgstr "Властивості"
+
+#: ../../src/basics/decorators.txt:394
+msgid ""
+"It's a way to bind a method name to access it as an attribute. Properties "
+"are **read-only** by default. This means a value cannot be assigned to "
+"``property member``."
+msgstr ""
+"Це спосіб прив'язати назву методу для доступу до нього як до атрибута. За "
+"замовчуванням властивості доступні **лише для читання**. Це означає, що "
+"значення не можна призначити ``члену властивості``."
+
+#: ../../src/basics/decorators.txt:399
+msgid "Some examples"
+msgstr "Деякі приклади"
 
 #: ../../src/basics/exceptions.txt:6
 msgid "Errors and Exceptions"
@@ -294,7 +653,7 @@ msgid ""
 "exceptions raised while running the ``try``."
 msgstr ""
 "Оператор ``try`` також може використовувати ``else`` (який є "
-"необов’язковим). Інструкції в цьому блоці виконуватимуться лише у випадку, "
+"необов'язковим). Інструкції в цьому блоці виконуватимуться лише у випадку, "
 "якщо під час виконання ``try`` не було викликано винятків."
 
 #: ../../src/basics/exceptions.txt:268
@@ -447,12 +806,12 @@ msgid "Supported operations"
 msgstr "Операції підтримки"
 
 #: ../../src/basics/stdtypes.txt:31 ../../src/basics/stdtypes.txt:149
-#: ../../src/basics/stdtypes.txt:201
+#: ../../src/basics/stdtypes.txt:199
 msgid "Operation"
 msgstr "Операції"
 
 #: ../../src/basics/stdtypes.txt:31 ../../src/basics/stdtypes.txt:149
-#: ../../src/basics/stdtypes.txt:201
+#: ../../src/basics/stdtypes.txt:199
 msgid "Result"
 msgstr "Результат"
 
@@ -605,8 +964,8 @@ msgid "Floating point numbers"
 msgstr "Числа з плаваючою комою"
 
 #: ../../src/basics/stdtypes.txt:104 ../../src/basics/stdtypes.txt:177
-#: ../../src/basics/stdtypes.txt:287 ../../src/basics/stdtypes.txt:296
-#: ../../src/basics/stdtypes.txt:325
+#: ../../src/basics/stdtypes.txt:285 ../../src/basics/stdtypes.txt:294
+#: ../../src/basics/stdtypes.txt:323
 msgid "Value comparisons"
 msgstr "Порівняння цінностей"
 
@@ -809,7 +1168,7 @@ msgstr ""
 "індекс першого входження *x* у *s* на або після індексу *i* та перед "
 "індексом *j*"
 
-#: ../../src/basics/stdtypes.txt:181
+#: ../../src/basics/stdtypes.txt:179
 msgid ""
 "Sequences can be compared only within each of their types, with the "
 "restriction that ranges do not support order comparison. Equality comparison "
@@ -821,7 +1180,7 @@ msgstr ""
 "типами призводить до нерівності, а впорядковане порівняння цих типів "
 "викликає ``TypeError``."
 
-#: ../../src/basics/stdtypes.txt:186
+#: ../../src/basics/stdtypes.txt:184
 msgid ""
 "Sequences compare lexicographically using comparison of corresponding "
 "elements. The built-in containers typically assume identical objects are "
@@ -833,7 +1192,7 @@ msgstr ""
 "рівні собі. Лексикографічне порівняння між вбудованими колекціями працює "
 "таким чином:"
 
-#: ../../src/basics/stdtypes.txt:191
+#: ../../src/basics/stdtypes.txt:189
 msgid ""
 "For two collections to compare equal, they must be of the same type, have "
 "the same length, and each pair of corresponding elements must compare equal."
@@ -842,7 +1201,7 @@ msgstr ""
 "мати однакову довжину, і кожна пара відповідних елементів повинна "
 "порівнюватися."
 
-#: ../../src/basics/stdtypes.txt:193
+#: ../../src/basics/stdtypes.txt:191
 msgid ""
 "Collections that supports order comparison are ordered the same as their "
 "first unequal elements. If corresponding element does not exist, the shorter "
@@ -852,98 +1211,98 @@ msgstr ""
 "їхні перші нерівні елементи. Якщо відповідний елемент не існує, спочатку "
 "впорядковується коротша колекція."
 
-#: ../../src/basics/stdtypes.txt:198
+#: ../../src/basics/stdtypes.txt:196
 msgid "Mutable sequence types"
 msgstr "Змінні типи послідовностей"
 
-#: ../../src/basics/stdtypes.txt:203
+#: ../../src/basics/stdtypes.txt:201
 msgid "``s[i] = x``"
 msgstr "``s[i] = x``"
 
-#: ../../src/basics/stdtypes.txt:203
+#: ../../src/basics/stdtypes.txt:201
 msgid "item *i* of *s* is replaced by *x*"
 msgstr "елемент *i* з *s* замінюється на *x*"
 
-#: ../../src/basics/stdtypes.txt:205
+#: ../../src/basics/stdtypes.txt:203
 msgid "``s[i:j] = t``"
 msgstr "``s[i:j] = t``"
 
-#: ../../src/basics/stdtypes.txt:205
+#: ../../src/basics/stdtypes.txt:203
 msgid "slice of *s* from *i* to *j* replaced by the contents of *t*"
 msgstr "фрагмент *s* від *i* до *j*, замінений вмістом *t*"
 
-#: ../../src/basics/stdtypes.txt:208
+#: ../../src/basics/stdtypes.txt:206
 msgid "``del s[i:j]``"
 msgstr "``del s[i:j]``"
 
-#: ../../src/basics/stdtypes.txt:208
+#: ../../src/basics/stdtypes.txt:206
 msgid "same as ``s[i:j] = []``"
 msgstr "те саме, що ``s[i:j] = []``"
 
-#: ../../src/basics/stdtypes.txt:210
+#: ../../src/basics/stdtypes.txt:208
 msgid "``s[i:j:k] = t``"
 msgstr "``s[i:j:k] = t``"
 
-#: ../../src/basics/stdtypes.txt:210
+#: ../../src/basics/stdtypes.txt:208
 msgid "the elements of *s* are replaced by those of *t* [#]_"
 msgstr "елементи *s* замінюються елементами *t* [#]_"
 
-#: ../../src/basics/stdtypes.txt:212
+#: ../../src/basics/stdtypes.txt:210
 msgid "``del s[i:j:k]``"
 msgstr "``del s[i:j:k]``"
 
-#: ../../src/basics/stdtypes.txt:212
+#: ../../src/basics/stdtypes.txt:210
 msgid "removes the elements of ``s[i:j:k]`` from the list"
 msgstr "видаляє елементи ``s[i:j:k]`` зі списку"
 
-#: ../../src/basics/stdtypes.txt:214
+#: ../../src/basics/stdtypes.txt:212
 msgid "``s.append(x)``"
 msgstr "``s.append(x)``"
 
-#: ../../src/basics/stdtypes.txt:214
+#: ../../src/basics/stdtypes.txt:212
 msgid ""
 "appends *x* to the end of the sequence; the same as ``s[len(s):len(s)] = "
 "[x]``"
 msgstr ""
 "додає *x* до кінця послідовності; те саме, що ``s[len(s):len(s)] = [x]``"
 
-#: ../../src/basics/stdtypes.txt:217
+#: ../../src/basics/stdtypes.txt:215
 msgid "``s.clear()``"
 msgstr "``s.clear()``"
 
-#: ../../src/basics/stdtypes.txt:217
+#: ../../src/basics/stdtypes.txt:215
 msgid "removes all items from *s* (``del s[:]``) [#py33]_"
 msgstr "видаляє всі елементи з *s* (``del s[:]``) [#py33]_"
 
-#: ../../src/basics/stdtypes.txt:219
+#: ../../src/basics/stdtypes.txt:217
 msgid "``s.copy()``"
 msgstr "``s.copy()``"
 
-#: ../../src/basics/stdtypes.txt:219
+#: ../../src/basics/stdtypes.txt:217
 msgid "creates a shallow copy of *s* (``s[:]``) [#py33]_"
 msgstr "створює поверхневу копію *s* (``s[:]``) [#py33]_"
 
-#: ../../src/basics/stdtypes.txt:221
+#: ../../src/basics/stdtypes.txt:219
 msgid "``s.extend(t)`` ``s += t``"
 msgstr "``s.extend(t)`` ``s += t``"
 
-#: ../../src/basics/stdtypes.txt:221
+#: ../../src/basics/stdtypes.txt:219
 msgid "extends *s* with the contents of *t*"
 msgstr "розширює *s* вмістом *t*"
 
-#: ../../src/basics/stdtypes.txt:224
+#: ../../src/basics/stdtypes.txt:222
 msgid "``s.insert(i, x)``"
 msgstr "``s.insert(i, x)``"
 
-#: ../../src/basics/stdtypes.txt:224
+#: ../../src/basics/stdtypes.txt:222
 msgid "inserts *x* into *s* at the index *i*; same as ``s[i:i] = [x]``"
 msgstr "вставляє *x* у *s* за індексом *i*; те саме, що ``s[i:i] = [x]``"
 
-#: ../../src/basics/stdtypes.txt:227
+#: ../../src/basics/stdtypes.txt:225
 msgid "``s.pop()``, ``s.pop(i)``"
 msgstr "``s.pop()``, ``s.pop(i)``"
 
-#: ../../src/basics/stdtypes.txt:227
+#: ../../src/basics/stdtypes.txt:225
 msgid ""
 "retrieves the item at *i* and also removes it from *s* (if *i* is omitted - "
 "use the last one available index)"
@@ -951,39 +1310,39 @@ msgstr ""
 "отримує елемент за адресою *i*, а також видаляє його з *s* (якщо *i* "
 "пропущено - використовуйте останній доступний індекс)"
 
-#: ../../src/basics/stdtypes.txt:230
+#: ../../src/basics/stdtypes.txt:228
 msgid "``s.remove(x)``"
 msgstr "``s.remove(x)``"
 
-#: ../../src/basics/stdtypes.txt:230
+#: ../../src/basics/stdtypes.txt:228
 msgid "remove the first item that is equal to *x* from *s*"
 msgstr "видалити перший елемент, який дорівнює *x*, із *s*"
 
-#: ../../src/basics/stdtypes.txt:232
+#: ../../src/basics/stdtypes.txt:230
 msgid "``s.reverse()``"
 msgstr "``s.reverse()``"
 
-#: ../../src/basics/stdtypes.txt:232
+#: ../../src/basics/stdtypes.txt:230
 msgid "reverses the items of *s* in place"
 msgstr "перевертає елементи *s* на місце"
 
-#: ../../src/basics/stdtypes.txt:235
+#: ../../src/basics/stdtypes.txt:233
 msgid "*t* must have the same length as the slice it is replacing"
 msgstr "*t* повинен мати таку ж довжину, як і фрагмент, який він замінює"
 
-#: ../../src/basics/stdtypes.txt:236
+#: ../../src/basics/stdtypes.txt:234
 msgid "new in Python version 3.3"
 msgstr "нове у версії Python 3.3"
 
-#: ../../src/basics/stdtypes.txt:239
+#: ../../src/basics/stdtypes.txt:237
 msgid "Text sequence type"
 msgstr "Тип текстової послідовності"
 
-#: ../../src/basics/stdtypes.txt:242
+#: ../../src/basics/stdtypes.txt:240
 msgid "String methods"
 msgstr "Рядкові методи"
 
-#: ../../src/basics/stdtypes.txt:244
+#: ../../src/basics/stdtypes.txt:242
 msgid ""
 "Strings implement all of the common sequence operations, along with the "
 "additional methods."
@@ -991,7 +1350,7 @@ msgstr ""
 "Рядки реалізують усі звичайні операції з послідовністю разом із додатковими "
 "методами."
 
-#: ../../src/basics/stdtypes.txt:289
+#: ../../src/basics/stdtypes.txt:287
 msgid ""
 "Strings compare lexicographically using the numerical Unicode code points of "
 "their characters."
@@ -999,11 +1358,11 @@ msgstr ""
 "Рядки порівнюються лексикографічно з використанням числових кодових точок "
 "Unicode своїх символів."
 
-#: ../../src/basics/stdtypes.txt:293
+#: ../../src/basics/stdtypes.txt:291
 msgid "Set types"
 msgstr "Типи сетів"
 
-#: ../../src/basics/stdtypes.txt:298
+#: ../../src/basics/stdtypes.txt:296
 msgid ""
 "Sets (instances of ``set`` or ``frozenset``) can be compared within and "
 "across their types. They define order comparison operators to mean subset "
@@ -1017,22 +1376,22 @@ msgstr ""
 "порядку (наприклад, два набори ``{1, 2}`` та ``{2, 3}`` не є рівними, ані "
 "підмножини одного іншого, ані надмножини один одного)."
 
-#: ../../src/basics/stdtypes.txt:305
+#: ../../src/basics/stdtypes.txt:303
 msgid "Mapping type"
 msgstr "Тип відображення"
 
-#: ../../src/basics/stdtypes.txt:307
+#: ../../src/basics/stdtypes.txt:305
 msgid ""
 "A mapping object maps hashable values to arbitrary objects. Mappings are "
 "mutable objects. There is currently ony one standard mapping type, the "
 "*dictionary*. In few words mappings are collections of keys and their values."
 msgstr ""
-"Об’єкт зіставлення зіставляє хешовані значення з довільними об’єктами. "
+"Об'єкт зіставлення зіставляє хешовані значення з довільними об'єктами. "
 "Відображення є змінними об'єктами. Наразі існує лише один стандартний тип "
 "відображення, *dictionary*. Якщо кількома словами, то відображення - це "
 "набори ключів та їхніх значень."
 
-#: ../../src/basics/stdtypes.txt:311
+#: ../../src/basics/stdtypes.txt:309
 msgid ""
 "A dictionary's keys are almost arbitrary values. Values that are not "
 "hashable may not be used as keys. Values that compare equal (such as ``1``, "
@@ -1044,15 +1403,15 @@ msgstr ""
 "``1.0`` і ``True``), можна використовувати як взаємозамінні для індексування "
 "тієї самої словникової статті."
 
-#: ../../src/basics/stdtypes.txt:315
+#: ../../src/basics/stdtypes.txt:313
 msgid "Dictionaries can be created by several means:"
 msgstr "Словники можна створювати кількома способами:"
 
-#: ../../src/basics/stdtypes.txt:317
+#: ../../src/basics/stdtypes.txt:315
 msgid "Use braces to denote the empty dictionary: ``{}``"
 msgstr "Використовуйте дужки для позначення порожнього словника: ``{}``"
 
-#: ../../src/basics/stdtypes.txt:318
+#: ../../src/basics/stdtypes.txt:316
 msgid ""
 "Use a comma-separated list of ``key: value`` pairs with braces: "
 "``{'first_name': 'Serhii', 'last_name': 'Horodilov', 'age': 34}``"
@@ -1060,11 +1419,11 @@ msgstr ""
 "Використовуйте розділений комами список пар ``key: value`` з дужками: "
 "``{'first_name': 'Serhii', 'last_name': 'Horodilov', 'age': 34}``"
 
-#: ../../src/basics/stdtypes.txt:320
+#: ../../src/basics/stdtypes.txt:318
 msgid "Use a dict comprehension: ``{x: x ** 2 for x in range(10)}``"
 msgstr "Використовуючи генератори списків: ``{x: x 2 for x in range(10)}``"
 
-#: ../../src/basics/stdtypes.txt:321
+#: ../../src/basics/stdtypes.txt:319
 msgid ""
 "Use the type constructor: ``dict()``, ``dict([('key', 100)])``, "
 "``dict(key=100)``"
@@ -1072,7 +1431,7 @@ msgstr ""
 "Використовуйте конструктор типу: ``dict()``, ``dict([('key', 100)])``, "
 "``dict(key=100)``"
 
-#: ../../src/basics/stdtypes.txt:327
+#: ../../src/basics/stdtypes.txt:325
 msgid ""
 "Instances of ``dict`` compare equal if and only if they have equal key-value "
 "pairs."
@@ -1080,7 +1439,7 @@ msgstr ""
 "Екземпляри ``dict`` вважаються рівними тоді і тільки тоді, коли вони мають "
 "однакові пари ключ-значення."
 
-#: ../../src/basics/stdtypes.txt:330
+#: ../../src/basics/stdtypes.txt:328
 msgid "Order comparisons raise ``TypeError``."
 msgstr "Порівняння порядку викликає ``TypeError``."
 
