@@ -1,3 +1,8 @@
+.. meta::
+    :description: Data aggregation
+    :author: Serhii Horodilov
+    :keywords: sql, db, database, data, aggregation, functions
+
 *******************************************************************************
                                Data Aggregation
 *******************************************************************************
