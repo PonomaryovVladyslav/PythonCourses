@@ -1,4 +1,7 @@
-.. appendix
+.. meta::
+    :description: Formatted strings usage in Python
+    :author: Serhii Horodilov sgorodil@gmail.com
+    :keywords: python, string, formatting
 
 .. todo: add code examples
 

@@ -1,4 +1,7 @@
-.. appendix
+.. meta::
+    :description: Setting up environment variables
+    :author: Serhii Horodilov sgorodil@gmail.com
+    :keywords: settings, environment, variables
 
 ###############################
 Issue - System Environment PATH

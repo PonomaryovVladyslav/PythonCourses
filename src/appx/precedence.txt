@@ -1,7 +1,7 @@
-.. appendix
-
-.. todo:
-    https://docs.python.org/3/reference/expressions.html#operator-precedence
+.. meta::
+    :description: Operator precedence in Python
+    :author: Serhii Horodilov sgorodil@gmail.com
+    :keywords: python, basics, operator, precedence
 
 ###################
 Operator Precedence
