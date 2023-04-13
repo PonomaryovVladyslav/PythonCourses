@@ -354,13 +354,17 @@ They are:
 - ``staticmethod``
 - ``property``
 
-If you develop an intuitive understanding for their differences you’ll be able to write object-oriented Python that communicates its intent more clearly and will be easier to maintain in the long run :cite:`realpython:methods-demystified`.
+If you develop an intuitive understanding for their differences you'll be able
+to write object-oriented Python that communicates its intent more clearly and
+will be easier to maintain in the long run
+:cite:`realpython:methods-demystified`.
 
 Class methods
 -------------
 
-Instead of accepting a self parameter, class methods take a ``cls`` parameter
-that points to the class—and not the object instance—when the method is called.
+Instead of accepting a ``self`` parameter, class methods take a ``cls``
+parameter that points to the class — and not the object instance — when
+the method is called.
 
 Because the class method only has access to this ``cls`` argument, it can't
 modify object instance state. That would require access to ``self``.
@@ -373,7 +377,7 @@ Static methods
 --------------
 
 This type of method takes neither a ``self`` nor a ``cls`` parameter (but of
-course it’s free to accept an arbitrary number of other parameters).
+course it's free to accept an arbitrary number of other parameters).
 
 Therefore a static method can neither modify object state nor class state.
 Static methods are restricted in what data they can access - and they're
@@ -388,7 +392,7 @@ Properties
 ----------
 
 It's a way to bind a method name to access it as an attribute. Properties are
-"read-only" by default. This means a value cannot be assigned to ``property
+**read-only** by default. This means a value cannot be assigned to ``property
 member``.
 
 Some examples
