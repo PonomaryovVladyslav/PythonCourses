@@ -1,3 +1,8 @@
+.. meta::
+    :description: Control flow in Python
+    :author: Serhii Horodilov
+    :keywords: python, basics, control, if, for, while, condition, loop
+
 *******************************************************************************
                                  Control Flow
 *******************************************************************************

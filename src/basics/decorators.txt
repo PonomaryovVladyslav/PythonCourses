@@ -1,3 +1,8 @@
+.. meta::
+    :description: Python decorators
+    :author: Serhii Horodilov
+    :keywords: python, basics, decorators
+
 .. _first-class objects:
     https://dbader.org/blog/python-first-class-functions
 

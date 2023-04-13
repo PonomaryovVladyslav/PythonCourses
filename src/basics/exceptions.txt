@@ -1,3 +1,8 @@
+.. meta::
+    :description: Handling exceptions in Python
+    :author: Serhii Horodilov
+    :keywords: python, exceptions, handling, try, except, finally
+
 .. _built-in exceptions:
     https://docs.python.org/library/exceptions.html#bltin-exceptions
 

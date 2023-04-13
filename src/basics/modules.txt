@@ -1,3 +1,8 @@
+.. meta::
+    :description: Modules and imports in Python
+    :author: Serhii Horodilov
+    :keywords: python, basics, modules, import
+
 *******************************************************************************
                           Pythons Modules and Imports
 *******************************************************************************
