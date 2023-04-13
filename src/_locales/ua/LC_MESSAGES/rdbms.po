@@ -1,16 +1,18 @@
-# COURSE/RELATIONAL DATABASES TRANSLATION.
+# RELATIONAL DATABASES TRANSLATION.
+#
 # Copyright (C) 2023, Python training course authors and contributors
 # This file is distributed under the same license as the Python Training
 # Course package.
-# Serhii Horodilov <sgorodil@gmail.com>, 2023.
+#
+# SERHII HORODILOV <sgorodil@gmail.com>
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: Python Training Course 2022.11.dev\n"
 "Report-Msgid-Bugs-To: https://github.com/edu-python-course/edu-python-course."
 "github.io/issues\n"
-"POT-Creation-Date: 2023-04-08 19:28+0300\n"
-"PO-Revision-Date: 2023-04-11 16:06+0300\n"
+"POT-Creation-Date: 2023-04-14 01:49+0300\n"
+"PO-Revision-Date: 2023-04-14 02:09+0300\n"
 "Last-Translator: Serhii Horodilov <sgorodil@gmail.com>\n"
 "Language-Team: ua <LL@li.org>\n"
 "Language: ua\n"
@@ -20,27 +22,40 @@ msgstr ""
 "Generated-By: Babel 2.12.1\n"
 "X-Generator: Poedit 3.2.2\n"
 
-#: ../../src/rdbms/aggregation.txt:3
+#: ../../src/rdbms/aggregation.txt:-1
+msgid "Data aggregation"
+msgstr "Агрегація даних"
+
+#: ../../src/rdbms/aggregation.txt:-1 ../../src/rdbms/index.txt:-1
+#: ../../src/rdbms/normalization.txt:-1 ../../src/rdbms/relations.txt:-1
+msgid "Serhii Horodilov"
+msgstr "Serhii Horodilov"
+
+#: ../../src/rdbms/aggregation.txt:-1
+msgid "sql, db, database, data, aggregation, functions"
+msgstr "sql, db, database, data, aggregation, functions"
+
+#: ../../src/rdbms/aggregation.txt:8
 msgid "Data Aggregation"
 msgstr "Агрегація даних"
 
-#: ../../src/rdbms/aggregation.txt:5
+#: ../../src/rdbms/aggregation.txt:10
 msgid "Here is some dummy data, that will be used as example in this section."
 msgstr ""
 "Ось деякі фіктивні дані, які будуть використані як приклад у цьому розділі."
 
-#: ../../src/rdbms/aggregation.txt:7 ../../src/rdbms/normalization.txt:1
+#: ../../src/rdbms/aggregation.txt:12 ../../src/rdbms/normalization.txt:1
 msgid "product"
 msgstr "product"
 
 #: ../../src/rdbms/normalization.txt:1 ../../src/rdbms/products_table.csv:1
-#: ../../src/rdbms/relations.txt:151 ../../src/rdbms/relations.txt:174
+#: ../../src/rdbms/relations.txt:156 ../../src/rdbms/relations.txt:179
 msgid "id"
 msgstr "id"
 
-#: ../../src/rdbms/products_table.csv:1 ../../src/rdbms/relations.txt:174
-#: ../../src/rdbms/relations.txt:249 ../../src/rdbms/relations.txt:278
-#: ../../src/rdbms/relations.txt:313 ../../src/rdbms/relations.txt:345
+#: ../../src/rdbms/products_table.csv:1 ../../src/rdbms/relations.txt:179
+#: ../../src/rdbms/relations.txt:254 ../../src/rdbms/relations.txt:283
+#: ../../src/rdbms/relations.txt:318 ../../src/rdbms/relations.txt:350
 msgid "name"
 msgstr "name"
 
@@ -48,19 +63,19 @@ msgstr "name"
 msgid "price"
 msgstr "price"
 
-#: ../../src/rdbms/aggregation.txt:169 ../../src/rdbms/aggregation.txt:210
+#: ../../src/rdbms/aggregation.txt:174 ../../src/rdbms/aggregation.txt:215
 #: ../../src/rdbms/products_table.csv:1
 msgid "category"
 msgstr "category"
 
-#: ../../src/rdbms/aggregation.txt:169 ../../src/rdbms/aggregation.txt:210
+#: ../../src/rdbms/aggregation.txt:174 ../../src/rdbms/aggregation.txt:215
 #: ../../src/rdbms/products_table.csv:1
 msgid "sold"
 msgstr "sold"
 
 #: ../../src/rdbms/normalization.txt:1 ../../src/rdbms/products_table.csv:1
-#: ../../src/rdbms/relations.txt:153 ../../src/rdbms/relations.txt:157
-#: ../../src/rdbms/relations.txt:161 ../../src/rdbms/relations.txt:176
+#: ../../src/rdbms/relations.txt:158 ../../src/rdbms/relations.txt:162
+#: ../../src/rdbms/relations.txt:166 ../../src/rdbms/relations.txt:181
 msgid "1"
 msgstr "1"
 
@@ -72,7 +87,7 @@ msgstr "Samsung Galaxy"
 msgid "100000"
 msgstr "100000"
 
-#: ../../src/rdbms/aggregation.txt:176 ../../src/rdbms/products_table.csv:1
+#: ../../src/rdbms/aggregation.txt:181 ../../src/rdbms/products_table.csv:1
 msgid "Phones"
 msgstr "Phones"
 
@@ -81,8 +96,8 @@ msgid "500"
 msgstr "500"
 
 #: ../../src/rdbms/normalization.txt:1 ../../src/rdbms/products_table.csv:1
-#: ../../src/rdbms/relations.txt:155 ../../src/rdbms/relations.txt:165
-#: ../../src/rdbms/relations.txt:178
+#: ../../src/rdbms/relations.txt:160 ../../src/rdbms/relations.txt:170
+#: ../../src/rdbms/relations.txt:183
 msgid "2"
 msgstr "2"
 
@@ -94,13 +109,13 @@ msgstr "iPhone 13 Pro"
 msgid "120000"
 msgstr "120000"
 
-#: ../../src/rdbms/aggregation.txt:175 ../../src/rdbms/aggregation.txt:214
+#: ../../src/rdbms/aggregation.txt:180 ../../src/rdbms/aggregation.txt:219
 #: ../../src/rdbms/products_table.csv:1
 msgid "300"
 msgstr "300"
 
 #: ../../src/rdbms/normalization.txt:1 ../../src/rdbms/products_table.csv:1
-#: ../../src/rdbms/relations.txt:157 ../../src/rdbms/relations.txt:180
+#: ../../src/rdbms/relations.txt:162 ../../src/rdbms/relations.txt:185
 msgid "3"
 msgstr "3"
 
@@ -112,7 +127,7 @@ msgstr "MacBook Pro"
 msgid "350000"
 msgstr "350000"
 
-#: ../../src/rdbms/aggregation.txt:175 ../../src/rdbms/aggregation.txt:214
+#: ../../src/rdbms/aggregation.txt:180 ../../src/rdbms/aggregation.txt:219
 #: ../../src/rdbms/products_table.csv:1
 msgid "Laptops"
 msgstr "Laptops"
@@ -122,7 +137,7 @@ msgid "100"
 msgstr "100"
 
 #: ../../src/rdbms/normalization.txt:1 ../../src/rdbms/products_table.csv:1
-#: ../../src/rdbms/relations.txt:159
+#: ../../src/rdbms/relations.txt:164
 msgid "4"
 msgstr "4"
 
@@ -138,7 +153,7 @@ msgstr "150000"
 msgid "200"
 msgstr "200"
 
-#: ../../src/rdbms/products_table.csv:1 ../../src/rdbms/relations.txt:161
+#: ../../src/rdbms/products_table.csv:1 ../../src/rdbms/relations.txt:166
 msgid "5"
 msgstr "5"
 
@@ -150,16 +165,16 @@ msgstr "HP Printer"
 msgid "20000"
 msgstr "20000"
 
-#: ../../src/rdbms/aggregation.txt:172 ../../src/rdbms/products_table.csv:1
+#: ../../src/rdbms/aggregation.txt:177 ../../src/rdbms/products_table.csv:1
 msgid "Printers"
 msgstr "Printers"
 
-#: ../../src/rdbms/aggregation.txt:172 ../../src/rdbms/aggregation.txt:176
+#: ../../src/rdbms/aggregation.txt:177 ../../src/rdbms/aggregation.txt:181
 #: ../../src/rdbms/products_table.csv:1
 msgid "800"
 msgstr "800"
 
-#: ../../src/rdbms/products_table.csv:1 ../../src/rdbms/relations.txt:163
+#: ../../src/rdbms/products_table.csv:1 ../../src/rdbms/relations.txt:168
 msgid "6"
 msgstr "6"
 
@@ -171,17 +186,17 @@ msgstr "Dell Monitor"
 msgid "50000"
 msgstr "50000"
 
-#: ../../src/rdbms/aggregation.txt:174 ../../src/rdbms/aggregation.txt:213
+#: ../../src/rdbms/aggregation.txt:179 ../../src/rdbms/aggregation.txt:218
 #: ../../src/rdbms/products_table.csv:1
 msgid "Monitors"
 msgstr "Monitors"
 
-#: ../../src/rdbms/aggregation.txt:174 ../../src/rdbms/aggregation.txt:213
+#: ../../src/rdbms/aggregation.txt:179 ../../src/rdbms/aggregation.txt:218
 #: ../../src/rdbms/products_table.csv:1
 msgid "400"
 msgstr "400"
 
-#: ../../src/rdbms/products_table.csv:1 ../../src/rdbms/relations.txt:165
+#: ../../src/rdbms/products_table.csv:1 ../../src/rdbms/relations.txt:170
 msgid "7"
 msgstr "7"
 
@@ -193,17 +208,17 @@ msgstr "Sony Headphones"
 msgid "30000"
 msgstr "30000"
 
-#: ../../src/rdbms/aggregation.txt:171 ../../src/rdbms/aggregation.txt:212
+#: ../../src/rdbms/aggregation.txt:176 ../../src/rdbms/aggregation.txt:217
 #: ../../src/rdbms/products_table.csv:1
 msgid "Audio"
 msgstr "Audio"
 
-#: ../../src/rdbms/aggregation.txt:171 ../../src/rdbms/aggregation.txt:212
+#: ../../src/rdbms/aggregation.txt:176 ../../src/rdbms/aggregation.txt:217
 #: ../../src/rdbms/products_table.csv:1
 msgid "0"
 msgstr "0"
 
-#: ../../src/rdbms/products_table.csv:1 ../../src/rdbms/relations.txt:167
+#: ../../src/rdbms/products_table.csv:1 ../../src/rdbms/relations.txt:172
 msgid "8"
 msgstr "8"
 
@@ -227,7 +242,7 @@ msgstr "Xbox Series X"
 msgid "60000"
 msgstr "60000"
 
-#: ../../src/rdbms/aggregation.txt:173 ../../src/rdbms/products_table.csv:1
+#: ../../src/rdbms/aggregation.txt:178 ../../src/rdbms/products_table.csv:1
 msgid "Gaming"
 msgstr "Gaming"
 
@@ -251,25 +266,25 @@ msgstr "55000"
 msgid "350"
 msgstr "350"
 
-#: ../../src/rdbms/aggregation.txt:14
+#: ../../src/rdbms/aggregation.txt:19
 msgid "The same dataset is available as:"
 msgstr "The same dataset is available as:"
 
-#: ../../src/rdbms/aggregation.txt:16
+#: ../../src/rdbms/aggregation.txt:21
 msgid ":download:`csv file <./products_table.csv>`"
 msgstr ":download:`csv file <./products_table.csv>`"
 
-#: ../../src/rdbms/aggregation.txt:17
+#: ../../src/rdbms/aggregation.txt:22
 msgid ""
 ":download:`postgres dump file </../assets/sql/products.pg13-1.dump.sql>`"
 msgstr ""
 ":download:`postgres dump file </../assets/sql/products.pg13-1.dump.sql>`"
 
-#: ../../src/rdbms/aggregation.txt:20
+#: ../../src/rdbms/aggregation.txt:25
 msgid "Aggregate functions"
 msgstr "Агрегуючі функції"
 
-#: ../../src/rdbms/aggregation.txt:22
+#: ../../src/rdbms/aggregation.txt:27
 msgid ""
 "*Aggregate functions* compute a single result from a set of input values. "
 "Various RDBMS implement various built-in aggregate functions. In this "
@@ -279,11 +294,11 @@ msgstr ""
 "Різні RDBMS реалізують різноманітні вбудовані агрегатні функції. У цьому "
 "розділі ми розглянемо 5 основних функцій, доступних у всіх RDBMS."
 
-#: ../../src/rdbms/aggregation.txt:29
+#: ../../src/rdbms/aggregation.txt:34
 msgid "Count"
 msgstr "Підрахунок"
 
-#: ../../src/rdbms/aggregation.txt:31
+#: ../../src/rdbms/aggregation.txt:36
 msgid ""
 "The ``count(field)`` function returns a count of the number of times that "
 "``field`` is not ``NULL`` in a group. The ``count(*)`` function (with no "
@@ -293,11 +308,11 @@ msgstr ""
 "``NULL`` у групі. Функція ``count()`` (без аргументів) повертає загальну "
 "кількість рядків у групі."
 
-#: ../../src/rdbms/aggregation.txt:47
+#: ../../src/rdbms/aggregation.txt:52
 msgid "Maximum value"
 msgstr "Максимальне значення"
 
-#: ../../src/rdbms/aggregation.txt:49
+#: ../../src/rdbms/aggregation.txt:54
 msgid ""
 "The ``max()`` aggregate function returns the maximum value of all values in "
 "the group. The maximum value is the value that would be returned last in an "
@@ -309,11 +324,11 @@ msgstr ""
 "ORDER BY для того самого стовпця. Агрегатна функція повертає ` `NULL``, якщо "
 "і лише якщо в групі немає значень, відмінних від NULL."
 
-#: ../../src/rdbms/aggregation.txt:66
+#: ../../src/rdbms/aggregation.txt:71
 msgid "Minimum value"
 msgstr "Мінімальне значення"
 
-#: ../../src/rdbms/aggregation.txt:68
+#: ../../src/rdbms/aggregation.txt:73
 msgid ""
 "The ``min()`` aggregate function returns the minimum non-NULL value of all "
 "values in the group. The minimum value is the first non-NULL value that "
@@ -325,11 +340,11 @@ msgstr ""
 "з'явиться в ORDER BY з Агрегатна функція повертає ``NULL`` тоді і тільки "
 "якщо в групі немає значень, відмінних від NULL."
 
-#: ../../src/rdbms/aggregation.txt:85
+#: ../../src/rdbms/aggregation.txt:90
 msgid "Average value"
 msgstr "Середнє значення"
 
-#: ../../src/rdbms/aggregation.txt:87
+#: ../../src/rdbms/aggregation.txt:92
 msgid ""
 "The ``avg()`` function returns the average value of all non-NULL inputs "
 "within a group. String and BLOB values that do not look like numbers are "
@@ -343,11 +358,11 @@ msgstr ""
 "один не-NULL-вхід, навіть якщо всі вхідні дані є цілими числами. Результатом "
 "є ``NULL`` тоді і тільки якщо немає не-NULL-вхідних даних."
 
-#: ../../src/rdbms/aggregation.txt:105
+#: ../../src/rdbms/aggregation.txt:110
 msgid "Sum of values"
 msgstr "Сума значень"
 
-#: ../../src/rdbms/aggregation.txt:107
+#: ../../src/rdbms/aggregation.txt:112
 msgid ""
 "The ``sum()`` aggregate functions return the sum of all non-NULL values in "
 "the group. If there are no non-NULL input rows then function returns "
@@ -356,7 +371,7 @@ msgstr ""
 "Агрегатні функції ``sum()`` повертають суму всіх значень, відмінних від "
 "NULL, у групі. Якщо вхідних рядків немає, функція повертає ``NULL``."
 
-#: ../../src/rdbms/aggregation.txt:112
+#: ../../src/rdbms/aggregation.txt:117
 msgid ""
 "NULL is not normally a helpful result for the sum of no rows but the SQL "
 "standard requires it."
@@ -364,7 +379,7 @@ msgstr ""
 "NULL зазвичай не є корисним результатом для суми відсутності рядків, але "
 "стандарт SQL вимагає цього."
 
-#: ../../src/rdbms/aggregation.txt:115
+#: ../../src/rdbms/aggregation.txt:120
 msgid ""
 "SQLite implements ``total`` aggregate function, that is similar to ``sum``, "
 "but returns ``0.0`` (always floating point) if there are no non-NULL input "
@@ -374,11 +389,11 @@ msgstr ""
 "повертає ``0.0`` (завжди з плаваючою точкою), якщо немає вхідних рядків, "
 "відмінних від NULL."
 
-#: ../../src/rdbms/aggregation.txt:130
+#: ../../src/rdbms/aggregation.txt:135
 msgid "Grouping data"
 msgstr "Групування даних"
 
-#: ../../src/rdbms/aggregation.txt:132
+#: ../../src/rdbms/aggregation.txt:137
 msgid ""
 "Getting some aggregated values is not very helpful itself. Most cases "
 "require to group outputs in some specific manner."
@@ -386,7 +401,7 @@ msgstr ""
 "Отримання деяких агрегованих значень не є дуже корисним саме по собі. "
 "Більшість випадків вимагають згрупувати виходи певним чином."
 
-#: ../../src/rdbms/aggregation.txt:135
+#: ../../src/rdbms/aggregation.txt:140
 msgid ""
 "For example, if the task is to count number of registered categories it is "
 "simple to solve as:"
@@ -394,7 +409,7 @@ msgstr ""
 "Наприклад, якщо завдання полягає в підрахунку кількості зареєстрованих "
 "категорій, його просто вирішити так:"
 
-#: ../../src/rdbms/aggregation.txt:148
+#: ../../src/rdbms/aggregation.txt:153
 msgid ""
 "But in case, the task is to count **sold** items for each category, this "
 "becomes impossible to solve without grouping items. ``GROUP BY`` clause "
@@ -405,15 +420,15 @@ msgstr ""
 "``GROUP BY`` надає можливість групувати рядки на основі певного значення "
 "поля(ів)."
 
-#: ../../src/rdbms/aggregation.txt:152
+#: ../../src/rdbms/aggregation.txt:157
 msgid "General syntax is:"
 msgstr "Загальний синтаксис:"
 
-#: ../../src/rdbms/aggregation.txt:173
+#: ../../src/rdbms/aggregation.txt:178
 msgid "600"
 msgstr "600"
 
-#: ../../src/rdbms/aggregation.txt:179
+#: ../../src/rdbms/aggregation.txt:184
 msgid ""
 "If the ``SELECT`` statement is an aggregate query with a ``GROUP BY`` "
 "clause, then each of the expressions specified as part of the GROUP BY "
@@ -439,11 +454,11 @@ msgstr ""
 "бути виразами, які з'являються в результаті. Вирази в пункті GROUP BY не "
 "можуть бути сукупними виразами."
 
-#: ../../src/rdbms/aggregation.txt:192
+#: ../../src/rdbms/aggregation.txt:197
 msgid "HAVING clause"
 msgstr "Вираз HAVING"
 
-#: ../../src/rdbms/aggregation.txt:194
+#: ../../src/rdbms/aggregation.txt:199
 msgid ""
 "But what, if the task is to filter categories, that have less than 500 sold "
 "items in it? ``WHERE`` clause will be useless, cause it's evaluated before "
@@ -455,7 +470,7 @@ msgstr ""
 "перед групуванням виводу. Іншими словами, лише рядки, які набір WHERE буде "
 "вибрано фільтр."
 
-#: ../../src/rdbms/aggregation.txt:217
+#: ../../src/rdbms/aggregation.txt:222
 msgid ""
 "If a ``HAVING`` clause is specified, it is evaluated once for each group of "
 "rows as a boolean expression. If the result of evaluating the HAVING clause "
@@ -467,7 +482,7 @@ msgstr ""
 "хибний, групу відкидають. Якщо речення HAVING є агрегатним виразом, воно "
 "обчислюється в усіх рядках у групі."
 
-#: ../../src/rdbms/aggregation.txt:222
+#: ../../src/rdbms/aggregation.txt:227
 msgid ""
 "If a HAVING clause is a non-aggregate expression, it is evaluated with "
 "respect to an arbitrarily selected row from the group. The HAVING expression "
@@ -477,11 +492,19 @@ msgstr ""
 "вибраного рядка з групи. Вираз HAVING може посилатися на значення, навіть "
 "агрегатні функції, яких немає в результат."
 
-#: ../../src/rdbms/index.txt:3
+#: ../../src/rdbms/index.txt:-1
+msgid "Relational databases"
+msgstr "Реляційні бази даних"
+
+#: ../../src/rdbms/index.txt:-1
+msgid "sql, db, database, intro, introduction, index"
+msgstr "sql, db, database, intro, introduction, index"
+
+#: ../../src/rdbms/index.txt:8
 msgid "Relational Database"
 msgstr "Реляційні бази даних"
 
-#: ../../src/rdbms/index.txt:5
+#: ../../src/rdbms/index.txt:10
 msgid ""
 ":abbr:`RDBMS (Relational Database Management System)` is a type of software "
 "that helps users to create, update, manage, and access relational databases. "
@@ -496,7 +519,7 @@ msgstr ""
 "стовпець представляє певний атрибут даних, тоді як кожен рядок представляє "
 "конкретний екземпляр цих даних."
 
-#: ../../src/rdbms/index.txt:11
+#: ../../src/rdbms/index.txt:16
 msgid ""
 "RDBMS allow users to interact with the database using :abbr:`SQL (Structured "
 "Query Language)`, which is a standard language for managing and manipulating "
@@ -510,7 +533,7 @@ msgstr ""
 "різноманітність операцій з базою даних, включаючи додавання, оновлення та "
 "видалення даних, а також отримання даних на основі певних критеріїв."
 
-#: ../../src/rdbms/index.txt:17
+#: ../../src/rdbms/index.txt:22
 msgid ""
 "RDBMS also provide a range of features to ensure data integrity, such as "
 "enforcing data constraints, supporting transactions, and providing backup "
@@ -526,11 +549,19 @@ msgstr ""
 "створення та модифікації таблиць і представлень, а також інструменти "
 "моніторингу для оптимізації продуктивності бази даних."
 
-#: ../../src/rdbms/normalization.txt:3
+#: ../../src/rdbms/normalization.txt:-1
+msgid "Database normalization"
+msgstr "Нормалізація баз даних"
+
+#: ../../src/rdbms/normalization.txt:-1
+msgid "sql, db, database, normalization"
+msgstr "sql, db, database, normalization"
+
+#: ../../src/rdbms/normalization.txt:8
 msgid "Database Normalization"
 msgstr "Нормалізація баз даних"
 
-#: ../../src/rdbms/normalization.txt:5
+#: ../../src/rdbms/normalization.txt:10
 msgid ""
 "Normalization is a process of organizing data in a database so that it is "
 "free from redundancy and dependency. It helps to eliminate data "
@@ -546,7 +577,7 @@ msgstr ""
 "таким чином, щоб уникнути дублювання даних, надмірності даних і "
 "неузгодженості даних."
 
-#: ../../src/rdbms/normalization.txt:11
+#: ../../src/rdbms/normalization.txt:16
 msgid ""
 "There are several normal forms, each building on the previous one, which "
 "guide us in the normalization process. The most commonly used normal forms "
@@ -555,7 +586,7 @@ msgstr ""
 "Існує кілька нормальних форм, кожна з яких будується на попередній, які "
 "скеровують нас у процесі нормалізації. Найпоширенішими звичайними формами є:"
 
-#: ../../src/rdbms/normalization.txt:14
+#: ../../src/rdbms/normalization.txt:19
 msgid ""
 "**First Normal Form (1NF)**: Each column should hold atomic (indivisible) "
 "values. There should be no repeating groups or arrays of data in a table."
@@ -564,7 +595,7 @@ msgstr ""
 "(неподільні) значення. У таблиці не повинно бути повторюваних груп або "
 "масивів даних."
 
-#: ../../src/rdbms/normalization.txt:17
+#: ../../src/rdbms/normalization.txt:22
 msgid ""
 "**Second Normal Form (2NF)**: Each non-key column should be functionally "
 "dependent on the entire primary key. In other words, every column in a table "
@@ -576,7 +607,7 @@ msgstr ""
 "таблиці має бути пов'язаний із первинним ключем, а не залежати від будь-яких "
 "інших неключових стовпців."
 
-#: ../../src/rdbms/normalization.txt:21
+#: ../../src/rdbms/normalization.txt:26
 msgid ""
 "**Third Normal Form (3NF)**: All non-key columns should be dependent only on "
 "the primary key and not on any other non-key columns. This eliminates "
@@ -586,7 +617,7 @@ msgstr ""
 "первинного ключа, а не від будь-яких інших неключових стовпців. Це усуває "
 "транзитивні залежності."
 
-#: ../../src/rdbms/normalization.txt:25
+#: ../../src/rdbms/normalization.txt:30
 msgid ""
 "Normalization reduces data redundancy and dependency, making the database "
 "more efficient, flexible, and scalable. It also helps in maintaining data "
@@ -598,11 +629,11 @@ msgstr ""
 "узгодженість і точність даних, а також гарантує належну обробку оновлень і "
 "видалень."
 
-#: ../../src/rdbms/normalization.txt:31
+#: ../../src/rdbms/normalization.txt:36
 msgid "First normal form (1NF)"
 msgstr "Перша нормальна форма (1NF)"
 
-#: ../../src/rdbms/normalization.txt:33
+#: ../../src/rdbms/normalization.txt:38
 msgid ""
 "It's easier to understand normalization via examples. Let's start with some "
 "dummy orders data."
@@ -610,7 +641,7 @@ msgstr ""
 "Легше зрозуміти нормалізацію на прикладах. Почнемо з деяких фіктивних даних "
 "про замовлення."
 
-#: ../../src/rdbms/normalization.txt:36
+#: ../../src/rdbms/normalization.txt:41
 msgid "Initial data"
 msgstr "Початкові дані"
 
@@ -630,8 +661,8 @@ msgstr "quantity"
 msgid "total"
 msgstr "total"
 
-#: ../../src/rdbms/normalization.txt:1 ../../src/rdbms/relations.txt:180
-#: ../../src/rdbms/relations.txt:325 ../../src/rdbms/relations.txt:363
+#: ../../src/rdbms/normalization.txt:1 ../../src/rdbms/relations.txt:185
+#: ../../src/rdbms/relations.txt:330 ../../src/rdbms/relations.txt:368
 msgid "John Doe"
 msgstr "John Doe"
 
@@ -663,7 +694,7 @@ msgstr "Banana"
 msgid "25"
 msgstr "25"
 
-#: ../../src/rdbms/normalization.txt:43
+#: ../../src/rdbms/normalization.txt:48
 msgid ""
 "This table violates 1NF, since its columns contain multiple values. To bring "
 "this to 1NF all data within the table are to be atomic."
@@ -671,7 +702,7 @@ msgstr ""
 "Ця таблиця порушує 1NF, оскільки її стовпці містять кілька значень. Щоб "
 "привести це до 1NF, усі дані в таблиці мають бути атомарними."
 
-#: ../../src/rdbms/normalization.txt:46
+#: ../../src/rdbms/normalization.txt:51
 msgid "1NF applied"
 msgstr "Застосовано 1NF"
 
@@ -691,15 +722,15 @@ msgstr "50"
 msgid "150"
 msgstr "150"
 
-#: ../../src/rdbms/normalization.txt:54
+#: ../../src/rdbms/normalization.txt:59
 msgid "From now each peace of data is represented as atomic value."
 msgstr "Відтепер кожна частина даних представлена як атомарне значення."
 
-#: ../../src/rdbms/normalization.txt:57
+#: ../../src/rdbms/normalization.txt:62
 msgid "Second normal form (2NF)"
 msgstr "Друга нормальна форма (2NF)"
 
-#: ../../src/rdbms/normalization.txt:59
+#: ../../src/rdbms/normalization.txt:64
 msgid ""
 "The table above is in 1NF, but ``item price`` is dependent on the *item* "
 "entity itself and have low cohesion to *orders*. To bring it into 2NF a "
@@ -713,7 +744,7 @@ msgstr ""
 "Після цього таблиці ``order`` і ``product`` з'єднуються (пов'язані) одна з "
 "одною за допомогою зовнішнього ключа."
 
-#: ../../src/rdbms/normalization.txt:65 ../../src/rdbms/normalization.txt:107
+#: ../../src/rdbms/normalization.txt:70 ../../src/rdbms/normalization.txt:112
 msgid "``order`` table"
 msgstr "таблиця ``order``"
 
@@ -721,11 +752,11 @@ msgstr "таблиця ``order``"
 msgid "product_id"
 msgstr "product_id"
 
-#: ../../src/rdbms/normalization.txt:73
+#: ../../src/rdbms/normalization.txt:78
 msgid "``product`` table"
 msgstr "таблиця ``product``"
 
-#: ../../src/rdbms/normalization.txt:98
+#: ../../src/rdbms/normalization.txt:103
 msgid ""
 "``total`` field is also removed, since now it can be calculated as product "
 "of ``product.price`` and ``order.quantity``."
@@ -733,11 +764,11 @@ msgstr ""
 "Поле ``total`` також видалено, оскільки тепер його можна обчислити як "
 "добуток ``product.price`` і ``order.quantity``."
 
-#: ../../src/rdbms/normalization.txt:102
+#: ../../src/rdbms/normalization.txt:107
 msgid "Third normal form (3NF)"
 msgstr "3-тя нормальна форма (3NF)"
 
-#: ../../src/rdbms/normalization.txt:104
+#: ../../src/rdbms/normalization.txt:109
 msgid ""
 "At last it's time to remove a transitive functional dependency. Customer's "
 "name is not actually dependent on a product, but on a person, who places an "
@@ -751,19 +782,27 @@ msgstr ""
 msgid "customer_id"
 msgstr "customer_id"
 
-#: ../../src/rdbms/normalization.txt:115
+#: ../../src/rdbms/normalization.txt:120
 msgid "``customer`` table"
 msgstr "таблиця ``customer``"
 
-#: ../../src/rdbms/relations.txt:3
+#: ../../src/rdbms/relations.txt:-1
+msgid "This document describes the database relationships"
+msgstr "Цей документ описує відносини в базах даних"
+
+#: ../../src/rdbms/relations.txt:-1
+msgid "sql, db, database, relationship"
+msgstr "sql, db, database, relationship"
+
+#: ../../src/rdbms/relations.txt:8
 msgid "Data Relationships"
 msgstr "Зв'язки даних"
 
-#: ../../src/rdbms/relations.txt:5
+#: ../../src/rdbms/relations.txt:10
 msgid "It's time to talk about **data relations**."
 msgstr "Настав час поговорити про **відносини даних**."
 
-#: ../../src/rdbms/relations.txt:7
+#: ../../src/rdbms/relations.txt:12
 msgid ""
 "For example your database contains two tables: ``weather`` and ``city``. The "
 "diagram below demonstrates the overall data structure:"
@@ -771,7 +810,7 @@ msgstr ""
 "Наприклад, ваша база даних містить дві таблиці: ``weather`` і ``city``. "
 "Діаграма нижче демонструє загальну структуру даних:"
 
-#: ../../src/rdbms/relations.txt:25
+#: ../../src/rdbms/relations.txt:30
 msgid ""
 "Consider the following problem: you want to make sure no one can insert a "
 "record into ``weather`` without a matching entry in ``city`` table. This is "
@@ -789,16 +828,16 @@ msgstr ""
 "потім вставляв або відхиляв нові записи погоди. Цей підхід має низку проблем "
 "і дуже незручно."
 
-#: ../../src/rdbms/relations.txt:47
+#: ../../src/rdbms/relations.txt:52
 msgid ""
 "This declaration creates a relationship between two (or even more) tables."
 msgstr "Це оголошення створює зв'язок між двома (або навіть більше) таблицями."
 
-#: ../../src/rdbms/relations.txt:50
+#: ../../src/rdbms/relations.txt:55
 msgid "Foreign key (FK)"
 msgstr "Зовнішній ключ (FK)"
 
-#: ../../src/rdbms/relations.txt:52
+#: ../../src/rdbms/relations.txt:57
 msgid ""
 "So far, you have knowledge about **primary** keys. The **foreign** key is a "
 "column, that *references* some another table. In common, it's a reference to "
@@ -812,14 +851,14 @@ msgstr ""
 "обробляє лише цілісність даних, не обов'язково, щоб значення FK було "
 "відмінним від NULL."
 
-#: ../../src/rdbms/relations.txt:58
+#: ../../src/rdbms/relations.txt:63
 msgid ""
 "The relation's properties are described by CONSTRAINTS and the database's "
 "structure."
 msgstr ""
 "Властивості відношення описуються ОБМЕЖЕННЯМИ та структурою бази даних."
 
-#: ../../src/rdbms/relations.txt:61
+#: ../../src/rdbms/relations.txt:66
 msgid ""
 "For example, modifying declaration with ``NOT NULL`` constraint grants that "
 "each record within a table has a matching one entity in another table."
@@ -827,19 +866,19 @@ msgstr ""
 "Наприклад, зміна декларації з обмеженням ``NOT NULL`` гарантує, що кожний "
 "запис у таблиці має відповідну сутність в іншій таблиці."
 
-#: ../../src/rdbms/relations.txt:71
+#: ../../src/rdbms/relations.txt:76
 msgid "This brings us to various relationship models."
 msgstr "Це підводить нас до різних моделей відносин."
 
-#: ../../src/rdbms/relations.txt:74
+#: ../../src/rdbms/relations.txt:79
 msgid "One-to-many relationship (1-to-N)"
 msgstr "Зв'язок один-до-багатьох (1-до-N)"
 
-#: ../../src/rdbms/relations.txt:76
+#: ../../src/rdbms/relations.txt:81
 msgid "This is the most common relationship."
 msgstr "Це найпоширеніший зв'язок."
 
-#: ../../src/rdbms/relations.txt:78
+#: ../../src/rdbms/relations.txt:83
 msgid ""
 "For the example above there are no limitations on temperature measurements "
 "in a specified city. So, a single city may has 0 or N related records in "
@@ -849,7 +888,7 @@ msgstr ""
 "визначеному місті. Отже, окреме місто може мати 0 або N пов'язаних записів у "
 "таблиці ``погода``. Але кожен запис погоди пов'язаний до єдиного міста."
 
-#: ../../src/rdbms/relations.txt:82
+#: ../../src/rdbms/relations.txt:87
 msgid ""
 "Another example is employees and office buildings they work in. Some big "
 "company may have multiple offices and employee across the globe. Multiple "
@@ -862,11 +901,11 @@ msgstr ""
 "одночасно. Але кожен працівник може фізично перебувати лише в одному офісі "
 "одночасно."
 
-#: ../../src/rdbms/relations.txt:105
+#: ../../src/rdbms/relations.txt:110
 msgid "One-to-one relationship (1-to-1)"
 msgstr "One-to-one relationship (1-to-1)"
 
-#: ../../src/rdbms/relations.txt:107
+#: ../../src/rdbms/relations.txt:112
 msgid ""
 "``UNIQUE`` and ``NOT NULL`` constraints are used together to ensure there is "
 "and only one matching record. Back to the example with employees. Multiple "
@@ -879,11 +918,11 @@ msgstr ""
 "розташовані в у кожній офісній будівлі. Лише одна особа може займати лише "
 "одну робочу станцію одночасно."
 
-#: ../../src/rdbms/relations.txt:118
+#: ../../src/rdbms/relations.txt:123
 msgid "Many-to-many relationship (N-to-N)"
 msgstr "Зв'язок багато-до-багатьох (N-до-N)"
 
-#: ../../src/rdbms/relations.txt:120
+#: ../../src/rdbms/relations.txt:125
 msgid ""
 "These relationships require additional table. A good example may be a "
 "*project role*. There are many of them in a production team. And some "
@@ -895,11 +934,11 @@ msgstr ""
 "призначено ту саму роль (наприклад, розробники, тестувальники і т. д.). Але "
 "також одна людина може бути розробником і тестувальником одночасно."
 
-#: ../../src/rdbms/relations.txt:133
+#: ../../src/rdbms/relations.txt:138
 msgid "Joining data"
 msgstr "Об'єднання даних"
 
-#: ../../src/rdbms/relations.txt:135
+#: ../../src/rdbms/relations.txt:140
 msgid ""
 "``JOIN`` is used to *join* data fetched from multiple related tables. To "
 "build a valid query you are to set the tables to join and parameter to use "
@@ -909,11 +948,11 @@ msgstr ""
 "пов'язаних таблиць. Щоб побудувати дійсний запит, вам потрібно встановити "
 "таблиці для об'єднання та параметр, який використовується для цієї операції."
 
-#: ../../src/rdbms/relations.txt:139
+#: ../../src/rdbms/relations.txt:144
 msgid "Common syntax is:"
 msgstr "Загальний синтаксис:"
 
-#: ../../src/rdbms/relations.txt:145
+#: ../../src/rdbms/relations.txt:150
 msgid ""
 "There are various join types available. Here are is some dummy data to "
 "demonstrate their purpose."
@@ -921,97 +960,97 @@ msgstr ""
 "Існують різні типи об'єднань. Ось деякі фіктивні дані, щоб продемонструвати "
 "їх призначення."
 
-#: ../../src/rdbms/relations.txt:148
+#: ../../src/rdbms/relations.txt:153
 msgid "poem"
 msgstr "poem"
 
-#: ../../src/rdbms/relations.txt:151 ../../src/rdbms/relations.txt:249
-#: ../../src/rdbms/relations.txt:278 ../../src/rdbms/relations.txt:313
-#: ../../src/rdbms/relations.txt:345
+#: ../../src/rdbms/relations.txt:156 ../../src/rdbms/relations.txt:254
+#: ../../src/rdbms/relations.txt:283 ../../src/rdbms/relations.txt:318
+#: ../../src/rdbms/relations.txt:350
 msgid "title"
 msgstr "title"
 
-#: ../../src/rdbms/relations.txt:151
+#: ../../src/rdbms/relations.txt:156
 msgid "author_id"
 msgstr "author_id"
 
-#: ../../src/rdbms/relations.txt:153 ../../src/rdbms/relations.txt:251
-#: ../../src/rdbms/relations.txt:280 ../../src/rdbms/relations.txt:315
-#: ../../src/rdbms/relations.txt:347
+#: ../../src/rdbms/relations.txt:158 ../../src/rdbms/relations.txt:256
+#: ../../src/rdbms/relations.txt:285 ../../src/rdbms/relations.txt:320
+#: ../../src/rdbms/relations.txt:352
 msgid "On the Field of Battle"
 msgstr "On the Field of Battle"
 
-#: ../../src/rdbms/relations.txt:155 ../../src/rdbms/relations.txt:253
-#: ../../src/rdbms/relations.txt:282 ../../src/rdbms/relations.txt:317
-#: ../../src/rdbms/relations.txt:349
+#: ../../src/rdbms/relations.txt:160 ../../src/rdbms/relations.txt:258
+#: ../../src/rdbms/relations.txt:287 ../../src/rdbms/relations.txt:322
+#: ../../src/rdbms/relations.txt:354
 msgid "Moses"
 msgstr "Moses"
 
-#: ../../src/rdbms/relations.txt:157 ../../src/rdbms/relations.txt:255
-#: ../../src/rdbms/relations.txt:284 ../../src/rdbms/relations.txt:319
-#: ../../src/rdbms/relations.txt:351
+#: ../../src/rdbms/relations.txt:162 ../../src/rdbms/relations.txt:260
+#: ../../src/rdbms/relations.txt:289 ../../src/rdbms/relations.txt:324
+#: ../../src/rdbms/relations.txt:356
 msgid "The Forest Song"
 msgstr "The Forest Song"
 
-#: ../../src/rdbms/relations.txt:159 ../../src/rdbms/relations.txt:286
-#: ../../src/rdbms/relations.txt:353
+#: ../../src/rdbms/relations.txt:164 ../../src/rdbms/relations.txt:291
+#: ../../src/rdbms/relations.txt:358
 msgid "In the Catacombs"
 msgstr "In the Catacombs"
 
-#: ../../src/rdbms/relations.txt:159 ../../src/rdbms/relations.txt:163
-#: ../../src/rdbms/relations.txt:167 ../../src/rdbms/relations.txt:286
-#: ../../src/rdbms/relations.txt:290 ../../src/rdbms/relations.txt:294
-#: ../../src/rdbms/relations.txt:325 ../../src/rdbms/relations.txt:353
-#: ../../src/rdbms/relations.txt:357 ../../src/rdbms/relations.txt:361
-#: ../../src/rdbms/relations.txt:363
+#: ../../src/rdbms/relations.txt:164 ../../src/rdbms/relations.txt:168
+#: ../../src/rdbms/relations.txt:172 ../../src/rdbms/relations.txt:291
+#: ../../src/rdbms/relations.txt:295 ../../src/rdbms/relations.txt:299
+#: ../../src/rdbms/relations.txt:330 ../../src/rdbms/relations.txt:358
+#: ../../src/rdbms/relations.txt:362 ../../src/rdbms/relations.txt:366
+#: ../../src/rdbms/relations.txt:368
 msgid "null"
 msgstr "null"
 
-#: ../../src/rdbms/relations.txt:161 ../../src/rdbms/relations.txt:257
-#: ../../src/rdbms/relations.txt:288 ../../src/rdbms/relations.txt:321
-#: ../../src/rdbms/relations.txt:355
+#: ../../src/rdbms/relations.txt:166 ../../src/rdbms/relations.txt:262
+#: ../../src/rdbms/relations.txt:293 ../../src/rdbms/relations.txt:326
+#: ../../src/rdbms/relations.txt:360
 msgid "The Singing Stones"
 msgstr "The Singing Stones"
 
-#: ../../src/rdbms/relations.txt:163 ../../src/rdbms/relations.txt:290
-#: ../../src/rdbms/relations.txt:357
+#: ../../src/rdbms/relations.txt:168 ../../src/rdbms/relations.txt:295
+#: ../../src/rdbms/relations.txt:362
 msgid "Ancient Fairy Tales"
 msgstr "Ancient Fairy Tales"
 
-#: ../../src/rdbms/relations.txt:165 ../../src/rdbms/relations.txt:259
-#: ../../src/rdbms/relations.txt:292 ../../src/rdbms/relations.txt:323
-#: ../../src/rdbms/relations.txt:359
+#: ../../src/rdbms/relations.txt:170 ../../src/rdbms/relations.txt:264
+#: ../../src/rdbms/relations.txt:297 ../../src/rdbms/relations.txt:328
+#: ../../src/rdbms/relations.txt:364
 msgid "My Thoughts"
 msgstr "My Thoughts"
 
-#: ../../src/rdbms/relations.txt:167 ../../src/rdbms/relations.txt:294
-#: ../../src/rdbms/relations.txt:361
+#: ../../src/rdbms/relations.txt:172 ../../src/rdbms/relations.txt:299
+#: ../../src/rdbms/relations.txt:366
 msgid "To Shevchenko"
 msgstr "To Shevchenko"
 
-#: ../../src/rdbms/relations.txt:171
+#: ../../src/rdbms/relations.txt:176
 msgid "author"
 msgstr "author"
 
-#: ../../src/rdbms/relations.txt:176 ../../src/rdbms/relations.txt:251
-#: ../../src/rdbms/relations.txt:255 ../../src/rdbms/relations.txt:257
-#: ../../src/rdbms/relations.txt:280 ../../src/rdbms/relations.txt:284
-#: ../../src/rdbms/relations.txt:288 ../../src/rdbms/relations.txt:315
-#: ../../src/rdbms/relations.txt:319 ../../src/rdbms/relations.txt:321
-#: ../../src/rdbms/relations.txt:347 ../../src/rdbms/relations.txt:351
-#: ../../src/rdbms/relations.txt:355
+#: ../../src/rdbms/relations.txt:181 ../../src/rdbms/relations.txt:256
+#: ../../src/rdbms/relations.txt:260 ../../src/rdbms/relations.txt:262
+#: ../../src/rdbms/relations.txt:285 ../../src/rdbms/relations.txt:289
+#: ../../src/rdbms/relations.txt:293 ../../src/rdbms/relations.txt:320
+#: ../../src/rdbms/relations.txt:324 ../../src/rdbms/relations.txt:326
+#: ../../src/rdbms/relations.txt:352 ../../src/rdbms/relations.txt:356
+#: ../../src/rdbms/relations.txt:360
 msgid "Larysa Kosach"
 msgstr "Larysa Kosach"
 
-#: ../../src/rdbms/relations.txt:178 ../../src/rdbms/relations.txt:253
-#: ../../src/rdbms/relations.txt:259 ../../src/rdbms/relations.txt:282
-#: ../../src/rdbms/relations.txt:292 ../../src/rdbms/relations.txt:317
-#: ../../src/rdbms/relations.txt:323 ../../src/rdbms/relations.txt:349
-#: ../../src/rdbms/relations.txt:359
+#: ../../src/rdbms/relations.txt:183 ../../src/rdbms/relations.txt:258
+#: ../../src/rdbms/relations.txt:264 ../../src/rdbms/relations.txt:287
+#: ../../src/rdbms/relations.txt:297 ../../src/rdbms/relations.txt:322
+#: ../../src/rdbms/relations.txt:328 ../../src/rdbms/relations.txt:354
+#: ../../src/rdbms/relations.txt:364
 msgid "Ivan Franko"
 msgstr "Ivan Franko"
 
-#: ../../src/rdbms/relations.txt:212
+#: ../../src/rdbms/relations.txt:217
 msgid "Join types"
 msgstr "Join types"
 
@@ -1019,7 +1058,7 @@ msgstr "Join types"
 msgid "Cross join"
 msgstr "Cross join"
 
-#: ../../src/rdbms/relations.txt:220
+#: ../../src/rdbms/relations.txt:225
 msgid ""
 "For every possible combination of rows from T1 and T2 (i.e., a Cartesian "
 "product), the joined table will contain a row consisting of all columns in "
@@ -1035,7 +1074,7 @@ msgstr ""
 msgid "Qualified joins"
 msgstr "Qualified joins"
 
-#: ../../src/rdbms/relations.txt:231
+#: ../../src/rdbms/relations.txt:236
 msgid ""
 "The words ``INNER`` and ``OUTER`` are optional for all forms. ``INNER`` is "
 "the default; ``LEFT``, ``RIGHT`` and ``FULL`` imply ``OUTER`` join."
@@ -1043,11 +1082,11 @@ msgstr ""
 "Слова ``INNER`` і ``OUTER`` є необов'язковими для всіх форм. ``INNER`` є "
 "типовим; ``LEFT``, ``RIGHT`` і ``FULL` ` означає ``OUTER`` приєднання."
 
-#: ../../src/rdbms/relations.txt:236
+#: ../../src/rdbms/relations.txt:241
 msgid "INNER JOIN"
 msgstr "INNER JOIN"
 
-#: ../../src/rdbms/relations.txt:238
+#: ../../src/rdbms/relations.txt:243
 msgid ""
 "For each row R1 of T1, the joined table has a row for each row in T2 that "
 "satisfies the join condition with R1."
@@ -1055,15 +1094,15 @@ msgstr ""
 "Для кожного рядка R1 T1 об'єднана таблиця має рядок для кожного рядка T2, "
 "який задовольняє умову об'єднання з R1."
 
-#: ../../src/rdbms/relations.txt:241
+#: ../../src/rdbms/relations.txt:246
 msgid "Inner join"
 msgstr "Inner join"
 
-#: ../../src/rdbms/relations.txt:263
+#: ../../src/rdbms/relations.txt:268
 msgid "LEFT OUTER JOIN"
 msgstr "LEFT OUTER JOIN"
 
-#: ../../src/rdbms/relations.txt:265
+#: ../../src/rdbms/relations.txt:270
 msgid ""
 "First, an inner join is performed. Then, for each row in T1 that does not "
 "satisfy the join condition with any row in T2, a joined row is added with "
@@ -1075,15 +1114,15 @@ msgstr ""
 "об'єднаний рядок із нульовими значеннями в стовпцях T2. Таким чином, "
 "об'єднана таблиця завжди має щонайменше один рядок для кожного рядка в T1."
 
-#: ../../src/rdbms/relations.txt:270
+#: ../../src/rdbms/relations.txt:275
 msgid "Left join"
 msgstr "Left join"
 
-#: ../../src/rdbms/relations.txt:298
+#: ../../src/rdbms/relations.txt:303
 msgid "RIGHT OUTER JOIN"
 msgstr "RIGHT OUTER JOIN"
 
-#: ../../src/rdbms/relations.txt:300
+#: ../../src/rdbms/relations.txt:305
 msgid ""
 "First, an inner join is performed. Then, for each row in T2 that does not "
 "satisfy the join condition with any row in T1, a joined row is added with "
@@ -1096,15 +1135,15 @@ msgstr ""
 "лівого об'єднання: таблиця результатів завжди матиме рядок для кожного рядка "
 "в T2."
 
-#: ../../src/rdbms/relations.txt:305
+#: ../../src/rdbms/relations.txt:310
 msgid "Right join"
 msgstr "Right join"
 
-#: ../../src/rdbms/relations.txt:329
+#: ../../src/rdbms/relations.txt:334
 msgid "FULL OUTER JOIN"
 msgstr "FULL OUTER JOIN"
 
-#: ../../src/rdbms/relations.txt:331
+#: ../../src/rdbms/relations.txt:336
 msgid ""
 "First, an inner join is performed. Then, for each row in T1 that does not "
 "satisfy the join condition with any row in T2, a joined row is added with "
@@ -1118,6 +1157,6 @@ msgstr ""
 "рядка T2, який не задовольняє умову з'єднання з будь-яким рядком T1, "
 "додається об'єднаний рядок із нульовими значеннями в стовпцях T1."
 
-#: ../../src/rdbms/relations.txt:337
+#: ../../src/rdbms/relations.txt:342
 msgid "Full join"
 msgstr "Full join"

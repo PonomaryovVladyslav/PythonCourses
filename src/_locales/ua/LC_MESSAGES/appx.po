@@ -1,15 +1,17 @@
-# APPENDIXES TRANSLATION FILE.
+# APPENDIXES TRANSLATION.
+#
 # Copyright (C) 2023, Python training course authors and contributors
 # This file is distributed under the same license as the Python Training
 # Course package.
-# SERHII HORODILOV <SHORODIL@GMAIL.COM>, 2023.
+#
+# SERHII HORODILOV <sgorodil@gmail.com>
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: Python Training Course 2022.11.dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-04-12 14:00+0300\n"
-"PO-Revision-Date: 2023-04-12 14:22+0300\n"
+"POT-Creation-Date: 2023-04-14 01:49+0300\n"
+"PO-Revision-Date: 2023-04-14 02:03+0300\n"
 "Last-Translator: Serhii Horodilov <sgorodil@gmail.com>\n"
 "Language-Team: ua <LL@li.org>\n"
 "Language: uk\n"
@@ -20,6 +22,18 @@ msgstr ""
 "n%10<=4 && (n%100<12 || n%100>14) ? 1 : 2);\n"
 "Generated-By: Babel 2.12.1\n"
 "X-Generator: Poedit 3.2.2\n"
+
+#: ../../src/appx/blog.txt:-1
+msgid "Specification for Django blog training project"
+msgstr "Специфікація навчального проекту блогу Django"
+
+#: ../../src/appx/blog.txt:-1 ../../src/appx/software_list.rst:-1
+msgid "Serhii Horodilov"
+msgstr "Serhii Horodilov"
+
+#: ../../src/appx/blog.txt:-1
+msgid "python, django, blog, project, training"
+msgstr "python, django, blog, project, training"
 
 #: ../../blog/docs/spec.rst:10
 msgid "Blog Project Specification"
@@ -217,7 +231,7 @@ msgid ""
 "*profile*) should raise ``Http404`` in case entity could not be fetched."
 msgstr ""
 "Усі ресурси, пов'язані з окремою сутністю (*деталі*, *оновлення*, "
-"*видалення*, *профіль*) мають викликати `Http404` у випадку, якщо сутність "
+"*видалення*, *профіль*) мають викликати ``Http404`` у випадку, якщо сутність "
 "не вдалося отримати."
 
 #: ../../blog/docs/spec.rst:116
@@ -369,8 +383,7 @@ msgstr "``confirm password``"
 #: ../../blog/docs/spec.rst:165
 msgid "``username`` value should be validated against existing values"
 msgstr ""
-"Значення \"ім'я користувача\" має перевірятися на відповідність існуючим "
-"значенням"
+"Значення ``username`` має перевірятися на відповідність існуючим значенням"
 
 #: ../../blog/docs/spec.rst:166
 msgid "``password`` and ``confirm password`` values should match"
@@ -537,11 +550,25 @@ msgstr ""
 msgid "Only authors can change their posts."
 msgstr "Тільки автори можуть змінювати свої повідомлення."
 
-#: ../../src/appx/code_edit.txt:5
+#: ../../src/appx/code_edit.txt:-1
+msgid "Code editors and IDEs for Python"
+msgstr "Редактори коду та IDE для Python"
+
+#: ../../src/appx/code_edit.txt:-1 ../../src/appx/conv_store.txt:-1
+#: ../../src/appx/env_path.txt:-1 ../../src/appx/precedence.txt:-1
+#: ../../src/appx/printf.txt:-1 ../../src/appx/wtk.txt:-1
+msgid "Serhii Horodilov sgorodil@gmail.com"
+msgstr "Serhii Horodilov sgorodil@gmail.com"
+
+#: ../../src/appx/code_edit.txt:-1
+msgid "python, editor, ide"
+msgstr "python, editor, ide"
+
+#: ../../src/appx/code_edit.txt:8
 msgid "Code Editors"
 msgstr "Редактори Коду"
 
-#: ../../src/appx/code_edit.txt:7
+#: ../../src/appx/code_edit.txt:10
 msgid ""
 "Writing Python using IDLE or the Python Shell is great for simple things, "
 "but those tools quickly turn larger programming projects into frustrating "
@@ -554,6 +581,14 @@ msgstr ""
 "програмування на розчаровуючу яму відчаю. Використання IDE або навіть просто "
 "хорошого спеціального редактора коду робить кодування цікавим — але який з "
 "них найкращий для вас? :cite:`realpython:code-edit`"
+
+#: ../../src/appx/conv_store.txt:-1
+msgid "Convenience store challenge"
+msgstr "Завдання: продуктовий магазин"
+
+#: ../../src/appx/conv_store.txt:-1
+msgid "python, basics, oop, object-oriented programming"
+msgstr "python, basics, oop, object-oriented programming"
 
 #: ../../problem-sets/src/conv_store/challenge.rst:3
 msgid "Convenience Store Challenge"
@@ -825,7 +860,7 @@ msgstr ""
 #: ../../problem-sets/src/conv_store/challenge.rst:102
 msgid "``Product`` should be initialized with all required data, no defaults."
 msgstr ""
-"``Продукт`` має бути ініціалізований усіма необхідними даними, без значень "
+"``Product`` має бути ініціалізований усіма необхідними даними, без значень "
 "за замовчуванням."
 
 #: ../../problem-sets/src/conv_store/challenge.rst:103
@@ -1085,9 +1120,25 @@ msgstr ""
 msgid "Project dependencies are to be updated."
 msgstr "Залежності проекту потрібно оновити."
 
-#: ../../src/appx/env_path.txt:5
+#: ../../src/appx/env_path.txt:-1
+msgid "Setting up environment variables"
+msgstr "Встановлення змінних середовища"
+
+#: ../../src/appx/env_path.txt:-1
+msgid "settings, environment, variables"
+msgstr "settings, environment, variables"
+
+#: ../../src/appx/env_path.txt:8
 msgid "Issue - System Environment PATH"
 msgstr "Проблема - System Environment PATH"
+
+#: ../../src/appx/precedence.txt:-1
+msgid "Operator precedence in Python"
+msgstr "Пріоритет операторів в Python"
+
+#: ../../src/appx/precedence.txt:-1
+msgid "python, basics, operator, precedence"
+msgstr "python, basics, operator, precedence"
 
 #: ../../src/appx/precedence.txt:8
 msgid "Operator Precedence"
@@ -1288,11 +1339,19 @@ msgstr ""
 "оператор ``%`` також використовується для форматування рядків; "
 "застосовується той самий пріоритет."
 
-#: ../../src/appx/printf.txt:7
+#: ../../src/appx/printf.txt:-1
+msgid "Formatted strings usage in Python"
+msgstr "Використання форматованих рядків в Python"
+
+#: ../../src/appx/printf.txt:-1
+msgid "python, string, formatting"
+msgstr "python, string, formatting"
+
+#: ../../src/appx/printf.txt:10
 msgid "``printf-style`` String Formatting"
 msgstr "``printf-style`` Форматування рядків"
 
-#: ../../src/appx/printf.txt:9
+#: ../../src/appx/printf.txt:12
 msgid ""
 "String objects have one unique built-in operation: the ``%`` operator "
 "(modulo). This is also known as the string *formatting* or *interpolation* "
@@ -1308,57 +1367,57 @@ msgstr ""
 "замінюються нулем або більше елементами *значень*. Якщо для *format* "
 "потрібен один аргумент, *values* може бути одним некортежним об’єктом."
 
-#: ../../src/appx/printf.txt:16
+#: ../../src/appx/printf.txt:19
 msgid "The conversion flag characters are:"
 msgstr "Символи перетворення:"
 
-#: ../../src/appx/printf.txt:19
+#: ../../src/appx/printf.txt:22
 msgid "Flag"
 msgstr "Символ"
 
-#: ../../src/appx/printf.txt:19 ../../src/appx/printf.txt:37
+#: ../../src/appx/printf.txt:22 ../../src/appx/printf.txt:40
 msgid "Meaning"
 msgstr "Значення"
 
-#: ../../src/appx/printf.txt:21
+#: ../../src/appx/printf.txt:24
 msgid "``#``"
 msgstr "``#``"
 
-#: ../../src/appx/printf.txt:21
+#: ../../src/appx/printf.txt:24
 msgid "The value conversion will use the \"alternative form\""
 msgstr "Перетворення значень використовуватиме \"альтернативну форму\""
 
-#: ../../src/appx/printf.txt:23
+#: ../../src/appx/printf.txt:26
 msgid "``0``"
 msgstr "``0``"
 
-#: ../../src/appx/printf.txt:23
+#: ../../src/appx/printf.txt:26
 msgid "The conversion will be zero padded for numeric values"
 msgstr "Перетворення буде доповнено нулем для числових значень"
 
-#: ../../src/appx/printf.txt:25
+#: ../../src/appx/printf.txt:28
 msgid "``'-'``"
 msgstr "``'-'``"
 
-#: ../../src/appx/printf.txt:25
+#: ../../src/appx/printf.txt:28
 msgid ""
 "The converted value is left adjusted (override the ``'0'`` if both are given)"
 msgstr ""
 "Перетворене значення коригується зліва (замініть ``'0'``, якщо надано обидва)"
 
-#: ../../src/appx/printf.txt:28
+#: ../../src/appx/printf.txt:31
 msgid "``' '``"
 msgstr "``' '``"
 
-#: ../../src/appx/printf.txt:28
+#: ../../src/appx/printf.txt:31
 msgid "(a space) A blank should be left before a positive number"
 msgstr "(пробіл) Перед додатним числом слід залишити пробіл"
 
-#: ../../src/appx/printf.txt:30
+#: ../../src/appx/printf.txt:33
 msgid "``'+'``"
 msgstr "``'+'``"
 
-#: ../../src/appx/printf.txt:30
+#: ../../src/appx/printf.txt:33
 msgid ""
 "A sign character (``'+'`` or ``'-'``) will precede the conversion (overrides "
 "a \"space\" flag)"
@@ -1366,91 +1425,91 @@ msgstr ""
 "Символ знака (``'+'`` або ``'-'``) передуватиме перетворенню (перевизначає "
 "прапор \"пробіл\")"
 
-#: ../../src/appx/printf.txt:34
+#: ../../src/appx/printf.txt:37
 msgid "The conversion types are:"
 msgstr "Типи перетворення:"
 
-#: ../../src/appx/printf.txt:37
+#: ../../src/appx/printf.txt:40
 msgid "Conversion"
 msgstr "Перетворення"
 
-#: ../../src/appx/printf.txt:39
+#: ../../src/appx/printf.txt:42
 msgid "``'d'``"
 msgstr "``'d'``"
 
-#: ../../src/appx/printf.txt:39 ../../src/appx/printf.txt:41
+#: ../../src/appx/printf.txt:42 ../../src/appx/printf.txt:44
 msgid "Signed integer decimal"
 msgstr "Ціле десяткове число зі знаком"
 
-#: ../../src/appx/printf.txt:41
+#: ../../src/appx/printf.txt:44
 msgid "``'i'``"
 msgstr "``'i'``"
 
-#: ../../src/appx/printf.txt:43
+#: ../../src/appx/printf.txt:46
 msgid "``'o'``"
 msgstr "``'o'``"
 
-#: ../../src/appx/printf.txt:43
+#: ../../src/appx/printf.txt:46
 msgid "Signed octal value"
 msgstr "Вісімкове значення зі знаком"
 
-#: ../../src/appx/printf.txt:45
+#: ../../src/appx/printf.txt:48
 msgid "``'u'``"
 msgstr "``'u'``"
 
-#: ../../src/appx/printf.txt:45
+#: ../../src/appx/printf.txt:48
 msgid "Obsolete type - it is identical to ``'d'``"
 msgstr "Застарілий тип - ідентичний ``'d``"
 
-#: ../../src/appx/printf.txt:47
+#: ../../src/appx/printf.txt:50
 msgid "``'x'``"
 msgstr "``'x'``"
 
-#: ../../src/appx/printf.txt:47
+#: ../../src/appx/printf.txt:50
 msgid "Signed hexadecimal (lowercase)"
 msgstr "Шістнадцяткове число зі знаком (маленький регістр)"
 
-#: ../../src/appx/printf.txt:49
+#: ../../src/appx/printf.txt:52
 msgid "``'X'``"
 msgstr "``'X'``"
 
-#: ../../src/appx/printf.txt:49
+#: ../../src/appx/printf.txt:52
 msgid "Signed hexadecimal (uppercase)"
 msgstr "Шістнадцяткове число зі знаком (верхній регістр)"
 
-#: ../../src/appx/printf.txt:51
+#: ../../src/appx/printf.txt:54
 msgid "``'e'``"
 msgstr "``'e'``"
 
-#: ../../src/appx/printf.txt:51
+#: ../../src/appx/printf.txt:54
 msgid "Floating point exponential format (lowercase)"
 msgstr "Експоненціальний формат із плаваючою комою (нижній регістр)"
 
-#: ../../src/appx/printf.txt:53
+#: ../../src/appx/printf.txt:56
 msgid "``'E'``"
 msgstr "``'E'``"
 
-#: ../../src/appx/printf.txt:53
+#: ../../src/appx/printf.txt:56
 msgid "Floating point exponential format (uppercase)"
 msgstr "Експоненціальний формат із плаваючою комою (верхній регістр)"
 
-#: ../../src/appx/printf.txt:55
+#: ../../src/appx/printf.txt:58
 msgid "``'f'`` ``'F'``"
 msgstr "``'f'`` ``'F'``"
 
-#: ../../src/appx/printf.txt:55
+#: ../../src/appx/printf.txt:58
 msgid "Floating point decimal format"
 msgstr "Десятковий формат із плаваючою комою"
 
-#: ../../src/appx/printf.txt:58
+#: ../../src/appx/printf.txt:61
 msgid "``'g'``"
 msgstr "``'g'``"
 
-#: ../../src/appx/printf.txt:61
+#: ../../src/appx/printf.txt:64
 msgid "``'G'``"
 msgstr "``'G'``"
 
-#: ../../src/appx/printf.txt:58
+#: ../../src/appx/printf.txt:61
 msgid ""
 "Floating point format. Uses lowercase exponential format if exponent is less "
 "that -4 or not less than precision, decimal format otherwise."
@@ -1459,77 +1518,85 @@ msgstr ""
 "формату, якщо показник степеня менший за -4 або не менший за точність, "
 "десятковий формат інакше."
 
-#: ../../src/appx/printf.txt:63
+#: ../../src/appx/printf.txt:66
 msgid "``'c'``"
 msgstr "``'c'``"
 
-#: ../../src/appx/printf.txt:63
+#: ../../src/appx/printf.txt:66
 msgid "Single character (accepts integer or single character string)"
 msgstr "Один символ (приймає ціле число або рядок з одним символом)"
 
-#: ../../src/appx/printf.txt:65
+#: ../../src/appx/printf.txt:68
 msgid "``'r'``"
 msgstr "``'r'``"
 
-#: ../../src/appx/printf.txt:65
+#: ../../src/appx/printf.txt:68
 msgid "Converts any Python object using ``repr()``"
 msgstr "Перетворює будь-який об’єкт Python за допомогою ``repr()``"
 
-#: ../../src/appx/printf.txt:67
+#: ../../src/appx/printf.txt:70
 msgid "``'s'``"
 msgstr "``'s'``"
 
-#: ../../src/appx/printf.txt:67
+#: ../../src/appx/printf.txt:70
 msgid "Converts any Python object using ``str()``"
 msgstr "Перетворює будь-який об’єкт Python за допомогою ``str()``"
 
-#: ../../src/appx/printf.txt:69
+#: ../../src/appx/printf.txt:72
 msgid "``'a'``"
 msgstr "``'a'``"
 
-#: ../../src/appx/printf.txt:69
+#: ../../src/appx/printf.txt:72
 msgid "Converts any Python object using ``ascii()``"
 msgstr "Перетворює будь-який об’єкт Python за допомогою ``ascii()``"
 
-#: ../../src/appx/printf.txt:71
+#: ../../src/appx/printf.txt:74
 msgid "``'%'``"
 msgstr "``'%'``"
 
-#: ../../src/appx/printf.txt:71
+#: ../../src/appx/printf.txt:74
 msgid ""
 "No arguments is converted, results in a ``'%'`` character in the result."
 msgstr "Жодні аргументи не перетворюються, результатом є символ ``'%'``."
 
-#: ../../src/appx/software_list.md:1
+#: ../../src/appx/software_list.rst:-1
+msgid "Useful software list"
+msgstr "Список корисного програмного забезпечення"
+
+#: ../../src/appx/software_list.rst:-1
+msgid "software"
+msgstr "software"
+
+#: ../../src/appx/software_list.rst:7
 msgid "Software List"
 msgstr "Список Програмного Забезпечення"
 
-#: ../../src/appx/software_list.md:4
+#: ../../src/appx/software_list.rst:10
 msgid "7zip"
 msgstr "7zip"
 
-#: ../../src/appx/software_list.md:7
+#: ../../src/appx/software_list.rst:12
 msgid "**7-Zip** is **free software** with **open source**."
 msgstr ""
 "**7-Zip** — це **вільне програмне забезпечення** з **відкритим кодом**."
 
-#: ../../src/appx/software_list.md:9
+#: ../../src/appx/software_list.rst:14
 msgid ""
-"High compression ratio in [7z format](https://7-zip.org/7z.html) with "
+"High compression ratio in `7z format <https://7-zip.org/7z.html>`__ with "
 "**LZMA** and **LZMA2** compression"
 msgstr ""
-"Високий ступінь стиснення у [форматі 7z](https://7-zip.org/7z.html) зі "
+"Високий ступінь стиснення у `7z format <https://7-zip.org/7z.html>`__ зі "
 "стисненням **LZMA** і **LZMA2**"
 
-#: ../../src/appx/software_list.md:11
+#: ../../src/appx/software_list.rst:16
 msgid "Supported formats:"
 msgstr "Підтримувані формати:"
 
-#: ../../src/appx/software_list.md:12
+#: ../../src/appx/software_list.rst:18
 msgid "Packing / unpacking: 7z, XZ, BZIP2, GZIP, TAR, ZIP and WIM"
 msgstr "Пакування / розпакування: 7z, XZ, BZIP2, GZIP, TAR, ZIP і WIM"
 
-#: ../../src/appx/software_list.md:13
+#: ../../src/appx/software_list.rst:19
 msgid ""
 "Unpacking only: APFS, AR, ARJ, CAB, CHM, CPIO, CramFS, DMG, EXT, FAT, GPT, "
 "HFS, IHEX, ISO, LZH, LZMA, MBR, MSI, NSIS, NTFS, QCOW2, RAR, RPM, SquashFS, "
@@ -1539,39 +1606,39 @@ msgstr ""
 "GPT, HFS, IHEX, ISO, LZH, LZMA, MBR, MSI, NSIS, NTFS, QCOW2, RAR, RPM, "
 "SquashFS , UDF, UEFI, VDI, VHD, VHDX, VMDK, XAR і Z."
 
-#: ../../src/appx/software_list.md:16
+#: ../../src/appx/software_list.rst:23
 msgid "Self-extracting capability for 7z format"
 msgstr "Можливість саморозпакування для формату 7z"
 
-#: ../../src/appx/software_list.md:17
+#: ../../src/appx/software_list.rst:24
 msgid "Integration with Windows Shell"
 msgstr "Інтеграція з Windows Shell"
 
-#: ../../src/appx/software_list.md:19
+#: ../../src/appx/software_list.rst:26
 msgid "https://7-zip.org/"
 msgstr "https://7-zip.org/"
 
-#: ../../src/appx/software_list.md:21
+#: ../../src/appx/software_list.rst:29
 msgid "cygwin"
 msgstr "cygwin"
 
-#: ../../src/appx/software_list.md:24
+#: ../../src/appx/software_list.rst:31
 msgid ""
 "It is a large collection of GNU and Open Source tools which provide "
-"functionality similar to a [Linux distribution](https://en.wikipedia.org/"
-"wiki/Linux_distribution) on Windows and a DLL (cygwin1.dll) which provides "
-"substantial POSIX API functionality."
+"functionality similar to a `Linux distribution <https://en.wikipedia.org/"
+"wiki/Linux_distribution>`__ on Windows and a DLL (cygwin1.dll) which "
+"provides substantial POSIX API functionality."
 msgstr ""
 "Це велика колекція інструментів GNU та Open Source, які забезпечують "
-"функціональність, подібну до [дистрибутива Linux](https://en.wikipedia.org/"
-"wiki/Linux_distribution) у Windows та DLL (cygwin1.dll), яка забезпечує "
+"функціональність, подібну до `дистрибутива Linux <https://en.wikipedia.org/"
+"wiki/Linux_distribution>`__ у Windows та DLL (cygwin1.dll), яка забезпечує "
 "значний POSIX Функціонал API."
 
-#: ../../src/appx/software_list.md:30
+#: ../../src/appx/software_list.rst:37
 msgid "**Cygwin is not**:"
 msgstr "**Сygwin це не**:"
 
-#: ../../src/appx/software_list.md:32
+#: ../../src/appx/software_list.rst:39
 msgid ""
 "a way to run native Linux apps on Windows. You must rebuild your application "
 "*from source* if you want it to run on Windows."
@@ -1579,51 +1646,51 @@ msgstr ""
 "спосіб запуску рідних програм Linux у Windows. Ви повинні перебудувати свою "
 "програму *з вихідного коду*, якщо ви хочете, щоб вона запускалася в Windows."
 
-#: ../../src/appx/software_list.md:34
+#: ../../src/appx/software_list.rst:41
 msgid ""
 "a way to magically make native Windows apps aware of UNIX® functionality "
-"like `signals`, `ptys` etc. Again, you need to build your apps *from source* "
-"if you want to take advantage of Cygwin functionality."
+"like ``signals``, ``ptys`` etc. Again, you need to build your apps *from "
+"source* if you want to take advantage of Cygwin functionality."
 msgstr ""
 "спосіб чарівним чином зробити рідні програми Windows відомими "
 "функціональності UNIX®, як-от `signals`, `ptys` тощо. Знову ж таки, вам "
 "потрібно створити свої програми *з джерела*, якщо ви хочете скористатися "
 "перевагами функціональності Cygwin."
 
-#: ../../src/appx/software_list.md:38
+#: ../../src/appx/software_list.rst:46
 msgid "https://www.cygwin.com/"
 msgstr "https://www.cygwin.com/"
 
-#: ../../src/appx/software_list.md:40
-msgid "git[^cygwin-pkg]"
-msgstr "git[^cygwin-pkg]"
+#: ../../src/appx/software_list.rst:49
+msgid "git [#cygwin]_"
+msgstr "git [#cygwin]_"
 
-#: ../../src/appx/software_list.md:43
+#: ../../src/appx/software_list.rst:51
 msgid ""
-"Git is a [free and open source](https://git-scm.com/about/free-and-open-"
-"source) distributed version control system designed to handle everything "
+"Git is a `free and open source <https://git-scm.com/about/free-and-open-"
+"source>`__ distributed version control system designed to handle everything "
 "from small to very large projects with speed and efficiency."
 msgstr ""
-"Git — це [безкоштовна система з відкритим вихідним кодом](https://git-scm."
-"com/about/free-and-open-source) розподілена система контролю версій, "
+"Git — це `безкоштовна система з відкритим вихідним кодом <https://git-scm."
+"com/about/free-and-open-source>`__ розподілена система контролю версій, "
 "призначена для швидкого та ефективного керування всіма проектами, від малих "
 "до дуже великих."
 
-#: ../../src/appx/software_list.md:47
+#: ../../src/appx/software_list.rst:56
 msgid "https://git-scm.com/"
 msgstr "https://git-scm.com/"
 
-#: ../../src/appx/software_list.md:49
+#: ../../src/appx/software_list.rst:59
 msgid "Docker"
 msgstr "Docker"
 
-#: ../../src/appx/software_list.md:52
+#: ../../src/appx/software_list.rst:61
 msgid "The most-loved Tool in Stack Overflow’s 2022 Developer Survey."
 msgstr ""
 "Найулюбленіший інструмент в опитуванні розробників Stack Overflow за 2022 "
 "рік."
 
-#: ../../src/appx/software_list.md:54
+#: ../../src/appx/software_list.rst:63
 msgid ""
 "Docker helps developers bring their ideas to life by conquering the "
 "complexity of app development. We simplify and accelerate development "
@@ -1639,15 +1706,15 @@ msgstr ""
 "Docker Desktop і Docker Hub забезпечують неперевершену простоту, гнучкість і "
 "вибір."
 
-#: ../../src/appx/software_list.md:60
+#: ../../src/appx/software_list.rst:70
 msgid "https://www.docker.com/"
 msgstr "https://www.docker.com/"
 
-#: ../../src/appx/software_list.md:62
-msgid "PostgreSQL[^cygwin-pkg]"
-msgstr "PostgreSQL[^cygwin-pkg]"
+#: ../../src/appx/software_list.rst:73
+msgid "PostgreSQL [#cygwin]_"
+msgstr "PostgreSQL [#cygwin]_"
 
-#: ../../src/appx/software_list.md:65
+#: ../../src/appx/software_list.rst:75
 msgid ""
 "PostgreSQL is a powerful, open source object-relational database system with "
 "over 35 years of active development that has earned it a strong reputation "
@@ -1657,15 +1724,15 @@ msgstr ""
 "кодом, активна розробка якої триває понад 35 років, завдяки чому вона "
 "заслужила міцну репутацію надійності, надійності функцій і продуктивності."
 
-#: ../../src/appx/software_list.md:69
+#: ../../src/appx/software_list.rst:79
 msgid "https://www.postgresql.org/"
 msgstr "https://www.postgresql.org/"
 
-#: ../../src/appx/software_list.md:71
-msgid "psql[^cygwin-pkg]"
-msgstr "psql[^cygwin-pkg]"
+#: ../../src/appx/software_list.rst:84
+msgid "psql [#cygwin]_"
+msgstr "psql [#cygwin]_"
 
-#: ../../src/appx/software_list.md:74
+#: ../../src/appx/software_list.rst:86
 msgid ""
 "A terminal-based front-end to PostgreSQL. It enables you to type in queries "
 "interactively, issue them to PostgreSQL, and see the query results. "
@@ -1681,23 +1748,23 @@ msgstr ""
 "подібних до оболонки, для полегшення написання сценаріїв і автоматизації "
 "різноманітних завдань."
 
-#: ../../src/appx/software_list.md:80
+#: ../../src/appx/software_list.rst:93
 msgid ""
 "On Windows it will be installed within PostgreSQL RDBMS. For macOS and Linux "
-"look for `postgresql-client` package."
+"look for ``postgresql-client`` package."
 msgstr ""
 "У Windows його буде встановлено в СУБД PostgreSQL. Для macOS і Linux "
-"знайдіть пакет `postgresql-client`."
+"знайдіть пакет ``postgresql-client``."
 
-#: ../../src/appx/software_list.md:83
+#: ../../src/appx/software_list.rst:96
 msgid "https://www.postgresql.org/docs/current/app-psql.html"
 msgstr "https://www.postgresql.org/docs/current/app-psql.html"
 
-#: ../../src/appx/software_list.md:85
+#: ../../src/appx/software_list.rst:99
 msgid "pgAdmin"
 msgstr "pgAdmin"
 
-#: ../../src/appx/software_list.md:88
+#: ../../src/appx/software_list.rst:101
 msgid ""
 "pgAdmin is the most popular and feature rich Open Source administration and "
 "development platform for PostgreSQL, the most advanced Open Source database "
@@ -1707,41 +1774,49 @@ msgstr ""
 "та розробки з відкритим кодом для PostgreSQL, найдосконалішої бази даних з "
 "відкритим кодом у світі."
 
-#: ../../src/appx/software_list.md:92
-msgid "It is a PostgreSQL client (like a `psql`), but with web based GUI."
+#: ../../src/appx/software_list.rst:105
+msgid "It is a PostgreSQL client (like a ``psql``), but with web based GUI."
 msgstr ""
-"Це клієнт PostgreSQL (як `psql`), але з графічним інтерфейсом на основі веб-"
-"інтерфейсу."
+"Це клієнт PostgreSQL (як ``psql``), але з графічним інтерфейсом на основі "
+"веб-інтерфейсу."
 
-#: ../../src/appx/software_list.md:94
+#: ../../src/appx/software_list.rst:107
 msgid "https://pgadmin.org/"
 msgstr "https://pgadmin.org/"
 
-#: ../../src/appx/software_list.md:96
-msgid "SQLite[^cygwin-pkg]"
-msgstr "SQLite[^cygwin-pkg]"
+#: ../../src/appx/software_list.rst:110
+msgid "SQLite [#cygwin]_"
+msgstr "SQLite [#cygwin]_"
 
-#: ../../src/appx/software_list.md:99
+#: ../../src/appx/software_list.rst:112
 msgid ""
-"SQLite is a C-language library that implements a [small](https://sqlite.org/"
-"footprint.html), [fast](https://sqlite.org/fasterthanfs.html), [self-"
-"contained](https://sqlite.org/selfcontained.html), [high-reliability]"
-"(https://sqlite.org/hirely.html), [full-featured](https://sqlite.org/fullsql."
-"html), SQL database engine."
+"SQLite is a C-language library that implements a `small <https://sqlite.org/"
+"footprint.html>`__, `fast <https://sqlite.org/fasterthanfs.html>`__, `self-"
+"contained <https://sqlite.org/selfcontained.html>`__, `high-reliability "
+"<https://sqlite.org/hirely.html>`__, `full-featured <https://sqlite.org/"
+"fullsql.html>`__, SQL database engine."
 msgstr ""
-"SQLite — це бібліотека мовою C, яка реалізує [маленьку](https://sqlite.org/"
-"footprint.html), [швидку](https://sqlite.org/fasterthanfs.html), "
-"[самодостатню]( https://sqlite.org/selfcontained.html), [висока надійність]"
-"(https://sqlite.org/hirely.html), [повнофункціональний](https://sqlite.org/"
-"fullsql.html) , двигун бази даних SQL."
+"SQLite — це бібліотека мовою C, яка реалізує `маленьку <https://sqlite.org/"
+"footprint.html>`__, `швидку <https://sqlite.org/fasterthanfs.html>`__, "
+"`самодостатню <https://sqlite.org/selfcontained.html>`__, `висока надійність "
+"<https://sqlite.org/hirely.html>`__, `повнофункціональний <https://sqlite."
+"org/fullsql.html>`__, двигун бази даних SQL."
 
-#: ../../src/appx/software_list.md:106
+#: ../../src/appx/software_list.rst:120
 msgid "https://sqlite.org/"
 msgstr "https://sqlite.org/"
 
-#: ../../src/appx/software_list.md:109
+#: ../../src/appx/software_list.rst:123
 msgid "available for installation as a cygwin package"
 msgstr "доступно для встановлення як пакет cygwin"
+
+#: ../../src/appx/wtk.txt:-1
+msgid "Knights, thieves and wizards game project"
+msgstr "Проект гри рицарі, злодії та чарівники"
+
+#: ../../src/appx/wtk.txt:-1
+msgid "python, game, oop, object-oriented programming"
+msgstr "python, game, oop, object-oriented programming"
 
 #: ../../problem-sets/src/wtk/challenge.rst:3
 msgid "Wizards, Thieves and Knights"
