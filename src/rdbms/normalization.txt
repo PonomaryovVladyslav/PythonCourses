@@ -1,3 +1,8 @@
+.. meta::
+    :description: Database normalization
+    :author: Serhii Horodilov
+    :keywords: sql, db, database, normalization
+
 *******************************************************************************
                             Database Normalization
 *******************************************************************************
