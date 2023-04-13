@@ -1,3 +1,8 @@
+.. meta::
+    :description: Testing software in Python
+    :author: Serhii Horodilov
+    :keywords: python, testing, unittest, pytest
+
 *******************************************************************************
                                     Testing
 *******************************************************************************

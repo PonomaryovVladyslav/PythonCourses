@@ -1,3 +1,8 @@
+.. meta::
+    :description: Python syntax
+    :author: Serhii Horodilov
+    :keywords: python, basics, syntax
+
 *******************************************************************************
                                  Python Syntax
 *******************************************************************************
