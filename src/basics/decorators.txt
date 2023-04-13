@@ -251,3 +251,96 @@ once more time again, and again, and again...
     methods as the target and delegates to it all requests it receives.
     However, the wrapper may alter the result by doing something either before
     or after it passes the request to the target.
+
+Passing arguments to the wrapper
+================================
+
+Until now the examples use *simple* decorators. But what if the decorated
+function gets some arguments? This will cause ``TypeError`` exception that tell
+that "arguments are missed". This can be fixed with just passing arguments to
+the ``wrapper`` inner function.
+
+.. code-block:: python
+
+    import logging
+    from typing import Callable
+
+    logging.basicConfig(level=logging.INFO)
+    logger = logging.getLogger(__name__)
+
+
+    def log(func: Callable) -> Callable:
+        def wrapper(x, y):
+            logger.info("%s called", func.__name__)
+            return func(x, y)
+
+        return wrapper
+
+
+    @log
+    def sum_numbers(x, y):
+        return x + y
+
+If case you're trying to make a generic decorator, you may pass ``*args`` and
+``**kwargs`` instead of exact arguments:
+
+.. code-block:: python
+
+    from typing import Callable
+
+
+    def generic_decorator(func: Callable) -> Callable:
+        def wrapper(*args, **kwargs):
+            ...  # do something before
+            result = func(*args, **kwargs)
+            ...  # do something after
+
+            return result
+
+        return wrapper
+
+Passing arguments to decorator
+==============================
+
+At last it's time to know how to pass arguments to the decorator.
+Here is a simple implementation of ``defer`` decorator which deferred
+the function execution for some time:
+
+.. code-block:: python
+
+    import time
+    from typing import Callable
+
+
+    def defer(seconds: int = 3) -> Callable:
+        def decorator(func: Callable) -> Callable:
+            def wrapper(*args, **kwargs):
+                started_at = time.perf_counter()
+                time.sleep(seconds)
+                result = func(*args, **kwargs)
+                completed_in = round(time.perf_counter() - started_at, 2)
+                print("Completed in %.2f" % completed_in)
+
+                return result
+
+            return wrapper
+
+        return decorator
+
+
+    @defer()
+    def function_a():
+        return 42
+
+
+    @defer(10)
+    def function_b():
+        return 24
+
+
+.. code-block::
+
+    function_a()
+    Completed in 3.00
+    function_b()
+    Completed in 10.00
