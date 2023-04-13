@@ -1,0 +1,194 @@
+.. _first-class objects:
+    https://dbader.org/blog/python-first-class-functions
+
+*******************************************************************************
+                                  Decorators
+*******************************************************************************
+
+Decorators provide a simple syntax for calling higher-order functions
+:cite:`realpython:decorators`.
+
+.. important::
+
+    There is some kind of misunderstanding in definitions.
+
+    **Decorator** is a function returning another function, usually applied
+    as a function transformation using the ``@wrapper`` syntax
+    :cite:`docs-python:term-decorator`.
+
+    However, that's no quit enough to describe it. The more complete
+    definition is:
+
+    **Decorator** is a structural design pattern that lets you attach new
+    behaviors to objects by placing these objects inside special wrapper
+    objects that contain the behaviors :cite:`refactoring.guru:decorator`.
+
+Before you understand decorators, you must first understand how functions
+work.
+
+First-class objects
+===================
+
+In Python functions are `first-class objects`_. Everything in Python is an
+object. Functions are objects too.
+
+Inner functions
+---------------
+
+Functions can be nested. This means it is possible to define functions
+inside other functions.
+
+.. code-block:: python
+    :caption: Nested functions example
+
+    def heap_sort(origin: List[int]) -> List[int]:
+        """Return a sorted collection using the heap sort algorithm"""
+
+        def heapify(_ds: List[int], _size: int, _idx: int) -> List[int]:
+            ...
+
+        ...
+        for idx in range(size, -1, -1):
+            heapify(result, size, idx)
+        ...
+
+The order in which inner functions are defined no matters. The function
+definition does not execute the function body; this gets executed only when
+the function is called. Furthermore, the inner functions are not defined until
+the parent function is called. They are locally scoped to their parent. Trying
+to call ``heapify`` function outside of ``heap_sort`` will cause ``NameError``
+exception.
+
+Functions are objects
+---------------------
+
+This means functions can be passed around and used as arguments, just like any
+other object (e.g. *int*, *str* etc.).
+
+.. code-block:: python
+
+    from typing import Callable
+
+
+    def say_hello(name: str) -> str:
+        return f"Hello, {name}!"
+
+
+    def be_awesome(name: str) -> str:
+        return f"Yo, {name}!"
+
+
+    def greet_serhii(greeting_func: Callable) -> str:
+        return greeting_func("Serhii")
+
+
+    if __name__ == "__main__":
+        print(f"{greet_serhii(say_hello) = }")
+        print(f"{greet_serhii(be_awesome) = }")
+
+Returning functions
+-------------------
+
+Since function can be passed as an argument, it may be returned from another
+function.
+
+.. code-block:: python
+
+    from typing import Callable
+
+
+    def parent(idx: int) -> Callable:
+        def first_child():
+            return "this is the first child"
+
+        def second_child():
+            return "this is the second child"
+
+        return second if not num % 2 else first
+
+
+    first = parent(1)
+    second = parent(2)
+
+.. note::
+
+    ``parent`` returns functions themselves, there are no parentheses.
+
+After running the code snippet above, ``first`` refers the ``first_child``
+function from the inner ``parent`` scope. From now it can be used to call
+the target function it refers.
+
+.. code-block::
+
+    >>> first()
+    "this is the first child"
+    >>> second()
+    "this is the second child"
+
+Simple decorators
+=================
+
+Now you're ready to move on and see the magical beast that is the Python
+decorators. Let's start with a simple example:
+
+.. code-block:: python
+
+    def decorator(func: Callable) -> Callable:
+        def wrapper():
+            print(f"before {func.__name__} call")
+            func()
+            print(f"after {func.__name__} call")
+
+        return wrapper  # no wrapper call, return reference to wrapper function
+
+    def say_hello():
+        print("Hello!")
+
+    say_hello_decorated = decorator(say_hello)
+
+Running function:
+
+.. code-block::
+
+    >>> say_hello()
+    Hello!
+    >>> say_hello_decorated()
+    before say_hello call
+    Hello!
+    after say_hello call
+
+The common way to use decorators is to replace the original function with
+a decorated one:
+
+.. code-block::
+
+    >>> say_hello = decorator(say_hello)
+    >>> say_hello()
+    before say_hello call
+    Hello!
+    after say_hello call
+
+``say_hello`` function is the reference to the ``decorator.<locals>.wrapper``,
+which itself is bound to the original ``say_hello`` function. There is a
+syntactic sugar to do this, called *pie-syntax*. The following example does
+exact the same things as the first decorator example:
+
+.. code-block:: python
+
+    def decorator(func: Callable) -> Callable:
+        def wrapper():
+            print(f"before {func.__name__} call")
+            func()
+            print(f"after {func.__name__} call")
+
+        return wrapper  # no wrapper call, return reference to wrapper function
+
+
+    @decorator
+    def say_hello():
+        print("Hello!")
+
+.. important::
+
+    There is no way to *undecorate* object in Python. Once something is bound
+    to the decorator's wrapper - it is decorated forever.
