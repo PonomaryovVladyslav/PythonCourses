@@ -5,7 +5,7 @@ SPHINX_SRC = src
 SPHINX_CONFIG = $(SPHINX_SRC)/conf.py
 
 # Internationalization
-SPHINXINTL_LANGUAGE ?= ua
+SPHINXINTL_LANGUAGE ?= uk
 LANGUAGE            ?= en
 
 # Sphinx build directories
@@ -20,7 +20,7 @@ SPHINX_BUILD = sphinx-build -q -D language=$(LANGUAGE)
 # Makefile targets
 all : clean
 	@make LANGUAGE=en html
-	@make LANGUAGE=ua html
+	@make LANGUAGE=uk html
 
 clean :
 	@echo "Cleaning existing builds at $(_SPHINX_OUT_BASE)"

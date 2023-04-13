@@ -41,7 +41,7 @@ jobs:
       - name: Build documents
         run: |
           LANGUAGE=en make html
-          LANGUAGE=ua make html
+          LANGUAGE=uk make html
       - name: Setup Pages
         uses: actions/configure-pages@v2
       - name: Upload artifact
