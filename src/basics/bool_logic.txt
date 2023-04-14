@@ -249,3 +249,22 @@ Each of these comparison operators return a Boolean value, it's always
 
 You can chain comparison operators together: ``x < y < z`` is equal to
 ``x < y and y < z``.
+
+Equality vs Identity
+--------------------
+
+It's easier to understand the difference between those by asking the question
+each answers to.
+
+The question for ``==`` (*equality*) is:
+
+    Is object on the left **equal** to the object on the right
+
+The question for ``is`` (*identity*) is:
+
+    Is object on the left **the same** as the object on the right
+
+For example, if there are two cars of the same model, same color etc. in front
+of you - these cars are equal, but they aren't ident to each other. But if you
+are shown two pictures of the same car, you understand that the cars on those
+pictures are the same object.
