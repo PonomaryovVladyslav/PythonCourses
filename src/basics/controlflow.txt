@@ -6,3 +6,79 @@
 *******************************************************************************
                                  Control Flow
 *******************************************************************************
+
+``if`` statement
+================
+
+Perhaps the most well-known statement type is ``if`` statement. For example:
+
+.. code-block:: python
+    :caption: if statement base example
+
+    >>> x = int(input("Please enter an integer: "))
+    >>> if x < 0:
+    ...     x = 0
+    ...     print("Negative x changed to 0")
+    ... elif x == 0:
+    ...     print("x is equal to zero")
+    ... elif x == 1:
+    ...     print("x is equal to one")
+    ... else:
+    ...     print("x is greater than one")
+
+But let's dive into ``if`` statement with more simple examples.
+
+How it works
+------------
+
+**if** statement is defined with a keyword ``if`` followed by a Boolean
+expression or any object and finished with colon. The statement requires
+a *body*: other statements to execute, also called an *if block*.
+The body is indented at the same distance from the left (in Python we use
+4 spaces to indent a single block of code).
+
+The body's statements will be executed only in case **if** expression is
+``True``.
+
+.. code-block:: python
+    :linenos:
+
+    from random import randint
+
+    number: int = randint(1, 2)
+
+    if not number % 2:  # the as number % 2 == 0
+        print(number, "is even")
+
+The ``print`` statement on line #6 will be executed only for even value of
+``number`` variable.
+
+``else`` block
+--------------
+
+Since ``if`` can be used by its own, it can extend its behavior with ``else``
+block. The general syntax for ``else`` body is the same: at least one indented
+statement. But ``else`` doesn't take any expression after it. This block of
+code will be executed only that the ``if`` statement truth check fails.
+
+.. code-block:: python
+    :linenos:
+
+    from random import randint
+
+    number: int = randint(1, 2)
+
+    if not number % 2:
+        print(number, "is even")
+    else:
+        print(number, "is odd")
+
+``elif`` block(s)
+-----------------
+
+.. todo: provide elif examples
+
+Usage
+-----
+
+.. todo: branching the code
