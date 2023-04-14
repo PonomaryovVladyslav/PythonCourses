@@ -1,0 +1,115 @@
+.. meta::
+    :description: this document covers usage of logic and comparison
+                  operators in Python
+    :author: Serhii Horodilov
+    :keywords: python, boolean, logic, comparison, operator
+
+.. _George Boole:
+    https://en.wikipedia.org/wiki/George_Boole
+.. _Boolean algebra:
+    https://en.wikipedia.org/wiki/Boolean_algebra
+
+*******************************************************************************
+                                 Boolean Logic
+*******************************************************************************
+
+.. image:: /../assets/img/george_boole.jpg
+    :align: center
+    :height: 248
+
+`George Boole`_ put together what is now known as `Boolean algebra`_, which
+relies on **true** and **false** values and define a set of boolean operations:
+**not**, **and**, and **or**.
+
+These Boolean values and operators are helpful in programming because they help
+you decide the course of action in your programs.
+
+The **Python boolean** type is one of Python's built-in data types. It's used
+to represent the truth value of an expression. For example, the expression
+``1 < 2`` is ``True``, while the expression ``0 == 1`` is ``False``.
+Understanding how Python Boolean values behave is important to programming well
+in Python.
+
+Understanding Boolean
+=====================
+
+The Boolean type has only two possible values:
+
+-   ``True``
+-   ``False``
+
+No other value will have ``bool`` as it type.
+
+.. code-block::
+
+    >>> type(True)
+    <class 'bool'>
+    >>> type(False)
+    <class 'bool'>
+
+The type ``bool`` is **built-in**, meaning it's always available in Python.
+``True`` and ``False`` are keywords in Python and can't be used as
+variable names. but ``bool`` type isn't and it's possible assign to the name
+``bool``, however this is considered bad style.
+
+Boolean as numbers
+------------------
+
+Booleans are a subtype of **numeric** type in Python. This means they're
+numbers for all intents and purposes. In other words, you can apply arithmetic
+operations to Boolean, and you can also compare them to numbers. ``True``
+value is treated to be 1, and ``False`` value is treated to be 0.
+
+There aren't many uses of the numerical nature of Boolean values.
+
+Truth value testing
+===================
+
+Any object can be tested for truth value. By default an object considered
+``True``, unless its class defines either. Here are most of built-in objects
+considered ``False``:
+
+-   constant values: ``None`` and ``False``
+-   zero of any numeric type: ``0``, ``0.0``, ``0j``, ``Decimal(0)``,
+    ``Fraction(0, 1)``
+-   empty sequences and collections: ``''``, ``[]``, ``()``, ``{}``, ``set()``,
+    ``range(0)``.
+
+.. hint::
+
+    If ``len(something)`` is equal to 0, than ``something`` is cast to ``bool``
+    as ``False``.
+
+Boolean comparison
+==================
+
+.. todo: not, and, or
+
+Comparison
+==========
+
+There are eight comparison operations in Python. They all have the same
+priority (which is higher than that of the Boolean operations).
+
+.. table:: Comparison operators
+    :align: center
+
+    +------------+-----------------------------------+
+    | Operator   | Meaning                           |
+    +============+===================================+
+    | ``<``      | strictly less than                |
+    +------------+-----------------------------------+
+    | ``<=``     | less than or equal                |
+    +------------+-----------------------------------+
+    | ``>``      | strictly greater than             |
+    +------------+-----------------------------------+
+    | ``>=``     | greater or equal                  |
+    +------------+-----------------------------------+
+    | ``==``     | equal (aka *equality* comparison) |
+    +------------+-----------------------------------+
+    | ``!=``     | not equal                         |
+    +------------+-----------------------------------+
+    | ``is``     | object identity                   |
+    +------------+-----------------------------------+
+    | ``is not`` | negated object identity           |
+    +------------+-----------------------------------+
