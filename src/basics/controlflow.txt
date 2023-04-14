@@ -79,9 +79,63 @@ You can attach **only one** else block to **if statement**. And you cannot use
 ``elif`` block(s)
 -----------------
 
-.. todo: provide elif examples
+``elif`` (*else if*) statement may be considered as semi-statement between
+``if`` and ``else`` statements. In case your program has more than two
+dedicated choices you are able to extends control flow by appending
+``elif`` blocks after ``if`` statement. The syntax is pretty similar to ``if``
+statement. Each ``elif`` has its own boolean expression or an object to test
+for the truth value.
+
+You can attach as many ``elif`` statements as it needed. But you cannot use
+``elif`` without ``if`` statement.
+
+Python will test conditions in ``if`` and ``elif`` statements from top to
+bottom. The first one, which considered to be ``True`` will be executed.
+All others will be skipped.
+
+If there were no truth conditions ``else`` block will be executed (if exists).
+
+.. code-block:: python
+
+    >>> x = int(input("Enter some integer number: "))
+    >>> if not x % 5 and not x % 3: # the same as x % 5 == 0 and x % 3 == 0
+    ...     print(x, "is divisible by 5 and 3")
+    ... elif not x % 5:
+    ...     print(x, "is divisible by 5")
+    ... elif not x % 3:
+    ...     print(x, "is divisible by 3")
+    ... else:
+    ...     print(x, "is not divisible by 5 or 3")
+
+.. note::
+
+    The order conditions appears matter.
+    The truth test goes from top to bottom and stops at first expression
+    which is ``True``.
 
 Usage
 -----
 
-.. todo: branching the code
+``if/elif/else`` statements help you to control which portion of your code is
+executed based on conditions from outer scope.
+
+.. code-block:: python
+    :linenos:
+
+    # Ask user for input
+    grade = int(input("Enter your grade (0-100): "))
+
+    # Use if/elif/else statements to assign letter grade
+    if grade >= 90:
+        letter_grade = "A"
+    elif grade >= 80:
+        letter_grade = "B"
+    elif grade >= 70:
+        letter_grade = "C"
+    elif grade >= 60:
+        letter_grade = "D"
+    else:
+        letter_grade = "F"
+
+    # Print the letter grade
+    print("Your letter grade is:", letter_grade)
