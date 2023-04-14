@@ -157,6 +157,32 @@ be ``True`` if **both** are true.
 
 .. todo: func_1() and func_2(); 0 and 5
 
+Getting started with ``or`` operator
+------------------------------------
+
+With Boolean ``or`` operator, you can connect two Boolean expressions into one
+compound expression. This makes ``or`` the **binary** operator. At least one
+subexpression must be ``True`` for the compound expression to be considered
+``True``, and it doesn't matter which. If both subexpressions are ``False``,
+then the expression is ``False``.
+
+.. table:: or operator truth table
+    :align: center
+
+    +---------------+---------------+----------------------------+
+    | ``operand_1`` | ``operand_2`` | ``operand_1 or operand_2`` |
+    +===============+===============+============================+
+    | ``True``      | ``True``      | ``True``                   |
+    +---------------+---------------+----------------------------+
+    | ``False``     | ``False``     | ``False``                  |
+    +---------------+---------------+----------------------------+
+    | ``True``      | ``False``     | ``True``                   |
+    +---------------+---------------+----------------------------+
+    | ``False``     | ``True``      | ``True``                   |
+    +---------------+---------------+----------------------------+
+
+.. todo: default mutable value, e.g. x = x or []
+
 Comparison
 ==========
 
