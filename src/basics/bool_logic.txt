@@ -85,6 +85,53 @@ Boolean comparison
 
 .. todo: not, and, or
 
+Python provides 3 logical operators:
+
+.. table::
+    :align: center
+
+    +----------+----------------+
+    | Operator | Logic operator |
+    +==========+================+
+    | ``not``  | Negation       |
+    +----------+----------------+
+    | ``and``  | Conjunction    |
+    +----------+----------------+
+    | ``or``   | Disjunction    |
+    +----------+----------------+
+
+With these operators, you can build expressions by connecting Boolean
+expressions with each other. These operators are **keywords** of the language,
+so you cannot use them as identifiers without causing a *SyntaxError*.
+
+Getting started with Python's ``not`` operator
+----------------------------------------------
+
+The ``not`` operator is the Boolean or logic operator that implements negation
+in Python. It's **unary**, which means that it takes only one **operand**.
+The operand can be a Boolean expression or any Python object. The task of
+``not`` is to reverse the truth value of its operand.
+
+.. table:: not operator
+    :align: center
+
+    +-----------+-------------+
+    | operand   | not operand |
+    +===========+=============+
+    | ``True``  | ``False``   |
+    +-----------+-------------+
+    | ``False`` | ``True``    |
+    +-----------+-------------+
+
+This functionality makes it worthwhile in several situations:
+
+
+-   Checking **unmet conditions** in the context of ``if`` statements and
+    ``while`` loops
+-   **Inverting the truth value** of an object or expression
+-   Checking if a **value is not in a given container**
+-   Checking for an **object's identity**
+
 Comparison
 ==========
 
