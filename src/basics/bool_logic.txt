@@ -243,3 +243,7 @@ priority (which is higher than that of the Boolean operations).
     +------------+-----------------------------------+
     | ``is not`` | negated object identity           |
     +------------+-----------------------------------+
+
+.. todo: add examples and description(s)
+
+.. todo: chaining with boolean operators
