@@ -155,7 +155,23 @@ be ``True`` if **both** are true.
     | ``False``     | ``True``      | ``False``                   |
     +---------------+---------------+-----------------------------+
 
-.. todo: func_1() and func_2(); 0 and 5
+``and`` operator work's not only with operands of Boolean type.
+It's behavior:
+
+-   evaluate 1st operand; return it, if it's ``False`` and finish
+-   evaluate 2nd operand; return it, if it's ``False`` and finish
+-   return 2nd operand
+
+.. code-block:: python
+
+    >>> 1 and 5
+    5
+    >>> '' and None
+    ''
+    >>> 0 and True
+    0
+    >>> 5 and False
+    False
 
 Getting started with ``or`` operator
 ------------------------------------
@@ -181,7 +197,23 @@ then the expression is ``False``.
     | ``False``     | ``True``      | ``True``                   |
     +---------------+---------------+----------------------------+
 
-.. todo: default mutable value, e.g. x = x or []
+``or`` operator work's not only with operands of Boolean type.
+It's behavior:
+
+-   evaluate 1st operand; return it, if it's ``True`` and finish
+-   evaluate 2nd operand; return it, if it's ``True`` and finish
+-   return 2nd operand
+
+.. code-block:: python
+
+    >>> 42 or True
+    42
+    >>> None or []
+    []
+    >>> 0 or True
+    True
+    >>> [[]] or ''
+    [[]]
 
 Comparison
 ==========
