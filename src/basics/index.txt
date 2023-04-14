@@ -13,6 +13,7 @@
     variables
     syntax
     stdtypes
+    bool_logic
     controlflow
     functions
     modules
