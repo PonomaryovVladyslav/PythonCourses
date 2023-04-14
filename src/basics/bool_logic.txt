@@ -244,6 +244,8 @@ priority (which is higher than that of the Boolean operations).
     | ``is not`` | negated object identity           |
     +------------+-----------------------------------+
 
-.. todo: add examples and description(s)
+Each of these comparison operators return a Boolean value, it's always
+``True`` or ``False``.
 
-.. todo: chaining with boolean operators
+You can chain comparison operators together: ``x < y < z`` is equal to
+``x < y and y < z``.
