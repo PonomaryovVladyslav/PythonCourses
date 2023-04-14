@@ -112,16 +112,16 @@ in Python. It's **unary**, which means that it takes only one **operand**.
 The operand can be a Boolean expression or any Python object. The task of
 ``not`` is to reverse the truth value of its operand.
 
-.. table:: not operator
+.. table:: not operator truth table
     :align: center
 
-    +-----------+-------------+
-    | operand   | not operand |
-    +===========+=============+
-    | ``True``  | ``False``   |
-    +-----------+-------------+
-    | ``False`` | ``True``    |
-    +-----------+-------------+
+    +-------------+-----------------+
+    | ``operand`` | ``not operand`` |
+    +=============+=================+
+    | ``True``    | ``False``       |
+    +-------------+-----------------+
+    | ``False``   | ``True``        |
+    +-------------+-----------------+
 
 This functionality makes it worthwhile in several situations:
 
@@ -131,6 +131,31 @@ This functionality makes it worthwhile in several situations:
 -   **Inverting the truth value** of an object or expression
 -   Checking if a **value is not in a given container**
 -   Checking for an **object's identity**
+
+Getting started with ``and`` operator
+-------------------------------------
+
+Python's ``and`` operator is **binary**, which means it takes two **operands**.
+The operands in an ``and`` expression are commonly known as *conditions*.
+The result of the operator depends on the truth values of its operands. It'll
+be ``True`` if **both** are true.
+
+.. table:: and operator truth table
+    :align: center
+
+    +---------------+---------------+-----------------------------+
+    | ``operand_1`` | ``operand_2`` | ``operand_1 and operand_2`` |
+    +===============+===============+=============================+
+    | ``True``      | ``True``      | ``True``                    |
+    +---------------+---------------+-----------------------------+
+    | ``False``     | ``False``     | ``False``                   |
+    +---------------+---------------+-----------------------------+
+    | ``True``      | ``False``     | ``False``                   |
+    +---------------+---------------+-----------------------------+
+    | ``False``     | ``True``      | ``False``                   |
+    +---------------+---------------+-----------------------------+
+
+.. todo: func_1() and func_2(); 0 and 5
 
 Comparison
 ==========
