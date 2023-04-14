@@ -73,6 +73,9 @@ code will be executed only that the ``if`` statement truth check fails.
     else:
         print(number, "is odd")
 
+You can attach **only one** else block to **if statement**. And you cannot use
+``else`` statement on its own - this will cause *SyntaxError*.
+
 ``elif`` block(s)
 -----------------
 
