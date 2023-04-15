@@ -26,6 +26,7 @@ extensions = [
     "sphinxcontrib.mermaid",
     "sphinx_rtd_theme",
     "myst_parser",
+    "sphinx_copybutton",
 ]
 source_suffix = {
     ".txt": "restructuredtext",
@@ -55,6 +56,7 @@ latex_documents = [
     (master_doc, latex_doc, project, authors, "manual", False),
     ("appx/software_list", "Software.tex", project, authors, "howto", False),
     ("appx/code_edit", "IDE.tex", project, authors, "howto", False),
+    ("appx/blog", "DjangoBlog.tex", project, authors, "howto", False),
 ]
 latex_appendices = [
     "appx/software_list",
@@ -63,5 +65,6 @@ latex_appendices = [
     "appx/precedence",
     "appx/printf",
     "appx/conv_store",
+    "appx/wtk",
     "appx/blog",
 ]
