@@ -4,6 +4,9 @@
 /venv/
 /env/
 
+# node packages
+/node_modules/
+
 # ide configs
 /.vscode/
 /.idea/
