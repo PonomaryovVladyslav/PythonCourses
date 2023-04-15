@@ -1,0 +1,11 @@
+{
+  "name": "python-course",
+  "private": true,
+  "dependencies": {
+    "@mermaid-js/mermaid-cli": "^10.1.0"
+  },
+  "devDependencies": {
+    "csso-cli": "^4.0.2",
+    "sass": "^1.62.0"
+  }
+}
