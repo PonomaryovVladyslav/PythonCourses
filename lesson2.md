@@ -300,7 +300,7 @@ age = int(input('Please enter your age:'))
 name = input('Please enter your name:')
 
 age > 18 and 'v' not in name.lower()
-age < or name == 'Kate'
+age < 10 or name == 'Kate'
 age // 3 == 1 and len(name) > 4 or str(age) in name
 ```
 
