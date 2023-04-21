@@ -3,15 +3,13 @@
 # Copyright (C) 2023, Python training course authors and contributors
 # This file is distributed under the same license as the Python Training
 # Course package.
-#
 # OLEKSANDR YEROMIN <unicorn.in.pants@gmail.com>, 2023.
-#
 msgid ""
 msgstr ""
 "Project-Id-Version: Python Training Course 2022.11.dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-04-14 01:49+0300\n"
-"PO-Revision-Date: 2023-04-14 02:10+0300\n"
+"POT-Creation-Date: 2023-04-21 05:50+0300\n"
+"PO-Revision-Date: 2023-04-21 05:51+0300\n"
 "Last-Translator: Serhii Horodilov <sgorodil@gmail.com>\n"
 "Language-Team: \n"
 "Language: uk\n"
@@ -775,7 +773,12 @@ msgstr "Функції в Python"
 msgid "python, basics, functions"
 msgstr "python, basics, functions"
 
-#: ../../src/basics/functions.txt:8 ../../src/basics/syntax.txt
+#: ../../src/basics/functions.txt:8 ../../src/basics/modules.txt:8
+#: ../../src/basics/pep8.txt:8 ../../src/basics/testing.txt:8
+msgid "Page is under construction"
+msgstr "Сторінка в розробці"
+
+#: ../../src/basics/functions.txt:16 ../../src/basics/syntax.txt
 msgid "Functions"
 msgstr "Функції"
 
@@ -799,7 +802,7 @@ msgstr "Модулі та імпорти в Pythons"
 msgid "python, basics, modules, import"
 msgstr "python, basics, modules, import"
 
-#: ../../src/basics/modules.txt:8
+#: ../../src/basics/modules.txt:16
 msgid "Pythons Modules and Imports"
 msgstr "Модулі та імпорт Pythons"
 
@@ -811,7 +814,7 @@ msgstr "Керівництво по стилю PEP8"
 msgid "python, style, guide"
 msgstr "python, style, guide"
 
-#: ../../src/basics/pep8.txt:8
+#: ../../src/basics/pep8.txt:16
 msgid "Style Guides: PEP8"
 msgstr "Керівництво по стилю: PEP8"
 
@@ -1757,7 +1760,7 @@ msgstr "Тестування в Python"
 msgid "python, testing, unittest, pytest"
 msgstr "python, testing, unittest, pytest"
 
-#: ../../src/basics/testing.txt:8
+#: ../../src/basics/testing.txt:16
 msgid "Testing"
 msgstr "Тестування"
 

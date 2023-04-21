@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Python Training Course 2022.11.dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-04-21 04:34+0300\n"
-"PO-Revision-Date: 2023-04-21 04:41+0300\n"
+"POT-Creation-Date: 2023-04-21 05:50+0300\n"
+"PO-Revision-Date: 2023-04-21 05:51+0300\n"
 "Last-Translator: Serhii Horodilov <sgorodil@gmail.com>\n"
 "Language-Team: ua <LL@li.org>\n"
 "Language: uk\n"
@@ -594,11 +594,15 @@ msgstr "Serhii Horodilov sgorodil@gmail.com"
 msgid "python, editor, ide"
 msgstr "python, editor, ide"
 
-#: ../../src/appx/code_edit.txt:8
+#: ../../src/appx/code_edit.txt:8 ../../src/appx/env_path.txt:8
+msgid "Page is under construction"
+msgstr "Сторінка в розробці"
+
+#: ../../src/appx/code_edit.txt:16
 msgid "Code Editors"
 msgstr "Редактори Коду"
 
-#: ../../src/appx/code_edit.txt:10
+#: ../../src/appx/code_edit.txt:18
 msgid ""
 "Writing Python using IDLE or the Python Shell is great for simple things, "
 "but those tools quickly turn larger programming projects into frustrating "
@@ -1158,7 +1162,7 @@ msgstr "Встановлення змінних середовища"
 msgid "settings, environment, variables"
 msgstr "settings, environment, variables"
 
-#: ../../src/appx/env_path.txt:8
+#: ../../src/appx/env_path.txt:16
 msgid "Issue - System Environment PATH"
 msgstr "Проблема - System Environment PATH"
 
