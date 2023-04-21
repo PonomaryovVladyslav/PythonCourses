@@ -3,6 +3,14 @@
     :author: Serhii Horodilov
     :keywords: python, basics, modules, import
 
+.. todo
+
+.. attention:: Page is under construction
+
+    .. figure:: /../assets/img/construction.svg
+        :figwidth: 250
+        :align: center
+
 *******************************************************************************
                           Pythons Modules and Imports
 *******************************************************************************

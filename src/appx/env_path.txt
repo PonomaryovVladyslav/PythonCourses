@@ -3,6 +3,14 @@
     :author: Serhii Horodilov sgorodil@gmail.com
     :keywords: settings, environment, variables
 
+.. todo
+
+.. attention:: Page is under construction
+
+    .. figure:: /../assets/img/construction.svg
+        :figwidth: 250
+        :align: center
+
 ###############################
 Issue - System Environment PATH
 ###############################

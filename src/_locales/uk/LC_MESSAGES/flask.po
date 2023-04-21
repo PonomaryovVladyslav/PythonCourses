@@ -3,15 +3,13 @@
 # Copyright (C) 2023, Python training course authors and contributors
 # This file is distributed under the same license as the Python Training
 # Course package.
-#
 # SERHII HORODILOV <sgorodil@gmail.com>
-#
 msgid ""
 msgstr ""
 "Project-Id-Version: Python Training Course 2023.04.dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-04-14 01:49+0300\n"
-"PO-Revision-Date: 2023-04-14 02:11+0300\n"
+"POT-Creation-Date: 2023-04-21 05:50+0300\n"
+"PO-Revision-Date: 2023-04-21 05:51+0300\n"
 "Last-Translator: Serhii Horodilov <sgorodil@gmail.com>\n"
 "Language-Team: ua <LL@li.org>\n"
 "Language: ua\n"
@@ -34,5 +32,9 @@ msgid "python, web, flask, index"
 msgstr "python, web, flask, index"
 
 #: ../../src/flask/index.txt:8
+msgid "Page is under construction"
+msgstr "Сторінка в розробці"
+
+#: ../../src/flask/index.txt:16
 msgid "Flask Framework"
 msgstr "Фреймворк Flask"
