@@ -3,6 +3,14 @@
     :author: Serhii Horodilov sgorodil@gmail.com
     :keywords: python, editor, ide
 
+.. todo
+
+.. attention:: Page is under construction
+
+    .. figure:: /../assets/img/construction.svg
+        :figwidth: 250
+        :align: center
+
 ############
 Code Editors
 ############

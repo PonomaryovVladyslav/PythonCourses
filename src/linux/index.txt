@@ -3,6 +3,14 @@
     :author: Serhii Horodilov
     :keywords: linux, basics, index
 
+.. todo
+
+.. attention:: Page is under construction
+
+    .. figure:: /../assets/img/construction.svg
+        :figwidth: 250
+        :align: center
+
 ###############################################################################
                              Linux Basics
 ###############################################################################
