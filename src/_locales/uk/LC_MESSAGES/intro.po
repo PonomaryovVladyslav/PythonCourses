@@ -1,27 +1,27 @@
 # INTRODUCTION SECTION TRANSLATION.
 #
 # Copyright (C) 2023, Python training course authors and contributors
-# This file is distributed under the same license as the Python Training Course package.
-#
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
+# This file is distributed under the same license as the Python Training
+# Course package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2023.
 msgid ""
 msgstr ""
 "Project-Id-Version: Python Training Course 2023.04.dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-04-21 04:34+0300\n"
-"PO-Revision-Date: 2023-04-21 05:21+0300\n"
+"POT-Creation-Date: 2023-04-21 06:01+0300\n"
+"PO-Revision-Date: 2023-04-21 06:02+0300\n"
 "Last-Translator: Serhii Horodilov <sgorodil@gmail.com>\n"
 "Language-Team: \n"
 "Language: uk\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
 "n%10<=4 && (n%100<12 || n%100>14) ? 1 : 2);\n"
+"Generated-By: Babel 2.12.1\n"
 "X-Generator: Poedit 3.2.2\n"
 
-#: ../../src/intro/index.txt:120
+#: ../../src/intro/index.txt:123
 msgid "Contents"
 msgstr "Зміст"
 
@@ -41,7 +41,7 @@ msgstr ""
 msgid "|guido| Guido van Rossum"
 msgstr "|guido| Гвідо ван Россум"
 
-#: ../../src/intro/index.txt:172
+#: ../../src/intro/index.txt:175
 msgid "guido"
 msgstr "guido"
 
@@ -63,7 +63,7 @@ msgstr ""
 "наступника мови під назвою ABC. Гвідо залишається головним автором Python, "
 "хоча мова містить багато внесків від інших авторів."
 
-#: ../../src/intro/index.txt:129
+#: ../../src/intro/index.txt:132
 msgid "python"
 msgstr "python"
 
@@ -144,35 +144,35 @@ msgstr ""
 msgid "google facebook instagram spotify quora netflix dropbox reddit"
 msgstr "google facebook instagram spotify quora netflix dropbox reddit"
 
-#: ../../src/intro/index.txt:0
+#: ../../src/intro/index.txt
 msgid "Google"
 msgstr "Google"
 
-#: ../../src/intro/index.txt:0
+#: ../../src/intro/index.txt
 msgid "Facebook"
 msgstr "Facebook"
 
-#: ../../src/intro/index.txt:0
+#: ../../src/intro/index.txt
 msgid "Instagram"
 msgstr "Instagram"
 
-#: ../../src/intro/index.txt:0
+#: ../../src/intro/index.txt
 msgid "Spotify"
 msgstr "Spotify"
 
-#: ../../src/intro/index.txt:0
+#: ../../src/intro/index.txt
 msgid "Quora"
 msgstr "Quora"
 
-#: ../../src/intro/index.txt:0
+#: ../../src/intro/index.txt
 msgid "Netflix"
 msgstr "Netflix"
 
-#: ../../src/intro/index.txt:0
+#: ../../src/intro/index.txt
 msgid "Dropbox"
 msgstr "Dropbox"
 
-#: ../../src/intro/index.txt:0
+#: ../../src/intro/index.txt
 msgid "Reddit"
 msgstr "Reddit"
 
@@ -251,151 +251,155 @@ msgstr ""
 "інтерпретатором, оскільки вони позначають конкретні вбудовані функції мови. "
 "У Python лише 35 :cite:`docs-python:keywords`, і вони:"
 
-#: ../../src/intro/index.txt:88
-msgid "False"
-msgstr "False"
+#: ../../src/intro/index.txt:87
+msgid "Python Keywords"
+msgstr "Ключові слова Python"
 
-#: ../../src/intro/index.txt:88
-msgid "await"
-msgstr "await"
+#: ../../src/intro/index.txt:91
+msgid "``False``"
+msgstr "``False``"
 
-#: ../../src/intro/index.txt:88
-msgid "else"
-msgstr "else"
+#: ../../src/intro/index.txt:91
+msgid "``await``"
+msgstr "``await``"
 
-#: ../../src/intro/index.txt:88
-msgid "import"
-msgstr "import"
+#: ../../src/intro/index.txt:91
+msgid "``else``"
+msgstr "``else``"
 
-#: ../../src/intro/index.txt:88
-msgid "pass"
-msgstr "pass"
+#: ../../src/intro/index.txt:91
+msgid "``import``"
+msgstr "``import``"
 
-#: ../../src/intro/index.txt:90
-msgid "None"
-msgstr "None"
+#: ../../src/intro/index.txt:91
+msgid "``pass``"
+msgstr "``pass``"
 
-#: ../../src/intro/index.txt:90
-msgid "break"
-msgstr "break"
+#: ../../src/intro/index.txt:93
+msgid "``None``"
+msgstr "``None``"
 
-#: ../../src/intro/index.txt:90
-msgid "except"
-msgstr "except"
+#: ../../src/intro/index.txt:93
+msgid "``break``"
+msgstr "``break``"
 
-#: ../../src/intro/index.txt:90
-msgid "in"
-msgstr "in"
+#: ../../src/intro/index.txt:93
+msgid "``except``"
+msgstr "``except``"
 
-#: ../../src/intro/index.txt:90
-msgid "raise"
-msgstr "raise"
+#: ../../src/intro/index.txt:93
+msgid "``in``"
+msgstr "``in``"
 
-#: ../../src/intro/index.txt:92
-msgid "True"
-msgstr "True"
+#: ../../src/intro/index.txt:93
+msgid "``raise``"
+msgstr "``raise``"
 
-#: ../../src/intro/index.txt:92
-msgid "class"
-msgstr "class"
+#: ../../src/intro/index.txt:95
+msgid "``True``"
+msgstr "``True``"
 
-#: ../../src/intro/index.txt:92
-msgid "finally"
-msgstr "finally"
+#: ../../src/intro/index.txt:95
+msgid "``class``"
+msgstr "``class``"
 
-#: ../../src/intro/index.txt:92
-msgid "is"
-msgstr "is"
+#: ../../src/intro/index.txt:95
+msgid "``finally``"
+msgstr "``finally``"
 
-#: ../../src/intro/index.txt:92
-msgid "return"
-msgstr "return"
+#: ../../src/intro/index.txt:95
+msgid "``is``"
+msgstr "``is``"
 
-#: ../../src/intro/index.txt:94
-msgid "and"
-msgstr "and"
+#: ../../src/intro/index.txt:95
+msgid "``return``"
+msgstr "``return``"
 
-#: ../../src/intro/index.txt:94
-msgid "continue"
-msgstr "continue"
+#: ../../src/intro/index.txt:97
+msgid "``and``"
+msgstr "``and``"
 
-#: ../../src/intro/index.txt:94
-msgid "for"
-msgstr "for"
+#: ../../src/intro/index.txt:97
+msgid "``continue``"
+msgstr "``continue``"
 
-#: ../../src/intro/index.txt:94
-msgid "lambda"
-msgstr "lambda"
+#: ../../src/intro/index.txt:97
+msgid "``for``"
+msgstr "``for``"
 
-#: ../../src/intro/index.txt:94
-msgid "try"
-msgstr "try"
+#: ../../src/intro/index.txt:97
+msgid "``lambda``"
+msgstr "``lambda``"
 
-#: ../../src/intro/index.txt:96
-msgid "as"
-msgstr "as"
+#: ../../src/intro/index.txt:97
+msgid "``try``"
+msgstr "``try``"
 
-#: ../../src/intro/index.txt:96
-msgid "def"
-msgstr "def"
+#: ../../src/intro/index.txt:99
+msgid "``as``"
+msgstr "``as``"
 
-#: ../../src/intro/index.txt:96
-msgid "from"
-msgstr "from"
+#: ../../src/intro/index.txt:99
+msgid "``def``"
+msgstr "``def``"
 
-#: ../../src/intro/index.txt:96
-msgid "nonlocal"
-msgstr "nonlocal"
+#: ../../src/intro/index.txt:99
+msgid "``from``"
+msgstr "``from``"
 
-#: ../../src/intro/index.txt:96
-msgid "while"
-msgstr "while"
+#: ../../src/intro/index.txt:99
+msgid "``nonlocal``"
+msgstr "``nonlocal``"
 
-#: ../../src/intro/index.txt:98
-msgid "assert"
-msgstr "assert"
+#: ../../src/intro/index.txt:99
+msgid "``while``"
+msgstr "``while``"
 
-#: ../../src/intro/index.txt:98
-msgid "del"
-msgstr "del"
+#: ../../src/intro/index.txt:101
+msgid "``assert``"
+msgstr "``assert``"
 
-#: ../../src/intro/index.txt:98
-msgid "global"
-msgstr "global"
+#: ../../src/intro/index.txt:101
+msgid "``del``"
+msgstr "``del``"
 
-#: ../../src/intro/index.txt:98
-msgid "not"
-msgstr "not"
+#: ../../src/intro/index.txt:101
+msgid "``global``"
+msgstr "``global``"
 
-#: ../../src/intro/index.txt:98
-msgid "with"
-msgstr "with"
+#: ../../src/intro/index.txt:101
+msgid "``not``"
+msgstr "``not``"
 
-#: ../../src/intro/index.txt:100
-msgid "async"
-msgstr "async"
+#: ../../src/intro/index.txt:101
+msgid "``with``"
+msgstr "``with``"
 
-#: ../../src/intro/index.txt:100
-msgid "elif"
-msgstr "elif"
+#: ../../src/intro/index.txt:103
+msgid "``async``"
+msgstr "``async``"
 
-#: ../../src/intro/index.txt:100
-msgid "if"
-msgstr "if"
+#: ../../src/intro/index.txt:103
+msgid "``elif``"
+msgstr "``elif``"
 
-#: ../../src/intro/index.txt:100
-msgid "or"
-msgstr "or"
+#: ../../src/intro/index.txt:103
+msgid "``if``"
+msgstr "``if``"
 
-#: ../../src/intro/index.txt:100
-msgid "yield"
-msgstr "yield"
+#: ../../src/intro/index.txt:103
+msgid "``or``"
+msgstr "``or``"
 
-#: ../../src/intro/index.txt:104
+#: ../../src/intro/index.txt:103
+msgid "``yield``"
+msgstr "``yield``"
+
+#: ../../src/intro/index.txt:107
 msgid "Python is general purpose"
 msgstr "Python є універсальним"
 
-#: ../../src/intro/index.txt:105
+#: ../../src/intro/index.txt:108
 msgid ""
 "Python is everywhere. Talking more specific common scopes for Python "
 "developers are :cite:`python-usage`:"
@@ -403,43 +407,43 @@ msgstr ""
 "Python всюди. Говорячи про більш конкретні загальні області для розробників "
 "Python, це :cite:`python-usage`:"
 
-#: ../../src/intro/index.txt:108
+#: ../../src/intro/index.txt:111
 msgid "Web Scraping Applications"
 msgstr "Програми для сканування веб-сторінок"
 
-#: ../../src/intro/index.txt:109
+#: ../../src/intro/index.txt:112
 msgid "Data Science Solutions"
 msgstr "Рішення для Data Science"
 
-#: ../../src/intro/index.txt:110
+#: ../../src/intro/index.txt:113
 msgid "Machine Learning Applications"
 msgstr "Програми машинного навчання"
 
-#: ../../src/intro/index.txt:111
+#: ../../src/intro/index.txt:114
 msgid "Web Development"
 msgstr "Веб-розробка"
 
-#: ../../src/intro/index.txt:112
+#: ../../src/intro/index.txt:115
 msgid "Game Development"
 msgstr "Розробка ігор"
 
-#: ../../src/intro/index.txt:113
+#: ../../src/intro/index.txt:116
 msgid "Scientific and Numeric Applications"
 msgstr "Наукові та обчислювальні програми"
 
-#: ../../src/intro/index.txt:114
+#: ../../src/intro/index.txt:117
 msgid "Image Design and Graphic Design Applications"
 msgstr "Програми для обробки зображень та графіки"
 
-#: ../../src/intro/index.txt:115
+#: ../../src/intro/index.txt:118
 msgid "Finance Fintech Platform"
 msgstr "Банківські та фінансові сервіси"
 
-#: ../../src/intro/index.txt:116
+#: ../../src/intro/index.txt:119
 msgid "Language Development"
 msgstr "Language Development"
 
-#: ../../src/intro/index.txt:117
+#: ../../src/intro/index.txt:120
 msgid "Operating Systems"
 msgstr "Операційні системи"
 
@@ -919,3 +923,18 @@ msgstr "Python надрукує рядок \"Hello, World!\". Ваш сеанс 
 #: ../../src/intro/interact.txt:144
 msgid "Files containing Python code are called *modules*."
 msgstr "Файли, що містять код Python, називаються *модулями*."
+
+#~ msgid "in"
+#~ msgstr "in"
+
+#~ msgid "is"
+#~ msgstr "is"
+
+#~ msgid "as"
+#~ msgstr "as"
+
+#~ msgid "if"
+#~ msgstr "if"
+
+#~ msgid "or"
+#~ msgstr "or"
