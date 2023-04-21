@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Python Training Course 2022.11.dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-04-21 05:50+0300\n"
-"PO-Revision-Date: 2023-04-21 05:51+0300\n"
+"POT-Creation-Date: 2023-04-21 06:44+0300\n"
+"PO-Revision-Date: 2023-04-21 06:46+0300\n"
 "Last-Translator: Serhii Horodilov <sgorodil@gmail.com>\n"
 "Language-Team: \n"
 "Language: uk\n"
@@ -903,7 +903,7 @@ msgstr "сума *x* і *y*"
 
 #: ../../src/basics/stdtypes.txt:40
 msgid "``x - y``"
-msgstr "``x + y``"
+msgstr "``x - y``"
 
 #: ../../src/basics/stdtypes.txt:40
 msgid "difference of *x* and *y*"
@@ -911,7 +911,7 @@ msgstr "різниця між *x* і *y*"
 
 #: ../../src/basics/stdtypes.txt:42
 msgid "``x * y``"
-msgstr "``x + y``"
+msgstr "``x * y``"
 
 #: ../../src/basics/stdtypes.txt:42
 msgid "product of *x* and *y*"
@@ -919,7 +919,7 @@ msgstr "добуток *x* і *y*"
 
 #: ../../src/basics/stdtypes.txt:44
 msgid "``x / y``"
-msgstr "``x + y``"
+msgstr "``x / y``"
 
 #: ../../src/basics/stdtypes.txt:44
 msgid "quotient of *x* and *y*"
@@ -927,7 +927,7 @@ msgstr "частка *x* і *y*"
 
 #: ../../src/basics/stdtypes.txt:46
 msgid "``x // y``"
-msgstr "``x + y``"
+msgstr "``x // y``"
 
 #: ../../src/basics/stdtypes.txt:46
 msgid "floored quotient of *x* and *y*"
@@ -935,15 +935,15 @@ msgstr "цілочисельне ділення *x* і *y*"
 
 #: ../../src/basics/stdtypes.txt:48
 msgid "``x % y``"
-msgstr "``x + y``"
+msgstr "``x % y``"
 
 #: ../../src/basics/stdtypes.txt:48
 msgid "remainder of ``x / y``"
-msgstr "залишок від ділення``x / y``"
+msgstr "залишок від ділення ``x / y``"
 
 #: ../../src/basics/stdtypes.txt:50
 msgid "``-x``"
-msgstr "``x + y``"
+msgstr "``-x``"
 
 #: ../../src/basics/stdtypes.txt:50
 msgid "*x* negated"
@@ -951,7 +951,7 @@ msgstr "*x* від'ємне"
 
 #: ../../src/basics/stdtypes.txt:52
 msgid "``+x``"
-msgstr "``x + y``"
+msgstr "``+x``"
 
 #: ../../src/basics/stdtypes.txt:52
 msgid "*y* unchanged"
@@ -959,7 +959,7 @@ msgstr "*y* без змін"
 
 #: ../../src/basics/stdtypes.txt:54
 msgid "``abs(x)``"
-msgstr "``x + y``"
+msgstr "``abs(x)``"
 
 #: ../../src/basics/stdtypes.txt:54
 msgid "absolute value or magnitude of *x*"
@@ -967,7 +967,7 @@ msgstr "абсолютне значення або величина *x*"
 
 #: ../../src/basics/stdtypes.txt:56
 msgid "``int(x)``"
-msgstr "``x + y``"
+msgstr "``int(x)``"
 
 #: ../../src/basics/stdtypes.txt:56
 msgid "*x* converted to integer"
@@ -975,7 +975,7 @@ msgstr "*x* перетворено на ціле число"
 
 #: ../../src/basics/stdtypes.txt:58
 msgid "``float(x)``"
-msgstr "``x + y``"
+msgstr "``float(x)``"
 
 #: ../../src/basics/stdtypes.txt:58
 msgid "*x* converted to floating point"
@@ -983,7 +983,7 @@ msgstr "*x* перетворено на число з плаваючою ком�
 
 #: ../../src/basics/stdtypes.txt:60
 msgid "``complex(re, im)``"
-msgstr "``x + y``"
+msgstr "``complex(re, im)``"
 
 #: ../../src/basics/stdtypes.txt:60
 msgid ""
@@ -995,7 +995,7 @@ msgstr ""
 
 #: ../../src/basics/stdtypes.txt:63
 msgid "``divmod(x, y)``"
-msgstr "``x + y``"
+msgstr "``divmod(x, y)``"
 
 #: ../../src/basics/stdtypes.txt:63
 msgid "the pair ``(x // y, x % y)``"
@@ -1003,7 +1003,7 @@ msgstr "об'єднує ``(x // y, x % y)``"
 
 #: ../../src/basics/stdtypes.txt:65
 msgid "``pow(x, y)`` ``x ** y``"
-msgstr "``x + y``"
+msgstr "``pow(x, y)`` ``x ** y``"
 
 #: ../../src/basics/stdtypes.txt:65
 msgid "*x* to the power *y*"
@@ -1022,12 +1022,12 @@ msgstr ""
 #: ../../src/basics/stdtypes.txt:74
 msgid ""
 "``float(x)`` also accepts the strings ``\"nan\"`` and ``\"inf\"`` with an "
-"optional prefix \"+\" or \"-\" for :abbr:Nan(Not a Number) and positive and "
-"negative infinity."
+"optional prefix \"+\" or \"-\" for :abbr:`NaN(Not a Number)` and positive "
+"and negative infinity."
 msgstr ""
 "``float(x)`` також приймає рядки ``\"nan\"`` та ``\"inf\"`` з необов'язковим "
-"префіксом \"+\" або \"-\" для: abbr:Nan(не число) і позитивна і негативна "
-"нескінченність."
+"префіксом \"+\" або \"-\" для: :abbr:`NaN(Not a Number, не число)` і "
+"позитивна та негативна нескінченність."
 
 #: ../../src/basics/stdtypes.txt:79
 msgid "Code examples"
