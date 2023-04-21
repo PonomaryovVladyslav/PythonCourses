@@ -1,0 +1,921 @@
+# INTRODUCTION SECTION TRANSLATION.
+#
+# Copyright (C) 2023, Python training course authors and contributors
+# This file is distributed under the same license as the Python Training Course package.
+#
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Python Training Course 2023.04.dev\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-04-21 04:34+0300\n"
+"PO-Revision-Date: 2023-04-21 05:21+0300\n"
+"Last-Translator: Serhii Horodilov <sgorodil@gmail.com>\n"
+"Language-Team: \n"
+"Language: uk\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<12 || n%100>14) ? 1 : 2);\n"
+"X-Generator: Poedit 3.2.2\n"
+
+#: ../../src/intro/index.txt:120
+msgid "Contents"
+msgstr "Зміст"
+
+#: ../../src/intro/index.txt:2
+msgid ""
+"There are a whole bunch of common programming tasks that are easy in Python. "
+"For someone who is not yet a programmer, who wants to become a programmer, "
+"for those people Python is particularly easy to get. In Python, every symbol "
+"you type is essential."
+msgstr ""
+"Існує ціла купа звичайних програмних завдань, які легко виконати на Python. "
+"Для тих, хто ще не програміст, хто хоче стати програмістом, для цих людей "
+"Python особливо легко отримати. У Python кожен символ, який ви вводите, є "
+"важливим."
+
+#: ../../src/intro/index.txt:7
+msgid "|guido| Guido van Rossum"
+msgstr "|guido| Гвідо ван Россум"
+
+#: ../../src/intro/index.txt:172
+msgid "guido"
+msgstr "guido"
+
+#: ../../src/intro/index.txt:11
+msgid "Introduction to Python"
+msgstr "Введення в Python"
+
+#: ../../src/intro/index.txt:13
+msgid ""
+"|python| **Python** is a high-level, interpreted scripting language. It was "
+"created in the early 1990s by Guido van Rossum at Stichting Mathematisch "
+"Centrum (CWI, see https://www.cwi.nl/) in the Netherlands as a successor of "
+"a language called ABC. Guido remains Python’s principal author, although it "
+"includes many contributions from others."
+msgstr ""
+"|python| **Python** — це інтерпретована скриптова мова високого рівня. Її "
+"було створено на початку 1990-х років Гвідо ван Россумом у Stichting "
+"Mathematisch Centrum (CWI, див. https://www.cwi.nl/) у Нідерландах як "
+"наступника мови під назвою ABC. Гвідо залишається головним автором Python, "
+"хоча мова містить багато внесків від інших авторів."
+
+#: ../../src/intro/index.txt:129
+msgid "python"
+msgstr "python"
+
+#: ../../src/intro/index.txt:19
+msgid ""
+"Python 2.0 was released in 2000, and the 2.x versions were the prevalent "
+"releases until December 2008. At that time, the development team made the "
+"decision to release version 3.0, which contained a few relatively small but "
+"significant changes that were not backward compatible with the 2.x versions. "
+"Python 2 and 3 are very similar, and some features of Python 3 have been "
+"backported to Python 2. But in general, they remain not quite compatible."
+msgstr ""
+"Python 2.0 був випущений у 2000 році, а версії 2.x були поширеними випусками "
+"до грудня 2008 року. У той час команда розробників прийняла рішення "
+"випустити версію 3.0, яка містила кілька відносно невеликих, але значних "
+"змін, які не були зворотно сумісними. з версіями 2.x. Python 2 і 3 дуже "
+"схожі, і деякі функції Python 3 були перенесені в Python 2. Але загалом вони "
+"залишаються не зовсім сумісними."
+
+#: ../../src/intro/index.txt:26
+msgid ""
+"Both Python 2 and 3 have continued to be maintained and developed, with "
+"periodic release updates for both. However, an official End Of Life date of "
+"January 1, 2020 has been established for Python 2, after which time it will "
+"no longer be maintained."
+msgstr ""
+"І Python 2, і 3 продовжували підтримуватися та розроблятися з періодичними "
+"оновленнями для обох. Однак для Python 2 було встановлено офіційну дату "
+"завершення життя 1 січня 2020 року, після якої він більше не "
+"підтримуватиметься."
+
+#: ../../src/intro/index.txt:31
+msgid ""
+"Python is still maintained by a core development team at the Institute, and "
+"Guido is still in charge, having been given the title of BDFL (Benevolent "
+"Dictator For Life) by the Python community. The name Python, by the way, "
+"derives not from the snake, but from the British comedy troupe Monty "
+"Python’s Flying Circus, of which Guido was, and presumably still is, a fan. "
+"It is common to find references to Monty Python sketches and movies "
+"scattered throughout the Python documentation."
+msgstr ""
+"Python все ще підтримується основною командою розробників в Інституті, і "
+"Гвідо все ще керує, отримавши звання BDFL (Доброзичливий диктатор на все "
+"життя) від спільноти Python. Назва Python, до речі, походить не від імені "
+"змії, а від британської комедійної трупи Monty Python’s Flying Circus, "
+"шанувальником якої був і, мабуть, залишається Гвідо. Посилання на ескізи та "
+"фільми Monty Python часто можна знайти в документації Python."
+
+#: ../../src/intro/index.txt:39
+msgid "Here are some significant facts about Python."
+msgstr "Ось кілька важливих фактів про Python."
+
+#: ../../src/intro/index.txt:42
+msgid "Python is popular"
+msgstr "Python популярний"
+
+#: ../../src/intro/index.txt:43
+msgid ""
+"Python has been growing in popularity over the last few years. The 2018 "
+"Stack Overflow Developer Survey ranked Python as the 7th most popular and "
+"the number one most wanted technology of the year. By the end of Q-4 in 2022 "
+"Python is the **top** language on all GitHut metrics :cite:`github:stats`."
+msgstr ""
+"Python набирає популярності протягом останніх кількох років. Опитування "
+"розробників Stack Overflow 2018 року поставило Python на сьоме місце за "
+"популярністю та на перше місце серед найпопулярніших технологій року. До "
+"кінця четвертого кварталу 2022 року Python є **найпопулярнішою** мовою за "
+"всіма показниками GitHut :cite:`github:stats`."
+
+#: ../../src/intro/index.txt:49
+msgid ""
+"Here are some logos of unknown companies across the globe who uses Python:"
+msgstr ""
+"Ось кілька логотипів невідомих компаній по всьому світі, які використовують "
+"Python:"
+
+#: ../../src/intro/index.txt:54
+msgid "google facebook instagram spotify quora netflix dropbox reddit"
+msgstr "google facebook instagram spotify quora netflix dropbox reddit"
+
+#: ../../src/intro/index.txt:0
+msgid "Google"
+msgstr "Google"
+
+#: ../../src/intro/index.txt:0
+msgid "Facebook"
+msgstr "Facebook"
+
+#: ../../src/intro/index.txt:0
+msgid "Instagram"
+msgstr "Instagram"
+
+#: ../../src/intro/index.txt:0
+msgid "Spotify"
+msgstr "Spotify"
+
+#: ../../src/intro/index.txt:0
+msgid "Quora"
+msgstr "Quora"
+
+#: ../../src/intro/index.txt:0
+msgid "Netflix"
+msgstr "Netflix"
+
+#: ../../src/intro/index.txt:0
+msgid "Dropbox"
+msgstr "Dropbox"
+
+#: ../../src/intro/index.txt:0
+msgid "Reddit"
+msgstr "Reddit"
+
+#: ../../src/intro/index.txt:56
+msgid "Python is interpreted"
+msgstr "Python інтерпретується"
+
+#: ../../src/intro/index.txt:57
+msgid ""
+"Many languages are compiled, meaning the source code you create needs to be "
+"translated into machine code, the language of your computer’s processor, "
+"before it can be run. Programs written in an interpreted language are passed "
+"straight to an interpreter that runs them directly."
+msgstr ""
+"Багато мов компілюється, тобто вихідний код, який ви створюєте, має бути "
+"переведений у машинний код, мовою процесора вашого комп’ютера, перш ніж його "
+"можна буде запустити. Програми, написані на інтерпретованій мові, "
+"передаються прямо до інтерпретатора, який їх безпосередньо запускає."
+
+#: ../../src/intro/index.txt:62
+msgid ""
+"This makes for a quicker development cycle because you just type in your "
+"code and run it, without the intermediate compilation step."
+msgstr ""
+"Це забезпечує швидший цикл розробки, оскільки ви просто вводите код і "
+"запускаєте його без проміжного етапу компіляції."
+
+#: ../../src/intro/index.txt:66
+msgid "Python is free"
+msgstr "Python безкоштовний"
+
+#: ../../src/intro/index.txt:67
+msgid ""
+"The Python interpreter is developed under an OSI-approved open-source "
+"license, making it free to install, use, and distribute, even for commercial "
+"purposes."
+msgstr ""
+"Інтерпретатор Python розроблено відповідно до схваленої OSI ліцензії з "
+"відкритим вихідним кодом, що робить його безкоштовним для встановлення, "
+"використання та розповсюдження навіть у комерційних цілях."
+
+#: ../../src/intro/index.txt:71
+msgid "Python is portable"
+msgstr "Python портативний"
+
+#: ../../src/intro/index.txt:72
+msgid ""
+"Because Python code is interpreted and not compiled into native machine "
+"instructions, code written for one platform will work on any other platform "
+"that has the Python interpreter installed. This is true of any interpreted "
+"language, not just Python."
+msgstr ""
+"Оскільки код Python інтерпретується, а не компілюється у власні машинні "
+"інструкції, код, написаний для однієї платформи, працюватиме на будь-якій "
+"іншій платформі, де встановлено інтерпретатор Python. Це стосується будь-"
+"якої інтерпретованої мови, а не лише Python."
+
+#: ../../src/intro/index.txt:78
+msgid "Python is simple"
+msgstr "Python простий"
+
+#: ../../src/intro/index.txt:79
+msgid ""
+"As programming languages go, Python is relatively uncluttered, and the "
+"developers have deliberately kept it that way. A rough estimate of the "
+"complexity of a language can be gleaned from the number of keywords or "
+"reserved words in the language. These are words that are reserved for "
+"special meaning by the compiler or interpreter because they designate "
+"specific built-in functionality of the language. There are only 35 :cite:"
+"`docs-python:keywords` in Python and they are:"
+msgstr ""
+"Що стосується мов програмування, Python є відносно незавантаженим, і "
+"розробники навмисно залишили його таким. Приблизну оцінку складності мови "
+"можна отримати з кількості ключових або зарезервованих слів у мові. Це "
+"слова, які зарезервовані для спеціального значення компілятором або "
+"інтерпретатором, оскільки вони позначають конкретні вбудовані функції мови. "
+"У Python лише 35 :cite:`docs-python:keywords`, і вони:"
+
+#: ../../src/intro/index.txt:88
+msgid "False"
+msgstr "False"
+
+#: ../../src/intro/index.txt:88
+msgid "await"
+msgstr "await"
+
+#: ../../src/intro/index.txt:88
+msgid "else"
+msgstr "else"
+
+#: ../../src/intro/index.txt:88
+msgid "import"
+msgstr "import"
+
+#: ../../src/intro/index.txt:88
+msgid "pass"
+msgstr "pass"
+
+#: ../../src/intro/index.txt:90
+msgid "None"
+msgstr "None"
+
+#: ../../src/intro/index.txt:90
+msgid "break"
+msgstr "break"
+
+#: ../../src/intro/index.txt:90
+msgid "except"
+msgstr "except"
+
+#: ../../src/intro/index.txt:90
+msgid "in"
+msgstr "in"
+
+#: ../../src/intro/index.txt:90
+msgid "raise"
+msgstr "raise"
+
+#: ../../src/intro/index.txt:92
+msgid "True"
+msgstr "True"
+
+#: ../../src/intro/index.txt:92
+msgid "class"
+msgstr "class"
+
+#: ../../src/intro/index.txt:92
+msgid "finally"
+msgstr "finally"
+
+#: ../../src/intro/index.txt:92
+msgid "is"
+msgstr "is"
+
+#: ../../src/intro/index.txt:92
+msgid "return"
+msgstr "return"
+
+#: ../../src/intro/index.txt:94
+msgid "and"
+msgstr "and"
+
+#: ../../src/intro/index.txt:94
+msgid "continue"
+msgstr "continue"
+
+#: ../../src/intro/index.txt:94
+msgid "for"
+msgstr "for"
+
+#: ../../src/intro/index.txt:94
+msgid "lambda"
+msgstr "lambda"
+
+#: ../../src/intro/index.txt:94
+msgid "try"
+msgstr "try"
+
+#: ../../src/intro/index.txt:96
+msgid "as"
+msgstr "as"
+
+#: ../../src/intro/index.txt:96
+msgid "def"
+msgstr "def"
+
+#: ../../src/intro/index.txt:96
+msgid "from"
+msgstr "from"
+
+#: ../../src/intro/index.txt:96
+msgid "nonlocal"
+msgstr "nonlocal"
+
+#: ../../src/intro/index.txt:96
+msgid "while"
+msgstr "while"
+
+#: ../../src/intro/index.txt:98
+msgid "assert"
+msgstr "assert"
+
+#: ../../src/intro/index.txt:98
+msgid "del"
+msgstr "del"
+
+#: ../../src/intro/index.txt:98
+msgid "global"
+msgstr "global"
+
+#: ../../src/intro/index.txt:98
+msgid "not"
+msgstr "not"
+
+#: ../../src/intro/index.txt:98
+msgid "with"
+msgstr "with"
+
+#: ../../src/intro/index.txt:100
+msgid "async"
+msgstr "async"
+
+#: ../../src/intro/index.txt:100
+msgid "elif"
+msgstr "elif"
+
+#: ../../src/intro/index.txt:100
+msgid "if"
+msgstr "if"
+
+#: ../../src/intro/index.txt:100
+msgid "or"
+msgstr "or"
+
+#: ../../src/intro/index.txt:100
+msgid "yield"
+msgstr "yield"
+
+#: ../../src/intro/index.txt:104
+msgid "Python is general purpose"
+msgstr "Python є універсальним"
+
+#: ../../src/intro/index.txt:105
+msgid ""
+"Python is everywhere. Talking more specific common scopes for Python "
+"developers are :cite:`python-usage`:"
+msgstr ""
+"Python всюди. Говорячи про більш конкретні загальні області для розробників "
+"Python, це :cite:`python-usage`:"
+
+#: ../../src/intro/index.txt:108
+msgid "Web Scraping Applications"
+msgstr "Програми для сканування веб-сторінок"
+
+#: ../../src/intro/index.txt:109
+msgid "Data Science Solutions"
+msgstr "Рішення для Data Science"
+
+#: ../../src/intro/index.txt:110
+msgid "Machine Learning Applications"
+msgstr "Програми машинного навчання"
+
+#: ../../src/intro/index.txt:111
+msgid "Web Development"
+msgstr "Веб-розробка"
+
+#: ../../src/intro/index.txt:112
+msgid "Game Development"
+msgstr "Розробка ігор"
+
+#: ../../src/intro/index.txt:113
+msgid "Scientific and Numeric Applications"
+msgstr "Наукові та обчислювальні програми"
+
+#: ../../src/intro/index.txt:114
+msgid "Image Design and Graphic Design Applications"
+msgstr "Програми для обробки зображень та графіки"
+
+#: ../../src/intro/index.txt:115
+msgid "Finance Fintech Platform"
+msgstr "Банківські та фінансові сервіси"
+
+#: ../../src/intro/index.txt:116
+msgid "Language Development"
+msgstr "Language Development"
+
+#: ../../src/intro/index.txt:117
+msgid "Operating Systems"
+msgstr "Операційні системи"
+
+#: ../../src/intro/install.txt:3 ../../src/intro/install.txt:21
+msgid "Install Python"
+msgstr "Встановлення Python"
+
+#: ../../src/intro/install.txt:5
+msgid ""
+"The `Python wiki <https://wiki.python.org/moin/BeginnersGuide/Download>`_ "
+"briefly describes the installation process."
+msgstr ""
+"`Вікі Python <https://wiki.python.org/moin/BeginnersGuide/Download>`_ "
+"коротко описує процес встановлення."
+
+#: ../../src/intro/install.txt:8
+msgid ""
+"To become a **true** professional, you need a special software called :abbr:"
+"`IDE (Integrated Development Environment)` or at least a code editor "
+"supporting syntax highlight. Refer :doc:`/appx/code_edit` for more "
+"information."
+msgstr ""
+"Щоб стати **справжнім** професіоналом, вам потрібне спеціальне програмне "
+"забезпечення під назвою :abbr:`IDE (Integrated Development Environment)` або "
+"принаймні редактор коду, який підтримує підсвічування синтаксису. Зверніться "
+"до :doc:`/appx/code_edit` для отримання додаткової інформації."
+
+#: ../../src/intro/install.txt:14
+msgid "Linux"
+msgstr "Linux"
+
+#: ../../src/intro/install.txt:16
+msgid ""
+"On most Linux distros Python comes pre-installed and/or all distro have it "
+"available in their package repository (I haven't seen the one which does "
+"have). The installation process depends on the distro, but here are some "
+"examples how you can install it:"
+msgstr ""
+"У більшості дистрибутивів Linux Python постачається попередньо встановленим "
+"і/або в усіх дистрибутивах він доступний у сховищі пакетів (я не бачив того, "
+"у якому є). Процес встановлення залежить від дистрибутива, але ось кілька "
+"прикладів того, як його можна встановити:"
+
+#: ../../src/intro/install.txt:37
+msgid "MacOS"
+msgstr "MacOS"
+
+#: ../../src/intro/install.txt:39
+msgid ""
+"For newer versions of MacOS Python is no longer included by default and you "
+"will have to download and install it."
+msgstr ""
+"Для нових версій MacOS Python більше не включено за замовчуванням, і вам "
+"доведеться завантажити та встановити його."
+
+#: ../../src/intro/install.txt:42
+msgid "The process is described at: `Using Python on a Mac`_."
+msgstr "Процес описано в: `Використання Python на Mac`_."
+
+#: ../../src/intro/install.txt:44
+msgid ""
+"Briefly, you are invited to visit `downloads`_ and download the latest "
+"stable version of Python. A \"universal binary\" build of Python runs "
+"natively on Mac's new Intel and legacy PPC CPUs."
+msgstr ""
+"Коротко, вас запрошують відвідати `завантаження`_ та завантажити останню "
+"стабільну версію Python. \"Універсальна двійкова\" збірка Python працює "
+"нативно на нових процесорах Intel і застарілих процесорах PPC від Mac."
+
+#: ../../src/intro/install.txt:48
+msgid "After the installation you would get:"
+msgstr "Після встановлення ви отримаєте:"
+
+#: ../../src/intro/install.txt:50
+msgid ""
+"`Python 3.x` folder in `Applications` folder. Standard development "
+"environment (`IDLE`) and `PythonLauncher` included."
+msgstr ""
+"Папка `Python 3.x` в папці `Програми`. Включено стандартне середовище "
+"розробки (`IDLE`) і `PythonLauncher`."
+
+#: ../../src/intro/install.txt:52
+msgid ""
+"A framework `/Library/Frameworks/Python.framework` included libraries and "
+"executables."
+msgstr ""
+"Фреймворк `/Library/Frameworks/Python.framework` що включає бібліотеки та "
+"виконувані файли."
+
+#: ../../src/intro/install.txt:56
+msgid "Install from Homebrew"
+msgstr "Встановити з Homebrew"
+
+#: ../../src/intro/install.txt:58
+msgid ""
+"Python for MacOS is available via Homebrew. You are to search `formulae`_ "
+"for the latest available version. In general, it's as easy as:"
+msgstr ""
+"Python для MacOS доступний через Homebrew. Ви повинні шукати `формули`_ для "
+"останньої доступної версії. Загалом, це так само просто:"
+
+#: ../../src/intro/install.txt:66
+msgid "Windows"
+msgstr "Windows"
+
+#: ../../src/intro/install.txt:68
+msgid ""
+"As for MacOS, here is the official documentation: `Using Python on Windows`_."
+msgstr ""
+"Що стосується MacOS, ось офіційна документація: `Using Python on Windows`_."
+
+#: ../../src/intro/install.txt:70
+msgid ""
+"For Windows' users the stable release is available from `downloads`_. Just "
+"download the installer and proceed to common steps to install software."
+msgstr ""
+"Для користувачів Windows стабільний випуск доступний із `завантажень`_. "
+"Просто завантажте програму встановлення та перейдіть до стандартних кроків "
+"для встановлення програмного забезпечення."
+
+#: ../../src/intro/install.txt:73
+msgid ""
+"It's recommended to **Add Python3.x to PATH**, this will avoid problems at "
+"the beginning of your journey with Python"
+msgstr ""
+"Рекомендовано **Додати Python3.x до PATH**, це дозволить уникнути проблем на "
+"початку вашого шляху з Python"
+
+#: ../../src/intro/install.txt:80
+msgid "Python installer first page"
+msgstr "Перша сторінка інсталятора Python"
+
+#: ../../src/intro/install.txt:82
+msgid "Going on with **Install Now**:"
+msgstr "Продовжуємо з **Встановити зараз**:"
+
+#: ../../src/intro/install.txt:84
+msgid "Python will be installed to your user directory"
+msgstr "Python буде встановлено у ваш каталог користувача"
+
+#: ../../src/intro/install.txt:85
+msgid ""
+"Python Launcher will be installed according to the option at the bottom of "
+"the page"
+msgstr "Python Launcher буде встановлено відповідно до опції внизу сторінки"
+
+#: ../../src/intro/install.txt:88
+msgid ""
+"Using **Customize installation** will perform an *all-users* installation."
+msgstr ""
+"Використання **Налаштувати інсталяцію** виконає інсталяцію *для всіх "
+"користувачів*."
+
+#: ../../src/intro/install.txt:91
+msgid "Removing the MAX_PATH Limitation"
+msgstr "Видалення обмеження MAX_PATH"
+
+#: ../../src/intro/install.txt:93
+msgid ""
+"Windows historically has limited path lengths to 260 characters. This meant "
+"that paths longer than this would not resolve and errors would result. In "
+"the latest versions of Windows, this limitation can be expanded to "
+"approximately 32,000 characters. This allows the open() function, the os "
+"module and most other path functionality to accept and return paths longer "
+"than 260 characters."
+msgstr ""
+"Історично у Windows довжина шляху обмежена 260 символами. Це означало, що "
+"шляхи, довші за цей, не вирішуватимуться, і спричинятимуться помилки. В "
+"останніх версіях Windows це обмеження можна розширити приблизно до 32 000 "
+"символів. Це дозволяє функції open(), модулю os і більшості інших функцій "
+"шляху приймати та повертати шляхи, довші за 260 символів."
+
+#: ../../src/intro/install.txt:99
+msgid "You will need PC administrator assistance to perform this action."
+msgstr "Для виконання цієї дії вам знадобиться допомога адміністратора ПК."
+
+#: ../../src/intro/install.txt:102
+msgid "Install from the Microsoft Store"
+msgstr "Встановити з Microsoft Store"
+
+#: ../../src/intro/install.txt:104
+msgid "You can install from the Microsoft Store in two steps:"
+msgstr "Ви можете встановити з Microsoft Store у два кроки:"
+
+#: ../../src/intro/install.txt:106
+msgid ""
+"Open the Microsoft Store app and search for ``Python`` The result should "
+"look like:"
+msgstr ""
+"Відкрийте програму Microsoft Store і знайдіть ``Python``. Результат має "
+"виглядати так:"
+
+#: ../../src/intro/install.txt:112
+msgid "Microsoft Store - search results for \"Python\""
+msgstr "Microsoft Store - результати пошуку для \"Python\""
+
+#: ../../src/intro/install.txt:114
+msgid "Select ``Python 3.9`` or the higher available version."
+msgstr "Виберіть ``Python 3.9`` або вищу доступну версію."
+
+#: ../../src/intro/install.txt:116
+msgid ""
+"Click **GET** and wait until the installer is downloaded. The installation "
+"process should run automatically. Follow the installer's instructions."
+msgstr ""
+"Натисніть **GET** і дочекайтеся завантаження інсталятора. Процес "
+"встановлення має запуститися автоматично. Дотримуйтесь інструкцій "
+"інсталятора."
+
+#: ../../src/intro/install.txt:124
+msgid "Online Interpreters"
+msgstr "Онлайн Інтерпретатори"
+
+#: ../../src/intro/install.txt:126
+msgid ""
+"Installing or updating Python on your computer is the first step to becoming "
+"a Python programmer :cite:`realpython:install-and-setup`."
+msgstr ""
+"Встановлення або оновлення Python на вашому комп’ютері – це перший крок до "
+"того, щоб стати програмістом Python :cite:`realpython:install-and-setup`."
+
+#: ../../src/intro/install.txt:129
+msgid ""
+"But if you cannot install Python at the moment for some reason, are can go "
+"with online interpreters. `repl.it <https://replit.com/>`_ provides the "
+"ability to create and store Python scripts (they are called *repl* here) for "
+"free."
+msgstr ""
+"Але якщо ви не можете встановити Python на даний момент з якоїсь причини, "
+"можна скористатися онлайн-інтерпретаторами. `repl.it <https://replit.com/>`_ "
+"надає можливість безкоштовно створювати та зберігати сценарії Python (тут "
+"вони називаються *repl*)."
+
+#: ../../src/intro/interact.txt:3
+msgid "Interacting with Python Interpreter"
+msgstr "Взаємодія з інтерпретатором Python"
+
+#: ../../src/intro/interact.txt:5
+msgid "It’s time to write some Python code!"
+msgstr "Настав час написати код на Python!"
+
+#: ../../src/intro/interact.txt:7
+msgid ":cite:t:`realpython:interact`"
+msgstr ":cite:t:`realpython:interact`"
+
+#: ../../src/intro/interact.txt:9
+msgid "In short there are three major ways to do something with Python:"
+msgstr "Коротше кажучи, є три основні способи зробити щось з Python:"
+
+#: ../../src/intro/interact.txt:11
+msgid "interactive Python console"
+msgstr "інтерактивна консоль Python"
+
+#: ../../src/intro/interact.txt:12
+msgid "running code from file [#]_"
+msgstr "запуск коду з файлу [#]_"
+
+#: ../../src/intro/interact.txt:13
+msgid "use online editors (like `repl.it <https://repl.it>`_)"
+msgstr ""
+"використовувати онлайн-редактори (наприклад, `repl.it <https://repl.it>`_)"
+
+#: ../../src/intro/interact.txt:16
+msgid "Using Python interpreter interactively"
+msgstr "Використання інтерпретатора Python в інтерактивному режимі"
+
+#: ../../src/intro/interact.txt:18
+msgid ""
+"Using :abbr:`REPL (Read-Eval-Print-Loop)` environment is the most straight "
+"forward way to start talking to Python. This simply means starting up the "
+"interpreter and typing commands to it directly :cite:`realpython:interact`. "
+"The interpreter:"
+msgstr ""
+"Використання середовища :abbr:`REPL (Read-Eval-Print-Loop)` є найпростішим "
+"способом почати спілкування з Python. Це просто означає запуск "
+"інтерпретатора та введення команд безпосередньо в нього :cite:`realpython:"
+"interact`. Перекладач:"
+
+#: ../../src/intro/interact.txt:23
+msgid "Reads the command you enter"
+msgstr "Читає введену команду"
+
+#: ../../src/intro/interact.txt:24
+msgid "Evaluates and executes it"
+msgstr "Оцінює та виконує її"
+
+#: ../../src/intro/interact.txt:25
+msgid "Prints the output (if any) back to the console"
+msgstr "Друкує результат (якщо є) назад на консоль"
+
+#: ../../src/intro/interact.txt:26
+msgid "Loops back and repeats"
+msgstr "Повертається назад та повторює"
+
+#: ../../src/intro/interact.txt:29
+msgid "Starting the interpreter"
+msgstr "Запуск інтерпретатора"
+
+#: ../../src/intro/interact.txt:31
+msgid ""
+"In :abbr:`GUI (Graphic User Interface)` environment, it's likely that the "
+"installer placed a shortcut on the desktop to launch the Python."
+msgstr ""
+"У середовищі :abbr:`GUI (Graphic User Interface)`, імовірно, інсталятор "
+"розмістив ярлик на робочому столі для запуску Python."
+
+#: ../../src/intro/interact.txt:34
+msgid ""
+"For example in Windows the interpreter can be found in the **Start** menu "
+"labeled **Python 3.x**:"
+msgstr ""
+"Наприклад, у Windows інтерпретатор можна знайти в меню **Пуск** з позначкою "
+"**Python 3.x**:"
+
+#: ../../src/intro/interact.txt:40
+msgid "Windows start menu Python group"
+msgstr "Меню Пуск Windows Група Python"
+
+#: ../../src/intro/interact.txt:42
+msgid ""
+"In case you are getting error saying python is not installed, but you are "
+"sure that the interpreter **is installed** - this means you have no Python "
+"in your ``PATH``. Message may look like: ``'python' is not recognized as an "
+"internal or external command`` / ``python: command not found``"
+msgstr ""
+"Якщо ви отримуєте повідомлення про те, що python не встановлено, але ви "
+"впевнені, що інтерпретатор **встановлено**, це означає, що у вашому ``PATH`` "
+"немає Python. Повідомлення може виглядати так: ``'python' не розпізнається "
+"як внутрішня або зовнішня команда`` / ``python: команда не знайдена``"
+
+#: ../../src/intro/interact.txt:48
+msgid "Refer :doc:`/appx/env_path` for problem solution."
+msgstr "Зверніться до :doc:`/appx/env_path` для вирішення проблеми."
+
+#: ../../src/intro/interact.txt:50
+msgid "The alternative is to launch from a terminal window:"
+msgstr "Альтернативою є запуск із вікна терміналу:"
+
+#: ../../src/intro/interact.txt:52
+msgid "**Command Prompt** in Windows"
+msgstr "**Командний рядок** у Windows"
+
+#: ../../src/intro/interact.txt:53
+msgid "**Terminal** both in macOS and Linux"
+msgstr "**Термінал** в macOS і Linux"
+
+#: ../../src/intro/interact.txt:58
+msgid "Start Python via Command Prompt"
+msgstr "Запуск Python через командний рядок"
+
+#: ../../src/intro/interact.txt:63
+msgid "Start Python via Terminal"
+msgstr "Запуск Python через термінал"
+
+#: ../../src/intro/interact.txt:66
+msgid "Running code"
+msgstr "Запускаємо код"
+
+#: ../../src/intro/interact.txt:68
+msgid ""
+"Put the Python code in interactive console and press enter to execute it."
+msgstr ""
+"Помістіть код Python в інтерактивну консоль і натисніть enter, щоб виконати "
+"його."
+
+#: ../../src/intro/interact.txt:70
+msgid ""
+"Ensure that the ``>>>`` prompt is displayed and the cursor is pointed after "
+"it"
+msgstr ""
+"Переконайтеся, що підказка ``>>>`` відображається, а курсор знаходиться "
+"після неї"
+
+#: ../../src/intro/interact.txt:72
+msgid "Type the command ``print(\"Hello, World!\")``"
+msgstr "Введіть команду ``print(\"Hello, World!\")``"
+
+#: ../../src/intro/interact.txt:73
+msgid "Press enter"
+msgstr "Натисніть enter"
+
+#: ../../src/intro/interact.txt:79
+msgid "Your session should look like:"
+msgstr "Ваш сеанс має виглядати так:"
+
+#: ../../src/intro/interact.txt:86
+msgid ""
+"If you've seen string \"Hello, World!\" printed back, congrats - you've run "
+"your first program in Python."
+msgstr ""
+"Якщо ви бачили рядок \"Hello, World!\" надруковано, вітаємо - ви запустили "
+"свою першу програму на Python."
+
+#: ../../src/intro/interact.txt:94
+msgid "Exiting the interpreter"
+msgstr "Вихід з інтерпретатора"
+
+#: ../../src/intro/interact.txt:96
+msgid "To exit the interactive console type \"exit\" and hit enter."
+msgstr "Щоб вийти з інтерактивної консолі, введіть \"exit\" і натисніть Enter."
+
+#: ../../src/intro/interact.txt:103
+msgid "Running code from file"
+msgstr "Запуск коду з файлу"
+
+#: ../../src/intro/interact.txt:105
+msgid ""
+"A Python script is a reusable set of code. It is essentially a Python "
+"program - a sequence of Python instructions - contained in a file. You can "
+"run the program by specifying the name of the script file to the interpreter."
+msgstr ""
+"Сценарій Python — це багаторазовий набір коду. По суті, це програма на "
+"Python – послідовність інструкцій Python, які містяться у файлі. Ви можете "
+"запустити програму, вказавши інтерпретатору назву файлу сценарію."
+
+#: ../../src/intro/interact.txt:109
+msgid ""
+"Python scripts are just plain text, so you can edit them with any text "
+"editor. If you have a favorite programmer’s editor that operates on text "
+"files, it should be fine to use. Otherwise here are some options for the "
+"first time:"
+msgstr ""
+"Сценарії Python — це звичайний текст, тому ви можете редагувати їх у будь-"
+"якому текстовому редакторі. Якщо у вас є улюблений програмістський редактор, "
+"який працює з текстовими файлами, його цілком можна використовувати. Інакше "
+"ось кілька варіантів для першого разу:"
+
+#: ../../src/intro/interact.txt:113
+msgid "Windows: |npp| `Notepad++ <https://notepad-plus-plus.org/>`_"
+msgstr "Windows: |npp| `Notepad++ <https://notepad-plus-plus.org/>`_"
+
+#: ../../src/intro/interact.txt:148
+msgid "npp"
+msgstr "npp"
+
+#: ../../src/intro/interact.txt:114
+msgid "Linux: |geany| `Geany <https://www.geany.org/>`_"
+msgstr "Linux: |geany| `Geany <https://www.geany.org/>`_"
+
+#: ../../src/intro/interact.txt:150
+msgid "geany"
+msgstr "geany"
+
+#: ../../src/intro/interact.txt:116
+msgid ""
+"Using whatever editor create a script file called ``hello.py`` and put the "
+"code in it:"
+msgstr ""
+"Використовуючи будь-який редактор, створіть файл сценарію під назвою ``hello."
+"py`` і помістіть у нього код:"
+
+#: ../../src/intro/interact.txt:123
+msgid ""
+"Save file keeping track on the directory you choose to save into. Now, open "
+"the terminal or command prompt in this directory."
+msgstr ""
+"Збережіть файл, відстежуючи його в каталозі, який ви вибрали для збереження. "
+"Тепер відкрийте термінал або командний рядок у цьому каталозі."
+
+#: ../../src/intro/interact.txt:126
+msgid ""
+"In window you may open Command Prompt in the directory by typing \"cmd\" to "
+"the address bar in explorer."
+msgstr ""
+"У вікні ви можете відкрити командний рядок у каталозі, ввівши \"cmd\" в "
+"адресний рядок провідника."
+
+#: ../../src/intro/interact.txt:129
+msgid "In the terminal (or command prompt) type:"
+msgstr "У терміналі (або командному рядку) введіть:"
+
+#: ../../src/intro/interact.txt:135
+msgid ""
+"Python will print string \"Hello, World!\". Your session should look like:"
+msgstr "Python надрукує рядок \"Hello, World!\". Ваш сеанс має виглядати так:"
+
+#: ../../src/intro/interact.txt:144
+msgid "Files containing Python code are called *modules*."
+msgstr "Файли, що містять код Python, називаються *модулями*."
