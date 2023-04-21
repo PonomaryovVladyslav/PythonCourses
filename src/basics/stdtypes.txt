@@ -72,7 +72,7 @@ Supported operations
           ``1 // 2`` is ``0``
 
 .. note:: ``float(x)`` also accepts the strings ``"nan"`` and ``"inf"`` with
-          an optional prefix "+" or "-" for :abbr:Nan(Not a Number) and
+          an optional prefix "+" or "-" for :abbr:`NaN(Not a Number)` and
           positive and negative infinity.
 
 Code examples
@@ -80,30 +80,32 @@ Code examples
 
 .. code-block:: python
     :caption: Integer numbers
+    :linenos:
     
-    x = 42
-    y = 24
-    a = int(42)
-    b = int(42.24)
-    
-    result = x + y   # for both int operands only
-    result = x - y   # for both int operands only
-    result = x * y   # for both int operands only
-    result = x // y  # for any numeric operands
+    >>> x = 42
+    >>> y = 24
+    >>> a = int(42)
+    >>> b = int(42.24)
+    >>> # result is of the integer type
+    >>> result_add = x + y   # for both int operands only
+    >>> result_sub = x - y   # for both int operands only
+    >>> result_mul = x * y   # for both int operands only
+    >>> result_div = x // y  # for any numeric operands
 
 .. code-block:: python
     :caption: Floating point numbers
+    :linenos:
 
-    x = 42.
-    y = .24
-    z = 42.24
-    a = float(42)
-    b = float(42.24)
-    
-    result = x + y  # for any float operand
-    result = x - y  # for any float operand
-    result = x * y  # for any float operand
-    result = x / y  # for any numeric operands
+    >>> x = 42.
+    >>> y = .24
+    >>> z = 42.24
+    >>> a = float(42)
+    >>> b = float(42.24)
+    >>> # result is of the float type
+    >>> result_add = x + y  # for any float operand
+    >>> result_sub = x - y  # for any float operand
+    >>> result_mul = x * y  # for any float operand
+    >>> result_div = x / y  # for any numeric operands
 
 Value comparisons
 -----------------
