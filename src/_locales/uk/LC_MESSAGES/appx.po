@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Python Training Course 2022.11.dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-04-21 05:50+0300\n"
-"PO-Revision-Date: 2023-04-21 05:51+0300\n"
+"POT-Creation-Date: 2023-04-21 23:02+0300\n"
+"PO-Revision-Date: 2023-04-21 23:09+0300\n"
 "Last-Translator: Serhii Horodilov <sgorodil@gmail.com>\n"
 "Language-Team: ua <LL@li.org>\n"
 "Language: uk\n"
@@ -1858,31 +1858,32 @@ msgstr "Чарівники, Злодії та Рицарі"
 
 #: ../../problem-sets/src/wtk/challenge.rst:5
 msgid ""
-"\"Wizards, Thieves and Knights\" (WTK) game is a \"Paper, Rock and "
-"Scissors\" clone but in a fantasy setting. It comes with a simple command "
-"line interface where the use must type in his or her choice. The enemy is "
-"controlled by the script. The player's goal is to gain as many score points, "
-"as it possible."
+"\"Wizards, Thieves and Knights\" (:abbr:`WTK (Wizards, Thieves and "
+"Knights)`) game is a \"Paper, Rock and Scissors\" clone but in a fantasy "
+"setting. It comes with a simple command line interface where the use must "
+"type in his or her choice. The enemy is controlled by the script. The "
+"player's goal is to gain as many score points, as it possible."
 msgstr ""
-"Гра \"Чарівники, Злодії та Рицарі» (WTK) — це клон \"Камень, ножиці, "
-"бумага\", але у фентезійному сеттингу. Вона має простий інтерфейс командного "
-"рядка, де користувач повинен ввести свій вибір. Ворогом керує скрипт. Мета "
-"гравця - набрати якомога більше очок."
+"Гра \"Чарівники, Злодії та Рицарі\" (:abbr:`WTK (Wizards, Thieves and "
+"Knights)`) — це клон \"Камень, ножиці, бумага\", але у фентезійному "
+"сеттингу. Вона має простий інтерфейс командного рядка, де користувач повинен "
+"ввести свій вибір. Ворогом керує скрипт. Мета гравця - набрати якомога "
+"більше очок."
 
-#: ../../problem-sets/src/wtk/challenge.rst:12
+#: ../../problem-sets/src/wtk/challenge.rst:13
 msgid "Code organization"
 msgstr "Організація коду"
 
-#: ../../problem-sets/src/wtk/challenge.rst:14
+#: ../../problem-sets/src/wtk/challenge.rst:15
 msgid "Use separate modules to maintain your code base. For example:"
 msgstr ""
 "Використовуйте окремі модулі для підтримки вашої кодової бази. Наприклад:"
 
-#: ../../problem-sets/src/wtk/challenge.rst:26
+#: ../../problem-sets/src/wtk/challenge.rst:27
 msgid "General playground description"
 msgstr "Загальний опис ігрового процесу"
 
-#: ../../problem-sets/src/wtk/challenge.rst:28
+#: ../../problem-sets/src/wtk/challenge.rst:29
 msgid ""
 "The game process is divided into rounds. Each round consists of **attack** "
 "and **defence** stages. Rounds are repeated, until player is defeated."
@@ -1890,31 +1891,31 @@ msgstr ""
 "Процес гри поділено на раунди. Кожен раунд складається з етапів атаки та "
 "захисту. Раунди повторюються, поки гравець не буде переможений."
 
-#: ../../problem-sets/src/wtk/challenge.rst:32
+#: ../../problem-sets/src/wtk/challenge.rst:33
 msgid "Fight rules"
 msgstr "Правила боротьби"
 
-#: ../../problem-sets/src/wtk/challenge.rst:34
+#: ../../problem-sets/src/wtk/challenge.rst:35
 msgid "It's simple..."
 msgstr "Це просто..."
 
-#: ../../problem-sets/src/wtk/challenge.rst:36
+#: ../../problem-sets/src/wtk/challenge.rst:37
 msgid "**Wizard** beats **Knight**"
 msgstr "**Чарівник** перемагає **Рицаря**"
 
-#: ../../problem-sets/src/wtk/challenge.rst:37
+#: ../../problem-sets/src/wtk/challenge.rst:38
 msgid "**Thief** beats **Wizard**"
 msgstr "**Злодій** перемагає **Чарівника**"
 
-#: ../../problem-sets/src/wtk/challenge.rst:38
+#: ../../problem-sets/src/wtk/challenge.rst:39
 msgid "**Knight** beats **Thief**"
 msgstr "**Рицар** перемагає **Злодія**"
 
-#: ../../problem-sets/src/wtk/challenge.rst:41
+#: ../../problem-sets/src/wtk/challenge.rst:42
 msgid "Attack stage"
 msgstr "Стадія атаки"
 
-#: ../../problem-sets/src/wtk/challenge.rst:43
+#: ../../problem-sets/src/wtk/challenge.rst:44
 msgid ""
 "Player selects the choice to attack from **wizard**, **thief** or "
 "**knight**, enemy selects the choice for defence from the same options by "
@@ -1923,35 +1924,35 @@ msgstr ""
 "Гравець обирає для атаки **чарівника**, **злодія** або **лицаря**, ворог "
 "обирає захист з тих самих варіантів випадковим чином. Якщо атака успішна:"
 
-#: ../../problem-sets/src/wtk/challenge.rst:47
+#: ../../problem-sets/src/wtk/challenge.rst:48
 msgid "enemy health is decreased"
 msgstr "здоров'я ворога зменшено"
 
-#: ../../problem-sets/src/wtk/challenge.rst:48
+#: ../../problem-sets/src/wtk/challenge.rst:49
 msgid "player gains score points"
 msgstr "гравець отримує очки"
 
-#: ../../problem-sets/src/wtk/challenge.rst:50
+#: ../../problem-sets/src/wtk/challenge.rst:51
 msgid "In case enemy is defeated:"
 msgstr "Якщо ворог переможений:"
 
-#: ../../problem-sets/src/wtk/challenge.rst:52
+#: ../../problem-sets/src/wtk/challenge.rst:53
 msgid "a new enemy instance is initialized using higher level"
 msgstr "новий екземпляр ворога ініціалізовано з використанням вищого рівня"
 
-#: ../../problem-sets/src/wtk/challenge.rst:53
+#: ../../problem-sets/src/wtk/challenge.rst:54
 msgid "player gains some extra score points"
 msgstr "гравець отримує додаткові очки"
 
-#: ../../problem-sets/src/wtk/challenge.rst:54
+#: ../../problem-sets/src/wtk/challenge.rst:55
 msgid "next defence stage is skipped, and player attacks again"
 msgstr "наступний етап захисту пропущено, і гравець атакує знову"
 
-#: ../../problem-sets/src/wtk/challenge.rst:57
+#: ../../problem-sets/src/wtk/challenge.rst:58
 msgid "Defence stage"
 msgstr "Стадія захисту"
 
-#: ../../problem-sets/src/wtk/challenge.rst:59
+#: ../../problem-sets/src/wtk/challenge.rst:60
 msgid ""
 "Player selects the choice to defend from **wizard**, **thief** or "
 "**knight**, enemy selects the choice to attack from the same options by "
@@ -1960,31 +1961,31 @@ msgstr ""
 "Гравець вибір для захисту **чарівника**, **злодія** або **рицаря**, ворог "
 "обирає для атаки з тих же варіантів випадковим чином. Якщо атака успішна:"
 
-#: ../../problem-sets/src/wtk/challenge.rst:63
+#: ../../problem-sets/src/wtk/challenge.rst:64
 msgid "player health is decreased"
 msgstr "здоров'я гравця знижено"
 
-#: ../../problem-sets/src/wtk/challenge.rst:65
+#: ../../problem-sets/src/wtk/challenge.rst:66
 msgid "If player is defeated:"
 msgstr "Якщо гравець переможений:"
 
-#: ../../problem-sets/src/wtk/challenge.rst:67
+#: ../../problem-sets/src/wtk/challenge.rst:68
 msgid "report the message about gained score points to the terminal"
 msgstr "повідомляти повідомлення про набрані бали на термінал"
 
-#: ../../problem-sets/src/wtk/challenge.rst:68
+#: ../../problem-sets/src/wtk/challenge.rst:69
 msgid "write down player's name and score points to \"scores.txt\" file"
 msgstr "запишіть ім'я гравця та наберіть очки до файлу \"scores.txt\""
 
-#: ../../problem-sets/src/wtk/challenge.rst:72
+#: ../../problem-sets/src/wtk/challenge.rst:73
 msgid "Exceptions"
 msgstr "Винятки"
 
-#: ../../problem-sets/src/wtk/challenge.rst:75
+#: ../../problem-sets/src/wtk/challenge.rst:76
 msgid "Enemy down"
 msgstr "Ворога переможено"
 
-#: ../../problem-sets/src/wtk/challenge.rst:77
+#: ../../problem-sets/src/wtk/challenge.rst:78
 msgid ""
 "This is an exceptional scenario when enemy is defeated. A custom exception "
 "``EnemyDown`` should be used to track these cases. Exception should provide "
@@ -1998,11 +1999,11 @@ msgstr ""
 msgid "Raised when an enemy is defeated"
 msgstr "Виникає, коли ворог переможений"
 
-#: ../../problem-sets/src/wtk/challenge.rst:84
+#: ../../problem-sets/src/wtk/challenge.rst:85
 msgid "Game over"
 msgstr "Гра завершена"
 
-#: ../../problem-sets/src/wtk/challenge.rst:86
+#: ../../problem-sets/src/wtk/challenge.rst:87
 msgid ""
 "This is an exceptional scenario when player is defeated. A custom exception "
 "``GameOver`` should be used to track these cases. Exception should provide "
@@ -2016,11 +2017,11 @@ msgstr ""
 msgid "Raised when a player is defeated"
 msgstr "Виникає, коли гравця переможено"
 
-#: ../../problem-sets/src/wtk/challenge.rst:94
+#: ../../problem-sets/src/wtk/challenge.rst:95
 msgid "Models"
 msgstr "Моделі"
 
-#: ../../problem-sets/src/wtk/challenge.rst:97
+#: ../../problem-sets/src/wtk/challenge.rst:98
 msgid "Enemy"
 msgstr "Ворог"
 
@@ -2045,6 +2046,10 @@ msgid "Initialize instance"
 msgstr "Ініціалізувати екземпляр"
 
 #: of wtk.models.Enemy.__init__:3
+msgid "Health value is equal to the level value."
+msgstr "Значення здоров'я дорівнює значенню рівня."
+
+#: of wtk.models.Enemy.__init__:5
 msgid "an enemy's level indicator"
 msgstr "індикатор рівня противника"
 
@@ -2081,12 +2086,12 @@ msgstr "Вибори, зроблені супротивником, випадк�
 msgid "a fight choice"
 msgstr "варіант для бою"
 
-#: ../../problem-sets/src/wtk/challenge.rst:103
+#: ../../problem-sets/src/wtk/challenge.rst:104
 msgid "You are free to implement other methods you like, if needed."
 msgstr ""
 "Ви можете використовувати інші методи, які вам подобаються, якщо потрібно."
 
-#: ../../problem-sets/src/wtk/challenge.rst:106
+#: ../../problem-sets/src/wtk/challenge.rst:107
 msgid "Player"
 msgstr "Гравець"
 
@@ -2223,68 +2228,80 @@ msgstr ""
 "Гравця просять прийняти рішення щодо майбутнього бою. Вибране значення "
 "перевіряється, і якщо воно недійсне, запитання повторюється."
 
-#: ../../problem-sets/src/wtk/challenge.rst:115
+#: ../../problem-sets/src/wtk/challenge.rst:116
 msgid "Settings"
 msgstr "Налаштування"
 
-#: ../../problem-sets/src/wtk/challenge.rst:117
+#: ../../problem-sets/src/wtk/challenge.rst:118
 msgid "Settings module contains constants values for the game."
 msgstr "Модуль налаштувань містить значення констант для гри."
 
-#: ../../problem-sets/src/wtk/challenge.rst:119
+#: ../../problem-sets/src/wtk/challenge.rst:120
 msgid "For example,"
 msgstr "Наприклад,"
 
-#: ../../problem-sets/src/wtk/challenge.rst:123
-msgid "Initial health meter value for a player instance"
-msgstr "Початкове значення індикатора стану здоров'я для екземпляру гравця"
+#: ../../docstring of wtk.settings.INITIAL_PLAYER_HEALTH:1
+msgid "Initial player health value"
+msgstr "Початкове значення здоров'я гравця"
 
-#: ../../problem-sets/src/wtk/challenge.rst
-msgid "type"
-msgstr "type"
+#: ../../docstring of wtk.settings.INITIAL_ENEMY_LEVEL:1
+msgid "Initial enemy level value"
+msgstr "Початкове значення рівня ворога"
 
-#: ../../problem-sets/src/wtk/challenge.rst:125
+#: ../../docstring of wtk.settings.SCORE_SUCCESS_ATTACK:1
+msgid "Score points value to assign when player's attack is successful"
+msgstr "Вартість очок, які призначаються, коли атака гравця успішна"
+
+#: ../../docstring of wtk.settings.SCORE_ENEMY_DOWN:1
+msgid "Score points value to assign when enemy is defeated"
+msgstr "Вартість очок, які призначаються, коли ворог переможений"
+
 #: ../../problem-sets/src/wtk/challenge.rst:131
-#: ../../problem-sets/src/wtk/challenge.rst:137
-#: ../../problem-sets/src/wtk/challenge.rst:143
-msgid "int"
-msgstr "int"
-
-#: ../../problem-sets/src/wtk/challenge.rst:129
-msgid "Indicates the level to initialize the first enemy instance."
-msgstr "Вказує рівень для ініціалізації першого екземпляра ворога."
-
-#: ../../problem-sets/src/wtk/challenge.rst:135
-msgid "Set the score value to assign when an attack is successful"
+msgid "You may also define messages with this module, for example:"
 msgstr ""
-"Встановлює кількість балів, яку буде присвоєно, якщо атака буде успішною"
+"Ви також можете визначити повідомлення за допомогою цього модуля, наприклад:"
+
+#: ../../docstring of wtk.settings.MSG_SUCCESS_ATTACK:1
+msgid "Successful attack message"
+msgstr "Повідомлення про успішну атаку"
+
+#: ../../docstring of wtk.settings.MSG_SUCCESS_DEFENCE:1
+msgid "Successful defence message"
+msgstr "Повідомлення про успішний захист"
+
+#: ../../docstring of wtk.settings.MSG_FAILURE_ATTACK:1
+msgid "Failed attack message"
+msgstr "Повідомлення про невдалу атаку"
+
+#: ../../docstring of wtk.settings.MSG_FAILURE_DEFENCE:1
+msgid "Failed defence message"
+msgstr "Повідомлення про невдалий захист"
+
+#: ../../docstring of wtk.settings.MSG_DRAW:1
+msgid "Draw fight message"
+msgstr "Повідомлення про нічию"
 
 #: ../../problem-sets/src/wtk/challenge.rst:141
-msgid "Set the score value to assign when an enemy is defeated"
-msgstr ""
-"Встановлює кількість балів, яку буде присвоєно, якщо ворог зазнає поразки"
-
-#: ../../problem-sets/src/wtk/challenge.rst:147
 msgid "Engine"
 msgstr "Ігровий рушій"
 
-#: ../../problem-sets/src/wtk/challenge.rst:149
+#: ../../problem-sets/src/wtk/challenge.rst:143
 msgid "Engine module should provide two functions:"
 msgstr "Модуль двигуна має забезпечувати дві функції:"
 
-#: ../../problem-sets/src/wtk/challenge.rst:151
+#: ../../problem-sets/src/wtk/challenge.rst:145
 msgid "``get_player_name``"
 msgstr "``get_player_name``"
 
-#: ../../problem-sets/src/wtk/challenge.rst:152
+#: ../../problem-sets/src/wtk/challenge.rst:146
 msgid "``play``"
 msgstr "``play``"
 
-#: ../../problem-sets/src/wtk/challenge.rst:155
+#: ../../problem-sets/src/wtk/challenge.rst:149
 msgid "Player name getter"
 msgstr "Отримання імені гравця"
 
-#: ../../problem-sets/src/wtk/challenge.rst:157
+#: ../../problem-sets/src/wtk/challenge.rst:151
 msgid ""
 "Asks the user to type in his or her name and return it back. Leading and "
 "trailing whitespaces are to be trimmed. Name should contain at least one "
@@ -2309,11 +2326,11 @@ msgstr ""
 msgid "a player defined name"
 msgstr "ім'я визначене гравцем"
 
-#: ../../problem-sets/src/wtk/challenge.rst:164
+#: ../../problem-sets/src/wtk/challenge.rst:158
 msgid "Play"
 msgstr "Гра"
 
-#: ../../problem-sets/src/wtk/challenge.rst:166
+#: ../../problem-sets/src/wtk/challenge.rst:160
 msgid ""
 "This function initializes player and enemy instance. It processes game "
 "rounds inside of an endless loop stage by stage. If an enemy is defeated - a "
@@ -2345,135 +2362,21 @@ msgstr ""
 "ігровий процес у нескінченному циклі. Як тільки гравець переможений - це "
 "зупиняє виконання."
 
-#: ../../problem-sets/src/wtk/challenge.rst:179
+#: ../../problem-sets/src/wtk/challenge.rst:173
 msgid "Optional Enhancements"
 msgstr "Додаткові Вдосконалення"
 
-#: ../../problem-sets/src/wtk/challenge.rst:181
+#: ../../problem-sets/src/wtk/challenge.rst:175
 msgid "Add scores processor to show top-10 scores from a record table."
 msgstr ""
 "Додайте процесор оцінок, щоб показати 10 найкращих результатів із таблиці "
 "записів."
 
-#: ../../problem-sets/src/wtk/challenge.rst:182
+#: ../../problem-sets/src/wtk/challenge.rst:176
 msgid "Create game menu, for example: ::"
 msgstr "Створити меню гри, наприклад: ::"
 
-#: ../../problem-sets/src/wtk/challenge.rst:188
+#: ../../problem-sets/src/wtk/challenge.rst:182
 msgid "Store score table to the database instead of using text file."
 msgstr ""
 "Зберігайте таблицю балів у базі даних замість використання текстового файлу."
-
-#~ msgid ""
-#~ "[Starter template](https://github.com/edu-python-course/django-template)"
-#~ msgstr ""
-#~ "[Starter template](https://github.com/edu-python-course/django-template)"
-
-#~ msgid ""
-#~ "[Bootstrap templates](https://github.com/edu-python-course/blog-bootstrap)"
-#~ msgstr ""
-#~ "[Bootstrap templates](https://github.com/edu-python-course/blog-bootstrap)"
-
-#~ msgid "Code notes"
-#~ msgstr "Примітки до коду"
-
-#~ msgid "At least 50% coverage."
-#~ msgstr "Хоча б 50% покриття тестами."
-
-#~ msgid "WARRIORS, ROBBERS AND WIZARDS GAME"
-#~ msgstr "ГРА WARRIORS, ROBBERS AND WIZARDS"
-
-#~ msgid "**Warrior** beats **Robber**"
-#~ msgstr "Воїн перемагає розбійника"
-
-#~ msgid ""
-#~ "Represents the playing enemy-bot. All choices made by this model are "
-#~ "random. The model should implement methods:"
-#~ msgstr ""
-#~ "Представляє граючого ворожого бота. Усі вибори, зроблені цією моделлю, "
-#~ "випадкові. Модель має реалізовувати методи:"
-
-#~ msgid "``__init__``"
-#~ msgstr "``__init__``"
-
-#~ msgid ""
-#~ "Initialize enemy instance. Initializer should receive one argument of "
-#~ "integer type - ``level: int``. Health points value should be set equal to "
-#~ "level value."
-#~ msgstr ""
-#~ "Ініціалізувати екземпляр противника. Ініціалізатор повинен отримати один "
-#~ "аргумент цілого типу - ``level: int``. Значення очок здоров'я має бути "
-#~ "встановлено рівним значенню рівня."
-
-#~ msgid "``descrease_health``"
-#~ msgstr "``descrease_health``"
-
-#~ msgid "``select_attack``"
-#~ msgstr "``select_attack``"
-
-#~ msgid "``select_defence``"
-#~ msgstr "``select_defence``"
-
-#~ msgid "Return a random defence choice from valid choices."
-#~ msgstr "Повернути випадковий вибір захисту з дійсних виборів."
-
-#~ msgid ""
-#~ "This model is controlled by the user. It represents a playing user. All "
-#~ "choices are controlled by the user. The model should implement methods:"
-#~ msgstr ""
-#~ "Цією моделлю керує користувач. Вона представляє гравця. Усі вибори "
-#~ "контролює користувач. Модель має реалізовувати методи:"
-
-#~ msgid ""
-#~ "Initialize player instance. Initializer should receive player's name as "
-#~ "an argument - ``name: str``. Health points are to be set from settings. "
-#~ "Score points should be initialized with 0 (zero)."
-#~ msgstr ""
-#~ "Ініціалізувати екземпляр гравця. Ініціалізатор має отримати ім'я гравця "
-#~ "як аргумент - ``ім'я: str``. Очки здоров'я повинні бути встановлені з "
-#~ "налаштувань. Очки мають бути ініціалізовані 0 (нулем)."
-
-#~ msgid "``fight``"
-#~ msgstr "``fight``"
-
-#~ msgid ""
-#~ "Static method to perform a fight. Takes two arguments representing attack "
-#~ "and defence choices. Performs fight result calculation and return it back."
-#~ msgstr ""
-#~ "Статичний метод для проведення бою. Бере два аргументи, що представляють "
-#~ "атаку та вибір захисту. Виконує обчислення результату бою та повертає "
-#~ "його назад."
-
-#~ msgid "``attack``"
-#~ msgstr "``attack``"
-
-#~ msgid "``defence``"
-#~ msgstr "``defence``"
-
-#~ msgid ""
-#~ "Each page should contain a list of links to archive views for the last "
-#~ "year."
-#~ msgstr ""
-#~ "Кожна сторінка має містити список посилань на перегляди архіву за "
-#~ "останній рік."
-
-#~ msgid ""
-#~ "Auth views should use ``register.html`` and ``login.html`` with "
-#~ "corresponding forms."
-#~ msgstr ""
-#~ "Подання авторизації повинні використовувати ``register.html`` і ``login."
-#~ "html`` з відповідними формами."
-
-#~ msgid ""
-#~ "For now, it’s ok to use admin as “test user”. Authentication system will "
-#~ "be implemented in the future challenges. ``user`` object is available (by "
-#~ "default) in any template context. To test anonymous access you can use "
-#~ "``user.is_authenticated``, which returns ``False`` for non-authenticated "
-#~ "users."
-#~ msgstr ""
-#~ "Наразі можна використовувати адміністратора як «тестового користувача». "
-#~ "Система автентифікації буде реалізована в майбутніх викликах. Об’єкт "
-#~ "«користувач» доступний (за замовчуванням) у будь-якому контексті шаблону. "
-#~ "Щоб перевірити анонімний доступ, ви можете використовувати ``user."
-#~ "is_authenticated``, який повертає ``False`` для неавтентифікованих "
-#~ "користувачів."
