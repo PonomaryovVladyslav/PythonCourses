@@ -104,8 +104,8 @@ With these operators, you can build expressions by connecting Boolean
 expressions with each other. These operators are **keywords** of the language,
 so you cannot use them as identifiers without causing a *SyntaxError*.
 
-Getting started with Python's ``not`` operator
-----------------------------------------------
+Getting started with ``not`` operator
+-------------------------------------
 
 The ``not`` operator is the Boolean or logic operator that implements negation
 in Python. It's **unary**, which means that it takes only one **operand**.
@@ -155,7 +155,7 @@ be ``True`` if **both** are true.
     | ``False``     | ``True``      | ``False``                   |
     +---------------+---------------+-----------------------------+
 
-``and`` operator work's not only with operands of Boolean type.
+``and`` operator works not only with operands of Boolean type.
 It's behavior:
 
 -   evaluate 1st operand; return it, if it's ``False`` and finish
@@ -197,7 +197,7 @@ then the expression is ``False``.
     | ``False``     | ``True``      | ``True``                   |
     +---------------+---------------+----------------------------+
 
-``or`` operator work's not only with operands of Boolean type.
+``or`` operator works not only with operands of Boolean type.
 It's behavior:
 
 -   evaluate 1st operand; return it, if it's ``True`` and finish
