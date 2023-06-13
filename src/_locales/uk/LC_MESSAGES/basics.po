@@ -49,7 +49,7 @@ msgid ""
 "relies on **true** and **false** values and define a set of boolean "
 "operations: **not**, **and**, and **or**."
 msgstr ""
-"`George Boole`_ об’єднав те, що тепер відомо як `булева алгебра`_, яка "
+"`George Boole`_ об'єднав те, що тепер відомо як `булева алгебра`_, яка "
 "спирається на значення **true** і **false** і визначає набір логічних "
 "операцій: **not**, **and** і **or**."
 
@@ -243,7 +243,7 @@ msgid ""
 msgstr ""
 "Оператор ``not`` є логічним або логічним оператором, який реалізує "
 "заперечення в Python. Це **унарний**, що означає, що він приймає лише один "
-"**операнд**. Операндом може бути логічний вираз або будь-який об’єкт Python. "
+"**операнд**. Операндом може бути логічний вираз або будь-який об'єкт Python. "
 "Завдання ``not`` полягає в тому, щоб змінити значення істинності свого "
 "операнда."
 
@@ -457,6 +457,62 @@ msgstr "``is not``"
 #: ../../src/basics/bool_logic.txt:244
 msgid "negated object identity"
 msgstr "заперечена ідентичність об'єкта"
+
+#: ../../src/basics/bool_logic.txt:247
+msgid ""
+"Each of these comparison operators return a Boolean value, it's always "
+"``True`` or ``False``."
+msgstr ""
+"Кожен із цих операторів порівняння повертає логічне значення, воно завжди "
+"``True`` або ``False``."
+
+#: ../../src/basics/bool_logic.txt:250
+msgid ""
+"You can chain comparison operators together: ``x < y < z`` is equal to ``x < "
+"y and y < z``."
+msgstr ""
+"Ви можете об'єднати оператори порівняння: ``x < y < z`` дорівнює ``x < y і y "
+"< z``."
+
+#: ../../src/basics/bool_logic.txt:254
+msgid "Equality vs Identity"
+msgstr "Рівність та Ідентичність"
+
+#: ../../src/basics/bool_logic.txt:256
+msgid ""
+"It's easier to understand the difference between those by asking the "
+"question each answers to."
+msgstr ""
+"Легше зрозуміти різницю між ними, поставивши запитання, на яке кожен "
+"відповідає."
+
+#: ../../src/basics/bool_logic.txt:259
+msgid "The question for ``==`` (*equality*) is:"
+msgstr "Питання для ``==`` (*equality*) таке:"
+
+#: ../../src/basics/bool_logic.txt:261
+msgid "Is object on the left **equal** to the object on the right"
+msgstr "Об'єкт ліворуч **дорівнює** об'єкту праворуч"
+
+#: ../../src/basics/bool_logic.txt:263
+msgid "The question for ``is`` (*identity*) is:"
+msgstr "Питання для ``is`` (*identity*) таке:"
+
+#: ../../src/basics/bool_logic.txt:265
+msgid "Is object on the left **the same** as the object on the right"
+msgstr "Об'єкт ліворуч **те саме**, що й об'єкт праворуч"
+
+#: ../../src/basics/bool_logic.txt:267
+msgid ""
+"For example, if there are two cars of the same model, same color etc. in "
+"front of you - these cars are equal, but they aren't ident to each other. "
+"But if you are shown two pictures of the same car, you understand that the "
+"cars on those pictures are the same object."
+msgstr ""
+"Наприклад, якщо перед вами дві машини однієї моделі, одного кольору і т. д. "
+"- ці машини рівні, але не ідентичні одна одній. Але якщо вам покажуть дві "
+"фотографії однієї машини, ви зрозумієте, що машини на цих фотографіях є "
+"одним і тим же об'єктом."
 
 #: ../../src/basics/controlflow.txt:-1
 msgid "Control flow in Python"
