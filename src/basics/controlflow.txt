@@ -56,8 +56,8 @@ The ``print`` statement on line #6 will be executed only for even value of
 ``else`` block
 --------------
 
-Since ``if`` can be used by its own, it can extend its behavior with ``else``
-block. The general syntax for ``else`` body is the same: at least one indented
+``if`` can be used by its own, it can extend its behavior with ``else`` block.
+The general syntax for ``else`` body is the same: at least one indented
 statement. But ``else`` doesn't take any expression after it. This block of
 code will be executed only that the ``if`` statement truth check fails.
 
