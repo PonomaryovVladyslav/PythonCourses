@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Python Training Course 2022.11.dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-07-14 17:20+0300\n"
-"PO-Revision-Date: 2023-07-14 17:21+0300\n"
+"POT-Creation-Date: 2023-07-14 18:29+0300\n"
+"PO-Revision-Date: 2023-07-14 18:30+0300\n"
 "Last-Translator: Serhii Horodilov <sgorodil@gmail.com>\n"
 "Language-Team: ua <LL@li.org>\n"
 "Language: uk\n"
@@ -57,7 +57,7 @@ msgstr ""
 msgid "**Key Features**"
 msgstr "**Основні функції**"
 
-#: ../../blog/docs/spec.rst
+#: ../../blog/docs/spec.rst:22
 msgid "User Registration and Authentication"
 msgstr "Реєстрація та Аутентифікація Користувачів"
 
@@ -74,7 +74,7 @@ msgstr ""
 "мати персоналізовані облікові записи та зберігати право власності на їхні "
 "опубліковані статті."
 
-#: ../../blog/docs/spec.rst
+#: ../../blog/docs/spec.rst:30
 msgid "Article Management"
 msgstr "Керування Статтями"
 
@@ -89,9 +89,9 @@ msgstr ""
 "рамках додатка. Система надасть зручний редактор. Крім того, автори зможуть "
 "категоризувати статті, присвоюючи їм відповідні теми."
 
-#: ../../blog/docs/spec.rst
-msgid "Topic Subscription"
-msgstr "Підписка на Теми"
+#: ../../blog/docs/spec.rst:37
+msgid "Topic Subscription:"
+msgstr "Підписка на Теми:"
 
 #: ../../blog/docs/spec.rst:38
 msgid ""
@@ -125,7 +125,7 @@ msgstr ""
 msgid ""
 "Here is a starter repository template, that may helps: `Starter template`_."
 msgstr ""
-"Ось шаблон стартового репозиторію, який може допомогти: Starter template_."
+"Ось шаблон стартового репозиторію, який може допомогти: `Starter template`_."
 
 #: ../../blog/docs/spec.rst:55
 msgid "Challenge: Functional views"
