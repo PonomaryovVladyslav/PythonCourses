@@ -8,18 +8,17 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Python Training Course 2022.11.dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-04-21 23:02+0300\n"
+"POT-Creation-Date: 2023-07-14 16:00+0300\n"
 "PO-Revision-Date: 2023-04-21 23:09+0300\n"
 "Last-Translator: Serhii Horodilov <sgorodil@gmail.com>\n"
-"Language-Team: ua <LL@li.org>\n"
 "Language: uk\n"
+"Language-Team: ua <LL@li.org>\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<12 || n%100>14) ? 1 : 2);\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
-"n%10<=4 && (n%100<12 || n%100>14) ? 1 : 2);\n"
 "Generated-By: Babel 2.12.1\n"
-"X-Generator: Poedit 3.2.2\n"
 
 #: ../../src/appx/blog.txt:-1
 msgid "Specification for Django blog training project"
@@ -39,384 +38,804 @@ msgstr "Специфікація Проекту Блогу"
 
 #: ../../blog/docs/spec.rst:12
 msgid ""
-"As a developer you were asked to create a simple blog site. The goal is to "
-"create a place on the Internet where users can share their stories to public."
+"The project aims to develop a robust and user-friendly web application "
+"using the Django framework. The primary objective is to create a blogging"
+" platform that allows users to publish and manage articles on various "
+"topics. The application will provide an intuitive interface for authors "
+"to compose and format their articles, while also offering a seamless "
+"reading experience for visitors."
 msgstr ""
-"Вас, як розробника, попросили створити простий сайт блогу. Мета - створити "
-"місце в Інтернеті, де користувачі зможуть ділитися своїми історіями з "
-"громадськістю."
 
-#: ../../blog/docs/spec.rst:16
+#: ../../blog/docs/spec.rst:19
+msgid "**Key Features**:"
+msgstr ""
+
+#: ../../blog/docs/spec.rst
+msgid "User Registration and Authentication"
+msgstr ""
+
+#: ../../blog/docs/spec.rst:23
 msgid ""
-"This document applies requirements for the entire project step-by-step. You "
-"will start from creating the appropriate URL dispatcher and connecting a "
-"PostgreSQL database to store the data and will finish with implementing REST "
-"API for the blog."
+"The application will provide user registration and authentication "
+"functionality, allowing individuals to create accounts, log in, and "
+"manage their profile information. This feature will enable authors to "
+"have personalized accounts and maintain ownership of their published "
+"articles."
 msgstr ""
-"Цей документ крок за кроком застосовує вимоги до всього проекту. Ви \" "
-"\"почнете зі створення відповідного диспетчера URL-адрес і підключення до "
-"бази даних PostgreSQL для зберігання даних і закінчите впровадженням REST "
-"API для блог."
 
-#: ../../blog/docs/spec.rst:21
+#: ../../blog/docs/spec.rst
+msgid "Article Management"
+msgstr ""
+
+#: ../../blog/docs/spec.rst:31
 msgid ""
-"There are some boiler plates, that may be useful in your future work, but "
-"you aren’t forced to use them. It’s on your choice."
+"Authors will have the ability to create, edit, and delete articles within"
+" the application. The system will offer a user-friendly editor. "
+"Additionally, authors will be able to categorize articles by assigning "
+"relevant topics to them."
 msgstr ""
-"Існують деякі котли, які можуть бути корисними у вашій майбутній роботі, але "
-"ви не змушені їх використовувати. Це на ваш вибір."
 
-#: ../../blog/docs/spec.rst:24
-msgid "`Starter template`_"
-msgstr "`Starter template`_"
+#: ../../blog/docs/spec.rst
+#, fuzzy
+msgid "Topic Subscription"
+msgstr "Опис"
 
-#: ../../blog/docs/spec.rst:25
-msgid "`Bootstrap template`_"
-msgstr "`Bootstrap template`_"
-
-#: ../../blog/docs/spec.rst:28
-msgid "Challenge: Site views"
-msgstr "Завдання: Site views"
-
-#: ../../blog/docs/spec.rst:30
+#: ../../blog/docs/spec.rst:38
 msgid ""
-"It’s ok not to return **actual** content for now. Just ensure all the routes "
-"are available and provide correct data. Use anything you like to return "
-"within HTTP response."
+"The application will include a subscription feature that allows users to "
+"subscribe to topics of interest. By subscribing to specific topics, users"
+" will receive notifications or updates whenever new articles are "
+"published in those categories. This feature will enhance user engagement "
+"and ensure that readers stay informed about the topics they find most "
+"valuable."
 msgstr ""
-"Наразі можна не повертати **фактичний** вміст. Просто переконайтеся, що всі "
-"маршрути доступні та надайте правильні дані. Використовуйте все, що хочете, "
-"щоб повернути у відповіді HTTP."
 
-#: ../../blog/docs/spec.rst:34
+#: ../../blog/docs/spec.rst:45
 msgid ""
-"``/blogs/``: A site’s homepage. This will contain a list of blogs available "
-"via the django site."
+"Overall, the project aims to deliver an efficient blogging platform that "
+"caters to both authors and readers. By providing a seamless user "
+"experience and incorporating essential functionalities such as user "
+"authentication, article management, and topic subscriptions, the "
+"application will empower users to create, share, and explore engaging "
+"content within a well-structured and organized platform."
 msgstr ""
-"``/blogs/``: домашня сторінка сайту. Він міститиме список блогів, доступних "
-"на сайті django."
 
-#: ../../blog/docs/spec.rst:36
+#: ../../blog/docs/spec.rst:52
+msgid ""
+"Here is a starter repository template, that may helps: `Starter "
+"template`_."
+msgstr ""
+
+#: ../../blog/docs/spec.rst:55
+#, fuzzy
+msgid "Challenge: Functional views"
+msgstr "Завдання: API views"
+
+#: ../../blog/docs/spec.rst:57
+#, fuzzy
+msgid ""
+"It's ok not to return **actual** content for now. Just ensure all the "
+"routes are available and provide correct data. Use anything you like to "
+"return within HTTP response."
+msgstr ""
+"Наразі можна не повертати **фактичний** вміст. Просто переконайтеся, що "
+"всі маршрути доступні та надайте правильні дані. Використовуйте все, що "
+"хочете, щоб повернути у відповіді HTTP."
+
+#: ../../blog/docs/spec.rst:61
 msgid ""
 "``/about/``: Provides a regular text for a user, describing the "
 "functionalities of the django site."
 msgstr ""
-"``/about/``: надає звичайний текст для користувача, що описує функції сайту "
-"django."
+"``/about/``: надає звичайний текст для користувача, що описує функції "
+"сайту django."
 
-#: ../../blog/docs/spec.rst:38
-msgid "``/``: same as ``/blogs/``"
-msgstr "``/``: те ж саме ``/blogs/``"
-
-#: ../../blog/docs/spec.rst:39
+#: ../../blog/docs/spec.rst:63
+#, fuzzy
 msgid ""
-"``/<slug:slug>/``: A single blog post detail view. The URL contains dynamic "
-"part in it. This will be used to fetch a single blogpost from the database."
+"``/``: A site's homepage. This will contain a list of blogs published via"
+" the django site."
 msgstr ""
-"``/<slug:slug>/``: детальний перегляд окремої публікації в блозі. URL-адреса "
-"містить динамічну частину. Це буде використано для отримання однієї "
-"публікації блогу з бази даних."
+"``/blogs/``: домашня сторінка сайту. Він міститиме список блогів, "
+"доступних на сайті django."
 
-#: ../../blog/docs/spec.rst:42
+#: ../../blog/docs/spec.rst:65
+#, fuzzy
 msgid ""
-"``/<slug:slug>/comment/``: This view will be used to add comments to a "
-"blogpost."
+"``/<article>/``: A single article detail view. The URL contains dynamic "
+"part in it. This will be used to fetch a single article from the "
+"database."
 msgstr ""
-"``/<slug:slug>/comment/``: це подання використовуватиметься для додавання "
-"коментарів до публікації блогу."
+"``/<slug:slug>/``: детальний перегляд окремої публікації в блозі. "
+"URL-адреса містить динамічну частину. Це буде використано для отримання "
+"однієї публікації блогу з бази даних."
 
-#: ../../blog/docs/spec.rst:44
-msgid "``/create/``: A post creation form."
+#: ../../blog/docs/spec.rst:68
+#, fuzzy
+msgid ""
+"``/<article>/comment/``: This view will be used to add comments to a "
+"article."
+msgstr ""
+"``/<slug:slug>/comment/``: це подання використовуватиметься для додавання"
+" коментарів до публікації блогу."
+
+#: ../../blog/docs/spec.rst:70
+#, fuzzy
+msgid "``/create/``: A article creation form."
 msgstr "``/create/``: форма створення публікації."
 
-#: ../../blog/docs/spec.rst:45
-msgid "``/<slug:slug>/update/``: A view to update an existing post data."
-msgstr ""
-"``/<slug:slug>/update/``: перегляд для оновлення наявних даних публікації."
+#: ../../blog/docs/spec.rst:71
+#, fuzzy
+msgid "``/<article>/update/``: A view to update an existing article data."
+msgstr "``/<slug:slug>/update/``: перегляд для оновлення наявних даних публікації."
 
-#: ../../blog/docs/spec.rst:46
-msgid "``/<slug:slug>/delete/``: A view to confirm post deletion."
-msgstr ""
-"``/<slug:slug>/delete/``: перегляд для підтвердження видалення публікації."
+#: ../../blog/docs/spec.rst:72
+#, fuzzy
+msgid "``/<article>/delete/``: A view to confirm article deletion."
+msgstr "``/<slug:slug>/delete/``: перегляд для підтвердження видалення публікації."
 
-#: ../../blog/docs/spec.rst:47
-msgid "``/profile/<str:username>/``: A site user’s personal page."
+#: ../../blog/docs/spec.rst:73
+msgid "``/topics/``: A list of topics available on the site."
+msgstr ""
+
+#: ../../blog/docs/spec.rst:74
+msgid "``/topics/<topic>/subscribe/``: A view to subscribe for a topic."
+msgstr ""
+
+#: ../../blog/docs/spec.rst:75
+msgid "``/topics/<topic>/unsubscribe/``: A view to unsubscribe from a topic."
+msgstr ""
+
+#: ../../blog/docs/spec.rst:76
+#, fuzzy
+msgid "``/profile/<str:username>/``: A site user's personal page."
 msgstr "``/profile/<str:username>/``: Персональна сторінка користувача."
 
-#: ../../blog/docs/spec.rst:48
+#: ../../blog/docs/spec.rst:77
+#, fuzzy
 msgid ""
-"``/change_password/``: This route will be used to change users’ credential "
+"``/set-password/``: This route will be used to change users' credential "
 "data."
 msgstr ""
-"``/change_password/``: Ця сторінка використовуватиметься для зміни облікових "
-"даних користувачів."
+"``/change_password/``: Ця сторінка використовуватиметься для зміни "
+"облікових даних користувачів."
 
-#: ../../blog/docs/spec.rst:50
+#: ../../blog/docs/spec.rst:79
+#, fuzzy
+msgid "``/set-userdata/``: This route will be user to change users' data."
+msgstr ""
+"``/change_password/``: Ця сторінка використовуватиметься для зміни "
+"облікових даних користувачів."
+
+#: ../../blog/docs/spec.rst:80
+msgid "``/deactivate/``: Account deactivation (deletion) view."
+msgstr ""
+
+#: ../../blog/docs/spec.rst:81
 msgid "``/register/``: This view contains a user registration form."
 msgstr "``/register/``: Сторінка з формою для реєстрації нового користувача."
 
-#: ../../blog/docs/spec.rst:51
+#: ../../blog/docs/spec.rst:82
 msgid "``/login/``: This view contains a login form."
 msgstr "``/login/``: Сторінка з формою для логіна."
 
-#: ../../blog/docs/spec.rst:52
+#: ../../blog/docs/spec.rst:83
 msgid ""
-"``/logout/``: Logout page. This view should redirect user back to homepage."
+"``/logout/``: Logout page. This view should redirect user back to "
+"homepage."
 msgstr ""
 "``/logout/``: Логаут. Має перенаправляти користувача назад на домашню "
 "сторінку.."
 
-#: ../../blog/docs/spec.rst:62
-msgid "Challenge: Templates"
-msgstr "Завдання: Шаблони"
-
-#: ../../blog/docs/spec.rst:64
-msgid ""
-"It’s time to work with data representations. You’re to add HTML template to "
-"the blog site project."
-msgstr ""
-"Настав час попрацювати з представленнями даних. Ви повинні додати шаблон "
-"HTML до проекту сайту блогу."
-
-#: ../../blog/docs/spec.rst:67
-msgid ""
-"Create \"templates\" folder in the project's root. This is the place to keep "
-"your base templates. Make sure this path is included to the ``TEMPLATES`` "
-"object in settings file."
-msgstr ""
-"Створіть папку \"templates\" в корені проекту. Це місце для зберігання ваших "
-"базових шаблонів. Переконайтеся, що цей шлях включено до об'єкта "
-"``TEMPLATES`` у файлі налаштувань."
-
-#: ../../blog/docs/spec.rst:73
-msgid ""
-"There is no need to implement functional for forms for now. Just render "
-"them. There is no need to pass any context to ``render`` function for now."
-msgstr ""
-"На даний момент немає необхідності впроваджувати функціонал для форм. Просто "
-"візуалізуйте їх. Наразі немає потреби передавати будь-який контекст у "
-"функцію ``render``."
-
-#: ../../blog/docs/spec.rst:77
-msgid "**All** templates should be inherited from the base template."
-msgstr "**Усі** шаблони мають бути успадковані від базового шаблону."
-
-#: ../../blog/docs/spec.rst:78
-msgid ""
-"Each page should contain a navbar at the top. Navbar will contain permalinks "
-"to the home and about pages."
-msgstr ""
-"Кожна сторінка повинна містити навігаційну панель угорі. Навігаційна панель "
-"міститиме постійні посилання на домашню сторінку та сторінку про."
-
-#: ../../blog/docs/spec.rst:80
-msgid "Navbar should contain links to ``/register/`` and ``/login/`` pages."
-msgstr ""
-"Панель навігації має містити посилання на сторінки ``/register/`` і ``/login/"
-"``."
-
-#: ../../blog/docs/spec.rst:81
-msgid "``/register/`` page should render a user registration form."
-msgstr "Сторінка ``/register/`` має відобразити форму реєстрації користувача."
-
-#: ../../blog/docs/spec.rst:82
-msgid "``/login/`` page should render a user authentication form."
-msgstr "Сторінка ``/login/`` має відображати форму автентифікації користувача."
-
-#: ../../blog/docs/spec.rst:83
-msgid "``/create/`` page should render a form to create a new post."
-msgstr ""
-"Сторінка ``/create/`` має відобразити форму для створення нового допису."
-
-#: ../../blog/docs/spec.rst:84
-msgid ""
-"``/`` and ``/blogs/`` page should provide a list of posts. Each post should "
-"contain a link to its detail view (``<slug:slug>/``). It's ok to use static "
-"content for now."
-msgstr ""
-"Сторінки ``/`` і ``/blogs/`` мають надавати список публікацій. Кожен допис "
-"має містити посилання на його детальний перегляд (``<slug:slug>/``). Наразі "
-"можна використовувати статичний вміст."
-
-#: ../../blog/docs/spec.rst:87
-msgid ""
-"``<slug:slug>/`` page should provide details on a single post. It's ok to "
-"use static content for now."
-msgstr ""
-"Сторінка ``<slug:slug>/`` має надавати детальну інформацію про одну "
-"публікацію. Наразі можна використовувати статичний вміст."
+#: ../../blog/docs/spec.rst:87 ../../blog/docs/spec.rst:258
+#, fuzzy
+msgid "Optional tasks"
+msgstr "Додаткові Вдосконалення"
 
 #: ../../blog/docs/spec.rst:89
-msgid "Detail view should contain links to ``/update/`` and ``/delete/``."
+msgid ""
+"``/archive/<int:year>/<int:month>/``: This view provides a list of "
+"articles published on a specified month of a specified year. This view "
+"should apply date validation and raise ``Http404`` for invalid paths. The"
+" valid date is a year's 4-digits form followed by 1 or 2 digits "
+"representing month. Month range should be limited as [1..12], leading "
+"zero may be omitted. Valid URLs are:"
 msgstr ""
-"Детальний перегляд має містити посилання на ``/update/`` та ``/delete/``."
 
-#: ../../blog/docs/spec.rst:90
-msgid "``/profile/<str:username>/`` should render an author's personal page."
-msgstr "``/profile/<str:username>/`` має відобразити особисту сторінку автора."
-
-#: ../../blog/docs/spec.rst:97
+#: ../../blog/docs/spec.rst:103
 msgid "Challenge: Data models"
 msgstr "Завдання: моделі даних"
 
-#: ../../blog/docs/spec.rst:99
-msgid "You are to implement data models for the blog site."
-msgstr "Ви повинні реалізувати моделі даних для сайту блогу."
-
-#: ../../blog/docs/spec.rst:101
-msgid "The ``auth.User`` will be used as ``user`` model."
-msgstr "``auth.User`` використовуватиметься як модель ``user``."
-
-#: ../../blog/docs/spec.rst:103
+#: ../../blog/docs/spec.rst:106
 msgid ""
-"``post.slug`` value should be autogenerated when a record is created or "
-"updated and follow the pattern:"
+"Django admin may be used to create some dummy data. To gather access to "
+"admin section you need to create a superuser. The easiest way to do that "
+"is to use a django command:"
 msgstr ""
-"Значення ``post.slug`` має автоматично генеруватися під час створення або "
-"оновлення запису та слідувати шаблону:"
 
-#: ../../blog/docs/spec.rst:110
+#: ../../blog/docs/spec.rst:115 ../../blog/docs/spec.rst:238
+msgid "General"
+msgstr ""
+
+#: ../../blog/docs/spec.rst:116
+msgid "Each model will be registered for admin site."
+msgstr ""
+
+#: ../../blog/docs/spec.rst:119 ../../blog/docs/spec.rst:469
+msgid "Article topic"
+msgstr ""
+
+#: ../../blog/docs/spec.rst:120
+msgid "This is a simple model, that contains information about topic:"
+msgstr ""
+
+#: ../../blog/docs/spec.rst:122
+msgid "topic title (unique value, 64 characters or fewer)"
+msgstr ""
+
+#: ../../blog/docs/spec.rst:123
+msgid "topic short description (255 characters or fewer)"
+msgstr ""
+
+#: ../../blog/docs/spec.rst:126 ../../blog/docs/spec.rst:483
+#, fuzzy
+msgid "Article"
+msgstr "Змінні"
+
+#: ../../blog/docs/spec.rst:127
+msgid "Article requires title (255 characters or fewer)."
+msgstr ""
+
+#: ../../blog/docs/spec.rst:128
+msgid "Article requires content (at least 255 characters)."
+msgstr ""
+
+#: ../../blog/docs/spec.rst:129
 msgid ""
-"User preferred topics should be marked with a ``notify`` flag. This value "
-"should be ``True`` by default."
+"Creation date should be autogenerated at article creation, and would "
+"never be updated."
 msgstr ""
-"Вибрані користувачем теми мають бути позначені прапорцем ``notify``. За "
-"замовчуванням це значення має бути ``True``."
 
-#: ../../blog/docs/spec.rst:143
-msgid "Challenge: ORM"
-msgstr "Завдання: ORM"
+#: ../../blog/docs/spec.rst:131
+msgid "Updated date will be update at each article save."
+msgstr ""
 
-#: ../../blog/docs/spec.rst:145
+#: ../../blog/docs/spec.rst:134 ../../blog/docs/spec.rst:476
+msgid "Article comment"
+msgstr ""
+
+#: ../../blog/docs/spec.rst:135
+msgid "Comment requires creation date (autogenerated)."
+msgstr ""
+
+#: ../../blog/docs/spec.rst:136
+msgid "Comment requires message text."
+msgstr ""
+
+#: ../../blog/docs/spec.rst:139
+msgid "Relationships"
+msgstr ""
+
+#: ../../blog/docs/spec.rst:141
 msgid ""
-"Update existing views to represent entities that are actually stored inside "
-"the project’s database."
+"Standard Django user model **will be** used for now. To apply model "
+"reference pass ``\"auth.User\"`` as related model. Users can be created "
+"via admin page. You can also refer the same model as shown below:"
 msgstr ""
-"Оновіть існуючі view, щоб представити сутності, які фактично зберігаються в "
-"базі даних проекту."
-
-#: ../../blog/docs/spec.rst:148
-msgid ""
-"Application-level templates should be located within appropriate "
-"applications."
-msgstr "Шаблони рівня застосунків розташовуватися у відповідних застосунках."
-
-#: ../../blog/docs/spec.rst:150
-msgid "``/`` and ``/blogs/``: should represent a list of existing blogposts."
-msgstr ""
-"``/`` і ``/blogs/``: мають представляти список існуючих публікацій блогу."
-
-#: ../../blog/docs/spec.rst:151
-msgid "Each post entity should provide the information about:"
-msgstr "Кожен допис блогу повинен надавати інформацію про:"
-
-#: ../../blog/docs/spec.rst:153
-msgid "title (each word should be capitalized)"
-msgstr "назва (кожне слово має бути великим)"
 
 #: ../../blog/docs/spec.rst:154
-msgid "creation date"
-msgstr "дата створення"
+msgid "``article`` and ``topics`` have *many-to-many* relationship."
+msgstr ""
 
 #: ../../blog/docs/spec.rst:155
-msgid "list of related topics (first 3 topics or fewer)"
-msgstr "список пов'язаних тем (перші 3 теми або менше)"
-
-#: ../../blog/docs/spec.rst:156
-msgid "trimmed content (~50 words or fewer)"
-msgstr "обрізаний вміст (~50 слів або менше)"
-
-#: ../../blog/docs/spec.rst:157
-msgid "number of comments"
-msgstr "кількість коментарів"
-
-#: ../../blog/docs/spec.rst:159
-msgid "Each post entity on a list view should be a link to corresponding post."
+msgid ""
+"``article`` and ``user`` have *one-to-many* relationship. A article can "
+"have **only one** author, but users can create as many articles as they "
+"want."
 msgstr ""
-"Кожна сутність публікації в поданні списку має бути посиланням на відповідну "
-"публікацію."
+
+#: ../../blog/docs/spec.rst:158
+msgid ""
+"``article`` and ``comment`` have *one-to-many* relationship. A article "
+"may be a container for many comments, but a comment is related to a "
+"single article."
+msgstr ""
 
 #: ../../blog/docs/spec.rst:161
-msgid "``/<slug:slug>/``: should represent a single existing blogpost."
-msgstr "``/<slug:slug>/``: має представляти одну наявну публікацію в блозі."
-
-#: ../../blog/docs/spec.rst:162
-msgid "Detail view should contain a list of post related comments."
+msgid ""
+"``comment`` and ``user`` have *one-to-many* relationship. It's similar to"
+" *article - user* relationship."
 msgstr ""
-"Подання деталей має містити список коментарів, пов'язаних із публікацією."
 
 #: ../../blog/docs/spec.rst:163
 msgid ""
-"``/profile/<str:username>/``: should contain information about user and a "
-"list of posts authored by this user."
+"``topic`` and ``user`` use *many-to-many* relationship. A single user can"
+" prefer none or as many topics as needed and vice versa. This "
+"relationship represents topics preferred by a certain blog user. Also "
+"this provides an additional option to mark some of preferred topics with "
+"a **notify** flag, to receive newsletters about specified topics updates."
+" The difference between *prefer* and *notify* is that *preferred* topics "
+"affect the articles list for a user, and *notify* is responsible for "
+"newsletters for the user."
+msgstr ""
+
+#: ../../blog/docs/spec.rst:174
+msgid "UML diagram"
+msgstr ""
+
+#: ../../blog/docs/spec.rst:206
+msgid "Challenge: ORM"
+msgstr "Завдання: ORM"
+
+#: ../../blog/docs/spec.rst:208
+#, fuzzy
+msgid ""
+"Update existing views to represent entities that are actually stored "
+"inside the project's database."
+msgstr ""
+"Оновіть існуючі view, щоб представити сутності, які фактично зберігаються"
+" в базі даних проекту."
+
+#: ../../blog/docs/spec.rst:211
+#, fuzzy
+msgid "``/``: should represent a list of existing articles."
+msgstr "``/`` і ``/blogs/``: мають представляти список існуючих публікацій блогу."
+
+#: ../../blog/docs/spec.rst:212
+#, fuzzy
+msgid ""
+"Each article entity on a list view should be a link to corresponding "
+"article."
+msgstr ""
+"Кожна сутність публікації в поданні списку має бути посиланням на "
+"відповідну публікацію."
+
+#: ../../blog/docs/spec.rst:214
+#, fuzzy
+msgid "``/<article>/``: should represent a single existing article."
+msgstr "``/<slug:slug>/``: має представляти одну наявну публікацію в блозі."
+
+#: ../../blog/docs/spec.rst:215
+#, fuzzy
+msgid "Detail view should contain a list of article related comments."
+msgstr "Подання деталей має містити список коментарів, пов'язаних із публікацією."
+
+#: ../../blog/docs/spec.rst:216
+#, fuzzy
+msgid ""
+"``/profile/<str:username>/``: should contain information about user and a"
+" list of articles authored by this user."
 msgstr ""
 "``/profile/<str:username>/``: має містити інформацію про користувача та "
 "список публікацій, автором яких є цей користувач."
 
-#: ../../blog/docs/spec.rst:165
+#: ../../blog/docs/spec.rst:218
 msgid ""
 "All views related to a single entity (*detail*, *update*, *delete*, "
 "*profile*) should raise ``Http404`` in case entity could not be fetched."
 msgstr ""
 "Усі ресурси, пов'язані з окремою сутністю (*деталі*, *оновлення*, "
-"*видалення*, *профіль*) мають викликати ``Http404`` у випадку, якщо сутність "
-"не вдалося отримати."
+"*видалення*, *профіль*) мають викликати ``Http404`` у випадку, якщо "
+"сутність не вдалося отримати."
 
-#: ../../blog/docs/spec.rst:170
+#: ../../blog/docs/spec.rst:221
+msgid ""
+"Create a service to fetch articles, ordered by a specified user "
+"preferences."
+msgstr ""
+
+#: ../../blog/docs/spec.rst:224
+msgid ""
+"It's common to store dedicated functions/classes that supports some "
+"specific business logic in a separate module called ``services.py`` or "
+"``utils.py`` within an application directory."
+msgstr ""
+
+#: ../../blog/docs/spec.rst:229
+msgid "Challenge: Templates"
+msgstr "Завдання: Шаблони"
+
+#: ../../blog/docs/spec.rst:232
+#, fuzzy
+msgid "Helpful link: `_Bootstrap template`_"
+msgstr "`Bootstrap template`_"
+
+#: ../../blog/docs/spec.rst:235
+msgid "Links related to user data **may be** placeholders for now."
+msgstr ""
+
+#: ../../blog/docs/spec.rst:239
+#, fuzzy
+msgid "**All** templates should be inherited from the ``base.html`` template."
+msgstr "**Усі** шаблони мають бути успадковані від базового шаблону."
+
+#: ../../blog/docs/spec.rst:240
+msgid ""
+"Each page has a descriptive title HTML tag, which included ``| Blog`` "
+"suffix, e.g. \"Articles | Blogs\", \"Sample | Blog\", \"Login | Blog\" "
+"etc."
+msgstr ""
+
+#: ../../blog/docs/spec.rst:242
+msgid "Each page should contain a link to homepage (``/`` URL route)."
+msgstr ""
+
+#: ../../blog/docs/spec.rst:243
+msgid ""
+"(*Optional*) Each page should contain an inclusion-block(s) with "
+"following links:"
+msgstr ""
+
+#: ../../blog/docs/spec.rst:246
+#, fuzzy
+msgid "``/registration/``: new user registration form"
+msgstr "``/register/``: Сторінка з формою для реєстрації нового користувача."
+
+#: ../../blog/docs/spec.rst:247
+#, fuzzy
+msgid "``/login/``: user login form"
+msgstr "``/login/``: Сторінка з формою для логіна."
+
+#: ../../blog/docs/spec.rst:248
+#, fuzzy
+msgid "``/create/``: article creation page"
+msgstr "``/create/``: форма створення публікації."
+
+#: ../../blog/docs/spec.rst:250
+msgid ""
+"Each page contains a list of registered topics. Each view of this kind "
+"filters only articles of a relevant topic. This should be implemented "
+"with a custom template context processor."
+msgstr ""
+
+#: ../../blog/docs/spec.rst:253
+msgid "Replace content block for *about* page with some static content."
+msgstr ""
+
+#: ../../blog/docs/spec.rst:254
+msgid ""
+"Application-level templates should be located within appropriate "
+"applications."
+msgstr "Шаблони рівня застосунків розташовуватися у відповідних застосунках."
+
+#: ../../blog/docs/spec.rst:260
+msgid ""
+"Each page should contain a list of links to archive views for the last "
+"year."
+msgstr ""
+
+#: ../../blog/docs/spec.rst:264
+#, fuzzy
+msgid "Articles list"
+msgstr "Список Програмного Забезпечення"
+
+#: ../../blog/docs/spec.rst:265
+msgid "Main page contains a list of published articles."
+msgstr ""
+
+#: ../../blog/docs/spec.rst:266
+msgid "Each article entity is rendered using a custom template tag."
+msgstr ""
+
+#: ../../blog/docs/spec.rst:267
+msgid "``article`` template tag renders information about a article object:"
+msgstr ""
+
+#: ../../blog/docs/spec.rst:269
+msgid "article title"
+msgstr ""
+
+#: ../../blog/docs/spec.rst:270
+msgid "article content (trimmed to ~50 characters)"
+msgstr ""
+
+#: ../../blog/docs/spec.rst:271
+#, fuzzy
+msgid "article creation date"
+msgstr "дата створення"
+
+#: ../../blog/docs/spec.rst:272
+#, fuzzy
+msgid "related topics (3 topics or fewer)"
+msgstr "список пов'язаних тем (перші 3 теми або менше)"
+
+#: ../../blog/docs/spec.rst:273
+#, fuzzy
+msgid "number of related comments"
+msgstr "кількість коментарів"
+
+#: ../../blog/docs/spec.rst:280
+msgid "Article details"
+msgstr ""
+
+#: ../../blog/docs/spec.rst:282
+msgid "Article update and deletion views **would not** affect data for now."
+msgstr ""
+
+#: ../../blog/docs/spec.rst:284
+msgid ""
+"A article detail page contains links to **update** or **delete** current "
+"article."
+msgstr ""
+
+#: ../../blog/docs/spec.rst:286
+msgid "Page provides information about article:"
+msgstr ""
+
+#: ../../blog/docs/spec.rst:288
+msgid "Article title"
+msgstr ""
+
+#: ../../blog/docs/spec.rst:289
+#, fuzzy
+msgid "Creation date"
+msgstr "дата створення"
+
+#: ../../blog/docs/spec.rst:290 ../../blog/docs/spec.rst:297
+#, fuzzy
+msgid "Author name"
+msgstr "Запускає гру"
+
+#: ../../blog/docs/spec.rst:291
+msgid "Related topics"
+msgstr ""
+
+#: ../../blog/docs/spec.rst:292
+msgid "Article content"
+msgstr ""
+
+#: ../../blog/docs/spec.rst:294
+#, fuzzy
+msgid "Page contains a list of related comments."
+msgstr "Подання деталей має містити список коментарів, пов'язаних із публікацією."
+
+#: ../../blog/docs/spec.rst:295
+msgid "Each comment contains:"
+msgstr ""
+
+#: ../../blog/docs/spec.rst:298
+#, fuzzy
+msgid "Comment creation time"
+msgstr "дата створення"
+
+#: ../../blog/docs/spec.rst:299
+msgid "Comment message"
+msgstr ""
+
+#: ../../blog/docs/spec.rst:302
+msgid "Profile page"
+msgstr ""
+
+#: ../../blog/docs/spec.rst:303
+msgid "Author page contains information about author:"
+msgstr ""
+
+#: ../../blog/docs/spec.rst:305
+#, fuzzy
+msgid "First name"
+msgstr "ім'я гравця"
+
+#: ../../blog/docs/spec.rst:306
+#, fuzzy
+msgid "Last name"
+msgstr "ім'я гравця"
+
+#: ../../blog/docs/spec.rst:308
+msgid "Add more information, if needed."
+msgstr ""
+
+#: ../../blog/docs/spec.rst:310
+msgid "Author page contains a list of articles created by this author."
+msgstr ""
+
+#: ../../blog/docs/spec.rst:311
+msgid ""
+"Author page contains buttons/links to change user data and password or "
+"deactivate a user's account."
+msgstr ""
+
+#: ../../blog/docs/spec.rst:315
+msgid "Forms"
+msgstr ""
+
+#: ../../blog/docs/spec.rst:317
+msgid ""
+"There is **no need** to add actual forms now. They will be generated by "
+"Django. This section describes the final view of these pages. It's ok "
+"just to create a dedicated templates for future use."
+msgstr ""
+
+#: ../../blog/docs/spec.rst:321
+#, fuzzy
+msgid ""
+"``/register/`` page contains a new user registration form. It should take"
+" inputs from the user:"
+msgstr "``/register/``: Сторінка з формою для реєстрації нового користувача."
+
+#: ../../blog/docs/spec.rst:324 ../../blog/docs/spec.rst:332
+#, fuzzy
+msgid "username"
+msgstr "``username``"
+
+#: ../../blog/docs/spec.rst:325
+#, fuzzy
+msgid "email"
+msgstr "``email``"
+
+#: ../../blog/docs/spec.rst:326 ../../blog/docs/spec.rst:333
+#, fuzzy
+msgid "password"
+msgstr "``password``"
+
+#: ../../blog/docs/spec.rst:327 ../../blog/docs/spec.rst:346
+#, fuzzy
+msgid "confirm password"
+msgstr "``confirm password``"
+
+#: ../../blog/docs/spec.rst:329
+msgid ""
+"``/login/`` page contains a user login form. It should take the inputs "
+"from the user:"
+msgstr ""
+
+#: ../../blog/docs/spec.rst:335
+msgid ""
+"``/create/`` and ``/<article>/update/`` pages contain a form to collect a"
+" article's data:"
+msgstr ""
+
+#: ../../blog/docs/spec.rst:338
+msgid "title"
+msgstr ""
+
+#: ../../blog/docs/spec.rst:339
+msgid "relevant topics"
+msgstr ""
+
+#: ../../blog/docs/spec.rst:340
+msgid "content"
+msgstr ""
+
+#: ../../blog/docs/spec.rst:342
+msgid "``/<article>/delete`` page contains a simple delete confirmation form."
+msgstr ""
+
+#: ../../blog/docs/spec.rst:343
+msgid "Change password form has two fields:"
+msgstr ""
+
+#: ../../blog/docs/spec.rst:345
+#, fuzzy
+msgid "new password"
+msgstr "``password``"
+
+#: ../../blog/docs/spec.rst:348
+msgid ""
+"Change user's data form collects all information, that can be changed, "
+"e.g. ``username``, ``first name``, ``last name`` etc."
+msgstr ""
+
+#: ../../blog/docs/spec.rst:350
+msgid ""
+"User preferences page contains a list of available topics. User can mark "
+"some topics as preferred. Also for preferred topics an option to "
+"*subscribe* for the newsletters becomes available."
+msgstr ""
+
+#: ../../blog/docs/spec.rst:355
+#, fuzzy
+msgid "Challenge: Articles' slugs"
+msgstr "Завдання: моделі даних"
+
+#: ../../blog/docs/spec.rst:358
+msgid "This is an optional challenge in addition to:"
+msgstr ""
+
+#: ../../blog/docs/spec.rst:360
+#, fuzzy
+msgid "`Challenge: Functional views`_"
+msgstr "Завдання: API views"
+
+#: ../../blog/docs/spec.rst:361
+#, fuzzy
+msgid "`Challenge: Templates`_"
+msgstr "Завдання: Шаблони"
+
+#: ../../blog/docs/spec.rst:362
+#, fuzzy
+msgid "`Challenge: Data models`_"
+msgstr "Завдання: моделі даних"
+
+#: ../../blog/docs/spec.rst:363
+#, fuzzy
+msgid "`Challenge: ORM`_"
+msgstr "Завдання: ORM"
+
+#: ../../blog/docs/spec.rst:365
+msgid "Update ``Article`` model with ``slug`` field. The slug value is:"
+msgstr ""
+
+#: ../../blog/docs/spec.rst:367
+msgid "required for each article"
+msgstr ""
+
+#: ../../blog/docs/spec.rst:368
+msgid "unique for each article"
+msgstr ""
+
+#: ../../blog/docs/spec.rst:370
+msgid "Create a data migration to provide slugs for existing articles."
+msgstr ""
+
+#: ../../blog/docs/spec.rst:371
+msgid ""
+"``slug`` should be auto-generated on article save. The pattern is "
+"``article.title-article.created_date``, e.g. \"Sample article\" created "
+"at \"03/24/2023\" should receive slug: ``sample-blog-"
+"article-2023-03-23``."
+msgstr ""
+
+#: ../../blog/docs/spec.rst:375
+msgid "Update detail view URL path with article slug as dynamic portion."
+msgstr ""
+
+#: ../../blog/docs/spec.rst:378
 msgid "Challenge: Auth forms"
 msgstr "Завдання: форми авторизації"
 
-#: ../../blog/docs/spec.rst:172
+#: ../../blog/docs/spec.rst:380
 msgid "Create form for new users registration with required fields:"
-msgstr ""
-"Створити форму для реєстрації нових користувачів із обов'язковими полями:"
+msgstr "Створити форму для реєстрації нових користувачів із обов'язковими полями:"
 
-#: ../../blog/docs/spec.rst:174
+#: ../../blog/docs/spec.rst:382
 msgid "``username``"
 msgstr "``username``"
 
-#: ../../blog/docs/spec.rst:175
+#: ../../blog/docs/spec.rst:383
 msgid "``email``"
 msgstr "``email``"
 
-#: ../../blog/docs/spec.rst:176
+#: ../../blog/docs/spec.rst:384
 msgid "``password``"
 msgstr "``password``"
 
-#: ../../blog/docs/spec.rst:177
+#: ../../blog/docs/spec.rst:385
 msgid "``confirm password``"
 msgstr "``confirm password``"
 
-#: ../../blog/docs/spec.rst:179
-msgid "``username`` value should be validated against existing values"
-msgstr ""
-"Значення ``username`` має перевірятися на відповідність існуючим значенням"
+#: ../../blog/docs/spec.rst:387
+#, fuzzy
+msgid "``username`` value should be validated against existing values."
+msgstr "Значення ``username`` має перевірятися на відповідність існуючим значенням"
 
-#: ../../blog/docs/spec.rst:180
-msgid "``password`` and ``confirm password`` values should match"
+#: ../../blog/docs/spec.rst:388
+#, fuzzy
+msgid "``password`` and ``confirm password`` values should match."
 msgstr "Значення ``password`` і ``confirm password`` мають збігатися"
 
-#: ../../blog/docs/spec.rst:181
-msgid "Create form for existing users login"
+#: ../../blog/docs/spec.rst:389
+#, fuzzy
+msgid "Create form for existing users login."
 msgstr "Створити форму для входу існуючих користувачів"
 
-#: ../../blog/docs/spec.rst:182
-msgid "Validations errors are to be rendered on the template"
+#: ../../blog/docs/spec.rst:390
+#, fuzzy
+msgid "Validations errors are to be rendered on the template."
 msgstr "Помилки перевірки мають бути відображені в шаблоні"
 
-#: ../../blog/docs/spec.rst:185
+#: ../../blog/docs/spec.rst:393
 msgid "Challenge: Authentication"
 msgstr "Завдання: Автентифікація"
 
-#: ../../blog/docs/spec.rst:187
+#: ../../blog/docs/spec.rst:395
 msgid ""
-"For anonymous users ``/register/`` and ``/login/`` links should be visible "
-"in navbar."
+"For anonymous users ``/register/`` and ``/login/`` links should be "
+"visible in navbar."
 msgstr ""
-"Для анонімних користувачів посилання ``/register/`` і ``/login/`` мають бути "
-"видимими на панелі навігації."
+"Для анонімних користувачів посилання ``/register/`` і ``/login/`` мають "
+"бути видимими на панелі навігації."
 
-#: ../../blog/docs/spec.rst:189
+#: ../../blog/docs/spec.rst:397
 msgid ""
 "For authenticated users ``/logout/`` and ``/create/`` links should be "
 "visible in navbar."
@@ -424,18 +843,19 @@ msgstr ""
 "Для автентифікованих користувачів посилання ``/logout/`` і ``/create/`` "
 "мають бути видимими на панелі навігації."
 
-#: ../../blog/docs/spec.rst:191
+#: ../../blog/docs/spec.rst:399
 msgid ""
-"If authenticated user is admin or stuff they should see a link to admin page."
+"If authenticated user is admin or stuff they should see a link to admin "
+"page."
 msgstr ""
 "Якщо автентифікований користувач є адміністратором або іншим, він має "
 "побачити посилання на сторінку адміністратора."
 
-#: ../../blog/docs/spec.rst:193
+#: ../../blog/docs/spec.rst:401
 msgid ""
-"``/register/``: Users should provide all required information about them: "
-"desired username and email. Name data (both first and last) is optional. "
-"After user creation they should be redirected to login page to perform "
+"``/register/``: Users should provide all required information about them:"
+" desired username and email. Name data (both first and last) is optional."
+" After user creation they should be redirected to login page to perform "
 "authentication process. Invalid form should provide information about "
 "error(s)."
 msgstr ""
@@ -445,140 +865,251 @@ msgstr ""
 "перенаправлені на сторінку входу для виконання процесу автентифікації. "
 "Недійсна форма повинна надавати інформацію про помилку(и)."
 
-#: ../../blog/docs/spec.rst:198
+#: ../../blog/docs/spec.rst:406
 msgid ""
-"``/login/``: Users should provide their credentials to login. In case login "
-"is successful they should be redirected to their profile (if no ``?"
-"next=url`` query string available)."
+"``/login/``: Users should provide their credentials to login. In case "
+"login is successful they should be redirected to their profile (if no "
+"``?next=url`` query string available)."
 msgstr ""
-"``/login/``: користувачі повинні надати свої облікові дані для входу. У разі "
-"успішного входу вони повинні бути перенаправлені до свого профілю (якщо "
-"немає рядка запиту ``?next=url``)."
+"``/login/``: користувачі повинні надати свої облікові дані для входу. У "
+"разі успішного входу вони повинні бути перенаправлені до свого профілю "
+"(якщо немає рядка запиту ``?next=url``)."
 
-#: ../../blog/docs/spec.rst:201
+#: ../../blog/docs/spec.rst:409
+#, fuzzy
 msgid ""
-"``/create/``: Only authenticated users should be able to visit this page. In "
-"case anonymous user is trying to request this view they should be redirected "
-"to the login view first, and after successful authentication get back to "
-"post creation. Then a post is created, it should be authored by the "
-"currently authenticated user."
+"``/create/``: Only authenticated users should be able to visit this page."
+" In case anonymous user is trying to request this view they should be "
+"redirected to the login view first, and after successful authentication "
+"get back to article creation. Then a article is created, it should be "
+"authored by the currently authenticated user."
 msgstr ""
 "``/create/``: лише автентифіковані користувачі повинні мати змогу "
 "відвідувати цю сторінку. Якщо анонімний користувач намагається надіслати "
-"запит на цей перегляд, він повинен бути спершу перенаправлений до перегляду "
-"входу, а після успішної автентифікації повернутися до створення публікації. "
-"Потім створюється допис, автором якого має бути поточний автентифікований "
-"користувач."
+"запит на цей перегляд, він повинен бути спершу перенаправлений до "
+"перегляду входу, а після успішної автентифікації повернутися до створення"
+" публікації. Потім створюється допис, автором якого має бути поточний "
+"автентифікований користувач."
 
-#: ../../blog/docs/spec.rst:206
+#: ../../blog/docs/spec.rst:414
+#, fuzzy
 msgid ""
-"``/<slug:slug>/comment``: Currently authenticated user should be referenced "
-"as a comment’s author."
+"``/<article>/comment/``: Currently authenticated user should be "
+"referenced as a comment's author."
 msgstr ""
 "``/<slug:slug>/comment``: як автора коментаря має бути вказано поточного "
 "автентифікованого користувача."
 
-#: ../../blog/docs/spec.rst:208
-msgid "Posts may be modified or deleted only by their authors (no exceptions)."
-msgstr ""
-"Дописи можуть бути змінені або видалені лише їхніми авторами (без винятків)."
-
-#: ../../blog/docs/spec.rst:212
-msgid "Challenge: Blogpost creation and update"
-msgstr "Завдання: створення та оновлення блогу"
-
-#: ../../blog/docs/spec.rst:214
-msgid "Create a form to work with the blogpost model."
-msgstr "Створіть форму для роботи з моделлю допису."
-
-#: ../../blog/docs/spec.rst:215
+#: ../../blog/docs/spec.rst:416
 msgid ""
-"Create a form to gather a comment from a user. Form should be used within a "
-"\"post detail\" view."
+"Articles may be modified or deleted only by their authors from the detail"
+" article page. However, admins can still performs articles actions from "
+"the admin page."
 msgstr ""
-"Створіть форму для збору коментарів від користувача. Форму слід "
-"використовувати в перегляді \"подробиць публікації\"."
 
-#: ../../blog/docs/spec.rst:217
-msgid "Form should be used for *create* and *update* view."
-msgstr "Форму слід використовувати для перегляду *створення* та *оновлення*."
-
-#: ../../blog/docs/spec.rst:219
-msgid "It’s ok to use a *pre-defined* user as a post’s author for now."
+#: ../../blog/docs/spec.rst:419
+msgid "User related paths are restricted for non-authorized users."
 msgstr ""
-"Наразі можна використовувати *попередньо визначеного* користувача як автора "
-"публікації."
 
-#: ../../blog/docs/spec.rst:222
+#: ../../blog/docs/spec.rst:421
+#, fuzzy
+msgid "``/set-password/``"
+msgstr "``password``"
+
+#: ../../blog/docs/spec.rst:422
+#, fuzzy
+msgid "``/set-userdata/``"
+msgstr "``username``"
+
+#: ../../blog/docs/spec.rst:424
+msgid ""
+"``POST`` request ``/deactivate/`` should mark current authenticated user "
+"as *deleted* and log them user."
+msgstr ""
+
+#: ../../blog/docs/spec.rst:427
+msgid "Optional task(s)"
+msgstr ""
+
+#: ../../blog/docs/spec.rst:429
+msgid ""
+"Adjust the order of article list according to authenticated user "
+"preferences. For anonymous users keep default ordering."
+msgstr ""
+
+#: ../../blog/docs/spec.rst:431
+msgid ""
+"Implement account reactivation behavior. The exact workflow does not "
+"mater. The sample scenario is to collect email for the user and check it "
+"for existing in the database. After that create a request for admin to "
+"activate an account and send a confirmation email, when all is done."
+msgstr ""
+
+#: ../../blog/docs/spec.rst:437
+#, fuzzy
+msgid "Challenge: Article related forms"
+msgstr "Завдання: форми авторизації"
+
+#: ../../blog/docs/spec.rst:439
+msgid ""
+"Implement a article form. This form will be used to create new articles "
+"and to update existing ones."
+msgstr ""
+
+#: ../../blog/docs/spec.rst:441
+msgid "Each created article should have at least one related topic."
+msgstr ""
+
+#: ../../blog/docs/spec.rst:442
+msgid "Implement a comment form to gather a comment from a user."
+msgstr ""
+
+#: ../../blog/docs/spec.rst:443
+msgid ""
+"Only ``POST`` requests to ``/<article>/comment/`` are allowed from this "
+"moment."
+msgstr ""
+
+#: ../../blog/docs/spec.rst:445
+msgid "Implement functionality:"
+msgstr ""
+
+#: ../../blog/docs/spec.rst:447
+msgid "article creation"
+msgstr ""
+
+#: ../../blog/docs/spec.rst:448
+msgid "article update"
+msgstr ""
+
+#: ../../blog/docs/spec.rst:449
+msgid "article comment (create a related comment)"
+msgstr ""
+
+#: ../../blog/docs/spec.rst:450
+msgid "article deletion"
+msgstr ""
+
+#: ../../blog/docs/spec.rst:453
+msgid ""
+"It's ok to use *pre-defined* author for now, or select author by random. "
+"This will be fixed in the next section."
+msgstr ""
+
+#: ../../blog/docs/spec.rst:457
 msgid "Challenge: Class-Based Views"
 msgstr "Завдання: Class-Based Views"
 
-#: ../../blog/docs/spec.rst:224
+#: ../../blog/docs/spec.rst:459
 msgid "Replace **all** existing views via ``CBV``."
 msgstr "Замінити **всі** існуючі перегляди через ``CBV``."
 
-#: ../../blog/docs/spec.rst:225
+#: ../../blog/docs/spec.rst:460
 msgid "Existing functionality should not be corrupted."
 msgstr "Існуюча функціональність не повинна бути пошкоджена."
 
-#: ../../blog/docs/spec.rst:227
-msgid "It’s ok to use Django built-in views for auth."
+#: ../../blog/docs/spec.rst:463
+msgid "It's ok to use built-in Django CBV if needed."
 msgstr ""
-"Для автентифікації можна використовувати вбудовані представлення Django."
 
-#: ../../blog/docs/spec.rst:230
+#: ../../blog/docs/spec.rst:466
 msgid "Challenge: Serializers"
 msgstr "Завдання: Серіалізатори"
 
-#: ../../blog/docs/spec.rst:232
-msgid "Create serializers for:"
-msgstr "Створіть серіалізатори для:"
+#: ../../blog/docs/spec.rst:470
+msgid ""
+"Topic serializer is for read-only purposes only. Topics can be created "
+"via admin page only."
+msgstr ""
 
-#: ../../blog/docs/spec.rst:234
-msgid "Blogpost entity"
-msgstr "Об'єкт публікації в блозі"
+#: ../../blog/docs/spec.rst:472
+msgid ""
+"Serialized data should contain all available data, e.g. ``pk``, "
+"``title``, ``description``."
+msgstr ""
 
-#: ../../blog/docs/spec.rst:235
-msgid "Blogpost comment"
-msgstr "Коментар у блозі"
+#: ../../blog/docs/spec.rst:477
+msgid ""
+"article comment serializer can perform both reading and writing "
+"operations. But it can't be used to *update* or *delete* comment."
+msgstr ""
 
-#: ../../blog/docs/spec.rst:236
+#: ../../blog/docs/spec.rst:479
+msgid ""
+"Random, or pre-defined user may be used as comment's author for now. This"
+" will be fixed in the future."
+msgstr ""
+
+#: ../../blog/docs/spec.rst:484
+msgid ""
+"article serializer provides full access to articles. All operations are "
+"available: list, retrieve, create, update and destroy."
+msgstr ""
+
+#: ../../blog/docs/spec.rst:488
 msgid "User"
 msgstr "Користувач"
 
-#: ../../blog/docs/spec.rst:239
+#: ../../blog/docs/spec.rst:489
+msgid ""
+"User serializer provides full access to site users data. All operations "
+"are available for now: list, retrieve, create, update and destroy. This "
+"behavior will be fixed in the future, to prevent unauthorized data "
+"modifications."
+msgstr ""
+
+#: ../../blog/docs/spec.rst:495
 msgid "Challenge: API views"
 msgstr "Завдання: API views"
 
-#: ../../blog/docs/spec.rst:241
+#: ../../blog/docs/spec.rst:497
+#, fuzzy
 msgid ""
-"All blog-site functionality are to be reflected via REST API. It’s ok to use "
-"*pre-defined* user as a post’s author for now."
+"All blog-site functionality are to be reflected via REST API. It's ok to "
+"use *pre-defined* user as a article's author for now."
 msgstr ""
 "Усі функції сайту блогу мають відображатися через REST API. Наразі можна "
-"використовувати *попередньо визначеного* користувача як автора публікації."
+"використовувати *попередньо визначеного* користувача як автора "
+"публікації."
 
-#: ../../blog/docs/spec.rst:245
+#: ../../blog/docs/spec.rst:501
 msgid "Challenge: Authentication and Permissions"
 msgstr "Завдання: Автентифікація та Дозволи"
 
-#: ../../blog/docs/spec.rst:247
-msgid "Implement REST authentication system."
+#: ../../blog/docs/spec.rst:503
+#, fuzzy
+msgid "Implement authentication system for REST API."
 msgstr "Запровадити систему автентифікації REST."
 
-#: ../../blog/docs/spec.rst:248
-msgid "Only account owner can change their account data."
+#: ../../blog/docs/spec.rst:505
+msgid "For non-authenticated users it is possible to create a new account"
 msgstr ""
-"Лише власник облікового запису може змінити дані свого облікового запису."
 
-#: ../../blog/docs/spec.rst:249
-msgid "Only authenticated users can create posts and comments."
+#: ../../blog/docs/spec.rst:506
+msgid "For non-authenticated users it is possible to obtain authentication data."
 msgstr ""
-"Тільки автентифіковані користувачі можуть створювати дописи та коментарі."
 
-#: ../../blog/docs/spec.rst:250
-msgid "Only authors can change their posts."
-msgstr "Тільки автори можуть змінювати свої повідомлення."
+#: ../../blog/docs/spec.rst:509
+msgid ""
+"Access to user data is restricted. Authorized users can manipulate only "
+"their own data (e.g. ``retrieve``, ``update``)."
+msgstr ""
+
+#: ../../blog/docs/spec.rst:511
+msgid ""
+"Admins can retrieve all users data (``list``), but can't change them via "
+"REST API. However, it is still possible via admin page."
+msgstr ""
+
+#: ../../blog/docs/spec.rst:513
+msgid ""
+"Authorized users can ``create`` articles or ``update`` and ``delete`` "
+"articles created by them."
+msgstr ""
+
+#: ../../blog/docs/spec.rst:515
+msgid "Authorized users can add comments to a specified article."
+msgstr ""
 
 #: ../../src/appx/code_edit.txt:-1
 msgid "Code editors and IDEs for Python"
@@ -604,17 +1135,17 @@ msgstr "Редактори Коду"
 
 #: ../../src/appx/code_edit.txt:18
 msgid ""
-"Writing Python using IDLE or the Python Shell is great for simple things, "
-"but those tools quickly turn larger programming projects into frustrating "
-"pits of despair. Using an IDE, or even just a good dedicated code editor, "
-"makes coding fun — but which one is best for you? :cite:`realpython:code-"
-"edit`"
+"Writing Python using IDLE or the Python Shell is great for simple things,"
+" but those tools quickly turn larger programming projects into "
+"frustrating pits of despair. Using an IDE, or even just a good dedicated "
+"code editor, makes coding fun — but which one is best for you? "
+":cite:`realpython:code-edit`"
 msgstr ""
-"Написання на Python за допомогою IDLE або оболонки Python чудово підходить "
-"для простих речей, але ці інструменти швидко перетворюють великі проекти "
-"програмування на розчаровуючу яму відчаю. Використання IDE або навіть просто "
-"хорошого спеціального редактора коду робить кодування цікавим — але який з "
-"них найкращий для вас? :cite:`realpython:code-edit`"
+"Написання на Python за допомогою IDLE або оболонки Python чудово "
+"підходить для простих речей, але ці інструменти швидко перетворюють "
+"великі проекти програмування на розчаровуючу яму відчаю. Використання IDE"
+" або навіть просто хорошого спеціального редактора коду робить кодування "
+"цікавим — але який з них найкращий для вас? :cite:`realpython:code-edit`"
 
 #: ../../src/appx/conv_store.txt:-1
 msgid "Convenience store challenge"
@@ -630,23 +1161,25 @@ msgstr "Convenience Store Challenge"
 
 #: ../../problem-sets/src/conv_store/challenge.rst:5
 msgid ""
-"The local store is struggling with their payment registry system. The owner "
-"asked you to take a look at it and to propose some ideas about the upgrade. "
-"While looking on a wooden frames with rows of beads you think that this will "
-"be a challenging task to bring a modern approach into this place and "
-"reorganize the processes. Fortunately, you are a Python developer who knows "
-"how to work with various data incomes and outcomes. After some time the "
-"scope of works and timelines were discussed and wrote some notes to split "
-"the entire project into individual pieces to implement step-by-step."
+"The local store is struggling with their payment registry system. The "
+"owner asked you to take a look at it and to propose some ideas about the "
+"upgrade. While looking on a wooden frames with rows of beads you think "
+"that this will be a challenging task to bring a modern approach into this"
+" place and reorganize the processes. Fortunately, you are a Python "
+"developer who knows how to work with various data incomes and outcomes. "
+"After some time the scope of works and timelines were discussed and wrote"
+" some notes to split the entire project into individual pieces to "
+"implement step-by-step."
 msgstr ""
 "Місцевий магазин має проблеми з системою реєстрації платежів. Власник "
-"попросив вас поглянути на нього та запропонувати деякі ідеї щодо оновлення. "
-"Дивлячись на дерев'яні рами з рядами намистин, ви думаєте, це буде складним "
-"завданням застосувати сучасний підхід до цього місця та реорганізувати "
-"процеси. На щастя, ви розробник Python, який знає, як працювати з різними "
-"доходами та результатами даних. Через деякий час обговорювалися обсяги робіт "
-"і часові рамки та були написані деякі примітки, щоб розділити весь проект на "
-"окремі частини для поетапної реалізації."
+"попросив вас поглянути на нього та запропонувати деякі ідеї щодо "
+"оновлення. Дивлячись на дерев'яні рами з рядами намистин, ви думаєте, це "
+"буде складним завданням застосувати сучасний підхід до цього місця та "
+"реорганізувати процеси. На щастя, ви розробник Python, який знає, як "
+"працювати з різними доходами та результатами даних. Через деякий час "
+"обговорювалися обсяги робіт і часові рамки та були написані деякі "
+"примітки, щоб розділити весь проект на окремі частини для поетапної "
+"реалізації."
 
 #: ../../problem-sets/src/conv_store/challenge.rst:14
 msgid "Your notes are here,"
@@ -659,8 +1192,8 @@ msgstr "Товари та кошик"
 #: ../../problem-sets/src/conv_store/challenge.rst:20
 msgid ""
 "It's a good idea to start with basics - the objects you're going to work "
-"with. At stage one the main goal is to implement data models - classes to "
-"work around data in the future."
+"with. At stage one the main goal is to implement data models - classes to"
+" work around data in the future."
 msgstr ""
 "Бажано почати з основ - об'єктів, з якими ви збираєтеся працювати. На "
 "першому етапі головною метою є впровадження моделей даних - класів для "
@@ -692,23 +1225,25 @@ msgstr "``unit`` - розмір одиниці окремого товару (п
 
 #: ../../problem-sets/src/conv_store/challenge.rst:35
 msgid ""
-"For example: **apple** costs 1059 for each 0.1 kg. This means ``name`` will "
-"store ``\"apple\"``, ``price`` is ``1059`` and ``unit`` is equal to ``0.1``."
+"For example: **apple** costs 1059 for each 0.1 kg. This means ``name`` "
+"will store ``\"apple\"``, ``price`` is ``1059`` and ``unit`` is equal to "
+"``0.1``."
 msgstr ""
-"Наприклад: **яблуко** коштує 1059 за кожні 0,1 кг. Це означає, що ``name`` "
-"зберігає ``\"apple\"``, ``price`` є ``1059`` і `` unit`` дорівнює ``0,1``."
+"Наприклад: **яблуко** коштує 1059 за кожні 0,1 кг. Це означає, що "
+"``name`` зберігає ``\"apple\"``, ``price`` є ``1059`` і `` unit`` "
+"дорівнює ``0,1``."
 
 #: ../../problem-sets/src/conv_store/challenge.rst:39
 msgid ""
-"``Product`` class should implement ``get_total`` method to calculate a total "
-"price for a specified quantity of a product to purchase. Desired quantity "
-"will be passed as an optional argument of a numeric type (``int`` or "
-"``float``). In case quantity argument is omitted - just use ``unit`` "
-"attribute value instead."
+"``Product`` class should implement ``get_total`` method to calculate a "
+"total price for a specified quantity of a product to purchase. Desired "
+"quantity will be passed as an optional argument of a numeric type "
+"(``int`` or ``float``). In case quantity argument is omitted - just use "
+"``unit`` attribute value instead."
 msgstr ""
-"Клас ``Product`` повинен реалізовувати метод ``get_total`` для обчислення "
-"загальної ціни на вказану кількість товару для покупки. Бажану кількість "
-"буде передано як необов'язковий аргумент числового типу (``int`` або "
+"Клас ``Product`` повинен реалізовувати метод ``get_total`` для обчислення"
+" загальної ціни на вказану кількість товару для покупки. Бажану кількість"
+" буде передано як необов'язковий аргумент числового типу (``int`` або "
 "``float``). Якщо аргумент кількості пропущено, просто використовуйте "
 "значення атрибута ``unit``."
 
@@ -795,11 +1330,11 @@ msgstr "Кошик для покупок"
 #: ../../problem-sets/src/conv_store/challenge.rst:65
 msgid ""
 "This class represents the container for the products. It's main "
-"responsibility is to store information about the purchases and their amount "
-"(quantities)."
+"responsibility is to store information about the purchases and their "
+"amount (quantities)."
 msgstr ""
-"Цей клас представляє контейнер для продуктів. Його основна відповідальність "
-"- зберігати інформацію про покупки та їх кількість."
+"Цей клас представляє контейнер для продуктів. Його основна "
+"відповідальність - зберігати інформацію про покупки та їх кількість."
 
 #: ../../problem-sets/src/conv_store/challenge.rst:68
 msgid ""
@@ -811,9 +1346,9 @@ msgstr ""
 
 #: ../../problem-sets/src/conv_store/challenge.rst:70
 msgid ""
-"``ShoppingCart`` should implement ``add_product`` method to put a specified "
-"quantity into a cart. ``quantity`` argument is optional, if omitted just "
-"uses ``Product.unit`` value instead."
+"``ShoppingCart`` should implement ``add_product`` method to put a "
+"specified quantity into a cart. ``quantity`` argument is optional, if "
+"omitted just uses ``Product.unit`` value instead."
 msgstr ""
 "``ShoppingCart`` має реалізувати метод ``add_product``, щоб помістити "
 "вказану кількість у кошик. Аргумент ``quantity`` є необов'язковим, якщо "
@@ -855,8 +1390,8 @@ msgstr "Додає товар до кошика"
 
 #: conv_store.models.ShoppingCart.add_product:3 of
 msgid ""
-"This method adds a product instance and corresponding quantity value to the "
-"cart."
+"This method adds a product instance and corresponding quantity value to "
+"the cart."
 msgstr ""
 "Цей метод додає екземпляр продукту та відповідне значення кількості до "
 "кошика."
@@ -868,7 +1403,8 @@ msgstr "екземпляр товару, щоб додати до кошика"
 #: conv_store.models.ShoppingCart.add_product:8 of
 msgid "a quantity of a product to add. Defaults to the product unit value."
 msgstr ""
-"кількість продукту для додавання. За замовчуванням значення одиниці продукту."
+"кількість продукту для додавання. За замовчуванням значення одиниці "
+"продукту."
 
 #: conv_store.models.ShoppingCart.get_total:1 of
 msgid "Return the total price for all the product in the cart"
@@ -884,8 +1420,8 @@ msgstr "Ініціалізація, представлення та привед
 
 #: ../../problem-sets/src/conv_store/challenge.rst:99
 msgid ""
-"It's difficult to set properties one-by-one, also it's not informative to "
-"get default objects string representations. It's time to fix this."
+"It's difficult to set properties one-by-one, also it's not informative to"
+" get default objects string representations. It's time to fix this."
 msgstr ""
 "Важко встановлювати властивості одну за одною, також "
 "неінформативноотримувати представлення рядків об'єктів за замовчуванням. "
@@ -894,16 +1430,16 @@ msgstr ""
 #: ../../problem-sets/src/conv_store/challenge.rst:102
 msgid "``Product`` should be initialized with all required data, no defaults."
 msgstr ""
-"``Product`` має бути ініціалізований усіма необхідними даними, без значень "
-"за замовчуванням."
+"``Product`` має бути ініціалізований усіма необхідними даними, без "
+"значень за замовчуванням."
 
 #: ../../problem-sets/src/conv_store/challenge.rst:103
 msgid ""
-"Apply ``ShoppingCart.__init__`` to separate products and quantities between "
-"different carts."
+"Apply ``ShoppingCart.__init__`` to separate products and quantities "
+"between different carts."
 msgstr ""
-"Застосуйте ``ShoppingCart.__init__``, щоб розділити продукти та кількість "
-"між різними візками."
+"Застосуйте ``ShoppingCart.__init__``, щоб розділити продукти та кількість"
+" між різними візками."
 
 #: ../../problem-sets/src/conv_store/challenge.rst:105
 msgid "Provide a human readable representations. For example:"
@@ -927,27 +1463,28 @@ msgstr ""
 
 #: ../../problem-sets/src/conv_store/challenge.rst:112
 msgid ""
-"While casting product instance to ``float`` type it should be equal to its "
-"``price`` attribute value."
+"While casting product instance to ``float`` type it should be equal to "
+"its ``price`` attribute value."
 msgstr ""
-"Під час приведення екземпляра продукту до типу ``float`` він має дорівнювати "
-"значенню його атрибута ``price``."
+"Під час приведення екземпляра продукту до типу ``float`` він має "
+"дорівнювати значенню його атрибута ``price``."
 
 #: ../../problem-sets/src/conv_store/challenge.rst:114
 msgid ""
-"While casting shopping cart instance to ``float`` type it should be equal to "
-"its total price value."
+"While casting shopping cart instance to ``float`` type it should be equal"
+" to its total price value."
 msgstr ""
-"Під час приведення екземпляра кошика для покупок до типу ``float`` він має "
-"дорівнювати загальному значенню ціни."
+"Під час приведення екземпляра кошика для покупок до типу ``float`` він "
+"має дорівнювати загальному значенню ціни."
 
 #: ../../problem-sets/src/conv_store/challenge.rst:116
 msgid ""
-"While casting shopping cart instance to ``bool`` consider it ``True`` if at "
-"least one product is attach to current cart."
+"While casting shopping cart instance to ``bool`` consider it ``True`` if "
+"at least one product is attach to current cart."
 msgstr ""
-"Під час трансляції екземпляра кошика для покупок до ``bool`` вважайте його "
-"``True``, якщо принаймні один продукт приєднаний до поточного кошика."
+"Під час трансляції екземпляра кошика для покупок до ``bool`` вважайте "
+"його ``True``, якщо принаймні один продукт приєднаний до поточного "
+"кошика."
 
 #: ../../problem-sets/src/conv_store/challenge.rst:119
 msgid "Implement equality operator support for your objects:"
@@ -958,8 +1495,7 @@ msgid "consider products equal if all their properties are the same"
 msgstr "вважати продукти рівними, якщо всі їхні властивості однакові"
 
 #: ../../problem-sets/src/conv_store/challenge.rst:122
-msgid ""
-"consider carts equal if products and corresponding quantities are the same"
+msgid "consider carts equal if products and corresponding quantities are the same"
 msgstr "вважати кошики рівними, якщо продукти та відповідна кількість однакові"
 
 #: ../../problem-sets/src/conv_store/challenge.rst:148
@@ -968,11 +1504,11 @@ msgstr "Опрацювання платежів"
 
 #: ../../problem-sets/src/conv_store/challenge.rst:150
 msgid ""
-"The owner asked you to implement a flexible payment system. Purchasing the "
-"shopping card consists of several steps:"
+"The owner asked you to implement a flexible payment system. Purchasing "
+"the shopping card consists of several steps:"
 msgstr ""
-"Власник попросив вас запровадити гнучку платіжну систему. Придбання картки "
-"покупок складається з кількох кроків:"
+"Власник попросив вас запровадити гнучку платіжну систему. Придбання "
+"картки покупок складається з кількох кроків:"
 
 #: ../../problem-sets/src/conv_store/challenge.rst:153
 msgid "cart validation - it should not be empty or already purchased"
@@ -988,27 +1524,27 @@ msgstr "купівля кошика"
 
 #: ../../problem-sets/src/conv_store/challenge.rst:157
 msgid ""
-"For now there are two payment types available in the store: cash and credit "
-"card, but they maybe extended at any time."
+"For now there are two payment types available in the store: cash and "
+"credit card, but they maybe extended at any time."
 msgstr ""
-"Наразі в магазині доступні два типи оплати: готівка та кредитна картка, але "
-"їх можна продовжити в будь-який час."
+"Наразі в магазині доступні два типи оплати: готівка та кредитна картка, "
+"але їх можна продовжити в будь-який час."
 
 #: ../../problem-sets/src/conv_store/challenge.rst:160
 msgid ""
-"Update the ``ShoppingCart`` class to handle ``purchased`` state. Make this "
-"property *protected*, since it should not be accessed outside the card "
-"instance."
+"Update the ``ShoppingCart`` class to handle ``purchased`` state. Make "
+"this property *protected*, since it should not be accessed outside the "
+"card instance."
 msgstr ""
-"Оновіть клас ``ShoppingCart`` для обробки стану ``purchased``. Зробіть цю "
-"властивість *protected*, оскільки до неї не слід звертатися поза екземпляром "
-"картки."
+"Оновіть клас ``ShoppingCart`` для обробки стану ``purchased``. Зробіть цю"
+" властивість *protected*, оскільки до неї не слід звертатися поза "
+"екземпляром картки."
 
 #: ../../problem-sets/src/conv_store/challenge.rst:163
 msgid ""
 "Implement ``PaymentValidator`` class with ``is_valid`` that takes no "
-"arguments and return a value of a boolean type. This is an abstract class "
-"for the future usage."
+"arguments and return a value of a boolean type. This is an abstract class"
+" for the future usage."
 msgstr ""
 "Реалізуйте клас ``PaymentValidator`` з ``is_valid``, який не приймає "
 "аргументів і повертає значення логічного типу. Це абстрактний клас для "
@@ -1016,9 +1552,9 @@ msgstr ""
 
 #: ../../problem-sets/src/conv_store/challenge.rst:166
 msgid ""
-"Implement ``PaymentProcessor`` class with ``purchase`` method that takes a "
-"``ShoppingCart`` object and returns nothing. This is an abstract class for "
-"the future usage."
+"Implement ``PaymentProcessor`` class with ``purchase`` method that takes "
+"a ``ShoppingCart`` object and returns nothing. This is an abstract class "
+"for the future usage."
 msgstr ""
 "Реалізуйте клас ``PaymentProcessor`` з методом ``purchase``, який бере "
 "об'єкт ``ShoppingCart`` і нічого не повертає. Це абстрактний клас для "
@@ -1026,8 +1562,8 @@ msgstr ""
 
 #: ../../problem-sets/src/conv_store/challenge.rst:169
 msgid ""
-"Inherit ``CashPaymentValidator`` from the base validator. The instances of "
-"this class are considered to be always valid."
+"Inherit ``CashPaymentValidator`` from the base validator. The instances "
+"of this class are considered to be always valid."
 msgstr ""
 "Успадкувати ``CashPaymentValidator`` від базового валідатора. Екземпляри "
 "цього класу вважаються завжди дійсними."
@@ -1037,31 +1573,29 @@ msgid "Inherit ``CodeValidator`` from the base validator."
 msgstr "Успадкувати ``CodeValidator`` від основного валідатора."
 
 #: ../../problem-sets/src/conv_store/challenge.rst:173
-msgid ""
-"The instances of this class are created with ``security_code`` argument."
-msgstr ""
-"Екземпляри цього класу створено за допомогою аргументу ``security_code``."
+msgid "The instances of this class are created with ``security_code`` argument."
+msgstr "Екземпляри цього класу створено за допомогою аргументу ``security_code``."
 
 #: ../../problem-sets/src/conv_store/challenge.rst:174
 msgid ""
-"``is_valid`` method should ask a customer for a security code and check it "
-"against the stored value. In case codes are equal payment considered to be "
-"valid."
+"``is_valid`` method should ask a customer for a security code and check "
+"it against the stored value. In case codes are equal payment considered "
+"to be valid."
 msgstr ""
-"Метод ``is_valid`` має запитати у клієнта код безпеки та перевірити його зі "
-"збереженим значенням. Якщо коди однакові, оплата вважається дійсною."
+"Метод ``is_valid`` має запитати у клієнта код безпеки та перевірити його "
+"зі збереженим значенням. Якщо коди однакові, оплата вважається дійсною."
 
 #: ../../problem-sets/src/conv_store/challenge.rst:178
 msgid ""
 "Create ``CashPaymentProcessor`` that combines ``CashValidator`` and "
 "``PaymentProcessor`` behaviors. While purchasing the cart the messages "
-"\"Processing cash payment...\" and \"Cart bill: {float total}\" should be "
-"printed out."
+"\"Processing cash payment...\" and \"Cart bill: {float total}\" should be"
+" printed out."
 msgstr ""
-"Створіть ``CashPaymentProcessor``, який поєднує поведінку ``CashValidator`` "
-"і ``PaymentProcessor``. Під час купівлі в кошику з'являються повідомлення "
-"\"Обробка готівкового платежу...\" і \"Рахунок у кошику : {float total}\" "
-"слід роздрукувати."
+"Створіть ``CashPaymentProcessor``, який поєднує поведінку "
+"``CashValidator`` і ``PaymentProcessor``. Під час купівлі в кошику "
+"з'являються повідомлення \"Обробка готівкового платежу...\" і \"Рахунок у"
+" кошику : {float total}\" слід роздрукувати."
 
 #: ../../problem-sets/src/conv_store/challenge.rst:183
 msgid ""
@@ -1070,9 +1604,10 @@ msgid ""
 "\"Processing card payment...\" and \"Security code: {code}\" should be "
 "printed out."
 msgstr ""
-"Створіть ``CardPaymentProcessor``, який поєднує поведінку ``CodeValidator`` "
-"і ``PaymentProcessor``. Під час купівлі кошику слід роздрукувати "
-"повідомлення \"Обробка платежу карткою...\" і \"Код безпеки : {code}\"."
+"Створіть ``CardPaymentProcessor``, який поєднує поведінку "
+"``CodeValidator`` і ``PaymentProcessor``. Під час купівлі кошику слід "
+"роздрукувати повідомлення \"Обробка платежу карткою...\" і \"Код безпеки "
+": {code}\"."
 
 #: ../../problem-sets/src/conv_store/challenge.rst:203
 msgid "More Enhancements for Shopping Carts"
@@ -1084,16 +1619,17 @@ msgstr "Зробіть ваш ``ShoppingCart`` справжнім контейн
 
 #: ../../problem-sets/src/conv_store/challenge.rst:207
 msgid ""
-"Implement ``len(cart_obj)`` and make it return the number of products in the "
-"cart."
+"Implement ``len(cart_obj)`` and make it return the number of products in "
+"the cart."
 msgstr ""
-"Реалізуйте ``len(cart_obj)`` і змусьте його повертати кількість продуктів у "
-"кошику."
+"Реалізуйте ``len(cart_obj)`` і змусьте його повертати кількість продуктів"
+" у кошику."
 
 #: ../../problem-sets/src/conv_store/challenge.rst:209
 msgid ""
-"Implement ``cart[...]`` behavior to take a ``tuple`` containing product and "
-"corresponding quantity (type hint: ``Tuple[Product, Union[int, float]]``)."
+"Implement ``cart[...]`` behavior to take a ``tuple`` containing product "
+"and corresponding quantity (type hint: ``Tuple[Product, Union[int, "
+"float]]``)."
 msgstr ""
 "Реалізуйте поведінку ``cart[...]``, щоб повертати ``tuple``, що містить "
 "товар та відповідну кількість (type hint: ``Tuple[Product, Union[int, "
@@ -1101,17 +1637,17 @@ msgstr ""
 
 #: ../../problem-sets/src/conv_store/challenge.rst:213
 msgid ""
-"Make your ``ShoppingCart`` iterable - let it provide the product instance "
-"and corresponding quantity for each iteration."
+"Make your ``ShoppingCart`` iterable - let it provide the product instance"
+" and corresponding quantity for each iteration."
 msgstr ""
 "Зробіть ваш ``ShoppingCart`` повторюваним - дозвольте йому надавати "
 "примірник продукту та відповідну кількість для кожної ітерації."
 
 #: ../../problem-sets/src/conv_store/challenge.rst:215
 msgid ""
-"Avoid products duplication. In case someone tries to put the product into a "
-"cart and this product already is present there, do not it for the second "
-"time - adjust corresponding quantity value instead."
+"Avoid products duplication. In case someone tries to put the product into"
+" a cart and this product already is present there, do not it for the "
+"second time - adjust corresponding quantity value instead."
 msgstr ""
 "Уникайте дублювання продуктів. Якщо хтось намагається покласти продукт у "
 "кошик, і цей продукт уже там присутній, не робіть цього вдруге - змініть "
@@ -1119,19 +1655,19 @@ msgstr ""
 
 #: ../../problem-sets/src/conv_store/challenge.rst:218
 msgid ""
-"Implement ``remove_product`` method to completely remove some product from "
-"the cart."
+"Implement ``remove_product`` method to completely remove some product "
+"from the cart."
 msgstr ""
-"Застосуйте метод ``remove_product``, щоб повністю видалити деякі продукти з "
-"кошика."
+"Застосуйте метод ``remove_product``, щоб повністю видалити деякі продукти"
+" з кошика."
 
 #: ../../problem-sets/src/conv_store/challenge.rst:220
 msgid ""
-"Implement ``sub_product`` to decrease some product quantity. If quantity is "
-"equal to 0 (zero) or less - remove product from the cart."
+"Implement ``sub_product`` to decrease some product quantity. If quantity "
+"is equal to 0 (zero) or less - remove product from the cart."
 msgstr ""
-"Застосуйте ``sub_product``, щоб зменшити кількість продукту. Якщо кількість "
-"дорівнює 0 (нуль) або менше - вилучіть продукт із кошика."
+"Застосуйте ``sub_product``, щоб зменшити кількість продукту. Якщо "
+"кількість дорівнює 0 (нуль) або менше - вилучіть продукт із кошика."
 
 #: ../../problem-sets/src/conv_store/challenge.rst:249
 msgid "Testing Software"
@@ -1147,8 +1683,7 @@ msgstr "Тести мають бути розташовані всередині
 
 #: ../../problem-sets/src/conv_store/challenge.rst:254
 msgid "``pytest`` and ``coverage`` libraries will be used for testing."
-msgstr ""
-"Для тестування використовуватимуться бібліотеки ``pytest`` і ``coverage``."
+msgstr "Для тестування використовуватимуться бібліотеки ``pytest`` і ``coverage``."
 
 #: ../../problem-sets/src/conv_store/challenge.rst:255
 msgid "Project dependencies are to be updated."
@@ -1181,15 +1716,15 @@ msgstr "Пріоритет Операторів"
 #: ../../src/appx/precedence.txt:10
 msgid ""
 "The following table summarizes the operator precedence in Python, from "
-"highest precedence (most binding) to lowest precedence (least binding) :cite:"
-"`docs-python:operator-precedence`. Operators in the same cell have the same "
-"precedence (use left-to-right precedence)."
+"highest precedence (most binding) to lowest precedence (least binding) "
+":cite:`docs-python:operator-precedence`. Operators in the same cell have "
+"the same precedence (use left-to-right precedence)."
 msgstr ""
 "У наведеній нижче таблиці підсумовано пріоритет операторів у Python від "
 "найвищого пріоритету (найбільш обов'язковий) до найнижчого пріоритету "
-"(найменший обов'язковий) :cite:`docs-python:operator-precedence`. Оператори "
-"в одній клітинці мають однаковий пріоритет (використовуйте пріоритет зліва "
-"направо)."
+"(найменший обов'язковий) :cite:`docs-python:operator-precedence`. "
+"Оператори в одній клітинці мають однаковий пріоритет (використовуйте "
+"пріоритет зліва направо)."
 
 #: ../../src/appx/precedence.txt:16
 msgid "Operator"
@@ -1209,11 +1744,11 @@ msgstr ""
 
 #: ../../src/appx/precedence.txt:18
 msgid ""
-"Binding or parenthesized expression, list display, dictionary display, set "
-"display"
+"Binding or parenthesized expression, list display, dictionary display, "
+"set display"
 msgstr ""
-"Прив'язка або вираз у дужках, відображення списку, відображення словника, "
-"відображення набору"
+"Прив'язка або вираз у дужках, відображення списку, відображення словника,"
+" відображення набору"
 
 #: ../../src/appx/precedence.txt:23
 msgid "``x[index]``, ``x[index:index]``, ``x(arguments...)``, ``x.attribute``"
@@ -1253,8 +1788,8 @@ msgstr "``*``, ``@``, ``/``, ``//``, ``%``"
 
 #: ../../src/appx/precedence.txt:34
 msgid ""
-"Multiplication, matrix multiplication, division, floor division, remainder "
-"[#]_"
+"Multiplication, matrix multiplication, division, floor division, "
+"remainder [#]_"
 msgstr "Множення, матричне множення, ділення, поверхове ділення, залишок [#]_"
 
 #: ../../src/appx/precedence.txt:37
@@ -1359,16 +1894,16 @@ msgstr "Оперетор присвоєння"
 
 #: ../../src/appx/precedence.txt:65
 msgid ""
-"the power operator binds less tightly than an arithmetic or bitwise unary "
-"operator on its right (``2 ** -1`` is ``0.5``)."
+"the power operator binds less tightly than an arithmetic or bitwise unary"
+" operator on its right (``2 ** -1`` is ``0.5``)."
 msgstr ""
 "оператор степені прив'язує менш тісно, ніж арифметичний або порозрядний "
 "унарний оператор праворуч (``2 ** -1`` це ``0,5``)."
 
 #: ../../src/appx/precedence.txt:67
 msgid ""
-"the ``%`` operator is also used for string formatting; the same precedence "
-"applies."
+"the ``%`` operator is also used for string formatting; the same "
+"precedence applies."
 msgstr ""
 "оператор ``%`` також використовується для форматування рядків; "
 "застосовується той самий пріоритет."
@@ -1388,18 +1923,20 @@ msgstr "``printf-style`` Форматування рядків"
 #: ../../src/appx/printf.txt:12
 msgid ""
 "String objects have one unique built-in operation: the ``%`` operator "
-"(modulo). This is also known as the string *formatting* or *interpolation* "
-"operator :cite:`docs-python:printf-formatting`. Given ``format % values`` "
-"(where *format* is a string), ``%`` conversion specifications in *format* "
-"are replaced with zero or more elements of *values*. If *format* requires a "
-"single argument, *values* may be a single non-tuple object."
+"(modulo). This is also known as the string *formatting* or "
+"*interpolation* operator :cite:`docs-python:printf-formatting`. Given "
+"``format % values`` (where *format* is a string), ``%`` conversion "
+"specifications in *format* are replaced with zero or more elements of "
+"*values*. If *format* requires a single argument, *values* may be a "
+"single non-tuple object."
 msgstr ""
-"Рядкові об'єкти мають одну унікальну вбудовану операцію: оператор ``%`` (по "
-"модулю). Це також відоме як оператор *форматування* рядка або "
-"*інтерполяції* :cite:`docs-python:printf-formatting`. Враховуючи ``формат % "
-"значень`` (де *format* є рядком), ``%`` специфікації перетворення у *format* "
-"замінюються нулем або більше елементами *значень*. Якщо для *format* "
-"потрібен один аргумент, *values* може бути одним некортежним об'єктом."
+"Рядкові об'єкти мають одну унікальну вбудовану операцію: оператор ``%`` "
+"(по модулю). Це також відоме як оператор *форматування* рядка або "
+"*інтерполяції* :cite:`docs-python:printf-formatting`. Враховуючи ``формат"
+" % значень`` (де *format* є рядком), ``%`` специфікації перетворення у "
+"*format* замінюються нулем або більше елементами *значень*. Якщо для "
+"*format* потрібен один аргумент, *values* може бути одним некортежним "
+"об'єктом."
 
 #: ../../src/appx/printf.txt:19
 msgid "The conversion flag characters are:"
@@ -1435,9 +1972,11 @@ msgstr "``'-'``"
 
 #: ../../src/appx/printf.txt:28
 msgid ""
-"The converted value is left adjusted (override the ``'0'`` if both are given)"
+"The converted value is left adjusted (override the ``'0'`` if both are "
+"given)"
 msgstr ""
-"Перетворене значення коригується зліва (замініть ``'0'``, якщо надано обидва)"
+"Перетворене значення коригується зліва (замініть ``'0'``, якщо надано "
+"обидва)"
 
 #: ../../src/appx/printf.txt:31
 msgid "``' '``"
@@ -1453,11 +1992,11 @@ msgstr "``'+'``"
 
 #: ../../src/appx/printf.txt:33
 msgid ""
-"A sign character (``'+'`` or ``'-'``) will precede the conversion (overrides "
-"a \"space\" flag)"
+"A sign character (``'+'`` or ``'-'``) will precede the conversion "
+"(overrides a \"space\" flag)"
 msgstr ""
-"Символ знака (``'+'`` або ``'-'``) передуватиме перетворенню (перевизначає "
-"прапор \"пробіл\")"
+"Символ знака (``'+'`` або ``'-'``) передуватиме перетворенню "
+"(перевизначає прапор \"пробіл\")"
 
 #: ../../src/appx/printf.txt:37
 msgid "The conversion types are:"
@@ -1545,8 +2084,8 @@ msgstr "``'G'``"
 
 #: ../../src/appx/printf.txt:61
 msgid ""
-"Floating point format. Uses lowercase exponential format if exponent is less "
-"that -4 or not less than precision, decimal format otherwise."
+"Floating point format. Uses lowercase exponential format if exponent is "
+"less that -4 or not less than precision, decimal format otherwise."
 msgstr ""
 "Формат з плаваючою комою. Використовує нижній регістр експоненціального "
 "формату, якщо показник степеня менший за -4 або не менший за точність, "
@@ -1589,8 +2128,7 @@ msgid "``'%'``"
 msgstr "``'%'``"
 
 #: ../../src/appx/printf.txt:74
-msgid ""
-"No arguments is converted, results in a ``'%'`` character in the result."
+msgid "No arguments is converted, results in a ``'%'`` character in the result."
 msgstr "Жодні аргументи не перетворюються, результатом є символ ``'%'``."
 
 #: ../../src/appx/software_list.rst:-1
@@ -1611,8 +2149,7 @@ msgstr "7zip"
 
 #: ../../src/appx/software_list.rst:12
 msgid "**7-Zip** is **free software** with **open source**."
-msgstr ""
-"**7-Zip** — це **вільне програмне забезпечення** з **відкритим кодом**."
+msgstr "**7-Zip** — це **вільне програмне забезпечення** з **відкритим кодом**."
 
 #: ../../src/appx/software_list.rst:14
 msgid ""
@@ -1632,9 +2169,9 @@ msgstr "Пакування / розпакування: 7z, XZ, BZIP2, GZIP, TAR,
 
 #: ../../src/appx/software_list.rst:19
 msgid ""
-"Unpacking only: APFS, AR, ARJ, CAB, CHM, CPIO, CramFS, DMG, EXT, FAT, GPT, "
-"HFS, IHEX, ISO, LZH, LZMA, MBR, MSI, NSIS, NTFS, QCOW2, RAR, RPM, SquashFS, "
-"UDF, UEFI, VDI, VHD, VHDX, VMDK, XAR and Z."
+"Unpacking only: APFS, AR, ARJ, CAB, CHM, CPIO, CramFS, DMG, EXT, FAT, "
+"GPT, HFS, IHEX, ISO, LZH, LZMA, MBR, MSI, NSIS, NTFS, QCOW2, RAR, RPM, "
+"SquashFS, UDF, UEFI, VDI, VHD, VHDX, VMDK, XAR and Z."
 msgstr ""
 "Лише розпакування: APFS, AR, ARJ, CAB, CHM, CPIO, CramFS, DMG, EXT, FAT, "
 "GPT, HFS, IHEX, ISO, LZH, LZMA, MBR, MSI, NSIS, NTFS, QCOW2, RAR, RPM, "
@@ -1659,14 +2196,14 @@ msgstr "cygwin"
 #: ../../src/appx/software_list.rst:31
 msgid ""
 "It is a large collection of GNU and Open Source tools which provide "
-"functionality similar to a `Linux distribution <https://en.wikipedia.org/"
-"wiki/Linux_distribution>`__ on Windows and a DLL (cygwin1.dll) which "
-"provides substantial POSIX API functionality."
+"functionality similar to a `Linux distribution "
+"<https://en.wikipedia.org/wiki/Linux_distribution>`__ on Windows and a "
+"DLL (cygwin1.dll) which provides substantial POSIX API functionality."
 msgstr ""
 "Це велика колекція інструментів GNU та Open Source, які забезпечують "
-"функціональність, подібну до `дистрибутива Linux <https://en.wikipedia.org/"
-"wiki/Linux_distribution>`__ у Windows та DLL (cygwin1.dll), яка забезпечує "
-"значний POSIX Функціонал API."
+"функціональність, подібну до `дистрибутива Linux "
+"<https://en.wikipedia.org/wiki/Linux_distribution>`__ у Windows та DLL "
+"(cygwin1.dll), яка забезпечує значний POSIX Функціонал API."
 
 #: ../../src/appx/software_list.rst:37
 msgid "**Cygwin is not**:"
@@ -1674,11 +2211,12 @@ msgstr "**Сygwin це не**:"
 
 #: ../../src/appx/software_list.rst:39
 msgid ""
-"a way to run native Linux apps on Windows. You must rebuild your application "
-"*from source* if you want it to run on Windows."
+"a way to run native Linux apps on Windows. You must rebuild your "
+"application *from source* if you want it to run on Windows."
 msgstr ""
-"спосіб запуску рідних програм Linux у Windows. Ви повинні перебудувати свою "
-"програму *з вихідного коду*, якщо ви хочете, щоб вона запускалася в Windows."
+"спосіб запуску рідних програм Linux у Windows. Ви повинні перебудувати "
+"свою програму *з вихідного коду*, якщо ви хочете, щоб вона запускалася в "
+"Windows."
 
 #: ../../src/appx/software_list.rst:41
 msgid ""
@@ -1702,13 +2240,13 @@ msgstr "git [#cygwin]_"
 #: ../../src/appx/software_list.rst:51
 msgid ""
 "Git is a `free and open source <https://git-scm.com/about/free-and-open-"
-"source>`__ distributed version control system designed to handle everything "
-"from small to very large projects with speed and efficiency."
+"source>`__ distributed version control system designed to handle "
+"everything from small to very large projects with speed and efficiency."
 msgstr ""
-"Git — це `безкоштовна система з відкритим вихідним кодом <https://git-scm."
-"com/about/free-and-open-source>`__ розподілена система контролю версій, "
-"призначена для швидкого та ефективного керування всіма проектами, від малих "
-"до дуже великих."
+"Git — це `безкоштовна система з відкритим вихідним кодом <https://git-"
+"scm.com/about/free-and-open-source>`__ розподілена система контролю "
+"версій, призначена для швидкого та ефективного керування всіма проектами,"
+" від малих до дуже великих."
 
 #: ../../src/appx/software_list.rst:56
 msgid "https://git-scm.com/"
@@ -1721,24 +2259,24 @@ msgstr "Docker"
 #: ../../src/appx/software_list.rst:61
 msgid "The most-loved Tool in Stack Overflow’s 2022 Developer Survey."
 msgstr ""
-"Найулюбленіший інструмент в опитуванні розробників Stack Overflow за 2022 "
-"рік."
+"Найулюбленіший інструмент в опитуванні розробників Stack Overflow за 2022"
+" рік."
 
 #: ../../src/appx/software_list.rst:63
 msgid ""
 "Docker helps developers bring their ideas to life by conquering the "
 "complexity of app development. We simplify and accelerate development "
-"workflows with an integrated dev pipeline and through the consolidation of "
-"application components. Actively used by millions of developers around the "
-"world, Docker Desktop and Docker Hub provide unmatched simplicity, agility "
-"and choice."
+"workflows with an integrated dev pipeline and through the consolidation "
+"of application components. Actively used by millions of developers around"
+" the world, Docker Desktop and Docker Hub provide unmatched simplicity, "
+"agility and choice."
 msgstr ""
-"Docker допомагає розробникам втілювати свої ідеї в життя, долаючи складність "
-"розробки програм. Ми спрощуємо та прискорюємо робочі процеси розробки за "
-"допомогою інтегрованого конвеєра розробників і консолідації компонентів "
-"програми. Активно використовувані мільйонами розробників у всьому світі "
-"Docker Desktop і Docker Hub забезпечують неперевершену простоту, гнучкість і "
-"вибір."
+"Docker допомагає розробникам втілювати свої ідеї в життя, долаючи "
+"складність розробки програм. Ми спрощуємо та прискорюємо робочі процеси "
+"розробки за допомогою інтегрованого конвеєра розробників і консолідації "
+"компонентів програми. Активно використовувані мільйонами розробників у "
+"всьому світі Docker Desktop і Docker Hub забезпечують неперевершену "
+"простоту, гнучкість і вибір."
 
 #: ../../src/appx/software_list.rst:70
 msgid "https://www.docker.com/"
@@ -1750,13 +2288,14 @@ msgstr "PostgreSQL [#cygwin]_"
 
 #: ../../src/appx/software_list.rst:75
 msgid ""
-"PostgreSQL is a powerful, open source object-relational database system with "
-"over 35 years of active development that has earned it a strong reputation "
-"for reliability, feature robustness, and performance."
+"PostgreSQL is a powerful, open source object-relational database system "
+"with over 35 years of active development that has earned it a strong "
+"reputation for reliability, feature robustness, and performance."
 msgstr ""
-"PostgreSQL — це потужна об'єктно-реляційна база даних з відкритим вихідним "
-"кодом, активна розробка якої триває понад 35 років, завдяки чому вона "
-"заслужила міцну репутацію надійності, надійності функцій і продуктивності."
+"PostgreSQL — це потужна об'єктно-реляційна база даних з відкритим "
+"вихідним кодом, активна розробка якої триває понад 35 років, завдяки чому"
+" вона заслужила міцну репутацію надійності, надійності функцій і "
+"продуктивності."
 
 #: ../../src/appx/software_list.rst:79
 msgid "https://www.postgresql.org/"
@@ -1768,24 +2307,24 @@ msgstr "psql [#cygwin]_"
 
 #: ../../src/appx/software_list.rst:86
 msgid ""
-"A terminal-based front-end to PostgreSQL. It enables you to type in queries "
-"interactively, issue them to PostgreSQL, and see the query results. "
-"Alternatively, input can be from a file or from command line arguments. In "
-"addition, psql provides a number of meta-commands and various shell-like "
-"features to facilitate writing scripts and automating a wide variety of "
-"tasks."
+"A terminal-based front-end to PostgreSQL. It enables you to type in "
+"queries interactively, issue them to PostgreSQL, and see the query "
+"results. Alternatively, input can be from a file or from command line "
+"arguments. In addition, psql provides a number of meta-commands and "
+"various shell-like features to facilitate writing scripts and automating "
+"a wide variety of tasks."
 msgstr ""
 "Термінальний інтерфейс для PostgreSQL. Це дозволяє вводити запити в "
-"інтерактивному режимі, надсилати їх у PostgreSQL і переглядати результати "
-"запиту. Крім того, введення може бути з файлу або з аргументів командного "
-"рядка. Крім того, psql надає низку мета-команд і різноманітних функцій, "
-"подібних до оболонки, для полегшення написання сценаріїв і автоматизації "
-"різноманітних завдань."
+"інтерактивному режимі, надсилати їх у PostgreSQL і переглядати результати"
+" запиту. Крім того, введення може бути з файлу або з аргументів "
+"командного рядка. Крім того, psql надає низку мета-команд і різноманітних"
+" функцій, подібних до оболонки, для полегшення написання сценаріїв і "
+"автоматизації різноманітних завдань."
 
 #: ../../src/appx/software_list.rst:93
 msgid ""
-"On Windows it will be installed within PostgreSQL RDBMS. For macOS and Linux "
-"look for ``postgresql-client`` package."
+"On Windows it will be installed within PostgreSQL RDBMS. For macOS and "
+"Linux look for ``postgresql-client`` package."
 msgstr ""
 "У Windows його буде встановлено в СУБД PostgreSQL. Для macOS і Linux "
 "знайдіть пакет ``postgresql-client``."
@@ -1800,19 +2339,19 @@ msgstr "pgAdmin"
 
 #: ../../src/appx/software_list.rst:101
 msgid ""
-"pgAdmin is the most popular and feature rich Open Source administration and "
-"development platform for PostgreSQL, the most advanced Open Source database "
-"in the world."
+"pgAdmin is the most popular and feature rich Open Source administration "
+"and development platform for PostgreSQL, the most advanced Open Source "
+"database in the world."
 msgstr ""
-"pgAdmin — це найпопулярніша та багатофункціональна платформа адміністрування "
-"та розробки з відкритим кодом для PostgreSQL, найдосконалішої бази даних з "
-"відкритим кодом у світі."
+"pgAdmin — це найпопулярніша та багатофункціональна платформа "
+"адміністрування та розробки з відкритим кодом для PostgreSQL, "
+"найдосконалішої бази даних з відкритим кодом у світі."
 
 #: ../../src/appx/software_list.rst:105
 msgid "It is a PostgreSQL client (like a ``psql``), but with web based GUI."
 msgstr ""
-"Це клієнт PostgreSQL (як ``psql``), але з графічним інтерфейсом на основі "
-"веб-інтерфейсу."
+"Це клієнт PostgreSQL (як ``psql``), але з графічним інтерфейсом на основі"
+" веб-інтерфейсу."
 
 #: ../../src/appx/software_list.rst:107
 msgid "https://pgadmin.org/"
@@ -1824,17 +2363,19 @@ msgstr "SQLite [#cygwin]_"
 
 #: ../../src/appx/software_list.rst:112
 msgid ""
-"SQLite is a C-language library that implements a `small <https://sqlite.org/"
-"footprint.html>`__, `fast <https://sqlite.org/fasterthanfs.html>`__, `self-"
-"contained <https://sqlite.org/selfcontained.html>`__, `high-reliability "
-"<https://sqlite.org/hirely.html>`__, `full-featured <https://sqlite.org/"
-"fullsql.html>`__, SQL database engine."
+"SQLite is a C-language library that implements a `small "
+"<https://sqlite.org/footprint.html>`__, `fast "
+"<https://sqlite.org/fasterthanfs.html>`__, `self-contained "
+"<https://sqlite.org/selfcontained.html>`__, `high-reliability "
+"<https://sqlite.org/hirely.html>`__, `full-featured "
+"<https://sqlite.org/fullsql.html>`__, SQL database engine."
 msgstr ""
-"SQLite — це бібліотека мовою C, яка реалізує `маленьку <https://sqlite.org/"
-"footprint.html>`__, `швидку <https://sqlite.org/fasterthanfs.html>`__, "
-"`самодостатню <https://sqlite.org/selfcontained.html>`__, `висока надійність "
-"<https://sqlite.org/hirely.html>`__, `повнофункціональний <https://sqlite."
-"org/fullsql.html>`__, двигун бази даних SQL."
+"SQLite — це бібліотека мовою C, яка реалізує `маленьку "
+"<https://sqlite.org/footprint.html>`__, `швидку "
+"<https://sqlite.org/fasterthanfs.html>`__, `самодостатню "
+"<https://sqlite.org/selfcontained.html>`__, `висока надійність "
+"<https://sqlite.org/hirely.html>`__, `повнофункціональний "
+"<https://sqlite.org/fullsql.html>`__, двигун бази даних SQL."
 
 #: ../../src/appx/software_list.rst:120
 msgid "https://sqlite.org/"
@@ -1860,15 +2401,15 @@ msgstr "Чарівники, Злодії та Рицарі"
 msgid ""
 "\"Wizards, Thieves and Knights\" (:abbr:`WTK (Wizards, Thieves and "
 "Knights)`) game is a \"Paper, Rock and Scissors\" clone but in a fantasy "
-"setting. It comes with a simple command line interface where the use must "
-"type in his or her choice. The enemy is controlled by the script. The "
+"setting. It comes with a simple command line interface where the use must"
+" type in his or her choice. The enemy is controlled by the script. The "
 "player's goal is to gain as many score points, as it possible."
 msgstr ""
 "Гра \"Чарівники, Злодії та Рицарі\" (:abbr:`WTK (Wizards, Thieves and "
 "Knights)`) — це клон \"Камень, ножиці, бумага\", але у фентезійному "
-"сеттингу. Вона має простий інтерфейс командного рядка, де користувач повинен "
-"ввести свій вибір. Ворогом керує скрипт. Мета гравця - набрати якомога "
-"більше очок."
+"сеттингу. Вона має простий інтерфейс командного рядка, де користувач "
+"повинен ввести свій вибір. Ворогом керує скрипт. Мета гравця - набрати "
+"якомога більше очок."
 
 #: ../../problem-sets/src/wtk/challenge.rst:13
 msgid "Code organization"
@@ -1876,8 +2417,7 @@ msgstr "Організація коду"
 
 #: ../../problem-sets/src/wtk/challenge.rst:15
 msgid "Use separate modules to maintain your code base. For example:"
-msgstr ""
-"Використовуйте окремі модулі для підтримки вашої кодової бази. Наприклад:"
+msgstr "Використовуйте окремі модулі для підтримки вашої кодової бази. Наприклад:"
 
 #: ../../problem-sets/src/wtk/challenge.rst:27
 msgid "General playground description"
@@ -1885,8 +2425,9 @@ msgstr "Загальний опис ігрового процесу"
 
 #: ../../problem-sets/src/wtk/challenge.rst:29
 msgid ""
-"The game process is divided into rounds. Each round consists of **attack** "
-"and **defence** stages. Rounds are repeated, until player is defeated."
+"The game process is divided into rounds. Each round consists of "
+"**attack** and **defence** stages. Rounds are repeated, until player is "
+"defeated."
 msgstr ""
 "Процес гри поділено на раунди. Кожен раунд складається з етапів атаки та "
 "захисту. Раунди повторюються, поки гравець не буде переможений."
@@ -1918,8 +2459,8 @@ msgstr "Стадія атаки"
 #: ../../problem-sets/src/wtk/challenge.rst:44
 msgid ""
 "Player selects the choice to attack from **wizard**, **thief** or "
-"**knight**, enemy selects the choice for defence from the same options by "
-"random. If the attack is successful:"
+"**knight**, enemy selects the choice for defence from the same options by"
+" random. If the attack is successful:"
 msgstr ""
 "Гравець обирає для атаки **чарівника**, **злодія** або **лицаря**, ворог "
 "обирає захист з тих самих варіантів випадковим чином. Якщо атака успішна:"
@@ -1958,8 +2499,9 @@ msgid ""
 "**knight**, enemy selects the choice to attack from the same options by "
 "random. If the attack is successful:"
 msgstr ""
-"Гравець вибір для захисту **чарівника**, **злодія** або **рицаря**, ворог "
-"обирає для атаки з тих же варіантів випадковим чином. Якщо атака успішна:"
+"Гравець вибір для захисту **чарівника**, **злодія** або **рицаря**, ворог"
+" обирає для атаки з тих же варіантів випадковим чином. Якщо атака "
+"успішна:"
 
 #: ../../problem-sets/src/wtk/challenge.rst:64
 msgid "player health is decreased"
@@ -1987,13 +2529,13 @@ msgstr "Ворога переможено"
 
 #: ../../problem-sets/src/wtk/challenge.rst:78
 msgid ""
-"This is an exceptional scenario when enemy is defeated. A custom exception "
-"``EnemyDown`` should be used to track these cases. Exception should provide "
-"the details on the enemy's instance, especially its level."
+"This is an exceptional scenario when enemy is defeated. A custom "
+"exception ``EnemyDown`` should be used to track these cases. Exception "
+"should provide the details on the enemy's instance, especially its level."
 msgstr ""
 "Це винятковий сценарій, коли ворог зазнає поразки. Щоб відстежувати ці "
-"випадки, слід використовувати налаштований виняток ``EnemyDown``. Виняток "
-"повинен надавати деталі про екземпляр ворога, особливо його рівень."
+"випадки, слід використовувати налаштований виняток ``EnemyDown``. Виняток"
+" повинен надавати деталі про екземпляр ворога, особливо його рівень."
 
 #: of wtk.exceptions.EnemyDown:1
 msgid "Raised when an enemy is defeated"
@@ -2005,13 +2547,15 @@ msgstr "Гра завершена"
 
 #: ../../problem-sets/src/wtk/challenge.rst:87
 msgid ""
-"This is an exceptional scenario when player is defeated. A custom exception "
-"``GameOver`` should be used to track these cases. Exception should provide "
-"the details on the player's instance, especially its score points."
+"This is an exceptional scenario when player is defeated. A custom "
+"exception ``GameOver`` should be used to track these cases. Exception "
+"should provide the details on the player's instance, especially its score"
+" points."
 msgstr ""
 "Це винятковий сценарій, коли гравець зазнає поразки. Щоб відстежувати ці "
 "випадки, слід використовувати спеціальний виняток ``GameOver``. Виняток "
-"повинен надавати деталі про екземпляр гравця, особливо його результати бали."
+"повинен надавати деталі про екземпляр гравця, особливо його результати "
+"бали."
 
 #: of wtk.exceptions.GameOver:1
 msgid "Raised when a player is defeated"
@@ -2059,11 +2603,11 @@ msgstr "Зменшує очоки здоров'я"
 
 #: of wtk.models.Enemy.decrease_health:3
 msgid ""
-"This method decreases the health meter value. When it comes to be less than "
-"1 (one) an ``EnemyDown`` exception is raised."
+"This method decreases the health meter value. When it comes to be less "
+"than 1 (one) an ``EnemyDown`` exception is raised."
 msgstr ""
-"Цей метод зменшує значення індикатора працездатності. Коли значення менше 1 "
-"(одного), виникає виняток ``EnemyDown``."
+"Цей метод зменшує значення індикатора працездатності. Коли значення менше"
+" 1 (одного), виникає виняток ``EnemyDown``."
 
 #: of wtk.models.Enemy.decrease_health wtk.models.Player.decrease_health
 msgid "raise"
@@ -2088,8 +2632,7 @@ msgstr "варіант для бою"
 
 #: ../../problem-sets/src/wtk/challenge.rst:104
 msgid "You are free to implement other methods you like, if needed."
-msgstr ""
-"Ви можете використовувати інші методи, які вам подобаються, якщо потрібно."
+msgstr "Ви можете використовувати інші методи, які вам подобаються, якщо потрібно."
 
 #: ../../problem-sets/src/wtk/challenge.rst:107
 msgid "Player"
@@ -2117,11 +2660,11 @@ msgstr "очки, зароблені гравцем"
 
 #: of wtk.models.Player.__init__:3
 msgid ""
-"This method performs player instance initialization. It set instance name, "
-"initial score points value and health."
+"This method performs player instance initialization. It set instance "
+"name, initial score points value and health."
 msgstr ""
-"Цей метод виконує ініціалізацію примірника програвача. Він встановлює назву "
-"екземпляра, значення початкових балів і здоров'я."
+"Цей метод виконує ініціалізацію примірника програвача. Він встановлює "
+"назву екземпляра, значення початкових балів і здоров'я."
 
 #: of wtk.models.Player.__init__:6
 msgid "a player's name"
@@ -2133,18 +2676,19 @@ msgstr "Атакує ворога"
 
 #: of wtk.models.Player.attack:3
 msgid ""
-"Perform attack on an enemy instance. This method takes an enemy instance as "
-"an argument. After that, it takes attack choice from the player model and "
-"the defence choice from an enemy model. After fight result calculation "
-"required operation are to be performed (decrease enemy health, assign score "
-"points etc.). Based on fight result should print out a message:"
+"Perform attack on an enemy instance. This method takes an enemy instance "
+"as an argument. After that, it takes attack choice from the player model "
+"and the defence choice from an enemy model. After fight result "
+"calculation required operation are to be performed (decrease enemy "
+"health, assign score points etc.). Based on fight result should print out"
+" a message:"
 msgstr ""
 "Виконати атаку на екземпляр противника. Цей метод приймає екземпляр "
-"противника як аргумент. Після цього він приймає вибір атаки з моделі гравця "
-"та вибір захисту з моделі противника. Після результату битви  потрібно "
-"виконати обчислення, необхідні операції (зменшити здоров'я ворога, "
-"призначити очки тощо). На основі результату бою має видрукувати\" "
-"\"повідомлення:"
+"противника як аргумент. Після цього він приймає вибір атаки з моделі "
+"гравця та вибір захисту з моделі противника. Після результату битви  "
+"потрібно виконати обчислення, необхідні операції (зменшити здоров'я "
+"ворога, призначити очки тощо). На основі результату бою має видрукувати\""
+" \"повідомлення:"
 
 #: of wtk.models.Player.attack:10
 msgid "\"YOUR ATTACK IS SUCCESSFUL!\""
@@ -2160,11 +2704,11 @@ msgstr "\"IT'S A DRAW!\""
 
 #: of wtk.models.Player.decrease_health:3
 msgid ""
-"This method decreases the health meter value. When it comes to be less than "
-"1 (one) an ``GameOver`` exception is raised."
+"This method decreases the health meter value. When it comes to be less "
+"than 1 (one) an ``GameOver`` exception is raised."
 msgstr ""
-"Цей метод зменшує значення індикатора працездатності. Коли значення менше 1 "
-"(одного), виникає виняток ``GameOver``."
+"Цей метод зменшує значення індикатора працездатності. Коли значення менше"
+" 1 (одного), виникає виняток ``GameOver``."
 
 #: of wtk.models.Player.decrease_health:6
 msgid "GameOver"
@@ -2176,17 +2720,17 @@ msgstr "Захист від атаки супротивника"
 
 #: of wtk.models.Player.defence:3
 msgid ""
-"Perform defence from an enemy attack. This method takes an enemy instance as "
-"an argument. After that, it takes defence choice from the player model and "
-"the attack choice from an enemy model. After fight result calculation "
-"required operation are to be performed (decrease player health). Based on "
-"fight result should print out a message:"
+"Perform defence from an enemy attack. This method takes an enemy instance"
+" as an argument. After that, it takes defence choice from the player "
+"model and the attack choice from an enemy model. After fight result "
+"calculation required operation are to be performed (decrease player "
+"health). Based on fight result should print out a message:"
 msgstr ""
 "Виконайте захист від атаки ворога. Цей метод приймає екземпляр ворога як "
-"аргумент. Після цього він приймає вибір захисту від моделі гравця та вибір "
-"атаки від моделі ворога. Після результату бою необхідно виконати операцію "
-"обчислення (зменшити здоров'я гравця). За результатами бою повинно вийти "
-"повідомлення:"
+"аргумент. Після цього він приймає вибір захисту від моделі гравця та "
+"вибір атаки від моделі ворога. Після результату бою необхідно виконати "
+"операцію обчислення (зменшити здоров'я гравця). За результатами бою "
+"повинно вийти повідомлення:"
 
 #: of wtk.models.Player.defence:10
 msgid "\"YOUR DEFENCE IS SUCCESSFUL!\""
@@ -2259,7 +2803,8 @@ msgstr "Вартість очок, які призначаються, коли �
 #: ../../problem-sets/src/wtk/challenge.rst:131
 msgid "You may also define messages with this module, for example:"
 msgstr ""
-"Ви також можете визначити повідомлення за допомогою цього модуля, наприклад:"
+"Ви також можете визначити повідомлення за допомогою цього модуля, "
+"наприклад:"
 
 #: ../../docstring of wtk.settings.MSG_SUCCESS_ATTACK:1
 msgid "Successful attack message"
@@ -2320,7 +2865,8 @@ msgid ""
 "A validation process is performed as well. The player name cannot be an "
 "empty string."
 msgstr ""
-"Також виконується процес перевірки. Ім'я гравця не може бути порожнім рядком."
+"Також виконується процес перевірки. Ім'я гравця не може бути порожнім "
+"рядком."
 
 #: of wtk.engine.get_player_name:6
 msgid "a player defined name"
@@ -2333,20 +2879,21 @@ msgstr "Гра"
 #: ../../problem-sets/src/wtk/challenge.rst:160
 msgid ""
 "This function initializes player and enemy instance. It processes game "
-"rounds inside of an endless loop stage by stage. If an enemy is defeated - a "
-"new one should be initialized with level increased by 1 (one). This case "
-"should be reported to the terminal. If a player is defeated - the \"Game "
-"Over\" message should be reported to the terminal. ``KeyboardInterrupt`` "
-"should be handled as well - it's behavior is similar to \"Game Over\" event, "
-"but \"game over\" message should be omitted."
+"rounds inside of an endless loop stage by stage. If an enemy is defeated "
+"- a new one should be initialized with level increased by 1 (one). This "
+"case should be reported to the terminal. If a player is defeated - the "
+"\"Game Over\" message should be reported to the terminal. "
+"``KeyboardInterrupt`` should be handled as well - it's behavior is "
+"similar to \"Game Over\" event, but \"game over\" message should be "
+"omitted."
 msgstr ""
 "Ця функція ініціалізує екземпляр гравця та ворога. Вона обробляє ігрові "
-"раунди в нескінченному циклі поетапно. Якщо ворога переможено - нового слід "
-"ініціалізувати з рівнем, збільшеним на 1 (один). Про цей випадок слід "
-"повідомити на термінал. Якщо гравець зазнає поразки - повідомлення \"Game "
-"Over\" має бути повідомлено на термінал. ``KeyboardInterrupt`` також слід "
-"обробити - це поведінка подібно до події \"Game Over\", але повідомлення "
-"\"Game Over\" має бути пропущено."
+"раунди в нескінченному циклі поетапно. Якщо ворога переможено - нового "
+"слід ініціалізувати з рівнем, збільшеним на 1 (один). Про цей випадок "
+"слід повідомити на термінал. Якщо гравець зазнає поразки - повідомлення "
+"\"Game Over\" має бути повідомлено на термінал. ``KeyboardInterrupt`` "
+"також слід обробити - це поведінка подібно до події \"Game Over\", але "
+"повідомлення \"Game Over\" має бути пропущено."
 
 #: of wtk.engine.play:1
 msgid "Run the game"
@@ -2354,13 +2901,13 @@ msgstr "Запускає гру"
 
 #: of wtk.engine.play:3
 msgid ""
-"The function initializes player and enemy instances. After that it runs the "
-"game process in an endless loop. Once the player is defeated - it stops the "
-"execution."
+"The function initializes player and enemy instances. After that it runs "
+"the game process in an endless loop. Once the player is defeated - it "
+"stops the execution."
 msgstr ""
-"Функція ініціалізує екземпляри гравця та ворога. Після цього він запускає "
-"ігровий процес у нескінченному циклі. Як тільки гравець переможений - це "
-"зупиняє виконання."
+"Функція ініціалізує екземпляри гравця та ворога. Після цього він запускає"
+" ігровий процес у нескінченному циклі. Як тільки гравець переможений - це"
+" зупиняє виконання."
 
 #: ../../problem-sets/src/wtk/challenge.rst:173
 msgid "Optional Enhancements"
@@ -2369,8 +2916,8 @@ msgstr "Додаткові Вдосконалення"
 #: ../../problem-sets/src/wtk/challenge.rst:175
 msgid "Add scores processor to show top-10 scores from a record table."
 msgstr ""
-"Додайте процесор оцінок, щоб показати 10 найкращих результатів із таблиці "
-"записів."
+"Додайте процесор оцінок, щоб показати 10 найкращих результатів із таблиці"
+" записів."
 
 #: ../../problem-sets/src/wtk/challenge.rst:176
 msgid "Create game menu, for example: ::"
@@ -2379,4 +2926,237 @@ msgstr "Створити меню гри, наприклад: ::"
 #: ../../problem-sets/src/wtk/challenge.rst:182
 msgid "Store score table to the database instead of using text file."
 msgstr ""
-"Зберігайте таблицю балів у базі даних замість використання текстового файлу."
+"Зберігайте таблицю балів у базі даних замість використання текстового "
+"файлу."
+
+#~ msgid ""
+#~ "As a developer you were asked to"
+#~ " create a simple blog site. The "
+#~ "goal is to create a place on "
+#~ "the Internet where users can share "
+#~ "their stories to public."
+#~ msgstr ""
+#~ "Вас, як розробника, попросили створити "
+#~ "простий сайт блогу. Мета - створити "
+#~ "місце в Інтернеті, де користувачі "
+#~ "зможуть ділитися своїми історіями з "
+#~ "громадськістю."
+
+#~ msgid ""
+#~ "This document applies requirements for "
+#~ "the entire project step-by-step. "
+#~ "You will start from creating the "
+#~ "appropriate URL dispatcher and connecting "
+#~ "a PostgreSQL database to store the "
+#~ "data and will finish with implementing"
+#~ " REST API for the blog."
+#~ msgstr ""
+#~ "Цей документ крок за кроком застосовує"
+#~ " вимоги до всього проекту. Ви \" "
+#~ "\"почнете зі створення відповідного диспетчера"
+#~ " URL-адрес і підключення до бази "
+#~ "даних PostgreSQL для зберігання даних і"
+#~ " закінчите впровадженням REST API для "
+#~ "блог."
+
+#~ msgid ""
+#~ "There are some boiler plates, that "
+#~ "may be useful in your future work,"
+#~ " but you aren’t forced to use "
+#~ "them. It’s on your choice."
+#~ msgstr ""
+#~ "Існують деякі котли, які можуть бути "
+#~ "корисними у вашій майбутній роботі, але"
+#~ " ви не змушені їх використовувати. Це"
+#~ " на ваш вибір."
+
+#~ msgid "`Starter template`_"
+#~ msgstr "`Starter template`_"
+
+#~ msgid "Challenge: Site views"
+#~ msgstr "Завдання: Site views"
+
+#~ msgid "``/``: same as ``/blogs/``"
+#~ msgstr "``/``: те ж саме ``/blogs/``"
+
+#~ msgid ""
+#~ "It’s time to work with data "
+#~ "representations. You’re to add HTML "
+#~ "template to the blog site project."
+#~ msgstr ""
+#~ "Настав час попрацювати з представленнями "
+#~ "даних. Ви повинні додати шаблон HTML "
+#~ "до проекту сайту блогу."
+
+#~ msgid ""
+#~ "Create \"templates\" folder in the "
+#~ "project's root. This is the place "
+#~ "to keep your base templates. Make "
+#~ "sure this path is included to the"
+#~ " ``TEMPLATES`` object in settings file."
+#~ msgstr ""
+#~ "Створіть папку \"templates\" в корені "
+#~ "проекту. Це місце для зберігання ваших"
+#~ " базових шаблонів. Переконайтеся, що цей"
+#~ " шлях включено до об'єкта ``TEMPLATES`` "
+#~ "у файлі налаштувань."
+
+#~ msgid ""
+#~ "There is no need to implement "
+#~ "functional for forms for now. Just "
+#~ "render them. There is no need to"
+#~ " pass any context to ``render`` "
+#~ "function for now."
+#~ msgstr ""
+#~ "На даний момент немає необхідності "
+#~ "впроваджувати функціонал для форм. Просто "
+#~ "візуалізуйте їх. Наразі немає потреби "
+#~ "передавати будь-який контекст у функцію "
+#~ "``render``."
+
+#~ msgid ""
+#~ "Each page should contain a navbar "
+#~ "at the top. Navbar will contain "
+#~ "permalinks to the home and about "
+#~ "pages."
+#~ msgstr ""
+#~ "Кожна сторінка повинна містити навігаційну "
+#~ "панель угорі. Навігаційна панель міститиме "
+#~ "постійні посилання на домашню сторінку "
+#~ "та сторінку про."
+
+#~ msgid "Navbar should contain links to ``/register/`` and ``/login/`` pages."
+#~ msgstr ""
+#~ "Панель навігації має містити посилання "
+#~ "на сторінки ``/register/`` і ``/login/``."
+
+#~ msgid "``/register/`` page should render a user registration form."
+#~ msgstr "Сторінка ``/register/`` має відобразити форму реєстрації користувача."
+
+#~ msgid "``/login/`` page should render a user authentication form."
+#~ msgstr "Сторінка ``/login/`` має відображати форму автентифікації користувача."
+
+#~ msgid "``/create/`` page should render a form to create a new post."
+#~ msgstr ""
+#~ "Сторінка ``/create/`` має відобразити форму"
+#~ " для створення нового допису."
+
+#~ msgid ""
+#~ "``/`` and ``/blogs/`` page should "
+#~ "provide a list of posts. Each post"
+#~ " should contain a link to its "
+#~ "detail view (``<slug:slug>/``). It's ok "
+#~ "to use static content for now."
+#~ msgstr ""
+#~ "Сторінки ``/`` і ``/blogs/`` мають "
+#~ "надавати список публікацій. Кожен допис "
+#~ "має містити посилання на його детальний"
+#~ " перегляд (``<slug:slug>/``). Наразі можна "
+#~ "використовувати статичний вміст."
+
+#~ msgid ""
+#~ "``<slug:slug>/`` page should provide details"
+#~ " on a single post. It's ok to"
+#~ " use static content for now."
+#~ msgstr ""
+#~ "Сторінка ``<slug:slug>/`` має надавати "
+#~ "детальну інформацію про одну публікацію. "
+#~ "Наразі можна використовувати статичний вміст."
+
+#~ msgid "Detail view should contain links to ``/update/`` and ``/delete/``."
+#~ msgstr ""
+#~ "Детальний перегляд має містити посилання "
+#~ "на ``/update/`` та ``/delete/``."
+
+#~ msgid "``/profile/<str:username>/`` should render an author's personal page."
+#~ msgstr "``/profile/<str:username>/`` має відобразити особисту сторінку автора."
+
+#~ msgid "You are to implement data models for the blog site."
+#~ msgstr "Ви повинні реалізувати моделі даних для сайту блогу."
+
+#~ msgid "The ``auth.User`` will be used as ``user`` model."
+#~ msgstr "``auth.User`` використовуватиметься як модель ``user``."
+
+#~ msgid ""
+#~ "``post.slug`` value should be autogenerated"
+#~ " when a record is created or "
+#~ "updated and follow the pattern:"
+#~ msgstr ""
+#~ "Значення ``post.slug`` має автоматично "
+#~ "генеруватися під час створення або "
+#~ "оновлення запису та слідувати шаблону:"
+
+#~ msgid ""
+#~ "User preferred topics should be marked"
+#~ " with a ``notify`` flag. This value"
+#~ " should be ``True`` by default."
+#~ msgstr ""
+#~ "Вибрані користувачем теми мають бути "
+#~ "позначені прапорцем ``notify``. За "
+#~ "замовчуванням це значення має бути "
+#~ "``True``."
+
+#~ msgid "Each post entity should provide the information about:"
+#~ msgstr "Кожен допис блогу повинен надавати інформацію про:"
+
+#~ msgid "title (each word should be capitalized)"
+#~ msgstr "назва (кожне слово має бути великим)"
+
+#~ msgid "trimmed content (~50 words or fewer)"
+#~ msgstr "обрізаний вміст (~50 слів або менше)"
+
+#~ msgid "Posts may be modified or deleted only by their authors (no exceptions)."
+#~ msgstr ""
+#~ "Дописи можуть бути змінені або видалені"
+#~ " лише їхніми авторами (без винятків)."
+
+#~ msgid "Challenge: Blogpost creation and update"
+#~ msgstr "Завдання: створення та оновлення блогу"
+
+#~ msgid "Create a form to work with the blogpost model."
+#~ msgstr "Створіть форму для роботи з моделлю допису."
+
+#~ msgid ""
+#~ "Create a form to gather a comment"
+#~ " from a user. Form should be "
+#~ "used within a \"post detail\" view."
+#~ msgstr ""
+#~ "Створіть форму для збору коментарів від"
+#~ " користувача. Форму слід використовувати в"
+#~ " перегляді \"подробиць публікації\"."
+
+#~ msgid "Form should be used for *create* and *update* view."
+#~ msgstr "Форму слід використовувати для перегляду *створення* та *оновлення*."
+
+#~ msgid "It’s ok to use a *pre-defined* user as a post’s author for now."
+#~ msgstr ""
+#~ "Наразі можна використовувати *попередньо "
+#~ "визначеного* користувача як автора публікації."
+
+#~ msgid "It’s ok to use Django built-in views for auth."
+#~ msgstr ""
+#~ "Для автентифікації можна використовувати "
+#~ "вбудовані представлення Django."
+
+#~ msgid "Create serializers for:"
+#~ msgstr "Створіть серіалізатори для:"
+
+#~ msgid "Blogpost entity"
+#~ msgstr "Об'єкт публікації в блозі"
+
+#~ msgid "Blogpost comment"
+#~ msgstr "Коментар у блозі"
+
+#~ msgid "Only account owner can change their account data."
+#~ msgstr ""
+#~ "Лише власник облікового запису може "
+#~ "змінити дані свого облікового запису."
+
+#~ msgid "Only authenticated users can create posts and comments."
+#~ msgstr ""
+#~ "Тільки автентифіковані користувачі можуть "
+#~ "створювати дописи та коментарі."
+
+#~ msgid "Only authors can change their posts."
+#~ msgstr "Тільки автори можуть змінювати свої повідомлення."
+
