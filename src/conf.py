@@ -60,6 +60,8 @@ latex_documents = [
     ("appx/software_list", "Software.tex", project, authors, "howto", False),
     ("appx/code_edit", "IDE.tex", project, authors, "howto", False),
     ("appx/blog", "DjangoBlog.tex", project, authors, "howto", False),
+    ("appx/create_pr", "CreatingPullRequest.tex", "Creating the Pull Request",
+     authors, "howto", False),
 ]
 latex_appendices = [
     "appx/software_list",
@@ -67,6 +69,7 @@ latex_appendices = [
     "appx/env_path",
     "appx/precedence",
     "appx/printf",
+    "appx/create_pr",
     "appx/conv_store",
     "appx/wtk",
     "appx/blog",
