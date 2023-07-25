@@ -1210,8 +1210,9 @@ msgid "Code editors and IDEs for Python"
 msgstr "Редактори коду та IDE для Python"
 
 #: ../../src/appx/code_edit.txt:-1 ../../src/appx/conv_store.txt:-1
-#: ../../src/appx/env_path.txt:-1 ../../src/appx/precedence.txt:-1
-#: ../../src/appx/printf.txt:-1 ../../src/appx/wtk.txt:-1
+#: ../../src/appx/create_pr.txt:-1 ../../src/appx/env_path.txt:-1
+#: ../../src/appx/precedence.txt:-1 ../../src/appx/printf.txt:-1
+#: ../../src/appx/wtk.txt:-1
 msgid "Serhii Horodilov sgorodil@gmail.com"
 msgstr "Serhii Horodilov sgorodil@gmail.com"
 
@@ -1778,6 +1779,400 @@ msgstr ""
 #: ../../problem-sets/src/conv_store/challenge.rst:255
 msgid "Project dependencies are to be updated."
 msgstr "Залежності проекту потрібно оновити."
+
+#: ../../src/appx/create_pr.txt:-1
+msgid "The instructions to create a pull request via GitHub"
+msgstr "Інструкції щодо створення запиту на отримання через GitHub"
+
+#: ../../src/appx/create_pr.txt:-1
+msgid "Vladyslav Ponomaryov"
+msgstr "Vladyslav Ponomaryov"
+
+#: ../../src/appx/create_pr.txt:-1
+msgid "git, github, pull request, branch, merge"
+msgstr "git, github, pull request, branch, merge"
+
+#: ../../src/appx/create_pr.txt:9
+msgid "Creating the Pull Request"
+msgstr "Створення Pull Request"
+
+#: ../../src/appx/create_pr.txt:11
+msgid ""
+"Create a pull request to propose and collaborate on changes to a repository. "
+"These changes are proposed in a *branch*, which ensures that the default "
+"branch only contains finished and approved work :cite:`github:creating-pr`."
+msgstr ""
+"Створіть запит на отримання, щоб запропонувати та співпрацювати над змінами "
+"в сховищі. Ці зміни пропонуються у *гілці*, що гарантує, що гілка за "
+"замовчуванням містить лише готову та затверджену роботу :cite:`github:"
+"creating-pr`."
+
+#: ../../src/appx/create_pr.txt:17
+msgid "About pull requests"
+msgstr "Про pull requests"
+
+#: ../../src/appx/create_pr.txt:19
+msgid ""
+"Pull requests let you tell others about changes you've pushed to a branch in "
+"a repository on GitHub. Once a pull request is opened, you can discuss and "
+"review the potential changes with collaborators and add follow-up commits "
+"before your changes are merged into the base branch :cite:`github:about-pr`."
+msgstr ""
+"Запити на витягування дозволяють повідомляти іншим про зміни, які ви внесли "
+"до гілки сховища на GitHub. Після відкриття запиту на отримання ви можете "
+"обговорити та переглянути потенційні зміни зі співавторами та додати "
+"подальші коміти, перш ніж ваші зміни буде об'єднано в базову гілку :cite:"
+"`github:about-pr`."
+
+#: ../../src/appx/create_pr.txt:25
+msgid ""
+"The compare and pull request pages use different methods to calculate the "
+"diff for changed files:"
+msgstr ""
+"Сторінки порівняння та запиту на отримання використовують різні методи для "
+"обчислення різниці для змінених файлів:"
+
+#: ../../src/appx/create_pr.txt:28
+msgid ""
+"Compare pages show the diff between the tip of the head ref and the current "
+"common ancestor (that is, the merge base) of the head and base ref."
+msgstr ""
+"Сторінки порівняння показують різницю між кінчиком головного посилання та "
+"поточним спільним предком (тобто основою злиття) головного та базового "
+"посилання."
+
+#: ../../src/appx/create_pr.txt:30
+msgid ""
+"Pull request pages show the diff between the tip of the head ref and the "
+"common ancestor of the head and base ref at the time when the pull request "
+"was created. Consequently, the merge base used for the comparison might be "
+"different."
+msgstr ""
+"Сторінки запиту на отримання показують різницю між кінчиком головного "
+"посилання та спільним предком головного та базового посилання на момент "
+"створення запиту на отримання. Отже, база злиття, яка використовується для "
+"порівняння, може бути іншою."
+
+#: ../../src/appx/create_pr.txt:35
+msgid ""
+"In *few words*: both source and target branches **should** share some "
+"commit(s) in their history and the source branch **should** has commit(s) "
+"missing on the target one."
+msgstr ""
+"У *кількох словах*: як вихідна, так і цільова гілки **повинні** мати спільні "
+"деякі коміти у своїй історії, а вихідна гілка **повинна** мати коміти, "
+"відсутні в цільовій."
+
+#: ../../src/appx/create_pr.txt:41
+msgid "Repository content"
+msgstr "Вміст репозиторію"
+
+#: ../../src/appx/create_pr.txt:43
+msgid "Following SHOULD be included to the repository:"
+msgstr "У репозиторій СЛІД включити наступне:"
+
+#: ../../src/appx/create_pr.txt:45
+msgid "code base"
+msgstr "кодова база"
+
+#: ../../src/appx/create_pr.txt:46
+msgid "project dependencies (if any)"
+msgstr "залежності проекту (якщо є)"
+
+#: ../../src/appx/create_pr.txt:48
+msgid "Following MAY be included to the repository:"
+msgstr "До репозиторію МОЖЕ бути включено:"
+
+#: ../../src/appx/create_pr.txt:50
+msgid "additional information (e.g. README file and other documents)"
+msgstr "додаткова інформація (наприклад, файл README та інші документи)"
+
+#: ../../src/appx/create_pr.txt:51
+msgid "dummy data (e.g. fixtures for development and testing etc.)"
+msgstr "фіктивні дані (наприклад, приклади для розробки та тестування тощо)"
+
+#: ../../src/appx/create_pr.txt:53
+msgid "Following SHOULD be excluded from the repository:"
+msgstr "З репозитарію СЛІД виключити:"
+
+#: ../../src/appx/create_pr.txt:55
+msgid "virtual environment directory"
+msgstr "каталог віртуального середовища"
+
+#: ../../src/appx/create_pr.txt:56
+msgid "project database (e.g. \"*.sqlite3\", \"*.db\" etc.)"
+msgstr "база даних проекту (наприклад, \"*.sqlite3\", \"*.db\" тощо)"
+
+#: ../../src/appx/create_pr.txt:57
+msgid "python byte-compiled code (``__pycache__``)"
+msgstr "скомпільований код python (``__pycache__``)"
+
+#: ../../src/appx/create_pr.txt:58
+msgid "IDE configurations (e.g. \".vscode\", \".idea\" etc.)"
+msgstr "Конфігурації IDE (наприклад, \".vscode\", \".idea\" тощо)"
+
+#: ../../src/appx/create_pr.txt:59
+msgid "Desktop Services Store (\".DS_Store\")"
+msgstr "Desktop Services Store (\".DS_Store\")"
+
+#: ../../src/appx/create_pr.txt:63
+msgid "Repository preparation"
+msgstr "Підготовка репозиторію"
+
+#: ../../src/appx/create_pr.txt:65
+msgid "This should be done once for each repository."
+msgstr "Це потрібно зробити один раз для кожного репозиторію."
+
+#: ../../src/appx/create_pr.txt:68
+msgid "Repository initialization"
+msgstr "Ініціалізація репозиторію"
+
+#: ../../src/appx/create_pr.txt:70
+msgid ""
+"Create README file and provide a brief description for your project "
+"(optional)."
+msgstr ""
+"Створіть файл README та надайте короткий опис свого проекту (необов'язково)."
+
+#: ../../src/appx/create_pr.txt:72
+msgid "Create a virtual environment."
+msgstr "Створіть віртуальне середовище."
+
+#: ../../src/appx/create_pr.txt:73
+msgid "Install project dependencies."
+msgstr "Встановіть залежності проекту."
+
+#: ../../src/appx/create_pr.txt:74
+msgid "Freeze the dependencies."
+msgstr "Зафіксуйте залежності."
+
+#: ../../src/appx/create_pr.txt:80
+msgid ""
+"Create a base code modules (e.g. initialize django project and apps, or "
+"create an empty python module like \"main.py\" etc.)."
+msgstr ""
+"Створіть модулі базового коду (наприклад, ініціалізуйте проект django та "
+"його застосунки або створіть порожній модуль python, як-от \"main.py\" тощо)."
+
+#: ../../src/appx/create_pr.txt:82
+msgid ""
+"Create \".gitignore\" file and set up directories and files to be excluded"
+msgstr ""
+"Створіть файл \".gitignore\" та налаштуйте каталоги та файли, які потрібно "
+"виключити"
+
+#: ../../src/appx/create_pr.txt:83
+msgid "Create a fresh repository."
+msgstr "Створіть нове репозиторій."
+
+#: ../../src/appx/create_pr.txt:89 ../../src/appx/create_pr.txt:171
+msgid "Stage and commit changes."
+msgstr "Зробіть фіксацію змін (stage + commit)."
+
+#: ../../src/appx/create_pr.txt:90
+msgid "Set up remote repository."
+msgstr "Налаштуйте віддалений репозиторій."
+
+#: ../../src/appx/create_pr.txt:96
+msgid "Push your local branch to remote repo."
+msgstr "Перенесіть свою локальну гілку до віддаленого репозиторію."
+
+#: ../../src/appx/create_pr.txt:99
+msgid "Append contributors to remote repository"
+msgstr "Додати учасників до віддаленого репозиторію"
+
+#: ../../src/appx/create_pr.txt:101
+msgid ""
+"Reviews allow collaborators to comment on the changes proposed in pull "
+"requests, approve the changes, or request further changes before the pull "
+"request is merged. Repository administrators can require that all pull "
+"requests are approved before being merged."
+msgstr ""
+"Рев'ю дозволяють співавторам коментувати зміни, запропоновані в запитах на "
+"отримання, затверджувати зміни або вимагати подальших змін перед об'єднанням "
+"запиту на отримання. Адміністратори сховища можуть вимагати схвалення всіх "
+"запитів на отримання перед об'єднанням."
+
+#: ../../src/appx/create_pr.txt:107
+msgid ""
+"On `GitHub <https://github.com>`_, navigate to the repository settings page "
+"and switch to **Collaborators and teams** menu item."
+msgstr ""
+"На `GitHub <https://github.com>`_ перейдіть на сторінку налаштувань "
+"репозиторію та перейдіть до пункту меню **Collaborators and teams**."
+
+#: ../../src/appx/create_pr.txt:109
+msgid "Under **Manage access** section click ``Add people`` button."
+msgstr "У розділі **Manage access** натисніть кнопку ``Add people``."
+
+#: ../../src/appx/create_pr.txt:110
+msgid "In modal window start typing GitHub username."
+msgstr "У модальному вікні почніть вводити ім'я користувача GitHub."
+
+#: ../../src/appx/create_pr.txt:111
+msgid "Select a contributor from the dropdown menu."
+msgstr "Виберіть учасника зі спадного меню."
+
+#: ../../src/appx/create_pr.txt:115
+msgid "Working on feature"
+msgstr "Робота над завданням"
+
+#: ../../src/appx/create_pr.txt:117
+msgid ""
+"Create a dedicated branch with some representative name (e.g. \"feature/"
+"models\", \"cbv\" etc.)."
+msgstr ""
+"Створіть спеціальну гілку з певною репрезентативною назвою (наприклад, "
+"\"feature/models\", \"cbv\" тощо)."
+
+#: ../../src/appx/create_pr.txt:119
+msgid "Switch to the newly created branch."
+msgstr "Перейдіть до новоствореної гілки."
+
+#: ../../src/appx/create_pr.txt:120
+msgid "Do the work and commit changes on a feature branch."
+msgstr "Виконайте роботу та зафіксуйте зміни в гілці."
+
+#: ../../src/appx/create_pr.txt:124
+msgid "You can create a branch and switch to it by a single command."
+msgstr ""
+"Ви можете створити нову гілку та перемкнутись на неї за допомогою однієї "
+"команди."
+
+#: ../../src/appx/create_pr.txt:133
+msgid ""
+"While working on a *feature branch* make commits for each completed logical "
+"block of code."
+msgstr ""
+"Під час роботи над *функціональною гілкою* робіть коміти для кожного "
+"завершеного логічного блоку коду."
+
+#: ../../src/appx/create_pr.txt:138
+msgid "Creating the pull request"
+msgstr "Створення запиту на злиття"
+
+#: ../../src/appx/create_pr.txt:140
+msgid ""
+"Make sure your working branch is up-to-date with the default one. You can "
+"pull changes for the default branch and rebase your feature branch onto it."
+msgstr ""
+"Переконайтеся, що ваша робоча гілка оновлена ​​до стандартної. Ви можете "
+"отримати зміни для гілки за замовчуванням і перебазувати свою гілку функції "
+"на неї."
+
+#: ../../src/appx/create_pr.txt:143
+msgid ""
+"Push feature branch to the remote repository. By default the current active "
+"branch is pushed to the remote repo."
+msgstr ""
+"Завантажте функціональну гілку до віддаленого репозиторію. За замовчуванням "
+"буде завантажена активна гілка."
+
+#: ../../src/appx/create_pr.txt:150
+msgid "Go to your remote repository at GitHub and click **Pull requests** tab."
+msgstr ""
+"Перейдіть до свого віддаленого сховища на GitHub і натисніть вкладку **Pull "
+"requests**."
+
+#: ../../src/appx/create_pr.txt:151
+msgid "On **Pull requests** tab click **New** button."
+msgstr "На вкладці **Pull requests** натисніть кнопку **New**."
+
+#: ../../src/appx/create_pr.txt:152
+msgid ""
+"Select your default branch as *target* and your feature branch as *source*."
+msgstr "Виберіть гілку за умовчанням як *ціль*, а робочу гілку як *джерело*."
+
+#: ../../src/appx/create_pr.txt:153
+msgid "Provide some brief description for your pull request."
+msgstr "Надайте короткий опис вашого запиту."
+
+#: ../../src/appx/create_pr.txt:154
+msgid "Press **Create pull request** button."
+msgstr "Натисніть кнопку **Create pull request**."
+
+#: ../../src/appx/create_pr.txt:155
+msgid ""
+"On the pull request page add a **reviewer** by clicking the appropriate "
+"option and selecting a person from a dropdown menu."
+msgstr ""
+"На сторінці запиту на отримання додайте **reviewer**, натиснувши відповідну "
+"опцію та вибравши особу зі спадного меню."
+
+#: ../../src/appx/create_pr.txt:160
+msgid "Making changes"
+msgstr "Внесення змін"
+
+#: ../../src/appx/create_pr.txt:162
+msgid "From this moment, your pull request *is waiting* for the review."
+msgstr "З цього моменту ваш пул-запит *очікує* на розгляд."
+
+#: ../../src/appx/create_pr.txt:164
+msgid ""
+"The reviewer will **approve** or **reject** your pull request. Optionally "
+"the reviewer may provide some comments to your code; **rejected** pull "
+"requests will always come with some details."
+msgstr ""
+"Рецензент **схвалить** або **відхилить** ваш запит на отримання. За бажанням "
+"рецензент може надати деякі коментарі до вашого коду; **відхилені** запити "
+"на витягування завжди надходитимуть з деякими деталями."
+
+#: ../../src/appx/create_pr.txt:168
+msgid ""
+"In case your work is **rejected**, you are to provide fixes. To do this:"
+msgstr ""
+"Якщо вашу роботу **відхилено**, ви повинні надати виправлення. Щоб зробити "
+"це:"
+
+#: ../../src/appx/create_pr.txt:170
+msgid "Do the work in your local feature branch."
+msgstr "Виконайте роботу у своїй локальній гілці."
+
+#: ../../src/appx/create_pr.txt:172
+msgid "Push them to remote branch."
+msgstr "Надішліть їх до гілки віддаленого репозиторію."
+
+#: ../../src/appx/create_pr.txt:173
+msgid "Re-request review from the pull request page."
+msgstr "Надішліть повторний запит на перегляд зі сторінки запиту."
+
+#: ../../src/appx/create_pr.txt:175
+msgid ""
+"All commits related to the source branch will be automatically appended to "
+"the open pull request. The reviewer will review your updates. Repeat this "
+"process until the pull request is **approved**."
+msgstr ""
+"Усі коміти, пов'язані з вихідною гілкою, будуть автоматично додані до "
+"відкритого запиту на отримання. Рецензент перевірить ваші оновлення. "
+"Повторюйте цей процес, доки запит на отримання не буде **схвалено**."
+
+#: ../../src/appx/create_pr.txt:181
+msgid "Merging the pull request"
+msgstr "Об'єднання (злиття) запиту"
+
+#: ../../src/appx/create_pr.txt:183
+msgid ""
+"Once your pull request is **approved** - merge it. Select one of the options "
+"available with your pull request; they may be:"
+msgstr ""
+"Коли ваш запит на отримання **схвалено**, об'єднайте його. Виберіть один із "
+"варіантів, доступних у вашому запиті на отримання; вони можуть бути:"
+
+#: ../../src/appx/create_pr.txt:186
+msgid "Create a merge commit"
+msgstr "Create a merge commit"
+
+#: ../../src/appx/create_pr.txt:187
+msgid "Rebase and merge"
+msgstr "Rebase and merge"
+
+#: ../../src/appx/create_pr.txt:188
+msgid "Squash and merge"
+msgstr "Squash and merge"
+
+#: ../../src/appx/create_pr.txt:190
+msgid "After that the pull request is merged into your target branch."
+msgstr "Після цього коміти робочої та цільової гілка об'єднується."
 
 #: ../../src/appx/env_path.txt:-1
 msgid "Setting up environment variables"
