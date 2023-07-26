@@ -24,7 +24,7 @@ gitGraph
 
 %% working with hotfix branch
     checkout hotfix
-    commit id: "Fix bugs"
+    commit id: "Fix bugs" type:HIGHLIGHT
 
 %% merge hotfix commits into main and develop
     checkout main
@@ -52,5 +52,7 @@ gitGraph
     checkout develop
     commit
     merge release/v1.0
+
+%% merging previous feature branch
     commit
     merge feature/B
