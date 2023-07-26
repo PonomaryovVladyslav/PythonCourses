@@ -1,0 +1,8 @@
+.. meta::
+    :description: Version control system
+    :author: Serhii Horodilov
+    :keywords: version, control, system, vcs, git, github
+
+*******************************************************************************
+                                    GitHub
+*******************************************************************************

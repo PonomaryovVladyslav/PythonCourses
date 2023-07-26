@@ -13,3 +13,4 @@
     intro
     setup
     basics
+    github
