@@ -1,0 +1,56 @@
+gitGraph
+%% initialize repository
+    commit id: "Initial commit"
+
+%% define development branch
+    branch develop
+    commit
+
+%% define hotfix branch
+    checkout main
+    commit id: "Buggy commit" type: REVERSE
+    branch hotfix
+
+%% define feature branches
+    checkout develop
+    branch feature/A
+    branch feature/B
+    checkout develop
+    commit
+    branch feature/C
+    commit
+    commit
+    commit
+
+%% working with hotfix branch
+    checkout hotfix
+    commit id: "Fix bugs"
+
+%% merge hotfix commits into main and develop
+    checkout main
+    merge hotfix
+    checkout develop
+    merge hotfix
+
+%% working with feature-b branch
+    checkout feature/A
+    commit
+    commit
+    checkout develop
+    merge feature/A
+%% work with feature-a branch
+    checkout feature/B
+    commit
+    checkout develop
+
+%% define release branch
+    checkout develop
+    branch release/v1.0
+    commit id: "Work on release" tag: "v1.0"
+    checkout main
+    merge release/v1.0
+    checkout develop
+    commit
+    merge release/v1.0
+    commit
+    merge feature/B
