@@ -1,0 +1,11 @@
+sequenceDiagram
+    participant Untracked
+    participant Unmodified
+    participant Modified
+    participant Staged
+
+    Untracked ->> Staged: Add the file
+    Unmodified ->> Modified: Edit the file
+    Modified ->> Staged: Stage the file
+    Unmodified ->> Untracked: Remove the file
+    Staged ->> Unmodified: Commit
