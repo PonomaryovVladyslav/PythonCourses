@@ -3,6 +3,23 @@
     :author: Serhii Horodilov
     :keywords: version, control, system, vcs, git, github
 
+.. _GitHub: https://github.com
+
 *******************************************************************************
                                     GitHub
 *******************************************************************************
+
+`GitHub`_ is the single largest host for Git repositories, and is the central
+point of collaboration for millions of developers and projects.
+
+
+Account setup and configuration
+===============================
+
+The first thing you need to do is set up a free user account. Visit `GitHub`_
+and press "Sign Up" button. The GitHub will lead you through the account
+creation process. Just follow the hints and provide an email address, username
+and a strong password.
+
+.. todo:
+    Describe SSH key generation and set up
