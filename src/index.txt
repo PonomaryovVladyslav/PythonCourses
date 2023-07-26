@@ -10,6 +10,7 @@
     intro/index
     basics/index
     rdbms/index
+    vcs/index
     oop/index
     flask/index
     django/index
