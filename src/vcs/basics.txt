@@ -1,0 +1,50 @@
+.. meta::
+    :description: Version control system
+    :author: Serhii Horodilov
+    :keywords: version, control, system, vcs, git, basics
+
+*******************************************************************************
+                                  Git Basics
+*******************************************************************************
+
+Getting a Git repository
+========================
+
+Initializing repo in an existing directory
+------------------------------------------
+
+.. code-block:: shell
+
+    git init
+
+Cloning an existing repo
+------------------------
+
+
+.. code-block:: shell
+
+    git clone https://github.com/edu-python-course/edu-python-course.github.io
+
+That creates a directory named *edu-python-course.github.io*, initializes a
+*.git* directory inside it, pulls down all the data for that repository,
+and checks out a working copy of the latest version.
+
+.. code-block:: shell
+
+    git clone https://github.com/edu-python-course/edu-python-course.github.io python-course
+
+That command does the same thing as the previous one, but the target directory
+is called *python-course*.
+
+Git has a number of different transfer protocols you can use. The previous
+example uses the ``https://`` protocol, but you may also see ``git://`` or
+``user@server:path/to/repo.git``, which uses the SSH transfer protocol.
+
+.. todo:
+    Describe committing changes process
+
+.. todo:
+    Describe branching
+
+.. todo:
+    Describe merging and cherry-pick
