@@ -1,0 +1,8 @@
+sequenceDiagram
+    participant Working directory
+    participant Stage area
+    participant .git directory (Repository)
+
+    .git directory (Repository) ->> Working directory: Checkout
+    Working directory ->> Stage area: Stage fixes
+    Stage area ->> .git directory (Repository): Commit

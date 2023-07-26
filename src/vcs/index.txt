@@ -9,3 +9,5 @@
 
 .. toctree::
     :name: vcs
+
+    intro
