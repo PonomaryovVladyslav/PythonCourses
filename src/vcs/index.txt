@@ -12,3 +12,4 @@
 
     intro
     setup
+    basics
