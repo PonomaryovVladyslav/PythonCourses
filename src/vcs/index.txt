@@ -11,3 +11,4 @@
     :name: vcs
 
     intro
+    setup
