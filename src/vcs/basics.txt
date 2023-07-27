@@ -76,8 +76,126 @@ Git has a number of different transfer protocols you can use. The previous
 example uses the ``https://`` protocol, but you may also see ``git://`` or
 ``user@server:path/to/repo.git``, which uses the SSH transfer protocol.
 
+Making changes to the repo
+==========================
+
+At this point, you should have a *bona fide* Git repository on your local
+machine, and a checkout or *working copy* of all of its files in front of you.
+Typically, you'll want to start making changes and committing snapshots of
+those changes into your repository each time the project reaches a state you
+want to record.
+
+Remember that each file in your working directory can be in one of two states:
+**tracked** or **untracked**.
+
+-   Tracked files are files that were in the last snapshot, as well as any
+    newly staged files; they can be unmodified, modified, or staged. In short,
+    tracked files are files that Git knows about.
+-   Untracked files are everything else -- any files in your working directory
+    that were not in your last snapshot and are not in your staging area.
+    Untracked basically means that Git sees a file you didn't have in
+    a previous snapshot (commit), and which hasn't been yet staged.
+
+.. mermaid:: /../assets/mermaid/git-lifecycle.mmd
+    :align: center
+    :caption: The lifecycle of the status of repo's files
+
+Checking out status of the file(s)
+----------------------------------
+
+The main tool you use to determine which files are in which state is
+the ``git status`` command.
+
+.. code-block:: shell
+
+    $ # check status
+    $ git status
+    On branch devel
+
+    No commits yet
+
+    nothing to commit (create/copy files and use "git add" to track)
+
+    $ # add file to the repository
+    $ echo "# Project Title" > README.md
+    $ # check status once again
+    $ git status
+    On branch devel
+
+    No commits yet
+
+    Untracked files:
+      (use "git add <file>..." to include in what will be committed)
+            README.md
+
+    nothing added to commit but untracked files present (use "git add" to track)
+
+Newly added *README.md* file is untracked, because it's under "Untracked files"
+heading the status output.
+
+Tracking new files
+------------------
+
+In order to begin tracking a new file, you use the ``git add`` command.
+
+.. code-block:: shell
+
+    $ git add README.md
+    $ git status
+    On branch devel
+
+    No commits yet
+
+    Changes to be committed:
+      (use "git rm --cached <file>..." to unstage)
+            new file:   README.md
+
+From now *README.md* file is **added** to the stage area and ready to be
+committed (is under "Changes to be committed" heading).
+
+.. hint::
+    You can use wildcards, to stage multiple files at once. The most common
+    use cases is to add **all** modified files, or files inside of a specific
+    directory.
+
+    .. code-block:: shell
+
+        git add *     # stage all changes
+        git add .     # stage all changes in current directory
+        git add docs  # stage all changes in "docs" directory
+
+Staging modified files
+----------------------
+
+If a staged (or already committed) file has been changed, it will be moved
+under "Modified" heading. These changes wouldn't be committed unless they are
+staged.
+
+.. code-block:: shell
+
+    $ git status
+    On branch devel
+
+    No commits yet
+
+    Changes to be committed:
+      (use "git rm --cached <file>..." to unstage)
+            new file:   README.md
+
+    Changes not staged for commit:
+      (use "git add <file>..." to update what will be committed)
+      (use "git restore <file>..." to discard changes in working directory)
+            modified:   README.md
+
+-   Changes may be added to the stage area by repeating ``git add`` command.
+-   Changes may be discard by ``git restore <file>`` command. This action will
+    restore file to its **staged** version.
+
 .. todo:
-    Describe committing changes process
+    Ignoring files
+
+.. todo:
+    Committing changes
 
 .. todo:
     Describe branching
