@@ -191,6 +191,74 @@ staged.
 -   Changes may be discard by ``git restore <file>`` command. This action will
     restore file to its **staged** version.
 
+Committing changes
+------------------
+
+Now that the stage area is set up the way required, it's time to commit
+changes. Remember that anything that is still unstaged -- any files you
+have created or modified that you haven't run git add on since you edited
+them -- won't go into this commit.
+
+The simplest way to commit is to type ``git commit``:
+
+.. code-block:: shell
+
+    git commit
+
+Doing so launches your editor of choice.
+
+.. note::
+    This is set by your shell’s EDITOR environment variable -- usually vim or
+    emacs, although you can configure it with whatever you want using
+    the ``git config --global core.editor``
+
+Alternatively, you can type your commit message inline with the ``commit``
+command by specifying it after a ``-m`` flag, like this:
+
+.. code-block:: shell
+
+    git commit -m "Add GitHub workflow to test Sphinx builds for PRs to devel"
+
+Although it can be amazingly useful for crafting commits exactly how you want
+them, the staging area is sometimes a bit more complex than you need in your
+workflow. If you want to skip the staging area, Git provides a simple shortcut.
+Adding the ``-a`` option to the ``git commit`` command makes Git automatically
+stage every file that is already tracked before doing the commit, letting you
+skip the git add part:
+
+.. code-block:: shell
+
+    $ git status
+    On branch devel
+
+    No commits yet
+
+    Changes to be committed:
+      (use "git rm --cached <file>..." to unstage)
+            new file:   README.md
+
+    Changes not staged for commit:
+      (use "git add <file>..." to update what will be committed)
+      (use "git restore <file>..." to discard changes in working directory)
+            modified:   README.md
+
+    Untracked files:
+      (use "git add <file>..." to include in what will be committed)
+            example.json
+
+    $ git commit -a -m "Commit tracked files"
+    [devel (root-commit) 7acb7a1] Commit tracked files
+     1 file changed, 3 insertions(+)
+     create mode 100644 README.md
+
+    $ git status
+    On branch devel
+    Untracked files:
+      (use "git add <file>..." to include in what will be committed)
+            example.json
+
+    nothing added to commit but untracked files present (use "git add" to track)
+
 Ignoring files
 --------------
 
@@ -271,9 +339,6 @@ a single character; and brackets enclosing characters separated by a hyphen
 ([0-9]) matches any character between them (in this case 0 through 9).
 You can also use two asterisks to match nested directories;
 a/\*\*/z would match *a/z*, *a/b/z*, *a/b/c/z*, and so on.
-
-.. todo:
-    Committing changes
 
 .. todo:
     Describe branching
