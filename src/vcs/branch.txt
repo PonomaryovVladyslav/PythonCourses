@@ -1,0 +1,17 @@
+.. meta::
+    :description: Version control system
+    :author: Serhii Horodilov
+    :keywords: version, control, system, vcs, git, branch, merge, cherry-pick
+
+*******************************************************************************
+                             Branches and Merging
+*******************************************************************************
+
+.. todo:
+    Add merge section
+
+.. todo:
+    Add rebase section
+
+.. todo:
+    Describe merging and cherry-pick

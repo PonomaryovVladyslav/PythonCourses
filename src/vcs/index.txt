@@ -13,4 +13,5 @@
     intro
     setup
     basics
+    branch
     github
