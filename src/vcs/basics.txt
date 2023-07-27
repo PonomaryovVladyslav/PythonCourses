@@ -191,8 +191,86 @@ staged.
 -   Changes may be discard by ``git restore <file>`` command. This action will
     restore file to its **staged** version.
 
-.. todo:
-    Ignoring files
+Ignoring files
+--------------
+
+Often, there is a class of files, that should not be a part of a repo. You
+want these files to be prevent from being automatically added or even shown
+as being untracked. These are generally files produced by loggers or a build
+system, or some local settings for the project that shouldn't be shared across
+other developers or maintainers. In such cases you can create a *.gitignore*
+file. Here is the content of *.gitignore* used in current repository:
+
+::
+
+    # virtual environment
+    /.venv/
+    /.env/
+    /venv/
+    /env/
+
+    # node packages
+    /node_modules/
+
+    # ide configs
+    /.vscode/
+    /.idea/
+
+    # emacs cache and backup files
+    \#*
+    *~
+
+    # temporary files storage
+    /temp/
+    /tmp/
+
+    # documentation builds
+    _builds/
+    _build/
+    builds/
+    build/
+
+    # translation object files
+    *.pot
+    *.mo
+
+These lines mean:
+
+-   Content within directories named ".venv", ".env", "venv" or "env"
+    will be ignored completely.
+-   Content within "node_modules" directory will be ignored completely.
+-   Any files within directories named ".vscode" or ".idea" will be ignored
+    completely.
+-   Any file with name starting with hash (#) will be ignored.
+-   Any file with name ending with tilda (~) will be ignored.
+-   Content within directories named "temp" or "tmp" will be ignored
+    completely.
+-   Content within directories named "_builds", "_build", "builds" or
+    "build" will be ignored completely.
+-   Any file with name ending with ".pot" will be ignored.
+-   Any file with name ending with ".mo" will be ignored.
+
+Setting up a *.gitignore* file for your new repository before you get going is
+generally a good idea so you don't accidentally commit files that you really
+don't want in your Git repository.
+
+The rules for the patterns you can put in the *.gitignore* file are as follows:
+
+-   Blank lines or lines starting with # are ignored.
+-   Standard glob patterns work, and will be applied recursively throughout
+    the entire working tree.
+-   You can start patterns with a forward slash (/) to avoid recursive
+    inclusion.
+-   You can end patterns with a forward slash (/) to specify a directory.
+-   You can negate a pattern by starting it with an exclamation point (!).
+
+Glob patterns are like simplified regular expressions that shells use.
+An asterisk (\*) matches zero or more characters; [ab] matches any character
+inside the brackets (in this case a or b); a question mark (?) matches
+a single character; and brackets enclosing characters separated by a hyphen
+([0-9]) matches any character between them (in this case 0 through 9).
+You can also use two asterisks to match nested directories;
+a/\*\*/z would match *a/z*, *a/b/z*, *a/b/c/z*, and so on.
 
 .. todo:
     Committing changes
