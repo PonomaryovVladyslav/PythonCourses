@@ -2,7 +2,7 @@ name: Check Sphinx Builds
 
 on:
   # Runs on pushes targeting the default branch and changes in the Sphinx-related files
-  push:
+  pull_request:
     branches:
       - devel
     paths:
