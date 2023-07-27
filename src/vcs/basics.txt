@@ -10,16 +10,52 @@
 Getting a Git repository
 ========================
 
+You typically obtain a Git repository in one of two ways:
+
+#.  You can take a local directory that is currently not under version control,
+    and turn it into a Git repository.
+#.  You can clone an existing Git repository from elsewhere.
+
+In either case, you end up with a Git repository on your local machine,
+ready for work.
+
 Initializing repo in an existing directory
 ------------------------------------------
+
+If you have a project directory that is currently not under version control and
+you want to start controlling it with Git, you first need to go to that
+project's directory. If you've never done this, it looks a little different
+depending on which system you're running:
+
+.. code-block:: shell
+    :caption: Change directory in bash (Linux)
+
+    cd /home/user/project
+
+.. code-block:: shell
+    :caption: Change directory in bash (MacOS)
+
+    cd /Users/user/project
+
+.. code-block:: powershell
+    :caption: Change directory in PowerShell (Windows)
+
+    cd C:\Users\user\project
+
+In the project's directory initialize a new Git repository.
 
 .. code-block:: shell
 
     git init
 
+This creates a new subdirectory named .git that contains all of your necessary
+repository files -- a Git repository skeleton.
+
 Cloning an existing repo
 ------------------------
 
+If you want to get a copy of an existing Git repository -- for example,
+a project you'd like to contribute to -- the command you need is ``git clone``.
 
 .. code-block:: shell
 
