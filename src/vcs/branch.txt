@@ -7,6 +7,9 @@
                              Branches and Merging
 *******************************************************************************
 
+About branches
+==============
+
 To really understand the way Git does branching, we need to take a step back
 and examine how Git stores its data. Git doesn't store data as a series of
 changesets or differences, but instead as a series of snapshots. When you make
