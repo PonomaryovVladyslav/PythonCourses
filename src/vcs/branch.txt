@@ -33,8 +33,24 @@ Every time you commit, the master branch pointer moves forward automatically.
 .. todo:
     Add merge section
 
+.. mermaid:: /../assets/mermaid/git-merge-1.mmd
+    :align: center
+    :caption: Fast-forward merge
+
+.. mermaid:: /../assets/mermaid/git-merge-2.mmd
+    :align: center
+    :caption: Merge commit
+
 .. todo:
     Add rebase section
+
+.. mermaid:: /../assets/mermaid/git-rebase-1.mmd
+    :align: center
+    :caption: Before rebase
+
+.. mermaid:: /../assets/mermaid/git-rebase-2.mmd
+    :align: center
+    :caption: After rebase
 
 .. todo:
     Describe merging and cherry-pick
