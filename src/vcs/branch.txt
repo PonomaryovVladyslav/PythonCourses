@@ -7,6 +7,29 @@
                              Branches and Merging
 *******************************************************************************
 
+To really understand the way Git does branching, we need to take a step back
+and examine how Git stores its data. Git doesn't store data as a series of
+changesets or differences, but instead as a series of snapshots. When you make
+a commit, Git stores a commit object that contains a pointer to the snapshot
+of the content you staged. This object also contains the author’s name and
+email address, the message that you typed, and pointers to the commit or
+commits that directly came before this commit (its parent or parents):
+zero parents for the initial commit, one parent for a normal commit,
+and multiple parents for a commit that results from a merge of two or more
+branches.
+
+.. figure:: /../assets/img/git-commits.svg
+    :align: center
+
+.. mermaid:: /../assets/mermaid/git-commits.mmd
+    :align: center
+    :caption: Commits tree
+
+A branch in Git is simply a lightweight movable pointer to one of these
+commits. The default branch name in Git is master. As you start making commits,
+you're given a master branch that points to the last commit you made.
+Every time you commit, the master branch pointer moves forward automatically.
+
 .. todo:
     Add merge section
 
