@@ -21,7 +21,7 @@ branches.
 .. figure:: /../assets/img/git-commits.svg
     :align: center
 
-.. mermaid:: /../assets/mermaid/git-commits.mmd
+.. mermaid:: /../assets/mermaid/git/commits.mmd
     :align: center
     :caption: Commits tree
 
@@ -33,22 +33,22 @@ Every time you commit, the master branch pointer moves forward automatically.
 .. todo:
     Add merge section
 
-.. mermaid:: /../assets/mermaid/git-merge-1.mmd
+.. mermaid:: /../assets/mermaid/git/merge-1.mmd
     :align: center
     :caption: Fast-forward merge
 
-.. mermaid:: /../assets/mermaid/git-merge-2.mmd
+.. mermaid:: /../assets/mermaid/git/merge-2.mmd
     :align: center
     :caption: Merge commit
 
 .. todo:
     Add rebase section
 
-.. mermaid:: /../assets/mermaid/git-rebase-1.mmd
+.. mermaid:: /../assets/mermaid/git/rebase-1.mmd
     :align: center
     :caption: Before rebase
 
-.. mermaid:: /../assets/mermaid/git-rebase-2.mmd
+.. mermaid:: /../assets/mermaid/git/rebase-2.mmd
     :align: center
     :caption: After rebase
 

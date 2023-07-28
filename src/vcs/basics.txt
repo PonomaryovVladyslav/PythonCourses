@@ -96,7 +96,7 @@ Remember that each file in your working directory can be in one of two states:
     Untracked basically means that Git sees a file you didn't have in
     a previous snapshot (commit), and which hasn't been yet staged.
 
-.. mermaid:: /../assets/mermaid/git-lifecycle.mmd
+.. mermaid:: /../assets/mermaid/git/lifecycle.mmd
     :align: center
     :caption: The lifecycle of the status of repo's files
 
