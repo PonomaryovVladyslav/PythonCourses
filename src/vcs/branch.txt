@@ -54,3 +54,49 @@ Every time you commit, the master branch pointer moves forward automatically.
 
 .. todo:
     Describe merging and cherry-pick
+
+Branching strategies
+====================
+
+Branching strategy in version control systems defines how branches are created,
+managed, and used in a project's development process.
+It helps teams collaborate effectively, isolate changes, and organize
+development efforts. A good branching strategy provides clarity on how to work
+with branches, minimizes conflicts, and enables a smooth and structured
+development workflow.
+
+GitFlow is a popular branching strategy that provides a well-defined model for
+managing branches in a Git repository. It was introduced by Vincent Driessen
+and is based on the idea of using two main branches: "master" and "develop."
+
+- **Master Branch**: The "master" branch represents the stable version of
+the codebase. It should always contain production-ready code and be free from
+any major issues. The "master" branch is protected, and only release versions
+are merged into it.
+
+- **Develop Branch**: The "develop" branch is where the ongoing development
+and integration of features take place. It serves as the integration branch
+for various feature branches and should also contain a stable version of
+the code.
+
+- **Feature Branches**: For each new feature or bug fix, a dedicated "feature"
+branch is created off the "develop" branch. These branches are short-lived and
+exist only for the duration of the feature development.
+
+- **Release Branches**: When the development on the "develop" branch is ready
+for a release, a "release" branch is created. The release branch is used
+for testing, bug fixing, and preparing for deployment.
+
+- **Hotfix Branches**: If a critical issue is discovered in the production
+version, a "hotfix" branch is created from the "master" branch. This allows
+for a quick fix without affecting ongoing development on the "develop" branch.
+
+GitFlow provides a structured approach to managing branching in a collaborative
+development environment. It ensures that the main branches remain stable, and
+new features and bug fixes are integrated smoothly before being released.
+This strategy is particularly useful for projects with regular releases and
+a team working on multiple features concurrently.
+
+.. mermaid:: /../assets/mermaid/git/gitflow.mmd
+    :align: center
+    :caption: GitFlow diagram
