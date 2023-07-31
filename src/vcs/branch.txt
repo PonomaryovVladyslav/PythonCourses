@@ -21,9 +21,6 @@ zero parents for the initial commit, one parent for a normal commit,
 and multiple parents for a commit that results from a merge of two or more
 branches.
 
-.. figure:: /../assets/img/git-commits.svg
-    :align: center
-
 .. mermaid:: /../assets/mermaid/git/commits.mmd
     :align: center
     :caption: Commits tree
@@ -32,6 +29,28 @@ A branch in Git is simply a lightweight movable pointer to one of these
 commits. The default branch name in Git is master. As you start making commits,
 you're given a master branch that points to the last commit you made.
 Every time you commit, the master branch pointer moves forward automatically.
+
+.. figure:: /../assets/img/git-commits.svg
+    :align: center
+
+Create branches
+===============
+
+There are few ways to create a new branch in a Git repository. The most common
+way is to use ``git branch`` command.
+
+.. code-block:: shell
+
+    git branch <branch_name> [parent_commit]
+
+Pointer to a parent commit is optional. By default the parent commit is set
+to the latest one available (HEAD pointer) at the moment of the branch
+creation. You can also switch to the newly created branch just after its
+creation using:
+
+.. code-block:: shell
+
+    git checkout -b <branch_name> [parent_commit]
 
 .. todo:
     Add merge section
