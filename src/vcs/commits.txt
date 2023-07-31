@@ -1,0 +1,17 @@
+.. meta::
+    :description: Version control system
+    :author: Serhii Horodilov
+    :keywords: version, control, system, vcs, git, history, commit
+
+###############################################################################
+                             Working with Commits
+###############################################################################
+
+.. todo:
+    git log
+
+.. todo:
+    git checkout
+
+.. todo:
+    git tag
