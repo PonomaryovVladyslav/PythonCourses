@@ -34,7 +34,9 @@ source_suffix = {
     ".md": "markdown",
 }
 needs_sphinx = "4.0"
-exclude_patterns = []
+exclude_patterns = [
+    "**/README.*",
+]
 suppress_warnings = []
 
 # options for bibliography
