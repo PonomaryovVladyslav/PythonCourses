@@ -30,7 +30,7 @@
         appx/create_pr
         appx/conv_store
         appx/wtk
-        appx/blog
+        appx/blog/spec
 
 .. rubric:: References
 
