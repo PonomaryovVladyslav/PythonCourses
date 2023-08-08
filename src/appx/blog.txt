@@ -1,6 +1,0 @@
-.. meta::
-    :description: Specification for Django blog training project
-    :author: Serhii Horodilov
-    :keywords: python, django, blog, project, training
-
-.. include:: /../blog/docs/spec.rst
