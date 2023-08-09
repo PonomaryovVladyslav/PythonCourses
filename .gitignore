@@ -4,6 +4,9 @@
 /venv/
 /env/
 
+# python byte-compiled
+__pycache__
+
 # node packages
 /node_modules/
 
