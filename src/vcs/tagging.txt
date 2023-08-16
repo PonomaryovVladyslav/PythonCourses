@@ -13,7 +13,7 @@ Listing tags
 Listing the existing tags in Git is straightforward. Just type ``git tag``
 (with optional ``-l`` or ``--list``).
 
-.. code-block:: shell
+::
 
     $ git tag
     v1.0
@@ -25,7 +25,7 @@ a particular pattern. The Git source repo, for instance contains more than
 500 tags. If you're interested only in looking at the 1.8.4 series, you can
 run this:
 
-.. code-block:: shell
+::
 
     $ git tag -l "1.8.5*"
     v1.8.5
@@ -54,7 +54,7 @@ keep the other information, lightweight tags are available too.
 Creating an annotated tag in Git is simple. The easiest way is to specify
 ``-a`` when you run the ``tag`` command:
 
-.. code-block:: shell
+::
 
     $ git tag -a VCS -m "Version Control System - tags"
     $ git tag
@@ -73,7 +73,7 @@ the commit checksum stored in a file -- no other information is kept. To
 create a lightweight tag, don't supply any of the ``-a``, ``-s``, or ``-m``
 options, just provide a tag name:
 
-.. code-block:: shell
+::
 
     $ git tag tagging
     $ git tag
@@ -90,7 +90,7 @@ options, just provide a tag name:
 
 You can also tag commits after you're moved past them.
 
-.. code-block:: shell
+::
 
     $ git log --pretty=format:%h -3
     21ae739
@@ -109,7 +109,7 @@ Deleting tags
 
 To delete a tag on your local repository, you can use ``git tag -d <tagname>``.
 
-.. code-block:: shell
+::
 
     $ git tag -d VCS
     Deleted tag 'VCS' (was eef3831)
@@ -121,7 +121,7 @@ If you want to view the versions of files a tag is pointing to, you can do
 a ``git checkout`` of that tag, although this puts your repository in
 "detached HEAD" state, which has some ill side effects:
 
-.. code-block:: shell
+::
 
     $ git checkout VCS
     Note: switching to 'vcs'.
@@ -149,7 +149,7 @@ unreachable, except by the exact commit hash. Thus, if you need to make changes
 -- say you’re fixing a bug on an older version, for instance -- you will
 generally want to create a branch:
 
-.. code-block:: shell
+::
 
     $ git checkout -b vcs-tag-branch VCS
     Switched to a new branch 'vcs-tag-branch'

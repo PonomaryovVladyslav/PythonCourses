@@ -44,7 +44,7 @@ depending on which system you're running:
 
 In the project's directory initialize a new Git repository.
 
-.. code-block:: shell
+::
 
     git init
 
@@ -106,7 +106,7 @@ Checking out status of the file(s)
 The main tool you use to determine which files are in which state is
 the ``git status`` command.
 
-.. code-block:: shell
+::
 
     $ # check status
     $ git status
@@ -138,7 +138,7 @@ Tracking new files
 
 In order to begin tracking a new file, you use the ``git add`` command.
 
-.. code-block:: shell
+::
 
     $ git add README.md
     $ git status
@@ -158,7 +158,7 @@ committed (is under "Changes to be committed" heading).
     use cases is to add **all** modified files, or files inside of a specific
     directory.
 
-    .. code-block:: shell
+    ::
 
         git add *     # stage all changes
         git add .     # stage all changes in current directory
@@ -171,7 +171,7 @@ If a staged (or already committed) file has been changed, it will be moved
 under "Modified" heading. These changes wouldn't be committed unless they are
 staged.
 
-.. code-block:: shell
+::
 
     $ git status
     On branch devel
@@ -201,7 +201,7 @@ them -- won't go into this commit.
 
 The simplest way to commit is to type ``git commit``:
 
-.. code-block:: shell
+::
 
     git commit
 
@@ -215,7 +215,7 @@ Doing so launches your editor of choice.
 Alternatively, you can type your commit message inline with the ``commit``
 command by specifying it after a ``-m`` flag, like this:
 
-.. code-block:: shell
+::
 
     git commit -m "Add GitHub workflow to test Sphinx builds for PRs to devel"
 
@@ -226,7 +226,7 @@ Adding the ``-a`` option to the ``git commit`` command makes Git automatically
 stage every file that is already tracked before doing the commit, letting you
 skip the git add part:
 
-.. code-block:: shell
+::
 
     $ git status
     On branch devel
@@ -347,7 +347,7 @@ After you have created several commits, or if you have cloned a repository with
 an existing commit history, you'll probably want to look back to see what has
 happened. The most basic and powerful tool to do this is the git log command.
 
-.. code-block:: shell
+::
 
     $ git log
     co  mmit 8b755eb400a1db7f88ca2058094321dcefea7f9c (HEAD -> feature/vcs, origin/feature/vcs)
@@ -379,7 +379,7 @@ difference (the *patch* output) introduced in each commit. You can also
 limit the number of log entries displayed, such as using ``-<number>`` to
 show only desired number of latest entries.
 
-.. code-block:: shell
+::
 
     $ git log -p -1
     commit 8b755eb400a1db7f88ca2058094321dcefea7f9c (HEAD -> feature/vcs, origin/feature/vcs)
@@ -418,7 +418,7 @@ use a series of summarizing options with ``git log``.
 If you want to see some abbreviated stats for each commit, you can use the
 ``--stat`` option:
 
-.. code-block:: shell
+::
 
     $ git log -1 --stat
     commit 8b755eb400a1db7f88ca2058094321dcefea7f9c (HEAD -> feature/vcs, origin/feature/vcs)
@@ -446,7 +446,7 @@ commit on a single line, which is useful if you're look a lot of commits.
 In addition, the ``short``, ``full``, and ``fuller`` values show the output
 in roughly the same format but with less or more information.
 
-.. code-block:: shell
+::
 
     $ git log --pretty=oneline
     8b755eb400a1db7f88ca2058094321dcefea7f9c (HEAD -> feature/vcs, origin/feature/vcs) Update gitflow diagram
@@ -457,7 +457,7 @@ in roughly the same format but with less or more information.
     0786a699e6901a6c968090422b3cec789402ad21 Update branches document
     74710531809a9cbbdec1979ef8ae775a034c2027 Fixed GitFlow branches list
 
-.. code-block:: shell
+::
 
     $ git log -10 --pretty=format:"%h - %an - %ad"
     8b755eb - Serhii Horodilov - Wed Aug 16 15:26:39 2023 +0300
@@ -509,7 +509,7 @@ The ``oneline`` and ``format`` option values are particularly useful with
 another ``log`` option called ``--graph``. This option adds a nice little
 ASCII graph showing your branch and merge history:
 
-.. code-block:: shell
+::
 
     $ git log --pretty=format:"%h %s" --graph
     * f9b988f Created base documentation structure
@@ -578,7 +578,7 @@ limiting options; that is options that let you show only a subset of commits.
 You've seen one such option already -- the ``-<number>`` (e.g. ``-2`` or
 ``-10``) option, which displays only the given number of latest commits.
 
-.. code-block:: shell
+::
 
     $ git log -5 --oneline
     db87ca0 (HEAD -> feature/vcs) fixup! Add commit history section (git log)
@@ -591,7 +591,7 @@ However, the time-limiting options such as ``--since`` and ``--until`` are very
 useful. For example, the command to get the list of commits made in the last
 two weeks:
 
-.. code-block:: shell
+::
 
     $ git log --since=2.weeks
 
@@ -604,7 +604,7 @@ that introduced a change to those files. This is always the last option and
 is generally preceded by double dashes (``--``) to separate the paths from
 the options:
 
-.. code-block:: shell
+::
 
     $ git log --oneline -- src/vcs/basics.txt
     30cb1a2 Fix apostrophe for VCS files
@@ -626,13 +626,13 @@ forget to add some files, or you mess up your commit message. If you want
 to redo that commit, make the additional changes you forgot, stage them,
 and commit again using the ``--amend`` option:
 
-.. code-block:: shell
+::
 
     $ git commit --amend
 
 E.g.
 
-.. code-block:: shell
+::
 
     $ git commit -m "Initial commit"
     $ git add forgotten_file
@@ -646,7 +646,7 @@ working directory changes. The nice part is that the command you use to
 determine the state of those two areas also reminds you how to undo changes
 to them.
 
-.. code-block:: shell
+::
 
     $ git add *
     $ git status
@@ -684,7 +684,7 @@ you last committed. ``git status`` also tells you how to do that:
 
 It tells you pretty explicitly how to discard the changes you've make.
 
-.. code-block:: shell
+::
 
     $ git checkout -- CONTRIBUTING.md
     $ git status
@@ -702,7 +702,7 @@ Undoing things with git restore
     Git version 2.23.0 onwards, Git will use ``git restore`` instead of
     ``git reset`` for many undo operations.
 
-.. code-block:: shell
+::
 
     $ git add *
     $ git status
