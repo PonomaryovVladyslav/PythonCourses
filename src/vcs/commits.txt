@@ -7,11 +7,238 @@
                              Working with Commits
 ###############################################################################
 
-.. todo:
-    git log
+Viewing the commit history
+==========================
+
+After you have created several commits, or if you have cloned a repository with
+an existing commit history, you'll probably want to look back to see what has
+happened. The most basic and powerful tool to do this is the git log command.
+
+.. code-block:: shell
+
+    $ git log
+    co  mmit 8b755eb400a1db7f88ca2058094321dcefea7f9c (HEAD -> feature/vcs, origin/feature/vcs)
+    Author: Serhii Horodilov <sgorodil@gmail.com>
+    Date:   Wed Aug 16 15:26:39 2023 +0300
+
+        Update gitflow diagram
+
+    commit 1e131a0c9faee2a22ea2bae8f31f8c7ee04fefc5
+    Author: Serhii Horodilov <sgorodil@gmail.com>
+    Date:   Wed Aug 16 14:46:39 2023 +0300
+
+        fixup! Add translations to VSC documents
+
+    commit 895dc24343fbbe25c3c94b25091ac64ac8aea53d
+    Author: Serhii Horodilov <sgorodil@gmail.com>
+    Date:   Wed Aug 16 14:42:10 2023 +0300
+
+        Add translations to VSC documents
+
+By default, with no arguments, ``git log`` lists the commits made in that
+repository in reverse chronological order; that is, the most recent commits
+show up first. As you can see, this command lists each commit with its SHA-1
+checksum, the author's name and email, the date written, and the commit
+message.
+
+One of the more helpful options is ``-p`` or ``--patch``, which shows the
+difference (the *patch* output) introduced in each commit. You can also
+limit the number of log entries displayed, such as using ``-<number>`` to
+show only desired number of latest entries.
+
+.. code-block:: shell
+
+    $ git log -p -1
+    commit 8b755eb400a1db7f88ca2058094321dcefea7f9c (HEAD -> feature/vcs, origin/feature/vcs)
+    Author: Serhii Horodilov <sgorodil@gmail.com>
+    Date:   Wed Aug 16 15:26:39 2023 +0300
+
+        Update gitflow diagram
+
+    diff --git a/assets/mermaid/git/gitflow.mmd b/assets/mermaid/git/gitflow.mmd
+    index 6287bbb..4e4eab7 100644
+    --- a/assets/mermaid/git/gitflow.mmd
+    +++ b/assets/mermaid/git/gitflow.mmd
+    @@ -19,8 +19,6 @@ gitGraph
+         commit
+         branch feature/C
+         commit
+    -    commit
+    -    commit
+
+     %% working with hotfix branch
+         checkout hotfix
+    @@ -35,7 +33,6 @@ gitGraph
+     %% working with feature-b branch
+         checkout feature/A
+         commit
+    -    commit
+         checkout develop
+         merge feature/A
+     %% work with feature-a branch
+
+This option display the same information but with a diff directly following
+each entry. This is very helpful for code review or to quickly browse what
+happened during a series of commits that a collaborator has added. You can also
+use a series of summarizing options with ``git log``.
+
+If you want to see some abbreviated stats for each commit, you can use the
+``--stat`` option:
+
+.. code-block:: shell
+
+    $ git log -1 --stat
+    commit 8b755eb400a1db7f88ca2058094321dcefea7f9c (HEAD -> feature/vcs, origin/feature/vcs)
+    Author: Serhii Horodilov <sgorodil@gmail.com>
+    Date:   Wed Aug 16 15:26:39 2023 +0300
+
+        Update gitflow diagram
+
+     assets/mermaid/git/gitflow.mmd | 3 ---
+     1 file changed, 3 deletions(-)
+
+    commit 1e131a0c9faee2a22ea2bae8f31f8c7ee04fefc5
+    Author: Serhii Horodilov <sgorodil@gmail.com>
+    Date:   Wed Aug 16 14:46:39 2023 +0300
+
+        fixup! Add translations to VSC documents
+
+     src/_locales/uk/LC_MESSAGES/vcs.po | 6 +++---
+     1 file changed, 3 insertions(+), 3 deletions(-)
+
+Another really useful option is ``--pretty``. This option changes the log
+output to formats other that the default. A few prebuilt option values are
+available for you to use. The ``oneline`` value for this option prints each
+commit on a single line, which is useful if you're look a lot of commits.
+In addition, the ``short``, ``full``, and ``fuller`` values show the output
+in roughly the same format but with less or more information.
+
+.. code-block:: shell
+
+    $ git log --pretty=oneline
+    8b755eb400a1db7f88ca2058094321dcefea7f9c (HEAD -> feature/vcs, origin/feature/vcs) Update gitflow diagram
+    1e131a0c9faee2a22ea2bae8f31f8c7ee04fefc5 fixup! Add translations to VSC documents
+    895dc24343fbbe25c3c94b25091ac64ac8aea53d Add translations to VSC documents
+    30cb1a2db3d62210010b05df634e1ec87e5ef748 Fix apostrophe for VCS files
+    79427a88defef82bc92482cfaf7da5fba3260f5e Add commit document (draft)
+    0786a699e6901a6c968090422b3cec789402ad21 Update branches document
+    74710531809a9cbbdec1979ef8ae775a034c2027 Fixed GitFlow branches list
+
+.. code-block:: shell
+
+    $ git log -10 --pretty=format:"%h - %an - %ad"
+    8b755eb - Serhii Horodilov - Wed Aug 16 15:26:39 2023 +0300
+    1e131a0 - Serhii Horodilov - Wed Aug 16 14:46:39 2023 +0300
+    895dc24 - Serhii Horodilov - Wed Aug 16 14:42:10 2023 +0300
+    30cb1a2 - Serhii Horodilov - Wed Aug 16 14:41:49 2023 +0300
+    79427a8 - Serhii Horodilov - Mon Jul 31 14:31:08 2023 +0300
+    0786a69 - Serhii Horodilov - Mon Jul 31 14:30:54 2023 +0300
+    7471053 - Serhii Horodilov - Fri Jul 28 15:13:15 2023 +0300
+    be60eb3 - Serhii Horodilov - Fri Jul 28 14:54:09 2023 +0300
+    24972b1 - Serhii Horodilov - Fri Jul 28 14:53:37 2023 +0300
+    4a9cfe4 - Serhii Horodilov - Fri Jul 28 14:32:53 2023 +0300
+
++-----------+---------------------------------------------------+
+| Specifier | Description of Output                             |
++===========+===================================================+
+| %H        | Commit hash                                       |
++-----------+---------------------------------------------------+
+| %h        | Abbreviated commit hash                           |
++-----------+---------------------------------------------------+
+| %T        | Tree hash                                         |
++-----------+---------------------------------------------------+
+| %t        | Abbreviated tree hash                             |
++-----------+---------------------------------------------------+
+| %P        | Parent hashes                                     |
++-----------+---------------------------------------------------+
+| %p        | Abbreviated parent hashes                         |
++-----------+---------------------------------------------------+
+| %an       | Author name                                       |
++-----------+---------------------------------------------------+
+| %ae       | Author email                                      |
++-----------+---------------------------------------------------+
+| %ad       | Author date (format respects the --date=option)   |
++-----------+---------------------------------------------------+
+| %ar       | Author date, relative                             |
++-----------+---------------------------------------------------+
+| %cn       | Committer name                                    |
++-----------+---------------------------------------------------+
+| %ce       | Committer email                                   |
++-----------+---------------------------------------------------+
+| %cd       | Committer date                                    |
++-----------+---------------------------------------------------+
+| %cr       | Committer date, relative                          |
++-----------+---------------------------------------------------+
+| %s        | Subject                                           |
++-----------+---------------------------------------------------+
+
+The ``oneline`` and ``format`` option values are particularly useful with
+another ``log`` option called ``--graph``. This option adds a nice little
+ASCII graph showing your branch and merge history:
+
+.. code-block:: shell
+
+    $ git log --pretty=format:"%h %s" --graph
+    * f9b988f Created base documentation structure
+    * 3fabf55 Started global course updated
+    *   06662ae Merge pull request #13 from edu-python-course/master
+    |\
+    | * 3579eea Update to suite edu-python-course/blog#74
+    |/
+    *   3fb7725 Merge remote-tracking branch 'origin/master'
+    |\
+    | *   181b66d Merge remote-tracking branch 'origin/master'
+    | |\
+    | * | 52e0ef8 add lesson21 hw
+    * | | 830a246 fix lesson32 hw
+    | |/
+    |/|
+    * | 59697e9 fix lesson2 typos
+    * | a6f77db fix lesson2 typos
+    * | 213b220 fix lesson2 typos
+    * | 9b69f5f fix lesson2 typos
+    * | 6a0b9c8 fix lesson2 typos
+    |/
+    * bda497f add lesson2
+
+There are many more output-formatting options to ``git log``. Common options to
+``git log`` are:
+
++-------------------+---------------------------------------------------------+
+| Option            | Description                                             |
++===================+=========================================================+
+| -p                | Show the patch introduced with each commit.             |
++-------------------+---------------------------------------------------------+
+| --stat            | Show statistics for files modified in each commit.      |
++-------------------+---------------------------------------------------------+
+| --shortstat       | Display only the changed/insertions/deletions line      |
+|                   | from the --stat command.                                |
++-------------------+---------------------------------------------------------+
+| --name-only       | Show the list of files modified after the commit        |
+|                   | information.                                            |
++-------------------+---------------------------------------------------------+
+| --name-status     | Show the list of files affected with                    |
+|                   | added/modified/deleted information as well.             |
++-------------------+---------------------------------------------------------+
+| --abbrev-commit   | Show only the first few characters of the SHA-1         |
+|                   | checksum instead of all 40.                             |
++-------------------+---------------------------------------------------------+
+| --relative-date   | Display the date in a relative format (for example,     |
+|                   | "2 weeks ago") instead of using the full date format.   |
++-------------------+---------------------------------------------------------+
+| --graph           | Display an ASCII graph of the branch and merge history  |
+|                   | beside the log output.                                  |
++-------------------+---------------------------------------------------------+
+| --pretty          | Show commits in an alternate format. Option values      |
+|                   | include oneline, short, full, fuller, and format (where |
+|                   | you specify your own format).                           |
++-------------------+---------------------------------------------------------+
+| --oneline         | Shorthand for --pretty=oneline --abbrev-commit used     |
+|                   | together.                                               |
++-------------------+---------------------------------------------------------+
 
 .. todo:
-    git checkout
+git checkout
 
 .. todo:
-    git tag
+git tag
