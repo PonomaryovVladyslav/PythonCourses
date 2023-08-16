@@ -283,8 +283,123 @@ the options:
     c23f8ff Update getting repository section
     582569d Add Git basics document (draft)
 
-.. todo:
-git checkout
+Undoing things
+==============
+
+At any stage, you may want to undo something.
+
+One of the common undos takes place when you commit too early and possibly
+forget to add some files, or you mess up your commit message. If you want
+to redo that commit, make the additional changes you forgot, stage them,
+and commit again using the ``--amend`` option:
+
+.. code-block:: shell
+
+    $ git commit --amend
+
+E.g.
+
+.. code-block:: shell
+
+    $ git commit -m "Initial commit"
+    $ git add forgotten_file
+    $ git commit --amend
+
+Unstaging a staged file
+-----------------------
+
+The next two sections demonstrate how to work with your staging area and
+working directory changes. The nice part is that the command you use to
+determine the state of those two areas also reminds you how to undo changes
+to them.
+
+.. code-block:: shell
+
+    $ git add *
+    $ git status
+    On branch master
+    Changes to be committed:
+        (use "git reset HEAD <file>..." to unstage)
+            renamed: README.md -> README
+            modified: CONTRIBUTING.md
+    $ git reset HEAD CONTRIBUTING.md
+    Unstaged changes after reset:
+    M CONTRIBUTING.md
+    $ git status
+    On branch master
+    Changes to be committed:
+        (use "git reset HEAD <file>..." to unstage)
+            renamed: README.md -> README
+    Changes not staged for commit:
+        (use "git add <file>..." to update what will be committed)
+        (use "git checkout -- <file>..." to discard changes in working directory)
+            modified: CONTRIBUTING.md
+
+Unmodifiyng a modified file
+---------------------------
+
+What if you realize that you don't want to keep your changes to some file?
+You can easily unmodify it -- **revert** it back to what it looked like when
+you last committed. ``git status`` also tells you how to do that:
+
+::
+
+    (use "git checkout -- <file>..." to discard changes in working directory)
+
+It tells you pretty explicitly how to discard the changes you've make.
+
+.. code-block:: shell
+
+    $ git checkout -- CONTRIBUTING.md
+    $ git status
+    On branch master
+    Changes to be committed:
+        (use "git reset HEAD <file>..." to unstage)
+            renamed: README.md -> README
+
+Undoing things with git restore
+-------------------------------
+
+.. versionadded:: 2.23.0
+    ``git restore`` is basically an alternative to ``git reset``, from
+    Git version 2.23.0 onwards, Git will use ``git restore`` instead of
+    ``git reset`` for many undo operations.
+
+.. code-block:: shell
+
+    $ git add *
+    $ git status
+    On branch master
+    Changes to be committed:
+        (use "git restore --staged <file>..." to unstage)
+            modified: CONTRIBUTING.md
+            renamed: README.md -> README
+    $ git restore --staged CONTRIBUTING.md
+    $ git status
+    On branch master
+    Changes to be committed:
+        (use "git restore --staged <file>..." to unstage)
+            renamed: README.md -> README
+    Changes not staged for commit:
+        (use "git add <file>..." to update what will be committed)
+        (use "git restore <file>..." to discard changes in working directory)
+            modified: CONTRIBUTING.md
+    $ git restore CONTRIBUTING.md
+    $ git status
+    On branch master
+    Changes to be committed:
+        (use "git restore --staged <file>..." to unstage)
+            renamed: README.md -> README
+
+.. important::
+    It’s important to understand that git restore <file> is a dangerous
+    command. Any local changes you made to that file are gone -- Git just
+    replaced that file with the last staged or committed version. Don't ever
+    use this command unless you absolutely know that you don’t want those
+    unsaved local changes.
 
 .. todo:
-git tag
+    git checkout
+
+.. todo:
+    git tag
