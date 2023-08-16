@@ -160,6 +160,76 @@ that it has more than one parent.
     :align: center
     :caption: Merge commit
 
+Merge conflicts
+===============
+
+Occasionally, the merge process doesn't go smoothly. If the same part of
+the same file is changed differently in the two branches you're merging, Git
+won't be able to merge them cleanly.
+
+.. code-block:: shell
+
+    $ git merge vcs
+    Auto-merging branches.txt
+    CONFLICT (content): Merge conflict in branches.txt
+    Automatic merge failed; fix conflicts and then commit the result
+
+Git hasn't automatically created a new merge commit. It has paused the process
+while you resolve the conflict. If you want to see which files are unmerged at
+any point after a merge conflict, you can run ``git status``:
+
+.. code-block:: shell
+
+    $ git status
+    On branch master
+
+    You have unmerged paths.
+        (fix conflicts and run "git commit")
+
+    Unmerged paths:
+        (use "git add <file>..." to mark resolution)
+
+        both modified: branches.txt
+
+    no changes added to commit (use "git add" and/or "git commit -a")
+
+Anything that has merge conflicts and hasn't been resolved is listed as
+unmerged. Git adds standard conflict-resolution markers to the files that
+have conflicts, so you can open them manually and resolve those conflicts.
+Your file contains a section that looks something like this:
+
+::
+
+    <<<<<<< HEAD:branches.txt
+    Anything that has merge conflicts and has not been resolved is listed as
+    =======
+    Anything that has merge conflicts
+    and hasn't been resolved is listed as
+    </div>
+    >>>>>>> vcs:branches.txt
+
+This means the version in ``HEAD`` (your ``master`` branch, because that was
+what you had checked out when you ran merge command) is the top part of that
+block (everything above the "======="), while the version in ``vcs`` branch
+looks like everything in the bottom part. In order to resolve the conflict,
+you have to either choose one side or the other or merge the contents yourself.
+
+When conflicts are resolved, you can run ``git status`` command again:
+
+.. code-block:: shell
+
+    $ git status
+    On branch master
+
+    All conflicts fixed but you are still merging.
+        (use "git commit" to conclude merge)
+
+    Changes to be committed:
+        modified: branches.txt
+
+If you're happy with that, and you verify that everything that had conflicts
+has been staged, you can run ``git commit`` for finalize the merge commit.
+
 .. todo:
     Add rebase section
 ..
