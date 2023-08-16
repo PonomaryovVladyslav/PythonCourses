@@ -1,3 +1,4 @@
+%%{init: {'gitGraph': {'mainBranchName': 'master'}} }%%
 gitGraph
 %% initialize repository
     commit id: "Initial commit"
@@ -7,7 +8,7 @@ gitGraph
     commit
 
 %% define hotfix branch
-    checkout main
+    checkout master
     commit id: "Buggy commit" type: REVERSE
     branch hotfix
 
@@ -25,7 +26,7 @@ gitGraph
     commit id: "Fix bugs" type:HIGHLIGHT
 
 %% merge hotfix commits into main and develop
-    checkout main
+    checkout master
     merge hotfix
     checkout develop
     merge hotfix
@@ -44,7 +45,7 @@ gitGraph
     checkout develop
     branch release/v1.0
     commit id: "Work on release" tag: "v1.0"
-    checkout main
+    checkout master
     merge release/v1.0
     checkout develop
     commit
