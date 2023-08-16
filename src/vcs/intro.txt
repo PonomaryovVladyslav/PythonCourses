@@ -54,7 +54,7 @@ disk, most operations seem almost instantaneous.
 .. rubric:: Integrity
 
 Everything in Git is checksummed before it is stored and is then referred
-to by that checksum. This means it’s impossible to change the contents of
+to by that checksum. This means it's impossible to change the contents of
 any file or directory without Git knowing about it.
 
 .. rubric:: Repository files states
