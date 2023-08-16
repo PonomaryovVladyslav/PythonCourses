@@ -13,6 +13,5 @@
     intro
     setup
     basics
-    commits
     branch
     github
