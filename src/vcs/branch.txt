@@ -33,8 +33,40 @@ Every time you commit, the master branch pointer moves forward automatically.
 .. figure:: /../assets/img/git-commits.svg
     :align: center
 
+
+Branch management
+=================
+
+The ``git branch`` command does more that create and delete branches. If you
+run it with no arguments, you get a simple listing of your current branches:
+
+::
+
+    $ git branch
+      devel
+      feature/contributing
+      feature/legacy
+      feature/lib-ms
+      feature/libms
+      feature/pdf-builder
+    * feature/vcs
+      master
+
+To see all the branches that contain work you haven't yet merged in, use
+``--no-merged`` option:
+
+::
+
+    $ git branch --no-merged
+      feature/contributing
+      feature/lib-ms
+      feature/libms
+
+Branches listed in the output has work, that isn't merged to current branch.
+So, deleting them via ``git branch -d`` will fail.
+
 Create branches
-===============
+---------------
 
 There are few ways to create a new branch in a Git repository. The most common
 way is to use ``git branch`` command.
@@ -53,7 +85,7 @@ creation using:
     git checkout -b <branch_name> [parent_commit]
 
 Switching branches
-==================
+------------------
 
 To switch to an existing branch, you run the ``git checkout`` command.
 
@@ -161,7 +193,7 @@ that it has more than one parent.
     :caption: Merge commit
 
 Merge conflicts
-===============
+---------------
 
 Occasionally, the merge process doesn't go smoothly. If the same part of
 the same file is changed differently in the two branches you're merging, Git
@@ -272,37 +304,6 @@ in turn.
 
 .. todo:
     Describe merging and cherry-pick
-
-Branch management
-=================
-
-The ``git branch`` command does more that create and delete branches. If you
-run it with no arguments, you get a simple listing of your current branches:
-
-::
-
-    $ git branch
-      devel
-      feature/contributing
-      feature/legacy
-      feature/lib-ms
-      feature/libms
-      feature/pdf-builder
-    * feature/vcs
-      master
-
-To see all the branches that contain work you haven't yet merged in, use
-``--no-merged`` option:
-
-::
-
-    $ git branch --no-merged
-      feature/contributing
-      feature/lib-ms
-      feature/libms
-
-Branches listed in the output has work, that isn't merged to current branch.
-So, deleting them via ``git branch -d`` will fail.
 
 Branching strategies
 ====================
