@@ -33,7 +33,7 @@ trump those in *[path]/etc/gitconfig*.
 
 You can view all of your settings and where they are coming from using:
 
-.. code-block:: shell
+::
 
     git config --list --show-origin
 
@@ -44,7 +44,7 @@ The first thing you should do when you install Git is to set your user name
 and email address. This is important because every Git commit uses this
 information.
 
-.. code-block:: shell
+::
 
     git config --global user.name "John Doe"
     git config --global user.email johndoe@example.com
