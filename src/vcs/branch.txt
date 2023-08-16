@@ -230,16 +230,45 @@ When conflicts are resolved, you can run ``git status`` command again:
 If you're happy with that, and you verify that everything that had conflicts
 has been staged, you can run ``git commit`` for finalize the merge commit.
 
-.. todo:
-    Add rebase section
-..
-    .. mermaid:: /../assets/mermaid/git/rebase-1.mmd
-        :align: center
-        :caption: Before rebase
-..
-    .. mermaid:: /../assets/mermaid/git/rebase-2.mmd
-        :align: center
-        :caption: After rebase
+Rebasing
+========
+
+In Git, there two main ways to integrate changes from one branch into another:
+the ``merge`` and the ``rebase``.
+
+Earlier, there was an example of diverged work and commits made on two
+different branches.
+
+.. mermaid:: /../assets/mermaid/git/rebase-1.mmd
+    :align: center
+    :caption: Before rebase
+
+The easiest way to integrate the branches, as we've already covered, is
+the ``merge`` command. It performs a three-way merge between the two latest
+branch snapshots, and the most recent common ancestor of the two, creating
+a new snapshot (and commit).
+
+However, there is another way: you can take the patch of the change that was
+introduced in ``master`` and reapply it on top of ``feature``. In Git, this is
+called *rebasing*. With ``rebase`` command, you can take all the changes that
+were committed on one branch and replay them on a different branch.
+
+::
+
+    $ git checkout feature
+    $ git rebase master
+    First, rewinding head to replay your work on top of it...
+    Applying: added staged command
+
+This operation works by going to the common ancestor of the two branches,
+getting the diff introduced by each commit of the branch you're on, saving
+those diffs to temporary files, resetting the current branch to the same
+commit as the branch you are rebasing onto, and finally applying each change
+in turn.
+
+.. mermaid:: /../assets/mermaid/git/rebase-2.mmd
+    :align: center
+    :caption: After rebase
 
 .. todo:
     Describe merging and cherry-pick
