@@ -1,9 +1,15 @@
 %%{init: {'gitGraph': {'mainBranchName': 'master'}} }%%
 gitGraph
     commit id: "Initial commit"
-    branch feature
+    branch feature/issue53
+    branch feature/issue54
+    checkout feature/issue53
     commit
     commit
     checkout master
+    merge feature/issue53
+    checkout feature/issue54
     commit
-    merge feature id: "Merge commit" type:NORMAL
+    checkout master
+    commit
+    merge feature/issue54 type:NORMAL id: "merge commit"
