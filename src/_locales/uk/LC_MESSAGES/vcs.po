@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Python Training Course 2023.06.dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-08-16 14:39+0300\n"
-"PO-Revision-Date: 2023-08-16 14:45+0300\n"
+"POT-Creation-Date: 2023-08-16 22:36+0300\n"
+"PO-Revision-Date: 2023-08-16 22:36+0300\n"
 "Last-Translator: Serhii Horodilov <sgorodil@gmail.com>\n"
 "Language-Team: uk <LL@li.org>\n"
 "Language: uk\n"
@@ -22,16 +22,14 @@ msgstr ""
 "X-Generator: Poedit 3.3.2\n"
 
 #: ../../src/vcs/basics.txt:-1 ../../src/vcs/branch.txt:-1
-#: ../../src/vcs/commits.txt:-1 ../../src/vcs/github.txt:-1
-#: ../../src/vcs/index.txt:-1 ../../src/vcs/intro.txt:-1
-#: ../../src/vcs/setup.txt:-1
+#: ../../src/vcs/github.txt:-1 ../../src/vcs/index.txt:-1
+#: ../../src/vcs/intro.txt:-1 ../../src/vcs/setup.txt:-1
 msgid "Version control system"
 msgstr "Система контролю версій"
 
 #: ../../src/vcs/basics.txt:-1 ../../src/vcs/branch.txt:-1
-#: ../../src/vcs/commits.txt:-1 ../../src/vcs/github.txt:-1
-#: ../../src/vcs/index.txt:-1 ../../src/vcs/intro.txt:-1
-#: ../../src/vcs/setup.txt:-1
+#: ../../src/vcs/github.txt:-1 ../../src/vcs/index.txt:-1
+#: ../../src/vcs/intro.txt:-1 ../../src/vcs/setup.txt:-1
 msgid "Serhii Horodilov"
 msgstr "Serhii Horodilov"
 
@@ -478,6 +476,484 @@ msgstr ""
 "від 0 до 9). Ви також можете використовувати дві зірочки для вкладених "
 "каталогів; a/\\*\\*/z буде відповідати *a/z*, *a/b/z*, *a/b/c/z* і так далі."
 
+#: ../../src/vcs/basics.txt:344
+msgid "Viewing the commit history"
+msgstr "Перегляд історії коммітів"
+
+#: ../../src/vcs/basics.txt:346
+msgid ""
+"After you have created several commits, or if you have cloned a repository "
+"with an existing commit history, you'll probably want to look back to see "
+"what has happened. The most basic and powerful tool to do this is the ``git "
+"log`` command."
+msgstr ""
+"Після того, як ви створили кілька коммітів, або якщо ви клонували сховище з "
+"існуючою історією коммітів, ви, ймовірно, захочете озирнутися назад, щоб "
+"побачити, що сталося. Найпростішим і найпотужнішим інструментом для цього є "
+"команда ``git log``."
+
+#: ../../src/vcs/basics.txt:372
+msgid ""
+"By default, with no arguments, ``git log`` lists the commits made in that "
+"repository in reverse chronological order; that is, the most recent commits "
+"show up first. As you can see, this command lists each commit with its SHA-1 "
+"checksum, the author's name and email, the date written, and the commit "
+"message."
+msgstr ""
+"За замовчуванням, без аргументів, ``git log`` виводить список коммітів, "
+"зроблених у цьому сховищі, у зворотному хронологічному порядку; тобто, "
+"найновіші комміти показуються першими. Як ви можете бачити, ця команда "
+"показує кожне внесення з його контрольною сумою SHA-1, ім'ям та електронною "
+"адресою автора, датою створення та повідомленням про внесення."
+
+#: ../../src/vcs/basics.txt:378
+msgid ""
+"One of the more helpful options is ``-p`` or ``--patch``, which shows the "
+"difference (the *patch* output) introduced in each commit. You can also "
+"limit the number of log entries displayed, such as using ``-<number>`` to "
+"show only desired number of latest entries."
+msgstr ""
+"Однією з найбільш корисних опцій є ``-p`` або ``--patch``, яка показує "
+"відмінності (виведення *patch*), внесені у кожну фіксацію. Ви також можете "
+"обмежити кількість відображуваних записів, наприклад, за допомогою ``-"
+"<number>``, щоб показати лише потрібну кількість останніх записів."
+
+#: ../../src/vcs/basics.txt:414
+msgid ""
+"This option display the same information but with a diff directly following "
+"each entry. This is very helpful for code review or to quickly browse what "
+"happened during a series of commits that a collaborator has added. You can "
+"also use a series of summarizing options with ``git log``."
+msgstr ""
+"Цей параметр показує ту саму інформацію, але з різницею безпосередньо після "
+"кожного запису. Це дуже корисно для перегляду коду або для швидкого "
+"перегляду того, що сталося під час серії коммітів, доданих співавторами. Ви "
+"також можете скористатися низкою параметрів підсумовування за допомогою "
+"``git log``."
+
+#: ../../src/vcs/basics.txt:419
+msgid ""
+"If you want to see some abbreviated stats for each commit, you can use the "
+"``--stat`` option:"
+msgstr ""
+"Якщо ви хочете побачити скорочену статистику для кожного коміту, ви можете "
+"скористатися опцією ``--stat``:"
+
+#: ../../src/vcs/basics.txt:443
+msgid ""
+"Another really useful option is ``--pretty``. This option changes the log "
+"output to formats other that the default. A few prebuilt option values are "
+"available for you to use. The ``oneline`` value for this option prints each "
+"commit on a single line, which is useful if you're look a lot of commits. In "
+"addition, the ``short``, ``full``, and ``fuller`` values show the output in "
+"roughly the same format but with less or more information."
+msgstr ""
+"Ще одним дійсно корисним параметром є ``--pretty``. Цей параметр змінює "
+"формат виведення журналу на формат, відмінний від стандартного. Ви можете "
+"скористатися кількома готовими значеннями цього параметра. Значення "
+"``oneline`` для цього параметра виводить кожну фіксацію в одному рядку, що є "
+"корисним, якщо ви переглядаєте багато фіксацій. Крім того, значення "
+"``short``, ``full`` і ``fuller`` показують виведення у приблизно однаковому "
+"форматі, але з меншою або більшою кількістю інформації."
+
+#: ../../src/vcs/basics.txt:476
+msgid "Specifier"
+msgstr "Специфікатор"
+
+#: ../../src/vcs/basics.txt:476
+msgid "Description of Output"
+msgstr "Опис Результатів"
+
+#: ../../src/vcs/basics.txt:478
+msgid "%H"
+msgstr "%H"
+
+#: ../../src/vcs/basics.txt:478
+msgid "Commit hash"
+msgstr "Хеш комміту"
+
+#: ../../src/vcs/basics.txt:480
+msgid "%h"
+msgstr "%h"
+
+#: ../../src/vcs/basics.txt:480
+msgid "Abbreviated commit hash"
+msgstr "Скорочений хеш коміту"
+
+#: ../../src/vcs/basics.txt:482
+msgid "%T"
+msgstr "%T"
+
+#: ../../src/vcs/basics.txt:482
+msgid "Tree hash"
+msgstr "Дерево хешу"
+
+#: ../../src/vcs/basics.txt:484
+msgid "%t"
+msgstr "%t"
+
+#: ../../src/vcs/basics.txt:484
+msgid "Abbreviated tree hash"
+msgstr "Скорочений хеш дерева"
+
+#: ../../src/vcs/basics.txt:486
+msgid "%P"
+msgstr "%P"
+
+#: ../../src/vcs/basics.txt:486
+msgid "Parent hashes"
+msgstr "Батьківські хеші"
+
+#: ../../src/vcs/basics.txt:488
+msgid "%p"
+msgstr "%p"
+
+#: ../../src/vcs/basics.txt:488
+msgid "Abbreviated parent hashes"
+msgstr "Скорочені батьківські хеші"
+
+#: ../../src/vcs/basics.txt:490
+msgid "%an"
+msgstr "%an"
+
+#: ../../src/vcs/basics.txt:490
+msgid "Author name"
+msgstr "Ім'я автора"
+
+#: ../../src/vcs/basics.txt:492
+msgid "%ae"
+msgstr "%ae"
+
+#: ../../src/vcs/basics.txt:492
+msgid "Author email"
+msgstr "Електронна пошта автора"
+
+#: ../../src/vcs/basics.txt:494
+msgid "%ad"
+msgstr "%ad"
+
+#: ../../src/vcs/basics.txt:494
+msgid "Author date (format respects the --date=option)"
+msgstr "Дата автора (формат відповідає параметру --date=option)"
+
+#: ../../src/vcs/basics.txt:496
+msgid "%ar"
+msgstr "%ar"
+
+#: ../../src/vcs/basics.txt:496
+msgid "Author date, relative"
+msgstr "Дата автора, відносна"
+
+#: ../../src/vcs/basics.txt:498
+#, python-format
+msgid "%cn"
+msgstr "%cn"
+
+#: ../../src/vcs/basics.txt:498
+msgid "Committer name"
+msgstr "Ім'я коммітера"
+
+#: ../../src/vcs/basics.txt:500
+#, python-format
+msgid "%ce"
+msgstr "%ce"
+
+#: ../../src/vcs/basics.txt:500
+msgid "Committer email"
+msgstr "Електронна пошта коммітера"
+
+#: ../../src/vcs/basics.txt:502
+#, python-format
+msgid "%cd"
+msgstr "%cd"
+
+#: ../../src/vcs/basics.txt:502
+msgid "Committer date"
+msgstr "Дата коммітера"
+
+#: ../../src/vcs/basics.txt:504
+#, python-format
+msgid "%cr"
+msgstr "%cr"
+
+#: ../../src/vcs/basics.txt:504
+msgid "Committer date, relative"
+msgstr "Дата коммітера, відносна"
+
+#: ../../src/vcs/basics.txt:506
+#, python-format
+msgid "%s"
+msgstr "%s"
+
+#: ../../src/vcs/basics.txt:506
+msgid "Subject"
+msgstr "Тема"
+
+#: ../../src/vcs/basics.txt:509
+msgid ""
+"The ``oneline`` and ``format`` option values are particularly useful with "
+"another ``log`` option called ``--graph``. This option adds a nice little "
+"ASCII graph showing your branch and merge history:"
+msgstr ""
+"Значення параметрів ``online`` і ``format`` особливо корисні з іншим "
+"параметром ``log``, який називається ``--graph``. Цей параметр додає "
+"невеликий гарний графік у форматі ASCII, який показує історію ваших гілок і "
+"злиття:"
+
+#: ../../src/vcs/basics.txt:538
+msgid ""
+"There are many more output-formatting options to ``git log``. Common options "
+"to ``git log`` are:"
+msgstr ""
+"Існує набагато більше варіантів форматування виводу для ``git log``. "
+"Загальними параметрами ``git log`` є наступні:"
+
+#: ../../src/vcs/basics.txt:542
+msgid "Option"
+msgstr "Опція"
+
+#: ../../src/vcs/basics.txt:542
+msgid "Description"
+msgstr "Опис"
+
+#: ../../src/vcs/basics.txt:544
+msgid "-p"
+msgstr "-p"
+
+#: ../../src/vcs/basics.txt:544
+msgid "Show the patch introduced with each commit."
+msgstr "Показувати виправлення, внесені з кожним коммітом."
+
+#: ../../src/vcs/basics.txt:546
+msgid "--stat"
+msgstr "--stat"
+
+#: ../../src/vcs/basics.txt:546
+msgid "Show statistics for files modified in each commit."
+msgstr "Показувати статистику для файлів, змінених у кожному коміті."
+
+#: ../../src/vcs/basics.txt:548
+msgid "--shortstat"
+msgstr "--shortstat"
+
+#: ../../src/vcs/basics.txt:548
+msgid ""
+"Display only the changed/insertions/deletions line from the --stat command."
+msgstr "Відображати лише змінений/вставлений/видалений рядок з команди --stat."
+
+#: ../../src/vcs/basics.txt:551
+msgid "--name-only"
+msgstr "--name-only"
+
+#: ../../src/vcs/basics.txt:551
+msgid "Show the list of files modified after the commit information."
+msgstr "Показати список файлів, змінених після фіксації інформації."
+
+#: ../../src/vcs/basics.txt:554
+msgid "--name-status"
+msgstr "--name-status"
+
+#: ../../src/vcs/basics.txt:554
+msgid ""
+"Show the list of files affected with added/modified/deleted information as "
+"well."
+msgstr ""
+"Також покажіть список файлів, яких торкнулася додана/змінена/видалена "
+"інформація."
+
+#: ../../src/vcs/basics.txt:557
+msgid "--abbrev-commit"
+msgstr "--abbrev-commit"
+
+#: ../../src/vcs/basics.txt:557
+msgid ""
+"Show only the first few characters of the SHA-1 checksum instead of all 40."
+msgstr ""
+"Показувати лише перші кілька символів контрольної суми SHA-1 замість усіх 40."
+
+#: ../../src/vcs/basics.txt:560
+msgid "--relative-date"
+msgstr "--relative-date"
+
+#: ../../src/vcs/basics.txt:560
+msgid ""
+"Display the date in a relative format (for example, \"2 weeks ago\") instead "
+"of using the full date format."
+msgstr ""
+"Відображати дату у відносному форматі (наприклад, \"2 тижні тому\") замість "
+"повного формату дати."
+
+#: ../../src/vcs/basics.txt:563
+msgid "--graph"
+msgstr "--graph"
+
+#: ../../src/vcs/basics.txt:563
+msgid ""
+"Display an ASCII graph of the branch and merge history beside the log output."
+msgstr ""
+"Відобразити ASCII-графік гілки та історію злиття поряд з виведенням журналу."
+
+#: ../../src/vcs/basics.txt:566
+msgid "--pretty"
+msgstr "--pretty"
+
+#: ../../src/vcs/basics.txt:566
+msgid ""
+"Show commits in an alternate format. Option values include oneline, short, "
+"full, fuller, and format (where you specify your own format)."
+msgstr ""
+"Показувати комміти в альтернативному форматі. Значення опції включають: "
+"online, short, full, fuller і format (де ви можете вказати свій власний "
+"формат)."
+
+#: ../../src/vcs/basics.txt:570
+msgid "--oneline"
+msgstr "--oneline"
+
+#: ../../src/vcs/basics.txt:570
+msgid "Shorthand for --pretty=oneline --abbrev-commit used together."
+msgstr ""
+"Скорочення для --pretty=online --abbrev-commit, що використовується разом."
+
+#: ../../src/vcs/basics.txt:575
+msgid "Limiting log output"
+msgstr "Обмеження виводу журналу"
+
+#: ../../src/vcs/basics.txt:577
+msgid ""
+"In addition to output-formatting options, ``git log`` takes a number of "
+"useful limiting options; that is options that let you show only a subset of "
+"commits. You've seen one such option already -- the ``-<number>`` (e.g. "
+"``-2`` or ``-10``) option, which displays only the given number of latest "
+"commits."
+msgstr ""
+"На додаток до параметрів форматування виводу, ``git log`` приймає ряд "
+"корисних обмежувальних параметрів, тобто параметрів, які дозволяють вам "
+"показувати лише підмножину коммітів. Ви вже бачили одну з таких опцій - ``-"
+"<число>`` (наприклад, ``-2`` або ``-10``), яка показує лише вказану "
+"кількість останніх коммітів."
+
+#: ../../src/vcs/basics.txt:591
+msgid ""
+"However, the time-limiting options such as ``--since`` and ``--until`` are "
+"very useful. For example, the command to get the list of commits made in the "
+"last two weeks:"
+msgstr ""
+"Однак, дуже корисними є опції, що обмежують час, такі як ``--since`` і ``--"
+"until``. Наприклад, команда для отримання списку коммітів, зроблених за "
+"останні два тижні:"
+
+#: ../../src/vcs/basics.txt:599
+msgid ""
+"This command works with lots of formats - you can specify a specific date "
+"like ``\"2022-02-24\"``, or relative date such as ``\"2 years 1 days 3 "
+"minutes ago\"``."
+msgstr ""
+"Ця команда працює з багатьма форматами - ви можете вказати конкретну дату, "
+"наприклад, ``\"2022-02-24\"``, або відносну дату, наприклад, ``\"2 роки 1 "
+"день 3 хвилини тому\"``."
+
+#: ../../src/vcs/basics.txt:602
+msgid ""
+"The last really useful option to pass to ``git log`` as a filter is a path. "
+"If you specify a directory or file name, you can limit the log output to "
+"commits that introduced a change to those files. This is always the last "
+"option and is generally preceded by double dashes (``--``) to separate the "
+"paths from the options:"
+msgstr ""
+"Останньою дійсно корисною опцією, яку можна передати ``git log`` як фільтр, "
+"є шлях. Якщо ви вкажете каталог або ім'я файлу, ви зможете обмежити "
+"виведення журналу лише тими комітами, які внесли зміни до цих файлів. Це "
+"завжди останній параметр, і йому зазвичай передують подвійні тире (``--``), "
+"щоб відокремити шлях від параметрів:"
+
+#: ../../src/vcs/basics.txt:621
+msgid "Undoing things"
+msgstr "Виправлення помилок"
+
+#: ../../src/vcs/basics.txt:623
+msgid "At any stage, you may want to undo something."
+msgstr "На будь-якому етапі ви можете захотіти щось виправити."
+
+#: ../../src/vcs/basics.txt:625
+msgid ""
+"One of the common undos takes place when you commit too early and possibly "
+"forget to add some files, or you mess up your commit message. If you want to "
+"redo that commit, make the additional changes you forgot, stage them, and "
+"commit again using the ``--amend`` option:"
+msgstr ""
+"Одне з найпоширеніших випадків скасування відбувається, коли ви коммітуєте "
+"занадто рано і, можливо, забуваєте додати деякі файли, або ви псуєте своє "
+"повідомлення про коммітування. Якщо ви хочете повторити фіксацію, внесіть "
+"додаткові зміни, про які ви забули, збережіть їх і зафіксуйте ще раз, "
+"використовуючи опцію ``--amend``:"
+
+#: ../../src/vcs/basics.txt:634
+msgid "E.g."
+msgstr "Наприклад."
+
+#: ../../src/vcs/basics.txt:643
+msgid "Unstaging a staged file"
+msgstr "Скасування додавання файла до індексу"
+
+#: ../../src/vcs/basics.txt:645
+msgid ""
+"The next two sections demonstrate how to work with your staging area and "
+"working directory changes. The nice part is that the command you use to "
+"determine the state of those two areas also reminds you how to undo changes "
+"to them."
+msgstr ""
+"У наступних двох розділах продемонстровано, як працювати зі змінами у вашій "
+"збірці та робочому каталозі. Приємним моментом є те, що команда, за "
+"допомогою якої ви визначаєте стан цих двох областей, також нагадує вам про "
+"те, як скасувати внесені до них зміни."
+
+#: ../../src/vcs/basics.txt:676
+msgid "Unmodifiyng a modified file"
+msgstr "Скасування модифікації зміненого файлу"
+
+#: ../../src/vcs/basics.txt:678
+msgid ""
+"What if you realize that you don't want to keep your changes to some file? "
+"You can easily unmodify it -- **revert** it back to what it looked like when "
+"you last committed. ``git status`` also tells you how to do that:"
+msgstr ""
+"Що робити, якщо ви зрозуміли, що не хочете зберігати зміни у якомусь файлі? "
+"Ви можете легко скасувати зміни - **повернути** його до того, як він "
+"виглядав під час останнього компонування. ``git status`` також покаже вам, "
+"як це зробити:"
+
+#: ../../src/vcs/basics.txt:686
+msgid "It tells you pretty explicitly how to discard the changes you've make."
+msgstr "Він досить чітко розповідає, як відкинути зміни, які ви зробили."
+
+#: ../../src/vcs/basics.txt:699
+msgid "Undoing things with git restore"
+msgstr "Скасування змін за допомогою git restore"
+
+#: ../../src/vcs/basics.txt:701
+msgid ""
+"``git restore`` is basically an alternative to ``git reset``, from Git "
+"version 2.23.0 onwards, Git will use ``git restore`` instead of ``git "
+"reset`` for many undo operations."
+msgstr ""
+"``git restore`` є альтернативою ``git reset``, починаючи з версії 2.23.0, "
+"Git використовуватиме ``git restore`` замість ``git reset`` для багатьох "
+"операцій скасування."
+
+#: ../../src/vcs/basics.txt:737
+msgid ""
+"It’s important to understand that git restore <file> is a dangerous command. "
+"Any local changes you made to that file are gone -- Git just replaced that "
+"file with the last staged or committed version. Don't ever use this command "
+"unless you absolutely know that you don’t want those unsaved local changes."
+msgstr ""
+"Важливо розуміти, що відновлення git'ом <файлу> є небезпечною командою. Усі "
+"локальні зміни, які ви зробили у цьому файлі, буде втрачено - Git просто "
+"замінить цей файл на останню версію, що перебуває у стадії виконання або "
+"фіксації. Ніколи не використовуйте цю команду, якщо ви точно не знаєте, що "
+"вам не потрібні ці незбережені локальні зміни."
+
 #: ../../src/vcs/branch.txt:-1
 msgid "version, control, system, vcs, git, branch, merge, cherry-pick"
 msgstr "version, control, system, vcs, git, branch, merge, cherry-pick"
@@ -528,11 +1004,40 @@ msgstr ""
 "Кожного разу, коли ви робите комміт, вказівник головної гілки автоматично "
 "пересувається вперед."
 
-#: ../../src/vcs/branch.txt:37
+#: ../../src/vcs/branch.txt:38
+msgid "Branch management"
+msgstr "Управління гілками"
+
+#: ../../src/vcs/branch.txt:40
+msgid ""
+"The ``git branch`` command does more that create and delete branches. If you "
+"run it with no arguments, you get a simple listing of your current branches:"
+msgstr ""
+"Команда ``git branch`` робить більше, ніж просто створює і видаляє гілки. "
+"Якщо ви запустите її без аргументів, ви отримаєте простий список ваших "
+"поточних гілок:"
+
+#: ../../src/vcs/branch.txt:55
+msgid ""
+"To see all the branches that contain work you haven't yet merged in, use ``--"
+"no-merged`` option:"
+msgstr ""
+"Щоб побачити всі гілки, які містять роботи, до яких ви ще не приєдналися, "
+"використовуйте опцію ``--no-merged``:"
+
+#: ../../src/vcs/branch.txt:65
+msgid ""
+"Branches listed in the output has work, that isn't merged to current branch. "
+"So, deleting them via ``git branch -d`` will fail."
+msgstr ""
+"У гілках, перелічених у виводі, є напрацювання, які не злито з поточною "
+"гілкою. Отже, їх видалення за допомогою ``git branch -d`` не спрацює."
+
+#: ../../src/vcs/branch.txt:69
 msgid "Create branches"
 msgstr "Створення гілок"
 
-#: ../../src/vcs/branch.txt:39
+#: ../../src/vcs/branch.txt:71
 msgid ""
 "There are few ways to create a new branch in a Git repository. The most "
 "common way is to use ``git branch`` command."
@@ -540,7 +1045,7 @@ msgstr ""
 "Існує декілька способів створити нову гілку в Git-сховищі. Найпоширеніший з "
 "них - використання команди ``git branch``."
 
-#: ../../src/vcs/branch.txt:46
+#: ../../src/vcs/branch.txt:78
 msgid ""
 "Pointer to a parent commit is optional. By default the parent commit is set "
 "to the latest one available (HEAD pointer) at the moment of the branch "
@@ -552,11 +1057,256 @@ msgstr ""
 "на момент створення гілки. Ви також можете переключитися на новостворену "
 "гілку одразу після її створення за допомогою:"
 
-#: ../../src/vcs/branch.txt:81
+#: ../../src/vcs/branch.txt:88
+msgid "Switching branches"
+msgstr "Перемикання гілок"
+
+#: ../../src/vcs/branch.txt:90
+msgid "To switch to an existing branch, you run the ``git checkout`` command."
+msgstr "Щоб перейти до існуючої гілки, виконайте команду ``git checkout``."
+
+#: ../../src/vcs/branch.txt:109
+msgid "Basic branching and merging"
+msgstr "To switch to an existing branch, you run the ``git checkout`` command"
+
+#: ../../src/vcs/branch.txt:111
+msgid ""
+"First, let's say you're working on your project and have a couple of commits "
+"already on the ``master`` branch. You've decided that you're going to work "
+"on issue #53 in whatever issue-tracking system your company uses. To create "
+"a new branch and switch to it at the same time, you can run the ``git "
+"checkout`` command with the ``-b`` switch:"
+msgstr ""
+"По-перше, припустимо, що ви працюєте над своїм проектом і вже маєте кілька "
+"комітів на гілці ``master``. Ви вирішили, що будете працювати над issue #53 "
+"в будь-якій системі відстеження проблем, яку використовує ваша компанія. Щоб "
+"створити нову гілку і одночасно переключитися на неї, ви можете виконати "
+"команду ``git checkout`` з ключем ``-b``:"
+
+#: ../../src/vcs/branch.txt:122
+msgid "This is shorthand for:"
+msgstr "Це скорочено означає:"
+
+#: ../../src/vcs/branch.txt:129
+msgid ""
+"In deed this creates a new branch pointer, aimed to the latest commit "
+"present on ``master`` branch. But, from now your branch is ``feature/"
+"issue53``. So, doing commits moves the feature branch pointer forward, "
+"because you have it checkout out (that is, your ``HEAD`` is pointing to it)."
+msgstr ""
+"Насправді це створить новий покажчик гілки, спрямований на останню фіксацію, "
+"наявну у гілці ``master``. Але відтепер ваша гілка називається ``feature/"
+"issue53``. Отже, виконання коммітів пересуває вказівник гілки feature "
+"вперед, тому що ви її вилучили (тобто ваша ``HEAD`` вказує на неї)."
+
+#: ../../src/vcs/branch.txt:134
+msgid ""
+"Now, lets assume the \"issue53\" is fixed, and you need to bring commits "
+"from the ``feature/issue53`` branch back to ``master``."
+msgstr ""
+"Тепер припустимо, що \"issue53\" виправлено, і вам потрібно перенести коміти "
+"з гілки ``feature/issue53`` назад до ``master``."
+
+#: ../../src/vcs/branch.txt:138
+msgid "Merging branches"
+msgstr "Злиття гілок"
+
+#: ../../src/vcs/branch.txt:140
+msgid ""
+"You need to switch back to ``master`` branch and use ``git merge`` command, "
+"to merge changes (commits) from the source branch into target."
+msgstr ""
+"Вам потрібно повернутися до гілки ``master`` і скористатися командою ``git "
+"merge``, щоб об'єднати зміни (коміти) з вихідної гілки в цільову."
+
+#: ../../src/vcs/branch.txt:152
+msgid ""
+"You'll notice phrase \"fast-forward\" in that merge. Because the commit "
+"pointed to by the branch ``feature/issue53`` you merged in was directly "
+"ahead of the last commit on ``master`` branch, Git simply moves the pointer "
+"forward."
+msgstr ""
+"Ви помітите фразу \"перемотування вперед\" у цьому злитті. Оскільки коміт, "
+"на який вказує гілка ``feature/issue53``, до якої ви приєдналися, був "
+"безпосередньо перед останнім комітом у гілці ``master``, Git просто пересуне "
+"вказівник вперед."
+
+#: ../../src/vcs/branch.txt:156
+msgid ""
+"Changes from ``feature/issue53`` are now in the snapshot of the commit "
+"pointed to by the ``master`` branch."
+msgstr ""
+"Зміни з ``feature/issue53`` тепер містяться у знімку коміту, на який вказує "
+"гілка ``master``."
+
+#: ../../src/vcs/branch.txt:163
+msgid ""
+"Now, lets assume another developer started working on ``feature/issue54`` at "
+"the same time. And there are few commits on this feature branch. Suppose, "
+"the developer decided that work on **issue54** is finished and they want to "
+"merge their feature branch into ``master``."
+msgstr ""
+"Тепер припустимо, що інший розробник почав працювати над ``feature/issue54`` "
+"в той самий час. І у цій гілці мало комітів. Припустимо, що розробник "
+"вирішив, що робота над **issue54** завершена і він хоче об'єднати свою гілку "
+"з ``master``."
+
+#: ../../src/vcs/branch.txt:179
+msgid ""
+"This looks a bit different than the ``feature/issue53`` merge. In this case, "
+"development history has diverged from some older point. Because the commit "
+"on the branch you're on isn't a direct ancestor of the branch you're merging "
+"in, Git has to do some work. In this case, Git does a simple three-way "
+"merge, using two snapshots pointed to by the branch tips and the common "
+"ancestor of the two."
+msgstr ""
+"Це виглядає дещо інакше, ніж злиття ``функція/випуск53``. У цьому випадку "
+"історія розробки розійшлася з якоїсь давнішої точки. Оскільки коміт на "
+"гілці, в якій ви перебуваєте, не є прямим предком гілки, в яку ви виконуєте "
+"злиття, Git'у доведеться виконати деяку роботу. У цьому випадку Git виконує "
+"просте тристороннє злиття, використовуючи два знімки, на які вказують "
+"кінчики гілок, і їхнього спільного предка."
+
+#: ../../src/vcs/branch.txt:186
+msgid ""
+"Instead of just moving the branch pointer forward, Git creates a new "
+"snapshot that results from this three-way merge and automatically creates a "
+"new commit that points to it. This is referred to as a *merge commit*, and "
+"is a special in that it has more than one parent."
+msgstr ""
+"Замість того, щоб просто перемістити вказівник гілки вперед, Git створює "
+"новий знімок, який є результатом цього тристороннього злиття, і автоматично "
+"створює новий коміт, який вказує на нього. Це називається *коммітом злиття*, "
+"і він особливий тим, що має більше одного батька."
+
+#: ../../src/vcs/branch.txt:196
+msgid "Merge conflicts"
+msgstr "Конфлікти об'єднання"
+
+#: ../../src/vcs/branch.txt:198
+msgid ""
+"Occasionally, the merge process doesn't go smoothly. If the same part of the "
+"same file is changed differently in the two branches you're merging, Git "
+"won't be able to merge them cleanly."
+msgstr ""
+"Іноді процес злиття відбувається не зовсім гладко. Якщо у двох гілках, які "
+"ви об'єднуєте, однакова частина одного і того ж файлу змінена по-різному, "
+"Git не зможе об'єднати їх чисто."
+
+#: ../../src/vcs/branch.txt:209
+msgid ""
+"Git hasn't automatically created a new merge commit. It has paused the "
+"process while you resolve the conflict. If you want to see which files are "
+"unmerged at any point after a merge conflict, you can run ``git status``:"
+msgstr ""
+"Git не створив автоматично новий коміт злиття. Він призупинив процес, поки "
+"ви вирішуєте конфлікт. Якщо ви хочете побачити, які файли було від'єднано "
+"після конфлікту злиття, ви можете запустити ``git status``:"
+
+#: ../../src/vcs/branch.txt:228
+msgid ""
+"Anything that has merge conflicts and hasn't been resolved is listed as "
+"unmerged. Git adds standard conflict-resolution markers to the files that "
+"have conflicts, so you can open them manually and resolve those conflicts. "
+"Your file contains a section that looks something like this:"
+msgstr ""
+"Все, що має конфлікти злиття, які не було вирішено, позначається як не "
+"об'єднане. Git додає стандартні маркери вирішення конфліктів до файлів, які "
+"мають конфлікти, щоб ви могли відкрити їх вручну і вирішити ці конфлікти. "
+"Ваш файл містить розділ, який виглядає приблизно так:"
+
+#: ../../src/vcs/branch.txt:243
+msgid ""
+"This means the version in ``HEAD`` (your ``master`` branch, because that was "
+"what you had checked out when you ran merge command) is the top part of that "
+"block (everything above the \"=======\"), while the version in ``vcs`` "
+"branch looks like everything in the bottom part. In order to resolve the "
+"conflict, you have to either choose one side or the other or merge the "
+"contents yourself."
+msgstr ""
+"Це означає, що версія у гілці ``HEAD`` (ваша гілка ``master``, тому що саме "
+"її ви перевірили, коли виконували команду merge) - це верхня частина блоку "
+"(все, що вище \"=======\"), тоді як версія у гілці ``vcs`` виглядає як все, "
+"що знаходиться у нижній частині. Для того, щоб вирішити конфлікт, вам "
+"доведеться або стати на чийсь бік, або об'єднати вміст самостійно."
+
+#: ../../src/vcs/branch.txt:249
+msgid "When conflicts are resolved, you can run ``git status`` command again:"
+msgstr ""
+"Коли конфлікти буде вирішено, ви можете знову запустити команду ``git "
+"status``:"
+
+#: ../../src/vcs/branch.txt:262
+msgid ""
+"If you're happy with that, and you verify that everything that had conflicts "
+"has been staged, you can run ``git commit`` for finalize the merge commit."
+msgstr ""
+"Якщо вас все влаштовує, і ви переконалися, що все, що викликало конфлікти, "
+"було усунуто, ви можете запустити ``git commit`` для остаточного завершення "
+"злиття."
+
+#: ../../src/vcs/branch.txt:266
+msgid "Rebasing"
+msgstr "Перебазування"
+
+#: ../../src/vcs/branch.txt:268
+msgid ""
+"In Git, there two main ways to integrate changes from one branch into "
+"another: the ``merge`` and the ``rebase``."
+msgstr ""
+"У Git'і існує два основних способи інтеграції змін з однієї гілки в іншу: "
+"\"злиття\" і \"перебазування\"."
+
+#: ../../src/vcs/branch.txt:271
+msgid ""
+"Earlier, there was an example of diverged work and commits made on two "
+"different branches."
+msgstr ""
+"Раніше ми вже наводили приклад розбіжностей у роботі та зобов'язаннях, "
+"зроблених на двох різних гілках."
+
+#: ../../src/vcs/branch.txt:278
+msgid ""
+"The easiest way to integrate the branches, as we've already covered, is the "
+"``merge`` command. It performs a three-way merge between the two latest "
+"branch snapshots, and the most recent common ancestor of the two, creating a "
+"new snapshot (and commit)."
+msgstr ""
+"Найпростішим способом об'єднання гілок, як ми вже розглядали, є команда "
+"``merge``. Вона виконує тристороннє злиття між двома останніми знімками "
+"гілок і останнім спільним предком, створюючи новий знімок (і фіксацію)."
+
+#: ../../src/vcs/branch.txt:283
+msgid ""
+"However, there is another way: you can take the patch of the change that was "
+"introduced in ``master`` and reapply it on top of ``feature``. In Git, this "
+"is called *rebasing*. With ``rebase`` command, you can take all the changes "
+"that were committed on one branch and replay them on a different branch."
+msgstr ""
+"Втім, є й інший спосіб: ви можете взяти патч зі змінами, які було внесено до "
+"``master``, і повторно застосувати його поверх ``feature``. У Git'і це "
+"називається *rebasing*. За допомогою команди ``rebase`` ви можете взяти всі "
+"зміни, які були зафіксовані на одній гілці, і відтворити їх на іншій гілці."
+
+#: ../../src/vcs/branch.txt:295
+msgid ""
+"This operation works by going to the common ancestor of the two branches, "
+"getting the diff introduced by each commit of the branch you're on, saving "
+"those diffs to temporary files, resetting the current branch to the same "
+"commit as the branch you are rebasing onto, and finally applying each change "
+"in turn."
+msgstr ""
+"Ця операція виконується шляхом переходу до спільного предка двох гілок, "
+"отримання відмінностей, внесених кожним коммітом гілки, на якій ви "
+"перебуваєте, збереження цих відмінностей у тимчасових файлах, скидання "
+"поточної гілки до того ж комміту, що і гілка, на яку ви перебазуєтесь, і, "
+"нарешті, застосування кожної зміни по черзі."
+
+#: ../../src/vcs/branch.txt:309
 msgid "Branching strategies"
 msgstr "Стратегії розгалуження"
 
-#: ../../src/vcs/branch.txt:83
+#: ../../src/vcs/branch.txt:311
 msgid ""
 "Branching strategy in version control systems defines how branches are "
 "created, managed, and used in a project's development process. It helps "
@@ -572,7 +1322,7 @@ msgstr ""
 "чіткість у роботі з гілками, мінімізує конфлікти та уможливлює плавний і "
 "структурований робочий процес розробки."
 
-#: ../../src/vcs/branch.txt:90
+#: ../../src/vcs/branch.txt:318
 msgid ""
 "GitFlow is a popular branching strategy that provides a well-defined model "
 "for managing branches in a Git repository. It was introduced by Vincent "
@@ -584,7 +1334,7 @@ msgstr ""
 "Вінсентом Дріссеном (Vincent Driessen) і базується на ідеї використання двох "
 "основних гілок: \"master\" і \"develop\"."
 
-#: ../../src/vcs/branch.txt:94
+#: ../../src/vcs/branch.txt:322
 msgid ""
 "**Master Branch**: The \"master\" branch represents the stable version of "
 "the codebase. It should always contain production-ready code and be free "
@@ -596,7 +1346,7 @@ msgstr ""
 "жодних серйозних проблем. Майстер-гілка захищена, і в неї зливаються тільки "
 "релізні версії."
 
-#: ../../src/vcs/branch.txt:98
+#: ../../src/vcs/branch.txt:326
 msgid ""
 "**Develop Branch**: The \"develop\" branch is where the ongoing development "
 "and integration of features take place. It serves as the integration branch "
@@ -607,7 +1357,7 @@ msgstr ""
 "розробка та інтеграція функцій. Вона слугує інтеграційною гілкою для різних "
 "функціональних гілок, а також повинна містити стабільну версію коду."
 
-#: ../../src/vcs/branch.txt:102
+#: ../../src/vcs/branch.txt:330
 msgid ""
 "**Feature Branches**: For each new feature or bug fix, a dedicated "
 "\"feature\" branch is created off the \"develop\" branch. These branches are "
@@ -617,7 +1367,7 @@ msgstr ""
 "створюється окрема гілка \"feature\" у гілці \"develop\". Ці гілки "
 "недовговічні і існують лише на час розробки функції."
 
-#: ../../src/vcs/branch.txt:105
+#: ../../src/vcs/branch.txt:333
 msgid ""
 "**Release Branches**: When the development on the \"develop\" branch is "
 "ready for a release, a \"release\" branch is created. The release branch is "
@@ -627,7 +1377,7 @@ msgstr ""
 "створюється гілка \"release\". Релізна гілка використовується для "
 "тестування, виправлення помилок і підготовки до розгортання."
 
-#: ../../src/vcs/branch.txt:108
+#: ../../src/vcs/branch.txt:336
 msgid ""
 "**Hotfix Branches**: If a critical issue is discovered in the production "
 "version, a \"hotfix\" branch is created from the \"master\" branch. This "
@@ -638,7 +1388,7 @@ msgstr ""
 "на основі основної гілки створюється гілка \"hotfix\". Це дозволяє швидко "
 "виправити проблему, не впливаючи на поточну розробку на гілці \"develop\"."
 
-#: ../../src/vcs/branch.txt:113
+#: ../../src/vcs/branch.txt:341
 msgid ""
 "GitFlow provides a structured approach to managing branching in a "
 "collaborative development environment. It ensures that the main branches "
@@ -651,14 +1401,6 @@ msgstr ""
 "стабільними, а нові функції та виправлення помилок плавно інтегруються перед "
 "випуском. Ця стратегія особливо корисна для проектів з регулярними випусками "
 "і командою, яка працює над декількома функціями одночасно."
-
-#: ../../src/vcs/commits.txt:-1
-msgid "version, control, system, vcs, git, history, commit"
-msgstr "version, control, system, vcs, git, history, commit"
-
-#: ../../src/vcs/commits.txt:8
-msgid "Working with Commits"
-msgstr "Робота з коммітами"
 
 #: ../../src/vcs/github.txt:-1
 msgid "version, control, system, vcs, git, github"
@@ -979,3 +1721,155 @@ msgstr ""
 "Перше, що вам слід зробити під час встановлення Git'у, це вказати своє ім'я "
 "користувача та адресу електронної пошти. Це важливо, оскільки кожна фіксація "
 "Git'а використовує цю інформацію."
+
+#: ../../src/vcs/tagging.txt:4
+msgid "Tagging"
+msgstr "Тегування"
+
+#: ../../src/vcs/tagging.txt:6
+msgid ""
+"Like most VCSs, Git has the ability to tag specific points in a repository's "
+"history as being important. Typically, people use this functionality to mark "
+"release points (``v1.0``, ``v2.0`` and so on)."
+msgstr ""
+"Як і більшість VCS, Git має можливість позначати певні моменти в історії "
+"сховища як важливі. Зазвичай люди використовують цю функцію для позначення "
+"точок релізу (``v1.0``, ``v2.0`` і так далі)."
+
+#: ../../src/vcs/tagging.txt:11
+msgid "Listing tags"
+msgstr "Перелік тегів"
+
+#: ../../src/vcs/tagging.txt:13
+msgid ""
+"Listing the existing tags in Git is straightforward. Just type ``git tag`` "
+"(with optional ``-l`` or ``--list``)."
+msgstr ""
+"Перерахувати існуючі теги у Git'і дуже просто. Просто введіть ``git tag`` (з "
+"необов'язковим ``-l`` або ``--list``)."
+
+#: ../../src/vcs/tagging.txt:22
+msgid ""
+"This command lists the tags in alphabetical order, the order in which they "
+"are displayed has no real importance. You can also search for tags that "
+"match a particular pattern. The Git source repo, for instance contains more "
+"than 500 tags. If you're interested only in looking at the 1.8.4 series, you "
+"can run this:"
+msgstr ""
+"Ця команда перелічує мітки в алфавітному порядку, порядок їх відображення не "
+"має особливого значення. Ви також можете шукати теги, які відповідають "
+"певному шаблону. Наприклад, сховище коду Git містить понад 500 тегів. Якщо "
+"вас цікавить лише серія 1.8.4, ви можете виконати цю команду:"
+
+#: ../../src/vcs/tagging.txt:38
+msgid "Creating tags"
+msgstr "Створення тегів"
+
+#: ../../src/vcs/tagging.txt:40
+msgid "Git supports two types of tags: *lightweight* and *annotated*."
+msgstr "Git підтримує два типи тегів: *легкі* та *анотовані*."
+
+#: ../../src/vcs/tagging.txt:42
+msgid ""
+"A lightweight tag is very much like a branch that doesn't change -- it's "
+"just a pointer to a specific commit."
+msgstr ""
+"Полегшений тег дуже схожий на гілку, яка не змінюється -- це просто "
+"вказівник на конкретний комміт."
+
+#: ../../src/vcs/tagging.txt:45
+msgid ""
+"Annotated tags, however, are stored as full objects in the Git database. "
+"They're checksummed; contain the tagger name, email, and date; have a "
+"tagging message; and can be signed and verified with GBU Privacy Guard "
+"(GPG). It's generally recommended that you create annotated tags so you can "
+"have all this information; but if you want a temporary tag or for some "
+"reason don't want to keep the other information, lightweight tags are "
+"available too."
+msgstr ""
+"Анотовані мітки, однак, зберігаються як повноцінні об'єкти в базі даних Git. "
+"Вони мають контрольну суму, містять ім'я тегувальника, електронну пошту та "
+"дату, мають повідомлення про тегування, а також можуть бути підписані та "
+"перевірені за допомогою GBU Privacy Guard (GPG). Зазвичай рекомендується "
+"створювати анотовані мітки, щоб мати всю цю інформацію; але якщо вам "
+"потрібна тимчасова мітка або з якихось причин ви не хочете зберігати іншу "
+"інформацію, доступні також полегшені мітки."
+
+#: ../../src/vcs/tagging.txt:53
+msgid "Annotated tags"
+msgstr "Анотовані теги"
+
+#: ../../src/vcs/tagging.txt:54
+msgid ""
+"Creating an annotated tag in Git is simple. The easiest way is to specify ``-"
+"a`` when you run the ``tag`` command:"
+msgstr ""
+"Створити анотовану мітку в Git'і дуже просто. Найпростіший спосіб - вказати "
+"``-a`` при виконанні команди ``tag``:"
+
+#: ../../src/vcs/tagging.txt:70
+msgid "Lightweight tags"
+msgstr "Легкі мітки"
+
+#: ../../src/vcs/tagging.txt:71
+msgid ""
+"Another way to tag commits is with a lightweight tag. this is basically the "
+"commit checksum stored in a file -- no other information is kept. To create "
+"a lightweight tag, don't supply any of the ``-a``, ``-s``, or ``-m`` "
+"options, just provide a tag name:"
+msgstr ""
+"Інший спосіб позначення коммітів - використання полегшених тегів. Це, по "
+"суті, контрольна сума комміту, яка зберігається у файлі - ніяка інша "
+"інформація не зберігається. Щоб створити полегшену мітку, не вказуйте жодної "
+"з опцій ``-a``, ``-s`` або ``-m``, просто вкажіть назву мітки:"
+
+#: ../../src/vcs/tagging.txt:90
+msgid "Tagging later"
+msgstr "Відмітити пізніше"
+
+#: ../../src/vcs/tagging.txt:91
+msgid "You can also tag commits after you're moved past them."
+msgstr "Ви також можете позначати коміти після того, як ви пройшли повз них."
+
+#: ../../src/vcs/tagging.txt:108
+msgid "Deleting tags"
+msgstr "Видалення тегів"
+
+#: ../../src/vcs/tagging.txt:110
+msgid ""
+"To delete a tag on your local repository, you can use ``git tag -d "
+"<tagname>``."
+msgstr ""
+"Щоб видалити тег у вашому локальному сховищі, ви можете скористатися ``git "
+"tag -d <tagname>``."
+
+#: ../../src/vcs/tagging.txt:118
+msgid "Checking out tags"
+msgstr "Перевірка тегів"
+
+#: ../../src/vcs/tagging.txt:120
+msgid ""
+"If you want to view the versions of files a tag is pointing to, you can do a "
+"``git checkout`` of that tag, although this puts your repository in "
+"\"detached HEAD\" state, which has some ill side effects:"
+msgstr ""
+"Якщо ви хочете переглянути версії файлів, на які вказує тег, ви можете "
+"виконати ``git checkout`` цього тегу, хоча це переводить ваше сховище у стан "
+"\"відокремленої ГОЛОВИ\", що має деякі погані побічні ефекти:"
+
+#: ../../src/vcs/tagging.txt:146
+msgid ""
+"In \"detached HEAD\" state, if you make changes and then create a commit, "
+"the tag will stay the same, but your new commit won’t belong to any branch "
+"and will be unreachable, except by the exact commit hash. Thus, if you need "
+"to make changes -- say you’re fixing a bug on an older version, for instance "
+"-- you will generally want to create a branch:"
+msgstr ""
+"У стані \"detached HEAD\", якщо ви внесете зміни, а потім створите коміт, "
+"тег залишиться незмінним, але ваш новий коміт не належатиме до жодної гілки "
+"і буде недоступним, окрім як за точним хешем коміту. Таким чином, якщо вам "
+"потрібно внести зміни - скажімо, ви виправляєте ваду у старій версії - вам, "
+"як правило, краще створити гілку:"
+
+#~ msgid "version, control, system, vcs, git, history, commit"
+#~ msgstr "version, control, system, vcs, git, history, commit"

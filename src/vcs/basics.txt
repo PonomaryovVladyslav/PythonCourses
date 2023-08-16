@@ -345,7 +345,8 @@ Viewing the commit history
 
 After you have created several commits, or if you have cloned a repository with
 an existing commit history, you'll probably want to look back to see what has
-happened. The most basic and powerful tool to do this is the git log command.
+happened. The most basic and powerful tool to do this is the ``git log``
+command.
 
 ::
 
