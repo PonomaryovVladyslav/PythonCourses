@@ -318,6 +318,7 @@ to them.
     $ git add *
     $ git status
     On branch master
+
     Changes to be committed:
         (use "git reset HEAD <file>..." to unstage)
             renamed: README.md -> README
@@ -327,9 +328,11 @@ to them.
     M CONTRIBUTING.md
     $ git status
     On branch master
+
     Changes to be committed:
         (use "git reset HEAD <file>..." to unstage)
             renamed: README.md -> README
+
     Changes not staged for commit:
         (use "git add <file>..." to update what will be committed)
         (use "git checkout -- <file>..." to discard changes in working directory)
@@ -353,6 +356,7 @@ It tells you pretty explicitly how to discard the changes you've make.
     $ git checkout -- CONTRIBUTING.md
     $ git status
     On branch master
+
     Changes to be committed:
         (use "git reset HEAD <file>..." to unstage)
             renamed: README.md -> README
@@ -370,6 +374,7 @@ Undoing things with git restore
     $ git add *
     $ git status
     On branch master
+
     Changes to be committed:
         (use "git restore --staged <file>..." to unstage)
             modified: CONTRIBUTING.md
@@ -377,9 +382,11 @@ Undoing things with git restore
     $ git restore --staged CONTRIBUTING.md
     $ git status
     On branch master
+
     Changes to be committed:
         (use "git restore --staged <file>..." to unstage)
             renamed: README.md -> README
+
     Changes not staged for commit:
         (use "git add <file>..." to update what will be committed)
         (use "git restore <file>..." to discard changes in working directory)
@@ -387,6 +394,7 @@ Undoing things with git restore
     $ git restore CONTRIBUTING.md
     $ git status
     On branch master
+
     Changes to be committed:
         (use "git restore --staged <file>..." to unstage)
             renamed: README.md -> README
