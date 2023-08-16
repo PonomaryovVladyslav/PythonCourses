@@ -1,0 +1,155 @@
+
+###############################################################################
+                                    Tagging
+###############################################################################
+
+Like most VCSs, Git has the ability to tag specific points in a repository's
+history as being important. Typically, people use this functionality to mark
+release points (``v1.0``, ``v2.0`` and so on).
+
+Listing tags
+============
+
+Listing the existing tags in Git is straightforward. Just type ``git tag``
+(with optional ``-l`` or ``--list``).
+
+.. code-block:: shell
+
+    $ git tag
+    v1.0
+    v2.0
+
+This command lists the tags in alphabetical order, the order in which they are
+displayed has no real importance. You can also search for tags that match
+a particular pattern. The Git source repo, for instance contains more than
+500 tags. If you're interested only in looking at the 1.8.4 series, you can
+run this:
+
+.. code-block:: shell
+
+    $ git tag -l "1.8.5*"
+    v1.8.5
+    v1.8.5-rc0
+    v1.8.5-rc1
+    v1.8.5-rc2
+    v1.8.5-rc3
+
+Creating tags
+=============
+
+Git supports two types of tags: *lightweight* and *annotated*.
+
+A lightweight tag is very much like a branch that doesn't change -- it's just
+a pointer to a specific commit.
+
+Annotated tags, however, are stored as full objects in the Git database.
+They're checksummed; contain the tagger name, email, and date; have a tagging
+message; and can be signed and verified with GBU Privacy Guard (GPG). It's
+generally recommended that you create annotated tags so you can have all this
+information; but if you want a temporary tag or for some reason don't want to
+keep the other information, lightweight tags are available too.
+
+.. rubric:: Annotated tags
+
+Creating an annotated tag in Git is simple. The easiest way is to specify
+``-a`` when you run the ``tag`` command:
+
+.. code-block:: shell
+
+    $ git tag -a VCS -m "Version Control System - tags"
+    $ git tag
+    VCS
+    $ git show VCS
+    tag VCS
+    Tagger: Serhii Horodilov <sgorodil@gmail.com>
+    Date:   Wed Aug 16 19:04:24 2023 +0300
+
+    Version Control System - tags
+
+.. rubric:: Lightweight tags
+
+Another way to tag commits is with a lightweight tag. this is basically
+the commit checksum stored in a file -- no other information is kept. To
+create a lightweight tag, don't supply any of the ``-a``, ``-s``, or ``-m``
+options, just provide a tag name:
+
+.. code-block:: shell
+
+    $ git tag tagging
+    $ git tag
+    VCS
+    tagging
+    $ git show tagging
+    commit 21ae739f891c6ee6a77d8986402cb1e69a9b6a88 (HEAD -> feature/vcs, tag: tagging, tag: VCS)
+    Author: Serhii Horodilov <sgorodil@gmail.com>
+    Date:   Wed Aug 16 18:45:23 2023 +0300
+
+        Move commits.txt content to "basics" document
+
+.. rubric:: Tagging later
+
+You can also tag commits after you're moved past them.
+
+.. code-block:: shell
+
+    $ git log --pretty=format:%h -3
+    21ae739
+    ea4ac00
+    df216cf
+    $ git tag v1.4 ea4ac00
+    $ git show v1.4
+    commit ea4ac002604ca897ba05c846d63af1618c123b6f (tag: v1.4)
+    Author: Serhii Horodilov <sgorodil@gmail.com>
+    Date:   Wed Aug 16 18:32:27 2023 +0300
+
+        Fix code-block outputs
+
+Deleting tags
+=============
+
+To delete a tag on your local repository, you can use ``git tag -d <tagname>``.
+
+.. code-block:: shell
+
+    $ git tag -d VCS
+    Deleted tag 'VCS' (was eef3831)
+
+Checking out tags
+=================
+
+If you want to view the versions of files a tag is pointing to, you can do
+a ``git checkout`` of that tag, although this puts your repository in
+"detached HEAD" state, which has some ill side effects:
+
+.. code-block:: shell
+
+    $ git checkout VCS
+    Note: switching to 'vcs'.
+
+    You are in 'detached HEAD' state. You can look around, make experimental
+    changes and commit them, and you can discard any commits you make in this
+    state without impacting any branches by switching back to a branch.
+
+    If you want to create a new branch to retain commits you create, you may
+    do so (now or later) by using -c with the switch command. Example:
+
+      git switch -c <new-branch-name>
+
+    Or undo this operation with:
+
+      git switch -
+
+    Turn off this advice by setting config variable advice.detachedHead to false
+
+    HEAD is now at 60565a1 Fix GitFlow branches list
+
+In “detached HEAD” state, if you make changes and then create a commit, the tag
+will stay the same, but your new commit won’t belong to any branch and will be
+unreachable, except by the exact commit hash. Thus, if you need to make changes
+-- say you’re fixing a bug on an older version, for instance -- you will
+generally want to create a branch:
+
+.. code-block:: shell
+
+    $ git checkout -b vcs-tag-branch VCS
+    Switched to a new branch 'vcs-tag-branch'
