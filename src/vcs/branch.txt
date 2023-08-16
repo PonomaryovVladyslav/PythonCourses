@@ -52,27 +52,72 @@ creation using:
 
     git checkout -b <branch_name> [parent_commit]
 
+Switching branches
+==================
+
+To switch to an existing branch, you run the ``git checkout`` command.
+
+.. code-block:: shell
+
+    $ git branch
+      devel
+      feature/contributing
+      feature/legacy
+      feature/lib-ms
+      feature/libms
+      feature/pdf-builder
+    * feature/vcs
+      master
+
+    $ git checkout devel
+    Switched to branch 'devel'
+    Your branch is up to date with 'origin/devel'.
+
+Basic branching
+===============
+
+First, let's say you're working on your project and have a couple of commits
+already on the ``master`` branch. You've decided that you're going to work on
+issue #53 in whatever issue-tracking system your company uses. To create a new
+branch and switch to it at the same time, you can run the ``git checkout``
+command with the ``-b`` switch:
+
+.. code-block:: shell
+
+    $ git checkout -b feature/issue53
+    Switched to a new branch "feature/issue53"
+
+This is shorthand for:
+
+.. code-block:: shell
+
+    $ git branch feature/issue53
+    $ git checkout feature/issue53
+
+In deed this creates a new branch pointer, aimed to the latest commit present
+on ``master`` branch.
+
 .. todo:
     Add merge section
-
-.. mermaid:: /../assets/mermaid/git/merge-1.mmd
-    :align: center
-    :caption: Fast-forward merge
-
-.. mermaid:: /../assets/mermaid/git/merge-2.mmd
-    :align: center
-    :caption: Merge commit
+..
+    .. mermaid:: /../assets/mermaid/git/merge-1.mmd
+        :align: center
+        :caption: Fast-forward merge
+..
+    .. mermaid:: /../assets/mermaid/git/merge-2.mmd
+        :align: center
+        :caption: Merge commit
 
 .. todo:
     Add rebase section
-
-.. mermaid:: /../assets/mermaid/git/rebase-1.mmd
-    :align: center
-    :caption: Before rebase
-
-.. mermaid:: /../assets/mermaid/git/rebase-2.mmd
-    :align: center
-    :caption: After rebase
+..
+    .. mermaid:: /../assets/mermaid/git/rebase-1.mmd
+        :align: center
+        :caption: Before rebase
+..
+    .. mermaid:: /../assets/mermaid/git/rebase-2.mmd
+        :align: center
+        :caption: After rebase
 
 .. todo:
     Describe merging and cherry-pick
