@@ -208,7 +208,7 @@ The simplest way to commit is to type ``git commit``:
 Doing so launches your editor of choice.
 
 .. note::
-    This is set by your shell’s EDITOR environment variable -- usually vim or
+    This is set by your shell's EDITOR environment variable -- usually vim or
     emacs, although you can configure it with whatever you want using
     the ``git config --global core.editor``
 
