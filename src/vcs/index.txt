@@ -13,5 +13,6 @@
     intro
     setup
     basics
+    tagging
     branch
     github
