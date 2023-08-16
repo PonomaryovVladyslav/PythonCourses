@@ -1,0 +1,981 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2023, Python training course authors and contributors
+# This file is distributed under the same license as the Python Training
+# Course package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2023.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Python Training Course 2023.06.dev\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-08-16 14:39+0300\n"
+"PO-Revision-Date: 2023-08-16 14:45+0300\n"
+"Last-Translator: Serhii Horodilov <sgorodil@gmail.com>\n"
+"Language-Team: uk <LL@li.org>\n"
+"Language: uk\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Generated-By: Babel 2.12.1\n"
+"X-Generator: Poedit 3.3.2\n"
+
+#: ../../src/vcs/basics.txt:-1 ../../src/vcs/branch.txt:-1
+#: ../../src/vcs/commits.txt:-1 ../../src/vcs/github.txt:-1
+#: ../../src/vcs/index.txt:-1 ../../src/vcs/intro.txt:-1
+#: ../../src/vcs/setup.txt:-1
+msgid "Version control system"
+msgstr "Система контролю версій"
+
+#: ../../src/vcs/basics.txt:-1 ../../src/vcs/branch.txt:-1
+#: ../../src/vcs/commits.txt:-1 ../../src/vcs/github.txt:-1
+#: ../../src/vcs/index.txt:-1 ../../src/vcs/intro.txt:-1
+#: ../../src/vcs/setup.txt:-1
+msgid "Serhii Horodilov"
+msgstr "Serhii Horodilov"
+
+#: ../../src/vcs/basics.txt:-1
+msgid "version, control, system, vcs, git, basics"
+msgstr "version, control, system, vcs, git, basics"
+
+#: ../../src/vcs/basics.txt:8
+msgid "Git Basics"
+msgstr "Основи Git"
+
+#: ../../src/vcs/basics.txt:11
+msgid "Getting a Git repository"
+msgstr "Отримання Git-репозиторію"
+
+#: ../../src/vcs/basics.txt:13
+msgid "You typically obtain a Git repository in one of two ways:"
+msgstr "Зазвичай ви отримуєте Git-репозиторій одним з двох способів:"
+
+#: ../../src/vcs/basics.txt:15
+msgid ""
+"You can take a local directory that is currently not under version control, "
+"and turn it into a Git repository."
+msgstr ""
+"Ви можете взяти локальний каталог, який наразі не перебуває під контролем "
+"версій, і перетворити його на Git-репозиторій."
+
+#: ../../src/vcs/basics.txt:17
+msgid "You can clone an existing Git repository from elsewhere."
+msgstr "Ви можете клонувати існуюче сховище Git'а з іншого місця."
+
+#: ../../src/vcs/basics.txt:19
+msgid ""
+"In either case, you end up with a Git repository on your local machine, "
+"ready for work."
+msgstr ""
+"У будь-якому випадку, ви отримаєте Git-репозиторій на вашій локальній "
+"машині, готовий до роботи."
+
+#: ../../src/vcs/basics.txt:23
+msgid "Initializing repo in an existing directory"
+msgstr "Ініціалізація репо в існуючому каталозі"
+
+#: ../../src/vcs/basics.txt:25
+msgid ""
+"If you have a project directory that is currently not under version control "
+"and you want to start controlling it with Git, you first need to go to that "
+"project's directory. If you've never done this, it looks a little different "
+"depending on which system you're running:"
+msgstr ""
+"Якщо у вас є каталог проекту, який наразі не перебуває під контролем версій, "
+"і ви хочете почати контролювати його за допомогою Git'а, спершу вам потрібно "
+"перейти до каталогу цього проекту. Якщо ви ніколи цього не робили, це "
+"виглядає трохи інакше, залежно від того, якою системою ви користуєтеся:"
+
+#: ../../src/vcs/basics.txt:30
+msgid "Change directory in bash (Linux)"
+msgstr "Зміна каталогу в bash (Linux)"
+
+#: ../../src/vcs/basics.txt:35
+msgid "Change directory in bash (MacOS)"
+msgstr "Зміна каталогу в bash (MacOS)"
+
+#: ../../src/vcs/basics.txt:40
+msgid "Change directory in PowerShell (Windows)"
+msgstr "Зміна каталогу в PowerShell (Windows)"
+
+#: ../../src/vcs/basics.txt:45
+msgid "In the project's directory initialize a new Git repository."
+msgstr "У каталозі проекту ініціалізуйте новий Git-репозиторій."
+
+#: ../../src/vcs/basics.txt:51
+msgid ""
+"This creates a new subdirectory named .git that contains all of your "
+"necessary repository files -- a Git repository skeleton."
+msgstr ""
+"Це створить новий підкаталог з ім'ям .git, який міститиме всі необхідні "
+"файли сховища - скелет сховища Git."
+
+#: ../../src/vcs/basics.txt:55
+msgid "Cloning an existing repo"
+msgstr "Клонування існуючого репо"
+
+#: ../../src/vcs/basics.txt:57
+msgid ""
+"If you want to get a copy of an existing Git repository -- for example, a "
+"project you'd like to contribute to -- the command you need is ``git clone``."
+msgstr ""
+"Якщо ви хочете отримати копію існуючого сховища Git'а - наприклад, проекту, "
+"до якого ви хочете долучитися, - вам потрібна команда ``git clone``."
+
+#: ../../src/vcs/basics.txt:64
+msgid ""
+"That creates a directory named *edu-python-course.github.io*, initializes a "
+"*.git* directory inside it, pulls down all the data for that repository, and "
+"checks out a working copy of the latest version."
+msgstr ""
+"Він створює каталог з назвою *edu-python-course.github.io*, ініціалізує "
+"каталог *.git* всередині нього, витягує всі дані для цього сховища і "
+"перевіряє робочу копію останньої версії."
+
+#: ../../src/vcs/basics.txt:72
+msgid ""
+"That command does the same thing as the previous one, but the target "
+"directory is called *python-course*."
+msgstr ""
+"Ця команда робить те саме, що й попередня, але цільовий каталог називається "
+"*python-course*."
+
+#: ../../src/vcs/basics.txt:75
+msgid ""
+"Git has a number of different transfer protocols you can use. The previous "
+"example uses the ``https://`` protocol, but you may also see ``git://`` or "
+"``user@server:path/to/repo.git``, which uses the SSH transfer protocol."
+msgstr ""
+"Git має декілька різних протоколів передачі даних, які ви можете "
+"використовувати. У попередньому прикладі використовується протокол ``https://"
+"``, але ви також можете побачити ``git://`` або ``user@server:path/to/repo."
+"git``, який використовує протокол передачі SSH."
+
+#: ../../src/vcs/basics.txt:80
+msgid "Making changes to the repo"
+msgstr "Внесення змін до репозиторію"
+
+#: ../../src/vcs/basics.txt:82
+msgid ""
+"At this point, you should have a *bona fide* Git repository on your local "
+"machine, and a checkout or *working copy* of all of its files in front of "
+"you. Typically, you'll want to start making changes and committing snapshots "
+"of those changes into your repository each time the project reaches a state "
+"you want to record."
+msgstr ""
+"На цьому етапі у вас має бути *справжній* Git-репозиторій на локальному "
+"комп'ютері, а також контрольна або *робоча копія* всіх його файлів перед "
+"вами. Зазвичай, ви захочете почати вносити зміни і фіксувати знімки цих змін "
+"у вашому сховищі кожного разу, коли проект досягне стану, який ви хочете "
+"зафіксувати."
+
+#: ../../src/vcs/basics.txt:88
+msgid ""
+"Remember that each file in your working directory can be in one of two "
+"states: **tracked** or **untracked**."
+msgstr ""
+"Пам'ятайте, що кожен файл у вашому робочому каталозі може перебувати в "
+"одному з двох станів: **відстежується** або **невідстежується**."
+
+#: ../../src/vcs/basics.txt:91
+msgid ""
+"Tracked files are files that were in the last snapshot, as well as any newly "
+"staged files; they can be unmodified, modified, or staged. In short, tracked "
+"files are files that Git knows about."
+msgstr ""
+"Відстежувані файли - це файли, які були в останньому знімку, а також будь-"
+"які нещодавно покладені файли; вони можуть бути незміненими, зміненими або "
+"покладеними. Коротше кажучи, відстежувані файли - це файли, про які відомо "
+"Git'у."
+
+#: ../../src/vcs/basics.txt:94
+msgid ""
+"Untracked files are everything else -- any files in your working directory "
+"that were not in your last snapshot and are not in your staging area. "
+"Untracked basically means that Git sees a file you didn't have in a previous "
+"snapshot (commit), and which hasn't been yet staged."
+msgstr ""
+"Невідстежені файли - це все інше - будь-які файли у вашому робочому "
+"каталозі, яких не було у вашому останньому знімку і які не перебувають у "
+"вашій області сховища. По суті, це означає, що Git бачить файл, якого не "
+"було у попередньому знімку (комміті), і який ще не було покладено у сховище."
+
+#: ../../src/vcs/basics.txt:104
+msgid "Checking out status of the file(s)"
+msgstr "Перевірка стану файлу(ів)"
+
+#: ../../src/vcs/basics.txt:106
+msgid ""
+"The main tool you use to determine which files are in which state is the "
+"``git status`` command."
+msgstr ""
+"Основним інструментом для визначення стану файлів є команда ``git status``."
+
+#: ../../src/vcs/basics.txt:133
+msgid ""
+"Newly added *README.md* file is untracked, because it's under \"Untracked "
+"files\" heading the status output."
+msgstr ""
+"Щойно доданий файл *README.md* не відстежується, оскільки він знаходиться у "
+"розділі \"Файли, що не відстежуються\" у виведенні статусу."
+
+#: ../../src/vcs/basics.txt:137
+msgid "Tracking new files"
+msgstr "Відстеження нових файлів"
+
+#: ../../src/vcs/basics.txt:139
+msgid "In order to begin tracking a new file, you use the ``git add`` command."
+msgstr ""
+"Для того, щоб почати відстеження нового файлу, скористайтеся командою ``git "
+"add``."
+
+#: ../../src/vcs/basics.txt:153
+msgid ""
+"From now *README.md* file is **added** to the stage area and ready to be "
+"committed (is under \"Changes to be committed\" heading)."
+msgstr ""
+"Відтепер файл *README.md* **додано** до області сцени і він готовий до "
+"фіксації (знаходиться під заголовком \"Зміни, що підлягають фіксації\")."
+
+#: ../../src/vcs/basics.txt:157
+msgid ""
+"You can use wildcards, to stage multiple files at once. The most common use "
+"cases is to add **all** modified files, or files inside of a specific "
+"directory."
+msgstr ""
+"Ви можете використовувати підстановочні знаки, щоб вносити зміни до кількох "
+"файлів одночасно. Найпоширенішим випадком використання є додавання **усіх** "
+"змінених файлів або файлів у певному каталозі."
+
+#: ../../src/vcs/basics.txt:168
+msgid "Staging modified files"
+msgstr "Зберігання змінених файлів"
+
+#: ../../src/vcs/basics.txt:170
+msgid ""
+"If a staged (or already committed) file has been changed, it will be moved "
+"under \"Modified\" heading. These changes wouldn't be committed unless they "
+"are staged."
+msgstr ""
+"Якщо файл, що перебуває на етапі (або вже зафіксований), було змінено, його "
+"буде переміщено у рубрику \"Змінено\". Ці зміни не будуть зафіксовані, якщо "
+"вони не були поетапними."
+
+#: ../../src/vcs/basics.txt:190
+msgid ""
+"Changes may be added to the stage area by repeating ``git add`` command."
+msgstr "Зміни можна додати до області сцени, повторивши команду ``git add``."
+
+#: ../../src/vcs/basics.txt:191
+msgid ""
+"Changes may be discard by ``git restore <file>`` command. This action will "
+"restore file to its **staged** version."
+msgstr ""
+"Зміни можна відкинути командою ``git restore <file>``. Ця дія відновить файл "
+"до його **попередньої** версії."
+
+#: ../../src/vcs/basics.txt:195
+msgid "Committing changes"
+msgstr "Фіксація змін"
+
+#: ../../src/vcs/basics.txt:197
+msgid ""
+"Now that the stage area is set up the way required, it's time to commit "
+"changes. Remember that anything that is still unstaged -- any files you have "
+"created or modified that you haven't run git add on since you edited them -- "
+"won't go into this commit."
+msgstr ""
+"Тепер, коли область змін налаштована належним чином, настав час зафіксувати "
+"зміни. Пам'ятайте, що все, що ще не є стадією - будь-які файли, які ви "
+"створили або змінили, але не запустили git-додаток з моменту редагування, - "
+"не потраплять до цього коміту."
+
+#: ../../src/vcs/basics.txt:202
+msgid "The simplest way to commit is to type ``git commit``:"
+msgstr "Найпростіший спосіб фіксації - ввести ``git commit``:"
+
+#: ../../src/vcs/basics.txt:208
+msgid "Doing so launches your editor of choice."
+msgstr "Після цього запуститься обраний вами редактор."
+
+#: ../../src/vcs/basics.txt:211
+msgid ""
+"This is set by your shell's EDITOR environment variable -- usually vim or "
+"emacs, although you can configure it with whatever you want using the ``git "
+"config --global core.editor``"
+msgstr ""
+"Це задається змінною оточення EDITOR вашої оболонки - зазвичай vim або "
+"emacs, хоча ви можете налаштувати її як завгодно за допомогою ``git config --"
+"global core.editor``"
+
+#: ../../src/vcs/basics.txt:215
+msgid ""
+"Alternatively, you can type your commit message inline with the ``commit`` "
+"command by specifying it after a ``-m`` flag, like this:"
+msgstr ""
+"Крім того, ви можете ввести повідомлення про фіксацію у рядку з командою "
+"``commit``, вказавши його після прапорця ``-m``, як показано нижче:"
+
+#: ../../src/vcs/basics.txt:222
+msgid ""
+"Although it can be amazingly useful for crafting commits exactly how you "
+"want them, the staging area is sometimes a bit more complex than you need in "
+"your workflow. If you want to skip the staging area, Git provides a simple "
+"shortcut. Adding the ``-a`` option to the ``git commit`` command makes Git "
+"automatically stage every file that is already tracked before doing the "
+"commit, letting you skip the git add part:"
+msgstr ""
+"Хоча вона може бути надзвичайно корисною для створення коммітів саме так, як "
+"вам потрібно, область підготовки іноді буває трохи складнішою, ніж вам "
+"потрібно у вашому робочому процесі. Якщо ви хочете пропустити область "
+"підготовки, Git надає простий ярлик. Додавання опції ``-a`` до команди ``git "
+"commit`` змушує Git автоматично стадіювати кожен файл, який вже "
+"відстежується, перед виконанням комміту, дозволяючи вам пропустити частину "
+"git add:"
+
+#: ../../src/vcs/basics.txt:263
+msgid "Ignoring files"
+msgstr "Ігнорування файлів"
+
+#: ../../src/vcs/basics.txt:265
+msgid ""
+"Often, there is a class of files, that should not be a part of a repo. You "
+"want these files to be prevent from being automatically added or even shown "
+"as being untracked. These are generally files produced by loggers or a build "
+"system, or some local settings for the project that shouldn't be shared "
+"across other developers or maintainers. In such cases you can create a *."
+"gitignore* file. Here is the content of *.gitignore* used in current "
+"repository:"
+msgstr ""
+"Часто існує клас файлів, які не повинні бути частиною репозиторію. Ви "
+"хочете, щоб ці файли не додавалися автоматично або навіть показувалися як "
+"такі, що не відстежуються. Зазвичай це файли, створені логгерами або "
+"системою збірки, або деякі локальні налаштування проекту, які не повинні "
+"бути доступними для інших розробників або супровідників. У таких випадках ви "
+"можете створити файл *.gitignore*. Ось вміст *.gitignore*, який "
+"використовується у поточному сховищі:"
+
+#: ../../src/vcs/basics.txt:305
+msgid "These lines mean:"
+msgstr "Ці рядки означають:"
+
+#: ../../src/vcs/basics.txt:307
+msgid ""
+"Content within directories named \".venv\", \".env\", \"venv\" or \"env\" "
+"will be ignored completely."
+msgstr ""
+"Вміст каталогів з іменами \".venv\", \".env\", \"venv\" або \"env\" буде "
+"повністю проігноровано."
+
+#: ../../src/vcs/basics.txt:309
+msgid "Content within \"node_modules\" directory will be ignored completely."
+msgstr "Вміст каталогу \"node_modules\" буде повністю проігноровано."
+
+#: ../../src/vcs/basics.txt:310
+msgid ""
+"Any files within directories named \".vscode\" or \".idea\" will be ignored "
+"completely."
+msgstr ""
+"Будь-які файли в каталогах з іменами \".vscode\" або \".idea\" будуть "
+"повністю проігноровані."
+
+#: ../../src/vcs/basics.txt:312
+msgid "Any file with name starting with hash (#) will be ignored."
+msgstr ""
+"Будь-який файл з іменем, що починається з хешу (#), буде проігноровано."
+
+#: ../../src/vcs/basics.txt:313
+msgid "Any file with name ending with tilda (~) will be ignored."
+msgstr ""
+"Будь-який файл, ім'я якого закінчується на тильду (~), буде проігноровано."
+
+#: ../../src/vcs/basics.txt:314
+msgid ""
+"Content within directories named \"temp\" or \"tmp\" will be ignored "
+"completely."
+msgstr ""
+"Вміст каталогів з іменами \"temp\" або \"tmp\" буде повністю проігноровано."
+
+#: ../../src/vcs/basics.txt:316
+msgid ""
+"Content within directories named \"_builds\", \"_build\", \"builds\" or "
+"\"build\" will be ignored completely."
+msgstr ""
+"Вміст каталогів з іменами \"_builds\", \"_build\", \"builds\" або \"build\" "
+"буде повністю проігноровано."
+
+#: ../../src/vcs/basics.txt:318
+msgid "Any file with name ending with \".pot\" will be ignored."
+msgstr ""
+"Будь-який файл з іменем, що закінчується на \".pot\", буде проігноровано."
+
+#: ../../src/vcs/basics.txt:319
+msgid "Any file with name ending with \".mo\" will be ignored."
+msgstr ""
+"Будь-який файл з іменем, що закінчується на \".mo\", буде проігноровано."
+
+#: ../../src/vcs/basics.txt:321
+msgid ""
+"Setting up a *.gitignore* file for your new repository before you get going "
+"is generally a good idea so you don't accidentally commit files that you "
+"really don't want in your Git repository."
+msgstr ""
+"Створення файлу *.gitignore* для вашого нового сховища перед початком "
+"роботи, як правило, є гарною ідеєю, щоб випадково не зафіксувати файли, які "
+"вам насправді не потрібні у вашому Git-репозиторії."
+
+#: ../../src/vcs/basics.txt:325
+msgid ""
+"The rules for the patterns you can put in the *.gitignore* file are as "
+"follows:"
+msgstr ""
+"Правила для шаблонів, які ви можете помістити у *.gitignore* файл, такі:"
+
+#: ../../src/vcs/basics.txt:327
+msgid "Blank lines or lines starting with # are ignored."
+msgstr "Порожні рядки або рядки, що починаються з #, ігноруються."
+
+#: ../../src/vcs/basics.txt:328
+msgid ""
+"Standard glob patterns work, and will be applied recursively throughout the "
+"entire working tree."
+msgstr ""
+"Працюють стандартні шаблони глобусів, які будуть застосовуватися рекурсивно "
+"по всьому робочому дереву."
+
+#: ../../src/vcs/basics.txt:330
+msgid ""
+"You can start patterns with a forward slash (/) to avoid recursive inclusion."
+msgstr ""
+"Щоб уникнути рекурсивного включення, ви можете починати шаблони з прямої "
+"похилої риски (/)."
+
+#: ../../src/vcs/basics.txt:332
+msgid "You can end patterns with a forward slash (/) to specify a directory."
+msgstr ""
+"Ви можете закінчувати шаблони прямою похилою рискою (/), щоб вказати каталог."
+
+#: ../../src/vcs/basics.txt:333
+msgid "You can negate a pattern by starting it with an exclamation point (!)."
+msgstr "Ви можете заперечити шаблон, почавши його зі знаку оклику (!)."
+
+#: ../../src/vcs/basics.txt:335
+msgid ""
+"Glob patterns are like simplified regular expressions that shells use. An "
+"asterisk (\\*) matches zero or more characters; [ab] matches any character "
+"inside the brackets (in this case a or b); a question mark (?) matches a "
+"single character; and brackets enclosing characters separated by a hyphen "
+"([0-9]) matches any character between them (in this case 0 through 9). You "
+"can also use two asterisks to match nested directories; a/\\*\\*/z would "
+"match *a/z*, *a/b/z*, *a/b/c/z*, and so on."
+msgstr ""
+"Шаблони глобусів подібні до спрощених регулярних виразів, які використовують "
+"оболонки. Зірочка (\\*) відповідає нулю або більше символів; [ab] відповідає "
+"будь-якому символу всередині дужок (у цьому випадку a або b); знак питання "
+"(?) відповідає одному символу; а дужки, що містять символи, розділені "
+"дефісом ([0-9]), відповідають будь-якому символу між ними (у цьому випадку "
+"від 0 до 9). Ви також можете використовувати дві зірочки для вкладених "
+"каталогів; a/\\*\\*/z буде відповідати *a/z*, *a/b/z*, *a/b/c/z* і так далі."
+
+#: ../../src/vcs/branch.txt:-1
+msgid "version, control, system, vcs, git, branch, merge, cherry-pick"
+msgstr "version, control, system, vcs, git, branch, merge, cherry-pick"
+
+#: ../../src/vcs/branch.txt:8
+msgid "Branches and Merging"
+msgstr "Гілки та злиття"
+
+#: ../../src/vcs/branch.txt:11
+msgid "About branches"
+msgstr "Про гілки"
+
+#: ../../src/vcs/branch.txt:13
+msgid ""
+"To really understand the way Git does branching, we need to take a step back "
+"and examine how Git stores its data. Git doesn't store data as a series of "
+"changesets or differences, but instead as a series of snapshots. When you "
+"make a commit, Git stores a commit object that contains a pointer to the "
+"snapshot of the content you staged. This object also contains the author's "
+"name and email address, the message that you typed, and pointers to the "
+"commit or commits that directly came before this commit (its parent or "
+"parents): zero parents for the initial commit, one parent for a normal "
+"commit, and multiple parents for a commit that results from a merge of two "
+"or more branches."
+msgstr ""
+"Щоб по-справжньому зрозуміти, як Git працює з розгалуженнями, нам потрібно "
+"зробити крок назад і розглянути, як Git зберігає свої дані. Git зберігає "
+"дані не у вигляді серії наборів змін або відмінностей, а у вигляді серії "
+"знімків. Коли ви робите коміт, Git зберігає об'єкт коміту, який містить "
+"вказівник на створений вами знімок вмісту. Цей об'єкт також містить ім'я та "
+"адресу електронної пошти автора, повідомлення, яке ви набрали, і вказівники "
+"на комміт або комміти, які безпосередньо передували цьому комміту (його "
+"батька або батьків): нульовий батько для початкового комміту, один батько "
+"для звичайного комміту і кілька батьків для комміту, який є результатом "
+"злиття двох або більше гілок."
+
+#: ../../src/vcs/branch.txt:28
+msgid ""
+"A branch in Git is simply a lightweight movable pointer to one of these "
+"commits. The default branch name in Git is master. As you start making "
+"commits, you're given a master branch that points to the last commit you "
+"made. Every time you commit, the master branch pointer moves forward "
+"automatically."
+msgstr ""
+"Гілка в Git'і - це просто легкий рухомий вказівник на одну з цих коммітів. "
+"Стандартна назва гілки у Git'і - master. Коли ви починаєте робити комміти, "
+"ви отримуєте головну гілку, яка вказує на останній зроблений вами комміт. "
+"Кожного разу, коли ви робите комміт, вказівник головної гілки автоматично "
+"пересувається вперед."
+
+#: ../../src/vcs/branch.txt:37
+msgid "Create branches"
+msgstr "Створення гілок"
+
+#: ../../src/vcs/branch.txt:39
+msgid ""
+"There are few ways to create a new branch in a Git repository. The most "
+"common way is to use ``git branch`` command."
+msgstr ""
+"Існує декілька способів створити нову гілку в Git-сховищі. Найпоширеніший з "
+"них - використання команди ``git branch``."
+
+#: ../../src/vcs/branch.txt:46
+msgid ""
+"Pointer to a parent commit is optional. By default the parent commit is set "
+"to the latest one available (HEAD pointer) at the moment of the branch "
+"creation. You can also switch to the newly created branch just after its "
+"creation using:"
+msgstr ""
+"Вказівник на батьківський коміт не є обов'язковим. За замовчуванням "
+"батьківський коміт встановлюється на найновіший доступний (вказівник HEAD) "
+"на момент створення гілки. Ви також можете переключитися на новостворену "
+"гілку одразу після її створення за допомогою:"
+
+#: ../../src/vcs/branch.txt:81
+msgid "Branching strategies"
+msgstr "Стратегії розгалуження"
+
+#: ../../src/vcs/branch.txt:83
+msgid ""
+"Branching strategy in version control systems defines how branches are "
+"created, managed, and used in a project's development process. It helps "
+"teams collaborate effectively, isolate changes, and organize development "
+"efforts. A good branching strategy provides clarity on how to work with "
+"branches, minimizes conflicts, and enables a smooth and structured "
+"development workflow."
+msgstr ""
+"Стратегія розгалуження в системах контролю версій визначає, як створюються, "
+"управляються та використовуються гілки в процесі розробки проекту. Вона "
+"допомагає командам ефективно співпрацювати, ізолювати зміни та "
+"організовувати зусилля з розробки. Хороша стратегія розгалуження забезпечує "
+"чіткість у роботі з гілками, мінімізує конфлікти та уможливлює плавний і "
+"структурований робочий процес розробки."
+
+#: ../../src/vcs/branch.txt:90
+msgid ""
+"GitFlow is a popular branching strategy that provides a well-defined model "
+"for managing branches in a Git repository. It was introduced by Vincent "
+"Driessen and is based on the idea of using two main branches: \"master\" and "
+"\"develop.\""
+msgstr ""
+"GitFlow - це популярна стратегія розгалуження, яка надає чітко визначену "
+"модель для управління гілками в Git-репозиторії. Вона була представлена "
+"Вінсентом Дріссеном (Vincent Driessen) і базується на ідеї використання двох "
+"основних гілок: \"master\" і \"develop\"."
+
+#: ../../src/vcs/branch.txt:94
+msgid ""
+"**Master Branch**: The \"master\" branch represents the stable version of "
+"the codebase. It should always contain production-ready code and be free "
+"from any major issues. The \"master\" branch is protected, and only release "
+"versions are merged into it."
+msgstr ""
+"**Майстер-гілка**: \"Майстер-гілка\" представляє стабільну версію кодової "
+"бази. Вона завжди повинна містити готовий до використання код і не містити "
+"жодних серйозних проблем. Майстер-гілка захищена, і в неї зливаються тільки "
+"релізні версії."
+
+#: ../../src/vcs/branch.txt:98
+msgid ""
+"**Develop Branch**: The \"develop\" branch is where the ongoing development "
+"and integration of features take place. It serves as the integration branch "
+"for various feature branches and should also contain a stable version of the "
+"code."
+msgstr ""
+"**Гілка розробки**: Гілка \"develop\" - це місце, де відбувається постійна "
+"розробка та інтеграція функцій. Вона слугує інтеграційною гілкою для різних "
+"функціональних гілок, а також повинна містити стабільну версію коду."
+
+#: ../../src/vcs/branch.txt:102
+msgid ""
+"**Feature Branches**: For each new feature or bug fix, a dedicated "
+"\"feature\" branch is created off the \"develop\" branch. These branches are "
+"short-lived and exist only for the duration of the feature development."
+msgstr ""
+"**Вітки функцій**: Для кожної нової функції або виправлення помилки "
+"створюється окрема гілка \"feature\" у гілці \"develop\". Ці гілки "
+"недовговічні і існують лише на час розробки функції."
+
+#: ../../src/vcs/branch.txt:105
+msgid ""
+"**Release Branches**: When the development on the \"develop\" branch is "
+"ready for a release, a \"release\" branch is created. The release branch is "
+"used for testing, bug fixing, and preparing for deployment."
+msgstr ""
+"**Вітки релізу**: Коли розробка на гілці \"develop\" готова до релізу, "
+"створюється гілка \"release\". Релізна гілка використовується для "
+"тестування, виправлення помилок і підготовки до розгортання."
+
+#: ../../src/vcs/branch.txt:108
+msgid ""
+"**Hotfix Branches**: If a critical issue is discovered in the production "
+"version, a \"hotfix\" branch is created from the \"master\" branch. This "
+"allows for a quick fix without affecting ongoing development on the "
+"\"develop\" branch."
+msgstr ""
+"**Гілки виправлень**: Якщо у виробничій версії виявлено критичну проблему, "
+"на основі основної гілки створюється гілка \"hotfix\". Це дозволяє швидко "
+"виправити проблему, не впливаючи на поточну розробку на гілці \"develop\"."
+
+#: ../../src/vcs/branch.txt:113
+msgid ""
+"GitFlow provides a structured approach to managing branching in a "
+"collaborative development environment. It ensures that the main branches "
+"remain stable, and new features and bug fixes are integrated smoothly before "
+"being released. This strategy is particularly useful for projects with "
+"regular releases and a team working on multiple features concurrently."
+msgstr ""
+"GitFlow забезпечує структурований підхід до управління розгалуженням у "
+"середовищі спільної розробки. Він гарантує, що основні гілки залишаються "
+"стабільними, а нові функції та виправлення помилок плавно інтегруються перед "
+"випуском. Ця стратегія особливо корисна для проектів з регулярними випусками "
+"і командою, яка працює над декількома функціями одночасно."
+
+#: ../../src/vcs/commits.txt:-1
+msgid "version, control, system, vcs, git, history, commit"
+msgstr "version, control, system, vcs, git, history, commit"
+
+#: ../../src/vcs/commits.txt:8
+msgid "Working with Commits"
+msgstr "Робота з коммітами"
+
+#: ../../src/vcs/github.txt:-1
+msgid "version, control, system, vcs, git, github"
+msgstr "version, control, system, vcs, git, github"
+
+#: ../../src/vcs/github.txt:10
+msgid "GitHub"
+msgstr "GitHub"
+
+#: ../../src/vcs/github.txt:12
+msgid ""
+"`GitHub`_ is the single largest host for Git repositories, and is the "
+"central point of collaboration for millions of developers and projects."
+msgstr ""
+"`GitHub`_ - найбільший хостинг для Git-репозиторіїв, який є центральною "
+"точкою співпраці для мільйонів розробників і проектів."
+
+#: ../../src/vcs/github.txt:17
+msgid "Account setup and configuration"
+msgstr "Налаштування та конфігурація акаунта"
+
+#: ../../src/vcs/github.txt:19
+msgid ""
+"The first thing you need to do is set up a free user account. Visit "
+"`GitHub`_ and press \"Sign Up\" button. The GitHub will lead you through the "
+"account creation process. Just follow the hints and provide an email "
+"address, username and a strong password."
+msgstr ""
+"Перше, що вам потрібно зробити, це створити безкоштовний обліковий запис "
+"користувача. Відвідайте `GitHub`_ і натисніть кнопку \"Зареєструватися\". "
+"GitHub проведе вас через процес створення облікового запису. Просто "
+"дотримуйтесь підказок і вкажіть адресу електронної пошти, ім'я користувача "
+"та надійний пароль."
+
+#: ../../src/vcs/index.txt:-1 ../../src/vcs/intro.txt:-1
+msgid "version, control, system, vcs, git"
+msgstr "version, control, system, vcs, git"
+
+#: ../../src/vcs/index.txt:8
+msgid "Version Control System"
+msgstr "Система контролю версій"
+
+#: ../../src/vcs/intro.txt:8
+msgid "About version control (Git)"
+msgstr "Про контроль версій (Git)"
+
+#: ../../src/vcs/intro.txt:10
+msgid ""
+"Version control is a system that records changes to a file or set of files "
+"over time so that you can recall specific versions later. It allows you to "
+"revert selected files back to a previous state, revert the entire project "
+"back to a previous state, compare changes over time, see who last modified "
+"something that might be causing a problem, who introduced an issue and when, "
+"and more."
+msgstr ""
+"Контроль версій - це система, яка реєструє зміни у файлі або наборі файлів з "
+"плином часу, щоб ви могли пізніше згадати конкретні версії. Він дозволяє "
+"повернути вибрані файли до попереднього стану, повернути весь проект до "
+"попереднього стану, порівняти зміни в часі, побачити, хто востаннє змінював "
+"щось, що може спричинити проблему, хто і коли створив проблему, тощо."
+
+#: ../../src/vcs/intro.txt:16
+msgid ""
+"In a :abbr:`DVCS (Distributed Version Control Systems)` clients don't just "
+"check out the latest snapshot of the files; rather, they fully mirror the "
+"repository, including its full history. Thus, if any server dies, and these "
+"systems were collaborating via that server, any of the client repositories "
+"can be copied back up to the server to restore it. Every clone is really a "
+"full backup of all the data."
+msgstr ""
+"У :abbr:`DVCS (Distributed Version Control Systems)` клієнти не просто "
+"перевіряють останній знімок файлів, а повністю дзеркально копіюють сховище, "
+"включно з його повною історією. Таким чином, якщо якийсь сервер вийде з "
+"ладу, а ці системи працювали через нього, будь-який з клієнтських "
+"репозиторіїв можна скопіювати на сервер, щоб відновити його роботу. Кожен "
+"клон - це фактично повна резервна копія всіх даних."
+
+#: ../../src/vcs/intro.txt:26
+msgid "Distributed version control diagram"
+msgstr "Розподілена схема управління версіями"
+
+#: ../../src/vcs/intro.txt:29
+msgid "What is Git?"
+msgstr "Що таке Git?"
+
+#: ../../src/vcs/intro.txt:30
+msgid ""
+"The major difference between Git and any other VCS is the way Git thinks "
+"about its data. Conceptually, most other systems store information as a list "
+"of file-based changes. Git doesn't think of or store its data this way. "
+"Instead, Git thinks of its data more like a series of snapshots of a "
+"miniature filesystem."
+msgstr ""
+"Основна відмінність між Git'ом та будь-якою іншою VCS полягає в тому, як "
+"Git'ом мислить про свої дані. Концептуально, більшість інших систем "
+"зберігають інформацію у вигляді списку змін у файлах. Git не думає про свої "
+"дані і не зберігає їх таким чином. Натомість, Git думає про свої дані як про "
+"серію знімків мініатюрної файлової системи."
+
+#: ../../src/vcs/intro.txt:36
+msgid ""
+"This is an important distinction between Git and nearly all other VCSs. It "
+"makes Git reconsider almost every aspect of version control that most other "
+"systems copied from the previous generation. This makes Git more like a mini "
+"filesystem with some incredibly powerful tools built on top of it, rather "
+"than simply a VCS."
+msgstr ""
+"Це важлива відмінність між Git'ом та майже всіма іншими VCS. Вона змушує "
+"Git'а переосмислити майже кожен аспект контролю версій, який більшість інших "
+"систем скопіювали з попереднього покоління. Це робить Git більше схожим на "
+"міні-файлову систему з деякими неймовірно потужними інструментами, "
+"побудованими поверх неї, ніж на звичайну VCS."
+
+#: ../../src/vcs/intro.txt:45
+msgid "Storing data as snapshots of the project over time"
+msgstr "Зберігання даних у вигляді знімків проекту з плином часу"
+
+#: ../../src/vcs/intro.txt:48
+msgid "Local operations"
+msgstr "Локальні операції"
+
+#: ../../src/vcs/intro.txt:49
+msgid ""
+"Most operations in Git need only local files and resources to operate -- "
+"generally no information is needed from another computer on your network. "
+"Because you have the entire history of the project right there on your local "
+"disk, most operations seem almost instantaneous."
+msgstr ""
+"Для виконання більшості операцій у Git'і потрібні лише локальні файли та "
+"ресурси - зазвичай не потрібна інформація з іншого комп'ютера у вашій "
+"мережі. Оскільки вся історія проекту зберігається на вашому локальному "
+"диску, більшість операцій виконуються майже миттєво."
+
+#: ../../src/vcs/intro.txt:55
+msgid "Integrity"
+msgstr "Цілісність"
+
+#: ../../src/vcs/intro.txt:56
+msgid ""
+"Everything in Git is checksummed before it is stored and is then referred to "
+"by that checksum. This means it's impossible to change the contents of any "
+"file or directory without Git knowing about it."
+msgstr ""
+"Усе в Git'і має контрольну суму перед збереженням і потім посилається на цю "
+"контрольну суму. Це означає, що неможливо змінити вміст будь-якого файлу або "
+"каталогу без відома Git'а."
+
+#: ../../src/vcs/intro.txt:61
+msgid "Repository files states"
+msgstr "Стани файлів сховища"
+
+#: ../../src/vcs/intro.txt:62
+msgid ""
+"Git has three main states that your files can reside in: **modified**, "
+"**staged**, and **committed**:"
+msgstr ""
+"Git має три основні стани, в яких можуть перебувати ваші файли: "
+"**модифіковані**, **на стадії розробки** та **зафіксовані**:"
+
+#: ../../src/vcs/intro.txt:65
+msgid ""
+"Modified means that you have changed the file but have not committed it to "
+"your database yet."
+msgstr ""
+"Змінено означає, що ви змінили файл, але ще не зафіксували його у вашій базі "
+"даних."
+
+#: ../../src/vcs/intro.txt:67
+msgid ""
+"Staged means that you have marked a modified file in its current version to "
+"go into your next commit snapshot."
+msgstr ""
+"Поетапний означає, що ви позначили змінений файл у його поточній версії, щоб "
+"він потрапив до наступного знімка фіксації."
+
+#: ../../src/vcs/intro.txt:69
+msgid "Committed means that the data is safely stored in your local database."
+msgstr ""
+"Фіксація означає, що дані безпечно зберігаються у вашій локальній базі даних."
+
+#: ../../src/vcs/intro.txt:76
+msgid "The basic Git workflow goes something like this:"
+msgstr "Базовий робочий процес Git'а виглядає приблизно так:"
+
+#: ../../src/vcs/intro.txt:78
+msgid "You modify files in your working tree."
+msgstr "Ви змінюєте файли у вашому робочому дереві."
+
+#: ../../src/vcs/intro.txt:79
+msgid ""
+"You selectively stage just those changes you want to be part of your next "
+"commit, which adds only those changes to the staging area."
+msgstr ""
+"Ви вибірково стабілізуєте лише ті зміни, які ви хочете включити в наступний "
+"коміт, що додає тільки ці зміни в область стабілізації."
+
+#: ../../src/vcs/intro.txt:81
+msgid ""
+"You do a commit, which takes the files as they are in the staging area and "
+"stores that snapshot permanently to your Git directory."
+msgstr ""
+"Ви робите фіксацію, яка бере файли в тому вигляді, в якому вони знаходяться "
+"в області підготовки, і зберігає цей знімок назавжди у вашому каталозі Git'а."
+
+#: ../../src/vcs/intro.txt:85
+msgid "Command line"
+msgstr "Командний рядок"
+
+#: ../../src/vcs/intro.txt:87
+msgid ""
+"There are a lot of different ways to use Git. There are the original command-"
+"line tools, and there are many graphical user interfaces of varying "
+"capabilities. For one, the command line is the only place you can run all "
+"Git commands -- most of the GUIs implement only a partial subset of Git "
+"functionality for simplicity. If you know how to run the command-line "
+"version, you can probably also figure out how to run the GUI version, while "
+"the opposite is not necessarily true. Also, while your choice of graphical "
+"client is a matter of personal taste, all users will have the command-line "
+"tools installed and available."
+msgstr ""
+"Існує багато різних способів використання Git'у. Існують оригінальні "
+"інструменти командного рядка, а також багато графічних інтерфейсів "
+"користувача з різними можливостями. З одного боку, командний рядок є єдиним "
+"місцем, де ви можете виконувати всі команди Git'а - більшість графічних "
+"інтерфейсів реалізують лише часткову підмножину функціональності Git'а для "
+"спрощення. Якщо ви знаєте, як запустити версію з командного рядка, ви, "
+"ймовірно, також зможете з'ясувати, як запустити версію з графічним "
+"інтерфейсом, хоча зворотне не обов'язково вірно. Крім того, хоча ваш вибір "
+"графічного клієнта є справою особистого смаку, всі користувачі матимуть "
+"встановлені та доступні інструменти командного рядка."
+
+#: ../../src/vcs/setup.txt:-1
+msgid "version, control, system, vcs, git, setup"
+msgstr "version, control, system, vcs, git, setup"
+
+#: ../../src/vcs/setup.txt:8
+msgid "Git Setup"
+msgstr "Налаштування Git'а"
+
+#: ../../src/vcs/setup.txt:10
+msgid ""
+"Now that you have Git on your system, you'll want to do a few things to "
+"customize your Git environment. Git comes with a tool called ``git config`` "
+"that lets you get and set configuration variables that control all aspects "
+"of how Git looks and operates. These variables can be stored in three "
+"different places:"
+msgstr ""
+"Тепер, коли у вашій системі встановлено Git, ви захочете зробити кілька "
+"речей, щоб налаштувати середовище Git'а. Git постачається з інструментом під "
+"назвою ``git config``, який дозволяє вам отримувати та встановлювати "
+"конфігураційні змінні, що контролюють всі аспекти вигляду та роботи Git'у. "
+"Ці змінні можна зберігати у трьох різних місцях:"
+
+#: ../../src/vcs/setup.txt:16
+msgid ""
+"*[path]/etc/gitconfig* file: Contains values applied to every user on the "
+"system and all their repositories. If you pass the option ``--system`` to "
+"git config, it reads and writes from this file specifically. Because this is "
+"a system configuration file, you would need administrative or superuser "
+"privilege to make changes to it."
+msgstr ""
+"Файл *[path]/etc/gitconfig*: Містить значення, що застосовуються до кожного "
+"користувача у системі та всіх його сховищ. Якщо ви передасте git config "
+"параметр ``--system``, він буде читати і писати саме з цього файлу. Оскільки "
+"це файл конфігурації системи, вам знадобляться адміністративні привілеї або "
+"привілеї суперкористувача, щоб вносити до нього зміни."
+
+#: ../../src/vcs/setup.txt:21
+msgid ""
+"*~/.gitconfig* or *~/.config/git/config* file: Values specific personally to "
+"you, the user. You can make Git read and write to this file specifically by "
+"passing the ``--global`` option, and this affects all of the repositories "
+"you work with on your system."
+msgstr ""
+"*~/.gitconfig* або *~/.config/git/config* файл: Значення, характерні "
+"особисто для вас, користувача. Ви можете змусити Git'а читати і писати до "
+"цього файлу спеціально, передавши опцію ``--global``, і це вплине на всі "
+"сховища, з якими ви працюєте у вашій системі."
+
+#: ../../src/vcs/setup.txt:25
+msgid ""
+"*config* file in the Git directory (that is, *.git/config*) of whatever "
+"repository you're currently using: Specific to that single repository. You "
+"can force Git to read from and write to this file with the ``--local`` "
+"option, but that is in fact the default. Unsurprisingly, you need to be "
+"located somewhere in a Git repository for this option to work properly."
+msgstr ""
+"файл *config* у каталозі Git (тобто *.git/config*) того сховища, яке ви "
+"зараз використовуєте: Специфічний для цього окремого сховища. Ви можете "
+"змусити Git'а читати з цього файлу і писати до нього за допомогою опції ``--"
+"local``, але за замовчуванням так і є. Не дивно, що для правильної роботи "
+"цієї опції вам потрібно знаходитися десь у сховищі Git'а."
+
+#: ../../src/vcs/setup.txt:31
+msgid ""
+"Each level overrides values in the previous level, so values in *.git/"
+"config* trump those in *[path]/etc/gitconfig*."
+msgstr ""
+"Кожен рівень перевизначає значення попереднього рівня, тому значення у *.git/"
+"config* мають перевагу над значеннями у *[path]/etc/gitconfig*."
+
+#: ../../src/vcs/setup.txt:34
+msgid "You can view all of your settings and where they are coming from using:"
+msgstr ""
+"Ви можете переглянути всі свої налаштування і те, звідки вони надходять, "
+"використовуючи:"
+
+#: ../../src/vcs/setup.txt:41
+msgid "Your identity"
+msgstr "Ваша особистість"
+
+#: ../../src/vcs/setup.txt:43
+msgid ""
+"The first thing you should do when you install Git is to set your user name "
+"and email address. This is important because every Git commit uses this "
+"information."
+msgstr ""
+"Перше, що вам слід зробити під час встановлення Git'у, це вказати своє ім'я "
+"користувача та адресу електронної пошти. Це важливо, оскільки кожна фіксація "
+"Git'а використовує цю інформацію."
