@@ -244,6 +244,37 @@ has been staged, you can run ``git commit`` for finalize the merge commit.
 .. todo:
     Describe merging and cherry-pick
 
+Branch management
+=================
+
+The ``git branch`` command does more that create and delete branches. If you
+run it with no arguments, you get a simple listing of your current branches:
+
+::
+
+    $ git branch
+      devel
+      feature/contributing
+      feature/legacy
+      feature/lib-ms
+      feature/libms
+      feature/pdf-builder
+    * feature/vcs
+      master
+
+To see all the branches that contain work you haven't yet merged in, use
+``--no-merged`` option:
+
+::
+
+    $ git branch --no-merged
+      feature/contributing
+      feature/lib-ms
+      feature/libms
+
+Branches listed in the output has work, that isn't merged to current branch.
+So, deleting them via ``git branch -d`` will fail.
+
 Branching strategies
 ====================
 
