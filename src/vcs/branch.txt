@@ -73,8 +73,8 @@ To switch to an existing branch, you run the ``git checkout`` command.
     Switched to branch 'devel'
     Your branch is up to date with 'origin/devel'.
 
-Basic branching
-===============
+Basic branching and merging
+===========================
 
 First, let's say you're working on your project and have a couple of commits
 already on the ``master`` branch. You've decided that you're going to work on
@@ -95,18 +95,70 @@ This is shorthand for:
     $ git checkout feature/issue53
 
 In deed this creates a new branch pointer, aimed to the latest commit present
-on ``master`` branch.
+on ``master`` branch. But, from now your branch is ``feature/issue53``. So,
+doing commits moves the feature branch pointer forward, because you have it
+checkout out (that is, your ``HEAD`` is pointing to it).
 
-.. todo:
-    Add merge section
-..
-    .. mermaid:: /../assets/mermaid/git/merge-1.mmd
-        :align: center
-        :caption: Fast-forward merge
-..
-    .. mermaid:: /../assets/mermaid/git/merge-2.mmd
-        :align: center
-        :caption: Merge commit
+Now, lets assume the "issue53" is fixed, and you need to bring commits from
+the ``feature/issue53`` branch back to ``master``.
+
+Merging branches
+----------------
+
+You need to switch back to ``master`` branch and use ``git merge`` command, to
+merge changes (commits) from the source branch into target.
+
+.. code-block:: shell
+
+    $ git checkout master
+    $ git merge feature/issue53
+    Updating f42c576..3a0874c
+    Fast-forward
+        index.html | 2 ++
+        1 file changed, 2 insertions(+)
+
+You'll notice phrase "fast-forward" in that merge. Because the commit pointed
+to by the branch ``feature/issue53`` you merged in was directly ahead of the
+last commit on ``master`` branch, Git simply moves the pointer forward.
+
+Changes from ``feature/issue53`` are now in the snapshot of the commit pointed
+to by the ``master`` branch.
+
+.. mermaid:: /../assets/mermaid/git/merge-1.mmd
+    :align: center
+    :caption: Fast-forward merge
+
+Now, lets assume another developer started working on ``feature/issue54`` at
+the same time. And there are few commits on this feature branch. Suppose,
+the developer decided that work on **issue54** is finished and they want to
+merge their feature branch into ``master``.
+
+.. code-block:: shell
+
+    $ git branch
+      master
+    * feature/issue54
+    $ git checkout master
+    $ git merge feature/issue54
+    Merge made by the 'recursive' strategy.
+        index.html | 1 +
+        1 file changed, 1 insertion(+)
+
+This looks a bit different than the ``feature/issue53`` merge. In this case,
+development history has diverged from some older point. Because the commit
+on the branch you're on isn't a direct ancestor of the branch you're merging
+in, Git has to do some work. In this case, Git does a simple three-way merge,
+using two snapshots pointed to by the branch tips and the common ancestor of
+the two.
+
+Instead of just moving the branch pointer forward, Git creates a new snapshot
+that results from this three-way merge and automatically creates a new commit
+that points to it. This is referred to as a *merge commit*, and is a special in
+that it has more than one parent.
+
+.. mermaid:: /../assets/mermaid/git/merge-2.mmd
+    :align: center
+    :caption: Merge commit
 
 .. todo:
     Add rebase section
