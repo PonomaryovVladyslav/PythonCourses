@@ -237,6 +237,52 @@ There are many more output-formatting options to ``git log``. Common options to
 |                   | together.                                               |
 +-------------------+---------------------------------------------------------+
 
+Limiting log output
+-------------------
+
+In addition to output-formatting options, ``git log`` takes a number of useful
+limiting options; that is options that let you show only a subset of commits.
+You've seen one such option already -- the ``-<number>`` (e.g. ``-2`` or
+``-10``) option, which displays only the given number of latest commits.
+
+.. code-block:: shell
+
+    $ git log -5 --oneline
+    db87ca0 (HEAD -> feature/vcs) fixup! Add commit history section (git log)
+    df9d599 Add commit history section (git log)
+    8b755eb (origin/feature/vcs) Update gitflow diagram
+    1e131a0 fixup! Add translations to VSC documents
+    895dc24 Add translations to VSC documents
+
+However, the time-limiting options such as ``--since`` and ``--until`` are very
+useful. For example, the command to get the list of commits made in the last
+two weeks:
+
+.. code-block:: shell
+
+    $ git log --since=2.weeks
+
+This command works with lots of formats - you can specify a specific date like
+``"2022-02-24"``, or relative date such as ``"2 years 1 days 3 minutes ago"``.
+
+The last really useful option to pass to ``git log`` as a filter is a path. If
+you specify a directory or file name, you can limit the log output to commits
+that introduced a change to those files. This is always the last option and
+is generally preceded by double dashes (``--``) to separate the paths from
+the options:
+
+.. code-block:: shell
+
+    $ git log --oneline -- src/vcs/basics.txt
+    30cb1a2 Fix apostrophe for VCS files
+    4a9cfe4 Move mermaid diagrams to a dedicated folder (git)
+    80a1ab3 Add branching and merging document
+    3978779 Add committing changes section
+    a40712a Add git ignore section
+    e92b12f Add making changes section
+    c23f8ff Update getting repository section
+    582569d Add Git basics document (draft)
+
 .. todo:
 git checkout
 
