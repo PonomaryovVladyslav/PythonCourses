@@ -12,7 +12,6 @@
 `GitHub`_ is the single largest host for Git repositories, and is the central
 point of collaboration for millions of developers and projects.
 
-
 Account setup and configuration
 ===============================
 
@@ -21,5 +20,16 @@ and press "Sign Up" button. The GitHub will lead you through the account
 creation process. Just follow the hints and provide an email address, username
 and a strong password.
 
+About authentication to GitHub
+------------------------------
+
+.. note::
+    Starting in March 2023 and through the end of 2023, GitHub gradually began
+    to require all users who contribute code on GitHub to enable two-factor
+    authentication (2FA).
+
+Connect with SSH
+================
+
 .. todo:
-    Describe SSH key generation and set up
+
