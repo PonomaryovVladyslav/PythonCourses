@@ -302,8 +302,32 @@ in turn.
     :align: center
     :caption: After rebase
 
-.. todo:
-    Describe merging and cherry-pick
+.. note::
+    Other maintainers prefer to rebase (or cherry-pick) contributed work on
+    top of their ``master`` branch, rather then merging it in, to keep
+    a mostly linear history.
+
+Cherry-picking
+==============
+
+The other way to move introduced work from one branch to another is to
+*cherry-pick* it. A cherry-pick in Git is a rebase for a single commit.
+It takes the patch that was introduced in a commit and tries to reapply
+it on the branch you're currently on. This is useful if you have a number
+of commits on a topic branch and you want to integrate only one of them,
+or if you only have one commit on a topic branch and you'd prefer to
+cherry-pick it rather than run rebase.
+
+.. mermaid:: /../assets/mermaid/git/cherry-pick.mmd
+    :align: center
+    :caption: Cherry-pick a commit
+
+::
+
+    $ git cherry-pick e43a6
+    [master 0288270] Important commit
+     Date: Thu Aug 17 20:30:05 2023 +0300
+     3 files changed, 17 insertions(+), 3 deletions(-)
 
 Branching strategies
 ====================
