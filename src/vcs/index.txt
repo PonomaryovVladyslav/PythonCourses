@@ -15,4 +15,5 @@
     basics
     tagging
     branch
+    remotes
     github
