@@ -109,6 +109,15 @@ at the same time and they push upstream and then you push upstream, you push
 will rightly be rejected. You'll have to fetch their work first and incorporate
 it into yours before you'll be allowed to push.
 
+Pushing a new branch to remote
+------------------------------
+
+In case you have created a local branch for some specific needs and you want
+to share this branch, you need to set up track for this branch. This can be
+done by using: ``git push --set-upstream origin <remote_branch>``. This will
+create a new remote branch and set up track to your current local branch.
+There is a shortcut for this command: ``git push -u origin <remote_branch>``.
+
 Inspecting a remote
 ===================
 
