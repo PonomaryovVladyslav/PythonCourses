@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Python Training Course 2023.06.dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-08-16 22:36+0300\n"
-"PO-Revision-Date: 2023-08-16 22:36+0300\n"
+"POT-Creation-Date: 2023-08-19 11:46+0300\n"
+"PO-Revision-Date: 2023-08-19 11:59+0300\n"
 "Last-Translator: Serhii Horodilov <sgorodil@gmail.com>\n"
 "Language-Team: uk <LL@li.org>\n"
 "Language: uk\n"
@@ -1302,11 +1302,44 @@ msgstr ""
 "поточної гілки до того ж комміту, що і гілка, на яку ви перебазуєтесь, і, "
 "нарешті, застосування кожної зміни по черзі."
 
-#: ../../src/vcs/branch.txt:309
+#: ../../src/vcs/branch.txt:306
+msgid ""
+"Other maintainers prefer to rebase (or cherry-pick) contributed work on top "
+"of their ``master`` branch, rather then merging it in, to keep a mostly "
+"linear history."
+msgstr ""
+"Інші супроводжувачі надають перевагу перезавантаженню (або вилученню) "
+"внесених напрацювань на вершині своєї \"головної\" гілки, замість того, щоб "
+"об'єднувати їх, щоб зберегти переважно лінійну історію."
+
+#: ../../src/vcs/branch.txt:311
+msgid "Cherry-picking"
+msgstr "Cherry-picking"
+
+#: ../../src/vcs/branch.txt:313
+msgid ""
+"The other way to move introduced work from one branch to another is to "
+"*cherry-pick* it. A cherry-pick in Git is a rebase for a single commit. It "
+"takes the patch that was introduced in a commit and tries to reapply it on "
+"the branch you're currently on. This is useful if you have a number of "
+"commits on a topic branch and you want to integrate only one of them, or if "
+"you only have one commit on a topic branch and you'd prefer to cherry-pick "
+"it rather than run rebase."
+msgstr ""
+"Інший спосіб перенесення внесеної роботи з однієї гілки в іншу - це "
+"\"збирання коммітів\" (cherry-pick). Збирання вишень у Git'і - це "
+"відновлення бази для одного коміту. Він бере патч, який було внесено в "
+"комміті, і намагається повторно застосувати його на гілці, на якій ви зараз "
+"перебуваєте. Це корисно, якщо ви маєте декілька коммітів у гілці теми і "
+"хочете інтегрувати лише один з них, або якщо ви маєте лише один комміт у "
+"гілці теми і вважаєте за краще вибрати його замість того, щоб запускати "
+"rebase."
+
+#: ../../src/vcs/branch.txt:333
 msgid "Branching strategies"
 msgstr "Стратегії розгалуження"
 
-#: ../../src/vcs/branch.txt:311
+#: ../../src/vcs/branch.txt:335
 msgid ""
 "Branching strategy in version control systems defines how branches are "
 "created, managed, and used in a project's development process. It helps "
@@ -1322,7 +1355,7 @@ msgstr ""
 "чіткість у роботі з гілками, мінімізує конфлікти та уможливлює плавний і "
 "структурований робочий процес розробки."
 
-#: ../../src/vcs/branch.txt:318
+#: ../../src/vcs/branch.txt:342
 msgid ""
 "GitFlow is a popular branching strategy that provides a well-defined model "
 "for managing branches in a Git repository. It was introduced by Vincent "
@@ -1334,7 +1367,7 @@ msgstr ""
 "Вінсентом Дріссеном (Vincent Driessen) і базується на ідеї використання двох "
 "основних гілок: \"master\" і \"develop\"."
 
-#: ../../src/vcs/branch.txt:322
+#: ../../src/vcs/branch.txt:346
 msgid ""
 "**Master Branch**: The \"master\" branch represents the stable version of "
 "the codebase. It should always contain production-ready code and be free "
@@ -1346,7 +1379,7 @@ msgstr ""
 "жодних серйозних проблем. Майстер-гілка захищена, і в неї зливаються тільки "
 "релізні версії."
 
-#: ../../src/vcs/branch.txt:326
+#: ../../src/vcs/branch.txt:350
 msgid ""
 "**Develop Branch**: The \"develop\" branch is where the ongoing development "
 "and integration of features take place. It serves as the integration branch "
@@ -1357,7 +1390,7 @@ msgstr ""
 "розробка та інтеграція функцій. Вона слугує інтеграційною гілкою для різних "
 "функціональних гілок, а також повинна містити стабільну версію коду."
 
-#: ../../src/vcs/branch.txt:330
+#: ../../src/vcs/branch.txt:354
 msgid ""
 "**Feature Branches**: For each new feature or bug fix, a dedicated "
 "\"feature\" branch is created off the \"develop\" branch. These branches are "
@@ -1367,7 +1400,7 @@ msgstr ""
 "створюється окрема гілка \"feature\" у гілці \"develop\". Ці гілки "
 "недовговічні і існують лише на час розробки функції."
 
-#: ../../src/vcs/branch.txt:333
+#: ../../src/vcs/branch.txt:357
 msgid ""
 "**Release Branches**: When the development on the \"develop\" branch is "
 "ready for a release, a \"release\" branch is created. The release branch is "
@@ -1377,7 +1410,7 @@ msgstr ""
 "створюється гілка \"release\". Релізна гілка використовується для "
 "тестування, виправлення помилок і підготовки до розгортання."
 
-#: ../../src/vcs/branch.txt:336
+#: ../../src/vcs/branch.txt:360
 msgid ""
 "**Hotfix Branches**: If a critical issue is discovered in the production "
 "version, a \"hotfix\" branch is created from the \"master\" branch. This "
@@ -1388,7 +1421,7 @@ msgstr ""
 "на основі основної гілки створюється гілка \"hotfix\". Це дозволяє швидко "
 "виправити проблему, не впливаючи на поточну розробку на гілці \"develop\"."
 
-#: ../../src/vcs/branch.txt:341
+#: ../../src/vcs/branch.txt:365
 msgid ""
 "GitFlow provides a structured approach to managing branching in a "
 "collaborative development environment. It ensures that the main branches "
@@ -1418,11 +1451,11 @@ msgstr ""
 "`GitHub`_ - найбільший хостинг для Git-репозиторіїв, який є центральною "
 "точкою співпраці для мільйонів розробників і проектів."
 
-#: ../../src/vcs/github.txt:17
+#: ../../src/vcs/github.txt:16
 msgid "Account setup and configuration"
 msgstr "Налаштування та конфігурація акаунта"
 
-#: ../../src/vcs/github.txt:19
+#: ../../src/vcs/github.txt:18
 msgid ""
 "The first thing you need to do is set up a free user account. Visit "
 "`GitHub`_ and press \"Sign Up\" button. The GitHub will lead you through the "
@@ -1434,6 +1467,204 @@ msgstr ""
 "GitHub проведе вас через процес створення облікового запису. Просто "
 "дотримуйтесь підказок і вкажіть адресу електронної пошти, ім'я користувача "
 "та надійний пароль."
+
+#: ../../src/vcs/github.txt:24
+msgid "About authentication to GitHub"
+msgstr "Про автентифікацію на GitHub"
+
+#: ../../src/vcs/github.txt:27
+msgid ""
+"Starting in March 2023 and through the end of 2023, GitHub gradually began "
+"to require all users who contribute code on GitHub to enable two-factor "
+"authentication (2FA)."
+msgstr ""
+"Починаючи з березня 2023 року і до кінця 2023 року, GitHub поступово почав "
+"вимагати від усіх користувачів, які публікують код на GitHub, увімкнути "
+"двофакторну автентифікацію (2FA)."
+
+#: ../../src/vcs/github.txt:32
+msgid "Connect with SSH"
+msgstr "Підключення за допомогою SSH"
+
+#: ../../src/vcs/github.txt:34
+msgid ""
+"You can access and write data in repositories on GitHub using :abbr:`SSH "
+"(Secure Shell Protocol)`. When you connect to via SSH, you authenticate "
+"using a private key file on your local machine."
+msgstr ""
+"Ви можете отримати доступ до даних у репозиторіях на GitHub і писати їх за "
+"допомогою :abbr:`SSH (Secure Shell Protocol)`. При підключенні по SSH ви "
+"автентифікуєтесь за допомогою файлу приватного ключа на вашому локальному "
+"комп'ютері."
+
+#: ../../src/vcs/github.txt:39
+msgid "Generating a new SSH key"
+msgstr "Генерація нового SSH-ключа"
+
+#: ../../src/vcs/github.txt:41
+msgid ""
+"You can generate a new SSH key on your local machine. After you do that, you "
+"can add the **public** key to your account on GitHub to enable "
+"authentication for Git operations over SSH."
+msgstr ""
+"Ви можете згенерувати новий SSH-ключ на своїй локальній машині. Після цього "
+"ви можете додати **public** ключ до свого облікового запису на GitHub, щоб "
+"увімкнути автентифікацію для операцій з Git'ом через SSH."
+
+#: ../../src/vcs/github.txt:45
+msgid "Open terminal (git-bash will suite for Windows users)"
+msgstr "Відкритий термінал (для користувачів Windows підійде git-bash)"
+
+#: ../../src/vcs/github.txt:46
+msgid "Run command:"
+msgstr "Виконати команду:"
+
+#: ../../src/vcs/github.txt:53
+msgid ""
+"If you are using a legacy system that doesn't support the **Ed25519** "
+"algorithm, use:"
+msgstr ""
+"Якщо ви використовуєте застарілу систему, яка не підтримує алгоритм "
+"**Ed25519**, використовуйте його:"
+
+#: ../../src/vcs/github.txt:60
+msgid ""
+"When you're prompted to \"Enter a file in which to save the key\", you can "
+"press **Enter** to accept the default file location."
+msgstr ""
+"Коли з'явиться запит \"Введіть файл для збереження ключа\", ви можете "
+"натиснути **Enter**, щоб прийняти розташування файлу за замовчуванням."
+
+#: ../../src/vcs/github.txt:67
+msgid ""
+"Type a secure passphrase, if you want -- this is an extra layer of security."
+msgstr ""
+"Введіть безпечну парольну фразу, якщо хочете -- це додатковий рівень безпеки."
+
+#: ../../src/vcs/github.txt:75
+msgid "This will create a new SSH key, using the provided email as label."
+msgstr ""
+"Буде створено новий SSH-ключ, з використанням наданої адреси електронної "
+"пошти як мітки."
+
+#: ../../src/vcs/github.txt:77
+msgid ""
+"Navigate to ssh key location -- \".ssh\" folder at your homedir by default "
+"and ensure there are two files generated:"
+msgstr ""
+"Перейдіть до розташування ключа ssh -- теки \".ssh\" у вашому домашньому "
+"каталозі за замовчуванням і переконайтеся, що згенеровано два файли:"
+
+#: ../../src/vcs/github.txt:80
+msgid "**id_ALGORITHM** (e.g. \"id_rsa\", \"id_ed252519\" etc.)"
+msgstr "**id_ALGORITHM** (наприклад, \"id_rsa\", \"id_ed252519\" тощо)."
+
+#: ../../src/vcs/github.txt:81
+msgid "**id_ALGORITHM.pub** (e.g. \"id_rsa.pub\", \"id_ed25519.pub\" etc.)"
+msgstr ""
+"**id_ALGORITHM.pub** (наприклад, \"id_rsa.pub\", \"id_ed25519.pub\" тощо)."
+
+#: ../../src/vcs/github.txt:84
+msgid ""
+"The private key (the one without \".pub\") should be kept secure and "
+"private. You should never share this."
+msgstr ""
+"Закритий ключ (той, що без \".pub\") слід зберігати в безпеці і не "
+"розголошувати. Ви ніколи не повинні ділитися ним."
+
+#: ../../src/vcs/github.txt:87
+msgid ""
+"The public key is what you add to servers or services to which you want to "
+"authenticate using your private key."
+msgstr ""
+"Відкритий ключ - це те, що ви додаєте до серверів або сервісів, на яких ви "
+"хочете пройти автентифікацію за допомогою вашого закритого ключа."
+
+#: ../../src/vcs/github.txt:91
+msgid "Adding your SSH key to the ssh-agent and GitHub"
+msgstr "Додавання SSH-ключа до ssh-агента та GitHub"
+
+#: ../../src/vcs/github.txt:93
+msgid ""
+"Before adding a new SSH key to the ssh-agent to manage your keys, you should "
+"have checked for existing SSH keys and generated SSH keys."
+msgstr ""
+"Перш ніж додавати новий SSH-ключ до ssh-агента для керування ключами, вам "
+"слід перевірити наявність наявних SSH-ключів і згенерувати SSH-ключі."
+
+#: ../../src/vcs/github.txt:96
+msgid ""
+"Ensure the ssh-agent is running. You can use the \"Auto-launching\" or start "
+"it manually:"
+msgstr ""
+"Переконайтеся, що ssh-агент запущено. Ви можете скористатися "
+"\"Автозапуском\" або запустити його вручну:"
+
+#: ../../src/vcs/github.txt:104
+msgid "Add you SSH private key to the ssh-agent."
+msgstr "Додайте ваш приватний ключ SSH до ssh-агента."
+
+#: ../../src/vcs/github.txt:110
+msgid ""
+"Add the SSH public key to your account on GitHub. Copy the SSH public key to "
+"your clipboard."
+msgstr ""
+"Додайте публічний ключ SSH до свого облікового запису на GitHub. Скопіюйте "
+"відкритий ключ SSH до буфера обміну."
+
+#: ../../src/vcs/github.txt:117
+msgid ""
+"Alternatively, if ``clip`` isn't working, just type public key content to "
+"the terminal using ``cat``,"
+msgstr ""
+"Крім того, якщо ``clip`` не працює, просто введіть вміст відкритого ключа у "
+"терміналі за допомогою ``cat``,"
+
+#: ../../src/vcs/github.txt:124
+msgid ""
+"or simply navigate to the file and open it with any text editor. At the end, "
+"you need to copy public key content."
+msgstr ""
+"або просто перейдіть до файлу і відкрийте його за допомогою будь-якого "
+"текстового редактора. В кінці потрібно скопіювати вміст відкритого ключа."
+
+#: ../../src/vcs/github.txt:127
+msgid ""
+"On GitHub, in the upper-right corner of any page, click your profile photo, "
+"then click **Settings**."
+msgstr ""
+"На GitHub у правому верхньому куті будь-якої сторінки натисніть на "
+"фотографію свого профілю, а потім натисніть **Налаштування**."
+
+#: ../../src/vcs/github.txt:129
+msgid ""
+"In the \"Access\" section of the sidebar, click **SSH and GPG keys** and "
+"press **New SSH key** button."
+msgstr ""
+"У розділі \"Доступ\" бічної панелі натисніть **Ключі SSH і GPG** і натисніть "
+"кнопку **Новий ключ SSH**."
+
+#: ../../src/vcs/github.txt:131
+msgid "In the \"Title\" field, add a descriptive label for the new key."
+msgstr "У полі \"Назва\" додайте описову мітку для нового ключа."
+
+#: ../../src/vcs/github.txt:132
+msgid "Select the type of key -- \"Authentication key\"."
+msgstr "Виберіть тип ключа - \"Ключ автентифікації\"."
+
+#: ../../src/vcs/github.txt:133
+msgid "In the \"Key\" field, paste your public key."
+msgstr "У полі \"Ключ\" вставте ваш відкритий ключ."
+
+#: ../../src/vcs/github.txt:134
+msgid "Click **Add SSH key**."
+msgstr "Натисніть **Додати SSH-ключ**."
+
+#: ../../src/vcs/github.txt:135
+msgid "If prompted, confirm access to your account on GitHub."
+msgstr ""
+"Якщо з'явиться відповідний запит, підтвердіть доступ до свого облікового "
+"запису на GitHub."
 
 #: ../../src/vcs/index.txt:-1 ../../src/vcs/intro.txt:-1
 msgid "version, control, system, vcs, git"
@@ -1632,6 +1863,213 @@ msgstr ""
 "графічного клієнта є справою особистого смаку, всі користувачі матимуть "
 "встановлені та доступні інструменти командного рядка."
 
+#: ../../src/vcs/remotes.txt:3
+msgid "Remotes"
+msgstr "Віддалені репозиторії"
+
+#: ../../src/vcs/remotes.txt:5
+msgid ""
+"To be able to collaborate on any Git project, you need to know how to manage "
+"your remote repositories. Remote repositories are versions of your project "
+"that are hosted on the Internet or network somewhere. You can have several "
+"of them, each of which generally is either read-only or read/write for you. "
+"Managing remotes includes knowing how to add remote repositories, remove "
+"remote repositories that are no longer valid, manage various branches and "
+"define them as being tracked or not, and more."
+msgstr ""
+"Щоб мати можливість співпрацювати над будь-яким Git-проектом, вам потрібно "
+"знати, як керувати вашими віддаленими сховищами. Віддалені сховища - це "
+"версії вашого проекту, розміщені десь в інтернеті або мережі. Ви можете мати "
+"декілька таких сховищ, кожне з яких, як правило, доступне лише для читання "
+"або читання/запису. Керування віддаленими сховищами включає в себе вміння "
+"додавати віддалені сховища, видаляти віддалені сховища, які більше не є "
+"дійсними, керувати різними гілками і визначати їх як такі, що відстежуються "
+"чи ні, і багато іншого."
+
+#: ../../src/vcs/remotes.txt:21
+msgid "Showing your remote"
+msgstr "Перелік віддалених репозиторіїв"
+
+#: ../../src/vcs/remotes.txt:23
+msgid ""
+"To see which remote servers you have configured, you can run the ``git "
+"remote`` command. It lists the shortnames of each remote handle you're "
+"specified. If you've cloned your repository, you should at least see "
+"``origin`` - that is default name Git gives to the server you clone from:"
+msgstr ""
+"Щоб побачити, які віддалені сервери ви налаштували, ви можете виконати "
+"команду ``git remote``. Вона покаже короткі імена кожного вказаного вами "
+"віддаленого дескриптора. Якщо ви клонували свій репозиторій, ви маєте "
+"побачити принаймні ``origin`` - ім'я за замовчуванням, яке Git дає серверу, "
+"з якого ви клонуєте:"
+
+#: ../../src/vcs/remotes.txt:41
+msgid ""
+"This means we can pull contributions from any of these users pretty easily. "
+"We may additionally have permission to push to one or more of these."
+msgstr ""
+"Це означає, що ми можемо досить легко отримувати внески від будь-якого з цих "
+"користувачів. Крім того, ми можемо мати дозвіл на проштовхування до одного "
+"або декількох з них."
+
+#: ../../src/vcs/remotes.txt:45
+msgid "Adding remote repositories"
+msgstr "Додавання віддалених репозиторіїв"
+
+#: ../../src/vcs/remotes.txt:47
+msgid ""
+"To add a new remote Git repository as a shortname you can reference easily, "
+"run ``git remote add <shortname> <url>``:"
+msgstr ""
+"Щоб додати новий віддалений репозиторій Git'у у вигляді короткого імені, на "
+"яке можна легко посилатися, виконайте ``git remote add <назва> <адреса>``:"
+
+#: ../../src/vcs/remotes.txt:61
+msgid ""
+"Now you can use the string \"personal\" on the command line in lieu of the "
+"whole URL. ``master`` branch of \"https://github.com/shorodilov/python-"
+"course\" is now accessible as ``personal/master``, while shortname to the "
+"same branch in origin will be -- ``origin/master``."
+msgstr ""
+"Тепер ви можете використовувати рядок \"personal\" в командному рядку "
+"замість повної URL-адреси. Гілка ``master`` в \"https://github.com/"
+"shorodilov/python-course\" тепер доступна як ``personal/master``, тоді як "
+"скорочена назва тієї ж гілки в origin буде -- ``origin/master``."
+
+#: ../../src/vcs/remotes.txt:67
+msgid "Fetching and pulling from remotes"
+msgstr "Отримання та витягування з віддаленого репозиторію"
+
+#: ../../src/vcs/remotes.txt:69
+msgid ""
+"To get data from remote project, you can run ``git fetch`` command. The "
+"command goes out to that remote project and pulls down all the information "
+"from that remote project that you don't have yet. After you do this, you "
+"should have references to all the branches from that remote, which you can "
+"merge in or inspect at any time."
+msgstr ""
+"Щоб отримати дані з віддаленого проекту, ви можете виконати команду ``git "
+"fetch``. Команда звернеться до цього віддаленого проекту і витягне всю "
+"інформацію з нього, якої ви ще не маєте. Після цього ви матимете посилання "
+"на всі гілки з цього віддаленого проекту, які ви можете об'єднати або "
+"переглянути у будь-який час."
+
+#: ../../src/vcs/remotes.txt:79
+msgid ""
+"If your current branch is set up to track a remote branch, you can use ``git "
+"pull`` command to automatically fetch and then merge that remote branch into "
+"your current branch. By default, the ``git clone`` command automatically "
+"sets up your local ``master`` branch to track the remote ``master`` branch "
+"(or whatever default remote branch)."
+msgstr ""
+"Якщо вашу поточну гілку налаштовано на відстеження віддаленої гілки, ви "
+"можете скористатися командою ``git pull`` для автоматичного отримання і "
+"подальшого об'єднання цієї віддаленої гілки у вашу поточну гілку. За "
+"замовчуванням, команда ``git clone`` автоматично налаштовує вашу локальну "
+"гілку ``master`` на відстеження віддаленої гілки ``master`` (або будь-якої "
+"іншої віддаленої гілки за замовчуванням)."
+
+#: ../../src/vcs/remotes.txt:85
+msgid ""
+"From Git version 2.27 onward, ``git pull`` will give a warning if the ``pull."
+"rebase`` variable is not set. Git will keep warning you until you set the "
+"variable."
+msgstr ""
+"Починаючи з версії 2.27, ``git pull`` видаватиме попередження, якщо змінну "
+"``pull.rebase`` не встановлено. Git продовжуватиме видавати попередження, "
+"доки ви не встановите змінну."
+
+#: ../../src/vcs/remotes.txt:90
+msgid ""
+"If you want the default behavior of Git (fast-forward if possible, else "
+"create a merge commit): ``git config --global pull.rebase \"false\"``."
+msgstr ""
+"Якщо ви хочете отримати поведінку Git'а за замовчуванням (перемотування "
+"вперед, якщо можливо, інакше створіть комміт злиття): ``git config --global "
+"pull.rebase \"false\"``."
+
+#: ../../src/vcs/remotes.txt:93
+msgid ""
+"If you want to rebase when pulling: ``git config --global pull.rebase "
+"\"true\"``."
+msgstr ""
+"Якщо ви хочете перебазувати базу при витягуванні: ``git config --global pull."
+"rebase \"true\"``."
+
+#: ../../src/vcs/remotes.txt:97
+msgid "Pushing to remotes"
+msgstr "Відправка до віддаленого репозиторію"
+
+#: ../../src/vcs/remotes.txt:99
+msgid ""
+"When you have your project at a point that you want to share, you have to "
+"push it upstream. The command for this is simple: ``git push <remote> "
+"<branch>``."
+msgstr ""
+"Коли ваш проект знаходиться на етапі, яким ви хочете поділитися, вам "
+"потрібно перемістити його вгору за течією. Команда для цього проста: ``git "
+"push <віддалений> <гілка>``."
+
+#: ../../src/vcs/remotes.txt:106
+msgid ""
+"This command works only if you cloned from a server to which you have write "
+"access and if nobody has pushed in the meantime. If you and someone else "
+"clone at the same time and they push upstream and then you push upstream, "
+"you push will rightly be rejected. You'll have to fetch their work first and "
+"incorporate it into yours before you'll be allowed to push."
+msgstr ""
+"Ця команда працює тільки якщо ви клонували з сервера, до якого у вас є "
+"доступ на запис, і якщо в цей час ніхто не робив поштовх. Якщо ви клонуєте "
+"одночасно з кимось іншим, і він зробить поштовх вище за течією, а потім ви, "
+"ваш поштовх буде справедливо відхилено. Вам доведеться спочатку отримати "
+"їхню роботу і включити її до своєї, перш ніж вам дозволять проштовхувати."
+
+#: ../../src/vcs/remotes.txt:113
+msgid "Pushing a new branch to remote"
+msgstr "Переміщення нової гілки до віддаленого репозиторію"
+
+#: ../../src/vcs/remotes.txt:115
+msgid ""
+"In case you have created a local branch for some specific needs and you want "
+"to share this branch, you need to set up track for this branch. This can be "
+"done by using: ``git push --set-upstream origin <remote_branch>``. This will "
+"create a new remote branch and set up track to your current local branch. "
+"There is a shortcut for this command: ``git push -u origin <remote_branch>``."
+msgstr ""
+"Якщо ви створили локальну гілку для якихось конкретних потреб і хочете "
+"надати до неї доступ, вам потрібно налаштувати трек для цієї гілки. Це можна "
+"зробити за допомогою ``git push --set-upstream origin <віддалена_гілка>``. "
+"Це створить нову віддалену гілку і налаштує трек до вашої поточної локальної "
+"гілки. Для цієї команди існує комбінація клавіш: ``git push -u origin "
+"<віддалена_гілка>``."
+
+#: ../../src/vcs/remotes.txt:122
+msgid "Inspecting a remote"
+msgstr "Перевірка віддаленого репозиторію"
+
+#: ../../src/vcs/remotes.txt:124
+msgid ""
+"If you want to see more information about a particular remote, you can use "
+"the ``git remote show <remote`` command."
+msgstr ""
+"Якщо ви хочете побачити більше інформації про певний віддалений сервер, "
+"скористайтеся командою ``git remote show <remote``."
+
+#: ../../src/vcs/remotes.txt:165
+msgid ""
+"It lists the URL for the remote repository as wll as the tracking branch "
+"information. The command helpfully tells you that if you're on the "
+"``master`` branch amd you run ``git pull``, it will automatically merge the "
+"remote's ``master`` branch into the local one after it has been fetched. It "
+"also lists all the remote references it has pulled down."
+msgstr ""
+"Вона показує URL-адресу віддаленого сховища, а також інформацію про "
+"відстежувану гілку. Команда корисно повідомляє, що якщо ви перебуваєте на "
+"гілці ``master`` і виконаєте ``git pull``, вона автоматично об'єднає гілку "
+"``master`` віддаленого сховища з локальною гілкою після того, як її буде "
+"витягнуто. Також буде показано список усіх віддалених посилань, які було "
+"витягнуто."
+
 #: ../../src/vcs/setup.txt:-1
 msgid "version, control, system, vcs, git, setup"
 msgstr "version, control, system, vcs, git, setup"
@@ -1722,11 +2160,11 @@ msgstr ""
 "користувача та адресу електронної пошти. Це важливо, оскільки кожна фіксація "
 "Git'а використовує цю інформацію."
 
-#: ../../src/vcs/tagging.txt:4
+#: ../../src/vcs/tagging.txt:3
 msgid "Tagging"
 msgstr "Тегування"
 
-#: ../../src/vcs/tagging.txt:6
+#: ../../src/vcs/tagging.txt:5
 msgid ""
 "Like most VCSs, Git has the ability to tag specific points in a repository's "
 "history as being important. Typically, people use this functionality to mark "
@@ -1736,11 +2174,11 @@ msgstr ""
 "сховища як важливі. Зазвичай люди використовують цю функцію для позначення "
 "точок релізу (``v1.0``, ``v2.0`` і так далі)."
 
-#: ../../src/vcs/tagging.txt:11
+#: ../../src/vcs/tagging.txt:10
 msgid "Listing tags"
 msgstr "Перелік тегів"
 
-#: ../../src/vcs/tagging.txt:13
+#: ../../src/vcs/tagging.txt:12
 msgid ""
 "Listing the existing tags in Git is straightforward. Just type ``git tag`` "
 "(with optional ``-l`` or ``--list``)."
@@ -1748,7 +2186,7 @@ msgstr ""
 "Перерахувати існуючі теги у Git'і дуже просто. Просто введіть ``git tag`` (з "
 "необов'язковим ``-l`` або ``--list``)."
 
-#: ../../src/vcs/tagging.txt:22
+#: ../../src/vcs/tagging.txt:21
 msgid ""
 "This command lists the tags in alphabetical order, the order in which they "
 "are displayed has no real importance. You can also search for tags that "
@@ -1761,15 +2199,15 @@ msgstr ""
 "певному шаблону. Наприклад, сховище коду Git містить понад 500 тегів. Якщо "
 "вас цікавить лише серія 1.8.4, ви можете виконати цю команду:"
 
-#: ../../src/vcs/tagging.txt:38
+#: ../../src/vcs/tagging.txt:37
 msgid "Creating tags"
 msgstr "Створення тегів"
 
-#: ../../src/vcs/tagging.txt:40
+#: ../../src/vcs/tagging.txt:39
 msgid "Git supports two types of tags: *lightweight* and *annotated*."
 msgstr "Git підтримує два типи тегів: *легкі* та *анотовані*."
 
-#: ../../src/vcs/tagging.txt:42
+#: ../../src/vcs/tagging.txt:41
 msgid ""
 "A lightweight tag is very much like a branch that doesn't change -- it's "
 "just a pointer to a specific commit."
@@ -1777,7 +2215,7 @@ msgstr ""
 "Полегшений тег дуже схожий на гілку, яка не змінюється -- це просто "
 "вказівник на конкретний комміт."
 
-#: ../../src/vcs/tagging.txt:45
+#: ../../src/vcs/tagging.txt:44
 msgid ""
 "Annotated tags, however, are stored as full objects in the Git database. "
 "They're checksummed; contain the tagger name, email, and date; have a "
@@ -1795,11 +2233,11 @@ msgstr ""
 "потрібна тимчасова мітка або з якихось причин ви не хочете зберігати іншу "
 "інформацію, доступні також полегшені мітки."
 
-#: ../../src/vcs/tagging.txt:53
+#: ../../src/vcs/tagging.txt:52
 msgid "Annotated tags"
 msgstr "Анотовані теги"
 
-#: ../../src/vcs/tagging.txt:54
+#: ../../src/vcs/tagging.txt:53
 msgid ""
 "Creating an annotated tag in Git is simple. The easiest way is to specify ``-"
 "a`` when you run the ``tag`` command:"
@@ -1807,11 +2245,11 @@ msgstr ""
 "Створити анотовану мітку в Git'і дуже просто. Найпростіший спосіб - вказати "
 "``-a`` при виконанні команди ``tag``:"
 
-#: ../../src/vcs/tagging.txt:70
+#: ../../src/vcs/tagging.txt:69
 msgid "Lightweight tags"
 msgstr "Легкі мітки"
 
-#: ../../src/vcs/tagging.txt:71
+#: ../../src/vcs/tagging.txt:70
 msgid ""
 "Another way to tag commits is with a lightweight tag. this is basically the "
 "commit checksum stored in a file -- no other information is kept. To create "
@@ -1823,19 +2261,19 @@ msgstr ""
 "інформація не зберігається. Щоб створити полегшену мітку, не вказуйте жодної "
 "з опцій ``-a``, ``-s`` або ``-m``, просто вкажіть назву мітки:"
 
-#: ../../src/vcs/tagging.txt:90
+#: ../../src/vcs/tagging.txt:89
 msgid "Tagging later"
 msgstr "Відмітити пізніше"
 
-#: ../../src/vcs/tagging.txt:91
+#: ../../src/vcs/tagging.txt:90
 msgid "You can also tag commits after you're moved past them."
 msgstr "Ви також можете позначати коміти після того, як ви пройшли повз них."
 
-#: ../../src/vcs/tagging.txt:108
+#: ../../src/vcs/tagging.txt:107
 msgid "Deleting tags"
 msgstr "Видалення тегів"
 
-#: ../../src/vcs/tagging.txt:110
+#: ../../src/vcs/tagging.txt:109
 msgid ""
 "To delete a tag on your local repository, you can use ``git tag -d "
 "<tagname>``."
@@ -1843,11 +2281,11 @@ msgstr ""
 "Щоб видалити тег у вашому локальному сховищі, ви можете скористатися ``git "
 "tag -d <tagname>``."
 
-#: ../../src/vcs/tagging.txt:118
+#: ../../src/vcs/tagging.txt:117
 msgid "Checking out tags"
 msgstr "Перевірка тегів"
 
-#: ../../src/vcs/tagging.txt:120
+#: ../../src/vcs/tagging.txt:119
 msgid ""
 "If you want to view the versions of files a tag is pointing to, you can do a "
 "``git checkout`` of that tag, although this puts your repository in "
@@ -1857,7 +2295,7 @@ msgstr ""
 "виконати ``git checkout`` цього тегу, хоча це переводить ваше сховище у стан "
 "\"відокремленої ГОЛОВИ\", що має деякі погані побічні ефекти:"
 
-#: ../../src/vcs/tagging.txt:146
+#: ../../src/vcs/tagging.txt:145
 msgid ""
 "In \"detached HEAD\" state, if you make changes and then create a commit, "
 "the tag will stay the same, but your new commit won’t belong to any branch "
