@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Python Training Course 2023.06.dev\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-08-19 11:46+0300\n"
-"PO-Revision-Date: 2023-08-19 11:59+0300\n"
+"PO-Revision-Date: 2023-08-19 12:18+0300\n"
 "Last-Translator: Serhii Horodilov <sgorodil@gmail.com>\n"
 "Language-Team: uk <LL@li.org>\n"
 "Language: uk\n"
@@ -1067,7 +1067,7 @@ msgstr "Щоб перейти до існуючої гілки, виконайт
 
 #: ../../src/vcs/branch.txt:109
 msgid "Basic branching and merging"
-msgstr "To switch to an existing branch, you run the ``git checkout`` command"
+msgstr "Основи розгалуження та злиття"
 
 #: ../../src/vcs/branch.txt:111
 msgid ""
