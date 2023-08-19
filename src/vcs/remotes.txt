@@ -1,3 +1,161 @@
 *******************************************************************************
                                     Remotes
 *******************************************************************************
+
+To be able to collaborate on any Git project, you need to know how to manage
+your remote repositories. Remote repositories are versions of your project
+that are hosted on the Internet or network somewhere. You can have several of
+them, each of which generally is either read-only or read/write for you.
+Managing remotes includes knowing how to add remote repositories, remove
+remote repositories that are no longer valid, manage various branches and
+define them as being tracked or not, and more.
+
+..
+    .. note::
+        It is entirely possible that you can be working with a "remote"
+        repository that is, in fact, on the same host you are.
+        The word "remote" does not necessary imply that repository is somewhere
+        else on the network or Internet, only that it is elsewhere.
+
+Showing your remote
+===================
+
+To see which remote servers you have configured, you can run the ``git remote``
+command. It lists the shortnames of each remote handle you're specified. If
+you've cloned your repository, you should at least see ``origin`` - that is
+default name Git gives to the server you clone from:
+
+::
+
+    $ git remote
+    origin
+    upstream
+
+    $ git remote -v
+    origin  git@github.com:edu-python-course/edu-python-course.github.io (fetch)
+    origin  git@github.com:edu-python-course/edu-python-course.github.io (push)
+    upstream        git@github.com:PonomaryovVladyslav/PythonCources.git (fetch)
+    upstream        git@github.com:PonomaryovVladyslav/PythonCources.git (push)
+
+
+This means we can pull contributions from any of these users pretty easily.
+We may additionally have permission to push to one or more of these.
+
+Adding remote repositories
+==========================
+
+To add a new remote Git repository as a shortname you can reference easily, run
+``git remote add <shortname> <url>``:
+
+::
+
+    $ git remote
+    origin
+    upstream
+    $ git remote add personal https://github.com/shorodilov/python-course
+    $ git remote
+    origin
+    upstream
+    personal
+
+Now you can use the string "personal" on the command line in lieu of the whole
+URL. ``master`` branch of "https://github.com/shorodilov/python-course" is now
+accessible as ``personal/master``, while shortname to the same branch in origin
+will be -- ``origin/master``.
+
+Fetching and pulling from remotes
+=================================
+
+To get data from remote project, you can run ``git fetch`` command.
+The command goes out to that remote project and pulls down all the information
+from that remote project that you don't have yet. After you do this, you should
+have references to all the branches from that remote, which you can merge in or
+inspect at any time.
+
+::
+
+    $ git fetch <remote>
+
+If your current branch is set up to track a remote branch, you can use
+``git pull`` command to automatically fetch and then merge that remote branch
+into your current branch. By default, the ``git clone`` command automatically
+sets up your local ``master`` branch to track the remote ``master`` branch
+(or whatever default remote branch).
+
+.. versionadded:: 2.27
+    From Git version 2.27 onward, ``git pull`` will give a warning if the
+    ``pull.rebase`` variable is not set. Git will keep warning you until
+    you set the variable.
+
+    If you want the default behavior of Git (fast-forward if possible, else
+    create a merge commit): ``git config --global pull.rebase "false"``.
+
+    If you want to rebase when pulling:
+    ``git config --global pull.rebase "true"``.
+
+Pushing to remotes
+==================
+
+When you have your project at a point that you want to share, you have to push
+it upstream. The command for this is simple: ``git push <remote> <branch>``.
+
+::
+
+    $ git push origin master
+
+This command works only if you cloned from a server to which you have write
+access and if nobody has pushed in the meantime. If you and someone else clone
+at the same time and they push upstream and then you push upstream, you push
+will rightly be rejected. You'll have to fetch their work first and incorporate
+it into yours before you'll be allowed to push.
+
+Inspecting a remote
+===================
+
+If you want to see more information about a particular remote, you can use the
+``git remote show <remote`` command.
+
+::
+
+    $ git remote show origin
+    * remote origin
+      Fetch URL: git@github.com:edu-python-course/edu-python-course.github.io
+      Push  URL: git@github.com:edu-python-course/edu-python-course.github.io
+      HEAD branch: master
+      Remote branches:
+        devel                                tracked
+        feature/contributing                 tracked
+        feature/libms                        tracked
+        feature/pdf-builder                  tracked
+        feature/translations                 tracked
+        feature/vcs                          tracked
+        gh-pages                             tracked
+        master                               tracked
+        refs/remotes/origin/blog-project     stale (use 'git remote prune' to remove)
+        refs/remotes/origin/feature/homepage stale (use 'git remote prune' to remove)
+        refs/remotes/origin/feature/patterns stale (use 'git remote prune' to remove)
+      Local branches configured for 'git pull':
+        devel                merges with remote devel
+        feature/contributing merges with remote feature/contributing
+        feature/intro-intl   merges with remote feature/intro-intl
+        feature/libms        merges with remote feature/libms
+        feature/pdf-builder  merges with remote feature/pdf-builder
+        feature/translations merges with remote feature/translations
+        feature/vcs          merges with remote feature/vcs
+        master               merges with remote master
+      Local refs configured for 'git push':
+        devel                pushes to devel                (up to date)
+        feature/contributing pushes to feature/contributing (up to date)
+        feature/libms        pushes to feature/libms        (up to date)
+        feature/pdf-builder  pushes to feature/pdf-builder  (up to date)
+        feature/translations pushes to feature/translations (up to date)
+        feature/vcs          pushes to feature/vcs          (fast-forwardable)
+        master               pushes to master               (up to date)
+
+
+It lists the URL for the remote repository as wll as the tracking branch
+information. The command helpfully tells you that if you're on the ``master``
+branch amd you run ``git pull``, it will automatically merge the remote's
+``master`` branch into the local one after it has been fetched. It also lists
+all the remote references it has pulled down.
+
