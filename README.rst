@@ -48,7 +48,7 @@ To do the same using poetry:
 .. _poetry: https://python-poetry.org
 
 Building documentation
-----------------------
+======================
 
 This repository comes with *Makefile*. For now this is the easiest way to do
 anything within this source code. There are several targets defined:
@@ -84,3 +84,9 @@ This command is equal to:
     make clean
     LANGUAGE=en make html
     LANGUAGE=uk make html
+
+Contributing to the project
+===========================
+
+This is an open-source project, so anyone is welcome to contribute to it.
+Please see `contributing guide <./.github/CONTRIBUTING.rst>`_ for more details.
