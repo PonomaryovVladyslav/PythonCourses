@@ -7,6 +7,22 @@
                             Version Control System
 ###############################################################################
 
+:abbr:`VCS (Version Control Systems)` play an integral role in modern software
+development. They allow multiple developers to work on a project simultaneously
+without overwriting each other's changes. VCSs track the history of changes
+to the source code, making it possible to revert to previous states, compare
+versions, and more.
+
+Among the VCSs available, Git stands out as one of the most popular and
+powerful tools. It's used by small projects and large-scale software alike,
+owing to its flexibility, distributed nature, and efficient handling of
+codebase versions.
+
+In this part, you'll learn about the fundamentals of version control, how to
+set up your environment for Git, dive into the basics of commits, branches, and
+merges, understand the significance of tags, and finally, explore how to
+collaborate using remote repositories and platforms like GitHub.
+
 .. toctree::
     :name: vcs
 
