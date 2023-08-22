@@ -83,8 +83,6 @@ considered ``False``:
 Boolean comparison
 ==================
 
-.. todo: not, and, or
-
 Python provides 3 logical operators:
 
 .. table::

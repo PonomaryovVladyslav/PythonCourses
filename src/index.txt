@@ -11,7 +11,6 @@
     basics/index
     rdbms/index
     oop/index
-    flask/index
     django/index
     linux/index
     deploy/index
