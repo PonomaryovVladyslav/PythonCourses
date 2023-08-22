@@ -3,8 +3,6 @@
     :author: Serhii Horodilov
     :keywords: python, basics, modules, import
 
-.. todo
-
 .. attention:: Page is under construction
 
     .. figure:: /../assets/img/construction.svg
@@ -14,3 +12,9 @@
 *******************************************************************************
                           Pythons Modules and Imports
 *******************************************************************************
+
+.. todo: module definition
+
+.. todo: imports
+
+.. todo: if __name__ == "__main__"

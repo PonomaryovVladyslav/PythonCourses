@@ -3,8 +3,6 @@
     :author: Serhii Horodilov
     :keywords: python, basics, functions
 
-.. todo
-
 .. attention:: Page is under construction
 
     .. figure:: /../assets/img/construction.svg
@@ -14,3 +12,9 @@
 *******************************************************************************
                                    Functions
 *******************************************************************************
+
+.. todo: function definition
+
+.. todo: function arguments (positional and key-word)
+
+.. todo: default argument value
