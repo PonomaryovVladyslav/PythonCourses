@@ -19,7 +19,11 @@ To get the full content, do:
 
 .. code-block:: shell
 
-    git submodule update --remote
+    git clone <this_repo_url> [local_repository]
+    # cd into cloned repo and switch to devel branch
+    git switch devel
+    # clone submodules content
+    git submodule update --init --recursive
 
 Installing dependencies
 -----------------------
