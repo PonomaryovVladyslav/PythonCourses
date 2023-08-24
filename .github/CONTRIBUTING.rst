@@ -1,3 +1,4 @@
+.. _Sphinx: https://www.sphinx-doc.org/
 .. _sphinxcontrib-mermaid: https://pypi.org/project/sphinxcontrib-mermaid/
 
 ###############################################################################
@@ -13,6 +14,33 @@ navigate. From the intricacies of Sphinx to the fluidity of Mermaid diagrams,
 we aim to provide you with all the insights you need.
 
 Let's dive in!
+
+*******************
+Documentation tools
+*******************
+
+`Sphinx`_ makes it easy to create intelligent and beautiful documentation.
+This is the main documentation generator used on this project. There are also
+some 3rd-party dependencies, like ``sphinxcontrib-mermaid`` or
+``MyST markdown`` installed, that makes it possible to use some extended
+syntax. Just install all project dependencies (including development).
+
+.. code-block:: shell
+
+    poetry install --with dev
+
+**requirements.txt** file does not split general and development deps, just do:
+
+.. code-block:: shell
+
+    pip install -r requirements.txt
+
+Other useful tools
+==================
+
+We found ``poedit`` software very useful for working with translations.
+
+.. todo
 
 ********************
 Repository structure
@@ -34,7 +62,8 @@ documentation builder.
 
 The **src/index.txt** is the master document. It combines all the content
 together. All topics are described in their own "topic" directories, each with
-its own *index.txt*.
+its own *index.txt*. Topic index file is the :abbr:`TOC (Table of Content)` for
+the topic, and it should be added to the master TOC.
 
 **assets** directory contains various static content for the documentation,
 like CSS, images etc.
@@ -143,3 +172,52 @@ blocks:
     flowchart LR
         id
     ```
+
+*********
+Branching
+*********
+
+Branches explanation
+====================
+
+This repo comes with two main branches: ``master`` and ``devel``.
+``master`` branch contains some stable releases of the documentation, while
+``devel`` aggregates works for the future releases.
+
+Working with topic branch(es)
+=============================
+
+We use GitFlow approach on this project. This means you would not commit to
+``master`` or ``devel`` branches directly. Instead you are to create a topic
+branch to work with.
+
+For example, if you want to describe "Django middleware", you will create
+a new branch ``[topic/]django-middleware``, and you will commit all your work
+to this branch.
+
+Once you consider the work is done - just open a pull request from your topic
+branch to ``devel``.
+
+**********************
+Working with documents
+**********************
+
+Do not make changes in **src** directory directly, except changes to "conf.py"
+and "index.txt" files. Keep your documents in dedicated topic directories
+instead. This project has some predefined topics already, so you can work
+inside of an existing topic directory.
+
+How to add new document(s)
+==========================
+
+.. todo
+
+How to add new topic(s)
+=======================
+
+.. todo
+
+How to translate
+================
+
+.. todo
