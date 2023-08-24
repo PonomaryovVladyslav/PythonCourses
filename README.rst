@@ -85,6 +85,17 @@ This command is equal to:
     LANGUAGE=en make html
     LANGUAGE=uk make html
 
+Building without make
+---------------------
+
+``make`` just automates the build process, however in case you don't have it
+installed, you can run builds manually:
+
+.. code-block:: shell
+
+    sphinx-build -b html -D language=en src _build/html/en
+    sphinx-build -b html -D language=uk src _build/html/uk
+
 Contributing to the project
 ===========================
 
