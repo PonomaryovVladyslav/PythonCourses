@@ -8,11 +8,6 @@
 Handing in Homework Assignments
 ###############################
 
-.. todo
-    # Как сдавать домашки
-    ## Как делать домашку
-    ## Что делать если я уже внёс файлы __pycache__ или .idea на гит?
-
 ******************************
 Repository content description
 ******************************
@@ -129,3 +124,90 @@ by using ``pip install`` command:
 .. code-block:: shell
 
     $ pip install -r requirements.txt
+
+************************************
+Dealing with home tasks (challenges)
+************************************
+
+#.  Create a new topic branch
+#.  Switch to a topic branch
+#.  Do the work and commit changes
+
+.. hint::
+    You can create a new branch and immediately switch to it:
+
+    .. code-block:: shell
+
+        git checkout -b <new_branch>
+
+Creating a pull request
+=======================
+
+#.  Make sure your working branch is up-to-date with the default one.
+    You can pull changes for the default branch and rebase your feature
+    branch onto it.
+#.  Push feature branch to the remote repository. By default, the current
+    active branch is pushed via ``git push`` command. You may need to
+    set upstream branch if it isn't yet.
+
+    .. code-block:: shell
+
+        git push -u origin <remote_branch>
+
+#.  Navigate to your remote repository homepage on GitHub and switch to
+    **Pull requests** tab.
+#.  Click **New pull request** button.
+#.  Select your default branch as *target* and your feature branch as
+    *source*.
+#.  Click **Create pull request** button.
+#.  Provide meaningful title and a brief description for your pull request.
+#.  Submit pull request creation.
+#.  *(Optional)* Select reviewer(s) in **Reviewers** section.
+#.  Wait until your pull request is reviewed.
+
+Set up reviewers
+================
+
+You may share a link to pull request to a reviewer directly, but it's better
+to set reviewer(s) on the pull request's page.
+Before you can select reviewers, you need to add them as project contributors.
+
+Append collaborators
+--------------------
+
+Reviews allow collaborators to comment on the changes proposed in pull
+requests, approve the changes, or request further changes before the pull
+request is merged. Repository administrators can require that pull requests
+are approved before being merged.
+
+#.  Navigate to your repository homepage on GitHub and switch to **Settings**
+    tab.
+#.  Select **Collaborators and teams** menu item.
+#.  Under **Manage access** section click **Add people** button.
+#.  In modal window start typing GitHub username.
+#.  Select a contributor from the dropdown menu.
+
+This will send a *contributing request* to a specified user.
+
+Merging changes
+===============
+
+In case your pull request is **approved** - merge it to the trunk branch.
+Select one of the options available:
+
+-   Create a merge commit
+-   Rebase and merge
+-   Squash and merge
+
+**Create a merge commit** suits in most of the cases.
+
+Making changes
+==============
+
+In case your pull request is **rejected** or has comments - you may need to
+provide some fixes.
+
+#.  Do the work in your local topic branch
+#.  Push these changes to remote
+#.  Re-request review (if applicable)
+#.  Wait until review is done
