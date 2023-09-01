@@ -27,7 +27,7 @@
         appx/env_path
         appx/precedence
         appx/printf
-        appx/create_pr
+        appx/assignments
         appx/conv_store
         appx/wtk
         appx/blog/spec

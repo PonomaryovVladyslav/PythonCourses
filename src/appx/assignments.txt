@@ -1,0 +1,131 @@
+.. meta::
+    :description: How-to handle in assignments via GitHub pull request(s)
+    :author: Vladyslav Ponomaryov
+    :author: Serhii Horodilov sgorodil@gmail.com
+    :keywords: git, github, pull request, review, merge, howto
+
+###############################
+Handing in Homework Assignments
+###############################
+
+.. todo
+    # Как сдавать домашки
+    ## Как делать домашку
+    ## Что делать если я уже внёс файлы __pycache__ или .idea на гит?
+
+******************************
+Repository content description
+******************************
+
+What to include
+===============
+
+-   Code base
+-   Project dependencies (if applicable)
+-   *(Optional)* Additional project information:
+    README, CONTRIBUTING, LICENSE etc.
+
+.. hint::
+    Always start new repository from creating ``README`` and ``.gitignore``
+    files.
+
+What to exclude
+===============
+
+-   Virtual environment, typically ``venv`` or ``env`` folder
+-   Byte compiled Python code (``__pycache__``)
+-   IDEA configurations, typically ``.vscode`` or ``.idea`` folder
+-   Database files, like ``db.sqlite3``
+-   Other stuff not related to the assignment directly
+
+.. hint::
+    Set up **.gitignore** to exclude all name patterns from appending
+    to the stage area. Common content of this file may look like:
+
+    ::
+
+        /venv/
+        /env/
+        __pycache__/
+
+*************************
+Repository initialization
+*************************
+
+#.  Create and activate virtual environment.
+#.  Create common repository files:
+
+    -   README
+    -   .gitignore
+    -   requirements.txt *(if applicable)*
+
+#.  *(Optional)* create a code base draft. This can be an empty module
+    like **main.py** or an empty :ref:`Django project <django_init>`.
+#.  Initialize a new repository using ``git init`` command.
+#.  Set up **.gitignore** name patterns.
+#.  Stage your changes.
+#.  Commit your changes.
+#.  Set up remote repository.
+#.  Push changes from local branch to remote.
+
+.. _django_init:
+
+Initializing new Django project
+===============================
+
+Base Django project may be added to the repository with the first commit.
+Initialize Django project in current repository root to avoid directories
+nesting.
+
+.. code-block:: shell
+
+    $ django-admin startproject <project_name> .
+
+.. important::
+    Do not forget to create **requirements.txt**.
+
+After that, you may proceed with "staging" and "commit" steps.
+
+****************************
+Sharing project dependencies
+****************************
+
+The **requirements.txt** file is a plain text file that lists all the Python
+packages required for a specific project. This file is used to specify
+dependencies in a version-controlled and easily shareable manner. It allows
+for a consistent environment across different team members' local setups.
+
+Where to place "requirements.txt" file
+======================================
+
+The **requirements.txt** file is generally placed in the root directory of
+the project.
+
+Creating "requirements.txt" file
+================================
+
+To generate file use ``pip freeze`` command and place its output to a file:
+
+.. code-block:: shell
+
+    $ pip freeze > requirements.txt
+
+This will create **requirements.txt** file. Its content may look like:
+
+::
+
+    asgiref==3.6.0
+    Django==4.1.5
+    psycopg2==2.9.5
+    sqlparse==0.4.3
+    tzdata==2022.7
+
+Installing dependencies from "requirements.txt" file
+====================================================
+
+Another team member may easily install all the requirements for the project
+by using ``pip install`` command:
+
+.. code-block:: shell
+
+    $ pip install -r requirements.txt
