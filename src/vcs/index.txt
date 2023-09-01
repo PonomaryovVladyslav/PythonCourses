@@ -33,3 +33,4 @@ collaborate using remote repositories and platforms like GitHub.
     branch
     remotes
     github
+    pullrequest
