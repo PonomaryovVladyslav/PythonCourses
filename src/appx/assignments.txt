@@ -29,7 +29,7 @@ What to exclude
 
 -   Virtual environment, typically ``venv`` or ``env`` folder
 -   Byte compiled Python code (``__pycache__``)
--   IDEA configurations, typically ``.vscode`` or ``.idea`` folder
+-   IDE configurations, typically ``.vscode`` or ``.idea`` folder
 -   Database files, like ``db.sqlite3``
 -   Other stuff not related to the assignment directly
 
@@ -54,7 +54,7 @@ Repository initialization
     -   .gitignore
     -   requirements.txt *(if applicable)*
 
-#.  *(Optional)* create a code base draft. This can be an empty module
+#.  *(Optional)* Create a code base draft. This can be an empty module
     like **main.py** or an empty :ref:`Django project <django_init>`.
 #.  Initialize a new repository using ``git init`` command.
 #.  Set up **.gitignore** name patterns.
