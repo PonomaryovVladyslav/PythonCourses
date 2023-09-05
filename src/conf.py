@@ -14,7 +14,7 @@ project_copyright = \
     f"{datetime.now().year}, Python training course authors and contributors"
 authors = "Vladyslav Ponomaryov \\and " \
           "Serhii Horodilov"
-version = "2023.06.dev"
+version = "2023.09.dev"
 
 # general configuration
 master_doc = root_doc = "index"
