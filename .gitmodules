@@ -4,3 +4,6 @@
 [submodule "src/appx/blog"]
 	path = src/appx/blog
 	url = git@github.com:edu-python-course/blog-spec
+[submodule "src/appx/libms"]
+	path = src/appx/libms
+	url = git@github.com:edu-python-course/libms-spec.git
