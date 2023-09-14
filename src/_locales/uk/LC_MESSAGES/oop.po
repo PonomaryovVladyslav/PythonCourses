@@ -1,4 +1,4 @@
-# OBJECT-ORIENTED PROGRAMMING BLOCK TRANSLATION.
+# OBJECT-ORIENTED PROGRAMMING TOPICS
 #
 # Copyright (C) 2022, Python training course authors and contributors
 # This file is distributed under the same license as the Python Training
