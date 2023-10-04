@@ -806,11 +806,11 @@ def regex(request, text):
 # Практика / Домашнее задание:
 
 Вся домашка на ближайшие много занятий описана вот 
-[тут](https://edu-python-course.github.io/_build/html/uk/appx/blog.html).
+[тут](https://edu-python-course.github.io/_build/html/uk/appx/blog/spec.html).
 
 Там прописаны все задачи разбитые на подзадачи, что бы собрать их в один цельный проект
 
-[Задание](https://edu-python-course.github.io/_build/html/uk/appx/blog.html#challenge-functional-views) на это занятие:
+[Задание](https://edu-python-course.github.io/_build/html/uk/appx/blog/spec.html#challenge-functional-views) на это занятие:
 
 
 
