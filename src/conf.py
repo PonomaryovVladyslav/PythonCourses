@@ -47,6 +47,7 @@ bibtex_reference_style = "label"
 #       mermaid-js/mermaid-cli is added to project's dependencies
 
 # options for internationalization
+gettext_compact = False
 language = "en"
 locale_dirs = ["_locales"]
 
