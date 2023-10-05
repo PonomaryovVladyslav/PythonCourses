@@ -1,0 +1,244 @@
+# Copyright (C) 2023, Python training course authors and contributors
+# This file is distributed under the same license as the Python Training
+# Course package.
+# SERHII HORODILOV <sgorodil@gmail.com>
+msgid ""
+msgstr ""
+"Project-Id-Version: Python Training Course 2022.11.dev\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-10-05 19:49+0300\n"
+"PO-Revision-Date: 2023-10-05 20:02+0300\n"
+"Last-Translator: Serhii Horodilov <sgorodil@gmail.com>\n"
+"Language-Team: ua <LL@li.org>\n"
+"Language: uk\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<12 || n%100>14) ? 1 : 2);\n"
+"Generated-By: Babel 2.13.0\n"
+"X-Generator: Poedit 3.4\n"
+
+#: ../../src/appx/printf.txt:-1
+msgid "Formatted strings usage in Python"
+msgstr "Використання форматованих рядків в Python"
+
+#: ../../src/appx/printf.txt:-1
+msgid "Serhii Horodilov sgorodil@gmail.com"
+msgstr "Serhii Horodilov sgorodil@gmail.com"
+
+#: ../../src/appx/printf.txt:-1
+msgid "python, string, formatting"
+msgstr "python, string, formatting"
+
+#: ../../src/appx/printf.txt:10
+msgid "``printf-style`` String Formatting"
+msgstr "``printf-style`` Форматування рядків"
+
+#: ../../src/appx/printf.txt:12
+msgid ""
+"String objects have one unique built-in operation: the ``%`` operator "
+"(modulo). This is also known as the string *formatting* or *interpolation* "
+"operator :cite:`docs-python:printf-formatting`. Given ``format % values`` "
+"(where *format* is a string), ``%`` conversion specifications in *format* "
+"are replaced with zero or more elements of *values*. If *format* requires a "
+"single argument, *values* may be a single non-tuple object."
+msgstr ""
+"Рядкові об'єкти мають одну унікальну вбудовану операцію: оператор ``%`` (по "
+"модулю). Це також відоме як оператор *форматування* рядка або "
+"*інтерполяції* :cite:`docs-python:printf-formatting`. Враховуючи ``формат % "
+"значень`` (де *format* є рядком), ``%`` специфікації перетворення у *format* "
+"замінюються нулем або більше елементами *значень*. Якщо для *format* "
+"потрібен один аргумент, *values* може бути одним некортежним об'єктом."
+
+#: ../../src/appx/printf.txt:19
+msgid "The conversion flag characters are:"
+msgstr "Символи перетворення:"
+
+#: ../../src/appx/printf.txt:22
+msgid "Flag"
+msgstr "Символ"
+
+#: ../../src/appx/printf.txt:22 ../../src/appx/printf.txt:40
+msgid "Meaning"
+msgstr "Значення"
+
+#: ../../src/appx/printf.txt:24
+msgid "``#``"
+msgstr "``#``"
+
+#: ../../src/appx/printf.txt:24
+msgid "The value conversion will use the \"alternative form\""
+msgstr "Перетворення значень використовуватиме \"альтернативну форму\""
+
+#: ../../src/appx/printf.txt:26
+msgid "``0``"
+msgstr "``0``"
+
+#: ../../src/appx/printf.txt:26
+msgid "The conversion will be zero padded for numeric values"
+msgstr "Перетворення буде доповнено нулем для числових значень"
+
+#: ../../src/appx/printf.txt:28
+msgid "``'-'``"
+msgstr "``'-'``"
+
+#: ../../src/appx/printf.txt:28
+msgid ""
+"The converted value is left adjusted (override the ``'0'`` if both are given)"
+msgstr ""
+"Перетворене значення коригується зліва (замініть ``'0'``, якщо надано обидва)"
+
+#: ../../src/appx/printf.txt:31
+msgid "``' '``"
+msgstr "``' '``"
+
+#: ../../src/appx/printf.txt:31
+msgid "(a space) A blank should be left before a positive number"
+msgstr "(пробіл) Перед додатним числом слід залишити пробіл"
+
+#: ../../src/appx/printf.txt:33
+msgid "``'+'``"
+msgstr "``'+'``"
+
+#: ../../src/appx/printf.txt:33
+msgid ""
+"A sign character (``'+'`` or ``'-'``) will precede the conversion (overrides "
+"a \"space\" flag)"
+msgstr ""
+"Символ знака (``'+'`` або ``'-'``) передуватиме перетворенню (перевизначає "
+"прапор \"пробіл\")"
+
+#: ../../src/appx/printf.txt:37
+msgid "The conversion types are:"
+msgstr "Типи перетворення:"
+
+#: ../../src/appx/printf.txt:40
+msgid "Conversion"
+msgstr "Перетворення"
+
+#: ../../src/appx/printf.txt:42
+msgid "``'d'``"
+msgstr "``'d'``"
+
+#: ../../src/appx/printf.txt:42 ../../src/appx/printf.txt:44
+msgid "Signed integer decimal"
+msgstr "Ціле десяткове число зі знаком"
+
+#: ../../src/appx/printf.txt:44
+msgid "``'i'``"
+msgstr "``'i'``"
+
+#: ../../src/appx/printf.txt:46
+msgid "``'o'``"
+msgstr "``'o'``"
+
+#: ../../src/appx/printf.txt:46
+msgid "Signed octal value"
+msgstr "Вісімкове значення зі знаком"
+
+#: ../../src/appx/printf.txt:48
+msgid "``'u'``"
+msgstr "``'u'``"
+
+#: ../../src/appx/printf.txt:48
+msgid "Obsolete type - it is identical to ``'d'``"
+msgstr "Застарілий тип - ідентичний ``'d``"
+
+#: ../../src/appx/printf.txt:50
+msgid "``'x'``"
+msgstr "``'x'``"
+
+#: ../../src/appx/printf.txt:50
+msgid "Signed hexadecimal (lowercase)"
+msgstr "Шістнадцяткове число зі знаком (маленький регістр)"
+
+#: ../../src/appx/printf.txt:52
+msgid "``'X'``"
+msgstr "``'X'``"
+
+#: ../../src/appx/printf.txt:52
+msgid "Signed hexadecimal (uppercase)"
+msgstr "Шістнадцяткове число зі знаком (верхній регістр)"
+
+#: ../../src/appx/printf.txt:54
+msgid "``'e'``"
+msgstr "``'e'``"
+
+#: ../../src/appx/printf.txt:54
+msgid "Floating point exponential format (lowercase)"
+msgstr "Експоненціальний формат із плаваючою комою (нижній регістр)"
+
+#: ../../src/appx/printf.txt:56
+msgid "``'E'``"
+msgstr "``'E'``"
+
+#: ../../src/appx/printf.txt:56
+msgid "Floating point exponential format (uppercase)"
+msgstr "Експоненціальний формат із плаваючою комою (верхній регістр)"
+
+#: ../../src/appx/printf.txt:58
+msgid "``'f'`` ``'F'``"
+msgstr "``'f'`` ``'F'``"
+
+#: ../../src/appx/printf.txt:58
+msgid "Floating point decimal format"
+msgstr "Десятковий формат із плаваючою комою"
+
+#: ../../src/appx/printf.txt:61
+msgid "``'g'``"
+msgstr "``'g'``"
+
+#: ../../src/appx/printf.txt:64
+msgid "``'G'``"
+msgstr "``'G'``"
+
+#: ../../src/appx/printf.txt:61
+msgid ""
+"Floating point format. Uses lowercase exponential format if exponent is less "
+"that -4 or not less than precision, decimal format otherwise."
+msgstr ""
+"Формат з плаваючою комою. Використовує нижній регістр експоненціального "
+"формату, якщо показник степеня менший за -4 або не менший за точність, "
+"десятковий формат інакше."
+
+#: ../../src/appx/printf.txt:66
+msgid "``'c'``"
+msgstr "``'c'``"
+
+#: ../../src/appx/printf.txt:66
+msgid "Single character (accepts integer or single character string)"
+msgstr "Один символ (приймає ціле число або рядок з одним символом)"
+
+#: ../../src/appx/printf.txt:68
+msgid "``'r'``"
+msgstr "``'r'``"
+
+#: ../../src/appx/printf.txt:68
+msgid "Converts any Python object using ``repr()``"
+msgstr "Перетворює будь-який об'єкт Python за допомогою ``repr()``"
+
+#: ../../src/appx/printf.txt:70
+msgid "``'s'``"
+msgstr "``'s'``"
+
+#: ../../src/appx/printf.txt:70
+msgid "Converts any Python object using ``str()``"
+msgstr "Перетворює будь-який об'єкт Python за допомогою ``str()``"
+
+#: ../../src/appx/printf.txt:72
+msgid "``'a'``"
+msgstr "``'a'``"
+
+#: ../../src/appx/printf.txt:72
+msgid "Converts any Python object using ``ascii()``"
+msgstr "Перетворює будь-який об'єкт Python за допомогою ``ascii()``"
+
+#: ../../src/appx/printf.txt:74
+msgid "``'%'``"
+msgstr "``'%'``"
+
+#: ../../src/appx/printf.txt:74
+msgid ""
+"No arguments is converted, results in a ``'%'`` character in the result."
+msgstr "Жодні аргументи не перетворюються, результатом є символ ``'%'``."

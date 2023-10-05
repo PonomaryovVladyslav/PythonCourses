@@ -1,0 +1,479 @@
+# Copyright (C) 2023, Python training course authors and contributors
+# This file is distributed under the same license as the Python Training
+# Course package.
+# SERHII HORODILOV <sgorodil@gmail.com>
+msgid ""
+msgstr ""
+"Project-Id-Version: Python Training Course 2022.11.dev\n"
+"Report-Msgid-Bugs-To: https://github.com/edu-python-course/edu-python-course."
+"github.io/issues\n"
+"POT-Creation-Date: 2023-10-05 19:49+0300\n"
+"PO-Revision-Date: 2023-10-05 20:16+0300\n"
+"Last-Translator: Serhii Horodilov <sgorodil@gmail.com>\n"
+"Language-Team: ua <LL@li.org>\n"
+"Language: ua\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.13.0\n"
+"X-Generator: Poedit 3.4\n"
+
+#: ../../src/rdbms/aggregation.txt:-1
+msgid "Data aggregation"
+msgstr "Агрегація даних"
+
+#: ../../src/rdbms/aggregation.txt:-1
+msgid "Serhii Horodilov"
+msgstr "Serhii Horodilov"
+
+#: ../../src/rdbms/aggregation.txt:-1
+msgid "sql, db, database, data, aggregation, functions"
+msgstr "sql, db, database, data, aggregation, functions"
+
+#: ../../src/rdbms/aggregation.txt:8
+msgid "Data Aggregation"
+msgstr "Агрегація даних"
+
+#: ../../src/rdbms/aggregation.txt:10
+msgid "Here is some dummy data, that will be used as example in this section."
+msgstr ""
+"Ось деякі фіктивні дані, які будуть використані як приклад у цьому розділі."
+
+#: ../../src/rdbms/aggregation.txt:12
+msgid "product"
+msgstr "product"
+
+#: ../../src/rdbms/products_table.csv:1
+msgid "id"
+msgstr "id"
+
+#: ../../src/rdbms/products_table.csv:1
+msgid "name"
+msgstr "name"
+
+#: ../../src/rdbms/products_table.csv:1
+msgid "price"
+msgstr "price"
+
+#: ../../src/rdbms/aggregation.txt:174 ../../src/rdbms/aggregation.txt:215
+#: ../../src/rdbms/products_table.csv:1
+msgid "category"
+msgstr "category"
+
+#: ../../src/rdbms/aggregation.txt:174 ../../src/rdbms/aggregation.txt:215
+#: ../../src/rdbms/products_table.csv:1
+msgid "sold"
+msgstr "sold"
+
+#: ../../src/rdbms/products_table.csv:1
+msgid "1"
+msgstr "1"
+
+#: ../../src/rdbms/products_table.csv:1
+msgid "Samsung Galaxy"
+msgstr "Samsung Galaxy"
+
+#: ../../src/rdbms/products_table.csv:1
+msgid "100000"
+msgstr "100000"
+
+#: ../../src/rdbms/aggregation.txt:181 ../../src/rdbms/products_table.csv:1
+msgid "Phones"
+msgstr "Phones"
+
+#: ../../src/rdbms/products_table.csv:1
+msgid "500"
+msgstr "500"
+
+#: ../../src/rdbms/products_table.csv:1
+msgid "2"
+msgstr "2"
+
+#: ../../src/rdbms/products_table.csv:1
+msgid "iPhone 13 Pro"
+msgstr "iPhone 13 Pro"
+
+#: ../../src/rdbms/products_table.csv:1
+msgid "120000"
+msgstr "120000"
+
+#: ../../src/rdbms/aggregation.txt:180 ../../src/rdbms/aggregation.txt:219
+#: ../../src/rdbms/products_table.csv:1
+msgid "300"
+msgstr "300"
+
+#: ../../src/rdbms/products_table.csv:1
+msgid "3"
+msgstr "3"
+
+#: ../../src/rdbms/products_table.csv:1
+msgid "MacBook Pro"
+msgstr "MacBook Pro"
+
+#: ../../src/rdbms/products_table.csv:1
+msgid "350000"
+msgstr "350000"
+
+#: ../../src/rdbms/aggregation.txt:180 ../../src/rdbms/aggregation.txt:219
+#: ../../src/rdbms/products_table.csv:1
+msgid "Laptops"
+msgstr "Laptops"
+
+#: ../../src/rdbms/products_table.csv:1
+msgid "100"
+msgstr "100"
+
+#: ../../src/rdbms/products_table.csv:1
+msgid "4"
+msgstr "4"
+
+#: ../../src/rdbms/products_table.csv:1
+msgid "Lenovo ThinkPad"
+msgstr "Lenovo ThinkPad"
+
+#: ../../src/rdbms/products_table.csv:1
+msgid "150000"
+msgstr "150000"
+
+#: ../../src/rdbms/products_table.csv:1
+msgid "200"
+msgstr "200"
+
+#: ../../src/rdbms/products_table.csv:1
+msgid "5"
+msgstr "5"
+
+#: ../../src/rdbms/products_table.csv:1
+msgid "HP Printer"
+msgstr "HP Printer"
+
+#: ../../src/rdbms/products_table.csv:1
+msgid "20000"
+msgstr "20000"
+
+#: ../../src/rdbms/aggregation.txt:177 ../../src/rdbms/products_table.csv:1
+msgid "Printers"
+msgstr "Printers"
+
+#: ../../src/rdbms/aggregation.txt:177 ../../src/rdbms/aggregation.txt:181
+#: ../../src/rdbms/products_table.csv:1
+msgid "800"
+msgstr "800"
+
+#: ../../src/rdbms/products_table.csv:1
+msgid "6"
+msgstr "6"
+
+#: ../../src/rdbms/products_table.csv:1
+msgid "Dell Monitor"
+msgstr "Dell Monitor"
+
+#: ../../src/rdbms/products_table.csv:1
+msgid "50000"
+msgstr "50000"
+
+#: ../../src/rdbms/aggregation.txt:179 ../../src/rdbms/aggregation.txt:218
+#: ../../src/rdbms/products_table.csv:1
+msgid "Monitors"
+msgstr "Monitors"
+
+#: ../../src/rdbms/aggregation.txt:179 ../../src/rdbms/aggregation.txt:218
+#: ../../src/rdbms/products_table.csv:1
+msgid "400"
+msgstr "400"
+
+#: ../../src/rdbms/products_table.csv:1
+msgid "7"
+msgstr "7"
+
+#: ../../src/rdbms/products_table.csv:1
+msgid "Sony Headphones"
+msgstr "Sony Headphones"
+
+#: ../../src/rdbms/products_table.csv:1
+msgid "30000"
+msgstr "30000"
+
+#: ../../src/rdbms/aggregation.txt:176 ../../src/rdbms/aggregation.txt:217
+#: ../../src/rdbms/products_table.csv:1
+msgid "Audio"
+msgstr "Audio"
+
+#: ../../src/rdbms/aggregation.txt:176 ../../src/rdbms/aggregation.txt:217
+#: ../../src/rdbms/products_table.csv:1
+msgid "0"
+msgstr "0"
+
+#: ../../src/rdbms/products_table.csv:1
+msgid "8"
+msgstr "8"
+
+#: ../../src/rdbms/products_table.csv:1
+msgid "Bose Soundbar"
+msgstr "Bose Soundbar"
+
+#: ../../src/rdbms/products_table.csv:1
+msgid "70000"
+msgstr "70000"
+
+#: ../../src/rdbms/products_table.csv:1
+msgid "9"
+msgstr "9"
+
+#: ../../src/rdbms/products_table.csv:1
+msgid "Xbox Series X"
+msgstr "Xbox Series X"
+
+#: ../../src/rdbms/products_table.csv:1
+msgid "60000"
+msgstr "60000"
+
+#: ../../src/rdbms/aggregation.txt:178 ../../src/rdbms/products_table.csv:1
+msgid "Gaming"
+msgstr "Gaming"
+
+#: ../../src/rdbms/products_table.csv:1
+msgid "250"
+msgstr "250"
+
+#: ../../src/rdbms/products_table.csv:1
+msgid "10"
+msgstr "10"
+
+#: ../../src/rdbms/products_table.csv:1
+msgid "PlayStation 5"
+msgstr "PlayStation 5"
+
+#: ../../src/rdbms/products_table.csv:1
+msgid "55000"
+msgstr "55000"
+
+#: ../../src/rdbms/products_table.csv:1
+msgid "350"
+msgstr "350"
+
+#: ../../src/rdbms/aggregation.txt:19
+msgid "The same dataset is available as:"
+msgstr "The same dataset is available as:"
+
+#: ../../src/rdbms/aggregation.txt:21
+msgid ":download:`csv file <./products_table.csv>`"
+msgstr ":download:`csv file <./products_table.csv>`"
+
+#: ../../src/rdbms/aggregation.txt:22
+msgid ""
+":download:`postgres dump file </../assets/sql/products.pg13-1.dump.sql>`"
+msgstr ""
+":download:`postgres dump file </../assets/sql/products.pg13-1.dump.sql>`"
+
+#: ../../src/rdbms/aggregation.txt:25
+msgid "Aggregate functions"
+msgstr "Агрегуючі функції"
+
+#: ../../src/rdbms/aggregation.txt:27
+msgid ""
+"*Aggregate functions* compute a single result from a set of input values. "
+"Various RDBMS implement various built-in aggregate functions. In this "
+"section we will review 5 basic functions that are available in all RDBMS."
+msgstr ""
+"*Агрегатні функції* обчислюють один результат із набору вхідних значень. "
+"Різні RDBMS реалізують різноманітні вбудовані агрегатні функції. У цьому "
+"розділі ми розглянемо 5 основних функцій, доступних у всіх RDBMS."
+
+#: ../../src/rdbms/aggregation.txt:34
+msgid "Count"
+msgstr "Підрахунок"
+
+#: ../../src/rdbms/aggregation.txt:36
+msgid ""
+"The ``count(field)`` function returns a count of the number of times that "
+"``field`` is not ``NULL`` in a group. The ``count(*)`` function (with no "
+"arguments) returns the total number of rows in the group."
+msgstr ""
+"Функція ``count(field)`` повертає кількість разів, коли ``field`` не є "
+"``NULL`` у групі. Функція ``count()`` (без аргументів) повертає загальну "
+"кількість рядків у групі."
+
+#: ../../src/rdbms/aggregation.txt:52
+msgid "Maximum value"
+msgstr "Максимальне значення"
+
+#: ../../src/rdbms/aggregation.txt:54
+msgid ""
+"The ``max()`` aggregate function returns the maximum value of all values in "
+"the group. The maximum value is the value that would be returned last in an "
+"ORDER BY on the same column. Aggregate function returns ``NULL`` if and only "
+"if there are no non-NULL values in the group."
+msgstr ""
+"Агрегатна функція ``max()`` повертає максимальне значення з усіх значень у "
+"групі. Максимальне значення - це значення, яке буде повернуто останнім у "
+"ORDER BY для того самого стовпця. Агрегатна функція повертає ` `NULL``, якщо "
+"і лише якщо в групі немає значень, відмінних від NULL."
+
+#: ../../src/rdbms/aggregation.txt:71
+msgid "Minimum value"
+msgstr "Мінімальне значення"
+
+#: ../../src/rdbms/aggregation.txt:73
+msgid ""
+"The ``min()`` aggregate function returns the minimum non-NULL value of all "
+"values in the group. The minimum value is the first non-NULL value that "
+"would appear in an ORDER BY of the column. Aggregate function returns "
+"``NULL`` if and only if there are no non-NULL values in the group."
+msgstr ""
+"Агрегатна функція ``min()`` повертає мінімальне значення не NULL для всіх "
+"значень у групі. Мінімальне значення - це перше значення не NULL, яке "
+"з'явиться в ORDER BY з Агрегатна функція повертає ``NULL`` тоді і тільки "
+"якщо в групі немає значень, відмінних від NULL."
+
+#: ../../src/rdbms/aggregation.txt:90
+msgid "Average value"
+msgstr "Середнє значення"
+
+#: ../../src/rdbms/aggregation.txt:92
+msgid ""
+"The ``avg()`` function returns the average value of all non-NULL inputs "
+"within a group. String and BLOB values that do not look like numbers are "
+"interpreted as 0. The result is always a floating point value whenever there "
+"is at least one non-NULL input even if all inputs are integers. The result "
+"is ``NULL`` if and only if there are no non-NULL inputs."
+msgstr ""
+"Функція ``avg()`` повертає середнє значення всіх не-NULL вхідних даних у "
+"групі. Рядкові та BLOB-значення, які не виглядають як числа, інтерпретуються "
+"як 0. Результат завжди значення з плаваючою комою щоразу, коли є принаймні "
+"один не-NULL-вхід, навіть якщо всі вхідні дані є цілими числами. Результатом "
+"є ``NULL`` тоді і тільки якщо немає не-NULL-вхідних даних."
+
+#: ../../src/rdbms/aggregation.txt:110
+msgid "Sum of values"
+msgstr "Сума значень"
+
+#: ../../src/rdbms/aggregation.txt:112
+msgid ""
+"The ``sum()`` aggregate functions return the sum of all non-NULL values in "
+"the group. If there are no non-NULL input rows then function returns "
+"``NULL``."
+msgstr ""
+"Агрегатні функції ``sum()`` повертають суму всіх значень, відмінних від "
+"NULL, у групі. Якщо вхідних рядків немає, функція повертає ``NULL``."
+
+#: ../../src/rdbms/aggregation.txt:117
+msgid ""
+"NULL is not normally a helpful result for the sum of no rows but the SQL "
+"standard requires it."
+msgstr ""
+"NULL зазвичай не є корисним результатом для суми відсутності рядків, але "
+"стандарт SQL вимагає цього."
+
+#: ../../src/rdbms/aggregation.txt:120
+msgid ""
+"SQLite implements ``total`` aggregate function, that is similar to ``sum``, "
+"but returns ``0.0`` (always floating point) if there are no non-NULL input "
+"rows."
+msgstr ""
+"SQLite реалізує агрегатну функцію ``total``, подібну до ``sum``, але "
+"повертає ``0.0`` (завжди з плаваючою точкою), якщо немає вхідних рядків, "
+"відмінних від NULL."
+
+#: ../../src/rdbms/aggregation.txt:135
+msgid "Grouping data"
+msgstr "Групування даних"
+
+#: ../../src/rdbms/aggregation.txt:137
+msgid ""
+"Getting some aggregated values is not very helpful itself. Most cases "
+"require to group outputs in some specific manner."
+msgstr ""
+"Отримання деяких агрегованих значень не є дуже корисним саме по собі. "
+"Більшість випадків вимагають згрупувати виходи певним чином."
+
+#: ../../src/rdbms/aggregation.txt:140
+msgid ""
+"For example, if the task is to count number of registered categories it is "
+"simple to solve as:"
+msgstr ""
+"Наприклад, якщо завдання полягає в підрахунку кількості зареєстрованих "
+"категорій, його просто вирішити так:"
+
+#: ../../src/rdbms/aggregation.txt:153
+msgid ""
+"But in case, the task is to count **sold** items for each category, this "
+"becomes impossible to solve without grouping items. ``GROUP BY`` clause "
+"provides the ability to group rows based on some field(s) values."
+msgstr ""
+"Але у випадку, якщо завдання полягає в підрахунку проданих товарів для "
+"кожної категорії, це стає неможливим вирішити без групування товарів. Пункт "
+"``GROUP BY`` надає можливість групувати рядки на основі певного значення "
+"поля(ів)."
+
+#: ../../src/rdbms/aggregation.txt:157
+msgid "General syntax is:"
+msgstr "Загальний синтаксис:"
+
+#: ../../src/rdbms/aggregation.txt:178
+msgid "600"
+msgstr "600"
+
+#: ../../src/rdbms/aggregation.txt:184
+msgid ""
+"If the ``SELECT`` statement is an aggregate query with a ``GROUP BY`` "
+"clause, then each of the expressions specified as part of the GROUP BY "
+"clause is evaluated for each row of the dataset according to the processing "
+"rules stated below for ORDER BY expressions. Each row is then assigned to a "
+"\"group\" based on the results; rows for which the results of evaluating the "
+"GROUP BY expressions are the same get assigned to the same group. For the "
+"purposes of grouping rows, ``NULL`` values are considered equal. The usual "
+"rules for selecting a collation sequence with which to compare text values "
+"apply when evaluating expressions in a GROUP BY clause. The expressions in "
+"the GROUP BY clause do not have to be expressions that appear in the result. "
+"The expressions in a GROUP BY clause may not be aggregate expressions."
+msgstr ""
+"Якщо інструкція ``SELECT`` є сукупним запитом із пропозицією ``GROUP BY``, "
+"тоді кожен із виразів, указаних як частина пропозиції GROUP BY, оцінюється "
+"для кожного рядка набір даних згідно з правилами обробки, викладеними нижче "
+"для виразів ORDER BY. Кожен рядок потім призначається \"групі\" на основі "
+"результатів; рядки, для яких результати оцінювання виразів GROUP BY однакові "
+"призначаються до однієї групи. Для цілей групування рядків значення ``NULL`` "
+"вважаються рівними. Звичайні правила для вибору послідовності порівняння, з "
+"якою порівнюються текстові значення, застосовуються під час оцінювання "
+"виразів у Речення GROUP BY. Вирази в пункті GROUP BY не обов'язково повинні "
+"бути виразами, які з'являються в результаті. Вирази в пункті GROUP BY не "
+"можуть бути сукупними виразами."
+
+#: ../../src/rdbms/aggregation.txt:197
+msgid "HAVING clause"
+msgstr "Вираз HAVING"
+
+#: ../../src/rdbms/aggregation.txt:199
+msgid ""
+"But what, if the task is to filter categories, that have less than 500 sold "
+"items in it? ``WHERE`` clause will be useless, cause it's evaluated before "
+"grouping output. In other words, only rows that suite WHERE filter will be "
+"selected."
+msgstr ""
+"Але що, якщо завдання полягає у фільтруванні категорій, які містять менше "
+"500 проданих товарів? Речення ``WHERE`` буде марним, тому що воно оцінюється "
+"перед групуванням виводу. Іншими словами, лише рядки, які набір WHERE буде "
+"вибрано фільтр."
+
+#: ../../src/rdbms/aggregation.txt:222
+msgid ""
+"If a ``HAVING`` clause is specified, it is evaluated once for each group of "
+"rows as a boolean expression. If the result of evaluating the HAVING clause "
+"is false, the group is discarded. If the HAVING clause is an aggregate "
+"expression, it is evaluated across all rows in the group."
+msgstr ""
+"Якщо вказано пропозицію ``HAVING``, вона оцінюється один раз для кожної "
+"групи рядків як логічний вираз. Якщо результат обчислення пропозиції HAVING "
+"хибний, групу відкидають. Якщо речення HAVING є агрегатним виразом, воно "
+"обчислюється в усіх рядках у групі."
+
+#: ../../src/rdbms/aggregation.txt:227
+msgid ""
+"If a HAVING clause is a non-aggregate expression, it is evaluated with "
+"respect to an arbitrarily selected row from the group. The HAVING expression "
+"may refer to values, even aggregate functions, that are not in the result."
+msgstr ""
+"Якщо речення HAVING є неагрегатним виразом, воно оцінюється щодо довільно "
+"вибраного рядка з групи. Вираз HAVING може посилатися на значення, навіть "
+"агрегатні функції, яких немає в результат."

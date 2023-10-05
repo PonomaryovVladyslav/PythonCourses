@@ -1,0 +1,177 @@
+# Copyright (C) 2023, Python training course authors and contributors
+# This file is distributed under the same license as the Python Training
+# Course package.
+# OLEKSANDR YEROMIN <unicorn.in.pants@gmail.com>, 2023.
+msgid ""
+msgstr ""
+"Project-Id-Version: Python Training Course 2022.11.dev\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-10-05 19:49+0300\n"
+"PO-Revision-Date: 2023-10-05 20:09+0300\n"
+"Last-Translator: Serhii Horodilov <sgorodil@gmail.com>\n"
+"Language-Team: \n"
+"Language: uk\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Generated-By: Babel 2.13.0\n"
+"X-Generator: Poedit 3.4\n"
+
+#: ../../src/basics/controlflow.txt:-1
+msgid "Control flow in Python"
+msgstr "Контроль потоку в Python"
+
+#: ../../src/basics/controlflow.txt:-1
+msgid "Serhii Horodilov"
+msgstr "Serhii Horodilov"
+
+#: ../../src/basics/controlflow.txt:-1
+msgid "python, basics, control, if, for, while, condition, loop"
+msgstr "python, basics, control, if, for, while, condition, loop"
+
+#: ../../src/basics/controlflow.txt:8
+msgid "Control Flow"
+msgstr "Керування виконанням"
+
+#: ../../src/basics/controlflow.txt:13
+msgid "``if`` statement"
+msgstr "Вираз ``if``"
+
+#: ../../src/basics/controlflow.txt:15
+msgid ""
+"Perhaps the most well-known statement type is ``if`` statement. For example:"
+msgstr "Мабуть, найвідомішим типом оператора є оператор ``if``. Наприклад:"
+
+#: ../../src/basics/controlflow.txt:17
+msgid "if statement base example"
+msgstr "базовий приклад оператора if"
+
+#: ../../src/basics/controlflow.txt:31
+msgid "But let's dive into ``if`` statement with more simple examples."
+msgstr ""
+"Але давайте зануримося в інструкцію ``if`` з більш простими прикладами."
+
+#: ../../src/basics/controlflow.txt:34
+msgid "How it works"
+msgstr "Як це працює"
+
+#: ../../src/basics/controlflow.txt:36
+msgid ""
+"**if** statement is defined with a keyword ``if`` followed by a Boolean "
+"expression or any object and finished with colon. The statement requires a "
+"*body*: other statements to execute, also called an *if block*. The body is "
+"indented at the same distance from the left (in Python we use 4 spaces to "
+"indent a single block of code)."
+msgstr ""
+"Оператор **if** визначається ключовим словом ``if``, за яким слідує логічний "
+"вираз або будь-який об'єкт і завершується двокрапкою. Оператор потребує "
+"*тіло*: інші оператори для виконання, які також називають блоком *if*. Тіло "
+"має відступ на однаковій відстані зліва (у Python ми використовуємо 4 "
+"пробіли для відступу одного блоку коду)."
+
+#: ../../src/basics/controlflow.txt:42
+msgid ""
+"The body's statements will be executed only in case **if** expression is "
+"``True``."
+msgstr ""
+"Оператори тіла виконуватимуться лише у випадку, якщо вираз **if** має "
+"значення ``True``."
+
+#: ../../src/basics/controlflow.txt:55
+msgid ""
+"The ``print`` statement on line #6 will be executed only for even value of "
+"``number`` variable."
+msgstr ""
+"Оператор ``print`` у рядку #6 буде виконано лише для парного значення "
+"змінної ``number``."
+
+#: ../../src/basics/controlflow.txt:59
+msgid "``else`` block"
+msgstr "Блок ``else``"
+
+#: ../../src/basics/controlflow.txt:61
+msgid ""
+"``if`` can be used by its own, it can extend its behavior with ``else`` "
+"block. The general syntax for ``else`` body is the same: at least one "
+"indented statement. But ``else`` doesn't take any expression after it. This "
+"block of code will be executed only that the ``if`` statement truth check "
+"fails."
+msgstr ""
+"``if`` може використовуватися самостійно, він може розширити свою поведінку "
+"за допомогою блоку ``else``. Загальний синтаксис для тіла ``else`` той "
+"самий: принаймні один оператор із відступом. Але ``else`` не приймає жодного "
+"виразу після нього. Цей блок коду буде виконано лише тоді, коли перевірка "
+"істинності оператора ``if`` буде невдалою."
+
+#: ../../src/basics/controlflow.txt:78
+msgid ""
+"You can attach **only one** else block to **if statement**. And you cannot "
+"use ``else`` statement on its own - this will cause *SyntaxError*."
+msgstr ""
+"Ви можете приєднати **лише один** блок else до **інструкції if**. І ви не "
+"можете використовувати оператор ``else`` сам по собі - це спричинить "
+"*SyntaxError*."
+
+#: ../../src/basics/controlflow.txt:82
+msgid "``elif`` block(s)"
+msgstr "Блок(и) ``elif``"
+
+#: ../../src/basics/controlflow.txt:84
+msgid ""
+"``elif`` (*else if*) statement may be considered as semi-statement between "
+"``if`` and ``else`` statements. In case your program has more than two "
+"dedicated choices you are able to extends control flow by appending ``elif`` "
+"blocks after ``if`` statement. The syntax is pretty similar to ``if`` "
+"statement. Each ``elif`` has its own boolean expression or an object to test "
+"for the truth value."
+msgstr ""
+"Оператор ``elif`` (*else if*) можна розглядати як напівоператор між ``if`` "
+"та ``else``. Якщо у вашій програмі є більше двох виділених варіантів, ви "
+"можете розширити потік керування, додавши блоки ``elif`` після оператора "
+"``if``. Синтаксис дуже схожий на оператор if. Кожен ``elif`` має свій "
+"власний логічний вираз або об'єкт для перевірки значення істинності."
+
+#: ../../src/basics/controlflow.txt:91
+msgid ""
+"You can attach as many ``elif`` statements as it needed. But you cannot use "
+"``elif`` without ``if`` statement."
+msgstr ""
+"Ви можете додати скільки завгодно операторів ``elif``. Але ви не можете "
+"використовувати ``elif`` без оператора ``if``."
+
+#: ../../src/basics/controlflow.txt:94
+msgid ""
+"Python will test conditions in ``if`` and ``elif`` statements from top to "
+"bottom. The first one, which considered to be ``True`` will be executed. All "
+"others will be skipped."
+msgstr ""
+"Python перевірить умови в операторах ``if`` та ``elif`` зверху вниз. Буде "
+"виконано перший, який вважається ``True``. Усі інші будуть проігноровано."
+
+#: ../../src/basics/controlflow.txt:98
+msgid ""
+"If there were no truth conditions ``else`` block will be executed (if "
+"exists)."
+msgstr "Якщо не було істиних умов, буде виконано блок ``else`` (якщо існує)."
+
+#: ../../src/basics/controlflow.txt:114
+msgid ""
+"The order conditions appears matter. The truth test goes from top to bottom "
+"and stops at first expression which is ``True``."
+msgstr ""
+"Порядок у якому визначено умови має значення. Перевірка істинності йде "
+"зверху вниз і зупиняється на першому виразі, який є ``True``."
+
+#: ../../src/basics/controlflow.txt:119
+msgid "Usage"
+msgstr "Використання"
+
+#: ../../src/basics/controlflow.txt:121
+msgid ""
+"``if/elif/else`` statements help you to control which portion of your code "
+"is executed based on conditions from outer scope."
+msgstr ""
+"Оператори ``if/elif/else`` допомагають вам контролювати, яка частина вашого "
+"коду виконується на основі умов ззовні."

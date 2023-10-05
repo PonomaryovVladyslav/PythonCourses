@@ -1,0 +1,508 @@
+# Copyright (C) 2023, Python training course authors and contributors
+# This file is distributed under the same license as the Python Training
+# Course package.
+# OLEKSANDR YEROMIN <unicorn.in.pants@gmail.com>, 2023.
+msgid ""
+msgstr ""
+"Project-Id-Version: Python Training Course 2022.11.dev\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-10-05 19:49+0300\n"
+"PO-Revision-Date: 2023-10-05 20:09+0300\n"
+"Last-Translator: Serhii Horodilov <sgorodil@gmail.com>\n"
+"Language-Team: \n"
+"Language: uk\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Generated-By: Babel 2.13.0\n"
+"X-Generator: Poedit 3.4\n"
+
+#: ../../src/basics/bool_logic.txt:-1
+msgid "this document covers usage of logic and comparison operators in Python"
+msgstr ""
+"цей документ охоплює використання логіки та операторів порівняння в Python"
+
+#: ../../src/basics/bool_logic.txt:-1
+msgid "Serhii Horodilov"
+msgstr "Serhii Horodilov"
+
+#: ../../src/basics/bool_logic.txt:-1
+msgid "python, boolean, logic, comparison, operator"
+msgstr "python, boolean, logic, comparison, operator"
+
+#: ../../src/basics/bool_logic.txt:14
+msgid "Boolean Logic"
+msgstr "Булева Логіка"
+
+#: ../../src/basics/bool_logic.txt:20
+msgid ""
+"`George Boole`_ put together what is now known as `Boolean algebra`_, which "
+"relies on **true** and **false** values and define a set of boolean "
+"operations: **not**, **and**, and **or**."
+msgstr ""
+"`George Boole`_ об'єднав те, що тепер відомо як `булева алгебра`_, яка "
+"спирається на значення **true** і **false** і визначає набір логічних "
+"операцій: **not**, **and** і **or**."
+
+#: ../../src/basics/bool_logic.txt:24
+msgid ""
+"These Boolean values and operators are helpful in programming because they "
+"help you decide the course of action in your programs."
+msgstr ""
+"Ці булеві значення та оператори корисні в програмуванні, оскільки вони "
+"допомагають визначити курс дій у ваших програмах."
+
+#: ../../src/basics/bool_logic.txt:27
+msgid ""
+"The **Python boolean** type is one of Python's built-in data types. It's "
+"used to represent the truth value of an expression. For example, the "
+"expression ``1 < 2`` is ``True``, while the expression ``0 == 1`` is "
+"``False``. Understanding how Python Boolean values behave is important to "
+"programming well in Python."
+msgstr ""
+"Тип **Python boolean** є одним із вбудованих типів даних Python. Він "
+"використовується для представлення істиності значення виразу. Наприклад, "
+"вираз ``1 < 2`` є ``True``, тоді як вираз ``0 == 1`` є ``False``. Розуміння "
+"того, як поводяться логічні значення Python, є важливим для якісного "
+"програмування на Python."
+
+#: ../../src/basics/bool_logic.txt:34
+msgid "Understanding Boolean"
+msgstr "Розбираємось з Логічним типом даних"
+
+#: ../../src/basics/bool_logic.txt:36
+msgid "The Boolean type has only two possible values:"
+msgstr "Логічний тип має лише два можливих значення:"
+
+#: ../../src/basics/bool_logic.txt:38 ../../src/basics/bool_logic.txt:119
+#: ../../src/basics/bool_logic.txt:121 ../../src/basics/bool_logic.txt:147
+#: ../../src/basics/bool_logic.txt:151 ../../src/basics/bool_logic.txt:153
+#: ../../src/basics/bool_logic.txt:189 ../../src/basics/bool_logic.txt:193
+#: ../../src/basics/bool_logic.txt:195
+msgid "``True``"
+msgstr "``True``"
+
+#: ../../src/basics/bool_logic.txt:39 ../../src/basics/bool_logic.txt:119
+#: ../../src/basics/bool_logic.txt:121 ../../src/basics/bool_logic.txt:149
+#: ../../src/basics/bool_logic.txt:151 ../../src/basics/bool_logic.txt:153
+#: ../../src/basics/bool_logic.txt:191 ../../src/basics/bool_logic.txt:193
+#: ../../src/basics/bool_logic.txt:195
+msgid "``False``"
+msgstr "``False``"
+
+#: ../../src/basics/bool_logic.txt:41
+msgid "No other value will have ``bool`` as it type."
+msgstr "Жодне інше значення не матиме тип ``bool``."
+
+#: ../../src/basics/bool_logic.txt:50
+msgid ""
+"The type ``bool`` is **built-in**, meaning it's always available in Python. "
+"``True`` and ``False`` are keywords in Python and can't be used as variable "
+"names. but ``bool`` type isn't and it's possible assign to the name "
+"``bool``, however this is considered bad style."
+msgstr ""
+"Тип ``bool`` є **вбудованим**, тобто він завжди доступний у Python. ``True`` "
+"і ``False`` є ключовими словами в Python і не можуть використовуватися як "
+"імена змінних, але тип ``bool`` не є таким, і імені ``bool`` призначити інше "
+"значення, однак це вважається поганим стилем."
+
+#: ../../src/basics/bool_logic.txt:56
+msgid "Boolean as numbers"
+msgstr "Boolean як число"
+
+#: ../../src/basics/bool_logic.txt:58
+msgid ""
+"Booleans are a subtype of **numeric** type in Python. This means they're "
+"numbers for all intents and purposes. In other words, you can apply "
+"arithmetic operations to Boolean, and you can also compare them to numbers. "
+"``True`` value is treated to be 1, and ``False`` value is treated to be 0."
+msgstr ""
+"Логічні значення є підтипом **числового** типу в Python. Це означає, що вони "
+"є числами для всіх намірів і цілей. Іншими словами, ви можете застосовувати "
+"арифметичні операції до логічних значень, а також порівнювати їх із числами. "
+"Значення ``True`` розглядається як 1, а значення ``False`` розглядається як "
+"0."
+
+#: ../../src/basics/bool_logic.txt:63
+msgid "There aren't many uses of the numerical nature of Boolean values."
+msgstr ""
+"Числовій природі логічних значень можна знайти не так багато застосунків."
+
+#: ../../src/basics/bool_logic.txt:66
+msgid "Truth value testing"
+msgstr "Перевірка істинності"
+
+#: ../../src/basics/bool_logic.txt:68
+msgid ""
+"Any object can be tested for truth value. By default an object considered "
+"``True``, unless its class defines either. Here are most of built-in objects "
+"considered ``False``:"
+msgstr ""
+"Будь-який об'єкт можна перевірити на істинність. За замовчуванням об'єкт "
+"вважається ``True``, якщо його клас не визначає іншого. Ось більшість "
+"вбудованих об'єктів, які вважаються ``False``:"
+
+#: ../../src/basics/bool_logic.txt:72
+msgid "constant values: ``None`` and ``False``"
+msgstr "константи: ``None`` та ``False``"
+
+#: ../../src/basics/bool_logic.txt:73
+msgid ""
+"zero of any numeric type: ``0``, ``0.0``, ``0j``, ``Decimal(0)``, "
+"``Fraction(0, 1)``"
+msgstr ""
+"нуль будь-якого числового типу: ``0``, ``0.0``, ``0j``, ``Decimal(0)``, "
+"``Fraction(0, 1)``"
+
+#: ../../src/basics/bool_logic.txt:75
+msgid ""
+"empty sequences and collections: ``''``, ``[]``, ``()``, ``{}``, ``set()``, "
+"``range(0)``."
+msgstr ""
+"порожні послідовності та колекції: ``''``, ``[]``, ``()``, ``{}``, "
+"``set()``, ``range(0)``."
+
+#: ../../src/basics/bool_logic.txt:80
+msgid ""
+"If ``len(something)`` is equal to 0, than ``something`` is cast to ``bool`` "
+"as ``False``."
+msgstr ""
+"Якщо ``len(something)`` дорівнює 0, тоді ``something`` буде приведено до "
+"``bool`` як ``False``."
+
+#: ../../src/basics/bool_logic.txt:84
+msgid "Boolean comparison"
+msgstr "Логічне Порівняння"
+
+#: ../../src/basics/bool_logic.txt:86
+msgid "Python provides 3 logical operators:"
+msgstr "Python надає 3 логічних оператори:"
+
+#: ../../src/basics/bool_logic.txt:92 ../../src/basics/bool_logic.txt:226
+msgid "Operator"
+msgstr "Оператор"
+
+#: ../../src/basics/bool_logic.txt:92
+msgid "Logic operator"
+msgstr "Логічний оператор"
+
+#: ../../src/basics/bool_logic.txt:94
+msgid "``not``"
+msgstr "``not``"
+
+#: ../../src/basics/bool_logic.txt:94
+msgid "Negation"
+msgstr "Заперечення"
+
+#: ../../src/basics/bool_logic.txt:96
+msgid "``and``"
+msgstr "``and``"
+
+#: ../../src/basics/bool_logic.txt:96
+msgid "Conjunction"
+msgstr "Кон'юнкція"
+
+#: ../../src/basics/bool_logic.txt:98
+msgid "``or``"
+msgstr "``or``"
+
+#: ../../src/basics/bool_logic.txt:98
+msgid "Disjunction"
+msgstr "Диз'юнкція"
+
+#: ../../src/basics/bool_logic.txt:101
+msgid ""
+"With these operators, you can build expressions by connecting Boolean "
+"expressions with each other. These operators are **keywords** of the "
+"language, so you cannot use them as identifiers without causing a "
+"*SyntaxError*."
+msgstr ""
+"За допомогою цих операторів можна будувати вирази, поєднуючі логічні вирази "
+"один з одним. Ці оператори є **ключовими словами** мови, тому ви не можете "
+"використовувати їх як ідентифікатори, не викликаючи *SyntaxError*."
+
+#: ../../src/basics/bool_logic.txt:106
+msgid "Getting started with ``not`` operator"
+msgstr "Початок роботи з оператором ``not``"
+
+#: ../../src/basics/bool_logic.txt:108
+msgid ""
+"The ``not`` operator is the Boolean or logic operator that implements "
+"negation in Python. It's **unary**, which means that it takes only one "
+"**operand**. The operand can be a Boolean expression or any Python object. "
+"The task of ``not`` is to reverse the truth value of its operand."
+msgstr ""
+"Оператор ``not`` є логічним або логічним оператором, який реалізує "
+"заперечення в Python. Це **унарний**, що означає, що він приймає лише один "
+"**операнд**. Операндом може бути логічний вираз або будь-який об'єкт Python. "
+"Завдання ``not`` полягає в тому, щоб змінити значення істинності свого "
+"операнда."
+
+#: ../../src/basics/bool_logic.txt:113
+msgid "not operator truth table"
+msgstr "таблиця істинності оператора not"
+
+#: ../../src/basics/bool_logic.txt:117
+msgid "``operand``"
+msgstr "``operand``"
+
+#: ../../src/basics/bool_logic.txt:117
+msgid "``not operand``"
+msgstr "``not operand``"
+
+#: ../../src/basics/bool_logic.txt:124
+msgid "This functionality makes it worthwhile in several situations:"
+msgstr "Ця функція доцільна в кількох ситуаціях:"
+
+#: ../../src/basics/bool_logic.txt:127
+msgid ""
+"Checking **unmet conditions** in the context of ``if`` statements and "
+"``while`` loops"
+msgstr ""
+"Перевірка **невиконаних умов** у контексті операторів ``if`` і циклів "
+"``while``"
+
+#: ../../src/basics/bool_logic.txt:129
+msgid "**Inverting the truth value** of an object or expression"
+msgstr "**Інвертування значення істинності** об'єкта чи виразу"
+
+#: ../../src/basics/bool_logic.txt:130
+msgid "Checking if a **value is not in a given container**"
+msgstr "Перевірка того, що **значення не міститься в заданому контейнері**"
+
+#: ../../src/basics/bool_logic.txt:131
+msgid "Checking for an **object's identity**"
+msgstr "Перевірка **ідентичності об'єкта**"
+
+#: ../../src/basics/bool_logic.txt:134
+msgid "Getting started with ``and`` operator"
+msgstr "Початок роботи з оператором ``and``"
+
+#: ../../src/basics/bool_logic.txt:136
+msgid ""
+"Python's ``and`` operator is **binary**, which means it takes two "
+"**operands**. The operands in an ``and`` expression are commonly known as "
+"*conditions*. The result of the operator depends on the truth values of its "
+"operands. It'll be ``True`` if **both** are true."
+msgstr ""
+"Оператор Python ``and`` є **бінарним**, що означає, що він приймає два "
+"**операнди**. Операнди у виразі ``and`` зазвичай відомі як *умови*. "
+"Результат оператора залежить від істинних значень його операндів. Це буде "
+"``True``, якщо **обидва** є істинними."
+
+#: ../../src/basics/bool_logic.txt:141
+msgid "and operator truth table"
+msgstr "таблиця істинності оператора and"
+
+#: ../../src/basics/bool_logic.txt:145 ../../src/basics/bool_logic.txt:187
+msgid "``operand_1``"
+msgstr "``operand_1``"
+
+#: ../../src/basics/bool_logic.txt:145 ../../src/basics/bool_logic.txt:187
+msgid "``operand_2``"
+msgstr "``operand_2``"
+
+#: ../../src/basics/bool_logic.txt:145
+msgid "``operand_1 and operand_2``"
+msgstr "``operand_1 and operand_2``"
+
+#: ../../src/basics/bool_logic.txt:156
+msgid ""
+"``and`` operator works not only with operands of Boolean type. It's behavior:"
+msgstr ""
+"Оператор ``and`` працює не тільки з операндами логічного типу. Його "
+"поведінка:"
+
+#: ../../src/basics/bool_logic.txt:159
+msgid "evaluate 1st operand; return it, if it's ``False`` and finish"
+msgstr "обчислити 1-й операнд; повернути його, якщо він ``False`` та завершити"
+
+#: ../../src/basics/bool_logic.txt:160
+msgid "evaluate 2nd operand; return it, if it's ``False`` and finish"
+msgstr "обчислити 2-й операнд; повернути його, якщо він ``False`` та завершити"
+
+#: ../../src/basics/bool_logic.txt:161 ../../src/basics/bool_logic.txt:203
+msgid "return 2nd operand"
+msgstr "повернути 2-й операнд"
+
+#: ../../src/basics/bool_logic.txt:175
+msgid "Getting started with ``or`` operator"
+msgstr "Початок роботи з оператором ``or``"
+
+#: ../../src/basics/bool_logic.txt:177
+msgid ""
+"With Boolean ``or`` operator, you can connect two Boolean expressions into "
+"one compound expression. This makes ``or`` the **binary** operator. At least "
+"one subexpression must be ``True`` for the compound expression to be "
+"considered ``True``, and it doesn't matter which. If both subexpressions are "
+"``False``, then the expression is ``False``."
+msgstr ""
+"За допомогою логічного оператора ``or`` ви можете з'єднати два логічні "
+"вирази в один складений вираз. Це робить ``or`` **бінарним** оператором. "
+"Принаймні один підвираз має бути ``True``, щоб складений вираз вважався "
+"``True``, і не має значення який. Якщо обидва підвирази мають значення "
+"``False``, тоді вираз є ``False``."
+
+#: ../../src/basics/bool_logic.txt:183
+msgid "or operator truth table"
+msgstr "таблиця істинності оператора or"
+
+#: ../../src/basics/bool_logic.txt:187
+msgid "``operand_1 or operand_2``"
+msgstr "``operand_1 or operand_2``"
+
+#: ../../src/basics/bool_logic.txt:198
+msgid ""
+"``or`` operator works not only with operands of Boolean type. It's behavior:"
+msgstr ""
+"Оператор ``or`` працює не тільки з операндами логічного типу. Його поведінка:"
+
+#: ../../src/basics/bool_logic.txt:201
+msgid "evaluate 1st operand; return it, if it's ``True`` and finish"
+msgstr "обчислити 1-й операнд; повернути його, якщо він ``True`` та завершити"
+
+#: ../../src/basics/bool_logic.txt:202
+msgid "evaluate 2nd operand; return it, if it's ``True`` and finish"
+msgstr "обчислити 2-й операнд; повернути його, якщо він ``True`` та завершити"
+
+#: ../../src/basics/bool_logic.txt:217
+msgid "Comparison"
+msgstr "Порівняння"
+
+#: ../../src/basics/bool_logic.txt:219
+msgid ""
+"There are eight comparison operations in Python. They all have the same "
+"priority (which is higher than that of the Boolean operations)."
+msgstr ""
+"У Python є вісім операцій порівняння. Усі вони мають однаковий пріоритет "
+"(вищий, ніж у логічних операцій)."
+
+#: ../../src/basics/bool_logic.txt:222
+msgid "Comparison operators"
+msgstr "Оператори порівняння"
+
+#: ../../src/basics/bool_logic.txt:226
+msgid "Meaning"
+msgstr "Значення"
+
+#: ../../src/basics/bool_logic.txt:228
+msgid "``<``"
+msgstr "``<``"
+
+#: ../../src/basics/bool_logic.txt:228
+msgid "strictly less than"
+msgstr "строго менше ніж"
+
+#: ../../src/basics/bool_logic.txt:230
+msgid "``<=``"
+msgstr "``<=``"
+
+#: ../../src/basics/bool_logic.txt:230
+msgid "less than or equal"
+msgstr "менше або дорівнює"
+
+#: ../../src/basics/bool_logic.txt:232
+msgid "``>``"
+msgstr "``>``"
+
+#: ../../src/basics/bool_logic.txt:232
+msgid "strictly greater than"
+msgstr "строго більше ніж"
+
+#: ../../src/basics/bool_logic.txt:234
+msgid "``>=``"
+msgstr "``>=``"
+
+#: ../../src/basics/bool_logic.txt:234
+msgid "greater or equal"
+msgstr "більше або дорівнює"
+
+#: ../../src/basics/bool_logic.txt:236
+msgid "``==``"
+msgstr "``==``"
+
+#: ../../src/basics/bool_logic.txt:236
+msgid "equal (aka *equality* comparison)"
+msgstr "дорівнює (також відоме як порівняння *equality*)"
+
+#: ../../src/basics/bool_logic.txt:238
+msgid "``!=``"
+msgstr "``!=``"
+
+#: ../../src/basics/bool_logic.txt:238
+msgid "not equal"
+msgstr "не дорівнює"
+
+#: ../../src/basics/bool_logic.txt:240
+msgid "``is``"
+msgstr "``is``"
+
+#: ../../src/basics/bool_logic.txt:240
+msgid "object identity"
+msgstr "ідентичність об'єкта"
+
+#: ../../src/basics/bool_logic.txt:242
+msgid "``is not``"
+msgstr "``is not``"
+
+#: ../../src/basics/bool_logic.txt:242
+msgid "negated object identity"
+msgstr "заперечена ідентичність об'єкта"
+
+#: ../../src/basics/bool_logic.txt:245
+msgid ""
+"Each of these comparison operators return a Boolean value, it's always "
+"``True`` or ``False``."
+msgstr ""
+"Кожен із цих операторів порівняння повертає логічне значення, воно завжди "
+"``True`` або ``False``."
+
+#: ../../src/basics/bool_logic.txt:248
+msgid ""
+"You can chain comparison operators together: ``x < y < z`` is equal to ``x < "
+"y and y < z``."
+msgstr ""
+"Ви можете об'єднати оператори порівняння: ``x < y < z`` дорівнює ``x < y і y "
+"< z``."
+
+#: ../../src/basics/bool_logic.txt:252
+msgid "Equality vs Identity"
+msgstr "Рівність та Ідентичність"
+
+#: ../../src/basics/bool_logic.txt:254
+msgid ""
+"It's easier to understand the difference between those by asking the "
+"question each answers to."
+msgstr ""
+"Легше зрозуміти різницю між ними, поставивши запитання, на яке кожен "
+"відповідає."
+
+#: ../../src/basics/bool_logic.txt:257
+msgid "The question for ``==`` (*equality*) is:"
+msgstr "Питання для ``==`` (*equality*) таке:"
+
+#: ../../src/basics/bool_logic.txt:259
+msgid "Is object on the left **equal** to the object on the right"
+msgstr "Об'єкт ліворуч **дорівнює** об'єкту праворуч"
+
+#: ../../src/basics/bool_logic.txt:261
+msgid "The question for ``is`` (*identity*) is:"
+msgstr "Питання для ``is`` (*identity*) таке:"
+
+#: ../../src/basics/bool_logic.txt:263
+msgid "Is object on the left **the same** as the object on the right"
+msgstr "Об'єкт ліворуч **те саме**, що й об'єкт праворуч"
+
+#: ../../src/basics/bool_logic.txt:265
+msgid ""
+"For example, if there are two cars of the same model, same color etc. in "
+"front of you - these cars are equal, but they aren't ident to each other. "
+"But if you are shown two pictures of the same car, you understand that the "
+"cars on those pictures are the same object."
+msgstr ""
+"Наприклад, якщо перед вами дві машини однієї моделі, одного кольору і т. д. "
+"- ці машини рівні, але не ідентичні одна одній. Але якщо вам покажуть дві "
+"фотографії однієї машини, ви зрозумієте, що машини на цих фотографіях є "
+"одним і тим же об'єктом."

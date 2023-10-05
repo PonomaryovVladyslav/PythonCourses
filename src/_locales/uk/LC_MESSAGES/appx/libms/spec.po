@@ -1,0 +1,1187 @@
+# Copyright (C) 2023, Python training course authors and contributors
+# This file is distributed under the same license as the Python Training
+# Course package.
+# SERHII HORODILOV <sgorodil@gmail.com>
+msgid ""
+msgstr ""
+"Project-Id-Version: Python Training Course 2022.11.dev\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-10-05 19:49+0300\n"
+"PO-Revision-Date: 2023-10-05 20:06+0300\n"
+"Last-Translator: Serhii Horodilov <sgorodil@gmail.com>\n"
+"Language-Team: ua <LL@li.org>\n"
+"Language: uk\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<12 || n%100>14) ? 1 : 2);\n"
+"Generated-By: Babel 2.13.0\n"
+"X-Generator: Poedit 3.4\n"
+
+#: ../../src/appx/libms/spec.rst:3
+msgid "Library Management System"
+msgstr "Система Керування Бібліотекою"
+
+#: ../../src/appx/libms/spec.rst:5
+msgid ""
+"The Library Management System is a Django-based web application that offers "
+"a digital platform for managing and interacting with a library's collection. "
+"It streamlines the processes of book lending, returns, and inventory "
+"management, while ensuring easy access for users and librarians alike. "
+"Through this system, users can search for available books, place borrowing "
+"requests, and manage their borrowed items. Librarians, on the other hand, "
+"oversee the addition, update, and removal of book records, and can approve "
+"or decline borrowing requests. The system also supports diverse user roles, "
+"from regular members to staff and administrators, each with distinct "
+"capabilities."
+msgstr ""
+"Система Керування Бібліотекою є веб-застосуванням на базі Django, яке "
+"пропонує цифрову платформу для управління та взаємодії з колекцією "
+"бібліотеки. Вона оптимізує процеси надання книг, повернення та управління "
+"інвентарем, забезпечуючи легкий доступ як для користувачів, так і для "
+"бібліотекарів. За допомогою цієї системи користувачі можуть шукати доступні "
+"книги, робити запити на позику та керувати позиченими предметами. "
+"Бібліотекарі, з свого боку, контролюють додавання, оновлення та видалення "
+"записів книг та можуть схвалювати або відхиляти запити на позику. Система "
+"також підтримує різноманітні ролі користувачів, від звичайних членів до "
+"персоналу та адміністраторів, кожен з яких має відмінні можливості."
+
+#: ../../src/appx/libms/spec.rst:15
+msgid ""
+"A well-structured user interface ensures that all functionalities are easily "
+"accessible, making the library management process seamless and efficient. "
+"This project aims to merge traditional library functions with modern "
+"technological innovations, promoting efficiency and an enhanced user "
+"experience."
+msgstr ""
+"Добре структурований користувацький інтерфейс забезпечує легкий доступ до "
+"всіх функцій, роблячи процес управління бібліотекою безперешкодним та "
+"ефективним. Цей проект має на меті об'єднати традиційні бібліотечні функції "
+"з сучасними технологічними інноваціями, сприяючи підвищенню ефективності та "
+"покращенню користувацького досвіду."
+
+#: ../../src/appx/libms/spec.rst:22
+msgid "User roles"
+msgstr "Ролі користувачів"
+
+#: ../../src/appx/libms/spec.rst:25
+msgid ""
+"It is essential for developers to consider security aspects when "
+"implementing these roles to ensure that users cannot perform actions outside "
+"their designated role's scope."
+msgstr ""
+"Розробникам важливо враховувати аспекти безпеки при впровадженні цих ролей, "
+"щоб гарантувати, що користувачі не зможуть виконувати дії, які виходять за "
+"рамки призначеної їм ролі."
+
+#: ../../src/appx/libms/spec.rst:30
+msgid "Admins"
+msgstr "Адміністратори"
+
+#: ../../src/appx/libms/spec.rst:32
+msgid ""
+"Superusers have full control over the entire system. They can access and "
+"manage all functionalities provided by the Django admin site."
+msgstr ""
+"Адміністратори мають повний контроль над усією системою. Вони можуть "
+"отримати доступ до всіх функцій, що надаються адмін-сайтом Django, і "
+"керувати ними."
+
+#: ../../src/appx/libms/spec.rst:35
+msgid "Admins can create, modify, or delete any record within the application."
+msgstr ""
+"Адміністратори можуть створювати, змінювати або видаляти будь-які записи в "
+"додатку."
+
+#: ../../src/appx/libms/spec.rst:38 ../../src/appx/libms/spec.rst:49
+#: ../../src/appx/libms/spec.rst:68 ../../src/appx/libms/spec.rst:82
+msgid "Capabilities"
+msgstr "Можливості"
+
+#: ../../src/appx/libms/spec.rst:39
+msgid "Access Django admin site"
+msgstr "Доступ до адміністративного сайту Django"
+
+#: ../../src/appx/libms/spec.rst:42
+msgid "Librarians"
+msgstr "Бібліотекарі"
+
+#: ../../src/appx/libms/spec.rst:44
+msgid ""
+"Staff personnel are in charge of day-to-day operations within the library. "
+"They can add new books to the library's collection, manage existing books' "
+"details, and accept or decline borrow requests from regular users."
+msgstr ""
+"Працівники бібліотеки відповідають за повсякденну роботу в бібліотеці. Вони "
+"можуть додавати нові книги до бібліотечної колекції, керувати даними про "
+"наявні книги, а також приймати або відхиляти запити від постійних "
+"користувачів."
+
+#: ../../src/appx/libms/spec.rst:50
+msgid "Management of the library catalogue"
+msgstr "Управління бібліотечним каталогом"
+
+#: ../../src/appx/libms/spec.rst:52
+msgid "Add, modify or delete authors"
+msgstr "Додавати, змінювати або видаляти авторів"
+
+#: ../../src/appx/libms/spec.rst:53
+msgid "Add, modify or delete genres"
+msgstr "Додавати, змінювати або видаляти жанри"
+
+#: ../../src/appx/libms/spec.rst:54
+msgid "Add, modify or delete books' details"
+msgstr "Додавати, змінювати або видаляти дані про книги"
+
+#: ../../src/appx/libms/spec.rst:56
+msgid "Review borrow requests from regular users"
+msgstr "Переглядати запити на позичення від користувачів"
+
+#: ../../src/appx/libms/spec.rst:57
+msgid "Accept or decline borrow requests"
+msgstr "Приймати або відхиляти запити на позичення"
+
+#: ../../src/appx/libms/spec.rst:58
+msgid "Register returned books and update their status"
+msgstr "Реєструвати повернені книги та оновлювати їх статус"
+
+#: ../../src/appx/libms/spec.rst:61
+msgid "Regular"
+msgstr "Звичайний"
+
+#: ../../src/appx/libms/spec.rst:63
+msgid ""
+"Regular registered users are the members of the library. They can search "
+"books, request to borrow them, and are responsible for returning borrowed "
+"books on time."
+msgstr ""
+"Постійні зареєстровані користувачі є членами бібліотеки. Вони можуть шукати "
+"книги, запитувати їх, а також несуть відповідальність за своєчасне "
+"повернення позичених книг."
+
+#: ../../src/appx/libms/spec.rst:69 ../../src/appx/libms/spec.rst:83
+msgid "Browse the books' catalogue"
+msgstr "Переглядати каталог книг"
+
+#: ../../src/appx/libms/spec.rst:70 ../../src/appx/libms/spec.rst:84
+msgid "View details of a book"
+msgstr "Переглядати деталі книги"
+
+#: ../../src/appx/libms/spec.rst:71 ../../src/appx/libms/spec.rst:85
+msgid "Search books"
+msgstr "Шукати книги"
+
+#: ../../src/appx/libms/spec.rst:72
+msgid "Request to borrow available books"
+msgstr "Робити запит на позичення доступних книжок"
+
+#: ../../src/appx/libms/spec.rst:73
+msgid "Check due date for returned books"
+msgstr "Перевіряти термін повернення запозичених книжок"
+
+#: ../../src/appx/libms/spec.rst:74
+msgid "Return borrowed books"
+msgstr "Повертати запозичені книги"
+
+#: ../../src/appx/libms/spec.rst:77
+msgid "Anonymous"
+msgstr "Анонімні"
+
+#: ../../src/appx/libms/spec.rst:79
+msgid "Anonymous users are visitors who haven't logged into the system."
+msgstr "Анонімні користувачі - це відвідувачі, які не ввійшли в систему."
+
+#: ../../src/appx/libms/spec.rst:86
+msgid "Access to the registration or login pages"
+msgstr "Доступ до сторінок реєстрації або входу"
+
+#: ../../src/appx/libms/spec.rst:90
+msgid "Models"
+msgstr "Моделі"
+
+#: ../../src/appx/libms/spec.rst:93
+msgid "Author model"
+msgstr "Модель авторів"
+
+#: ../../src/appx/libms/spec.rst:95
+msgid ""
+"The ``Author`` model captures the details of the person, or group "
+"responsible for creating the book."
+msgstr ""
+"Модель ``Author`` фіксує інформацію про особу або групу осіб, відповідальних "
+"за створення книги."
+
+#: ../../src/appx/libms/spec.rst:99 ../../src/appx/libms/spec.rst:116
+#: ../../src/appx/libms/spec.rst:128 ../../src/appx/libms/spec.rst:170
+msgid "Attributes"
+msgstr "Атрибути"
+
+#: ../../src/appx/libms/spec.rst
+msgid "Name"
+msgstr "Name"
+
+#: ../../src/appx/libms/spec.rst:102
+msgid "The full name of the author. This should be limited to 255 characters."
+msgstr "Повне ім'я автора. Не більше 255 символів."
+
+#: ../../src/appx/libms/spec.rst
+msgid "Bio"
+msgstr "Bio"
+
+#: ../../src/appx/libms/spec.rst:105
+msgid "A brief biography or description of the author."
+msgstr "Коротка біографія або опис автора."
+
+#: ../../src/appx/libms/spec.rst:108
+msgid "Genre model"
+msgstr "Модель жанра"
+
+#: ../../src/appx/libms/spec.rst:110
+msgid ""
+"The ``Genre`` model represents the category or type of content a book "
+"belongs to, such as \"Fiction\", \"Non-fiction\", \"Science\", \"Romance\" "
+"etc. Since a book can belong to more than one category at a time, it is "
+"implemented as a dedicated model."
+msgstr ""
+"Модель ``Genre`` представляє категорію або тип контенту, до якого належить "
+"книга, наприклад, \"Художня література\", \"Нехудожня література\", "
+"\"Наука\", \"Романтика\" тощо. Оскільки книга може належати до кількох "
+"категорій одночасно, вона реалізована як окрема модель."
+
+#: ../../src/appx/libms/spec.rst:118
+msgid "The name of the genre."
+msgstr "Назва жанру."
+
+#: ../../src/appx/libms/spec.rst:121
+msgid "Book model"
+msgstr "Модель книги"
+
+#: ../../src/appx/libms/spec.rst:123
+msgid ""
+"The ``Book`` model represents a physical book in the library's collection. "
+"Each book record captures essential bibliographic information, as well as "
+"details related to its current status in the library (e.g. available, "
+"borrowed etc.)."
+msgstr ""
+"Модель ``Book`` представляє фізичну книгу в бібліотечній колекції. Кожен "
+"запис про книгу містить основну бібліографічну інформацію, а також деталі, "
+"пов'язані з її поточним статусом у бібліотеці (наприклад, доступна, позичена "
+"тощо)."
+
+#: ../../src/appx/libms/spec.rst
+msgid "Title"
+msgstr "Title"
+
+#: ../../src/appx/libms/spec.rst:131
+msgid "The name or title of the book (255 characters or fewer)."
+msgstr "Назва книги (255 символів або менше)."
+
+#: ../../src/appx/libms/spec.rst
+msgid "Summary"
+msgstr "Summary"
+
+#: ../../src/appx/libms/spec.rst:134
+msgid "A brief description or synopsis of the book."
+msgstr "Короткий опис або синопсис книги."
+
+#: ../../src/appx/libms/spec.rst
+msgid "ISBN"
+msgstr "ISBN"
+
+#: ../../src/appx/libms/spec.rst:137
+msgid "International Standard Book Number, a unique identifier for books."
+msgstr ""
+"International Standard Book Number, унікальний ідентифікатор для книг.."
+
+#: ../../src/appx/libms/spec.rst
+msgid "Available"
+msgstr "Available"
+
+#: ../../src/appx/libms/spec.rst:140
+msgid ""
+"Current available status of the book. Either ``True`` or ``False``. Books "
+"are available by default."
+msgstr ""
+"Поточний статус доступності книги. Або ``True``, або ``False``. За "
+"замовчуванням книги доступні."
+
+#: ../../src/appx/libms/spec.rst
+msgid "Published date"
+msgstr "Published date"
+
+#: ../../src/appx/libms/spec.rst:144
+msgid "The date when the book was published."
+msgstr "Дата, коли книга була опублікована."
+
+#: ../../src/appx/libms/spec.rst
+msgid "Publisher"
+msgstr "Publisher"
+
+#: ../../src/appx/libms/spec.rst:147
+msgid ""
+"The entity or company responsible for the production and distribution of the "
+"book."
+msgstr ""
+"Організація або компанія, відповідальна за виробництво та розповсюдження "
+"книги."
+
+#: ../../src/appx/libms/spec.rst
+msgid "Genre(s)"
+msgstr "Genre(s)"
+
+#: ../../src/appx/libms/spec.rst:151
+msgid ""
+"The category or type of content the book falls under (e.g., Fiction, Non-"
+"Fiction, Science)."
+msgstr ""
+"Категорія або тип контенту, до якого належить книга (наприклад, художня "
+"література, нон-фікшн, наукова література)."
+
+#: ../../src/appx/libms/spec.rst
+msgid "Author(s)"
+msgstr "Author(s)"
+
+#: ../../src/appx/libms/spec.rst:156
+msgid ""
+"The name of the person or group responsible for creating the content of the "
+"book."
+msgstr "Ім'я особи або групи осіб, відповідальних за створення змісту книги."
+
+#: ../../src/appx/libms/spec.rst
+msgid "Borrower"
+msgstr "Borrower"
+
+#: ../../src/appx/libms/spec.rst:160
+msgid "The user who has currently borrowed the book, if applicable."
+msgstr "Користувач, який наразі позичив книгу, якщо це можливо."
+
+#: ../../src/appx/libms/spec.rst:163
+msgid "Borrow request model"
+msgstr "Модель запиту на позику"
+
+#: ../../src/appx/libms/spec.rst:165
+msgid ""
+"The ``BorrowRequest`` model captures the intent of a user to borrow a "
+"specific book. It tracks the status of the request, whether it's pending, "
+"approved, declined, or completed."
+msgstr ""
+"Модель ``BorrowRequest`` фіксує намір користувача взяти конкретну книгу. "
+"Вона відстежує статус запиту: очікує, схвалений, відхилений чи завершений."
+
+#: ../../src/appx/libms/spec.rst
+msgid "Book"
+msgstr "Book"
+
+#: ../../src/appx/libms/spec.rst:173
+msgid "A reference to a book to be borrowed."
+msgstr "Посилання на книгу, яку потрібно взяти."
+
+#: ../../src/appx/libms/spec.rst:176
+msgid "A reference to a user who wants to borrow a book."
+msgstr "Посилання на користувача, який хоче взяти книгу."
+
+#: ../../src/appx/libms/spec.rst
+msgid "Status"
+msgstr "Status"
+
+#: ../../src/appx/libms/spec.rst:179
+msgid "The current status of the request."
+msgstr "Поточний статус заявки."
+
+#: ../../src/appx/libms/spec.rst:181
+msgid "pending"
+msgstr "pending"
+
+#: ../../src/appx/libms/spec.rst:182
+msgid "approved"
+msgstr "approved"
+
+#: ../../src/appx/libms/spec.rst:183
+msgid "collected"
+msgstr "collected"
+
+#: ../../src/appx/libms/spec.rst:184
+msgid "complete"
+msgstr "complete"
+
+#: ../../src/appx/libms/spec.rst:185
+msgid "declined"
+msgstr "declined"
+
+#: ../../src/appx/libms/spec.rst:187
+msgid ""
+"The status constants should be encapsulated within the ``BorrowRequest`` "
+"model."
+msgstr ""
+"Константи стану повинні бути інкапсульовані в моделі ``BorrowRequest``."
+
+#: ../../src/appx/libms/spec.rst
+msgid "Overdue"
+msgstr "Overdue"
+
+#: ../../src/appx/libms/spec.rst:202
+msgid "A flag indicating if a borrow request was overdue."
+msgstr "Прапорець, що вказує на те, чи був запит на позику прострочений."
+
+#: ../../src/appx/libms/spec.rst
+msgid "Request date"
+msgstr "Request date"
+
+#: ../../src/appx/libms/spec.rst:205
+msgid "The date the borrow request was made. This is required."
+msgstr "Дата подання запиту на позику. Це обов'язкова інформація."
+
+#: ../../src/appx/libms/spec.rst
+msgid "Approval date"
+msgstr "Approval date"
+
+#: ../../src/appx/libms/spec.rst:208
+msgid "The date the request was approved, if applicable. Optional."
+msgstr "Дата схвалення запиту, якщо це можливо. Необов'язково."
+
+#: ../../src/appx/libms/spec.rst
+msgid "Due date"
+msgstr "Due date"
+
+#: ../../src/appx/libms/spec.rst:211
+msgid ""
+"The date by which the book should be returned. Optional, should only be set "
+"if the request if approved."
+msgstr ""
+"Дата, до якої книга має бути повернута. Необов'язкова, має бути вказана лише "
+"у разі схвалення запиту."
+
+#: ../../src/appx/libms/spec.rst
+msgid "Complete date"
+msgstr "Complete date"
+
+#: ../../src/appx/libms/spec.rst:215
+msgid ""
+"The date the book was returned and the borrowing request was completed. "
+"Optional, should only be set if the request has reached the \"Complete\" "
+"status."
+msgstr ""
+"Дата повернення книги та завершення запиту на позику. Необов'язкова, має "
+"бути встановлена тільки якщо запит досяг статусу \"Завершено\"."
+
+#: ../../src/appx/libms/spec.rst:220
+msgid "Relationships"
+msgstr "Відносини"
+
+#: ../../src/appx/libms/spec.rst:228
+msgid "Book to author"
+msgstr "Книга до автору"
+
+#: ../../src/appx/libms/spec.rst:230
+msgid ""
+"Each ``Author`` can be associated with multiple ``Books``, and each ``Book`` "
+"can have **one or more** ``authors``. This establishes a **many-to-many** "
+"relationship between the two entities."
+msgstr ""
+"Кожен ``Автор`` може бути пов'язаний з декількома ``Книгами``, а кожна "
+"``Книга`` може мати **одного або більше** ``авторів``. Це встановлює зв'язок "
+"**багато-до-багатьох** між цими двома сутностями."
+
+#: ../../src/appx/libms/spec.rst:235
+msgid "Book to genre"
+msgstr "Книга до жанру"
+
+#: ../../src/appx/libms/spec.rst:237
+msgid ""
+"Each ``Genre`` can be associated with multiple ``Books``, and vice-versa. "
+"However a ``Book`` might not belong to any genre. This relationship between "
+"``Genre`` and ``Book`` is still considered **many-to-many**, but with the "
+"possibility of zero genres for a book."
+msgstr ""
+"Кожен ``Жанр`` може бути пов'язаний з декількома ``Книгами``, і навпаки. "
+"Однак ``Книга`` може не належати до жодного жанру. Цей зв'язок між "
+"``Жанром`` і ``Книгою`` все ще вважається **багато-до-багатьох**, але з "
+"можливістю нульових жанрів для книги."
+
+#: ../../src/appx/libms/spec.rst:243
+msgid "Book to borrow request"
+msgstr "Книга до запиту на позику"
+
+#: ../../src/appx/libms/spec.rst:245
+msgid ""
+"Each ``Book`` can be associated with multiple ``BorrowRequests``, but each "
+"``BorrowRequest`` refers only one ``book``, forming a **many-to-one** "
+"relationship."
+msgstr ""
+"Кожна ``Книга`` може бути пов'язана з декількома ``Запитами на позику``, але "
+"кожен ``Запит на позику`` посилається тільки на одну ``Книгу``, утворюючи "
+"зв'язок **багато-до-одного**."
+
+#: ../../src/appx/libms/spec.rst:250
+msgid "User to borrow request"
+msgstr "Користувач до запиту на позику"
+
+#: ../../src/appx/libms/spec.rst:252
+msgid ""
+"Each ``User`` can make multiple ``BorrowRequests``, but each "
+"``BorrowRequest`` refers to only one book, forming a **many-to-one** "
+"relationship."
+msgstr ""
+"Кожен ``Користувач`` може зробити кілька ``Запитів на позику``, але кожен "
+"``Запит на позику`` відноситься тільки до однієї книги, формуючи зв'язок "
+"``багато до однієї``."
+
+#: ../../src/appx/libms/spec.rst:256
+msgid "User to book (as a borrower)"
+msgstr "Користувач до книги (як запозичувач)"
+
+#: ../../src/appx/libms/spec.rst:258
+msgid ""
+"A ``Book`` may have been borrowed by a ``User``, but at any given time, each "
+"``Book`` can be borrowed by one user only. This forms a **one-to-one** "
+"relationship."
+msgstr ""
+"Книга\" може бути позичена \"Користувачем\", але в будь-який момент часу "
+"кожна \"Книга\" може бути позичена тільки одним користувачем. Це формує "
+"відносини \"один до одного\"."
+
+#: ../../src/appx/libms/spec.rst:264
+msgid "Views and templates"
+msgstr "Подання та шаблони"
+
+#: ../../src/appx/libms/spec.rst:267
+msgid "Admin site"
+msgstr "Адмін-сайт"
+
+#: ../../src/appx/libms/spec.rst:269
+msgid ""
+"Admin site provides the full control over the entire system. Only admins are "
+"permitted to use admin site. Librarians should use their dedicated views to "
+"perform operations, except special cases."
+msgstr ""
+"Адмін-сайт забезпечує повний контроль над всією системою. Тільки "
+"адміністратори мають право користуватися сайтом адміністратора. Бібліотекарі "
+"повинні використовувати свої виділені подання для виконання операцій, за "
+"винятком особливих випадків."
+
+#: ../../src/appx/libms/spec.rst:275
+msgid "Authentication"
+msgstr "Автентифікація"
+
+#: ../../src/appx/libms/spec.rst:278
+msgid "Login"
+msgstr "Логін"
+
+#: ../../src/appx/libms/spec.rst:281 ../../src/appx/libms/spec.rst:293
+#: ../../src/appx/libms/spec.rst:324 ../../src/appx/libms/spec.rst:344
+#: ../../src/appx/libms/spec.rst:371 ../../src/appx/libms/spec.rst:495
+#: ../../src/appx/libms/spec.rst:512
+msgid "Template"
+msgstr "Template"
+
+#: ../../src/appx/libms/spec.rst:282
+msgid ""
+"A form with fields for entering a username and a password, and a submit "
+"button."
+msgstr ""
+"Форма з полями для введення імені користувача та пароля, а також кнопкою "
+"\"Надіслати\"."
+
+#: ../../src/appx/libms/spec.rst:285 ../../src/appx/libms/spec.rst:303
+#: ../../src/appx/libms/spec.rst:329 ../../src/appx/libms/spec.rst:353
+#: ../../src/appx/libms/spec.rst:390 ../../src/appx/libms/spec.rst:476
+#: ../../src/appx/libms/spec.rst:499
+msgid "View logic"
+msgstr "View logic"
+
+#: ../../src/appx/libms/spec.rst:286
+msgid ""
+"Validate entered credentials and authenticate the user. In case of incorrect "
+"credentials, display an error message."
+msgstr ""
+"Перевірити введені облікові дані та автентифікувати користувача. У разі "
+"неправильних облікових даних вивести повідомлення про помилку."
+
+#: ../../src/appx/libms/spec.rst:290
+msgid "Registration"
+msgstr "Реєстрація"
+
+#: ../../src/appx/libms/spec.rst:294
+msgid "A form for new user registration. **Required** fields are:"
+msgstr "Форма для реєстрації нового користувача. **Обов'язковими** полями є:"
+
+#: ../../src/appx/libms/spec.rst:296
+msgid "username"
+msgstr "username"
+
+#: ../../src/appx/libms/spec.rst:297
+msgid "first name"
+msgstr "first name"
+
+#: ../../src/appx/libms/spec.rst:298
+msgid "last name"
+msgstr "last name"
+
+#: ../../src/appx/libms/spec.rst:299
+msgid "password"
+msgstr "password"
+
+#: ../../src/appx/libms/spec.rst:300
+msgid "confirm password"
+msgstr "confirm password"
+
+#: ../../src/appx/libms/spec.rst:304
+msgid "Upon submission, the view should validate the provided data:"
+msgstr "Після відправлення, перегляд повинен підтвердити надані дані:"
+
+#: ../../src/appx/libms/spec.rst:306
+msgid "Check if username is already taken."
+msgstr "Перевірте, чи не зайнято вже ім'я користувача."
+
+#: ../../src/appx/libms/spec.rst:307
+msgid "Ensure that password and confirm password fields match."
+msgstr ""
+"Переконайтеся, що поля \"Пароль\" і \"Підтвердження пароля\" збігаються."
+
+#: ../../src/appx/libms/spec.rst:308
+msgid ""
+"Save the user's data if all validations pass. Otherwise, display appropriate "
+"error messages."
+msgstr ""
+"Зберегти дані користувача, якщо всі перевірки пройдено. В іншому випадку, "
+"відобразити відповідні повідомлення про помилки."
+
+#: ../../src/appx/libms/spec.rst:311
+msgid ""
+"When saving passwords in the database, always store them in a hashed format, "
+"never in plain text."
+msgstr ""
+"Зберігаючи паролі в базі даних, завжди зберігайте їх у хешованому форматі, а "
+"не у вигляді простого тексту."
+
+#: ../../src/appx/libms/spec.rst:315
+msgid ""
+"Django's built-in ``User`` model and authentication system handle password "
+"hashing by default, which is a big plus."
+msgstr ""
+"Вбудована в Django модель ``User`` та система автентифікації за "
+"замовчуванням обробляє хешування паролів, що є великим плюсом."
+
+#: ../../src/appx/libms/spec.rst:319
+msgid "Borrowing History"
+msgstr "Історія запозичень"
+
+#: ../../src/appx/libms/spec.rst:321
+msgid "This view is available only for authenticated users."
+msgstr "Це подання доступне лише для авторизованих користувачів."
+
+#: ../../src/appx/libms/spec.rst:325
+msgid ""
+"Users can see the list of **all** their borrows requests, regardless of "
+"approve/decline status."
+msgstr ""
+"Користувачі можуть бачити список **всіх** своїх заявок на позики, незалежно "
+"від статусу схвалення/відхилення."
+
+#: ../../src/appx/libms/spec.rst:330
+msgid "Authenticated users can see only their own borrow requests."
+msgstr "Авторизовані користувачі можуть бачити лише власні заявки на позики."
+
+#: ../../src/appx/libms/spec.rst:331
+msgid ""
+"Librarians and admins can access borrows requests list for any user, "
+"registered in the library system."
+msgstr ""
+"Бібліотекарі та адміністратори мають доступ до списку запитів на позики для "
+"будь-якого користувача, зареєстрованого в бібліотечній системі."
+
+#: ../../src/appx/libms/spec.rst:335
+msgid "Library collection"
+msgstr "Бібліотечний фонд"
+
+#: ../../src/appx/libms/spec.rst:337
+msgid ""
+"These views are generally available for all (including anonymous) users. The "
+"functionality for authenticated users include books borrowing."
+msgstr ""
+"Ці перегляди загалом доступні для всіх (в тому числі анонімних) "
+"користувачів. Функціонал для аутентифікованих користувачів включає в себе "
+"можливість позичати книги."
+
+#: ../../src/appx/libms/spec.rst:341
+msgid "Books list"
+msgstr "Список літератури"
+
+#: ../../src/appx/libms/spec.rst:345
+msgid "A list (or table) of books. Each book entry should provide information:"
+msgstr ""
+"Список (або таблиця) книг. Кожна позиція повинна містити інформацію про "
+"книгу:"
+
+#: ../../src/appx/libms/spec.rst:347
+msgid "title"
+msgstr "title"
+
+#: ../../src/appx/libms/spec.rst:348
+msgid "author(s)"
+msgstr "автор(и)"
+
+#: ../../src/appx/libms/spec.rst:349
+msgid "summary (truncated if too long, 30 words or fewer)"
+msgstr "опис (скорочене, якщо занадто довге, до 30 слів або менше)"
+
+#: ../../src/appx/libms/spec.rst:350
+msgid "availability status (either **Available** or **Unavailable**)"
+msgstr "статус доступності (**Доступний** або **Не доступний**)"
+
+#: ../../src/appx/libms/spec.rst:354
+msgid "Querying the data"
+msgstr "Запит даних"
+
+#: ../../src/appx/libms/spec.rst:356
+msgid "Fetch **all** books from the database"
+msgstr "Отримати **усі** книги з бази даних"
+
+#: ../../src/appx/libms/spec.rst:358
+msgid "Checking availability status (visual mark)"
+msgstr "Перевірка статусу доступності (візуальна позначка)"
+
+#: ../../src/appx/libms/spec.rst:360
+msgid ""
+"For each book, determine its availability status. Check ``Book.available`` "
+"flag."
+msgstr ""
+"Для кожної книги визначте її статус доступності. Встановіть прапорець ``Book."
+"available``."
+
+#: ../../src/appx/libms/spec.rst:364
+msgid ""
+"A user can still create a borrowing request, regardless of the book "
+"availability status. This is only the visual mark."
+msgstr ""
+"Користувач все одно може створити запит на позику, незалежно від статусу "
+"доступності книги. Це лише візуальна позначка."
+
+#: ../../src/appx/libms/spec.rst:368
+msgid "Detail view"
+msgstr "Детальний перегляд"
+
+#: ../../src/appx/libms/spec.rst:372
+msgid ""
+"The detailed view of a specific book, presenting comprehensive information:"
+msgstr "Детальний огляд конкретної книги, що містить вичерпну інформацію:"
+
+#: ../../src/appx/libms/spec.rst:374
+msgid "**Title**: Display the book's title prominently."
+msgstr "**Назва**: Покажіть назву книги на видному місці."
+
+#: ../../src/appx/libms/spec.rst:375
+msgid "**Genre(s)**: List all associated genres (if any)."
+msgstr "**Жанр(и)**: Перелічіть усі пов'язані жанри (якщо такі є)."
+
+#: ../../src/appx/libms/spec.rst:376
+msgid "**Author(s)**: List all associated authors."
+msgstr "**Автор(и)**: Перерахуйте всіх асоційованих авторів."
+
+#: ../../src/appx/libms/spec.rst:377
+msgid "**ISBN**: The International Standard Book Number."
+msgstr "**ISBN**: Міжнародний стандартний номер книги."
+
+#: ../../src/appx/libms/spec.rst:378
+msgid "**Published Date**: When the book was published."
+msgstr "**Дата публікації**: Коли вийшла друком книга."
+
+#: ../../src/appx/libms/spec.rst:379
+msgid ""
+"**Publisher**: The name of the entity or company responsible for publishing"
+msgstr ""
+"**Видавець**: Назва організації або компанії, відповідальної за публікацію"
+
+#: ../../src/appx/libms/spec.rst:380
+msgid "**Summary**: A full summary or description of the book. the book."
+msgstr "**Коротка анотація**: Повне резюме або опис книги. книги."
+
+#: ../../src/appx/libms/spec.rst:382
+msgid "**Action Buttons** (For authenticated users only):"
+msgstr "**Кнопки дій** (Тільки для авторизованих користувачів):"
+
+#: ../../src/appx/libms/spec.rst:384
+msgid ""
+"**Borrow Request Button**: If the user has no associated borrow request they "
+"can create a new one."
+msgstr ""
+"**Кнопка запиту на позику**: Якщо користувач не має пов'язаного запиту на "
+"позику, він може створити новий."
+
+#: ../../src/appx/libms/spec.rst:386
+msgid ""
+"**Gather Book Button**: If the user's borrow request for this book has been "
+"approved, allow the user to confirm they've picked up the book."
+msgstr ""
+"**Кнопка Забрати книгу**: Якщо запит користувача на позику цієї книги було "
+"схвалено, дозвольте користувачеві підтвердити, що він забрав книгу."
+
+#: ../../src/appx/libms/spec.rst:391
+msgid "**Fetching Book Details**:"
+msgstr "**Доступ до деталей книги**:"
+
+#: ../../src/appx/libms/spec.rst:393
+msgid ""
+"Use the book's identifier (usually a primary key) to fetch its details from "
+"the database."
+msgstr ""
+"Використовуйте ідентифікатор книги (зазвичай первинний ключ), щоб отримати "
+"інформацію про неї з бази даних."
+
+#: ../../src/appx/libms/spec.rst:396
+msgid "**Checking User Authentication**:"
+msgstr "**Перевірка автентичності користувача**:"
+
+#: ../../src/appx/libms/spec.rst:398
+msgid ""
+"Determine if a user is authenticated. If they are, display the appropriate "
+"action buttons based on the book's availability status and any existing "
+"borrow requests by the user."
+msgstr ""
+"Визначити, чи користувач автентифікований. Якщо так, відобразити відповідні "
+"кнопки дій на основі статусу доступності книги та наявних запитів "
+"користувача на позику."
+
+#: ../../src/appx/libms/spec.rst:402
+msgid "**Handling Borrow Requests**:"
+msgstr "**Обробка запитів на позику**:"
+
+#: ../../src/appx/libms/spec.rst:404
+msgid "If an authenticated user clicks on the \"Borrow Request\" button:"
+msgstr "Якщо авторизований користувач натискає кнопку \"Запит на позику\":"
+
+#: ../../src/appx/libms/spec.rst:406
+msgid ""
+"Create a new borrow request in the ``BorrowRequest`` model with status "
+"\"pending\"."
+msgstr ""
+"Створіть новий запит на позику в моделі ``BorrowRequest`` зі статусом \"на "
+"розгляді\"."
+
+#: ../../src/appx/libms/spec.rst:408
+msgid "Update the book's status to \"Awaiting approval\"."
+msgstr "Оновіть статус книги на \"Очікує затвердження\"."
+
+#: ../../src/appx/libms/spec.rst:409
+msgid ""
+"Redirect the user to a confirmation page or display a message indicating the "
+"request has been made."
+msgstr ""
+"Перенаправлення користувача на сторінку підтвердження або відображення "
+"повідомлення про те, що запит було зроблено."
+
+#: ../../src/appx/libms/spec.rst:412
+msgid "**Handling Book Gathering**:"
+msgstr "**Опрацювання Позики Книги**:"
+
+#: ../../src/appx/libms/spec.rst:414
+msgid ""
+"If an authenticated user has an approved borrow request and clicks the "
+"\"Gather Book\" button:"
+msgstr ""
+"Якщо авторизований користувач має схвалений запит на позику і натискає "
+"кнопку \"Зібрати книгу\":"
+
+#: ../../src/appx/libms/spec.rst:417
+msgid "Update the book's status to \"Borrowed\"."
+msgstr "Оновіть статус книги на \"Позичена\"."
+
+#: ../../src/appx/libms/spec.rst:418
+msgid "Update the borrow request's status to \"complete\"."
+msgstr "Оновіть статус запиту на позику до \"завершено\"."
+
+#: ../../src/appx/libms/spec.rst:419
+msgid ""
+"Redirect the user to a confirmation page or display a message indicating "
+"they've picked up the book."
+msgstr ""
+"Перенаправляйте користувача на сторінку підтвердження або показуйте "
+"повідомлення про те, що він забрав книгу."
+
+#: ../../src/appx/libms/spec.rst:423
+msgid ""
+"Always ensure the user's actions are authenticated and authorized. This "
+"prevents unauthorized borrow requests or gathering of books. Also, consider "
+"adding error handling to manage cases where the book's details cannot be "
+"fetched or any other unexpected issues."
+msgstr ""
+"Завжди переконуйтеся, що дії користувача автентифіковані та санкціоновані. "
+"Це запобігає несанкціонованим запитам на позику або збору книг. Також "
+"подумайте про те, щоб додати обробку помилок для випадків, коли не вдається "
+"отримати дані про книгу, або будь-яких інших непередбачуваних проблем."
+
+#: ../../src/appx/libms/spec.rst:429
+msgid "Books management"
+msgstr "Управління книгами"
+
+#: ../../src/appx/libms/spec.rst:431
+msgid "These views are available only for staff (librarians and admins)."
+msgstr ""
+"Ці перегляди доступні лише для персоналу (бібліотекарів та адміністраторів)."
+
+#: ../../src/appx/libms/spec.rst:434
+msgid "Authors and genres management"
+msgstr "Управління авторами та жанрами"
+
+#: ../../src/appx/libms/spec.rst:436
+msgid ""
+"Only librarians and admins can add, modify or delete authors and genres. No "
+"additional views for CRUD operations required (except admin site). "
+"Librarians are allowed to access authors and genres via admin site. Only "
+"admins can remove authors or genres."
+msgstr ""
+"Тільки бібліотекарі та адміністратори можуть додавати, змінювати або "
+"видаляти авторів і жанри. Для виконання CRUD-операцій не потрібні додаткові "
+"перегляди (окрім адмін-сайту). Бібліотекарі мають доступ до авторів і жанрів "
+"через сайт адміністратора. Тільки адміністратори можуть видаляти авторів або "
+"жанри."
+
+#: ../../src/appx/libms/spec.rst:442
+msgid "Book creation and update"
+msgstr "Створення та оновлення книг"
+
+#: ../../src/appx/libms/spec.rst:444
+msgid ""
+"The template should comprise a form with fields corresponding to the book's "
+"attributes. Here are the essential elements for the form:"
+msgstr ""
+"Шаблон повинен містити форму з полями, що відповідають атрибутам книги. Ось "
+"основні елементи форми:"
+
+#: ../../src/appx/libms/spec.rst:448 ../../src/appx/libms/spec.rst:463
+msgid "A text input field."
+msgstr "Поле для введення тексту."
+
+#: ../../src/appx/libms/spec.rst:451
+msgid "A textarea for a brief description or synopsis."
+msgstr "Текстова область для короткого опису або синопсису."
+
+#: ../../src/appx/libms/spec.rst:454
+msgid "A text input field for the book's International Standard Book Number."
+msgstr "Поле для введення міжнародного стандартного номера книги."
+
+#: ../../src/appx/libms/spec.rst:457
+msgid "A checkbox indicating if a book is available. Defaults to ``True``."
+msgstr ""
+"Прапорець, що вказує на наявність книги. За замовчуванням стоїть ``True``."
+
+#: ../../src/appx/libms/spec.rst:460
+msgid "A date input field."
+msgstr "Поле для введення дати."
+
+#: ../../src/appx/libms/spec.rst
+msgid "Genres"
+msgstr "Жанри"
+
+#: ../../src/appx/libms/spec.rst:466
+msgid ""
+"A multi-select list of genres (e.g. dropdown, checkboxes etc.). This should "
+"fetch available genres from the database and allow users to select zero or "
+"more genres."
+msgstr ""
+"Список жанрів з можливістю вибору (наприклад, випадаючий список, прапорці "
+"тощо). Він повинен отримувати доступні жанри з бази даних і дозволяти "
+"користувачам вибирати нуль або більше жанрів."
+
+#: ../../src/appx/libms/spec.rst
+msgid "Authors"
+msgstr "Автори"
+
+#: ../../src/appx/libms/spec.rst:471
+msgid ""
+"A multi-select list of authors (e.g. dropdown, checkboxes etc.). This should "
+"fetch available authors from the database and allow users to select one or "
+"more authors."
+msgstr ""
+"Список авторів з можливістю вибору (наприклад, випадаючий список, прапорці "
+"тощо). Він повинен отримувати доступних авторів з бази даних і дозволяти "
+"користувачам вибирати одного або декількох авторів."
+
+#: ../../src/appx/libms/spec.rst:477
+msgid ""
+"If it's an *update* action, pre-populate the form fields with the existing "
+"details of the book fetched from the database."
+msgstr ""
+"Якщо це дія *оновлення*, попередньо заповніть поля форми існуючими даними "
+"книги, отриманими з бази даних."
+
+#: ../../src/appx/libms/spec.rst:479
+msgid "For *creation*, provide an empty form for the librarian to fill in."
+msgstr "Для *створення* надайте бібліотекарю порожню форму для заповнення."
+
+#: ../../src/appx/libms/spec.rst:480
+msgid "Ensure the published date is logical (e.g. not a future date)."
+msgstr ""
+"Переконайтеся, що опублікована дата є логічною (наприклад, не є датою "
+"майбутнього)."
+
+#: ../../src/appx/libms/spec.rst:481
+msgid "Validate required inputs, according to general ``Book`` model rules."
+msgstr ""
+"Перевірити необхідні вхідні дані відповідно до загальних правил моделі "
+"``Book``."
+
+#: ../../src/appx/libms/spec.rst:482
+msgid ""
+"If validations pass: save changes to the database; otherwise, provide "
+"helpful error messages."
+msgstr ""
+"Якщо перевірка пройшла успішно: збережіть зміни в базі даних; в іншому "
+"випадку надайте корисні повідомлення про помилки."
+
+#: ../../src/appx/libms/spec.rst:486
+msgid ""
+"You MAY provide a mechanism (like modal or a quick entry form) to add a new "
+"genre or author without leaving the book form page."
+msgstr ""
+"Ви МОЖЕТЕ надати механізм (наприклад, модальну форму або форму швидкого "
+"введення) для додавання нового жанру або автора, не виходячи зі сторінки "
+"форми книги."
+
+#: ../../src/appx/libms/spec.rst:490
+msgid "Book deletion"
+msgstr "Видалення книги"
+
+#: ../../src/appx/libms/spec.rst:492
+msgid ""
+"Only librarians and administrators are permitted to perform this action."
+msgstr "Тільки бібліотекарі та адміністратори мають право виконувати цю дію."
+
+#: ../../src/appx/libms/spec.rst:496
+msgid "A confirm delete form with **Submit** and **Cancel** buttons."
+msgstr "Форма підтвердження видалення з кнопками **Подати** та **Скасувати**."
+
+#: ../../src/appx/libms/spec.rst:500
+msgid "Authorize user before deleting performing deletion."
+msgstr "Авторизуйте користувача перед виконанням видалення."
+
+#: ../../src/appx/libms/spec.rst:501
+msgid ""
+"If a form is submitted, a book should be removed from the library collection."
+msgstr "Якщо формуляр подано, книга має бути вилучена з бібліотечної колекції."
+
+#: ../../src/appx/libms/spec.rst:503
+msgid ""
+"If deletion is canceled view should redirect back to book detail view page."
+msgstr ""
+"Якщо видалення скасовано, перегляд має бути перенаправлений назад на "
+"сторінку детального перегляду книги."
+
+#: ../../src/appx/libms/spec.rst:506
+msgid "Borrow requests"
+msgstr "Запити на позики"
+
+#: ../../src/appx/libms/spec.rst:508
+msgid ""
+"This view facilitates the management of borrowing requests for librarians "
+"and admins, aiding in their prompt handling."
+msgstr ""
+"Цей перегляд полегшує бібліотекарям і адміністраторам управління запитами на "
+"позики, допомагаючи оперативно їх обробляти."
+
+#: ../../src/appx/libms/spec.rst:513
+msgid ""
+"Present a table showcasing the list of borrow requests. Each row embodies a "
+"borrow request and encompasses:"
+msgstr ""
+"Уявіть таблицю, що відображає список запитів на позики. Кожен рядок "
+"відображає один запит на позику і включає в себе всі запити:"
+
+#: ../../src/appx/libms/spec.rst:516
+msgid "**Book Title**: Title of the requested book."
+msgstr "**Назва книги**: Назва запитуваної книги."
+
+#: ../../src/appx/libms/spec.rst:517
+msgid "**User**: Identifier of the user who initiated the request."
+msgstr "**Користувач**: Ідентифікатор користувача, який ініціював запит."
+
+#: ../../src/appx/libms/spec.rst:518
+msgid "**Request Date**: Date of the request's inception."
+msgstr "**Дата запиту**: Дата створення запиту."
+
+#: ../../src/appx/libms/spec.rst:519
+msgid ""
+"**Due Date**: -   Input field for librarians to set upon approval for new "
+"requests. -   For approved ones, display the librarian-set date."
+msgstr ""
+"**Дата виконання**: - Поле для введення бібліотекарями при затвердженні "
+"нових запитів. - Для затверджених запитів відображатиметься дата, "
+"встановлена бібліотекарем."
+
+#: ../../src/appx/libms/spec.rst:522
+msgid ""
+"**Status**: Present state of the request (New, Approved, Completed, "
+"Declined)."
+msgstr ""
+"**Статус**: Поточний стан запиту (Новий, Затверджений, Завершений, "
+"Відхилений)."
+
+#: ../../src/appx/libms/spec.rst:524
+msgid ""
+"**Approve Button**: Visible for new requests. Toggles status to \"Approved\" "
+"and freezes the due date."
+msgstr ""
+"**Кнопка \"Затвердити\"**: Відображається для нових запитів. Перемикає "
+"статус на \"Затверджено\" і заморожує дату виконання."
+
+#: ../../src/appx/libms/spec.rst:526
+msgid ""
+"**Decline Button**: Appears for new requests. Sets status to \"Declined\" "
+"and can prompt for a decline reason."
+msgstr ""
+"**Кнопка \"Відхилити\"**: З'являється для нових запитів. Встановлює статус "
+"\"Відхилено\" і може запитувати причину відхилення."
+
+#: ../../src/appx/libms/spec.rst:528
+msgid ""
+"**Complete Button**: Displayed for approved requests. Marks the request as "
+"completed."
+msgstr ""
+"**Кнопка \"Завершити\"**: Відображається для затверджених запитів. Позначає "
+"запит як завершений."
+
+#: ../../src/appx/libms/spec.rst:532
+msgid "View Logic"
+msgstr "View Logic"
+
+#: ../../src/appx/libms/spec.rst:533
+msgid ""
+"**Approve Borrow Request**: -   Validate book availability. -   Modify book "
+"status to \"Borrowed\". -   Switch borrow request to \"Approved\". -   "
+"Define the return due date as per librarian. -   Inform the user about the "
+"approval and due date."
+msgstr ""
+"**Схвалити запит на позику**: - Підтвердити наявність книги. - Змінити "
+"статус книги на \"Позичена\". - Переключіть запит на позику на "
+"\"Затверджено\". - Визначте дату повернення відповідно до побажань "
+"бібліотекаря. - Повідомте користувача про схвалення та дату повернення."
+
+#: ../../src/appx/libms/spec.rst:540
+msgid ""
+"**Decline Borrow Request**: -   Change borrow request status to "
+"\"Declined\". -   Optionally, procure decline reason from librarian. -   "
+"Notify user regarding the declination."
+msgstr ""
+"**Відхилити запит на позику**: - Змінити статус запиту на \"Відхилено\". - "
+"За бажанням, запитайте причину відмови у бібліотекаря. - Повідомте "
+"користувача про відхилення."
+
+#: ../../src/appx/libms/spec.rst:545
+msgid ""
+"**Complete Borrow Request**: -   Ensure book's return. -   Update book "
+"status to \"Available\". -   Toggle borrow request status to \"Completed\". "
+"-   If needed, record any notes or damages during return."
+msgstr ""
+"**Завершити запит на позику**: - Переконайтеся, що книга повернулася. - "
+"Оновити статус книги до \"Доступна\". - Змінити статус запиту на "
+"\"Виконано\". - Якщо потрібно, запишіть будь-які примітки або пошкодження "
+"під час повернення."
+
+#: ../../src/appx/libms/spec.rst:552
+msgid ""
+"Implementing reminders for near-due borrow requests can function as an alert "
+"system for both the librarian and the user."
+msgstr ""
+"Впровадження нагадувань про прострочені запити може функціонувати як система "
+"оповіщення як для бібліотекаря, так і для користувача."

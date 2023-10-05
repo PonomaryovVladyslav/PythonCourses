@@ -1,0 +1,54 @@
+# Copyright (C) 2023, Python training course authors and contributors
+# This file is distributed under the same license as the Python Training
+# Course package.
+# SERHII HORODILOV <sgorodil@gmail.com>
+msgid ""
+msgstr ""
+"Project-Id-Version: Python Training Course 2022.11.dev\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-10-05 19:49+0300\n"
+"PO-Revision-Date: 2023-10-05 20:03+0300\n"
+"Last-Translator: Serhii Horodilov <sgorodil@gmail.com>\n"
+"Language-Team: ua <LL@li.org>\n"
+"Language: uk\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<12 || n%100>14) ? 1 : 2);\n"
+"Generated-By: Babel 2.13.0\n"
+"X-Generator: Poedit 3.4\n"
+
+#: ../../src/appx/code_edit.txt:-1
+msgid "Code editors and IDEs for Python"
+msgstr "Редактори коду та IDE для Python"
+
+#: ../../src/appx/code_edit.txt:-1
+msgid "Serhii Horodilov sgorodil@gmail.com"
+msgstr "Serhii Horodilov sgorodil@gmail.com"
+
+#: ../../src/appx/code_edit.txt:-1
+msgid "python, editor, ide"
+msgstr "python, editor, ide"
+
+#: ../../src/appx/code_edit.txt:8
+msgid "Page is under construction"
+msgstr "Сторінка в розробці"
+
+#: ../../src/appx/code_edit.txt:16
+msgid "Code Editors"
+msgstr "Редактори Коду"
+
+#: ../../src/appx/code_edit.txt:18
+msgid ""
+"Writing Python using IDLE or the Python Shell is great for simple things, "
+"but those tools quickly turn larger programming projects into frustrating "
+"pits of despair. Using an IDE, or even just a good dedicated code editor, "
+"makes coding fun — but which one is best for you? :cite:`realpython:code-"
+"edit`"
+msgstr ""
+"Написання на Python за допомогою IDLE або оболонки Python чудово підходить "
+"для простих речей, але ці інструменти швидко перетворюють великі проекти "
+"програмування на розчаровуючу яму відчаю. Використання IDE або навіть просто "
+"хорошого спеціального редактора коду робить кодування цікавим — але який з "
+"них найкращий для вас? :cite:`realpython:code-edit`"

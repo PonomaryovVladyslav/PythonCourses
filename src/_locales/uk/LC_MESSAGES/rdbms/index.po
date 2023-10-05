@@ -1,0 +1,80 @@
+# Copyright (C) 2023, Python training course authors and contributors
+# This file is distributed under the same license as the Python Training
+# Course package.
+# SERHII HORODILOV <sgorodil@gmail.com>
+msgid ""
+msgstr ""
+"Project-Id-Version: Python Training Course 2022.11.dev\n"
+"Report-Msgid-Bugs-To: https://github.com/edu-python-course/edu-python-course."
+"github.io/issues\n"
+"POT-Creation-Date: 2023-10-05 19:49+0300\n"
+"PO-Revision-Date: 2023-10-05 20:15+0300\n"
+"Last-Translator: Serhii Horodilov <sgorodil@gmail.com>\n"
+"Language-Team: ua <LL@li.org>\n"
+"Language: ua\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.13.0\n"
+"X-Generator: Poedit 3.4\n"
+
+#: ../../src/rdbms/index.txt:-1
+msgid "Relational databases"
+msgstr "Реляційні бази даних"
+
+#: ../../src/rdbms/index.txt:-1
+msgid "Serhii Horodilov"
+msgstr "Serhii Horodilov"
+
+#: ../../src/rdbms/index.txt:-1
+msgid "sql, db, database, intro, introduction, index"
+msgstr "sql, db, database, intro, introduction, index"
+
+#: ../../src/rdbms/index.txt:8
+msgid "Relational Database"
+msgstr "Реляційні бази даних"
+
+#: ../../src/rdbms/index.txt:10
+msgid ""
+":abbr:`RDBMS (Relational Database Management System)` is a type of software "
+"that helps users to create, update, manage, and access relational databases. "
+"Relational databases organize data into tables, which consist of rows and "
+"columns. Each column represents a specific attribute of the data, while each "
+"row represents a specific instance of that data."
+msgstr ""
+":abbr:`RDBMS (Relational Database Management System)` - це тип програмного "
+"забезпечення, яке допомагає користувачам створювати, оновлювати, керувати та "
+"отримувати доступ до реляційних баз даних. Реляційні бази даних "
+"організовують дані в таблиці, які складаються з рядків і стовпців. Кожен "
+"стовпець представляє певний атрибут даних, тоді як кожен рядок представляє "
+"конкретний екземпляр цих даних."
+
+#: ../../src/rdbms/index.txt:16
+msgid ""
+"RDBMS allow users to interact with the database using :abbr:`SQL (Structured "
+"Query Language)`, which is a standard language for managing and manipulating "
+"relational databases. SQL allows users to perform a variety of operations on "
+"the database, including adding, updating, and deleting data, as well as "
+"retrieving data based on specific criteria."
+msgstr ""
+"СУБД дозволяє користувачам взаємодіяти з базою даних за допомогою :abbr:`SQL "
+"(Structured Query Language)`, яка є стандартною мовою для керування і "
+"маніпулювання реляційними базами даних. SQL дозволяє користувачам виконувати "
+"різноманітність операцій з базою даних, включаючи додавання, оновлення та "
+"видалення даних, а також отримання даних на основі певних критеріїв."
+
+#: ../../src/rdbms/index.txt:22
+msgid ""
+"RDBMS also provide a range of features to ensure data integrity, such as "
+"enforcing data constraints, supporting transactions, and providing backup "
+"and recovery capabilities. Additionally, RDBMS systems often provide tools "
+"for managing the database, such as user interfaces for creating and "
+"modifying tables and views, and monitoring tools for optimizing database "
+"performance."
+msgstr ""
+"СУБД також надає низку функцій для забезпечення цілісності даних, таких як "
+"дотримання обмежень даних, підтримка транзакцій та забезпечення можливостей "
+"резервного копіюванняі відновлення. Крім того, системи РСУБД часто надають "
+"інструменти для керування базою даних, такі як інтерфейси користувача для "
+"створення та модифікації таблиць і представлень, а також інструменти "
+"моніторингу для оптимізації продуктивності бази даних."

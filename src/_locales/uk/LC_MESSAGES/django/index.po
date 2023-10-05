@@ -1,5 +1,3 @@
-# DJANGO BLOCK TRANSLATION.
-#
 # Copyright (C) 2023, Python training course authors and contributors
 # This file is distributed under the same license as the Python Training
 # Course package.
@@ -9,7 +7,7 @@ msgstr ""
 "Project-Id-Version: Python Training Course 2023.04.dev\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-04-21 05:50+0300\n"
-"PO-Revision-Date: 2023-04-21 05:51+0300\n"
+"PO-Revision-Date: 2023-10-05 20:11+0300\n"
 "Last-Translator: Serhii Horodilov <sgorodil@gmail.com>\n"
 "Language-Team: ua <LL@li.org>\n"
 "Language: ua\n"
@@ -17,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.12.1\n"
-"X-Generator: Poedit 3.2.2\n"
+"X-Generator: Poedit 3.4\n"
 
 #: ../../src/django/index.txt:-1
 msgid "Django web-framework"

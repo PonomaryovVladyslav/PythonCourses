@@ -1,0 +1,223 @@
+# Copyright (C) 2023, Python training course authors and contributors
+# This file is distributed under the same license as the Python Training
+# Course package.
+# SERHII HORODILOV <sgorodil@gmail.com>, 2023.
+msgid ""
+msgstr ""
+"Project-Id-Version: Python Training Course 2023.06.dev\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-10-05 19:49+0300\n"
+"PO-Revision-Date: 2023-10-05 20:17+0300\n"
+"Last-Translator: Serhii Horodilov <sgorodil@gmail.com>\n"
+"Language-Team: uk <LL@li.org>\n"
+"Language: uk\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Generated-By: Babel 2.13.0\n"
+"X-Generator: Poedit 3.4\n"
+
+#: ../../src/vcs/pullrequest.txt:-1
+msgid "Version Control System - Pull Requests"
+msgstr "Система контролю версій - Запити на Злиття (Pull Requests)"
+
+#: ../../src/vcs/pullrequest.txt:-1
+msgid "Serhii Horodilov"
+msgstr "Serhii Horodilov"
+
+#: ../../src/vcs/pullrequest.txt:-1
+msgid "Vladyslav Ponomaryov"
+msgstr "Vladyslav Ponomaryov"
+
+#: ../../src/vcs/pullrequest.txt:-1
+msgid "version, control, system, vcs, git, pull request, merge"
+msgstr "version, control, system, vcs, git, pull request, merge"
+
+#: ../../src/vcs/pullrequest.txt:9
+msgid "Pull Request"
+msgstr "Запит на Злиття (Pull Request)"
+
+#: ../../src/vcs/pullrequest.txt:11
+msgid ""
+"Pull request let you tell others about changes you've pushed to a branch in "
+"a repository on GitHub. Once a pull request is opened, you can discuss and "
+"review the potential changes with collaborators and add follow-up commits "
+"before your changes are merged into the base branch:cite:`github:about-pr`."
+msgstr ""
+"Pull-запит дозволяє вам повідомити інших про зміни, які ви перенесли до "
+"гілки в репозиторії на GitHub. Після того, як запит відкрито, ви можете "
+"обговорити і переглянути потенційні зміни з колегами і додати подальші "
+"коміти, перш ніж ваші зміни будуть злиті в базову гілку branch:cite:`github:"
+"about-pr`."
+
+#: ../../src/vcs/pullrequest.txt:17
+msgid "Draft pull requests"
+msgstr "Чернетки pull requests"
+
+#: ../../src/vcs/pullrequest.txt:19
+msgid ""
+"Draft pull requests are available in public repositories on GitHub. When you "
+"create a pull request, you can choose to a create a pull request that is "
+"ready for review or a draft pull request. Draft pull requests cannot be "
+"merged. When you're ready to get feedback on your pull request, you can mark "
+"your draft pull request as ready for review."
+msgstr ""
+"Чернетки pull-запитів доступні в публічних репозиторіях на GitHub. Коли ви "
+"створюєте пул-запит, ви можете вибрати між створенням готового до розгляду "
+"пул-запиту та чернетки пул-запиту. Чернетки пул-запитів не можна "
+"об'єднувати. Коли ви будете готові отримати відгук на свій запит, ви можете "
+"позначити свій чернетковий запит як готовий до розгляду."
+
+#: ../../src/vcs/pullrequest.txt:26
+msgid "Difference between commits on compare and pull request pages"
+msgstr "Різниця між коммітами на сторінках порівняння та pull-запитів"
+
+#: ../../src/vcs/pullrequest.txt:28
+msgid ""
+"The compare and pull request pages use different methods to calculate the "
+"diff for changed files:"
+msgstr ""
+"Сторінки запитів порівняння і витягування використовують різні методи для "
+"обчислення різниці для змінених файлів:"
+
+#: ../../src/vcs/pullrequest.txt:31
+msgid ""
+"Compare pages show the diff between the tip of the head ref and the current "
+"common ancestor (that is, the merge base) of the head and base ref."
+msgstr ""
+"На сторінках порівняння показано різницю між кінчиком головного референта і "
+"поточним спільним предком (тобто, основою злиття) головного і основного "
+"референта."
+
+#: ../../src/vcs/pullrequest.txt:33
+msgid ""
+"Pull request pages show the diff between the tip of the head ref and the "
+"common ancestor of the head and base ref at the time when the pull request "
+"was created. Consequently, the merge base used for the comparison might be "
+"different."
+msgstr ""
+"Сторінки запитів на злиття показують різницю між вершиною головного рефа і "
+"спільним предком головного і базового рефів на момент створення запиту на "
+"злиття. Отже, база злиття, яка використовується для порівняння, може "
+"відрізнятися."
+
+#: ../../src/vcs/pullrequest.txt:39
+msgid "About comparing branches"
+msgstr "Про порівняння гілок"
+
+#: ../../src/vcs/pullrequest.txt:41
+msgid ""
+"Pull requests display diffs to compare the changes you made in your topic "
+"branch against the base branch that you want to merge your changes into."
+msgstr ""
+"Витягніть запити на відображення відмінностей, щоб порівняти зміни, зроблені "
+"у вашій гілці теми, з базовою гілкою, до якої ви хочете об'єднати ваші зміни."
+
+#: ../../src/vcs/pullrequest.txt:44
+msgid ""
+"Rather that viewing the commits themselves, you can view the proposed "
+"changes as they'll appear in the files once the pull request is merged. The "
+"files appear in alphabetical order within the Files changed tab. Additions "
+"to the files appear in green and are prefaced by a ``+`` sign while content "
+"that has been removed appears in red and is prefaced by a ``-`` sign :cite:"
+"`github:compare-pr`."
+msgstr ""
+"Замість того, щоб переглядати самі комміти, ви можете переглянути "
+"запропоновані зміни, які з'являться у файлах після об'єднання запиту на "
+"витягування. Файли відображаються в алфавітному порядку на вкладці Змінені "
+"файли. Доповнення до файлів відображаються зеленим кольором зі знаком ``+``, "
+"тоді як вміст, який було вилучено, відображається червоним кольором зі "
+"знаком ``-`` :cite:`github:compare-pr`."
+
+#: ../../src/vcs/pullrequest.txt:52 ../../src/vcs/pullrequest.txt:73
+msgid "Creating a pull request"
+msgstr "Створення pull-запиту"
+
+#: ../../src/vcs/pullrequest.txt:54
+msgid ""
+"Create a pull request to propose and collaborate on changes to a repository. "
+"These changes are proposed in a *branch*, which ensures that the default "
+"branch only contains finished and approved work:cite:`github:create-pr`."
+msgstr ""
+"Створіть pull request, щоб пропонувати зміни до сховища та співпрацювати над "
+"ними. Ці зміни пропонуються у *гілці*, що гарантує, що гілка за "
+"замовчуванням містить лише завершені та затверджені роботи:cite:`github:"
+"create-pr`."
+
+#: ../../src/vcs/pullrequest.txt:59
+msgid "About branches"
+msgstr "Про гілки"
+
+#: ../../src/vcs/pullrequest.txt:61
+msgid ""
+"Use a branch to isolate development work without affecting other branches in "
+"the repository. Each repository has one default branch, and can have "
+"multiple other branches. You can merge a branch into another branch using a "
+"pull request."
+msgstr ""
+"Використовуйте гілку, щоб ізолювати роботу над розробкою, не впливаючи на "
+"інші гілки у сховищі. Кожне сховище має одну гілку за замовчуванням і може "
+"мати декілька інших гілок. Ви можете об'єднати гілку з іншою гілкою за "
+"допомогою pull-запиту."
+
+#: ../../src/vcs/pullrequest.txt:66
+msgid ""
+"Branches allow you to develop features, fix bugs, or safely experiment with "
+"new ideas in a contained area of your repository."
+msgstr ""
+"Гілки дозволяють розробляти функції, виправляти помилки або безпечно "
+"експериментувати з новими ідеями в обмеженій області вашого сховища."
+
+#: ../../src/vcs/pullrequest.txt:69
+msgid ""
+"You always create a branch from an existing branch. Typically, you might "
+"create a new branch from the default branch of your repository."
+msgstr ""
+"Ви завжди створюєте гілку з існуючої гілки. Зазвичай, ви можете створити "
+"нову гілку з гілки за замовчуванням вашого сховища."
+
+#: ../../src/vcs/pullrequest.txt:75
+msgid "On GitHub, navigate to the main page of the repository."
+msgstr "На GitHub перейдіть на головну сторінку репозиторію."
+
+#: ../../src/vcs/pullrequest.txt:76
+msgid "Switch to \"Pull requests\" tab."
+msgstr "Перейдіть на вкладку \"Pull requests\"."
+
+#: ../../src/vcs/pullrequest.txt:77
+msgid "Press \"New pull request\" button."
+msgstr "Натисніть кнопку \"New pull request\"."
+
+#: ../../src/vcs/pullrequest.txt:78
+msgid "Select base and source branches."
+msgstr "Виберіть базову і вихідну гілки."
+
+#: ../../src/vcs/pullrequest.txt:79
+msgid "Press \"Create pull request\" button."
+msgstr "Натисніть кнопку \"Create pull request\"."
+
+#: ../../src/vcs/pullrequest.txt:80
+msgid "Provide a meaningful title and description."
+msgstr "Надайте змістовну назву та опис."
+
+#: ../../src/vcs/pullrequest.txt:81
+msgid "Draft or create a pull request."
+msgstr "Створіть pull request або його чорнетку."
+
+#: ../../src/vcs/pullrequest.txt:83
+msgid ""
+"To create pull request that is ready for review, click **Create Pull "
+"Request**."
+msgstr ""
+"Щоб створити запит, готовий до перегляду, натисніть **Create Pull Request**."
+
+#: ../../src/vcs/pullrequest.txt:85
+msgid ""
+"To create a draft pull request, use the drop-down and select **Create Draft "
+"Pull Request**, then click **Draft Pull Request**."
+msgstr ""
+"Щоб створити чернетку запиту на вилучення, скористайтеся випадаючим списком "
+"і виберіть **Create Draft Pull Request**, а потім натисніть **Draft Pull "
+"Request**."

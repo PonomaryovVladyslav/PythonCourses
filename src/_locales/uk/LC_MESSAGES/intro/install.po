@@ -1,0 +1,250 @@
+# Copyright (C) 2023, Python training course authors and contributors
+# This file is distributed under the same license as the Python Training
+# Course package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2023.
+msgid ""
+msgstr ""
+"Project-Id-Version: Python Training Course 2023.04.dev\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-10-05 19:49+0300\n"
+"PO-Revision-Date: 2023-10-05 20:12+0300\n"
+"Last-Translator: Serhii Horodilov <sgorodil@gmail.com>\n"
+"Language-Team: \n"
+"Language: uk\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<12 || n%100>14) ? 1 : 2);\n"
+"Generated-By: Babel 2.13.0\n"
+"X-Generator: Poedit 3.4\n"
+
+#: ../../src/intro/install.txt:3 ../../src/intro/install.txt:21
+msgid "Install Python"
+msgstr "Встановлення Python"
+
+#: ../../src/intro/install.txt:5
+msgid ""
+"The `Python wiki <https://wiki.python.org/moin/BeginnersGuide/Download>`_ "
+"briefly describes the installation process."
+msgstr ""
+"`Вікі Python <https://wiki.python.org/moin/BeginnersGuide/Download>`_ "
+"коротко описує процес встановлення."
+
+#: ../../src/intro/install.txt:8
+msgid ""
+"To become a **true** professional, you need a special software called :abbr:"
+"`IDE (Integrated Development Environment)` or at least a code editor "
+"supporting syntax highlight. Refer :doc:`/appx/code_edit` for more "
+"information."
+msgstr ""
+"Щоб стати **справжнім** професіоналом, вам потрібне спеціальне програмне "
+"забезпечення під назвою :abbr:`IDE (Integrated Development Environment)` або "
+"принаймні редактор коду, який підтримує підсвічування синтаксису. Зверніться "
+"до :doc:`/appx/code_edit` для отримання додаткової інформації."
+
+#: ../../src/intro/install.txt:14
+msgid "Linux"
+msgstr "Linux"
+
+#: ../../src/intro/install.txt:16
+msgid ""
+"On most Linux distros Python comes pre-installed and/or all distro have it "
+"available in their package repository (I haven't seen the one which does "
+"have). The installation process depends on the distro, but here are some "
+"examples how you can install it:"
+msgstr ""
+"У більшості дистрибутивів Linux Python постачається попередньо встановленим "
+"і/або в усіх дистрибутивах він доступний у сховищі пакетів (я не бачив того, "
+"у якому є). Процес встановлення залежить від дистрибутива, але ось кілька "
+"прикладів того, як його можна встановити:"
+
+#: ../../src/intro/install.txt:37
+msgid "MacOS"
+msgstr "MacOS"
+
+#: ../../src/intro/install.txt:39
+msgid ""
+"For newer versions of MacOS Python is no longer included by default and you "
+"will have to download and install it."
+msgstr ""
+"Для нових версій MacOS Python більше не включено за замовчуванням, і вам "
+"доведеться завантажити та встановити його."
+
+#: ../../src/intro/install.txt:42
+msgid "The process is described at: `Using Python on a Mac`_."
+msgstr "Процес описано в: `Використання Python на Mac`_."
+
+#: ../../src/intro/install.txt:44
+msgid ""
+"Briefly, you are invited to visit `downloads`_ and download the latest "
+"stable version of Python. A \"universal binary\" build of Python runs "
+"natively on Mac's new Intel and legacy PPC CPUs."
+msgstr ""
+"Коротко, вас запрошують відвідати `завантаження`_ та завантажити останню "
+"стабільну версію Python. \"Універсальна двійкова\" збірка Python працює "
+"нативно на нових процесорах Intel і застарілих процесорах PPC від Mac."
+
+#: ../../src/intro/install.txt:48
+msgid "After the installation you would get:"
+msgstr "Після встановлення ви отримаєте:"
+
+#: ../../src/intro/install.txt:50
+msgid ""
+"`Python 3.x` folder in `Applications` folder. Standard development "
+"environment (`IDLE`) and `PythonLauncher` included."
+msgstr ""
+"Папка `Python 3.x` в папці `Програми`. Включено стандартне середовище "
+"розробки (`IDLE`) і `PythonLauncher`."
+
+#: ../../src/intro/install.txt:52
+msgid ""
+"A framework `/Library/Frameworks/Python.framework` included libraries and "
+"executables."
+msgstr ""
+"Фреймворк `/Library/Frameworks/Python.framework` що включає бібліотеки та "
+"виконувані файли."
+
+#: ../../src/intro/install.txt:56
+msgid "Install from Homebrew"
+msgstr "Встановити з Homebrew"
+
+#: ../../src/intro/install.txt:58
+msgid ""
+"Python for MacOS is available via Homebrew. You are to search `formulae`_ "
+"for the latest available version. In general, it's as easy as:"
+msgstr ""
+"Python для MacOS доступний через Homebrew. Ви повинні шукати `формули`_ для "
+"останньої доступної версії. Загалом, це так само просто:"
+
+#: ../../src/intro/install.txt:66
+msgid "Windows"
+msgstr "Windows"
+
+#: ../../src/intro/install.txt:68
+msgid ""
+"As for MacOS, here is the official documentation: `Using Python on Windows`_."
+msgstr ""
+"Що стосується MacOS, ось офіційна документація: `Using Python on Windows`_."
+
+#: ../../src/intro/install.txt:70
+msgid ""
+"For Windows' users the stable release is available from `downloads`_. Just "
+"download the installer and proceed to common steps to install software."
+msgstr ""
+"Для користувачів Windows стабільний випуск доступний із `завантажень`_. "
+"Просто завантажте програму встановлення та перейдіть до стандартних кроків "
+"для встановлення програмного забезпечення."
+
+#: ../../src/intro/install.txt:73
+msgid ""
+"It's recommended to **Add Python3.x to PATH**, this will avoid problems at "
+"the beginning of your journey with Python"
+msgstr ""
+"Рекомендовано **Додати Python3.x до PATH**, це дозволить уникнути проблем на "
+"початку вашого шляху з Python"
+
+#: ../../src/intro/install.txt:80
+msgid "Python installer first page"
+msgstr "Перша сторінка інсталятора Python"
+
+#: ../../src/intro/install.txt:82
+msgid "Going on with **Install Now**:"
+msgstr "Продовжуємо з **Встановити зараз**:"
+
+#: ../../src/intro/install.txt:84
+msgid "Python will be installed to your user directory"
+msgstr "Python буде встановлено у ваш каталог користувача"
+
+#: ../../src/intro/install.txt:85
+msgid ""
+"Python Launcher will be installed according to the option at the bottom of "
+"the page"
+msgstr "Python Launcher буде встановлено відповідно до опції внизу сторінки"
+
+#: ../../src/intro/install.txt:88
+msgid ""
+"Using **Customize installation** will perform an *all-users* installation."
+msgstr ""
+"Використання **Налаштувати інсталяцію** виконає інсталяцію *для всіх "
+"користувачів*."
+
+#: ../../src/intro/install.txt:91
+msgid "Removing the MAX_PATH Limitation"
+msgstr "Видалення обмеження MAX_PATH"
+
+#: ../../src/intro/install.txt:93
+msgid ""
+"Windows historically has limited path lengths to 260 characters. This meant "
+"that paths longer than this would not resolve and errors would result. In "
+"the latest versions of Windows, this limitation can be expanded to "
+"approximately 32,000 characters. This allows the open() function, the os "
+"module and most other path functionality to accept and return paths longer "
+"than 260 characters."
+msgstr ""
+"Історично у Windows довжина шляху обмежена 260 символами. Це означало, що "
+"шляхи, довші за цей, не вирішуватимуться, і спричинятимуться помилки. В "
+"останніх версіях Windows це обмеження можна розширити приблизно до 32 000 "
+"символів. Це дозволяє функції open(), модулю os і більшості інших функцій "
+"шляху приймати та повертати шляхи, довші за 260 символів."
+
+#: ../../src/intro/install.txt:99
+msgid "You will need PC administrator assistance to perform this action."
+msgstr "Для виконання цієї дії вам знадобиться допомога адміністратора ПК."
+
+#: ../../src/intro/install.txt:102
+msgid "Install from the Microsoft Store"
+msgstr "Встановити з Microsoft Store"
+
+#: ../../src/intro/install.txt:104
+msgid "You can install from the Microsoft Store in two steps:"
+msgstr "Ви можете встановити з Microsoft Store у два кроки:"
+
+#: ../../src/intro/install.txt:106
+msgid ""
+"Open the Microsoft Store app and search for ``Python`` The result should "
+"look like:"
+msgstr ""
+"Відкрийте програму Microsoft Store і знайдіть ``Python``. Результат має "
+"виглядати так:"
+
+#: ../../src/intro/install.txt:112
+msgid "Microsoft Store - search results for \"Python\""
+msgstr "Microsoft Store - результати пошуку для \"Python\""
+
+#: ../../src/intro/install.txt:114
+msgid "Select ``Python 3.9`` or the higher available version."
+msgstr "Виберіть ``Python 3.9`` або вищу доступну версію."
+
+#: ../../src/intro/install.txt:116
+msgid ""
+"Click **GET** and wait until the installer is downloaded. The installation "
+"process should run automatically. Follow the installer's instructions."
+msgstr ""
+"Натисніть **GET** і дочекайтеся завантаження інсталятора. Процес "
+"встановлення має запуститися автоматично. Дотримуйтесь інструкцій "
+"інсталятора."
+
+#: ../../src/intro/install.txt:124
+msgid "Online Interpreters"
+msgstr "Онлайн Інтерпретатори"
+
+#: ../../src/intro/install.txt:126
+msgid ""
+"Installing or updating Python on your computer is the first step to becoming "
+"a Python programmer :cite:`realpython:install-and-setup`."
+msgstr ""
+"Встановлення або оновлення Python на вашому комп’ютері – це перший крок до "
+"того, щоб стати програмістом Python :cite:`realpython:install-and-setup`."
+
+#: ../../src/intro/install.txt:129
+msgid ""
+"But if you cannot install Python at the moment for some reason, are can go "
+"with online interpreters. `repl.it <https://replit.com/>`_ provides the "
+"ability to create and store Python scripts (they are called *repl* here) for "
+"free."
+msgstr ""
+"Але якщо ви не можете встановити Python на даний момент з якоїсь причини, "
+"можна скористатися онлайн-інтерпретаторами. `repl.it <https://replit.com/>`_ "
+"надає можливість безкоштовно створювати та зберігати сценарії Python (тут "
+"вони називаються *repl*)."

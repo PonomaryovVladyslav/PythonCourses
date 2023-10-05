@@ -1,0 +1,221 @@
+# Copyright (C) 2023, Python training course authors and contributors
+# This file is distributed under the same license as the Python Training
+# Course package.
+# SERHII HORODILOV <sgorodil@gmail.com>, 2023.
+msgid ""
+msgstr ""
+"Project-Id-Version: Python Training Course 2023.06.dev\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-10-05 19:49+0300\n"
+"PO-Revision-Date: 2023-10-05 20:17+0300\n"
+"Last-Translator: Serhii Horodilov <sgorodil@gmail.com>\n"
+"Language-Team: uk <LL@li.org>\n"
+"Language: uk\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Generated-By: Babel 2.13.0\n"
+"X-Generator: Poedit 3.4\n"
+
+#: ../../src/vcs/intro.txt:-1
+msgid "Version control system"
+msgstr "Система контролю версій"
+
+#: ../../src/vcs/intro.txt:-1
+msgid "Serhii Horodilov"
+msgstr "Serhii Horodilov"
+
+#: ../../src/vcs/intro.txt:-1
+msgid "version, control, system, vcs, git"
+msgstr "version, control, system, vcs, git"
+
+#: ../../src/vcs/intro.txt:8
+msgid "About version control (Git)"
+msgstr "Про контроль версій (Git)"
+
+#: ../../src/vcs/intro.txt:10
+msgid ""
+"Version control is a system that records changes to a file or set of files "
+"over time so that you can recall specific versions later. It allows you to "
+"revert selected files back to a previous state, revert the entire project "
+"back to a previous state, compare changes over time, see who last modified "
+"something that might be causing a problem, who introduced an issue and when, "
+"and more."
+msgstr ""
+"Контроль версій - це система, яка реєструє зміни у файлі або наборі файлів з "
+"плином часу, щоб ви могли пізніше згадати конкретні версії. Він дозволяє "
+"повернути вибрані файли до попереднього стану, повернути весь проект до "
+"попереднього стану, порівняти зміни в часі, побачити, хто востаннє змінював "
+"щось, що може спричинити проблему, хто і коли створив проблему, тощо."
+
+#: ../../src/vcs/intro.txt:16
+msgid ""
+"In a :abbr:`DVCS (Distributed Version Control Systems)` clients don't just "
+"check out the latest snapshot of the files; rather, they fully mirror the "
+"repository, including its full history. Thus, if any server dies, and these "
+"systems were collaborating via that server, any of the client repositories "
+"can be copied back up to the server to restore it. Every clone is really a "
+"full backup of all the data."
+msgstr ""
+"У :abbr:`DVCS (Distributed Version Control Systems)` клієнти не просто "
+"перевіряють останній знімок файлів, а повністю дзеркально копіюють сховище, "
+"включно з його повною історією. Таким чином, якщо якийсь сервер вийде з "
+"ладу, а ці системи працювали через нього, будь-який з клієнтських "
+"репозиторіїв можна скопіювати на сервер, щоб відновити його роботу. Кожен "
+"клон - це фактично повна резервна копія всіх даних."
+
+#: ../../src/vcs/intro.txt:26
+msgid "Distributed version control diagram"
+msgstr "Розподілена схема управління версіями"
+
+#: ../../src/vcs/intro.txt:29
+msgid "What is Git?"
+msgstr "Що таке Git?"
+
+#: ../../src/vcs/intro.txt:30
+msgid ""
+"The major difference between Git and any other VCS is the way Git thinks "
+"about its data. Conceptually, most other systems store information as a list "
+"of file-based changes. Git doesn't think of or store its data this way. "
+"Instead, Git thinks of its data more like a series of snapshots of a "
+"miniature filesystem."
+msgstr ""
+"Основна відмінність між Git'ом та будь-якою іншою VCS полягає в тому, як "
+"Git'ом мислить про свої дані. Концептуально, більшість інших систем "
+"зберігають інформацію у вигляді списку змін у файлах. Git не думає про свої "
+"дані і не зберігає їх таким чином. Натомість, Git думає про свої дані як про "
+"серію знімків мініатюрної файлової системи."
+
+#: ../../src/vcs/intro.txt:36
+msgid ""
+"This is an important distinction between Git and nearly all other VCSs. It "
+"makes Git reconsider almost every aspect of version control that most other "
+"systems copied from the previous generation. This makes Git more like a mini "
+"filesystem with some incredibly powerful tools built on top of it, rather "
+"than simply a VCS."
+msgstr ""
+"Це важлива відмінність між Git'ом та майже всіма іншими VCS. Вона змушує "
+"Git'а переосмислити майже кожен аспект контролю версій, який більшість інших "
+"систем скопіювали з попереднього покоління. Це робить Git більше схожим на "
+"міні-файлову систему з деякими неймовірно потужними інструментами, "
+"побудованими поверх неї, ніж на звичайну VCS."
+
+#: ../../src/vcs/intro.txt:45
+msgid "Storing data as snapshots of the project over time"
+msgstr "Зберігання даних у вигляді знімків проекту з плином часу"
+
+#: ../../src/vcs/intro.txt:48
+msgid "Local operations"
+msgstr "Локальні операції"
+
+#: ../../src/vcs/intro.txt:49
+msgid ""
+"Most operations in Git need only local files and resources to operate -- "
+"generally no information is needed from another computer on your network. "
+"Because you have the entire history of the project right there on your local "
+"disk, most operations seem almost instantaneous."
+msgstr ""
+"Для виконання більшості операцій у Git'і потрібні лише локальні файли та "
+"ресурси - зазвичай не потрібна інформація з іншого комп'ютера у вашій "
+"мережі. Оскільки вся історія проекту зберігається на вашому локальному "
+"диску, більшість операцій виконуються майже миттєво."
+
+#: ../../src/vcs/intro.txt:55
+msgid "Integrity"
+msgstr "Цілісність"
+
+#: ../../src/vcs/intro.txt:56
+msgid ""
+"Everything in Git is checksummed before it is stored and is then referred to "
+"by that checksum. This means it's impossible to change the contents of any "
+"file or directory without Git knowing about it."
+msgstr ""
+"Усе в Git'і має контрольну суму перед збереженням і потім посилається на цю "
+"контрольну суму. Це означає, що неможливо змінити вміст будь-якого файлу або "
+"каталогу без відома Git'а."
+
+#: ../../src/vcs/intro.txt:61
+msgid "Repository files states"
+msgstr "Стани файлів сховища"
+
+#: ../../src/vcs/intro.txt:62
+msgid ""
+"Git has three main states that your files can reside in: **modified**, "
+"**staged**, and **committed**:"
+msgstr ""
+"Git має три основні стани, в яких можуть перебувати ваші файли: "
+"**модифіковані**, **на стадії розробки** та **зафіксовані**:"
+
+#: ../../src/vcs/intro.txt:65
+msgid ""
+"Modified means that you have changed the file but have not committed it to "
+"your database yet."
+msgstr ""
+"Змінено означає, що ви змінили файл, але ще не зафіксували його у вашій базі "
+"даних."
+
+#: ../../src/vcs/intro.txt:67
+msgid ""
+"Staged means that you have marked a modified file in its current version to "
+"go into your next commit snapshot."
+msgstr ""
+"Поетапний означає, що ви позначили змінений файл у його поточній версії, щоб "
+"він потрапив до наступного знімка фіксації."
+
+#: ../../src/vcs/intro.txt:69
+msgid "Committed means that the data is safely stored in your local database."
+msgstr ""
+"Фіксація означає, що дані безпечно зберігаються у вашій локальній базі даних."
+
+#: ../../src/vcs/intro.txt:76
+msgid "The basic Git workflow goes something like this:"
+msgstr "Базовий робочий процес Git'а виглядає приблизно так:"
+
+#: ../../src/vcs/intro.txt:78
+msgid "You modify files in your working tree."
+msgstr "Ви змінюєте файли у вашому робочому дереві."
+
+#: ../../src/vcs/intro.txt:79
+msgid ""
+"You selectively stage just those changes you want to be part of your next "
+"commit, which adds only those changes to the staging area."
+msgstr ""
+"Ви вибірково стабілізуєте лише ті зміни, які ви хочете включити в наступний "
+"коміт, що додає тільки ці зміни в область стабілізації."
+
+#: ../../src/vcs/intro.txt:81
+msgid ""
+"You do a commit, which takes the files as they are in the staging area and "
+"stores that snapshot permanently to your Git directory."
+msgstr ""
+"Ви робите фіксацію, яка бере файли в тому вигляді, в якому вони знаходяться "
+"в області підготовки, і зберігає цей знімок назавжди у вашому каталозі Git'а."
+
+#: ../../src/vcs/intro.txt:85
+msgid "Command line"
+msgstr "Командний рядок"
+
+#: ../../src/vcs/intro.txt:87
+msgid ""
+"There are a lot of different ways to use Git. There are the original command-"
+"line tools, and there are many graphical user interfaces of varying "
+"capabilities. For one, the command line is the only place you can run all "
+"Git commands -- most of the GUIs implement only a partial subset of Git "
+"functionality for simplicity. If you know how to run the command-line "
+"version, you can probably also figure out how to run the GUI version, while "
+"the opposite is not necessarily true. Also, while your choice of graphical "
+"client is a matter of personal taste, all users will have the command-line "
+"tools installed and available."
+msgstr ""
+"Існує багато різних способів використання Git'у. Існують оригінальні "
+"інструменти командного рядка, а також багато графічних інтерфейсів "
+"користувача з різними можливостями. З одного боку, командний рядок є єдиним "
+"місцем, де ви можете виконувати всі команди Git'а - більшість графічних "
+"інтерфейсів реалізують лише часткову підмножину функціональності Git'а для "
+"спрощення. Якщо ви знаєте, як запустити версію з командного рядка, ви, "
+"ймовірно, також зможете з'ясувати, як запустити версію з графічним "
+"інтерфейсом, хоча зворотне не обов'язково вірно. Крім того, хоча ваш вибір "
+"графічного клієнта є справою особистого смаку, всі користувачі матимуть "
+"встановлені та доступні інструменти командного рядка."

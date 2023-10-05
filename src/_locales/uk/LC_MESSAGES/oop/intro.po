@@ -1,17 +1,13 @@
-# OBJECT-ORIENTED PROGRAMMING TOPICS
-#
 # Copyright (C) 2022, Python training course authors and contributors
 # This file is distributed under the same license as the Python Training
 # Course package.
-#
 # SERHII HORODILOV <sgorodil@gmail.com>
-#
 msgid ""
 msgstr ""
 "Project-Id-Version: Python Training Course 2022.11.dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-04-14 01:49+0300\n"
-"PO-Revision-Date: 2023-04-14 02:08+0300\n"
+"POT-Creation-Date: 2023-10-05 19:49+0300\n"
+"PO-Revision-Date: 2023-10-05 20:14+0300\n"
 "Last-Translator: Serhii Horodilov <sgorodil@gmail.com>\n"
 "Language-Team: \n"
 "Language: uk\n"
@@ -20,52 +16,16 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
 "n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
-"Generated-By: Babel 2.12.1\n"
-"X-Generator: Poedit 3.2.2\n"
-
-#: ../../src/oop/index.txt:-1
-msgid "Object-oriented programming in Python"
-msgstr "Об'єктно-орієнтоване програмування"
-
-#: ../../src/oop/index.txt:-1 ../../src/oop/inheritance.txt:-1
-#: ../../src/oop/intro.txt:-1 ../../src/oop/patterns.txt:-1
-#: ../../src/oop/solid.txt:-1
-msgid "Serhii Horodilov"
-msgstr "Serhii Horodilov"
-
-#: ../../src/oop/index.txt:-1
-msgid "python, oop, object-oriented programming, index"
-msgstr "python, oop, object-oriented programming, index"
-
-#: ../../src/oop/index.txt:8
-msgid "Object-Oriented Programming"
-msgstr "Об'єктно-орієнтоване програмування"
-
-#: ../../src/oop/index.txt:10
-msgid ""
-"Object-oriented programming (OOP) is one of the biggest and most important "
-"subjects in all of programming. It is a method of structuring a program by "
-"bundling related properties and behavior into individual objects."
-msgstr ""
-"Об'єктно-орієнтоване програмування (ООП) є однією з найбільших і "
-"найважливіших тем у всьому програмуванні. Це метод структуруванняпрограми "
-"шляхом об'єднання пов'язаних властивостей і поведінки в окремі об'єкти."
-
-#: ../../src/oop/inheritance.txt:-1
-msgid "Inheritance in Python"
-msgstr "Наслідування в Python"
-
-#: ../../src/oop/inheritance.txt:-1
-msgid "python, inheritance, oop, object-oriented programming"
-msgstr "python, inheritance, oop, object-oriented programming"
-
-#: ../../src/oop/inheritance.txt:8
-msgid "Inheritance"
-msgstr "Наслідування"
+"Generated-By: Babel 2.13.0\n"
+"X-Generator: Poedit 3.4\n"
 
 #: ../../src/oop/intro.txt:-1
 msgid "Introduction to OOP"
 msgstr "Введення в ООП"
+
+#: ../../src/oop/intro.txt:-1
+msgid "Serhii Horodilov"
+msgstr "Serhii Horodilov"
 
 #: ../../src/oop/intro.txt:-1
 msgid "python, intro, introduction, oop, object-oriented programming"
@@ -514,57 +474,3 @@ msgstr ""
 "Наприклад, у вас можуть бути різні класи, успадковані від базового класу, "
 "який забезпечує загальний інтерфейс, але кожен похідний клас може "
 "реалізовувати метод по-своєму."
-
-#: ../../src/oop/patterns.txt:-1
-msgid "Design patterns"
-msgstr "Патерни проектування"
-
-#: ../../src/oop/patterns.txt:-1
-msgid "python, programming, design, patterns"
-msgstr "python, programming, design, patterns"
-
-#: ../../src/oop/patterns.txt:8
-msgid "Design Patterns"
-msgstr "Патерни Проектування"
-
-#: ../../src/oop/solid.txt:-1
-msgid "SOLID principles"
-msgstr "Принципи SOLID"
-
-#: ../../src/oop/solid.txt:-1
-msgid ""
-"python, solid, single, responsibility, open, closed, liskov, substitution, "
-"interface, segregation, dependency, inversion, oop, object-oriented "
-"programming"
-msgstr ""
-"python, solid, single, responsibility, open, closed, liskov, substitution, "
-"interface, segregation, dependency, inversion, oop, object-oriented "
-"programming"
-
-#: ../../src/oop/solid.txt:10
-msgid "SOLID Principles"
-msgstr "Принципи SOLID"
-
-#~ msgid ""
-#~ "Many programming languages has *access modifiers* implemented. The Python "
-#~ "has also, but actually no. It's implemented as a convention-level. All "
-#~ "class's members starting with underscore are considered to be "
-#~ "**protected** members and should not be accessible outside the class "
-#~ "instance; on the other hand members starting with two underscores are "
-#~ "considered to be **private** members and shouldn't be accessible outside "
-#~ "the class instance as well."
-#~ msgstr ""
-#~ "Багато мов програмування мають реалізовані модифікатори доступу. Python "
-#~ "також має, але насправді ні. Він реалізований на рівні конвенції. Усі "
-#~ "члени класу, які починаються з підкреслення, вважаються захищеними "
-#~ "членами та не повинні бути доступними за межами екземпляр класу; з іншого "
-#~ "боку, члени, які починаються з двох символів підкреслення, вважаються "
-#~ "приватними членами та не повинні бути доступними за межами екземпляра "
-#~ "класу."
-
-#~ msgid ""
-#~ "With the implementation above there are **public** attributes, but you "
-#~ "can still access data outside the class, but you definitely shouldn't."
-#~ msgstr ""
-#~ "З наведеною вище реалізацією є загальнодоступні атрибути, але ви все ще "
-#~ "можете отримати доступ до даних за межами класу, але точно не повинні."

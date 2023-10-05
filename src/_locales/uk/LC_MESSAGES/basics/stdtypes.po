@@ -1,0 +1,728 @@
+# Copyright (C) 2023, Python training course authors and contributors
+# This file is distributed under the same license as the Python Training
+# Course package.
+# OLEKSANDR YEROMIN <unicorn.in.pants@gmail.com>, 2023.
+msgid ""
+msgstr ""
+"Project-Id-Version: Python Training Course 2022.11.dev\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-10-05 19:49+0300\n"
+"PO-Revision-Date: 2023-10-05 20:08+0300\n"
+"Last-Translator: Serhii Horodilov <sgorodil@gmail.com>\n"
+"Language-Team: \n"
+"Language: uk\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Generated-By: Babel 2.13.0\n"
+"X-Generator: Poedit 3.4\n"
+
+#: ../../src/basics/stdtypes.txt:-1
+msgid "Python built-in types"
+msgstr "Вбудовані типи даних в Python"
+
+#: ../../src/basics/stdtypes.txt:-1
+msgid "Serhii Horodilov"
+msgstr "Serhii Horodilov"
+
+#: ../../src/basics/stdtypes.txt:-1
+msgid "python, basics"
+msgstr "python, basics"
+
+#: ../../src/basics/stdtypes.txt:11
+msgid "Built-in Types"
+msgstr "Вбудовані типи"
+
+#: ../../src/basics/stdtypes.txt:13
+msgid ""
+"The principal built-in types are numerics, sequences, mappings, classes, "
+"instances and exceptions :cite:`docs-python:stdtypes`. This section covers "
+"only the most base of them. Others will be discussed in the future within "
+"their own topics."
+msgstr ""
+"Основними вбудованими типами є числа, послідовності, відображення, класи, "
+"екземпляри та винятки :cite:`docs-python:stdtypes`. Цей розділ охоплює лише "
+"найпростіші з них. Інші будуть обговорюватися в майбутньому в рамках їхніх "
+"власних тем."
+
+#: ../../src/basics/stdtypes.txt:19
+msgid "Numeric types"
+msgstr "Числові типи"
+
+#: ../../src/basics/stdtypes.txt:21
+msgid ""
+"There are 3 distinct numeric types: *integers*, *floating point numbers*, "
+"and *complex numbers*. In addition, Booleans are a subtype of integers. "
+"Integers have unlimited precision. Floating point numbers are usually "
+"implemented using ``double`` in C. Complex numbers have a real and imaginary "
+"part, which are each a floating point number."
+msgstr ""
+"Існує 3 різних типи чисел: *integers*, *floating point numbers*, та *complex "
+"numbers*. Крім того, логічні значення є підтипом цілих чисел. Цілі числа "
+"мають необмежену точність. Числа з плаваючою комою зазвичай реалізуються "
+"через знак ``double`` у C. Комплексні числа мають дійсну та уявну частини, "
+"кожна з яких є числом з плаваючою комою."
+
+#: ../../src/basics/stdtypes.txt:27
+msgid ""
+"Numbers are created by numeric literals or as the result of built-in "
+"functions and operators. Unadorned integer literals (including hex, octal "
+"and binary numbers) yield integers. Numeric literals containing a decimal "
+"point or an exponent sign yield floating point numbers. Appending ``j`` or "
+"``J`` to a numeric literal yields an imaginary number (a complex number with "
+"a zero real part) which you can add to an integer or float to get a complex "
+"number with real and imaginary parts."
+msgstr ""
+"Числа створюються за допомогою числових літералів або як результат "
+"вбудованих функцій і операторів. Неприкрашені цілі літерали (включаючи "
+"шістнадцяткові, вісімкові та двійкові числа) дають цілі числа. Числові "
+"літерали, що містять десяткову кому або знак експоненти, дають числа з "
+"плаваючою комою. Додавання ``j`` або ``J`` до числового літералу дає уявне "
+"число (комплексне число з нульовою дійсною частиною), яке ви можете додати "
+"до цілого числа або числа з плаваючою точкою, щоб отримати комплексне число "
+"з дійсною та уявною частинами."
+
+#: ../../src/basics/stdtypes.txt:36
+msgid "Supported operations"
+msgstr "Операції підтримки"
+
+#: ../../src/basics/stdtypes.txt:39 ../../src/basics/stdtypes.txt:159
+#: ../../src/basics/stdtypes.txt:209
+msgid "Operation"
+msgstr "Операції"
+
+#: ../../src/basics/stdtypes.txt:39 ../../src/basics/stdtypes.txt:159
+#: ../../src/basics/stdtypes.txt:209
+msgid "Result"
+msgstr "Результат"
+
+#: ../../src/basics/stdtypes.txt:41
+msgid "``x + y``"
+msgstr "``x + y``"
+
+#: ../../src/basics/stdtypes.txt:41
+msgid "sum of *x* and *y*"
+msgstr "сума *x* і *y*"
+
+#: ../../src/basics/stdtypes.txt:43
+msgid "``x - y``"
+msgstr "``x - y``"
+
+#: ../../src/basics/stdtypes.txt:43
+msgid "difference of *x* and *y*"
+msgstr "різниця між *x* і *y*"
+
+#: ../../src/basics/stdtypes.txt:45
+msgid "``x * y``"
+msgstr "``x * y``"
+
+#: ../../src/basics/stdtypes.txt:45
+msgid "product of *x* and *y*"
+msgstr "добуток *x* і *y*"
+
+#: ../../src/basics/stdtypes.txt:47
+msgid "``x / y``"
+msgstr "``x / y``"
+
+#: ../../src/basics/stdtypes.txt:47
+msgid "quotient of *x* and *y*"
+msgstr "частка *x* і *y*"
+
+#: ../../src/basics/stdtypes.txt:49
+msgid "``x // y``"
+msgstr "``x // y``"
+
+#: ../../src/basics/stdtypes.txt:49
+msgid "floored quotient of *x* and *y*"
+msgstr "цілочисельне ділення *x* і *y*"
+
+#: ../../src/basics/stdtypes.txt:51
+msgid "``x % y``"
+msgstr "``x % y``"
+
+#: ../../src/basics/stdtypes.txt:51
+msgid "remainder of ``x / y``"
+msgstr "залишок від ділення ``x / y``"
+
+#: ../../src/basics/stdtypes.txt:53
+msgid "``-x``"
+msgstr "``-x``"
+
+#: ../../src/basics/stdtypes.txt:53
+msgid "*x* negated"
+msgstr "*x* від'ємне"
+
+#: ../../src/basics/stdtypes.txt:55
+msgid "``+x``"
+msgstr "``+x``"
+
+#: ../../src/basics/stdtypes.txt:55
+#, fuzzy
+msgid "*x* unchanged"
+msgstr "*y* без змін"
+
+#: ../../src/basics/stdtypes.txt:57
+msgid "``abs(x)``"
+msgstr "``abs(x)``"
+
+#: ../../src/basics/stdtypes.txt:57
+msgid "absolute value or magnitude of *x*"
+msgstr "абсолютне значення або величина *x*"
+
+#: ../../src/basics/stdtypes.txt:59
+msgid "``int(x)``"
+msgstr "``int(x)``"
+
+#: ../../src/basics/stdtypes.txt:59
+msgid "*x* converted to integer"
+msgstr "*x* перетворено на ціле число"
+
+#: ../../src/basics/stdtypes.txt:61
+msgid "``float(x)``"
+msgstr "``float(x)``"
+
+#: ../../src/basics/stdtypes.txt:61
+msgid "*x* converted to floating point"
+msgstr "*x* перетворено на число з плаваючою комою"
+
+#: ../../src/basics/stdtypes.txt:63
+msgid "``complex(re, im)``"
+msgstr "``complex(re, im)``"
+
+#: ../../src/basics/stdtypes.txt:63
+msgid ""
+"a complex number with real part *re*, imaginary part *im*. *im* defaults to "
+"zero."
+msgstr ""
+"комплексне число з дійсною частиною *re*, уявною частиною *im*. *im* за "
+"замовчуванням на нуль."
+
+#: ../../src/basics/stdtypes.txt:66
+msgid "``divmod(x, y)``"
+msgstr "``divmod(x, y)``"
+
+#: ../../src/basics/stdtypes.txt:66
+msgid "the pair ``(x // y, x % y)``"
+msgstr "об'єднує ``(x // y, x % y)``"
+
+#: ../../src/basics/stdtypes.txt:68
+msgid "``pow(x, y)`` ``x ** y``"
+msgstr "``pow(x, y)`` ``x ** y``"
+
+#: ../../src/basics/stdtypes.txt:68
+msgid "*x* to the power *y*"
+msgstr "*x* у степені *y*"
+
+#: ../../src/basics/stdtypes.txt:72
+msgid ""
+"``x // y`` also referred to as integer division. The resultant value is a "
+"whole integer, through the result's type is not necessarily int. The result "
+"is always rounded towards minus infinity: ``1 // 2`` is ``0``"
+msgstr ""
+"``x // y`` також називають цілим діленням. Результуюче значення є цілим "
+"числом, через тип результату не обов'язково int. Результат завжди "
+"округлюється до мінус нескінченності: ``1 // 2`` дорівнює ``0``"
+
+#: ../../src/basics/stdtypes.txt:77
+msgid ""
+"``float(x)`` also accepts the strings ``\"nan\"`` and ``\"inf\"`` with an "
+"optional prefix \"+\" or \"-\" for :abbr:`NaN(Not a Number)` and positive "
+"and negative infinity."
+msgstr ""
+"``float(x)`` також приймає рядки ``\"nan\"`` та ``\"inf\"`` з необов'язковим "
+"префіксом \"+\" або \"-\" для: :abbr:`NaN(Not a Number, не число)` і "
+"позитивна та негативна нескінченність."
+
+#: ../../src/basics/stdtypes.txt:82
+msgid "Code examples"
+msgstr "Приклади коду"
+
+#: ../../src/basics/stdtypes.txt:84
+msgid "Integer numbers"
+msgstr "Цілі числа"
+
+#: ../../src/basics/stdtypes.txt:98
+msgid "Floating point numbers"
+msgstr "Числа з плаваючою комою"
+
+#: ../../src/basics/stdtypes.txt:114 ../../src/basics/stdtypes.txt:187
+#: ../../src/basics/stdtypes.txt:295 ../../src/basics/stdtypes.txt:304
+#: ../../src/basics/stdtypes.txt:333
+msgid "Value comparisons"
+msgstr "Порівняння цінностей"
+
+#: ../../src/basics/stdtypes.txt:116
+msgid ""
+"Numbers of built-in numeric types can be compared within and across their "
+"types (with the restriction that complex numbers do not support order "
+"comparison). Within the limits of the types involved, they compare "
+"mathematically correct without loss of precision."
+msgstr ""
+"Числа вбудованих числових типів можна порівнювати всередині та між типами (з "
+"обмеженням, що комплексні числа не підтримують порядок порівняння). У межах "
+"залучених типів вони порівняються математично правильно без втрати точності."
+
+#: ../../src/basics/stdtypes.txt:121
+msgid ""
+"The \"not-a-number\" values ``float(\"NaN\")`` and ``decimal."
+"Decimal('NaN')`` are special. Any ordered comparison of a number to a not-a-"
+"number value is false."
+msgstr ""
+"Значення \"not-a-number\" ``float(\"NaN\")`` і ``decimal.Decimal('NaN')`` є "
+"спеціальними. Будь-яке впорядковане порівняння числа з нечисловим значенням "
+"є хибним."
+
+#: ../../src/basics/stdtypes.txt:125
+msgid "Sequence types"
+msgstr "Типи послідовностей"
+
+#: ../../src/basics/stdtypes.txt:127
+msgid ""
+"There are 3 basic sequence types: *lists*, *tuples*, and *range objects*. "
+"Additional sequence types tailored for processing of binary data and text "
+"strings are described in dedicated sections."
+msgstr ""
+"Існує 3 основних типи послідовностей: списки, кортежі та об'єкти діапазону. "
+"Додаткові типи послідовностей, призначені для обробки двійкових даних і "
+"текстових рядків, описані у інших розділах."
+
+#: ../../src/basics/stdtypes.txt:132
+msgid "Lists"
+msgstr "Списки"
+
+#: ../../src/basics/stdtypes.txt:134
+msgid ""
+"Lists are mutable sequences, typically used to store collections of items. "
+"They may be constructed in several ways:"
+msgstr ""
+"Списки - це змінні послідовності, які зазвичай використовуються для "
+"зберігання колекцій елементів. Вони можуть бути побудовані кількома "
+"способами:"
+
+#: ../../src/basics/stdtypes.txt:137
+msgid "using a pair of square brackets to denote the empty list: ``[]``"
+msgstr ""
+"використовуючи пару квадратних дужок для cтворення порожнього списку: ``[]``"
+
+#: ../../src/basics/stdtypes.txt:138
+msgid ""
+"using square brackets, separating items with commas: ``[a]``, ``[a, b, c]``"
+msgstr ""
+"використовуючи квадратні дужки, розділяючи елементи комами: ``[a]``, ``[a, "
+"b, c]``"
+
+#: ../../src/basics/stdtypes.txt:139
+msgid "using a list comprehension: ``[x for x in iterable]``"
+msgstr "використовуючи генератори списків: ``[x for x in iterable]``"
+
+#: ../../src/basics/stdtypes.txt:140
+msgid "using the type constructor: ``list()`` or ``list(iterable)``"
+msgstr "використовуючи конструкції типу: ``list()`` або ``list(iterable)``"
+
+#: ../../src/basics/stdtypes.txt:143
+msgid "Tuples"
+msgstr "Кортежі"
+
+#: ../../src/basics/stdtypes.txt:145
+msgid ""
+"Tuples are immutable sequences, typically used to store collections of data "
+"or for cases where an immutable sequence of data is needed (such as allowing "
+"storage in a ``set`` or ``dict`` instances). They may be constructed in a "
+"number of ways:"
+msgstr ""
+"Кортежі - це незмінні послідовності, які зазвичай використовуються для "
+"зберігання колекцій даних або для випадків, коли потрібна незмінна "
+"послідовність даних (наприклад, дозволяє зберігати в екземплярах ``set`` або "
+"``dict``). Вони можуть бути конструйовані декількома способами:"
+
+#: ../../src/basics/stdtypes.txt:150
+msgid "using a pair of parentheses to denote the empty tuple: ``()``"
+msgstr ""
+"використовуючи пару круглих дужок для позначення порожнього кортежу: ``()``"
+
+#: ../../src/basics/stdtypes.txt:151
+msgid "using a trailing comma for a singleton tuple: ``a,`` or ``(a, b, c)``"
+msgstr ""
+"використовуючи кінцеву кому для одноэлементного кортежу: ``a,`` або ``(a, b, "
+"c)``"
+
+#: ../../src/basics/stdtypes.txt:152
+msgid "separating items with commas: ``a, b, c`` or ``(a, b, c)``"
+msgstr "відокремлюючи елементи комами: ``a, b, c`` або ``(a, b, c)``"
+
+#: ../../src/basics/stdtypes.txt:153
+msgid "using the type constructor: ``tuple()`` or ``tuple(iterable)``"
+msgstr "за допомогою конструктора типу: ``tuple()`` або ``tuple(iterable)``"
+
+#: ../../src/basics/stdtypes.txt:156
+msgid "Common operations"
+msgstr "Загальні операції"
+
+#: ../../src/basics/stdtypes.txt:161
+msgid "``x in s`` ``x not in s``"
+msgstr "``x in s`` ``x not in s``"
+
+#: ../../src/basics/stdtypes.txt:161
+msgid ""
+"``True`` if an item of *s* equal to *x* ``False`` if an item of *s* equal to "
+"*x*"
+msgstr ""
+"``True``, якщо елемент *s* дорівнює *x* ``False``, якщо елемент *s* дорівнює "
+"*x*"
+
+#: ../../src/basics/stdtypes.txt:164
+msgid "``s + t``"
+msgstr "``s + t``"
+
+#: ../../src/basics/stdtypes.txt:164
+msgid "the concatenation of *s* and *t*"
+msgstr "конкатенація s і t"
+
+#: ../../src/basics/stdtypes.txt:166
+msgid "``s * n``"
+msgstr "``s * n``"
+
+#: ../../src/basics/stdtypes.txt:166
+msgid "equivalent to adding *s* to itself *n* times"
+msgstr "еквівалентно додаванню *s* до себе *n* разів"
+
+#: ../../src/basics/stdtypes.txt:168
+msgid "``s[i]``"
+msgstr "``s[i]``"
+
+#: ../../src/basics/stdtypes.txt:168
+msgid "*i*-th item of *s*, origin 0"
+msgstr "*i*-й елемент *s*, джерело 0"
+
+#: ../../src/basics/stdtypes.txt:170
+msgid "``s[i:j]`` ``s[i:j:k]``"
+msgstr "``s[i:j]`` ``s[i:j:k]``"
+
+#: ../../src/basics/stdtypes.txt:170
+msgid ""
+"slice of *s* from *i* to *j* with step *k*. any of these (or even all 3) may "
+"be omitted."
+msgstr ""
+"фрагмент *s* від *i* до *j* з кроком *k*. будь-який із цих (або навіть усі "
+"3) можна опустити."
+
+#: ../../src/basics/stdtypes.txt:173
+msgid "``len(s)``"
+msgstr "``len(s)``"
+
+#: ../../src/basics/stdtypes.txt:173
+msgid "length of *s*"
+msgstr "довжина *s*"
+
+#: ../../src/basics/stdtypes.txt:175
+msgid "``min(s)``"
+msgstr "``min(s)``"
+
+#: ../../src/basics/stdtypes.txt:175
+msgid "smallest item of *s*"
+msgstr "найменший елемент *s*"
+
+#: ../../src/basics/stdtypes.txt:177
+msgid "``max(s)``"
+msgstr "``max(s)``"
+
+#: ../../src/basics/stdtypes.txt:177
+msgid "largest item of *s*"
+msgstr "найбільший елемент *s*"
+
+#: ../../src/basics/stdtypes.txt:179
+msgid "``s.count(x)``"
+msgstr "``s.count(x)``"
+
+#: ../../src/basics/stdtypes.txt:179
+msgid "total number of occurrences of *x* in *s*"
+msgstr "загальна кількість входжень *x* у *s*"
+
+#: ../../src/basics/stdtypes.txt:181
+msgid "``s.index(x)`` ``s.index(x, i)`` ``s.index(x, i, j)``"
+msgstr "``s.index(x)`` ``s.index(x, i)`` ``s.index(x, i, j)``"
+
+#: ../../src/basics/stdtypes.txt:181
+msgid ""
+"index of the first occurrence of *x* in *s* at or after index *i* and before "
+"index *j*"
+msgstr ""
+"індекс першого входження *x* у *s* на або після індексу *i* та перед "
+"індексом *j*"
+
+#: ../../src/basics/stdtypes.txt:189
+msgid ""
+"Sequences can be compared only within each of their types, with the "
+"restriction that ranges do not support order comparison. Equality comparison "
+"across these types results in inequality, and ordering comparison across "
+"these types raises ``TypeError``."
+msgstr ""
+"Послідовності можна порівнювати лише в межах кожного типу, з обмеженням, що "
+"діапазони не підтримують порівняння порядку. Порівняння рівності між цими "
+"типами призводить до нерівності, а впорядковане порівняння цих типів "
+"викликає ``TypeError``."
+
+#: ../../src/basics/stdtypes.txt:194
+msgid ""
+"Sequences compare lexicographically using comparison of corresponding "
+"elements. The built-in containers typically assume identical objects are "
+"equal to themselves. Lexicographical comparison between built-in collections "
+"works as follows:"
+msgstr ""
+"Послідовності порівнюють лексикографічно за допомогою порівняння відповідних "
+"елементів. Вбудовані контейнери зазвичай припускають, що ідентичні об'єкти "
+"рівні собі. Лексикографічне порівняння між вбудованими колекціями працює "
+"таким чином:"
+
+#: ../../src/basics/stdtypes.txt:199
+msgid ""
+"For two collections to compare equal, they must be of the same type, have "
+"the same length, and each pair of corresponding elements must compare equal."
+msgstr ""
+"Щоб дві колекції порівнювалися рівноправними, вони повинні бути одного типу, "
+"мати однакову довжину, і кожна пара відповідних елементів повинна "
+"порівнюватися."
+
+#: ../../src/basics/stdtypes.txt:201
+msgid ""
+"Collections that supports order comparison are ordered the same as their "
+"first unequal elements. If corresponding element does not exist, the shorter "
+"collection is ordered first."
+msgstr ""
+"Колекції, які підтримують порівняння порядку, упорядковуються так само, як і "
+"їхні перші нерівні елементи. Якщо відповідний елемент не існує, спочатку "
+"впорядковується коротша колекція."
+
+#: ../../src/basics/stdtypes.txt:206
+msgid "Mutable sequence types"
+msgstr "Змінні типи послідовностей"
+
+#: ../../src/basics/stdtypes.txt:211
+msgid "``s[i] = x``"
+msgstr "``s[i] = x``"
+
+#: ../../src/basics/stdtypes.txt:211
+msgid "item *i* of *s* is replaced by *x*"
+msgstr "елемент *i* з *s* замінюється на *x*"
+
+#: ../../src/basics/stdtypes.txt:213
+msgid "``s[i:j] = t``"
+msgstr "``s[i:j] = t``"
+
+#: ../../src/basics/stdtypes.txt:213
+msgid "slice of *s* from *i* to *j* replaced by the contents of *t*"
+msgstr "фрагмент *s* від *i* до *j*, замінений вмістом *t*"
+
+#: ../../src/basics/stdtypes.txt:216
+msgid "``del s[i:j]``"
+msgstr "``del s[i:j]``"
+
+#: ../../src/basics/stdtypes.txt:216
+msgid "same as ``s[i:j] = []``"
+msgstr "те саме, що ``s[i:j] = []``"
+
+#: ../../src/basics/stdtypes.txt:218
+msgid "``s[i:j:k] = t``"
+msgstr "``s[i:j:k] = t``"
+
+#: ../../src/basics/stdtypes.txt:218
+msgid "the elements of *s* are replaced by those of *t* [#]_"
+msgstr "елементи *s* замінюються елементами *t* [#]_"
+
+#: ../../src/basics/stdtypes.txt:220
+msgid "``del s[i:j:k]``"
+msgstr "``del s[i:j:k]``"
+
+#: ../../src/basics/stdtypes.txt:220
+msgid "removes the elements of ``s[i:j:k]`` from the list"
+msgstr "видаляє елементи ``s[i:j:k]`` зі списку"
+
+#: ../../src/basics/stdtypes.txt:222
+msgid "``s.append(x)``"
+msgstr "``s.append(x)``"
+
+#: ../../src/basics/stdtypes.txt:222
+msgid ""
+"appends *x* to the end of the sequence; the same as ``s[len(s):len(s)] = "
+"[x]``"
+msgstr ""
+"додає *x* до кінця послідовності; те саме, що ``s[len(s):len(s)] = [x]``"
+
+#: ../../src/basics/stdtypes.txt:225
+msgid "``s.clear()``"
+msgstr "``s.clear()``"
+
+#: ../../src/basics/stdtypes.txt:225
+msgid "removes all items from *s* (``del s[:]``) [#py33]_"
+msgstr "видаляє всі елементи з *s* (``del s[:]``) [#py33]_"
+
+#: ../../src/basics/stdtypes.txt:227
+msgid "``s.copy()``"
+msgstr "``s.copy()``"
+
+#: ../../src/basics/stdtypes.txt:227
+msgid "creates a shallow copy of *s* (``s[:]``) [#py33]_"
+msgstr "створює поверхневу копію *s* (``s[:]``) [#py33]_"
+
+#: ../../src/basics/stdtypes.txt:229
+msgid "``s.extend(t)`` ``s += t``"
+msgstr "``s.extend(t)`` ``s += t``"
+
+#: ../../src/basics/stdtypes.txt:229
+msgid "extends *s* with the contents of *t*"
+msgstr "розширює *s* вмістом *t*"
+
+#: ../../src/basics/stdtypes.txt:232
+msgid "``s.insert(i, x)``"
+msgstr "``s.insert(i, x)``"
+
+#: ../../src/basics/stdtypes.txt:232
+msgid "inserts *x* into *s* at the index *i*; same as ``s[i:i] = [x]``"
+msgstr "вставляє *x* у *s* за індексом *i*; те саме, що ``s[i:i] = [x]``"
+
+#: ../../src/basics/stdtypes.txt:235
+msgid "``s.pop()``, ``s.pop(i)``"
+msgstr "``s.pop()``, ``s.pop(i)``"
+
+#: ../../src/basics/stdtypes.txt:235
+msgid ""
+"retrieves the item at *i* and also removes it from *s* (if *i* is omitted - "
+"use the last one available index)"
+msgstr ""
+"отримує елемент за адресою *i*, а також видаляє його з *s* (якщо *i* "
+"пропущено - використовуйте останній доступний індекс)"
+
+#: ../../src/basics/stdtypes.txt:238
+msgid "``s.remove(x)``"
+msgstr "``s.remove(x)``"
+
+#: ../../src/basics/stdtypes.txt:238
+msgid "remove the first item that is equal to *x* from *s*"
+msgstr "видалити перший елемент, який дорівнює *x*, із *s*"
+
+#: ../../src/basics/stdtypes.txt:240
+msgid "``s.reverse()``"
+msgstr "``s.reverse()``"
+
+#: ../../src/basics/stdtypes.txt:240
+msgid "reverses the items of *s* in place"
+msgstr "перевертає елементи *s* на місце"
+
+#: ../../src/basics/stdtypes.txt:243
+msgid "*t* must have the same length as the slice it is replacing"
+msgstr "*t* повинен мати таку ж довжину, як і фрагмент, який він замінює"
+
+#: ../../src/basics/stdtypes.txt:244
+msgid "new in Python version 3.3"
+msgstr "нове у версії Python 3.3"
+
+#: ../../src/basics/stdtypes.txt:247
+msgid "Text sequence type"
+msgstr "Тип текстової послідовності"
+
+#: ../../src/basics/stdtypes.txt:250
+msgid "String methods"
+msgstr "Рядкові методи"
+
+#: ../../src/basics/stdtypes.txt:252
+msgid ""
+"Strings implement all of the common sequence operations, along with the "
+"additional methods."
+msgstr ""
+"Рядки реалізують усі звичайні операції з послідовністю разом із додатковими "
+"методами."
+
+#: ../../src/basics/stdtypes.txt:297
+msgid ""
+"Strings compare lexicographically using the numerical Unicode code points of "
+"their characters."
+msgstr ""
+"Рядки порівнюються лексикографічно з використанням числових кодових точок "
+"Unicode своїх символів."
+
+#: ../../src/basics/stdtypes.txt:301
+msgid "Set types"
+msgstr "Типи сетів"
+
+#: ../../src/basics/stdtypes.txt:306
+msgid ""
+"Sets (instances of ``set`` or ``frozenset``) can be compared within and "
+"across their types. They define order comparison operators to mean subset "
+"and superset tests. Those relations do not define total ordering (e.g. two "
+"sets ``{1, 2}`` and ``{2, 3}`` are not equal, nor subsets of one another, "
+"nor supersets of one another)."
+msgstr ""
+"Сети (екземпляри ``set`` або ``frozenset``) можна порівнювати всередині та "
+"між типами. Вони визначають оператори порівняння порядку, щоб проходити "
+"тести підмножини та надмножини. Ці відношення не визначають загального "
+"порядку (наприклад, два набори ``{1, 2}`` та ``{2, 3}`` не є рівними, ані "
+"підмножини одного іншого, ані надмножини один одного)."
+
+#: ../../src/basics/stdtypes.txt:313
+msgid "Mapping type"
+msgstr "Тип відображення"
+
+#: ../../src/basics/stdtypes.txt:315
+msgid ""
+"A mapping object maps hashable values to arbitrary objects. Mappings are "
+"mutable objects. There is currently ony one standard mapping type, the "
+"*dictionary*. In few words mappings are collections of keys and their values."
+msgstr ""
+"Об'єкт зіставлення зіставляє хешовані значення з довільними об'єктами. "
+"Відображення є змінними об'єктами. Наразі існує лише один стандартний тип "
+"відображення, *dictionary*. Якщо кількома словами, то відображення - це "
+"набори ключів та їхніх значень."
+
+#: ../../src/basics/stdtypes.txt:319
+msgid ""
+"A dictionary's keys are almost arbitrary values. Values that are not "
+"hashable may not be used as keys. Values that compare equal (such as ``1``, "
+"``1.0`` and ``True``) can be used interchangeably to index the same "
+"dictionary entry."
+msgstr ""
+"Ключі словника - це майже довільні значення. Значення, які не хешуються, не "
+"можуть бути використані як ключі. Значення, які порівнюються (такі як ``1``, "
+"``1.0`` і ``True``), можна використовувати як взаємозамінні для індексування "
+"тієї самої словникової статті."
+
+#: ../../src/basics/stdtypes.txt:323
+msgid "Dictionaries can be created by several means:"
+msgstr "Словники можна створювати кількома способами:"
+
+#: ../../src/basics/stdtypes.txt:325
+msgid "Use braces to denote the empty dictionary: ``{}``"
+msgstr "Використовуйте дужки для позначення порожнього словника: ``{}``"
+
+#: ../../src/basics/stdtypes.txt:326
+msgid ""
+"Use a comma-separated list of ``key: value`` pairs with braces: "
+"``{'first_name': 'Serhii', 'last_name': 'Horodilov', 'age': 34}``"
+msgstr ""
+"Використовуйте розділений комами список пар ``key: value`` з дужками: "
+"``{'first_name': 'Serhii', 'last_name': 'Horodilov', 'age': 34}``"
+
+#: ../../src/basics/stdtypes.txt:328
+msgid "Use a dict comprehension: ``{x: x ** 2 for x in range(10)}``"
+msgstr "Використовуючи генератори списків: ``{x: x 2 for x in range(10)}``"
+
+#: ../../src/basics/stdtypes.txt:329
+msgid ""
+"Use the type constructor: ``dict()``, ``dict([('key', 100)])``, "
+"``dict(key=100)``"
+msgstr ""
+"Використовуйте конструктор типу: ``dict()``, ``dict([('key', 100)])``, "
+"``dict(key=100)``"
+
+#: ../../src/basics/stdtypes.txt:335
+msgid ""
+"Instances of ``dict`` compare equal if and only if they have equal key-value "
+"pairs."
+msgstr ""
+"Екземпляри ``dict`` вважаються рівними тоді і тільки тоді, коли вони мають "
+"однакові пари ключ-значення."
+
+#: ../../src/basics/stdtypes.txt:338
+msgid "Order comparisons raise ``TypeError``."
+msgstr "Порівняння порядку викликає ``TypeError``."

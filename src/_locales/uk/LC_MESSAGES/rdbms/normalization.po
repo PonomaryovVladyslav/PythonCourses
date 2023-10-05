@@ -1,0 +1,295 @@
+# Copyright (C) 2023, Python training course authors and contributors
+# This file is distributed under the same license as the Python Training
+# Course package.
+# SERHII HORODILOV <sgorodil@gmail.com>
+msgid ""
+msgstr ""
+"Project-Id-Version: Python Training Course 2022.11.dev\n"
+"Report-Msgid-Bugs-To: https://github.com/edu-python-course/edu-python-course."
+"github.io/issues\n"
+"POT-Creation-Date: 2023-10-05 19:49+0300\n"
+"PO-Revision-Date: 2023-10-05 20:15+0300\n"
+"Last-Translator: Serhii Horodilov <sgorodil@gmail.com>\n"
+"Language-Team: ua <LL@li.org>\n"
+"Language: ua\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.13.0\n"
+"X-Generator: Poedit 3.4\n"
+
+#: ../../src/rdbms/normalization.txt:-1
+msgid "Database normalization"
+msgstr "Нормалізація баз даних"
+
+#: ../../src/rdbms/normalization.txt:-1
+msgid "Serhii Horodilov"
+msgstr "Serhii Horodilov"
+
+#: ../../src/rdbms/normalization.txt:-1
+msgid "sql, db, database, normalization"
+msgstr "sql, db, database, normalization"
+
+#: ../../src/rdbms/normalization.txt:8
+msgid "Database Normalization"
+msgstr "Нормалізація баз даних"
+
+#: ../../src/rdbms/normalization.txt:10
+msgid ""
+"Normalization is a process of organizing data in a database so that it is "
+"free from redundancy and dependency. It helps to eliminate data "
+"inconsistencies and anomalies, thereby improving data integrity. "
+"Normalization is a set of rules or guidelines to design a database schema in "
+"such a way that it avoids data duplication, data redundancy, and data "
+"inconsistency."
+msgstr ""
+"Нормалізація - це процес упорядкування даних у базі даних таким чином, щоб "
+"вона була вільна від надлишковості та залежності. Це допомагає усунути "
+"невідповідності та аномалії даних, тим самим покращуючи цілісність даних. "
+"Нормалізація - це набір правил або вказівки щодо розробки схеми бази даних "
+"таким чином, щоб уникнути дублювання даних, надмірності даних і "
+"неузгодженості даних."
+
+#: ../../src/rdbms/normalization.txt:16
+msgid ""
+"There are several normal forms, each building on the previous one, which "
+"guide us in the normalization process. The most commonly used normal forms "
+"are:"
+msgstr ""
+"Існує кілька нормальних форм, кожна з яких будується на попередній, які "
+"скеровують нас у процесі нормалізації. Найпоширенішими звичайними формами є:"
+
+#: ../../src/rdbms/normalization.txt:19
+msgid ""
+"**First Normal Form (1NF)**: Each column should hold atomic (indivisible) "
+"values. There should be no repeating groups or arrays of data in a table."
+msgstr ""
+"Перша нормальна форма (1NF): кожен стовпець має містити атомарні "
+"(неподільні) значення. У таблиці не повинно бути повторюваних груп або "
+"масивів даних."
+
+#: ../../src/rdbms/normalization.txt:22
+msgid ""
+"**Second Normal Form (2NF)**: Each non-key column should be functionally "
+"dependent on the entire primary key. In other words, every column in a table "
+"should be related to the primary key and not dependent on any other non-key "
+"columns."
+msgstr ""
+"Друга нормальна форма (2NF): кожен неключовий стовпець має функціонально "
+"залежати від усього первинного ключа. Іншими словами, кожен стовпець у "
+"таблиці має бути пов'язаний із первинним ключем, а не залежати від будь-яких "
+"інших неключових стовпців."
+
+#: ../../src/rdbms/normalization.txt:26
+msgid ""
+"**Third Normal Form (3NF)**: All non-key columns should be dependent only on "
+"the primary key and not on any other non-key columns. This eliminates "
+"transitive dependencies."
+msgstr ""
+"Третя нормальна форма (3NF): усі неключові стовпці мають залежати лише від "
+"первинного ключа, а не від будь-яких інших неключових стовпців. Це усуває "
+"транзитивні залежності."
+
+#: ../../src/rdbms/normalization.txt:30
+msgid ""
+"Normalization reduces data redundancy and dependency, making the database "
+"more efficient, flexible, and scalable. It also helps in maintaining data "
+"consistency and accuracy, and ensures that updates and deletions are "
+"properly handled."
+msgstr ""
+"Нормалізація зменшує надлишковість даних і залежність, роблячи базу даних "
+"більш ефективною, гнучкою та масштабованою. Це також допомагає підтримувати "
+"узгодженість і точність даних, а також гарантує належну обробку оновлень і "
+"видалень."
+
+#: ../../src/rdbms/normalization.txt:36
+msgid "First normal form (1NF)"
+msgstr "Перша нормальна форма (1NF)"
+
+#: ../../src/rdbms/normalization.txt:38
+msgid ""
+"It's easier to understand normalization via examples. Let's start with some "
+"dummy orders data."
+msgstr ""
+"Легше зрозуміти нормалізацію на прикладах. Почнемо з деяких фіктивних даних "
+"про замовлення."
+
+#: ../../src/rdbms/normalization.txt:41
+msgid "Initial data"
+msgstr "Початкові дані"
+
+#: ../../src/rdbms/normalization.txt:1
+msgid "order"
+msgstr "order"
+
+#: ../../src/rdbms/normalization.txt:1
+msgid "customer"
+msgstr "customer"
+
+#: ../../src/rdbms/normalization.txt:1
+msgid "product"
+msgstr "product"
+
+#: ../../src/rdbms/normalization.txt:1
+msgid "quantity"
+msgstr "quantity"
+
+#: ../../src/rdbms/normalization.txt:1
+msgid "price"
+msgstr "price"
+
+#: ../../src/rdbms/normalization.txt:1
+msgid "total"
+msgstr "total"
+
+#: ../../src/rdbms/normalization.txt:1
+msgid "1"
+msgstr "1"
+
+#: ../../src/rdbms/normalization.txt:1
+msgid "John Doe"
+msgstr "John Doe"
+
+#: ../../src/rdbms/normalization.txt:1
+msgid "(Apple, Orange)"
+msgstr "(Apple, Orange)"
+
+#: ../../src/rdbms/normalization.txt:1
+msgid "(2, 3)"
+msgstr "(2, 3)"
+
+#: ../../src/rdbms/normalization.txt:1
+msgid "(100, 50)"
+msgstr "(100, 50)"
+
+#: ../../src/rdbms/normalization.txt:1
+msgid "(200, 150)"
+msgstr "(200, 150)"
+
+#: ../../src/rdbms/normalization.txt:1
+msgid "2"
+msgstr "2"
+
+#: ../../src/rdbms/normalization.txt:1
+msgid "Jane Smith"
+msgstr "Jane Smith"
+
+#: ../../src/rdbms/normalization.txt:1
+msgid "Banana"
+msgstr "Banana"
+
+#: ../../src/rdbms/normalization.txt:1
+msgid "4"
+msgstr "4"
+
+#: ../../src/rdbms/normalization.txt:1
+msgid "25"
+msgstr "25"
+
+#: ../../src/rdbms/normalization.txt:1
+msgid "100"
+msgstr "100"
+
+#: ../../src/rdbms/normalization.txt:48
+msgid ""
+"This table violates 1NF, since its columns contain multiple values. To bring "
+"this to 1NF all data within the table are to be atomic."
+msgstr ""
+"Ця таблиця порушує 1NF, оскільки її стовпці містять кілька значень. Щоб "
+"привести це до 1NF, усі дані в таблиці мають бути атомарними."
+
+#: ../../src/rdbms/normalization.txt:51
+msgid "1NF applied"
+msgstr "Застосовано 1NF"
+
+#: ../../src/rdbms/normalization.txt:1
+msgid "Apple"
+msgstr "Apple"
+
+#: ../../src/rdbms/normalization.txt:1
+msgid "200"
+msgstr "200"
+
+#: ../../src/rdbms/normalization.txt:1
+msgid "Orange"
+msgstr "Orange"
+
+#: ../../src/rdbms/normalization.txt:1
+msgid "3"
+msgstr "3"
+
+#: ../../src/rdbms/normalization.txt:1
+msgid "50"
+msgstr "50"
+
+#: ../../src/rdbms/normalization.txt:1
+msgid "150"
+msgstr "150"
+
+#: ../../src/rdbms/normalization.txt:59
+msgid "From now each peace of data is represented as atomic value."
+msgstr "Відтепер кожна частина даних представлена як атомарне значення."
+
+#: ../../src/rdbms/normalization.txt:62
+msgid "Second normal form (2NF)"
+msgstr "Друга нормальна форма (2NF)"
+
+#: ../../src/rdbms/normalization.txt:64
+msgid ""
+"The table above is in 1NF, but ``item price`` is dependent on the *item* "
+"entity itself and have low cohesion to *orders*. To bring it into 2NF a "
+"dedicated table to store information about items themselves is to be "
+"created. After that ``order`` and ``product`` table are connected (related) "
+"to each other via a foreign key."
+msgstr ""
+"Таблиця вище міститься в 1NF, але ``item price`` залежить від самого "
+"*елемента* і має низьку зв'язність із замовленнями. Щоб перенести її в 2NF, "
+"потрібно створити окрему таблицю для зберігання інформації про самі товари. "
+"Після цього таблиці ``order`` і ``product`` з'єднуються (пов'язані) одна з "
+"одною за допомогою зовнішнього ключа."
+
+#: ../../src/rdbms/normalization.txt:70 ../../src/rdbms/normalization.txt:112
+msgid "``order`` table"
+msgstr "таблиця ``order``"
+
+#: ../../src/rdbms/normalization.txt:1
+msgid "id"
+msgstr "id"
+
+#: ../../src/rdbms/normalization.txt:1
+msgid "product_id"
+msgstr "product_id"
+
+#: ../../src/rdbms/normalization.txt:78
+msgid "``product`` table"
+msgstr "таблиця ``product``"
+
+#: ../../src/rdbms/normalization.txt:103
+msgid ""
+"``total`` field is also removed, since now it can be calculated as product "
+"of ``product.price`` and ``order.quantity``."
+msgstr ""
+"Поле ``total`` також видалено, оскільки тепер його можна обчислити як "
+"добуток ``product.price`` і ``order.quantity``."
+
+#: ../../src/rdbms/normalization.txt:107
+msgid "Third normal form (3NF)"
+msgstr "3-тя нормальна форма (3NF)"
+
+#: ../../src/rdbms/normalization.txt:109
+msgid ""
+"At last it's time to remove a transitive functional dependency. Customer's "
+"name is not actually dependent on a product, but on a person, who places an "
+"order."
+msgstr ""
+"Нарешті настав час видалити транзитивну функціональну залежність. Ім'я "
+"клієнта насправді залежить не від продукту, а від особи, яка робить "
+"замовлення."
+
+#: ../../src/rdbms/normalization.txt:1
+msgid "customer_id"
+msgstr "customer_id"
+
+#: ../../src/rdbms/normalization.txt:120
+msgid "``customer`` table"
+msgstr "таблиця ``customer``"

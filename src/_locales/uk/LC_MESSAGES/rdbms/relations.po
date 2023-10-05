@@ -1,0 +1,447 @@
+# Copyright (C) 2023, Python training course authors and contributors
+# This file is distributed under the same license as the Python Training
+# Course package.
+# SERHII HORODILOV <sgorodil@gmail.com>
+msgid ""
+msgstr ""
+"Project-Id-Version: Python Training Course 2022.11.dev\n"
+"Report-Msgid-Bugs-To: https://github.com/edu-python-course/edu-python-course."
+"github.io/issues\n"
+"POT-Creation-Date: 2023-10-05 19:49+0300\n"
+"PO-Revision-Date: 2023-10-05 20:15+0300\n"
+"Last-Translator: Serhii Horodilov <sgorodil@gmail.com>\n"
+"Language-Team: ua <LL@li.org>\n"
+"Language: ua\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.13.0\n"
+"X-Generator: Poedit 3.4\n"
+
+#: ../../src/rdbms/relations.txt:-1
+msgid "This document describes the database relationships"
+msgstr "Цей документ описує відносини в базах даних"
+
+#: ../../src/rdbms/relations.txt:-1
+msgid "Serhii Horodilov"
+msgstr "Serhii Horodilov"
+
+#: ../../src/rdbms/relations.txt:-1
+msgid "sql, db, database, relationship"
+msgstr "sql, db, database, relationship"
+
+#: ../../src/rdbms/relations.txt:8
+msgid "Data Relationships"
+msgstr "Зв'язки даних"
+
+#: ../../src/rdbms/relations.txt:10
+msgid "It's time to talk about **data relations**."
+msgstr "Настав час поговорити про **відносини даних**."
+
+#: ../../src/rdbms/relations.txt:12
+msgid ""
+"For example your database contains two tables: ``weather`` and ``city``. The "
+"diagram below demonstrates the overall data structure:"
+msgstr ""
+"Наприклад, ваша база даних містить дві таблиці: ``weather`` і ``city``. "
+"Діаграма нижче демонструє загальну структуру даних:"
+
+#: ../../src/rdbms/relations.txt:30
+msgid ""
+"Consider the following problem: you want to make sure no one can insert a "
+"record into ``weather`` without a matching entry in ``city`` table. This is "
+"called maintaining the *referential integrity* of your data. In simplistic "
+"database systems this would be implemented (if at all) by first looking at "
+"the cities table to check if a matching record exists, and then inserting or "
+"rejecting the new weather records. This approach has a number of problems "
+"and is very inconvenient."
+msgstr ""
+"Розглянемо таку проблему: ви хочете переконатися, що ніхто не може вставити "
+"запис до ``weather`` без відповідного запису в ``city`` таблиці. "
+"Ценазивається підтримкою посилальної цілісності ваші дані. У спрощених "
+"системах баз даних це було б реалізовано (якщо взагалі) спочатку "
+"переглядаючи таблицю міст, щоб перевірити, чи існує відповідний запис, а "
+"потім вставляв або відхиляв нові записи погоди. Цей підхід має низку проблем "
+"і дуже незручно."
+
+#: ../../src/rdbms/relations.txt:52
+msgid ""
+"This declaration creates a relationship between two (or even more) tables."
+msgstr "Це оголошення створює зв'язок між двома (або навіть більше) таблицями."
+
+#: ../../src/rdbms/relations.txt:55
+msgid "Foreign key (FK)"
+msgstr "Зовнішній ключ (FK)"
+
+#: ../../src/rdbms/relations.txt:57
+msgid ""
+"So far, you have knowledge about **primary** keys. The **foreign** key is a "
+"column, that *references* some another table. In common, it's a reference to "
+"another table's PK; but there is no limitation of this kind, any column can "
+"be referenced by another one. FKs handle data integrity only, it's not "
+"required for FK to be non-NULL value."
+msgstr ""
+"Поки що ви знаєте про первинні ключі. Зовнішній ключ - це стовпець, який "
+"посилається на іншу таблицю. Загалом, це посилання на PK іншої таблиці; але "
+"такого роду обмежень немає , на будь-який стовпець може посилатися інший. FK "
+"обробляє лише цілісність даних, не обов'язково, щоб значення FK було "
+"відмінним від NULL."
+
+#: ../../src/rdbms/relations.txt:63
+msgid ""
+"The relation's properties are described by CONSTRAINTS and the database's "
+"structure."
+msgstr ""
+"Властивості відношення описуються ОБМЕЖЕННЯМИ та структурою бази даних."
+
+#: ../../src/rdbms/relations.txt:66
+msgid ""
+"For example, modifying declaration with ``NOT NULL`` constraint grants that "
+"each record within a table has a matching one entity in another table."
+msgstr ""
+"Наприклад, зміна декларації з обмеженням ``NOT NULL`` гарантує, що кожний "
+"запис у таблиці має відповідну сутність в іншій таблиці."
+
+#: ../../src/rdbms/relations.txt:76
+msgid "This brings us to various relationship models."
+msgstr "Це підводить нас до різних моделей відносин."
+
+#: ../../src/rdbms/relations.txt:79
+msgid "One-to-many relationship (1-to-N)"
+msgstr "Зв'язок один-до-багатьох (1-до-N)"
+
+#: ../../src/rdbms/relations.txt:81
+msgid "This is the most common relationship."
+msgstr "Це найпоширеніший зв'язок."
+
+#: ../../src/rdbms/relations.txt:83
+msgid ""
+"For the example above there are no limitations on temperature measurements "
+"in a specified city. So, a single city may has 0 or N related records in "
+"``weather`` table. But each weather record is related to the only one city."
+msgstr ""
+"Для наведеного вище прикладу немає обмежень на вимірювання температури у "
+"визначеному місті. Отже, окреме місто може мати 0 або N пов'язаних записів у "
+"таблиці ``погода``. Але кожен запис погоди пов'язаний до єдиного міста."
+
+#: ../../src/rdbms/relations.txt:87
+msgid ""
+"Another example is employees and office buildings they work in. Some big "
+"company may have multiple offices and employee across the globe. Multiple "
+"employees can be present in a single office building at a time. But each "
+"employee can be physically located only in a single office at a time."
+msgstr ""
+"Іншим прикладом є співробітники та офісні будівлі, в яких вони працюють. "
+"Деякі великі компанії можуть мати кілька офісів і співробітників по всьому "
+"світу. Декілька працівників можуть бути присутні в одній офісній будівлі "
+"одночасно. Але кожен працівник може фізично перебувати лише в одному офісі "
+"одночасно."
+
+#: ../../src/rdbms/relations.txt:110
+msgid "One-to-one relationship (1-to-1)"
+msgstr "One-to-one relationship (1-to-1)"
+
+#: ../../src/rdbms/relations.txt:112
+msgid ""
+"``UNIQUE`` and ``NOT NULL`` constraints are used together to ensure there is "
+"and only one matching record. Back to the example with employees. Multiple "
+"workstations (personal computers) are located in each office building. The "
+"only one person can occupy the only one work station at a time."
+msgstr ""
+"Обмеження ``UNIQUE`` і ``NOT NULL`` використовуються разом, щоб забезпечити "
+"наявність лише одного відповідного запису. Повернемося до прикладу зі "
+"співробітниками. Кілька робочих станцій (персональних комп'ютерів) "
+"розташовані в у кожній офісній будівлі. Лише одна особа може займати лише "
+"одну робочу станцію одночасно."
+
+#: ../../src/rdbms/relations.txt:123
+msgid "Many-to-many relationship (N-to-N)"
+msgstr "Зв'язок багато-до-багатьох (N-до-N)"
+
+#: ../../src/rdbms/relations.txt:125
+msgid ""
+"These relationships require additional table. A good example may be a "
+"*project role*. There are many of them in a production team. And some "
+"employees may be assigned to the same role (e.g. developers, testers etc.). "
+"But also a single person can be a developer and tester at a time."
+msgstr ""
+"Ці зв'язки потребують додаткової таблиці. Хорошим прикладом може бути роль у "
+"проекті. Їх багато у виробничій команді. І деяким працівникам може бути "
+"призначено ту саму роль (наприклад, розробники, тестувальники і т. д.). Але "
+"також одна людина може бути розробником і тестувальником одночасно."
+
+#: ../../src/rdbms/relations.txt:138
+msgid "Joining data"
+msgstr "Об'єднання даних"
+
+#: ../../src/rdbms/relations.txt:140
+msgid ""
+"``JOIN`` is used to *join* data fetched from multiple related tables. To "
+"build a valid query you are to set the tables to join and parameter to use "
+"for this operation."
+msgstr ""
+"``JOIN`` використовується для об'єднання даних, отриманих з кількох "
+"пов'язаних таблиць. Щоб побудувати дійсний запит, вам потрібно встановити "
+"таблиці для об'єднання та параметр, який використовується для цієї операції."
+
+#: ../../src/rdbms/relations.txt:144
+msgid "Common syntax is:"
+msgstr "Загальний синтаксис:"
+
+#: ../../src/rdbms/relations.txt:150
+msgid ""
+"There are various join types available. Here are is some dummy data to "
+"demonstrate their purpose."
+msgstr ""
+"Існують різні типи об'єднань. Ось деякі фіктивні дані, щоб продемонструвати "
+"їх призначення."
+
+#: ../../src/rdbms/relations.txt:153
+msgid "poem"
+msgstr "poem"
+
+#: ../../src/rdbms/relations.txt:156 ../../src/rdbms/relations.txt:179
+msgid "id"
+msgstr "id"
+
+#: ../../src/rdbms/relations.txt:156 ../../src/rdbms/relations.txt:254
+#: ../../src/rdbms/relations.txt:283 ../../src/rdbms/relations.txt:318
+#: ../../src/rdbms/relations.txt:350
+msgid "title"
+msgstr "title"
+
+#: ../../src/rdbms/relations.txt:156
+msgid "author_id"
+msgstr "author_id"
+
+#: ../../src/rdbms/relations.txt:158 ../../src/rdbms/relations.txt:162
+#: ../../src/rdbms/relations.txt:166 ../../src/rdbms/relations.txt:181
+msgid "1"
+msgstr "1"
+
+#: ../../src/rdbms/relations.txt:158 ../../src/rdbms/relations.txt:256
+#: ../../src/rdbms/relations.txt:285 ../../src/rdbms/relations.txt:320
+#: ../../src/rdbms/relations.txt:352
+msgid "On the Field of Battle"
+msgstr "On the Field of Battle"
+
+#: ../../src/rdbms/relations.txt:160 ../../src/rdbms/relations.txt:170
+#: ../../src/rdbms/relations.txt:183
+msgid "2"
+msgstr "2"
+
+#: ../../src/rdbms/relations.txt:160 ../../src/rdbms/relations.txt:258
+#: ../../src/rdbms/relations.txt:287 ../../src/rdbms/relations.txt:322
+#: ../../src/rdbms/relations.txt:354
+msgid "Moses"
+msgstr "Moses"
+
+#: ../../src/rdbms/relations.txt:162 ../../src/rdbms/relations.txt:185
+msgid "3"
+msgstr "3"
+
+#: ../../src/rdbms/relations.txt:162 ../../src/rdbms/relations.txt:260
+#: ../../src/rdbms/relations.txt:289 ../../src/rdbms/relations.txt:324
+#: ../../src/rdbms/relations.txt:356
+msgid "The Forest Song"
+msgstr "The Forest Song"
+
+#: ../../src/rdbms/relations.txt:164
+msgid "4"
+msgstr "4"
+
+#: ../../src/rdbms/relations.txt:164 ../../src/rdbms/relations.txt:291
+#: ../../src/rdbms/relations.txt:358
+msgid "In the Catacombs"
+msgstr "In the Catacombs"
+
+#: ../../src/rdbms/relations.txt:164 ../../src/rdbms/relations.txt:168
+#: ../../src/rdbms/relations.txt:172 ../../src/rdbms/relations.txt:291
+#: ../../src/rdbms/relations.txt:295 ../../src/rdbms/relations.txt:299
+#: ../../src/rdbms/relations.txt:330 ../../src/rdbms/relations.txt:358
+#: ../../src/rdbms/relations.txt:362 ../../src/rdbms/relations.txt:366
+#: ../../src/rdbms/relations.txt:368
+msgid "null"
+msgstr "null"
+
+#: ../../src/rdbms/relations.txt:166
+msgid "5"
+msgstr "5"
+
+#: ../../src/rdbms/relations.txt:166 ../../src/rdbms/relations.txt:262
+#: ../../src/rdbms/relations.txt:293 ../../src/rdbms/relations.txt:326
+#: ../../src/rdbms/relations.txt:360
+msgid "The Singing Stones"
+msgstr "The Singing Stones"
+
+#: ../../src/rdbms/relations.txt:168
+msgid "6"
+msgstr "6"
+
+#: ../../src/rdbms/relations.txt:168 ../../src/rdbms/relations.txt:295
+#: ../../src/rdbms/relations.txt:362
+msgid "Ancient Fairy Tales"
+msgstr "Ancient Fairy Tales"
+
+#: ../../src/rdbms/relations.txt:170
+msgid "7"
+msgstr "7"
+
+#: ../../src/rdbms/relations.txt:170 ../../src/rdbms/relations.txt:264
+#: ../../src/rdbms/relations.txt:297 ../../src/rdbms/relations.txt:328
+#: ../../src/rdbms/relations.txt:364
+msgid "My Thoughts"
+msgstr "My Thoughts"
+
+#: ../../src/rdbms/relations.txt:172
+msgid "8"
+msgstr "8"
+
+#: ../../src/rdbms/relations.txt:172 ../../src/rdbms/relations.txt:299
+#: ../../src/rdbms/relations.txt:366
+msgid "To Shevchenko"
+msgstr "To Shevchenko"
+
+#: ../../src/rdbms/relations.txt:176
+msgid "author"
+msgstr "author"
+
+#: ../../src/rdbms/relations.txt:179 ../../src/rdbms/relations.txt:254
+#: ../../src/rdbms/relations.txt:283 ../../src/rdbms/relations.txt:318
+#: ../../src/rdbms/relations.txt:350
+msgid "name"
+msgstr "name"
+
+#: ../../src/rdbms/relations.txt:181 ../../src/rdbms/relations.txt:256
+#: ../../src/rdbms/relations.txt:260 ../../src/rdbms/relations.txt:262
+#: ../../src/rdbms/relations.txt:285 ../../src/rdbms/relations.txt:289
+#: ../../src/rdbms/relations.txt:293 ../../src/rdbms/relations.txt:320
+#: ../../src/rdbms/relations.txt:324 ../../src/rdbms/relations.txt:326
+#: ../../src/rdbms/relations.txt:352 ../../src/rdbms/relations.txt:356
+#: ../../src/rdbms/relations.txt:360
+msgid "Larysa Kosach"
+msgstr "Larysa Kosach"
+
+#: ../../src/rdbms/relations.txt:183 ../../src/rdbms/relations.txt:258
+#: ../../src/rdbms/relations.txt:264 ../../src/rdbms/relations.txt:287
+#: ../../src/rdbms/relations.txt:297 ../../src/rdbms/relations.txt:322
+#: ../../src/rdbms/relations.txt:328 ../../src/rdbms/relations.txt:354
+#: ../../src/rdbms/relations.txt:364
+msgid "Ivan Franko"
+msgstr "Ivan Franko"
+
+#: ../../src/rdbms/relations.txt:185 ../../src/rdbms/relations.txt:330
+#: ../../src/rdbms/relations.txt:368
+msgid "John Doe"
+msgstr "John Doe"
+
+#: ../../src/rdbms/relations.txt:217
+msgid "Join types"
+msgstr "Join types"
+
+#: ../../src/rdbms/relations.txt
+msgid "Cross join"
+msgstr "Cross join"
+
+#: ../../src/rdbms/relations.txt:225
+msgid ""
+"For every possible combination of rows from T1 and T2 (i.e., a Cartesian "
+"product), the joined table will contain a row consisting of all columns in "
+"T1 followed by all columns in T2. If the tables have N and M rows "
+"respectively, the joined table will have N * M rows."
+msgstr ""
+"Для будь-якої можливої комбінації рядків з T1 і T2 (тобто декартового "
+"добутку) об’єднана таблиця міститиме рядок, що складається з усіх стовпців у "
+"T1, за якими йдуть усі стовпці в T2. Якщо таблиці мають N і M рядків "
+"відповідно, об’єднана таблиця матиме N * M рядків."
+
+#: ../../src/rdbms/relations.txt
+msgid "Qualified joins"
+msgstr "Qualified joins"
+
+#: ../../src/rdbms/relations.txt:236
+msgid ""
+"The words ``INNER`` and ``OUTER`` are optional for all forms. ``INNER`` is "
+"the default; ``LEFT``, ``RIGHT`` and ``FULL`` imply ``OUTER`` join."
+msgstr ""
+"Слова ``INNER`` і ``OUTER`` є необов'язковими для всіх форм. ``INNER`` є "
+"типовим; ``LEFT``, ``RIGHT`` і ``FULL` ` означає ``OUTER`` приєднання."
+
+#: ../../src/rdbms/relations.txt:241
+msgid "INNER JOIN"
+msgstr "INNER JOIN"
+
+#: ../../src/rdbms/relations.txt:243
+msgid ""
+"For each row R1 of T1, the joined table has a row for each row in T2 that "
+"satisfies the join condition with R1."
+msgstr ""
+"Для кожного рядка R1 T1 об'єднана таблиця має рядок для кожного рядка T2, "
+"який задовольняє умову об'єднання з R1."
+
+#: ../../src/rdbms/relations.txt:246
+msgid "Inner join"
+msgstr "Inner join"
+
+#: ../../src/rdbms/relations.txt:268
+msgid "LEFT OUTER JOIN"
+msgstr "LEFT OUTER JOIN"
+
+#: ../../src/rdbms/relations.txt:270
+msgid ""
+"First, an inner join is performed. Then, for each row in T1 that does not "
+"satisfy the join condition with any row in T2, a joined row is added with "
+"null values in columns of T2. Thus, the joined table always has at least one "
+"row for each row in T1."
+msgstr ""
+"Спочатку виконується внутрішнє об'єднання. Потім для кожного рядка в T1, "
+"який не задовольняє умови з'єднання з будь-яким рядком у T2, додається "
+"об'єднаний рядок із нульовими значеннями в стовпцях T2. Таким чином, "
+"об'єднана таблиця завжди має щонайменше один рядок для кожного рядка в T1."
+
+#: ../../src/rdbms/relations.txt:275
+msgid "Left join"
+msgstr "Left join"
+
+#: ../../src/rdbms/relations.txt:303
+msgid "RIGHT OUTER JOIN"
+msgstr "RIGHT OUTER JOIN"
+
+#: ../../src/rdbms/relations.txt:305
+msgid ""
+"First, an inner join is performed. Then, for each row in T2 that does not "
+"satisfy the join condition with any row in T1, a joined row is added with "
+"null values in columns of T1. This is the converse of a left join: the "
+"result table will always have a row for each row in T2."
+msgstr ""
+"Спочатку виконується внутрішнє об'єднання. Потім для кожного рядка в T2, "
+"який не задовольняє умови об'єднання з будь-яким рядком у T1, об'єднаний "
+"рядок додається з нульовими значеннями в стовпцях T1. Це є протилежністю "
+"лівого об'єднання: таблиця результатів завжди матиме рядок для кожного рядка "
+"в T2."
+
+#: ../../src/rdbms/relations.txt:310
+msgid "Right join"
+msgstr "Right join"
+
+#: ../../src/rdbms/relations.txt:334
+msgid "FULL OUTER JOIN"
+msgstr "FULL OUTER JOIN"
+
+#: ../../src/rdbms/relations.txt:336
+msgid ""
+"First, an inner join is performed. Then, for each row in T1 that does not "
+"satisfy the join condition with any row in T2, a joined row is added with "
+"null values in columns of T2. Also, for each row of T2 that does not satisfy "
+"the join condition with any row in T1, a joined row with null values in the "
+"columns of T1 is added."
+msgstr ""
+"Спочатку виконується внутрішнє об'єднання. Потім для кожного рядка в T1, "
+"який не задовольняє умови об'єднання з будь-яким рядком у T2, додається "
+"об'єднаний рядок із нульовими значеннями в стовпцях T2. Також , для кожного "
+"рядка T2, який не задовольняє умову з'єднання з будь-яким рядком T1, "
+"додається об'єднаний рядок із нульовими значеннями в стовпцях T1."
+
+#: ../../src/rdbms/relations.txt:342
+msgid "Full join"
+msgstr "Full join"

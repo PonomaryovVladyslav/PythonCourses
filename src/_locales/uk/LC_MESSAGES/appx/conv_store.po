@@ -1,0 +1,558 @@
+# Copyright (C) 2023, Python training course authors and contributors
+# This file is distributed under the same license as the Python Training
+# Course package.
+# SERHII HORODILOV <sgorodil@gmail.com>
+msgid ""
+msgstr ""
+"Project-Id-Version: Python Training Course 2022.11.dev\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-10-05 19:49+0300\n"
+"PO-Revision-Date: 2023-10-05 20:02+0300\n"
+"Last-Translator: Serhii Horodilov <sgorodil@gmail.com>\n"
+"Language-Team: ua <LL@li.org>\n"
+"Language: uk\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<12 || n%100>14) ? 1 : 2);\n"
+"Generated-By: Babel 2.13.0\n"
+"X-Generator: Poedit 3.4\n"
+
+#: ../../src/appx/conv_store.txt:-1
+msgid "Convenience store challenge"
+msgstr "Завдання: продуктовий магазин"
+
+#: ../../src/appx/conv_store.txt:-1
+msgid "Serhii Horodilov sgorodil@gmail.com"
+msgstr "Serhii Horodilov sgorodil@gmail.com"
+
+#: ../../src/appx/conv_store.txt:-1
+msgid "python, basics, oop, object-oriented programming"
+msgstr "python, basics, oop, object-oriented programming"
+
+#: ../../problem-sets/src/conv_store/challenge.rst:3
+msgid "Convenience Store Challenge"
+msgstr "Convenience Store Challenge"
+
+#: ../../problem-sets/src/conv_store/challenge.rst:5
+msgid ""
+"The local store is struggling with their payment registry system. The owner "
+"asked you to take a look at it and to propose some ideas about the upgrade. "
+"While looking on a wooden frames with rows of beads you think that this will "
+"be a challenging task to bring a modern approach into this place and "
+"reorganize the processes. Fortunately, you are a Python developer who knows "
+"how to work with various data incomes and outcomes. After some time the "
+"scope of works and timelines were discussed and wrote some notes to split "
+"the entire project into individual pieces to implement step-by-step."
+msgstr ""
+"Місцевий магазин має проблеми з системою реєстрації платежів. Власник "
+"попросив вас поглянути на нього та запропонувати деякі ідеї щодо оновлення. "
+"Дивлячись на дерев'яні рами з рядами намистин, ви думаєте, це буде складним "
+"завданням застосувати сучасний підхід до цього місця та реорганізувати "
+"процеси. На щастя, ви розробник Python, який знає, як працювати з різними "
+"доходами та результатами даних. Через деякий час обговорювалися обсяги робіт "
+"і часові рамки та були написані деякі примітки, щоб розділити весь проект на "
+"окремі частини для поетапної реалізації."
+
+#: ../../problem-sets/src/conv_store/challenge.rst:14
+msgid "Your notes are here,"
+msgstr "Ваші нотатки ось,"
+
+#: ../../problem-sets/src/conv_store/challenge.rst:18
+msgid "Products and Carts"
+msgstr "Товари та кошик"
+
+#: ../../problem-sets/src/conv_store/challenge.rst:20
+msgid ""
+"It's a good idea to start with basics - the objects you're going to work "
+"with. At stage one the main goal is to implement data models - classes to "
+"work around data in the future."
+msgstr ""
+"Бажано почати з основ - об'єктів, з якими ви збираєтеся працювати. На "
+"першому етапі головною метою є впровадження моделей даних - класів для "
+"роботи з даними в майбутньому."
+
+#: ../../problem-sets/src/conv_store/challenge.rst:25
+msgid "Product"
+msgstr "Товар"
+
+#: ../../problem-sets/src/conv_store/challenge.rst:27
+msgid "This class represents goods available to purchase in the store."
+msgstr "Цей клас представляє товари, які можна придбати в магазині."
+
+#: ../../problem-sets/src/conv_store/challenge.rst:29
+msgid "Each product instance should have next attributes:"
+msgstr "Кожен екземпляр продукту повинен мати такі атрибути:"
+
+#: ../../problem-sets/src/conv_store/challenge.rst:31
+msgid "``name`` - a product title (e.g. \"apple\", \"juice\")"
+msgstr "``name`` - назва товару (прик. \"apple\", \"juice\")"
+
+#: ../../problem-sets/src/conv_store/challenge.rst:32
+msgid "``price`` - a price for a single product unit (e.g. 3655, 500, 12999)"
+msgstr "``price`` - ціна за одну одиницю товару (прик. 3655, 500, 12999)"
+
+#: ../../problem-sets/src/conv_store/challenge.rst:33
+msgid "``unit`` - a size of a single product's unit (e.g. 1, 0.500, 12)"
+msgstr "``unit`` - розмір одиниці окремого товару (прик. 1, 0.500, 12)"
+
+#: ../../problem-sets/src/conv_store/challenge.rst:35
+msgid ""
+"For example: **apple** costs 1059 for each 0.1 kg. This means ``name`` will "
+"store ``\"apple\"``, ``price`` is ``1059`` and ``unit`` is equal to ``0.1``."
+msgstr ""
+"Наприклад: **яблуко** коштує 1059 за кожні 0,1 кг. Це означає, що ``name`` "
+"зберігає ``\"apple\"``, ``price`` є ``1059`` і `` unit`` дорівнює ``0,1``."
+
+#: ../../problem-sets/src/conv_store/challenge.rst:39
+msgid ""
+"``Product`` class should implement ``get_total`` method to calculate a total "
+"price for a specified quantity of a product to purchase. Desired quantity "
+"will be passed as an optional argument of a numeric type (``int`` or "
+"``float``). In case quantity argument is omitted - just use ``unit`` "
+"attribute value instead."
+msgstr ""
+"Клас ``Product`` повинен реалізовувати метод ``get_total`` для обчислення "
+"загальної ціни на вказану кількість товару для покупки. Бажану кількість "
+"буде передано як необов'язковий аргумент числового типу (``int`` або "
+"``float``). Якщо аргумент кількості пропущено, просто використовуйте "
+"значення атрибута ``unit``."
+
+#: ../../problem-sets/src/conv_store/challenge.rst:46
+#: ../../problem-sets/src/conv_store/challenge.rst:77
+msgid "Code explanation"
+msgstr "Пояснення коду"
+
+#: conv_store.models.Product:1 of
+msgid "Product model implementation"
+msgstr "Реалізація моделі товару"
+
+#: conv_store.models.Product conv_store.models.ShoppingCart of
+msgid "Variables"
+msgstr "Змінні"
+
+#: conv_store.models.Product:3 of
+msgid "the name of a product"
+msgstr "назва товару"
+
+#: conv_store.models.Product:5 of
+msgid "the price for a single product unit"
+msgstr "вартість однієї одиниці товару (прик. 3655, 500, 12999)"
+
+#: conv_store.models.Product:7 of
+msgid "the size of a single product unit"
+msgstr "розмір одиниці окремого товару (прик. 1, 0.500, 12)"
+
+#: conv_store.models.Product:10 of
+msgid "Instances of this class represent a product available for purchase."
+msgstr "Цей клас представляє товари, які можна придбати в магазині."
+
+#: conv_store.models.Product.get_total:1 of
+msgid "Return the total price for a specified amount of a product"
+msgstr "Повертає загальну ціну за вказану кількість товару"
+
+#: conv_store.models.Product.get_total
+#: conv_store.models.ShoppingCart.add_product of
+msgid "Parameters"
+msgstr "Параметри"
+
+#: conv_store.models.Product.get_total:3 of
+msgid "a quantity to purchase, defaults to None"
+msgstr "кількість для покупки, за замовчуванням None"
+
+#: conv_store.models.Product.get_total conv_store.models.ShoppingCart.get_total
+#: of
+msgid "Returns"
+msgstr "Повертає"
+
+#: conv_store.models.Product.get_total:6 of
+msgid "total price for a specified amount of a product"
+msgstr "вартість вказаної кількості товару"
+
+#: conv_store.models.Product.get_total conv_store.models.ShoppingCart.get_total
+#: of
+msgid "Return type"
+msgstr "Тип повернення"
+
+#: conv_store.models.Product.get_total:9 of
+msgid ""
+"If the quantity argument is omitted, unit attribute value should be used "
+"instead."
+msgstr ""
+"Якщо аргумент кількості пропущено, замість нього слід використовувати "
+"значення атрибута одиниці."
+
+#: ../../problem-sets/src/conv_store/challenge.rst:51
+#: ../../problem-sets/src/conv_store/challenge.rst:82
+#: ../../problem-sets/src/conv_store/challenge.rst:126
+#: ../../problem-sets/src/conv_store/challenge.rst:189
+#: ../../problem-sets/src/conv_store/challenge.rst:224
+msgid "Test cases"
+msgstr "Тестові приклади"
+
+#: ../../problem-sets/src/conv_store/challenge.rst:63
+msgid "Shopping Cart"
+msgstr "Кошик для покупок"
+
+#: ../../problem-sets/src/conv_store/challenge.rst:65
+msgid ""
+"This class represents the container for the products. It's main "
+"responsibility is to store information about the purchases and their amount "
+"(quantities)."
+msgstr ""
+"Цей клас представляє контейнер для продуктів. Його основна відповідальність "
+"- зберігати інформацію про покупки та їх кількість."
+
+#: ../../problem-sets/src/conv_store/challenge.rst:68
+msgid ""
+"Each cart instance should store data about ``Product`` objects in it and "
+"corresponding quantity value for each individual product."
+msgstr ""
+"Кожен екземпляр кошика повинен зберігати дані про об'єкти ``Продукт`` у "
+"ньому та відповідне значення кількості для кожного окремого продукту."
+
+#: ../../problem-sets/src/conv_store/challenge.rst:70
+msgid ""
+"``ShoppingCart`` should implement ``add_product`` method to put a specified "
+"quantity into a cart. ``quantity`` argument is optional, if omitted just "
+"uses ``Product.unit`` value instead."
+msgstr ""
+"``ShoppingCart`` має реалізувати метод ``add_product``, щоб помістити "
+"вказану кількість у кошик. Аргумент ``quantity`` є необов'язковим, якщо "
+"пропущено, просто використовує натомість значення ``Product.unit``."
+
+#: ../../problem-sets/src/conv_store/challenge.rst:73
+msgid ""
+"``ShoppingCart`` should implement ``get_total`` method to calculate the "
+"total price for the entire cart contents."
+msgstr ""
+"``ShoppingCart`` має застосувати метод ``get_total`` для обчислення "
+"загальної ціни всього вмісту кошика."
+
+#: conv_store.models.ShoppingCart:1 of
+msgid "Shopping cart model implementation"
+msgstr "Реалізація моделі кошика"
+
+#: conv_store.models.ShoppingCart:3 of
+msgid "product appended to the shopping cart instance"
+msgstr "товар, доданий до екземпляра кошика"
+
+#: conv_store.models.ShoppingCart:5 of
+msgid "corresponding quantities for each product in cart"
+msgstr "відповідна кількість для товару у кошику"
+
+#: conv_store.models.ShoppingCart:8 of
+msgid ""
+"In general shopping cart is a container for products. Instances of this "
+"class handle product and corresponding quantity for each item inside a "
+"shopping cart instance."
+msgstr ""
+"Загалом кошик для покупок – це контейнер для продуктів. Екземпляри цього "
+"класу обробляють продукт і відповідну кількість для кожного товару в "
+"екземплярі кошика для покупок."
+
+#: conv_store.models.ShoppingCart.add_product:1 of
+msgid "Add product to the shopping cart"
+msgstr "Додає товар до кошика"
+
+#: conv_store.models.ShoppingCart.add_product:3 of
+msgid "a product instance to add to cart"
+msgstr "екземпляр товару, щоб додати до кошика"
+
+#: conv_store.models.ShoppingCart.add_product:5 of
+msgid "a quantity of a product to add. Defaults to the product unit value."
+msgstr ""
+"кількість продукту для додавання. За замовчуванням значення одиниці продукту."
+
+#: conv_store.models.ShoppingCart.add_product:9 of
+msgid ""
+"This method adds a product instance and corresponding quantity value to the "
+"cart."
+msgstr ""
+"Цей метод додає екземпляр продукту та відповідне значення кількості до "
+"кошика."
+
+#: conv_store.models.ShoppingCart.get_total:1 of
+msgid "Return the total price for all the product in the cart"
+msgstr "Повертає загальну вартість усіх товарів у кошику"
+
+#: conv_store.models.ShoppingCart.get_total:3 of
+msgid "total cart price"
+msgstr "загальна вартість кошика"
+
+#: ../../problem-sets/src/conv_store/challenge.rst:97
+msgid "Initialization, Representation and Type Casting"
+msgstr "Ініціалізація, представлення та приведення типів"
+
+#: ../../problem-sets/src/conv_store/challenge.rst:99
+msgid ""
+"It's difficult to set properties one-by-one, also it's not informative to "
+"get default objects string representations. It's time to fix this."
+msgstr ""
+"Важко встановлювати властивості одну за одною, також "
+"неінформативноотримувати представлення рядків об'єктів за замовчуванням. "
+"Настав час це виправити."
+
+#: ../../problem-sets/src/conv_store/challenge.rst:102
+msgid "``Product`` should be initialized with all required data, no defaults."
+msgstr ""
+"``Product`` має бути ініціалізований усіма необхідними даними, без значень "
+"за замовчуванням."
+
+#: ../../problem-sets/src/conv_store/challenge.rst:103
+msgid ""
+"Apply ``ShoppingCart.__init__`` to separate products and quantities between "
+"different carts."
+msgstr ""
+"Застосуйте ``ShoppingCart.__init__``, щоб розділити продукти та кількість "
+"між різними візками."
+
+#: ../../problem-sets/src/conv_store/challenge.rst:105
+msgid "Provide a human readable representations. For example:"
+msgstr "Надайте представлення, зрозумілі людині. Наприклад:"
+
+#: ../../problem-sets/src/conv_store/challenge.rst:107
+msgid "``Product('juice', 35.66, 1)``"
+msgstr "``Product('juice', 35.66, 1)``"
+
+#: ../../problem-sets/src/conv_store/challenge.rst:108
+msgid "``<ShoppingCart>``"
+msgstr "``<ShoppingCart>``"
+
+#: ../../problem-sets/src/conv_store/challenge.rst:110
+msgid ""
+"While casting product instance to ``str`` type it should be equal to its "
+"``name`` attribute value."
+msgstr ""
+"Під час приведення екземпляра продукту до типу ``str`` він повинен "
+"дорівнювати значенню атрибута ``name``."
+
+#: ../../problem-sets/src/conv_store/challenge.rst:112
+msgid ""
+"While casting product instance to ``float`` type it should be equal to its "
+"``price`` attribute value."
+msgstr ""
+"Під час приведення екземпляра продукту до типу ``float`` він має дорівнювати "
+"значенню його атрибута ``price``."
+
+#: ../../problem-sets/src/conv_store/challenge.rst:114
+msgid ""
+"While casting shopping cart instance to ``float`` type it should be equal to "
+"its total price value."
+msgstr ""
+"Під час приведення екземпляра кошика для покупок до типу ``float`` він має "
+"дорівнювати загальному значенню ціни."
+
+#: ../../problem-sets/src/conv_store/challenge.rst:116
+msgid ""
+"While casting shopping cart instance to ``bool`` consider it ``True`` if at "
+"least one product is attach to current cart."
+msgstr ""
+"Під час трансляції екземпляра кошика для покупок до ``bool`` вважайте його "
+"``True``, якщо принаймні один продукт приєднаний до поточного кошика."
+
+#: ../../problem-sets/src/conv_store/challenge.rst:119
+msgid "Implement equality operator support for your objects:"
+msgstr "Запровадити підтримку оператора рівності для ваших об'єктів:"
+
+#: ../../problem-sets/src/conv_store/challenge.rst:121
+msgid "consider products equal if all their properties are the same"
+msgstr "вважати продукти рівними, якщо всі їхні властивості однакові"
+
+#: ../../problem-sets/src/conv_store/challenge.rst:122
+msgid ""
+"consider carts equal if products and corresponding quantities are the same"
+msgstr "вважати кошики рівними, якщо продукти та відповідна кількість однакові"
+
+#: ../../problem-sets/src/conv_store/challenge.rst:148
+msgid "Payment Processors"
+msgstr "Опрацювання платежів"
+
+#: ../../problem-sets/src/conv_store/challenge.rst:150
+msgid ""
+"The owner asked you to implement a flexible payment system. Purchasing the "
+"shopping card consists of several steps:"
+msgstr ""
+"Власник попросив вас запровадити гнучку платіжну систему. Придбання картки "
+"покупок складається з кількох кроків:"
+
+#: ../../problem-sets/src/conv_store/challenge.rst:153
+msgid "cart validation - it should not be empty or already purchased"
+msgstr "перевірка кошика - він не повинен бути порожнім або вже придбаним"
+
+#: ../../problem-sets/src/conv_store/challenge.rst:154
+msgid "payment validation - various payment types requires various validations"
+msgstr "підтвердження платежу - різні типи платежу вимагають різних перевірок"
+
+#: ../../problem-sets/src/conv_store/challenge.rst:155
+msgid "purchasing the cart"
+msgstr "купівля кошика"
+
+#: ../../problem-sets/src/conv_store/challenge.rst:157
+msgid ""
+"For now there are two payment types available in the store: cash and credit "
+"card, but they maybe extended at any time."
+msgstr ""
+"Наразі в магазині доступні два типи оплати: готівка та кредитна картка, але "
+"їх можна продовжити в будь-який час."
+
+#: ../../problem-sets/src/conv_store/challenge.rst:160
+msgid ""
+"Update the ``ShoppingCart`` class to handle ``purchased`` state. Make this "
+"property *protected*, since it should not be accessed outside the card "
+"instance."
+msgstr ""
+"Оновіть клас ``ShoppingCart`` для обробки стану ``purchased``. Зробіть цю "
+"властивість *protected*, оскільки до неї не слід звертатися поза екземпляром "
+"картки."
+
+#: ../../problem-sets/src/conv_store/challenge.rst:163
+msgid ""
+"Implement ``PaymentValidator`` class with ``is_valid`` that takes no "
+"arguments and return a value of a boolean type. This is an abstract class "
+"for the future usage."
+msgstr ""
+"Реалізуйте клас ``PaymentValidator`` з ``is_valid``, який не приймає "
+"аргументів і повертає значення логічного типу. Це абстрактний клас для "
+"майбутнього використання."
+
+#: ../../problem-sets/src/conv_store/challenge.rst:166
+msgid ""
+"Implement ``PaymentProcessor`` class with ``purchase`` method that takes a "
+"``ShoppingCart`` object and returns nothing. This is an abstract class for "
+"the future usage."
+msgstr ""
+"Реалізуйте клас ``PaymentProcessor`` з методом ``purchase``, який бере "
+"об'єкт ``ShoppingCart`` і нічого не повертає. Це абстрактний клас для "
+"майбутнього використання."
+
+#: ../../problem-sets/src/conv_store/challenge.rst:169
+msgid ""
+"Inherit ``CashPaymentValidator`` from the base validator. The instances of "
+"this class are considered to be always valid."
+msgstr ""
+"Успадкувати ``CashPaymentValidator`` від базового валідатора. Екземпляри "
+"цього класу вважаються завжди дійсними."
+
+#: ../../problem-sets/src/conv_store/challenge.rst:171
+msgid "Inherit ``CodeValidator`` from the base validator."
+msgstr "Успадкувати ``CodeValidator`` від основного валідатора."
+
+#: ../../problem-sets/src/conv_store/challenge.rst:173
+msgid ""
+"The instances of this class are created with ``security_code`` argument."
+msgstr ""
+"Екземпляри цього класу створено за допомогою аргументу ``security_code``."
+
+#: ../../problem-sets/src/conv_store/challenge.rst:174
+msgid ""
+"``is_valid`` method should ask a customer for a security code and check it "
+"against the stored value. In case codes are equal payment considered to be "
+"valid."
+msgstr ""
+"Метод ``is_valid`` має запитати у клієнта код безпеки та перевірити його зі "
+"збереженим значенням. Якщо коди однакові, оплата вважається дійсною."
+
+#: ../../problem-sets/src/conv_store/challenge.rst:178
+msgid ""
+"Create ``CashPaymentProcessor`` that combines ``CashValidator`` and "
+"``PaymentProcessor`` behaviors. While purchasing the cart the messages "
+"\"Processing cash payment...\" and \"Cart bill: {float total}\" should be "
+"printed out."
+msgstr ""
+"Створіть ``CashPaymentProcessor``, який поєднує поведінку ``CashValidator`` "
+"і ``PaymentProcessor``. Під час купівлі в кошику з'являються повідомлення "
+"\"Обробка готівкового платежу...\" і \"Рахунок у кошику : {float total}\" "
+"слід роздрукувати."
+
+#: ../../problem-sets/src/conv_store/challenge.rst:183
+msgid ""
+"Create ``CardPaymentProcessor`` that combines ``CodeValidator`` and "
+"``PaymentProcessor`` behaviors. While purchasing the cart the messages "
+"\"Processing card payment...\" and \"Security code: {code}\" should be "
+"printed out."
+msgstr ""
+"Створіть ``CardPaymentProcessor``, який поєднує поведінку ``CodeValidator`` "
+"і ``PaymentProcessor``. Під час купівлі кошику слід роздрукувати "
+"повідомлення \"Обробка платежу карткою...\" і \"Код безпеки : {code}\"."
+
+#: ../../problem-sets/src/conv_store/challenge.rst:203
+msgid "More Enhancements for Shopping Carts"
+msgstr "Більше покращень для кошиків для покупок"
+
+#: ../../problem-sets/src/conv_store/challenge.rst:205
+msgid "Make your ``ShoppingCart`` an actual container"
+msgstr "Зробіть ваш ``ShoppingCart`` справжнім контейнером"
+
+#: ../../problem-sets/src/conv_store/challenge.rst:207
+msgid ""
+"Implement ``len(cart_obj)`` and make it return the number of products in the "
+"cart."
+msgstr ""
+"Реалізуйте ``len(cart_obj)`` і змусьте його повертати кількість продуктів у "
+"кошику."
+
+#: ../../problem-sets/src/conv_store/challenge.rst:209
+msgid ""
+"Implement ``cart[...]`` behavior to take a ``tuple`` containing product and "
+"corresponding quantity (type hint: ``Tuple[Product, Union[int, float]]``)."
+msgstr ""
+"Реалізуйте поведінку ``cart[...]``, щоб повертати ``tuple``, що містить "
+"товар та відповідну кількість (type hint: ``Tuple[Product, Union[int, "
+"float]]``)."
+
+#: ../../problem-sets/src/conv_store/challenge.rst:213
+msgid ""
+"Make your ``ShoppingCart`` iterable - let it provide the product instance "
+"and corresponding quantity for each iteration."
+msgstr ""
+"Зробіть ваш ``ShoppingCart`` повторюваним - дозвольте йому надавати "
+"примірник продукту та відповідну кількість для кожної ітерації."
+
+#: ../../problem-sets/src/conv_store/challenge.rst:215
+msgid ""
+"Avoid products duplication. In case someone tries to put the product into a "
+"cart and this product already is present there, do not it for the second "
+"time - adjust corresponding quantity value instead."
+msgstr ""
+"Уникайте дублювання продуктів. Якщо хтось намагається покласти продукт у "
+"кошик, і цей продукт уже там присутній, не робіть цього вдруге - змініть "
+"натомість відповідне значення кількості."
+
+#: ../../problem-sets/src/conv_store/challenge.rst:218
+msgid ""
+"Implement ``remove_product`` method to completely remove some product from "
+"the cart."
+msgstr ""
+"Застосуйте метод ``remove_product``, щоб повністю видалити деякі продукти з "
+"кошика."
+
+#: ../../problem-sets/src/conv_store/challenge.rst:220
+msgid ""
+"Implement ``sub_product`` to decrease some product quantity. If quantity is "
+"equal to 0 (zero) or less - remove product from the cart."
+msgstr ""
+"Застосуйте ``sub_product``, щоб зменшити кількість продукту. Якщо кількість "
+"дорівнює 0 (нуль) або менше - вилучіть продукт із кошика."
+
+#: ../../problem-sets/src/conv_store/challenge.rst:249
+msgid "Testing Software"
+msgstr "Тестування програмного забезпечення"
+
+#: ../../problem-sets/src/conv_store/challenge.rst:251
+msgid "Add autotests for ``ShoppingCart`` and ``Product`` models."
+msgstr "Додати автотести для моделей ``ShoppingCart`` і ``Product``."
+
+#: ../../problem-sets/src/conv_store/challenge.rst:253
+msgid "Tests should be located inside of \"tests\" directory."
+msgstr "Тести мають бути розташовані всередині каталогу \"tests\"."
+
+#: ../../problem-sets/src/conv_store/challenge.rst:254
+msgid "``pytest`` and ``coverage`` libraries will be used for testing."
+msgstr ""
+"Для тестування використовуватимуться бібліотеки ``pytest`` і ``coverage``."
+
+#: ../../problem-sets/src/conv_store/challenge.rst:255
+msgid "Project dependencies are to be updated."
+msgstr "Залежності проекту потрібно оновити."

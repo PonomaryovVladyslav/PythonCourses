@@ -1,0 +1,950 @@
+# Copyright (C) 2023, Python training course authors and contributors
+# This file is distributed under the same license as the Python Training
+# Course package.
+# SERHII HORODILOV <sgorodil@gmail.com>, 2023.
+msgid ""
+msgstr ""
+"Project-Id-Version: Python Training Course 2023.06.dev\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-10-05 19:49+0300\n"
+"PO-Revision-Date: 2023-10-05 20:17+0300\n"
+"Last-Translator: Serhii Horodilov <sgorodil@gmail.com>\n"
+"Language-Team: uk <LL@li.org>\n"
+"Language: uk\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Generated-By: Babel 2.13.0\n"
+"X-Generator: Poedit 3.4\n"
+
+#: ../../src/vcs/basics.txt:-1
+msgid "Version control system"
+msgstr "Система контролю версій"
+
+#: ../../src/vcs/basics.txt:-1
+msgid "Serhii Horodilov"
+msgstr "Serhii Horodilov"
+
+#: ../../src/vcs/basics.txt:-1
+msgid "version, control, system, vcs, git, basics"
+msgstr "version, control, system, vcs, git, basics"
+
+#: ../../src/vcs/basics.txt:8
+msgid "Git Basics"
+msgstr "Основи Git"
+
+#: ../../src/vcs/basics.txt:11
+msgid "Getting a Git repository"
+msgstr "Отримання Git-репозиторію"
+
+#: ../../src/vcs/basics.txt:13
+msgid "You typically obtain a Git repository in one of two ways:"
+msgstr "Зазвичай ви отримуєте Git-репозиторій одним з двох способів:"
+
+#: ../../src/vcs/basics.txt:15
+msgid ""
+"You can take a local directory that is currently not under version control, "
+"and turn it into a Git repository."
+msgstr ""
+"Ви можете взяти локальний каталог, який наразі не перебуває під контролем "
+"версій, і перетворити його на Git-репозиторій."
+
+#: ../../src/vcs/basics.txt:17
+msgid "You can clone an existing Git repository from elsewhere."
+msgstr "Ви можете клонувати існуюче сховище Git'а з іншого місця."
+
+#: ../../src/vcs/basics.txt:19
+msgid ""
+"In either case, you end up with a Git repository on your local machine, "
+"ready for work."
+msgstr ""
+"У будь-якому випадку, ви отримаєте Git-репозиторій на вашій локальній "
+"машині, готовий до роботи."
+
+#: ../../src/vcs/basics.txt:23
+msgid "Initializing repo in an existing directory"
+msgstr "Ініціалізація репо в існуючому каталозі"
+
+#: ../../src/vcs/basics.txt:25
+msgid ""
+"If you have a project directory that is currently not under version control "
+"and you want to start controlling it with Git, you first need to go to that "
+"project's directory. If you've never done this, it looks a little different "
+"depending on which system you're running:"
+msgstr ""
+"Якщо у вас є каталог проекту, який наразі не перебуває під контролем версій, "
+"і ви хочете почати контролювати його за допомогою Git'а, спершу вам потрібно "
+"перейти до каталогу цього проекту. Якщо ви ніколи цього не робили, це "
+"виглядає трохи інакше, залежно від того, якою системою ви користуєтеся:"
+
+#: ../../src/vcs/basics.txt:30
+msgid "Change directory in bash (Linux)"
+msgstr "Зміна каталогу в bash (Linux)"
+
+#: ../../src/vcs/basics.txt:35
+msgid "Change directory in bash (MacOS)"
+msgstr "Зміна каталогу в bash (MacOS)"
+
+#: ../../src/vcs/basics.txt:40
+msgid "Change directory in PowerShell (Windows)"
+msgstr "Зміна каталогу в PowerShell (Windows)"
+
+#: ../../src/vcs/basics.txt:45
+msgid "In the project's directory initialize a new Git repository."
+msgstr "У каталозі проекту ініціалізуйте новий Git-репозиторій."
+
+#: ../../src/vcs/basics.txt:51
+msgid ""
+"This creates a new subdirectory named .git that contains all of your "
+"necessary repository files -- a Git repository skeleton."
+msgstr ""
+"Це створить новий підкаталог з ім'ям .git, який міститиме всі необхідні "
+"файли сховища - скелет сховища Git."
+
+#: ../../src/vcs/basics.txt:55
+msgid "Cloning an existing repo"
+msgstr "Клонування існуючого репо"
+
+#: ../../src/vcs/basics.txt:57
+msgid ""
+"If you want to get a copy of an existing Git repository -- for example, a "
+"project you'd like to contribute to -- the command you need is ``git clone``."
+msgstr ""
+"Якщо ви хочете отримати копію існуючого сховища Git'а - наприклад, проекту, "
+"до якого ви хочете долучитися, - вам потрібна команда ``git clone``."
+
+#: ../../src/vcs/basics.txt:64
+msgid ""
+"That creates a directory named *edu-python-course.github.io*, initializes a "
+"*.git* directory inside it, pulls down all the data for that repository, and "
+"checks out a working copy of the latest version."
+msgstr ""
+"Він створює каталог з назвою *edu-python-course.github.io*, ініціалізує "
+"каталог *.git* всередині нього, витягує всі дані для цього сховища і "
+"перевіряє робочу копію останньої версії."
+
+#: ../../src/vcs/basics.txt:72
+msgid ""
+"That command does the same thing as the previous one, but the target "
+"directory is called *python-course*."
+msgstr ""
+"Ця команда робить те саме, що й попередня, але цільовий каталог називається "
+"*python-course*."
+
+#: ../../src/vcs/basics.txt:75
+msgid ""
+"Git has a number of different transfer protocols you can use. The previous "
+"example uses the ``https://`` protocol, but you may also see ``git://`` or "
+"``user@server:path/to/repo.git``, which uses the SSH transfer protocol."
+msgstr ""
+"Git має декілька різних протоколів передачі даних, які ви можете "
+"використовувати. У попередньому прикладі використовується протокол ``https://"
+"``, але ви також можете побачити ``git://`` або ``user@server:path/to/repo."
+"git``, який використовує протокол передачі SSH."
+
+#: ../../src/vcs/basics.txt:80
+msgid "Making changes to the repo"
+msgstr "Внесення змін до репозиторію"
+
+#: ../../src/vcs/basics.txt:82
+msgid ""
+"At this point, you should have a *bona fide* Git repository on your local "
+"machine, and a checkout or *working copy* of all of its files in front of "
+"you. Typically, you'll want to start making changes and committing snapshots "
+"of those changes into your repository each time the project reaches a state "
+"you want to record."
+msgstr ""
+"На цьому етапі у вас має бути *справжній* Git-репозиторій на локальному "
+"комп'ютері, а також контрольна або *робоча копія* всіх його файлів перед "
+"вами. Зазвичай, ви захочете почати вносити зміни і фіксувати знімки цих змін "
+"у вашому сховищі кожного разу, коли проект досягне стану, який ви хочете "
+"зафіксувати."
+
+#: ../../src/vcs/basics.txt:88
+msgid ""
+"Remember that each file in your working directory can be in one of two "
+"states: **tracked** or **untracked**."
+msgstr ""
+"Пам'ятайте, що кожен файл у вашому робочому каталозі може перебувати в "
+"одному з двох станів: **відстежується** або **невідстежується**."
+
+#: ../../src/vcs/basics.txt:91
+msgid ""
+"Tracked files are files that were in the last snapshot, as well as any newly "
+"staged files; they can be unmodified, modified, or staged. In short, tracked "
+"files are files that Git knows about."
+msgstr ""
+"Відстежувані файли - це файли, які були в останньому знімку, а також будь-"
+"які нещодавно покладені файли; вони можуть бути незміненими, зміненими або "
+"покладеними. Коротше кажучи, відстежувані файли - це файли, про які відомо "
+"Git'у."
+
+#: ../../src/vcs/basics.txt:94
+msgid ""
+"Untracked files are everything else -- any files in your working directory "
+"that were not in your last snapshot and are not in your staging area. "
+"Untracked basically means that Git sees a file you didn't have in a previous "
+"snapshot (commit), and which hasn't been yet staged."
+msgstr ""
+"Невідстежені файли - це все інше - будь-які файли у вашому робочому "
+"каталозі, яких не було у вашому останньому знімку і які не перебувають у "
+"вашій області сховища. По суті, це означає, що Git бачить файл, якого не "
+"було у попередньому знімку (комміті), і який ще не було покладено у сховище."
+
+#: ../../src/vcs/basics.txt:104
+msgid "Checking out status of the file(s)"
+msgstr "Перевірка стану файлу(ів)"
+
+#: ../../src/vcs/basics.txt:106
+msgid ""
+"The main tool you use to determine which files are in which state is the "
+"``git status`` command."
+msgstr ""
+"Основним інструментом для визначення стану файлів є команда ``git status``."
+
+#: ../../src/vcs/basics.txt:133
+msgid ""
+"Newly added *README.md* file is untracked, because it's under \"Untracked "
+"files\" heading the status output."
+msgstr ""
+"Щойно доданий файл *README.md* не відстежується, оскільки він знаходиться у "
+"розділі \"Файли, що не відстежуються\" у виведенні статусу."
+
+#: ../../src/vcs/basics.txt:137
+msgid "Tracking new files"
+msgstr "Відстеження нових файлів"
+
+#: ../../src/vcs/basics.txt:139
+msgid "In order to begin tracking a new file, you use the ``git add`` command."
+msgstr ""
+"Для того, щоб почати відстеження нового файлу, скористайтеся командою ``git "
+"add``."
+
+#: ../../src/vcs/basics.txt:153
+msgid ""
+"From now *README.md* file is **added** to the stage area and ready to be "
+"committed (is under \"Changes to be committed\" heading)."
+msgstr ""
+"Відтепер файл *README.md* **додано** до області сцени і він готовий до "
+"фіксації (знаходиться під заголовком \"Зміни, що підлягають фіксації\")."
+
+#: ../../src/vcs/basics.txt:157
+msgid ""
+"You can use wildcards, to stage multiple files at once. The most common use "
+"cases is to add **all** modified files, or files inside of a specific "
+"directory."
+msgstr ""
+"Ви можете використовувати підстановочні знаки, щоб вносити зміни до кількох "
+"файлів одночасно. Найпоширенішим випадком використання є додавання **усіх** "
+"змінених файлів або файлів у певному каталозі."
+
+#: ../../src/vcs/basics.txt:168
+msgid "Staging modified files"
+msgstr "Зберігання змінених файлів"
+
+#: ../../src/vcs/basics.txt:170
+msgid ""
+"If a staged (or already committed) file has been changed, it will be moved "
+"under \"Modified\" heading. These changes wouldn't be committed unless they "
+"are staged."
+msgstr ""
+"Якщо файл, що перебуває на етапі (або вже зафіксований), було змінено, його "
+"буде переміщено у рубрику \"Змінено\". Ці зміни не будуть зафіксовані, якщо "
+"вони не були поетапними."
+
+#: ../../src/vcs/basics.txt:190
+msgid ""
+"Changes may be added to the stage area by repeating ``git add`` command."
+msgstr "Зміни можна додати до області сцени, повторивши команду ``git add``."
+
+#: ../../src/vcs/basics.txt:191
+msgid ""
+"Changes may be discard by ``git restore <file>`` command. This action will "
+"restore file to its **staged** version."
+msgstr ""
+"Зміни можна відкинути командою ``git restore <file>``. Ця дія відновить файл "
+"до його **попередньої** версії."
+
+#: ../../src/vcs/basics.txt:195
+msgid "Committing changes"
+msgstr "Фіксація змін"
+
+#: ../../src/vcs/basics.txt:197
+msgid ""
+"Now that the stage area is set up the way required, it's time to commit "
+"changes. Remember that anything that is still unstaged -- any files you have "
+"created or modified that you haven't run git add on since you edited them -- "
+"won't go into this commit."
+msgstr ""
+"Тепер, коли область змін налаштована належним чином, настав час зафіксувати "
+"зміни. Пам'ятайте, що все, що ще не є стадією - будь-які файли, які ви "
+"створили або змінили, але не запустили git-додаток з моменту редагування, - "
+"не потраплять до цього коміту."
+
+#: ../../src/vcs/basics.txt:202
+msgid "The simplest way to commit is to type ``git commit``:"
+msgstr "Найпростіший спосіб фіксації - ввести ``git commit``:"
+
+#: ../../src/vcs/basics.txt:208
+msgid "Doing so launches your editor of choice."
+msgstr "Після цього запуститься обраний вами редактор."
+
+#: ../../src/vcs/basics.txt:211
+msgid ""
+"This is set by your shell's EDITOR environment variable -- usually vim or "
+"emacs, although you can configure it with whatever you want using the ``git "
+"config --global core.editor``"
+msgstr ""
+"Це задається змінною оточення EDITOR вашої оболонки - зазвичай vim або "
+"emacs, хоча ви можете налаштувати її як завгодно за допомогою ``git config --"
+"global core.editor``"
+
+#: ../../src/vcs/basics.txt:215
+msgid ""
+"Alternatively, you can type your commit message inline with the ``commit`` "
+"command by specifying it after a ``-m`` flag, like this:"
+msgstr ""
+"Крім того, ви можете ввести повідомлення про фіксацію у рядку з командою "
+"``commit``, вказавши його після прапорця ``-m``, як показано нижче:"
+
+#: ../../src/vcs/basics.txt:222
+msgid ""
+"Although it can be amazingly useful for crafting commits exactly how you "
+"want them, the staging area is sometimes a bit more complex than you need in "
+"your workflow. If you want to skip the staging area, Git provides a simple "
+"shortcut. Adding the ``-a`` option to the ``git commit`` command makes Git "
+"automatically stage every file that is already tracked before doing the "
+"commit, letting you skip the git add part:"
+msgstr ""
+"Хоча вона може бути надзвичайно корисною для створення коммітів саме так, як "
+"вам потрібно, область підготовки іноді буває трохи складнішою, ніж вам "
+"потрібно у вашому робочому процесі. Якщо ви хочете пропустити область "
+"підготовки, Git надає простий ярлик. Додавання опції ``-a`` до команди ``git "
+"commit`` змушує Git автоматично стадіювати кожен файл, який вже "
+"відстежується, перед виконанням комміту, дозволяючи вам пропустити частину "
+"git add:"
+
+#: ../../src/vcs/basics.txt:263
+msgid "Ignoring files"
+msgstr "Ігнорування файлів"
+
+#: ../../src/vcs/basics.txt:265
+msgid ""
+"Often, there is a class of files, that should not be a part of a repo. You "
+"want these files to be prevent from being automatically added or even shown "
+"as being untracked. These are generally files produced by loggers or a build "
+"system, or some local settings for the project that shouldn't be shared "
+"across other developers or maintainers. In such cases you can create a *."
+"gitignore* file. Here is the content of *.gitignore* used in current "
+"repository:"
+msgstr ""
+"Часто існує клас файлів, які не повинні бути частиною репозиторію. Ви "
+"хочете, щоб ці файли не додавалися автоматично або навіть показувалися як "
+"такі, що не відстежуються. Зазвичай це файли, створені логгерами або "
+"системою збірки, або деякі локальні налаштування проекту, які не повинні "
+"бути доступними для інших розробників або супровідників. У таких випадках ви "
+"можете створити файл *.gitignore*. Ось вміст *.gitignore*, який "
+"використовується у поточному сховищі:"
+
+#: ../../src/vcs/basics.txt:305
+msgid "These lines mean:"
+msgstr "Ці рядки означають:"
+
+#: ../../src/vcs/basics.txt:307
+msgid ""
+"Content within directories named \".venv\", \".env\", \"venv\" or \"env\" "
+"will be ignored completely."
+msgstr ""
+"Вміст каталогів з іменами \".venv\", \".env\", \"venv\" або \"env\" буде "
+"повністю проігноровано."
+
+#: ../../src/vcs/basics.txt:309
+msgid "Content within \"node_modules\" directory will be ignored completely."
+msgstr "Вміст каталогу \"node_modules\" буде повністю проігноровано."
+
+#: ../../src/vcs/basics.txt:310
+msgid ""
+"Any files within directories named \".vscode\" or \".idea\" will be ignored "
+"completely."
+msgstr ""
+"Будь-які файли в каталогах з іменами \".vscode\" або \".idea\" будуть "
+"повністю проігноровані."
+
+#: ../../src/vcs/basics.txt:312
+msgid "Any file with name starting with hash (#) will be ignored."
+msgstr ""
+"Будь-який файл з іменем, що починається з хешу (#), буде проігноровано."
+
+#: ../../src/vcs/basics.txt:313
+msgid "Any file with name ending with tilda (~) will be ignored."
+msgstr ""
+"Будь-який файл, ім'я якого закінчується на тильду (~), буде проігноровано."
+
+#: ../../src/vcs/basics.txt:314
+msgid ""
+"Content within directories named \"temp\" or \"tmp\" will be ignored "
+"completely."
+msgstr ""
+"Вміст каталогів з іменами \"temp\" або \"tmp\" буде повністю проігноровано."
+
+#: ../../src/vcs/basics.txt:316
+msgid ""
+"Content within directories named \"_builds\", \"_build\", \"builds\" or "
+"\"build\" will be ignored completely."
+msgstr ""
+"Вміст каталогів з іменами \"_builds\", \"_build\", \"builds\" або \"build\" "
+"буде повністю проігноровано."
+
+#: ../../src/vcs/basics.txt:318
+msgid "Any file with name ending with \".pot\" will be ignored."
+msgstr ""
+"Будь-який файл з іменем, що закінчується на \".pot\", буде проігноровано."
+
+#: ../../src/vcs/basics.txt:319
+msgid "Any file with name ending with \".mo\" will be ignored."
+msgstr ""
+"Будь-який файл з іменем, що закінчується на \".mo\", буде проігноровано."
+
+#: ../../src/vcs/basics.txt:321
+msgid ""
+"Setting up a *.gitignore* file for your new repository before you get going "
+"is generally a good idea so you don't accidentally commit files that you "
+"really don't want in your Git repository."
+msgstr ""
+"Створення файлу *.gitignore* для вашого нового сховища перед початком "
+"роботи, як правило, є гарною ідеєю, щоб випадково не зафіксувати файли, які "
+"вам насправді не потрібні у вашому Git-репозиторії."
+
+#: ../../src/vcs/basics.txt:325
+msgid ""
+"The rules for the patterns you can put in the *.gitignore* file are as "
+"follows:"
+msgstr ""
+"Правила для шаблонів, які ви можете помістити у *.gitignore* файл, такі:"
+
+#: ../../src/vcs/basics.txt:327
+msgid "Blank lines or lines starting with # are ignored."
+msgstr "Порожні рядки або рядки, що починаються з #, ігноруються."
+
+#: ../../src/vcs/basics.txt:328
+msgid ""
+"Standard glob patterns work, and will be applied recursively throughout the "
+"entire working tree."
+msgstr ""
+"Працюють стандартні глобальні шаблони, які будуть застосовуватися рекурсивно "
+"по всьому робочому дереву."
+
+#: ../../src/vcs/basics.txt:330
+msgid ""
+"You can start patterns with a forward slash (/) to avoid recursive inclusion."
+msgstr ""
+"Щоб уникнути рекурсивного включення, ви можете починати шаблони з прямої "
+"похилої риски (/)."
+
+#: ../../src/vcs/basics.txt:332
+msgid "You can end patterns with a forward slash (/) to specify a directory."
+msgstr ""
+"Ви можете закінчувати шаблони прямою похилою рискою (/), щоб вказати каталог."
+
+#: ../../src/vcs/basics.txt:333
+msgid "You can negate a pattern by starting it with an exclamation point (!)."
+msgstr "Ви можете заперечити шаблон, почавши його зі знаку оклику (!)."
+
+#: ../../src/vcs/basics.txt:335
+msgid ""
+"Glob patterns are like simplified regular expressions that shells use. An "
+"asterisk (\\*) matches zero or more characters; [ab] matches any character "
+"inside the brackets (in this case a or b); a question mark (?) matches a "
+"single character; and brackets enclosing characters separated by a hyphen "
+"([0-9]) matches any character between them (in this case 0 through 9). You "
+"can also use two asterisks to match nested directories; a/\\*\\*/z would "
+"match *a/z*, *a/b/z*, *a/b/c/z*, and so on."
+msgstr ""
+"Глобальні шаблони подібні до спрощених регулярних виразів, які "
+"використовують оболонки. Зірочка (\\*) відповідає нулю або більше символів; "
+"[ab] відповідає будь-якому символу всередині дужок (у цьому випадку a або "
+"b); знак питання (?) відповідає одному символу; а дужки, що містять символи, "
+"розділені дефісом ([0-9]), відповідають будь-якому символу між ними (у цьому "
+"випадку від 0 до 9). Ви також можете використовувати дві зірочки для "
+"вкладених каталогів; a/\\*\\*/z буде відповідати *a/z*, *a/b/z*, *a/b/c/z* і "
+"так далі."
+
+#: ../../src/vcs/basics.txt:344
+msgid "Viewing the commit history"
+msgstr "Перегляд історії коммітів"
+
+#: ../../src/vcs/basics.txt:346
+msgid ""
+"After you have created several commits, or if you have cloned a repository "
+"with an existing commit history, you'll probably want to look back to see "
+"what has happened. The most basic and powerful tool to do this is the ``git "
+"log`` command."
+msgstr ""
+"Після того, як ви створили кілька коммітів, або якщо ви клонували сховище з "
+"існуючою історією коммітів, ви, ймовірно, захочете озирнутися назад, щоб "
+"побачити, що сталося. Найпростішим і найпотужнішим інструментом для цього є "
+"команда ``git log``."
+
+#: ../../src/vcs/basics.txt:372
+msgid ""
+"By default, with no arguments, ``git log`` lists the commits made in that "
+"repository in reverse chronological order; that is, the most recent commits "
+"show up first. As you can see, this command lists each commit with its SHA-1 "
+"checksum, the author's name and email, the date written, and the commit "
+"message."
+msgstr ""
+"За замовчуванням, без аргументів, ``git log`` виводить список коммітів, "
+"зроблених у цьому сховищі, у зворотному хронологічному порядку; тобто, "
+"найновіші комміти показуються першими. Як ви можете бачити, ця команда "
+"показує кожне внесення з його контрольною сумою SHA-1, ім'ям та електронною "
+"адресою автора, датою створення та повідомленням про внесення."
+
+#: ../../src/vcs/basics.txt:378
+msgid ""
+"One of the more helpful options is ``-p`` or ``--patch``, which shows the "
+"difference (the *patch* output) introduced in each commit. You can also "
+"limit the number of log entries displayed, such as using ``-<number>`` to "
+"show only desired number of latest entries."
+msgstr ""
+"Однією з найбільш корисних опцій є ``-p`` або ``--patch``, яка показує "
+"відмінності (виведення *patch*), внесені у кожну фіксацію. Ви також можете "
+"обмежити кількість відображуваних записів, наприклад, за допомогою ``-"
+"<number>``, щоб показати лише потрібну кількість останніх записів."
+
+#: ../../src/vcs/basics.txt:414
+msgid ""
+"This option display the same information but with a diff directly following "
+"each entry. This is very helpful for code review or to quickly browse what "
+"happened during a series of commits that a collaborator has added. You can "
+"also use a series of summarizing options with ``git log``."
+msgstr ""
+"Цей параметр показує ту саму інформацію, але з різницею безпосередньо після "
+"кожного запису. Це дуже корисно для перегляду коду або для швидкого "
+"перегляду того, що сталося під час серії коммітів, доданих співавторами. Ви "
+"також можете скористатися низкою параметрів підсумовування за допомогою "
+"``git log``."
+
+#: ../../src/vcs/basics.txt:419
+msgid ""
+"If you want to see some abbreviated stats for each commit, you can use the "
+"``--stat`` option:"
+msgstr ""
+"Якщо ви хочете побачити скорочену статистику для кожного коміту, ви можете "
+"скористатися опцією ``--stat``:"
+
+#: ../../src/vcs/basics.txt:443
+msgid ""
+"Another really useful option is ``--pretty``. This option changes the log "
+"output to formats other that the default. A few prebuilt option values are "
+"available for you to use. The ``oneline`` value for this option prints each "
+"commit on a single line, which is useful if you're look a lot of commits. In "
+"addition, the ``short``, ``full``, and ``fuller`` values show the output in "
+"roughly the same format but with less or more information."
+msgstr ""
+"Ще одним дійсно корисним параметром є ``--pretty``. Цей параметр змінює "
+"формат виведення журналу на формат, відмінний від стандартного. Ви можете "
+"скористатися кількома готовими значеннями цього параметра. Значення "
+"``oneline`` для цього параметра виводить кожну фіксацію в одному рядку, що є "
+"корисним, якщо ви переглядаєте багато фіксацій. Крім того, значення "
+"``short``, ``full`` і ``fuller`` показують виведення у приблизно однаковому "
+"форматі, але з меншою або більшою кількістю інформації."
+
+#: ../../src/vcs/basics.txt:476
+msgid "Specifier"
+msgstr "Специфікатор"
+
+#: ../../src/vcs/basics.txt:476
+msgid "Description of Output"
+msgstr "Опис Результатів"
+
+#: ../../src/vcs/basics.txt:478
+msgid "%H"
+msgstr "%H"
+
+#: ../../src/vcs/basics.txt:478
+msgid "Commit hash"
+msgstr "Хеш комміту"
+
+#: ../../src/vcs/basics.txt:480
+msgid "%h"
+msgstr "%h"
+
+#: ../../src/vcs/basics.txt:480
+msgid "Abbreviated commit hash"
+msgstr "Скорочений хеш коміту"
+
+#: ../../src/vcs/basics.txt:482
+msgid "%T"
+msgstr "%T"
+
+#: ../../src/vcs/basics.txt:482
+msgid "Tree hash"
+msgstr "Дерево хешу"
+
+#: ../../src/vcs/basics.txt:484
+msgid "%t"
+msgstr "%t"
+
+#: ../../src/vcs/basics.txt:484
+msgid "Abbreviated tree hash"
+msgstr "Скорочений хеш дерева"
+
+#: ../../src/vcs/basics.txt:486
+msgid "%P"
+msgstr "%P"
+
+#: ../../src/vcs/basics.txt:486
+msgid "Parent hashes"
+msgstr "Батьківські хеші"
+
+#: ../../src/vcs/basics.txt:488
+msgid "%p"
+msgstr "%p"
+
+#: ../../src/vcs/basics.txt:488
+msgid "Abbreviated parent hashes"
+msgstr "Скорочені батьківські хеші"
+
+#: ../../src/vcs/basics.txt:490
+msgid "%an"
+msgstr "%an"
+
+#: ../../src/vcs/basics.txt:490
+msgid "Author name"
+msgstr "Ім'я автора"
+
+#: ../../src/vcs/basics.txt:492
+msgid "%ae"
+msgstr "%ae"
+
+#: ../../src/vcs/basics.txt:492
+msgid "Author email"
+msgstr "Електронна пошта автора"
+
+#: ../../src/vcs/basics.txt:494
+msgid "%ad"
+msgstr "%ad"
+
+#: ../../src/vcs/basics.txt:494
+msgid "Author date (format respects the --date=option)"
+msgstr "Дата автора (формат відповідає параметру --date=option)"
+
+#: ../../src/vcs/basics.txt:496
+msgid "%ar"
+msgstr "%ar"
+
+#: ../../src/vcs/basics.txt:496
+msgid "Author date, relative"
+msgstr "Дата автора, відносна"
+
+#: ../../src/vcs/basics.txt:498
+#, python-format
+msgid "%cn"
+msgstr "%cn"
+
+#: ../../src/vcs/basics.txt:498
+msgid "Committer name"
+msgstr "Ім'я коммітера"
+
+#: ../../src/vcs/basics.txt:500
+#, python-format
+msgid "%ce"
+msgstr "%ce"
+
+#: ../../src/vcs/basics.txt:500
+msgid "Committer email"
+msgstr "Електронна пошта коммітера"
+
+#: ../../src/vcs/basics.txt:502
+#, python-format
+msgid "%cd"
+msgstr "%cd"
+
+#: ../../src/vcs/basics.txt:502
+msgid "Committer date"
+msgstr "Дата коммітера"
+
+#: ../../src/vcs/basics.txt:504
+#, python-format
+msgid "%cr"
+msgstr "%cr"
+
+#: ../../src/vcs/basics.txt:504
+msgid "Committer date, relative"
+msgstr "Дата коммітера, відносна"
+
+#: ../../src/vcs/basics.txt:506
+#, python-format
+msgid "%s"
+msgstr "%s"
+
+#: ../../src/vcs/basics.txt:506
+msgid "Subject"
+msgstr "Тема"
+
+#: ../../src/vcs/basics.txt:509
+msgid ""
+"The ``oneline`` and ``format`` option values are particularly useful with "
+"another ``log`` option called ``--graph``. This option adds a nice little "
+"ASCII graph showing your branch and merge history:"
+msgstr ""
+"Значення параметрів ``online`` і ``format`` особливо корисні з іншим "
+"параметром ``log``, який називається ``--graph``. Цей параметр додає "
+"невеликий гарний графік у форматі ASCII, який показує історію ваших гілок і "
+"злиття:"
+
+#: ../../src/vcs/basics.txt:538
+msgid ""
+"There are many more output-formatting options to ``git log``. Common options "
+"to ``git log`` are:"
+msgstr ""
+"Існує набагато більше варіантів форматування виводу для ``git log``. "
+"Загальними параметрами ``git log`` є наступні:"
+
+#: ../../src/vcs/basics.txt:542
+msgid "Option"
+msgstr "Опція"
+
+#: ../../src/vcs/basics.txt:542
+msgid "Description"
+msgstr "Опис"
+
+#: ../../src/vcs/basics.txt:544
+msgid "-p"
+msgstr "-p"
+
+#: ../../src/vcs/basics.txt:544
+msgid "Show the patch introduced with each commit."
+msgstr "Показувати виправлення, внесені з кожним коммітом."
+
+#: ../../src/vcs/basics.txt:546
+msgid "--stat"
+msgstr "--stat"
+
+#: ../../src/vcs/basics.txt:546
+msgid "Show statistics for files modified in each commit."
+msgstr "Показувати статистику для файлів, змінених у кожному коміті."
+
+#: ../../src/vcs/basics.txt:548
+msgid "--shortstat"
+msgstr "--shortstat"
+
+#: ../../src/vcs/basics.txt:548
+msgid ""
+"Display only the changed/insertions/deletions line from the --stat command."
+msgstr "Відображати лише змінений/вставлений/видалений рядок з команди --stat."
+
+#: ../../src/vcs/basics.txt:551
+msgid "--name-only"
+msgstr "--name-only"
+
+#: ../../src/vcs/basics.txt:551
+msgid "Show the list of files modified after the commit information."
+msgstr "Показати список файлів, змінених після фіксації інформації."
+
+#: ../../src/vcs/basics.txt:554
+msgid "--name-status"
+msgstr "--name-status"
+
+#: ../../src/vcs/basics.txt:554
+msgid ""
+"Show the list of files affected with added/modified/deleted information as "
+"well."
+msgstr ""
+"Також покажіть список файлів, яких торкнулася додана/змінена/видалена "
+"інформація."
+
+#: ../../src/vcs/basics.txt:557
+msgid "--abbrev-commit"
+msgstr "--abbrev-commit"
+
+#: ../../src/vcs/basics.txt:557
+msgid ""
+"Show only the first few characters of the SHA-1 checksum instead of all 40."
+msgstr ""
+"Показувати лише перші кілька символів контрольної суми SHA-1 замість усіх 40."
+
+#: ../../src/vcs/basics.txt:560
+msgid "--relative-date"
+msgstr "--relative-date"
+
+#: ../../src/vcs/basics.txt:560
+msgid ""
+"Display the date in a relative format (for example, \"2 weeks ago\") instead "
+"of using the full date format."
+msgstr ""
+"Відображати дату у відносному форматі (наприклад, \"2 тижні тому\") замість "
+"повного формату дати."
+
+#: ../../src/vcs/basics.txt:563
+msgid "--graph"
+msgstr "--graph"
+
+#: ../../src/vcs/basics.txt:563
+msgid ""
+"Display an ASCII graph of the branch and merge history beside the log output."
+msgstr ""
+"Відобразити ASCII-графік гілки та історію злиття поряд з виведенням журналу."
+
+#: ../../src/vcs/basics.txt:566
+msgid "--pretty"
+msgstr "--pretty"
+
+#: ../../src/vcs/basics.txt:566
+msgid ""
+"Show commits in an alternate format. Option values include oneline, short, "
+"full, fuller, and format (where you specify your own format)."
+msgstr ""
+"Показувати комміти в альтернативному форматі. Значення опції включають: "
+"online, short, full, fuller і format (де ви можете вказати свій власний "
+"формат)."
+
+#: ../../src/vcs/basics.txt:570
+msgid "--oneline"
+msgstr "--oneline"
+
+#: ../../src/vcs/basics.txt:570
+msgid "Shorthand for --pretty=oneline --abbrev-commit used together."
+msgstr ""
+"Скорочення для --pretty=online --abbrev-commit, що використовується разом."
+
+#: ../../src/vcs/basics.txt:575
+msgid "Limiting log output"
+msgstr "Обмеження виводу журналу"
+
+#: ../../src/vcs/basics.txt:577
+msgid ""
+"In addition to output-formatting options, ``git log`` takes a number of "
+"useful limiting options; that is options that let you show only a subset of "
+"commits. You've seen one such option already -- the ``-<number>`` (e.g. "
+"``-2`` or ``-10``) option, which displays only the given number of latest "
+"commits."
+msgstr ""
+"На додаток до параметрів форматування виводу, ``git log`` приймає ряд "
+"корисних обмежувальних параметрів, тобто параметрів, які дозволяють вам "
+"показувати лише підмножину коммітів. Ви вже бачили одну з таких опцій - ``-"
+"<число>`` (наприклад, ``-2`` або ``-10``), яка показує лише вказану "
+"кількість останніх коммітів."
+
+#: ../../src/vcs/basics.txt:591
+msgid ""
+"However, the time-limiting options such as ``--since`` and ``--until`` are "
+"very useful. For example, the command to get the list of commits made in the "
+"last two weeks:"
+msgstr ""
+"Однак, дуже корисними є опції, що обмежують час, такі як ``--since`` і ``--"
+"until``. Наприклад, команда для отримання списку коммітів, зроблених за "
+"останні два тижні:"
+
+#: ../../src/vcs/basics.txt:599
+msgid ""
+"This command works with lots of formats - you can specify a specific date "
+"like ``\"2022-02-24\"``, or relative date such as ``\"2 years 1 days 3 "
+"minutes ago\"``."
+msgstr ""
+"Ця команда працює з багатьма форматами - ви можете вказати конкретну дату, "
+"наприклад, ``\"2022-02-24\"``, або відносну дату, наприклад, ``\"2 роки 1 "
+"день 3 хвилини тому\"``."
+
+#: ../../src/vcs/basics.txt:602
+msgid ""
+"The last really useful option to pass to ``git log`` as a filter is a path. "
+"If you specify a directory or file name, you can limit the log output to "
+"commits that introduced a change to those files. This is always the last "
+"option and is generally preceded by double dashes (``--``) to separate the "
+"paths from the options:"
+msgstr ""
+"Останньою дійсно корисною опцією, яку можна передати ``git log`` як фільтр, "
+"є шлях. Якщо ви вкажете каталог або ім'я файлу, ви зможете обмежити "
+"виведення журналу лише тими комітами, які внесли зміни до цих файлів. Це "
+"завжди останній параметр, і йому зазвичай передують подвійні тире (``--``), "
+"щоб відокремити шлях від параметрів:"
+
+#: ../../src/vcs/basics.txt:621
+msgid "Undoing things"
+msgstr "Виправлення помилок"
+
+#: ../../src/vcs/basics.txt:623
+msgid "At any stage, you may want to undo something."
+msgstr "На будь-якому етапі ви можете захотіти щось виправити."
+
+#: ../../src/vcs/basics.txt:625
+msgid ""
+"One of the common undos takes place when you commit too early and possibly "
+"forget to add some files, or you mess up your commit message. If you want to "
+"redo that commit, make the additional changes you forgot, stage them, and "
+"commit again using the ``--amend`` option:"
+msgstr ""
+"Одне з найпоширеніших випадків скасування відбувається, коли ви коммітуєте "
+"занадто рано і, можливо, забуваєте додати деякі файли, або ви псуєте своє "
+"повідомлення про коммітування. Якщо ви хочете повторити фіксацію, внесіть "
+"додаткові зміни, про які ви забули, збережіть їх і зафіксуйте ще раз, "
+"використовуючи опцію ``--amend``:"
+
+#: ../../src/vcs/basics.txt:634
+msgid "E.g."
+msgstr "Наприклад."
+
+#: ../../src/vcs/basics.txt:643
+msgid "Unstaging a staged file"
+msgstr "Скасування додавання файла до індексу"
+
+#: ../../src/vcs/basics.txt:645
+msgid ""
+"The next two sections demonstrate how to work with your staging area and "
+"working directory changes. The nice part is that the command you use to "
+"determine the state of those two areas also reminds you how to undo changes "
+"to them."
+msgstr ""
+"У наступних двох розділах продемонстровано, як працювати зі змінами у вашій "
+"збірці та робочому каталозі. Приємним моментом є те, що команда, за "
+"допомогою якої ви визначаєте стан цих двох областей, також нагадує вам про "
+"те, як скасувати внесені до них зміни."
+
+#: ../../src/vcs/basics.txt:676
+msgid "Unmodifiyng a modified file"
+msgstr "Скасування модифікації зміненого файлу"
+
+#: ../../src/vcs/basics.txt:678
+msgid ""
+"What if you realize that you don't want to keep your changes to some file? "
+"You can easily unmodify it -- **revert** it back to what it looked like when "
+"you last committed. ``git status`` also tells you how to do that:"
+msgstr ""
+"Що робити, якщо ви зрозуміли, що не хочете зберігати зміни у якомусь файлі? "
+"Ви можете легко скасувати зміни - **повернути** його до того, як він "
+"виглядав під час останнього компонування. ``git status`` також покаже вам, "
+"як це зробити:"
+
+#: ../../src/vcs/basics.txt:686
+msgid "It tells you pretty explicitly how to discard the changes you've make."
+msgstr "Він досить чітко розповідає, як відкинути зміни, які ви зробили."
+
+#: ../../src/vcs/basics.txt:699
+msgid "Undoing things with git restore"
+msgstr "Скасування змін за допомогою git restore"
+
+#: ../../src/vcs/basics.txt:701
+msgid ""
+"``git restore`` is basically an alternative to ``git reset``, from Git "
+"version 2.23.0 onwards, Git will use ``git restore`` instead of ``git "
+"reset`` for many undo operations."
+msgstr ""
+"``git restore`` є альтернативою ``git reset``, починаючи з версії 2.23.0, "
+"Git використовуватиме ``git restore`` замість ``git reset`` для багатьох "
+"операцій скасування."
+
+#: ../../src/vcs/basics.txt:737
+msgid ""
+"It’s important to understand that git restore <file> is a dangerous command. "
+"Any local changes you made to that file are gone -- Git just replaced that "
+"file with the last staged or committed version. Don't ever use this command "
+"unless you absolutely know that you don’t want those unsaved local changes."
+msgstr ""
+"Важливо розуміти, що відновлення git'ом <файлу> є небезпечною командою. Усі "
+"локальні зміни, які ви зробили у цьому файлі, буде втрачено - Git просто "
+"замінить цей файл на останню версію, що перебуває у стадії виконання або "
+"фіксації. Ніколи не використовуйте цю команду, якщо ви точно не знаєте, що "
+"вам не потрібні ці незбережені локальні зміни."
