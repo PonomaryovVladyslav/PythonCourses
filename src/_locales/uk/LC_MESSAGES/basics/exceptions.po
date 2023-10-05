@@ -1,0 +1,380 @@
+# Copyright (C) 2023, Python training course authors and contributors
+# This file is distributed under the same license as the Python Training
+# Course package.
+# OLEKSANDR YEROMIN <unicorn.in.pants@gmail.com>, 2023.
+msgid ""
+msgstr ""
+"Project-Id-Version: Python Training Course 2022.11.dev\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-10-05 19:49+0300\n"
+"PO-Revision-Date: 2023-10-05 20:09+0300\n"
+"Last-Translator: Serhii Horodilov <sgorodil@gmail.com>\n"
+"Language-Team: \n"
+"Language: uk\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Generated-By: Babel 2.13.0\n"
+"X-Generator: Poedit 3.4\n"
+
+#: ../../src/basics/exceptions.txt:-1
+msgid "Handling exceptions in Python"
+msgstr "Опрацювання винятків в Python"
+
+#: ../../src/basics/exceptions.txt:-1
+msgid "Serhii Horodilov"
+msgstr "Serhii Horodilov"
+
+#: ../../src/basics/exceptions.txt:-1
+msgid "python, exceptions, handling, try, except, finally"
+msgstr "python, exceptions, handling, try, except, finally"
+
+#: ../../src/basics/exceptions.txt:11
+msgid "Errors and Exceptions"
+msgstr "Помилки та винятки"
+
+#: ../../src/basics/exceptions.txt:13
+msgid ""
+"There are (at least) two distinguishable kinds of errors: *syntax errors* "
+"and *exceptions* :cite:`docs-python:errors`."
+msgstr ""
+"Існує (принаймні) два типи помилок: *синтаксичні помилки* та *виключення* :"
+"cite:`docs-python:errors`."
+
+#: ../../src/basics/exceptions.txt:17
+msgid "Syntax errors"
+msgstr "Синтаксичні помилки"
+
+#: ../../src/basics/exceptions.txt:19
+msgid "Syntax errors are also known as parsing errors."
+msgstr "Синтаксичні помилки також відомі як помилки Python парсера."
+
+#: ../../src/basics/exceptions.txt:29
+msgid ""
+"The parser repeats the offending line and displays a little \"arrow\" "
+"pointing at the earliest point in the line where the error was detected. The "
+"error is caused by (or at least detected at) the token preceding the arrow."
+msgstr ""
+"Синтаксичний аналізатор повторює неправильний рядок і відображає маленьку "
+"\"стрілку\", яка вказує на найперший символ рядка, де було виявлено помилку. "
+"Помилка спричинена (або принаймні виявлена) символом(а) перед стрілкою."
+
+#: ../../src/basics/exceptions.txt:34
+msgid "Exceptions"
+msgstr "Винятки"
+
+#: ../../src/basics/exceptions.txt:36
+msgid ""
+"Even if a statement or expression is syntactically correct, it may cause an "
+"error when an attempt is made to execute it. Errors detected during "
+"execution are called exceptions and are not unconditionally fatal: you will "
+"soon learn how to handle them in Python programs."
+msgstr ""
+"Навіть якщо оператор або вираз синтаксично правильний, це може спричинити "
+"помилку під час спроби його виконання. Помилки, виявлені під час виконання, "
+"називаються винятками і не є фатальними: незабаром ви дізнаєтеся, як їх "
+"обробляти в програмах на Python."
+
+#: ../../src/basics/exceptions.txt:41
+msgid ""
+"Exceptions come in different types, and the type is printed as part of the "
+"message."
+msgstr ""
+"Винятки бувають різних типів, і тип друкується як частина повідомлення."
+
+#: ../../src/basics/exceptions.txt:44
+msgid "For example, the ``div`` function implemented as"
+msgstr "Наприклад, функція ``div``, реалізована як"
+
+#: ../../src/basics/exceptions.txt:53
+msgid ""
+"may cause a ``ZeroDivisionError`` exception in case 0 is passed as ``y`` "
+"parameter."
+msgstr ""
+"може викликати виняток ``ZeroDivisionError``, якщо 0 передається як параметр "
+"``y``."
+
+#: ../../src/basics/exceptions.txt:56
+msgid ""
+"Standard exception names are built-in identifiers (not reserved keywords)."
+msgstr ""
+"Стандартні назви винятків є вбудованими ідентифікаторами (а не "
+"зарезервованими ключовими словами)."
+
+#: ../../src/basics/exceptions.txt:58
+msgid "The list of `built-in exceptions`_"
+msgstr "Список `вбудованих винятків`_"
+
+#: ../../src/basics/exceptions.txt:61
+msgid "Tracebacks"
+msgstr "Відстеження"
+
+#: ../../src/basics/exceptions.txt:63
+msgid "\"File\" is replaced with a *dummy string* within the examples."
+msgstr "У наведених прикладах \"Файл\" замінено на *фіктивний рядок*."
+
+#: ../../src/basics/exceptions.txt:65
+msgid "Let's assume the following modules structure:"
+msgstr "Припустимо наступну структуру модулів:"
+
+#: ../../src/basics/exceptions.txt:73
+msgid ""
+"The **main** module imports a ``div`` function implemented above from the "
+"**func** module. The code in main is implemented as follows:"
+msgstr ""
+"Модуль **main** імпортує функцію ``div``, реалізовану вище, з модуля "
+"**func**. Основний код реалізовано наступним чином:"
+
+#: ../../src/basics/exceptions.txt:85
+msgid ""
+"While running the code with correct inputs it will work fine. But there are "
+"at two exceptions for this script."
+msgstr ""
+"Під час виконання коду з правильними введеннями він працюватиме нормально. "
+"Але для цього сценарію є два винятки."
+
+#: ../../src/basics/exceptions.txt:88
+msgid ""
+"The first one is related on type conversion. While running the main script "
+"there is case of invalid input."
+msgstr ""
+"Перший пов'язаний з перетворенням типів. Під час виконання основного "
+"сценарію є випадок неправильного введення."
+
+#: ../../src/basics/exceptions.txt:100
+msgid ""
+"Note the **traceback** indicates the module and the exact line of code that "
+"causes the exception."
+msgstr ""
+"Зауважте, що **traceback** вказує на модуль і точний рядок коду, який "
+"викликає виняток."
+
+#: ../../src/basics/exceptions.txt:103
+msgid ""
+"The second one exception occurs when a 0 is passed as the second parameter "
+"to ``div`` function. The traceback would look like:"
+msgstr ""
+"Другий виняток виникає, коли 0 передається як другий параметр функції "
+"``div``. Трасування виглядатиме так:"
+
+#: ../../src/basics/exceptions.txt:117
+msgid ""
+"The traceback indicates all calls (top to bottom) that cause an exception."
+msgstr ""
+"Зворотне відстеження вказує на всі виклики (зверху вниз), які викликають "
+"виняток."
+
+#: ../../src/basics/exceptions.txt:120
+msgid "Exception handling"
+msgstr "Обробка винятків"
+
+#: ../../src/basics/exceptions.txt:122
+msgid ""
+"It is possible to write programs that handle selected exceptions. The "
+"``try`` statement is used to do that."
+msgstr ""
+"Можна писати програми, які оброблятимуть вибрані винятки. Для цього "
+"використовується інструкція ``try``."
+
+#: ../../src/basics/exceptions.txt:125
+msgid "The try statement works as follows."
+msgstr "Інструкція try працює наступним чином."
+
+#: ../../src/basics/exceptions.txt:127
+msgid ""
+"First, the try clause (the statement(s) between the try and except keywords) "
+"is executed."
+msgstr ""
+"Спочатку виконується речення try (вираз(и) між ключовими словами try і "
+"except)."
+
+#: ../../src/basics/exceptions.txt:129
+msgid ""
+"If no exception occurs, the except clause is skipped and execution of the "
+"try statement is finished."
+msgstr ""
+"Якщо винятків не відбувається, пропозиція винятку пропускається, і виконання "
+"оператора try завершується."
+
+#: ../../src/basics/exceptions.txt:131
+msgid ""
+"If an exception occurs during execution of the try clause, the rest of the "
+"clause is skipped. Then, if its type matches the exception named after the "
+"except keyword, the except clause is executed, and then execution continues "
+"after the try/except block."
+msgstr ""
+"Якщо під час виконання try виникає виняток, решта пропозиції пропускається. "
+"Потім, якщо його тип збігається з винятком, названим за ключовим словом "
+"osim, виконується пропозиція, а потім виконання продовжується після блоку "
+"try/except."
+
+#: ../../src/basics/exceptions.txt:135
+msgid ""
+"If an exception occurs which does not match the exception named in the "
+"except clause, it is passed on to outer try statements; if no handler is "
+"found, it is an unhandled exception and execution stops with a message as "
+"shown above."
+msgstr ""
+"Якщо виникає виняток, який не збігається з винятком, названим у реченні "
+"винятку, він передається зовнішнім операторам try; якщо обробник не "
+"знайдено, це необроблена виняткова ситуація, і виконання зупиняється з "
+"повідомленням, як показано вище."
+
+#: ../../src/basics/exceptions.txt:152
+msgid ""
+"A try statement may have more than one except clause, to specify handlers "
+"for different exceptions."
+msgstr ""
+"Інструкція try може мати більше однієї пропозиції, щоб вказати обробники для "
+"різних винятків."
+
+#: ../../src/basics/exceptions.txt:182
+msgid "Handling ALL exception"
+msgstr "Опрацювання усіх винятків"
+
+#: ../../src/basics/exceptions.txt:184
+msgid "It's a bad practice to handle **all** exceptions."
+msgstr "Обробляти **всі** винятки – це погана практика."
+
+#: ../../src/basics/exceptions.txt:186
+msgid ""
+"When indicating an ``except`` block without specifying an exception to catch "
+"it will work for any exception, that occurs in ``try`` block. The same is "
+"relevant for handling ``BaseException`` and ``Exception``. But you can never "
+"say what exact goes wrong."
+msgstr ""
+"Якщо вказати блок ``except`` без визначення винятку для перехоплення, він "
+"працюватиме для будь-якого винятку, який виникає в блоці ``try``. Те саме "
+"стосується обробки ``BaseException`` і ``Exception``. Проте ніколи не "
+"можливо сказати, який саме виняток стався."
+
+#: ../../src/basics/exceptions.txt:191
+msgid ""
+"However, this scenario may work for logging an exception and raising it "
+"again to be handled on upper levels."
+msgstr ""
+"Проте, такий сценарій може працювати для логування винятків, після чого вони "
+"підійматься заново, щоб бути опрацьованими на вищих рівнях програми."
+
+#: ../../src/basics/exceptions.txt:213
+msgid ""
+"All exceptions are inherited from ``Exception`` class, which is subclass of "
+"``BaseException``. So, you can never know what exactly goes wrong with your "
+"code."
+msgstr ""
+"Усі винятки успадковуються від класу ``Exception``, який є підкласом "
+"``BaseException``. Отже, ви ніколи не можете знати, що саме пішло не так із "
+"вашим кодом."
+
+#: ../../src/basics/exceptions.txt:218
+msgid "``finally`` statement"
+msgstr "Вираз ``finally``"
+
+#: ../../src/basics/exceptions.txt:220
+msgid ""
+"The ``try`` statement cannot be used itself. This will cause "
+"``SyntaxError``. Either ``except`` or ``finally`` block is required to be "
+"included."
+msgstr ""
+"Оператор ``try`` не може бути використаний сам по собі. Це спричинить "
+"``SyntaxError``. Необхідно включити блок ``except`` або ``finally``."
+
+#: ../../src/basics/exceptions.txt:223
+msgid ""
+"While the ``except`` block tries to catch the exceptions if any, the "
+"``finally`` block will be always executed regardless of the exception occurs."
+msgstr ""
+"У той час як блок ``except`` намагається перехопити винятки, якщо такі є, "
+"блок ``finally`` завжди виконуватиметься незалежно від виникнення винятку."
+
+#: ../../src/basics/exceptions.txt:249
+msgid "``else`` statement"
+msgstr "Вираз ``else``"
+
+#: ../../src/basics/exceptions.txt:251
+msgid ""
+"The ``try`` statement can also use ``else`` (which is optional). The "
+"statements within this block will be execute only in case there were no "
+"exceptions raised while running the ``try``."
+msgstr ""
+"Оператор ``try`` також може використовувати ``else`` (який є "
+"необов'язковим). Інструкції в цьому блоці виконуватимуться лише у випадку, "
+"якщо під час виконання ``try`` не було викликано винятків."
+
+#: ../../src/basics/exceptions.txt:273
+msgid "Raising exceptions"
+msgstr "Винятки: raising"
+
+#: ../../src/basics/exceptions.txt:275
+msgid ""
+"The ``raise`` statement allows the programmer to force a specified exception "
+"to occur. The sole argument to raise indicates the exception to be raised. "
+"This must be either an exception instance or an exception class (a class "
+"that derives from ``BaseException``, such as ``Exception`` or one of its "
+"subclasses). If an exception class is passed, it will be implicitly "
+"instantiated by calling its constructor with no arguments."
+msgstr ""
+"Інструкція ``raise`` дозволяє програмісту примусово викликати певний "
+"виняток. Єдиний аргумент, який потрібно викликати, вказує на виняток, який "
+"потрібно викликати. Це має бути екземпляр винятку або клас винятку (клас, "
+"який походить від ``BaseException``, наприклад ``Exception`` або один із "
+"його підкласів). Якщо передано клас винятків, він буде неявно створений "
+"шляхом виклику його конструктора без аргументів."
+
+#: ../../src/basics/exceptions.txt:287
+msgid ""
+"``raise`` statement itself will re-raise all the exceptions within the "
+"context. Also exceptions can be raised again from the ``except`` block. It's "
+"a common pattern to catch the exception for loggers and when re-raise it."
+msgstr ""
+"Сам оператор ``raise`` повторно викличе всі винятки в контексті опрацювання. "
+"Крім того, винятки можуть бути викликані знову з блоку ``except``. Це "
+"загальний шаблон для перехоплення винятку для реєстрації повідомлення про "
+"виняткову ситуацію і повторного його підняття."
+
+#: ../../src/basics/exceptions.txt:300
+msgid "Creating custom exceptions"
+msgstr "Створення винятків"
+
+#: ../../src/basics/exceptions.txt:302
+msgid ""
+"Programs may name their own exceptions by creating a new exception class. "
+"Exceptions should typically be derived from the Exception class, either "
+"directly or indirectly."
+msgstr ""
+"Програми можуть називати власні винятки, створюючи новий клас винятків. "
+"Винятки зазвичай мають бути похідними від класу Exception, прямо чи "
+"опосередковано."
+
+#: ../../src/basics/exceptions.txt:306
+msgid ""
+"Exception classes can be defined which do anything any other class can do, "
+"but are usually kept simple, often only offering a number of attributes that "
+"allow information about the error to be extracted by handlers for the "
+"exception."
+msgstr ""
+"Можна визначити класи винятків, які роблять усе, що може зробити будь-який "
+"інший клас, але зазвичай вони прості, часто пропонують лише ряд атрибутів, "
+"які дозволяють обробникам витягувати інформацію про помилку для винятку."
+
+#: ../../src/basics/exceptions.txt:311
+msgid ""
+"Most exceptions are defined with names that end in \"Error\", similar to the "
+"naming of the standard exceptions."
+msgstr ""
+"Більшість винятків визначено з іменами, які закінчуються на \"Error\", "
+"подібно до назв стандартних винятків."
+
+#: ../../src/basics/exceptions.txt:314
+msgid ""
+"Many standard modules define their own exceptions to report errors that may "
+"occur in functions they define."
+msgstr ""
+"Багато стандартних модулів визначають власні винятки, щоб повідомляти про "
+"помилки, які можуть виникнути у функціях, які вони визначають."
+
+#: ../../src/basics/exceptions.txt:317
+msgid "User-defined exception"
+msgstr "Виняток, визначений користувачем"

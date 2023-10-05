@@ -1,0 +1,259 @@
+# Copyright (C) 2023, Python training course authors and contributors
+# This file is distributed under the same license as the Python Training
+# Course package.
+# SERHII HORODILOV <sgorodil@gmail.com>, 2023.
+msgid ""
+msgstr ""
+"Project-Id-Version: Python Training Course 2023.06.dev\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-10-05 19:49+0300\n"
+"PO-Revision-Date: 2023-10-05 20:17+0300\n"
+"Last-Translator: Serhii Horodilov <sgorodil@gmail.com>\n"
+"Language-Team: uk <LL@li.org>\n"
+"Language: uk\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Generated-By: Babel 2.13.0\n"
+"X-Generator: Poedit 3.4\n"
+
+#: ../../src/vcs/github.txt:-1
+msgid "Version control system"
+msgstr "Система контролю версій"
+
+#: ../../src/vcs/github.txt:-1
+msgid "Serhii Horodilov"
+msgstr "Serhii Horodilov"
+
+#: ../../src/vcs/github.txt:-1
+msgid "version, control, system, vcs, git, github"
+msgstr "version, control, system, vcs, git, github"
+
+#: ../../src/vcs/github.txt:10
+msgid "GitHub"
+msgstr "GitHub"
+
+#: ../../src/vcs/github.txt:12
+msgid ""
+"`GitHub`_ is the single largest host for Git repositories, and is the "
+"central point of collaboration for millions of developers and projects."
+msgstr ""
+"`GitHub`_ - найбільший хостинг для Git-репозиторіїв, який є центральною "
+"точкою співпраці для мільйонів розробників і проектів."
+
+#: ../../src/vcs/github.txt:16
+msgid "Account setup and configuration"
+msgstr "Налаштування та конфігурація акаунта"
+
+#: ../../src/vcs/github.txt:18
+msgid ""
+"The first thing you need to do is set up a free user account. Visit "
+"`GitHub`_ and press \"Sign Up\" button. The GitHub will lead you through the "
+"account creation process. Just follow the hints and provide an email "
+"address, username and a strong password."
+msgstr ""
+"Перше, що вам потрібно зробити, це створити безкоштовний обліковий запис "
+"користувача. Відвідайте `GitHub`_ і натисніть кнопку \"Зареєструватися\". "
+"GitHub проведе вас через процес створення облікового запису. Просто "
+"дотримуйтесь підказок і вкажіть адресу електронної пошти, ім'я користувача "
+"та надійний пароль."
+
+#: ../../src/vcs/github.txt:24
+msgid "About authentication to GitHub"
+msgstr "Про автентифікацію на GitHub"
+
+#: ../../src/vcs/github.txt:27
+msgid ""
+"Starting in March 2023 and through the end of 2023, GitHub gradually began "
+"to require all users who contribute code on GitHub to enable two-factor "
+"authentication (2FA)."
+msgstr ""
+"Починаючи з березня 2023 року і до кінця 2023 року, GitHub поступово почав "
+"вимагати від усіх користувачів, які публікують код на GitHub, увімкнути "
+"двофакторну автентифікацію (2FA)."
+
+#: ../../src/vcs/github.txt:32
+msgid "Connect with SSH"
+msgstr "Підключення за допомогою SSH"
+
+#: ../../src/vcs/github.txt:34
+msgid ""
+"You can access and write data in repositories on GitHub using :abbr:`SSH "
+"(Secure Shell Protocol)`. When you connect to via SSH, you authenticate "
+"using a private key file on your local machine."
+msgstr ""
+"Ви можете отримати доступ до даних у репозиторіях на GitHub і писати їх за "
+"допомогою :abbr:`SSH (Secure Shell Protocol)`. При підключенні по SSH ви "
+"автентифікуєтесь за допомогою файлу приватного ключа на вашому локальному "
+"комп'ютері."
+
+#: ../../src/vcs/github.txt:39
+msgid "Generating a new SSH key"
+msgstr "Генерація нового SSH-ключа"
+
+#: ../../src/vcs/github.txt:41
+msgid ""
+"You can generate a new SSH key on your local machine. After you do that, you "
+"can add the **public** key to your account on GitHub to enable "
+"authentication for Git operations over SSH."
+msgstr ""
+"Ви можете згенерувати новий SSH-ключ на своїй локальній машині. Після цього "
+"ви можете додати **public** ключ до свого облікового запису на GitHub, щоб "
+"увімкнути автентифікацію для операцій з Git'ом через SSH."
+
+#: ../../src/vcs/github.txt:45
+msgid "Open terminal (git-bash will suite for Windows users)"
+msgstr "Відкритий термінал (для користувачів Windows підійде git-bash)"
+
+#: ../../src/vcs/github.txt:46
+msgid "Run command:"
+msgstr "Виконати команду:"
+
+#: ../../src/vcs/github.txt:53
+msgid ""
+"If you are using a legacy system that doesn't support the **Ed25519** "
+"algorithm, use:"
+msgstr ""
+"Якщо ви використовуєте застарілу систему, яка не підтримує алгоритм "
+"**Ed25519**, використовуйте його:"
+
+#: ../../src/vcs/github.txt:60
+msgid ""
+"When you're prompted to \"Enter a file in which to save the key\", you can "
+"press **Enter** to accept the default file location."
+msgstr ""
+"Коли з'явиться запит \"Введіть файл для збереження ключа\", ви можете "
+"натиснути **Enter**, щоб прийняти розташування файлу за замовчуванням."
+
+#: ../../src/vcs/github.txt:67
+msgid ""
+"Type a secure passphrase, if you want -- this is an extra layer of security."
+msgstr ""
+"Введіть безпечну парольну фразу, якщо хочете -- це додатковий рівень безпеки."
+
+#: ../../src/vcs/github.txt:75
+msgid "This will create a new SSH key, using the provided email as label."
+msgstr ""
+"Буде створено новий SSH-ключ, з використанням наданої адреси електронної "
+"пошти як мітки."
+
+#: ../../src/vcs/github.txt:77
+msgid ""
+"Navigate to ssh key location -- \".ssh\" folder at your homedir by default "
+"and ensure there are two files generated:"
+msgstr ""
+"Перейдіть до розташування ключа ssh -- теки \".ssh\" у вашому домашньому "
+"каталозі за замовчуванням і переконайтеся, що згенеровано два файли:"
+
+#: ../../src/vcs/github.txt:80
+msgid "**id_ALGORITHM** (e.g. \"id_rsa\", \"id_ed252519\" etc.)"
+msgstr "**id_ALGORITHM** (наприклад, \"id_rsa\", \"id_ed252519\" тощо)."
+
+#: ../../src/vcs/github.txt:81
+msgid "**id_ALGORITHM.pub** (e.g. \"id_rsa.pub\", \"id_ed25519.pub\" etc.)"
+msgstr ""
+"**id_ALGORITHM.pub** (наприклад, \"id_rsa.pub\", \"id_ed25519.pub\" тощо)."
+
+#: ../../src/vcs/github.txt:84
+msgid ""
+"The private key (the one without \".pub\") should be kept secure and "
+"private. You should never share this."
+msgstr ""
+"Закритий ключ (той, що без \".pub\") слід зберігати в безпеці і не "
+"розголошувати. Ви ніколи не повинні ділитися ним."
+
+#: ../../src/vcs/github.txt:87
+msgid ""
+"The public key is what you add to servers or services to which you want to "
+"authenticate using your private key."
+msgstr ""
+"Відкритий ключ - це те, що ви додаєте до серверів або сервісів, на яких ви "
+"хочете пройти автентифікацію за допомогою вашого закритого ключа."
+
+#: ../../src/vcs/github.txt:91
+msgid "Adding your SSH key to the ssh-agent and GitHub"
+msgstr "Додавання SSH-ключа до ssh-агента та GitHub"
+
+#: ../../src/vcs/github.txt:93
+msgid ""
+"Before adding a new SSH key to the ssh-agent to manage your keys, you should "
+"have checked for existing SSH keys and generated SSH keys."
+msgstr ""
+"Перш ніж додавати новий SSH-ключ до ssh-агента для керування ключами, вам "
+"слід перевірити наявність наявних SSH-ключів і згенерувати SSH-ключі."
+
+#: ../../src/vcs/github.txt:96
+msgid ""
+"Ensure the ssh-agent is running. You can use the \"Auto-launching\" or start "
+"it manually:"
+msgstr ""
+"Переконайтеся, що ssh-агент запущено. Ви можете скористатися "
+"\"Автозапуском\" або запустити його вручну:"
+
+#: ../../src/vcs/github.txt:104
+msgid "Add you SSH private key to the ssh-agent."
+msgstr "Додайте ваш приватний ключ SSH до ssh-агента."
+
+#: ../../src/vcs/github.txt:110
+msgid ""
+"Add the SSH public key to your account on GitHub. Copy the SSH public key to "
+"your clipboard."
+msgstr ""
+"Додайте публічний ключ SSH до свого облікового запису на GitHub. Скопіюйте "
+"відкритий ключ SSH до буфера обміну."
+
+#: ../../src/vcs/github.txt:117
+msgid ""
+"Alternatively, if ``clip`` isn't working, just type public key content to "
+"the terminal using ``cat``,"
+msgstr ""
+"Крім того, якщо ``clip`` не працює, просто введіть вміст відкритого ключа у "
+"терміналі за допомогою ``cat``,"
+
+#: ../../src/vcs/github.txt:124
+msgid ""
+"or simply navigate to the file and open it with any text editor. At the end, "
+"you need to copy public key content."
+msgstr ""
+"або просто перейдіть до файлу і відкрийте його за допомогою будь-якого "
+"текстового редактора. В кінці потрібно скопіювати вміст відкритого ключа."
+
+#: ../../src/vcs/github.txt:127
+msgid ""
+"On GitHub, in the upper-right corner of any page, click your profile photo, "
+"then click **Settings**."
+msgstr ""
+"На GitHub у правому верхньому куті будь-якої сторінки натисніть на "
+"фотографію свого профілю, а потім натисніть **Налаштування**."
+
+#: ../../src/vcs/github.txt:129
+msgid ""
+"In the \"Access\" section of the sidebar, click **SSH and GPG keys** and "
+"press **New SSH key** button."
+msgstr ""
+"У розділі \"Доступ\" бічної панелі натисніть **Ключі SSH і GPG** і натисніть "
+"кнопку **Новий ключ SSH**."
+
+#: ../../src/vcs/github.txt:131
+msgid "In the \"Title\" field, add a descriptive label for the new key."
+msgstr "У полі \"Назва\" додайте описову мітку для нового ключа."
+
+#: ../../src/vcs/github.txt:132
+msgid "Select the type of key -- \"Authentication key\"."
+msgstr "Виберіть тип ключа - \"Ключ автентифікації\"."
+
+#: ../../src/vcs/github.txt:133
+msgid "In the \"Key\" field, paste your public key."
+msgstr "У полі \"Ключ\" вставте ваш відкритий ключ."
+
+#: ../../src/vcs/github.txt:134
+msgid "Click **Add SSH key**."
+msgstr "Натисніть **Додати SSH-ключ**."
+
+#: ../../src/vcs/github.txt:135
+msgid "If prompted, confirm access to your account on GitHub."
+msgstr ""
+"Якщо з'явиться відповідний запит, підтвердіть доступ до свого облікового "
+"запису на GitHub."

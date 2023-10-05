@@ -1,0 +1,227 @@
+# Copyright (C) 2023, Python training course authors and contributors
+# This file is distributed under the same license as the Python Training
+# Course package.
+# SERHII HORODILOV <sgorodil@gmail.com>, 2023.
+msgid ""
+msgstr ""
+"Project-Id-Version: Python Training Course 2023.06.dev\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-10-05 19:49+0300\n"
+"PO-Revision-Date: 2023-10-05 20:16+0300\n"
+"Last-Translator: Serhii Horodilov <sgorodil@gmail.com>\n"
+"Language-Team: uk <LL@li.org>\n"
+"Language: uk\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Generated-By: Babel 2.13.0\n"
+"X-Generator: Poedit 3.4\n"
+
+#: ../../src/vcs/remotes.txt:3
+msgid "Remotes"
+msgstr "Віддалені репозиторії"
+
+#: ../../src/vcs/remotes.txt:5
+msgid ""
+"To be able to collaborate on any Git project, you need to know how to manage "
+"your remote repositories. Remote repositories are versions of your project "
+"that are hosted on the Internet or network somewhere. You can have several "
+"of them, each of which generally is either read-only or read/write for you. "
+"Managing remotes includes knowing how to add remote repositories, remove "
+"remote repositories that are no longer valid, manage various branches and "
+"define them as being tracked or not, and more."
+msgstr ""
+"Щоб мати можливість співпрацювати над будь-яким Git-проектом, вам потрібно "
+"знати, як керувати вашими віддаленими сховищами. Віддалені сховища - це "
+"версії вашого проекту, розміщені десь в інтернеті або мережі. Ви можете мати "
+"декілька таких сховищ, кожне з яких, як правило, доступне лише для читання "
+"або читання/запису. Керування віддаленими сховищами включає в себе вміння "
+"додавати віддалені сховища, видаляти віддалені сховища, які більше не є "
+"дійсними, керувати різними гілками і визначати їх як такі, що відстежуються "
+"чи ні, і багато іншого."
+
+#: ../../src/vcs/remotes.txt:21
+msgid "Showing your remote"
+msgstr "Перелік віддалених репозиторіїв"
+
+#: ../../src/vcs/remotes.txt:23
+msgid ""
+"To see which remote servers you have configured, you can run the ``git "
+"remote`` command. It lists the shortnames of each remote handle you're "
+"specified. If you've cloned your repository, you should at least see "
+"``origin`` - that is default name Git gives to the server you clone from:"
+msgstr ""
+"Щоб побачити, які віддалені сервери ви налаштували, ви можете виконати "
+"команду ``git remote``. Вона покаже короткі імена кожного вказаного вами "
+"віддаленого дескриптора. Якщо ви клонували свій репозиторій, ви маєте "
+"побачити принаймні ``origin`` - ім'я за замовчуванням, яке Git дає серверу, "
+"з якого ви клонуєте:"
+
+#: ../../src/vcs/remotes.txt:41
+msgid ""
+"This means we can pull contributions from any of these users pretty easily. "
+"We may additionally have permission to push to one or more of these."
+msgstr ""
+"Це означає, що ми можемо досить легко отримувати внески від будь-якого з цих "
+"користувачів. Крім того, ми можемо мати дозвіл на проштовхування до одного "
+"або декількох з них."
+
+#: ../../src/vcs/remotes.txt:45
+msgid "Adding remote repositories"
+msgstr "Додавання віддалених репозиторіїв"
+
+#: ../../src/vcs/remotes.txt:47
+msgid ""
+"To add a new remote Git repository as a shortname you can reference easily, "
+"run ``git remote add <shortname> <url>``:"
+msgstr ""
+"Щоб додати новий віддалений репозиторій Git'у у вигляді короткого імені, на "
+"яке можна легко посилатися, виконайте ``git remote add <назва> <адреса>``:"
+
+#: ../../src/vcs/remotes.txt:61
+msgid ""
+"Now you can use the string \"personal\" on the command line in lieu of the "
+"whole URL. ``master`` branch of \"https://github.com/shorodilov/python-"
+"course\" is now accessible as ``personal/master``, while shortname to the "
+"same branch in origin will be -- ``origin/master``."
+msgstr ""
+"Тепер ви можете використовувати рядок \"personal\" в командному рядку "
+"замість повної URL-адреси. Гілка ``master`` в \"https://github.com/"
+"shorodilov/python-course\" тепер доступна як ``personal/master``, тоді як "
+"скорочена назва тієї ж гілки в origin буде -- ``origin/master``."
+
+#: ../../src/vcs/remotes.txt:67
+msgid "Fetching and pulling from remotes"
+msgstr "Отримання та витягування з віддаленого репозиторію"
+
+#: ../../src/vcs/remotes.txt:69
+msgid ""
+"To get data from remote project, you can run ``git fetch`` command. The "
+"command goes out to that remote project and pulls down all the information "
+"from that remote project that you don't have yet. After you do this, you "
+"should have references to all the branches from that remote, which you can "
+"merge in or inspect at any time."
+msgstr ""
+"Щоб отримати дані з віддаленого проекту, ви можете виконати команду ``git "
+"fetch``. Команда звернеться до цього віддаленого проекту і витягне всю "
+"інформацію з нього, якої ви ще не маєте. Після цього ви матимете посилання "
+"на всі гілки з цього віддаленого проекту, які ви можете об'єднати або "
+"переглянути у будь-який час."
+
+#: ../../src/vcs/remotes.txt:79
+msgid ""
+"If your current branch is set up to track a remote branch, you can use ``git "
+"pull`` command to automatically fetch and then merge that remote branch into "
+"your current branch. By default, the ``git clone`` command automatically "
+"sets up your local ``master`` branch to track the remote ``master`` branch "
+"(or whatever default remote branch)."
+msgstr ""
+"Якщо вашу поточну гілку налаштовано на відстеження віддаленої гілки, ви "
+"можете скористатися командою ``git pull`` для автоматичного отримання і "
+"подальшого об'єднання цієї віддаленої гілки у вашу поточну гілку. За "
+"замовчуванням, команда ``git clone`` автоматично налаштовує вашу локальну "
+"гілку ``master`` на відстеження віддаленої гілки ``master`` (або будь-якої "
+"іншої віддаленої гілки за замовчуванням)."
+
+#: ../../src/vcs/remotes.txt:85
+msgid ""
+"From Git version 2.27 onward, ``git pull`` will give a warning if the ``pull."
+"rebase`` variable is not set. Git will keep warning you until you set the "
+"variable."
+msgstr ""
+"Починаючи з версії 2.27, ``git pull`` видаватиме попередження, якщо змінну "
+"``pull.rebase`` не встановлено. Git продовжуватиме видавати попередження, "
+"доки ви не встановите змінну."
+
+#: ../../src/vcs/remotes.txt:90
+msgid ""
+"If you want the default behavior of Git (fast-forward if possible, else "
+"create a merge commit): ``git config --global pull.rebase \"false\"``."
+msgstr ""
+"Якщо ви хочете отримати поведінку Git'а за замовчуванням (перемотування "
+"вперед, якщо можливо, інакше створіть комміт злиття): ``git config --global "
+"pull.rebase \"false\"``."
+
+#: ../../src/vcs/remotes.txt:93
+msgid ""
+"If you want to rebase when pulling: ``git config --global pull.rebase "
+"\"true\"``."
+msgstr ""
+"Якщо ви хочете перебазувати базу при витягуванні: ``git config --global pull."
+"rebase \"true\"``."
+
+#: ../../src/vcs/remotes.txt:97
+msgid "Pushing to remotes"
+msgstr "Відправка до віддаленого репозиторію"
+
+#: ../../src/vcs/remotes.txt:99
+msgid ""
+"When you have your project at a point that you want to share, you have to "
+"push it upstream. The command for this is simple: ``git push <remote> "
+"<branch>``."
+msgstr ""
+"Коли ваш проект знаходиться на етапі, яким ви хочете поділитися, вам "
+"потрібно перемістити його вгору за течією. Команда для цього проста: ``git "
+"push <віддалений> <гілка>``."
+
+#: ../../src/vcs/remotes.txt:106
+msgid ""
+"This command works only if you cloned from a server to which you have write "
+"access and if nobody has pushed in the meantime. If you and someone else "
+"clone at the same time and they push upstream and then you push upstream, "
+"you push will rightly be rejected. You'll have to fetch their work first and "
+"incorporate it into yours before you'll be allowed to push."
+msgstr ""
+"Ця команда працює тільки якщо ви клонували з сервера, до якого у вас є "
+"доступ на запис, і якщо в цей час ніхто не робив поштовх. Якщо ви клонуєте "
+"одночасно з кимось іншим, і він зробить поштовх вище за течією, а потім ви, "
+"ваш поштовх буде справедливо відхилено. Вам доведеться спочатку отримати "
+"їхню роботу і включити її до своєї, перш ніж вам дозволять проштовхувати."
+
+#: ../../src/vcs/remotes.txt:113
+msgid "Pushing a new branch to remote"
+msgstr "Переміщення нової гілки до віддаленого репозиторію"
+
+#: ../../src/vcs/remotes.txt:115
+msgid ""
+"In case you have created a local branch for some specific needs and you want "
+"to share this branch, you need to set up track for this branch. This can be "
+"done by using: ``git push --set-upstream origin <remote_branch>``. This will "
+"create a new remote branch and set up track to your current local branch. "
+"There is a shortcut for this command: ``git push -u origin <remote_branch>``."
+msgstr ""
+"Якщо ви створили локальну гілку для якихось конкретних потреб і хочете "
+"надати до неї доступ, вам потрібно налаштувати трек для цієї гілки. Це можна "
+"зробити за допомогою ``git push --set-upstream origin <віддалена_гілка>``. "
+"Це створить нову віддалену гілку і налаштує трек до вашої поточної локальної "
+"гілки. Для цієї команди існує комбінація клавіш: ``git push -u origin "
+"<віддалена_гілка>``."
+
+#: ../../src/vcs/remotes.txt:122
+msgid "Inspecting a remote"
+msgstr "Перевірка віддаленого репозиторію"
+
+#: ../../src/vcs/remotes.txt:124
+msgid ""
+"If you want to see more information about a particular remote, you can use "
+"the ``git remote show <remote`` command."
+msgstr ""
+"Якщо ви хочете побачити більше інформації про певний віддалений сервер, "
+"скористайтеся командою ``git remote show <remote``."
+
+#: ../../src/vcs/remotes.txt:165
+msgid ""
+"It lists the URL for the remote repository as wll as the tracking branch "
+"information. The command helpfully tells you that if you're on the "
+"``master`` branch amd you run ``git pull``, it will automatically merge the "
+"remote's ``master`` branch into the local one after it has been fetched. It "
+"also lists all the remote references it has pulled down."
+msgstr ""
+"Вона показує URL-адресу віддаленого сховища, а також інформацію про "
+"відстежувану гілку. Команда корисно повідомляє, що якщо ви перебуваєте на "
+"гілці ``master`` і виконаєте ``git pull``, вона автоматично об'єднає гілку "
+"``master`` віддаленого сховища з локальною гілкою після того, як її буде "
+"витягнуто. Також буде показано список усіх віддалених посилань, які було "
+"витягнуто."

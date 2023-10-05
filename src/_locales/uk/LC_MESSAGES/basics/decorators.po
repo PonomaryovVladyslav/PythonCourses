@@ -1,0 +1,391 @@
+# Copyright (C) 2023, Python training course authors and contributors
+# This file is distributed under the same license as the Python Training
+# Course package.
+# OLEKSANDR YEROMIN <unicorn.in.pants@gmail.com>, 2023.
+msgid ""
+msgstr ""
+"Project-Id-Version: Python Training Course 2022.11.dev\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-10-05 19:49+0300\n"
+"PO-Revision-Date: 2023-10-05 20:09+0300\n"
+"Last-Translator: Serhii Horodilov <sgorodil@gmail.com>\n"
+"Language-Team: \n"
+"Language: uk\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Generated-By: Babel 2.13.0\n"
+"X-Generator: Poedit 3.4\n"
+
+#: ../../src/basics/decorators.txt:-1
+msgid "Python decorators"
+msgstr "Декоратори в Python"
+
+#: ../../src/basics/decorators.txt:-1
+msgid "Serhii Horodilov"
+msgstr "Serhii Horodilov"
+
+#: ../../src/basics/decorators.txt:-1
+msgid "python, basics, decorators"
+msgstr "python, basics, decorators"
+
+#: ../../src/basics/decorators.txt:11
+msgid "Decorators"
+msgstr "Декоратори"
+
+#: ../../src/basics/decorators.txt:13
+msgid ""
+"Decorators provide a simple syntax for calling higher-order functions :cite:"
+"`realpython:decorators`."
+msgstr ""
+"Декоратори забезпечують простий синтаксис для виклику функцій вищого "
+"порядку :cite:`realpython:decorators`."
+
+#: ../../src/basics/decorators.txt:18
+msgid "There is some kind of misunderstanding in definitions."
+msgstr "Є деяке непорозуміння у визначеннях."
+
+#: ../../src/basics/decorators.txt:20
+msgid ""
+"**Decorator** is a function returning another function, usually applied as a "
+"function transformation using the ``@wrapper`` syntax :cite:`docs-python:"
+"term-decorator`."
+msgstr ""
+"**Декоратор** — це функція, яка повертає іншу функцію, зазвичай "
+"застосовується як перетворення функції за допомогою синтаксису ``@wrapper`` :"
+"cite:`docs-python:term-decorator`."
+
+#: ../../src/basics/decorators.txt:24
+msgid ""
+"However, that's no quit enough to describe it. The more complete definition "
+"is:"
+msgstr "Однак цього недостатньо, щоб описати це. Більш повне визначення таке:"
+
+#: ../../src/basics/decorators.txt:27
+msgid ""
+"**Decorator** is a structural design pattern that lets you attach new "
+"behaviors to objects by placing these objects inside special wrapper objects "
+"that contain the behaviors :cite:`refactoring.guru:decorator`."
+msgstr ""
+"**Декоратор** — це структурний шаблон проектування, який дає змогу додавати "
+"нову поведінку до об'єктів, розміщуючи ці об'єкти всередині спеціальних "
+"об'єктів-огорток, які містять поведінку :cite:`refactoring.guru:decorator`."
+
+#: ../../src/basics/decorators.txt:31
+msgid ""
+"Before you understand decorators, you must first understand how functions "
+"work."
+msgstr ""
+"Перш ніж зрозуміти декораторів, ви повинні спочатку зрозуміти, як працюють "
+"функції."
+
+#: ../../src/basics/decorators.txt:35
+msgid "First-class objects"
+msgstr "Об'єкти першого класу"
+
+#: ../../src/basics/decorators.txt:37
+msgid ""
+"In Python functions are `first-class objects`_. Everything in Python is an "
+"object. Functions are objects too."
+msgstr ""
+"У Python функції є `об'єктами першого класу`_. Усе в Python є об'єктом. "
+"Функції також є об'єктами."
+
+#: ../../src/basics/decorators.txt:41
+msgid "Inner functions"
+msgstr "Внутрішні функції"
+
+#: ../../src/basics/decorators.txt:43
+msgid ""
+"Functions can be nested. This means it is possible to define functions "
+"inside other functions."
+msgstr ""
+"Функції можуть бути вкладеними. Це означає, що можна визначати функції "
+"всередині інших функцій."
+
+#: ../../src/basics/decorators.txt:46
+msgid "Nested functions example"
+msgstr "Приклад вкладених функцій"
+
+#: ../../src/basics/decorators.txt:60
+msgid ""
+"The order in which inner functions are defined no matters. The function "
+"definition does not execute the function body; this gets executed only when "
+"the function is called. Furthermore, the inner functions are not defined "
+"until the parent function is called. They are locally scoped to their "
+"parent. Trying to call ``heapify`` function outside of ``heap_sort`` will "
+"cause ``NameError`` exception."
+msgstr ""
+"Порядок визначення внутрішніх функцій не має значення. Визначення функції не "
+"виконує тіло функції; це виконується лише під час виклику функції. Крім "
+"того, внутрішні функції не визначені, доки не буде викликана батьківська "
+"функція. Вони локально прив'язані до свого батьківського елемента. Спроба "
+"викликати функцію ``heapify`` поза межами ``heap_sort`` спричинить виняток "
+"``NameError``."
+
+#: ../../src/basics/decorators.txt:68
+msgid "Functions are objects"
+msgstr "Функції є об'єктами"
+
+#: ../../src/basics/decorators.txt:70
+msgid ""
+"This means functions can be passed around and used as arguments, just like "
+"any other object (e.g. *int*, *str* etc.)."
+msgstr ""
+"Це означає, що функції можна передавати й використовувати як аргументи, як і "
+"будь-який інший об'єкт (наприклад, *int*, *str* тощо)."
+
+#: ../../src/basics/decorators.txt:95
+msgid "Returning functions"
+msgstr "Повернення функцій"
+
+#: ../../src/basics/decorators.txt:97
+msgid ""
+"Since function can be passed as an argument, it may be returned from another "
+"function."
+msgstr ""
+"Оскільки функцію можна передати як аргумент, її можна повернути з іншої "
+"функції."
+
+#: ../../src/basics/decorators.txt:120
+msgid "``parent`` returns functions themselves, there are no parentheses."
+msgstr "``parent`` повертає самі функції, тут нема дужок."
+
+#: ../../src/basics/decorators.txt:122
+msgid ""
+"After running the code snippet above, ``first`` refers the ``first_child`` "
+"function from the inner ``parent`` scope. From now it can be used to call "
+"the target function it refers."
+msgstr ""
+"Після виконання наведеного вище фрагмента коду ``first`` посилається на "
+"функцію ``first_child`` із внутрішньої області ``parent``. Відтепер його "
+"можна використовувати для виклику цільової функції, на яку він посилається."
+
+#: ../../src/basics/decorators.txt:134
+msgid "Simple decorators"
+msgstr "Прості декоратори"
+
+#: ../../src/basics/decorators.txt:136
+msgid ""
+"Now you're ready to move on and see the magical beast that is the Python "
+"decorators. Let's start with a simple example:"
+msgstr ""
+"Тепер ви готові рухатися далі та побачити чарівного звіра, яким є декоратори "
+"Python. Почнемо з простого прикладу:"
+
+#: ../../src/basics/decorators.txt:154
+msgid "Running function:"
+msgstr "Запуск функцій:"
+
+#: ../../src/basics/decorators.txt:165
+msgid ""
+"The common way to use decorators is to replace the original function with a "
+"decorated one:"
+msgstr ""
+"Поширеним способом використання декораторів є заміна оригінальної функції на "
+"декоровану:"
+
+#: ../../src/basics/decorators.txt:176
+msgid ""
+"``say_hello`` function is the reference to the ``decorator.<locals>."
+"wrapper``, which itself is bound to the original ``say_hello`` function. "
+"There is a syntactic sugar to do this, called *pie-syntax*. The following "
+"example does exact the same things as the first decorator example:"
+msgstr ""
+"Функція ``say_hello`` є посиланням на ``decorator.<locals>.wrapper``, який "
+"сам прив'язаний до оригінальної функції ``say_hello``. Для цього існує "
+"синтаксичний цукор, який називається *pie-syntax*. Наступний приклад виконує "
+"ті самі речі, що й перший приклад декоратора:"
+
+#: ../../src/basics/decorators.txt:198
+msgid ""
+"There is no way to *undecorate* object in Python. Once something is bound to "
+"the decorator's wrapper - it is decorated forever."
+msgstr ""
+"У Python немає способу *скасувати* об'єкт. Одного разу щось прив'язане до "
+"обгортки декоратора - воно прикрашене назавжди."
+
+#: ../../src/basics/decorators.txt:201
+msgid ""
+"A decorated function still remains a **function**. So, it can be decorated "
+"once more time again, and again, and again..."
+msgstr ""
+"Декорована функція все ще залишається **функцією**. Отже, його можна "
+"прикрашати ще раз, і ще, і ще..."
+
+#: ../../src/basics/decorators.txt:253
+msgid ""
+"\"Wrapper\" is the alternative nickname for the Decorator pattern that "
+"clearly expresses the main idea of the pattern. A wrapper is an object that "
+"can be linked with some target object. The wrapper contains the same set of "
+"methods as the target and delegates to it all requests it receives. However, "
+"the wrapper may alter the result by doing something either before or after "
+"it passes the request to the target."
+msgstr ""
+"\"Обгортка\" — альтернативне прізвисько візерунка \"Декоратор\", яке чітко "
+"виражає основну ідею візерунка. Обгортка — це об'єкт, який можна зв'язати з "
+"деяким цільовим об'єктом. Обгортка містить той самий набір методів, що й "
+"мета, і делегує їй усі отримані запити. Однак обгортка може змінити "
+"результат, зробивши щось до або після того, як вона передає запит цільовому "
+"об'єкту."
+
+#: ../../src/basics/decorators.txt:261
+msgid "Passing arguments to the wrapper"
+msgstr "Передача аргументів до wrapper"
+
+#: ../../src/basics/decorators.txt:263
+msgid ""
+"Until now the examples use *simple* decorators. But what if the decorated "
+"function gets some arguments? This will cause ``TypeError`` exception that "
+"tell that \"arguments are missed\". This can be fixed with just passing "
+"arguments to the ``wrapper`` inner function."
+msgstr ""
+"Досі приклади використовують *прості* декоратори. Але що, якщо декорована "
+"функція отримує деякі аргументи? Це спричинить виняток ``TypeError``, який "
+"повідомляє, що \"аргументи пропущено\". Це можна виправити, просто передавши "
+"аргументи внутрішній функції ``wrapper``."
+
+#: ../../src/basics/decorators.txt:289
+msgid ""
+"If case you're trying to make a generic decorator, you may pass ``*args`` "
+"and ``**kwargs`` instead of exact arguments:"
+msgstr ""
+"Якщо ви намагаєтеся створити загальний декоратор, ви можете передати "
+"``*args`` і ``**kwargs`` замість точних аргументів:"
+
+#: ../../src/basics/decorators.txt:308
+msgid "Passing arguments to decorator"
+msgstr "Передача аргументів декоратору"
+
+#: ../../src/basics/decorators.txt:310
+msgid ""
+"At last it's time to know how to pass arguments to the decorator. Here is a "
+"simple implementation of ``defer`` decorator which deferred the function "
+"execution for some time:"
+msgstr ""
+"Нарешті настав час знати, як передавати аргументи декоратору. Ось проста "
+"реалізація декоратора ``defer``, яка відкладає виконання функції на деякий "
+"час:"
+
+#: ../../src/basics/decorators.txt:353
+msgid "Class decorators"
+msgstr "Декоратори класів"
+
+#: ../../src/basics/decorators.txt:355
+msgid ""
+"There are some pre-defined decorators exists for usage together with "
+"classes. They are:"
+msgstr ""
+"Існують деякі попередньо визначені декоратори для використання разом із "
+"класами. Це:"
+
+#: ../../src/basics/decorators.txt:358
+msgid "``classmethod``"
+msgstr "``classmethod``"
+
+#: ../../src/basics/decorators.txt:359
+msgid "``staticmethod``"
+msgstr "``staticmethod``"
+
+#: ../../src/basics/decorators.txt:360
+msgid "``property``"
+msgstr "``property``"
+
+#: ../../src/basics/decorators.txt:362
+msgid ""
+"If you develop an intuitive understanding for their differences you'll be "
+"able to write object-oriented Python that communicates its intent more "
+"clearly and will be easier to maintain in the long run :cite:`realpython:"
+"methods-demystified`."
+msgstr ""
+"Якщо ви розвинете інтуїтивне розуміння їхніх відмінностей, ви зможете "
+"написати об'єктно-орієнтований Python, який чіткіше передає свої наміри та "
+"який буде легше підтримувати в довгостроковій перспективі :cite:`realpython:"
+"methods-demystified`."
+
+#: ../../src/basics/decorators.txt:368
+msgid "Class methods"
+msgstr "Методи класу"
+
+#: ../../src/basics/decorators.txt:370
+msgid ""
+"Instead of accepting a ``self`` parameter, class methods take a ``cls`` "
+"parameter that points to the class — and not the object instance — when the "
+"method is called."
+msgstr ""
+"Замість того, щоб приймати параметр self, під час виклику методу методи "
+"класу приймають параметр ``cls``, який вказує на клас, а не на екземпляр "
+"класу."
+
+#: ../../src/basics/decorators.txt:374
+msgid ""
+"Because the class method only has access to this ``cls`` argument, it can't "
+"modify object instance state. That would require access to ``self``. "
+"However, class methods can still modify class state that applies across all "
+"instances of the class."
+msgstr ""
+"Оскільки метод класу має доступ лише до цього аргументу ``cls``, він не може "
+"змінити стан екземпляра об'єкта. Це потребує доступу до ``self``. Однак "
+"методи класу все ще можуть змінювати стан класу, який застосовується до всіх "
+"екземплярів класу."
+
+#: ../../src/basics/decorators.txt:379
+msgid ""
+"The common usage for ``classmethod`` is provide alternative initializers."
+msgstr ""
+"Загальним використанням ``методи класу`` є надання альтернативних "
+"ініціалізаторів."
+
+#: ../../src/basics/decorators.txt:382
+msgid "Static methods"
+msgstr "Статичні методи"
+
+#: ../../src/basics/decorators.txt:384
+msgid ""
+"This type of method takes neither a ``self`` nor a ``cls`` parameter (but of "
+"course it's free to accept an arbitrary number of other parameters)."
+msgstr ""
+"Цей тип методу не приймає ані ``self``, ані ``cls`` параметр (але, звичайно, "
+"він може приймати будь-яку кількість інших параметрів)."
+
+#: ../../src/basics/decorators.txt:387
+msgid ""
+"Therefore a static method can neither modify object state nor class state. "
+"Static methods are restricted in what data they can access - and they're "
+"primarily a way to namespace your methods."
+msgstr ""
+"Тому статичний метод не може змінити ні стан об'єкта, ні стан класу. "
+"Статичні методи обмежені в тому, до яких даних вони можуть отримати доступ, "
+"і вони, перш за все, є способом простору імен ваших методів."
+
+#: ../../src/basics/decorators.txt:391
+msgid ""
+"It's tricky to explain ``staticmethod`` usage. Almost always you can create "
+"a dedicated function instead of static method. But sometimes you need to "
+"bind some logic independent from class itself or its instances to a class - "
+"it common to encapsulate it with ``staticmethod``."
+msgstr ""
+"Важко пояснити використання ``staticmethod``. Майже завжди ви можете "
+"створити спеціальну функцію замість статичного методу. Але іноді вам "
+"потрібно прив'язати до класу певну логіку, незалежну від самого класу або "
+"його екземплярів – зазвичай інкапсулювати її за допомогою ``staticmethod``."
+
+#: ../../src/basics/decorators.txt:397
+msgid "Properties"
+msgstr "Властивості"
+
+#: ../../src/basics/decorators.txt:399
+msgid ""
+"It's a way to bind a method name to access it as an attribute. Properties "
+"are **read-only** by default. This means a value cannot be assigned to "
+"``property member``."
+msgstr ""
+"Це спосіб прив'язати назву методу для доступу до нього як до атрибута. За "
+"замовчуванням властивості доступні **лише для читання**. Це означає, що "
+"значення не можна призначити ``члену властивості``."
+
+#: ../../src/basics/decorators.txt:404
+msgid "Some examples"
+msgstr "Деякі приклади"

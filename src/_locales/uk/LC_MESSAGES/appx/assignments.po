@@ -1,0 +1,433 @@
+# Copyright (C) 2023, Python training course authors and contributors
+# This file is distributed under the same license as the Python Training
+# Course package.
+# SERHII HORODILOV <sgorodil@gmail.com>
+msgid ""
+msgstr ""
+"Project-Id-Version: Python Training Course 2022.11.dev\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-10-05 19:49+0300\n"
+"PO-Revision-Date: 2023-10-05 20:03+0300\n"
+"Last-Translator: Serhii Horodilov <sgorodil@gmail.com>\n"
+"Language-Team: ua <LL@li.org>\n"
+"Language: uk\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<12 || n%100>14) ? 1 : 2);\n"
+"Generated-By: Babel 2.13.0\n"
+"X-Generator: Poedit 3.4\n"
+
+#: ../../src/appx/assignments.txt:-1
+msgid "How-to handle in assignments via GitHub pull request(s)"
+msgstr "Як працювати з призначеннями через GitHub pull request(и)"
+
+#: ../../src/appx/assignments.txt:-1
+msgid "Vladyslav Ponomaryov"
+msgstr "Vladyslav Ponomaryov"
+
+#: ../../src/appx/assignments.txt:-1
+msgid "Serhii Horodilov sgorodil@gmail.com"
+msgstr "Serhii Horodilov sgorodil@gmail.com"
+
+#: ../../src/appx/assignments.txt:-1
+msgid "git, github, pull request, review, merge, howto"
+msgstr "git, github, pull request, review, merge, howto"
+
+#: ../../src/appx/assignments.txt:9
+msgid "Handing in Homework Assignments"
+msgstr "Здача домашніх завдань"
+
+#: ../../src/appx/assignments.txt:13
+msgid "Repository content description"
+msgstr "Опис вмісту репозиторію"
+
+#: ../../src/appx/assignments.txt:16
+msgid "What to include"
+msgstr "Що потрібно включити"
+
+#: ../../src/appx/assignments.txt:18
+msgid "Code base"
+msgstr "Кодова база"
+
+#: ../../src/appx/assignments.txt:19
+msgid "Project dependencies (if applicable)"
+msgstr "Залежності проекту (якщо застосовно)"
+
+#: ../../src/appx/assignments.txt:20
+msgid ""
+"*(Optional)* Additional project information: README, CONTRIBUTING, LICENSE "
+"etc."
+msgstr ""
+"*(Додаткова)* інформація про проєкт: README, CONTRIBUTING, LICENSE тощо."
+
+#: ../../src/appx/assignments.txt:24
+msgid ""
+"Always start new repository from creating ``README`` and ``.gitignore`` "
+"files."
+msgstr ""
+"Завжди починайте новий репозиторій зі створення файлів ``README`` та ``."
+"gitignore``."
+
+#: ../../src/appx/assignments.txt:28
+msgid "What to exclude"
+msgstr "Що потрібно виключити"
+
+#: ../../src/appx/assignments.txt:30
+msgid "Virtual environment, typically ``venv`` or ``env`` folder"
+msgstr "Віртуальне середовище, зазвичай папка ``venv`` або ``env``"
+
+#: ../../src/appx/assignments.txt:31
+msgid "Byte compiled Python code (``__pycache__``)"
+msgstr "Байтовий скомпільований код Python (``__pycache__``)"
+
+#: ../../src/appx/assignments.txt:32
+msgid "IDE configurations, typically ``.vscode`` or ``.idea`` folder"
+msgstr "Конфігурації IDE, зазвичай папка ``.vscode`` або ``.idea``"
+
+#: ../../src/appx/assignments.txt:33
+msgid "Database files, like ``db.sqlite3``"
+msgstr "Файли баз даних, такі як ``db.sqlite3``"
+
+#: ../../src/appx/assignments.txt:34
+msgid "Other stuff not related to the assignment directly"
+msgstr "Інші речі, не пов'язані з завданням безпосередньо"
+
+#: ../../src/appx/assignments.txt:37
+msgid ""
+"Set up **.gitignore** to exclude all name patterns from appending to the "
+"stage area. Common content of this file may look like:"
+msgstr ""
+"Налаштуйте **.gitignore**, щоб виключити всі шаблони назв з додавання до "
+"області сцени. Типовий вміст цього файлу може виглядати так:"
+
+#: ../../src/appx/assignments.txt:48
+msgid "Repository initialization"
+msgstr "Ініціалізація репозиторію"
+
+#: ../../src/appx/assignments.txt:50
+msgid "Create and activate virtual environment."
+msgstr "Створіть та активуйте віртуальне середовище."
+
+#: ../../src/appx/assignments.txt:51
+msgid "Create common repository files:"
+msgstr "Створіть загальні файли репозиторію:"
+
+#: ../../src/appx/assignments.txt:53
+msgid "README"
+msgstr "README"
+
+#: ../../src/appx/assignments.txt:54
+msgid ".gitignore"
+msgstr ".gitignore"
+
+#: ../../src/appx/assignments.txt:55
+msgid "requirements.txt *(if applicable)*"
+msgstr "requirements.txt *(якщо застосовно)*"
+
+#: ../../src/appx/assignments.txt:57
+msgid ""
+"*(Optional)* Create a code base draft. This can be an empty module like "
+"**main.py** or an empty :ref:`Django project <django_init>`."
+msgstr ""
+"*(Додатково)* Створіть чорновий варіант кодової бази. Це може бути порожній "
+"модуль типу **main.py** або порожній :ref:`проект Django <django_init>`."
+
+#: ../../src/appx/assignments.txt:59
+msgid "Initialize a new repository using ``git init`` command."
+msgstr "Ініціалізуйте новий репозиторій за допомогою команди ``git init``."
+
+#: ../../src/appx/assignments.txt:60
+msgid "Set up **.gitignore** name patterns."
+msgstr "Налаштуйте шаблони імен **.gitignore**."
+
+#: ../../src/appx/assignments.txt:61
+msgid "Stage your changes."
+msgstr "Додайте зміни до stage-простору."
+
+#: ../../src/appx/assignments.txt:62
+msgid "Commit your changes."
+msgstr "Зафіксуйте зміни."
+
+#: ../../src/appx/assignments.txt:63
+msgid "Set up remote repository."
+msgstr "Налаштуйте віддалений репозиторій."
+
+#: ../../src/appx/assignments.txt:64
+msgid "Push changes from local branch to remote."
+msgstr "Перенесіть зміни з локальної гілки на віддалену."
+
+#: ../../src/appx/assignments.txt:69
+msgid "Initializing new Django project"
+msgstr "Ініціалізація нового проекту Django"
+
+#: ../../src/appx/assignments.txt:71
+msgid ""
+"Base Django project may be added to the repository with the first commit. "
+"Initialize Django project in current repository root to avoid directories "
+"nesting."
+msgstr ""
+"Базовий проект Django може бути доданий до сховища з першим коммітом. "
+"Ініціалізуйте проект Django у корені поточного сховища, щоб уникнути "
+"вкладеності каталогів."
+
+#: ../../src/appx/assignments.txt:80
+msgid "Do not forget to create **requirements.txt**."
+msgstr "Не забудьте створити **requirements.txt**."
+
+#: ../../src/appx/assignments.txt:82
+msgid "After that, you may proceed with \"staging\" and \"commit\" steps."
+msgstr "Після цього ви можете перейти до етапів \"stage\" та \"commit\"."
+
+#: ../../src/appx/assignments.txt:86
+msgid "Sharing project dependencies"
+msgstr "Спільний доступ до залежностей проекту"
+
+#: ../../src/appx/assignments.txt:88
+msgid ""
+"The **requirements.txt** file is a plain text file that lists all the Python "
+"packages required for a specific project. This file is used to specify "
+"dependencies in a version-controlled and easily shareable manner. It allows "
+"for a consistent environment across different team members' local setups."
+msgstr ""
+"Файл **requirements.txt** -- це звичайний текстовий файл, який містить "
+"список усіх пакунків Python, необхідних для конкретного проекту. Цей файл "
+"використовується для вказівки залежностей у спосіб, що дозволяє контролювати "
+"версії та легко ділитися ними. Це дозволяє забезпечити узгодженість "
+"середовища в локальних налаштуваннях різних членів команди."
+
+#: ../../src/appx/assignments.txt:94
+msgid "Where to place \"requirements.txt\" file"
+msgstr "Де розмістити файл \"requirements.txt\""
+
+#: ../../src/appx/assignments.txt:96
+msgid ""
+"The **requirements.txt** file is generally placed in the root directory of "
+"the project."
+msgstr ""
+"Файл **requirements.txt** зазвичай розміщується у кореневому каталозі "
+"проекту."
+
+#: ../../src/appx/assignments.txt:100
+msgid "Creating \"requirements.txt\" file"
+msgstr "Створення файлу \"requirements.txt\""
+
+#: ../../src/appx/assignments.txt:102
+msgid ""
+"To generate file use ``pip freeze`` command and place its output to a file:"
+msgstr ""
+"Щоб згенерувати файл, скористайтеся командою ``pip freeze`` і помістіть його "
+"вивід у файл:"
+
+#: ../../src/appx/assignments.txt:108
+msgid "This will create **requirements.txt** file. Its content may look like:"
+msgstr ""
+"В результаті буде створено файл **requirements.txt**. Його вміст може мати "
+"вигляд:"
+
+#: ../../src/appx/assignments.txt:119
+msgid "Installing dependencies from \"requirements.txt\" file"
+msgstr "Встановлення залежностей з файлу \"requirements.txt\""
+
+#: ../../src/appx/assignments.txt:121
+msgid ""
+"Another team member may easily install all the requirements for the project "
+"by using ``pip install`` command:"
+msgstr ""
+"Інший член команди може легко встановити всі вимоги до проекту за допомогою "
+"команди ``pip install``:"
+
+#: ../../src/appx/assignments.txt:130
+msgid "Dealing with home tasks (challenges)"
+msgstr "Вирішення домашніх завдань (викликів)"
+
+#: ../../src/appx/assignments.txt:132
+msgid "Create a new topic branch"
+msgstr "Створити нову гілку завдання"
+
+#: ../../src/appx/assignments.txt:133
+msgid "Switch to a topic branch"
+msgstr "Перейдіть до гілки завдання"
+
+#: ../../src/appx/assignments.txt:134
+msgid "Do the work and commit changes"
+msgstr "Виконайте роботу та зафіксуйте зміни"
+
+#: ../../src/appx/assignments.txt:137
+msgid "You can create a new branch and immediately switch to it:"
+msgstr "Ви можете створити нову гілку і одразу перейти до неї:"
+
+#: ../../src/appx/assignments.txt:144
+msgid "Creating a pull request"
+msgstr "Створення запиту на злиття"
+
+#: ../../src/appx/assignments.txt:146
+msgid ""
+"Make sure your working branch is up-to-date with the default one. You can "
+"pull changes for the default branch and rebase your feature branch onto it."
+msgstr ""
+"Переконайтеся, що ваша робоча гілка оновлена ​​до стандартної. Ви можете "
+"отримати зміни для гілки за замовчуванням і перебазувати свою гілку функції "
+"на неї."
+
+#: ../../src/appx/assignments.txt:149
+msgid ""
+"Push feature branch to the remote repository. By default, the current active "
+"branch is pushed via ``git push`` command. You may need to set upstream "
+"branch if it isn't yet."
+msgstr ""
+"Перенести гілку функції до віддаленого сховища. За замовчуванням, поточна "
+"активна гілка виштовхується командою ``git push``. Можливо, вам доведеться "
+"створити нову гілку, якщо вона ще не створена."
+
+#: ../../src/appx/assignments.txt:157
+msgid ""
+"Navigate to your remote repository homepage on GitHub and switch to **Pull "
+"requests** tab."
+msgstr ""
+"Перейдіть на головну сторінку вашого віддаленого сховища на GitHub і "
+"перейдіть на вкладку **Pull requests**."
+
+#: ../../src/appx/assignments.txt:159
+msgid "Click **New pull request** button."
+msgstr "Натисніть кнопку **New pull request**."
+
+#: ../../src/appx/assignments.txt:160
+msgid ""
+"Select your default branch as *target* and your feature branch as *source*."
+msgstr "Виберіть гілку за умовчанням як *ціль*, а робочу гілку як *джерело*."
+
+#: ../../src/appx/assignments.txt:162
+msgid "Click **Create pull request** button."
+msgstr "Натисніть кнопку **Create pull request**."
+
+#: ../../src/appx/assignments.txt:163
+msgid "Provide meaningful title and a brief description for your pull request."
+msgstr "Надайте змістовну назву та короткий опис вашого запиту."
+
+#: ../../src/appx/assignments.txt:164
+msgid "Submit pull request creation."
+msgstr "Підтвердіть створення запиту."
+
+#: ../../src/appx/assignments.txt:165
+msgid "*(Optional)* Select reviewer(s) in **Reviewers** section."
+msgstr "*(Необов'язково)* Виберіть рецензента(ів) у розділі **Reviewers**."
+
+#: ../../src/appx/assignments.txt:166
+msgid "Wait until your pull request is reviewed."
+msgstr "Зачекайте, поки ваш запит буде розглянуто."
+
+#: ../../src/appx/assignments.txt:169
+msgid "Set up reviewers"
+msgstr "Налаштування рецензентів"
+
+#: ../../src/appx/assignments.txt:171
+msgid ""
+"You may share a link to pull request to a reviewer directly, but it's better "
+"to set reviewer(s) on the pull request's page. Before you can select "
+"reviewers, you need to add them as project contributors."
+msgstr ""
+"Ви можете надіслати посилання на запит безпосередньо рецензенту, але краще "
+"вказати рецензента(ів) на сторінці запиту. Перш ніж ви зможете вибрати "
+"рецензентів, вам потрібно додати їх як учасників проекту."
+
+#: ../../src/appx/assignments.txt:176
+msgid "Append collaborators"
+msgstr "Додавання співавторів"
+
+#: ../../src/appx/assignments.txt:178
+msgid ""
+"Reviews allow collaborators to comment on the changes proposed in pull "
+"requests, approve the changes, or request further changes before the pull "
+"request is merged. Repository administrators can require that pull requests "
+"are approved before being merged."
+msgstr ""
+"Рецензії дозволяють учасникам коментувати зміни, запропоновані у запитах, "
+"затверджувати їх або вимагати подальших змін до того, як запит буде "
+"об'єднано. Адміністратори сховища можуть вимагати, щоб запити на вилучення "
+"були затверджені перед об'єднанням."
+
+#: ../../src/appx/assignments.txt:183
+msgid ""
+"Navigate to your repository homepage on GitHub and switch to **Settings** "
+"tab."
+msgstr ""
+"Перейдіть на головну сторінку вашого сховища на GitHub і перейдіть на "
+"вкладку **Налаштування**."
+
+#: ../../src/appx/assignments.txt:185
+msgid "Select **Collaborators and teams** menu item."
+msgstr "Виберіть пункт меню **Collaborators and teams**."
+
+#: ../../src/appx/assignments.txt:186
+msgid "Under **Manage access** section click **Add people** button."
+msgstr "У розділі **Manage access** натисніть кнопку ``Add people``."
+
+#: ../../src/appx/assignments.txt:187
+msgid "In modal window start typing GitHub username."
+msgstr "У модальному вікні почніть вводити ім'я користувача GitHub."
+
+#: ../../src/appx/assignments.txt:188
+msgid "Select a contributor from the dropdown menu."
+msgstr "Виберіть учасника зі спадного меню."
+
+#: ../../src/appx/assignments.txt:190
+msgid "This will send a *contributing request* to a specified user."
+msgstr "Це надішле *запит* вказаному користувачеві."
+
+#: ../../src/appx/assignments.txt:193
+msgid "Merging changes"
+msgstr "Об'єднання змін"
+
+#: ../../src/appx/assignments.txt:195
+msgid ""
+"In case your pull request is **approved** - merge it to the trunk branch. "
+"Select one of the options available:"
+msgstr ""
+"Якщо ваш pull request буде **схвалено** - об'єднайте його в основну гілку. "
+"Виберіть один з доступних варіантів:"
+
+#: ../../src/appx/assignments.txt:198
+msgid "Create a merge commit"
+msgstr "Create a merge commit"
+
+#: ../../src/appx/assignments.txt:199
+msgid "Rebase and merge"
+msgstr "Rebase and merge"
+
+#: ../../src/appx/assignments.txt:200
+msgid "Squash and merge"
+msgstr "Squash and merge"
+
+#: ../../src/appx/assignments.txt:202
+msgid "**Create a merge commit** suits in most of the cases."
+msgstr "**Create a merge commit** підходить у більшості випадків."
+
+#: ../../src/appx/assignments.txt:205
+msgid "Making changes"
+msgstr "Внесення змін"
+
+#: ../../src/appx/assignments.txt:207
+msgid ""
+"In case your pull request is **rejected** or has comments - you may need to "
+"provide some fixes."
+msgstr ""
+"Якщо ваш pull request буде **відхилено** або він матиме зауваження - вам "
+"може знадобитися надати деякі виправлення."
+
+#: ../../src/appx/assignments.txt:210
+msgid "Do the work in your local topic branch"
+msgstr "Виконайте роботу у вашій місцевій тематичній гілці"
+
+#: ../../src/appx/assignments.txt:211
+msgid "Push these changes to remote"
+msgstr "Надішліть їх до гілки віддаленого репозиторію"
+
+#: ../../src/appx/assignments.txt:212
+msgid "Re-request review (if applicable)"
+msgstr "Зробіть повторний запит на перегляд (за необхідності)"
+
+#: ../../src/appx/assignments.txt:213
+msgid "Wait until review is done"
+msgstr "Дочекайтеся завершення перевірки"

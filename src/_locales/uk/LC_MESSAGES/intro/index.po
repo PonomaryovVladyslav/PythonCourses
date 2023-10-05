@@ -1,0 +1,446 @@
+# Copyright (C) 2023, Python training course authors and contributors
+# This file is distributed under the same license as the Python Training
+# Course package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2023.
+msgid ""
+msgstr ""
+"Project-Id-Version: Python Training Course 2023.04.dev\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-10-05 19:49+0300\n"
+"PO-Revision-Date: 2023-10-05 20:13+0300\n"
+"Last-Translator: Serhii Horodilov <sgorodil@gmail.com>\n"
+"Language-Team: \n"
+"Language: uk\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<12 || n%100>14) ? 1 : 2);\n"
+"Generated-By: Babel 2.13.0\n"
+"X-Generator: Poedit 3.4\n"
+
+#: ../../src/intro/index.txt:123
+msgid "Contents"
+msgstr "Зміст"
+
+#: ../../src/intro/index.txt:2
+msgid ""
+"There are a whole bunch of common programming tasks that are easy in Python. "
+"For someone who is not yet a programmer, who wants to become a programmer, "
+"for those people Python is particularly easy to get. In Python, every symbol "
+"you type is essential."
+msgstr ""
+"Існує ціла купа звичайних програмних завдань, які легко виконати на Python. "
+"Для тих, хто ще не програміст, хто хоче стати програмістом, для цих людей "
+"Python особливо легко отримати. У Python кожен символ, який ви вводите, є "
+"важливим."
+
+#: ../../src/intro/index.txt:7
+msgid "|guido| Guido van Rossum"
+msgstr "|guido| Гвідо ван Россум"
+
+#: ../../src/intro/index.txt:175
+msgid "guido"
+msgstr "guido"
+
+#: ../../src/intro/index.txt:11
+msgid "Introduction to Python"
+msgstr "Введення в Python"
+
+#: ../../src/intro/index.txt:13
+msgid ""
+"|python| **Python** is a high-level, interpreted scripting language. It was "
+"created in the early 1990s by Guido van Rossum at Stichting Mathematisch "
+"Centrum (CWI, see https://www.cwi.nl/) in the Netherlands as a successor of "
+"a language called ABC. Guido remains Python’s principal author, although it "
+"includes many contributions from others."
+msgstr ""
+"|python| **Python** — це інтерпретована скриптова мова високого рівня. Її "
+"було створено на початку 1990-х років Гвідо ван Россумом у Stichting "
+"Mathematisch Centrum (CWI, див. https://www.cwi.nl/) у Нідерландах як "
+"наступника мови під назвою ABC. Гвідо залишається головним автором Python, "
+"хоча мова містить багато внесків від інших авторів."
+
+#: ../../src/intro/index.txt:132
+msgid "python"
+msgstr "python"
+
+#: ../../src/intro/index.txt:19
+msgid ""
+"Python 2.0 was released in 2000, and the 2.x versions were the prevalent "
+"releases until December 2008. At that time, the development team made the "
+"decision to release version 3.0, which contained a few relatively small but "
+"significant changes that were not backward compatible with the 2.x versions. "
+"Python 2 and 3 are very similar, and some features of Python 3 have been "
+"backported to Python 2. But in general, they remain not quite compatible."
+msgstr ""
+"Python 2.0 був випущений у 2000 році, а версії 2.x були поширеними випусками "
+"до грудня 2008 року. У той час команда розробників прийняла рішення "
+"випустити версію 3.0, яка містила кілька відносно невеликих, але значних "
+"змін, які не були зворотно сумісними. з версіями 2.x. Python 2 і 3 дуже "
+"схожі, і деякі функції Python 3 були перенесені в Python 2. Але загалом вони "
+"залишаються не зовсім сумісними."
+
+#: ../../src/intro/index.txt:26
+msgid ""
+"Both Python 2 and 3 have continued to be maintained and developed, with "
+"periodic release updates for both. However, an official End Of Life date of "
+"January 1, 2020 has been established for Python 2, after which time it will "
+"no longer be maintained."
+msgstr ""
+"І Python 2, і 3 продовжували підтримуватися та розроблятися з періодичними "
+"оновленнями для обох. Однак для Python 2 було встановлено офіційну дату "
+"завершення життя 1 січня 2020 року, після якої він більше не "
+"підтримуватиметься."
+
+#: ../../src/intro/index.txt:31
+msgid ""
+"Python is still maintained by a core development team at the Institute, and "
+"Guido is still in charge, having been given the title of BDFL (Benevolent "
+"Dictator For Life) by the Python community. The name Python, by the way, "
+"derives not from the snake, but from the British comedy troupe Monty "
+"Python’s Flying Circus, of which Guido was, and presumably still is, a fan. "
+"It is common to find references to Monty Python sketches and movies "
+"scattered throughout the Python documentation."
+msgstr ""
+"Python все ще підтримується основною командою розробників в Інституті, і "
+"Гвідо все ще керує, отримавши звання BDFL (Доброзичливий диктатор на все "
+"життя) від спільноти Python. Назва Python, до речі, походить не від імені "
+"змії, а від британської комедійної трупи Monty Python’s Flying Circus, "
+"шанувальником якої був і, мабуть, залишається Гвідо. Посилання на ескізи та "
+"фільми Monty Python часто можна знайти в документації Python."
+
+#: ../../src/intro/index.txt:39
+msgid "Here are some significant facts about Python."
+msgstr "Ось кілька важливих фактів про Python."
+
+#: ../../src/intro/index.txt:42
+msgid "Python is popular"
+msgstr "Python популярний"
+
+#: ../../src/intro/index.txt:43
+msgid ""
+"Python has been growing in popularity over the last few years. The 2018 "
+"Stack Overflow Developer Survey ranked Python as the 7th most popular and "
+"the number one most wanted technology of the year. By the end of Q-4 in 2022 "
+"Python is the **top** language on all GitHut metrics :cite:`github:stats`."
+msgstr ""
+"Python набирає популярності протягом останніх кількох років. Опитування "
+"розробників Stack Overflow 2018 року поставило Python на сьоме місце за "
+"популярністю та на перше місце серед найпопулярніших технологій року. До "
+"кінця четвертого кварталу 2022 року Python є **найпопулярнішою** мовою за "
+"всіма показниками GitHut :cite:`github:stats`."
+
+#: ../../src/intro/index.txt:49
+msgid ""
+"Here are some logos of unknown companies across the globe who uses Python:"
+msgstr ""
+"Ось кілька логотипів невідомих компаній по всьому світі, які використовують "
+"Python:"
+
+#: ../../src/intro/index.txt:54
+msgid "google facebook instagram spotify quora netflix dropbox reddit"
+msgstr "google facebook instagram spotify quora netflix dropbox reddit"
+
+#: ../../src/intro/index.txt
+msgid "Google"
+msgstr "Google"
+
+#: ../../src/intro/index.txt
+msgid "Facebook"
+msgstr "Facebook"
+
+#: ../../src/intro/index.txt
+msgid "Instagram"
+msgstr "Instagram"
+
+#: ../../src/intro/index.txt
+msgid "Spotify"
+msgstr "Spotify"
+
+#: ../../src/intro/index.txt
+msgid "Quora"
+msgstr "Quora"
+
+#: ../../src/intro/index.txt
+msgid "Netflix"
+msgstr "Netflix"
+
+#: ../../src/intro/index.txt
+msgid "Dropbox"
+msgstr "Dropbox"
+
+#: ../../src/intro/index.txt
+msgid "Reddit"
+msgstr "Reddit"
+
+#: ../../src/intro/index.txt:56
+msgid "Python is interpreted"
+msgstr "Python інтерпретується"
+
+#: ../../src/intro/index.txt:57
+msgid ""
+"Many languages are compiled, meaning the source code you create needs to be "
+"translated into machine code, the language of your computer’s processor, "
+"before it can be run. Programs written in an interpreted language are passed "
+"straight to an interpreter that runs them directly."
+msgstr ""
+"Багато мов компілюється, тобто вихідний код, який ви створюєте, має бути "
+"переведений у машинний код, мовою процесора вашого комп’ютера, перш ніж його "
+"можна буде запустити. Програми, написані на інтерпретованій мові, "
+"передаються прямо до інтерпретатора, який їх безпосередньо запускає."
+
+#: ../../src/intro/index.txt:62
+msgid ""
+"This makes for a quicker development cycle because you just type in your "
+"code and run it, without the intermediate compilation step."
+msgstr ""
+"Це забезпечує швидший цикл розробки, оскільки ви просто вводите код і "
+"запускаєте його без проміжного етапу компіляції."
+
+#: ../../src/intro/index.txt:66
+msgid "Python is free"
+msgstr "Python безкоштовний"
+
+#: ../../src/intro/index.txt:67
+msgid ""
+"The Python interpreter is developed under an OSI-approved open-source "
+"license, making it free to install, use, and distribute, even for commercial "
+"purposes."
+msgstr ""
+"Інтерпретатор Python розроблено відповідно до схваленої OSI ліцензії з "
+"відкритим вихідним кодом, що робить його безкоштовним для встановлення, "
+"використання та розповсюдження навіть у комерційних цілях."
+
+#: ../../src/intro/index.txt:71
+msgid "Python is portable"
+msgstr "Python портативний"
+
+#: ../../src/intro/index.txt:72
+msgid ""
+"Because Python code is interpreted and not compiled into native machine "
+"instructions, code written for one platform will work on any other platform "
+"that has the Python interpreter installed. This is true of any interpreted "
+"language, not just Python."
+msgstr ""
+"Оскільки код Python інтерпретується, а не компілюється у власні машинні "
+"інструкції, код, написаний для однієї платформи, працюватиме на будь-якій "
+"іншій платформі, де встановлено інтерпретатор Python. Це стосується будь-"
+"якої інтерпретованої мови, а не лише Python."
+
+#: ../../src/intro/index.txt:78
+msgid "Python is simple"
+msgstr "Python простий"
+
+#: ../../src/intro/index.txt:79
+msgid ""
+"As programming languages go, Python is relatively uncluttered, and the "
+"developers have deliberately kept it that way. A rough estimate of the "
+"complexity of a language can be gleaned from the number of keywords or "
+"reserved words in the language. These are words that are reserved for "
+"special meaning by the compiler or interpreter because they designate "
+"specific built-in functionality of the language. There are only 35 :cite:"
+"`docs-python:keywords` in Python and they are:"
+msgstr ""
+"Що стосується мов програмування, Python є відносно незавантаженим, і "
+"розробники навмисно залишили його таким. Приблизну оцінку складності мови "
+"можна отримати з кількості ключових або зарезервованих слів у мові. Це "
+"слова, які зарезервовані для спеціального значення компілятором або "
+"інтерпретатором, оскільки вони позначають конкретні вбудовані функції мови. "
+"У Python лише 35 :cite:`docs-python:keywords`, і вони:"
+
+#: ../../src/intro/index.txt:87
+msgid "Python Keywords"
+msgstr "Ключові слова Python"
+
+#: ../../src/intro/index.txt:91
+msgid "``False``"
+msgstr "``False``"
+
+#: ../../src/intro/index.txt:91
+msgid "``await``"
+msgstr "``await``"
+
+#: ../../src/intro/index.txt:91
+msgid "``else``"
+msgstr "``else``"
+
+#: ../../src/intro/index.txt:91
+msgid "``import``"
+msgstr "``import``"
+
+#: ../../src/intro/index.txt:91
+msgid "``pass``"
+msgstr "``pass``"
+
+#: ../../src/intro/index.txt:93
+msgid "``None``"
+msgstr "``None``"
+
+#: ../../src/intro/index.txt:93
+msgid "``break``"
+msgstr "``break``"
+
+#: ../../src/intro/index.txt:93
+msgid "``except``"
+msgstr "``except``"
+
+#: ../../src/intro/index.txt:93
+msgid "``in``"
+msgstr "``in``"
+
+#: ../../src/intro/index.txt:93
+msgid "``raise``"
+msgstr "``raise``"
+
+#: ../../src/intro/index.txt:95
+msgid "``True``"
+msgstr "``True``"
+
+#: ../../src/intro/index.txt:95
+msgid "``class``"
+msgstr "``class``"
+
+#: ../../src/intro/index.txt:95
+msgid "``finally``"
+msgstr "``finally``"
+
+#: ../../src/intro/index.txt:95
+msgid "``is``"
+msgstr "``is``"
+
+#: ../../src/intro/index.txt:95
+msgid "``return``"
+msgstr "``return``"
+
+#: ../../src/intro/index.txt:97
+msgid "``and``"
+msgstr "``and``"
+
+#: ../../src/intro/index.txt:97
+msgid "``continue``"
+msgstr "``continue``"
+
+#: ../../src/intro/index.txt:97
+msgid "``for``"
+msgstr "``for``"
+
+#: ../../src/intro/index.txt:97
+msgid "``lambda``"
+msgstr "``lambda``"
+
+#: ../../src/intro/index.txt:97
+msgid "``try``"
+msgstr "``try``"
+
+#: ../../src/intro/index.txt:99
+msgid "``as``"
+msgstr "``as``"
+
+#: ../../src/intro/index.txt:99
+msgid "``def``"
+msgstr "``def``"
+
+#: ../../src/intro/index.txt:99
+msgid "``from``"
+msgstr "``from``"
+
+#: ../../src/intro/index.txt:99
+msgid "``nonlocal``"
+msgstr "``nonlocal``"
+
+#: ../../src/intro/index.txt:99
+msgid "``while``"
+msgstr "``while``"
+
+#: ../../src/intro/index.txt:101
+msgid "``assert``"
+msgstr "``assert``"
+
+#: ../../src/intro/index.txt:101
+msgid "``del``"
+msgstr "``del``"
+
+#: ../../src/intro/index.txt:101
+msgid "``global``"
+msgstr "``global``"
+
+#: ../../src/intro/index.txt:101
+msgid "``not``"
+msgstr "``not``"
+
+#: ../../src/intro/index.txt:101
+msgid "``with``"
+msgstr "``with``"
+
+#: ../../src/intro/index.txt:103
+msgid "``async``"
+msgstr "``async``"
+
+#: ../../src/intro/index.txt:103
+msgid "``elif``"
+msgstr "``elif``"
+
+#: ../../src/intro/index.txt:103
+msgid "``if``"
+msgstr "``if``"
+
+#: ../../src/intro/index.txt:103
+msgid "``or``"
+msgstr "``or``"
+
+#: ../../src/intro/index.txt:103
+msgid "``yield``"
+msgstr "``yield``"
+
+#: ../../src/intro/index.txt:107
+msgid "Python is general purpose"
+msgstr "Python є універсальним"
+
+#: ../../src/intro/index.txt:108
+msgid ""
+"Python is everywhere. Talking more specific common scopes for Python "
+"developers are :cite:`python-usage`:"
+msgstr ""
+"Python всюди. Говорячи про більш конкретні загальні області для розробників "
+"Python, це :cite:`python-usage`:"
+
+#: ../../src/intro/index.txt:111
+msgid "Web Scraping Applications"
+msgstr "Програми для сканування веб-сторінок"
+
+#: ../../src/intro/index.txt:112
+msgid "Data Science Solutions"
+msgstr "Рішення для Data Science"
+
+#: ../../src/intro/index.txt:113
+msgid "Machine Learning Applications"
+msgstr "Програми машинного навчання"
+
+#: ../../src/intro/index.txt:114
+msgid "Web Development"
+msgstr "Веб-розробка"
+
+#: ../../src/intro/index.txt:115
+msgid "Game Development"
+msgstr "Розробка ігор"
+
+#: ../../src/intro/index.txt:116
+msgid "Scientific and Numeric Applications"
+msgstr "Наукові та обчислювальні програми"
+
+#: ../../src/intro/index.txt:117
+msgid "Image Design and Graphic Design Applications"
+msgstr "Програми для обробки зображень та графіки"
+
+#: ../../src/intro/index.txt:118
+msgid "Finance Fintech Platform"
+msgstr "Банківські та фінансові сервіси"
+
+#: ../../src/intro/index.txt:119
+msgid "Language Development"
+msgstr "Language Development"
+
+#: ../../src/intro/index.txt:120
+msgid "Operating Systems"
+msgstr "Операційні системи"

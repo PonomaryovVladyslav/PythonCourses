@@ -1,0 +1,231 @@
+# Copyright (C) 2023, Python training course authors and contributors
+# This file is distributed under the same license as the Python Training
+# Course package.
+# SERHII HORODILOV <sgorodil@gmail.com>
+msgid ""
+msgstr ""
+"Project-Id-Version: Python Training Course 2022.11.dev\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-10-05 19:49+0300\n"
+"PO-Revision-Date: 2023-10-05 20:02+0300\n"
+"Last-Translator: Serhii Horodilov <sgorodil@gmail.com>\n"
+"Language-Team: ua <LL@li.org>\n"
+"Language: uk\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<12 || n%100>14) ? 1 : 2);\n"
+"Generated-By: Babel 2.13.0\n"
+"X-Generator: Poedit 3.4\n"
+
+#: ../../src/appx/precedence.txt:-1
+msgid "Operator precedence in Python"
+msgstr "Пріоритет операторів в Python"
+
+#: ../../src/appx/precedence.txt:-1
+msgid "Serhii Horodilov sgorodil@gmail.com"
+msgstr "Serhii Horodilov sgorodil@gmail.com"
+
+#: ../../src/appx/precedence.txt:-1
+msgid "python, basics, operator, precedence"
+msgstr "python, basics, operator, precedence"
+
+#: ../../src/appx/precedence.txt:8
+msgid "Operator Precedence"
+msgstr "Пріоритет Операторів"
+
+#: ../../src/appx/precedence.txt:10
+msgid ""
+"The following table summarizes the operator precedence in Python, from "
+"highest precedence (most binding) to lowest precedence (least binding) :cite:"
+"`docs-python:operator-precedence`. Operators in the same cell have the same "
+"precedence (use left-to-right precedence)."
+msgstr ""
+"У наведеній нижче таблиці підсумовано пріоритет операторів у Python від "
+"найвищого пріоритету (найбільш обов'язковий) до найнижчого пріоритету "
+"(найменший обов'язковий) :cite:`docs-python:operator-precedence`. Оператори "
+"в одній клітинці мають однаковий пріоритет (використовуйте пріоритет зліва "
+"направо)."
+
+#: ../../src/appx/precedence.txt:16
+msgid "Operator"
+msgstr "Оператор"
+
+#: ../../src/appx/precedence.txt:16
+msgid "Description"
+msgstr "Опис"
+
+#: ../../src/appx/precedence.txt:18
+msgid ""
+"``(expressions...)``, ``[expressions...]``, ``{key: value...}``, "
+"``{expressions...}``"
+msgstr ""
+"``(expressions...)``, ``[expressions...]``, ``{key: value...}``, "
+"``{expressions...}``"
+
+#: ../../src/appx/precedence.txt:18
+msgid ""
+"Binding or parenthesized expression, list display, dictionary display, set "
+"display"
+msgstr ""
+"Прив'язка або вираз у дужках, відображення списку, відображення словника, "
+"відображення набору"
+
+#: ../../src/appx/precedence.txt:23
+msgid "``x[index]``, ``x[index:index]``, ``x(arguments...)``, ``x.attribute``"
+msgstr "``x[index]``, ``x[index:index]``, ``x(arguments...)``, ``x.attribute``"
+
+#: ../../src/appx/precedence.txt:23
+msgid "Subscription, slicing, call, attribute reference"
+msgstr "Підписка, нарізка, виклик, посилання на атрибути"
+
+#: ../../src/appx/precedence.txt:28
+msgid "``await x``"
+msgstr "``await x``"
+
+#: ../../src/appx/precedence.txt:28
+msgid "Await expression"
+msgstr "Вираз Await"
+
+#: ../../src/appx/precedence.txt:30
+msgid "``**``"
+msgstr "``**``"
+
+#: ../../src/appx/precedence.txt:30
+msgid "Exponentiation [#]_"
+msgstr "Піднесення до степеня [#]_"
+
+#: ../../src/appx/precedence.txt:32
+msgid "``+x``, ``-x``, ``~x``"
+msgstr "``+x``, ``-x``, ``~x``"
+
+#: ../../src/appx/precedence.txt:32
+msgid "Positive, negative, bitwise NOT"
+msgstr "Позитивне, негативне, побітове НІ"
+
+#: ../../src/appx/precedence.txt:34
+msgid "``*``, ``@``, ``/``, ``//``, ``%``"
+msgstr "``*``, ``@``, ``/``, ``//``, ``%``"
+
+#: ../../src/appx/precedence.txt:34
+msgid ""
+"Multiplication, matrix multiplication, division, floor division, remainder "
+"[#]_"
+msgstr "Множення, матричне множення, ділення, поверхове ділення, залишок [#]_"
+
+#: ../../src/appx/precedence.txt:37
+msgid "``+``, ``-``"
+msgstr "``+``, ``-``"
+
+#: ../../src/appx/precedence.txt:37
+msgid "Addition and subtraction"
+msgstr "Додавання і віднімання"
+
+#: ../../src/appx/precedence.txt:39
+msgid "``<<``, ``>>``"
+msgstr "``<<``, ``>>``"
+
+#: ../../src/appx/precedence.txt:39
+msgid "Shifts"
+msgstr "Зсуви"
+
+#: ../../src/appx/precedence.txt:41
+msgid "``&``"
+msgstr "``&``"
+
+#: ../../src/appx/precedence.txt:41
+msgid "Bitwise AND"
+msgstr "Побітове І"
+
+#: ../../src/appx/precedence.txt:43
+msgid "``^``"
+msgstr "``^``"
+
+#: ../../src/appx/precedence.txt:43
+msgid "Bitwise XOR"
+msgstr "Побітове XOR"
+
+#: ../../src/appx/precedence.txt:45
+msgid "``|``"
+msgstr "``|``"
+
+#: ../../src/appx/precedence.txt:45
+msgid "Bitwise OR"
+msgstr "Порозрядне АБО"
+
+#: ../../src/appx/precedence.txt:47
+msgid ""
+"``in``, ``not in``, ``is``, ``is not``, ``<``, ``<=``, ``>``, ``>=``, "
+"``==``, ``!=``"
+msgstr ""
+"``in``, ``not in``, ``is``, ``is not``, ``<``, ``<=``, ``>``, ``>=``, "
+"``==``, ``!=``"
+
+#: ../../src/appx/precedence.txt:47
+msgid "Comparisons, including membership tests and identity tests"
+msgstr "Порівняння, включаючи тести на приналежність і тести на ідентифікацію"
+
+#: ../../src/appx/precedence.txt:52
+msgid "``not x``"
+msgstr "``not x``"
+
+#: ../../src/appx/precedence.txt:52
+msgid "Boolean NOT"
+msgstr "Логічне НІ"
+
+#: ../../src/appx/precedence.txt:54
+msgid "``and``"
+msgstr "``and``"
+
+#: ../../src/appx/precedence.txt:54
+msgid "Boolean AND"
+msgstr "Логічне І"
+
+#: ../../src/appx/precedence.txt:56
+msgid "``or``"
+msgstr "``or``"
+
+#: ../../src/appx/precedence.txt:56
+msgid "Boolean OR"
+msgstr "Логічне АБО"
+
+#: ../../src/appx/precedence.txt:58
+msgid "``if - else``"
+msgstr "``if - else``"
+
+#: ../../src/appx/precedence.txt:58
+msgid "Conditional expression (ternary ``if``)"
+msgstr "Умовний вираз (трійковий ``if``)"
+
+#: ../../src/appx/precedence.txt:60
+msgid "``lambda``"
+msgstr "``lambda``"
+
+#: ../../src/appx/precedence.txt:60
+msgid "Lambda expression"
+msgstr "Lambda вирази"
+
+#: ../../src/appx/precedence.txt:62
+msgid "``=``, ``:=``"
+msgstr "``=``, ``:=``"
+
+#: ../../src/appx/precedence.txt:62
+msgid "Assignment expression"
+msgstr "Оперетор присвоєння"
+
+#: ../../src/appx/precedence.txt:65
+msgid ""
+"the power operator binds less tightly than an arithmetic or bitwise unary "
+"operator on its right (``2 ** -1`` is ``0.5``)."
+msgstr ""
+"оператор степені прив'язує менш тісно, ніж арифметичний або порозрядний "
+"унарний оператор праворуч (``2 ** -1`` це ``0,5``)."
+
+#: ../../src/appx/precedence.txt:67
+msgid ""
+"the ``%`` operator is also used for string formatting; the same precedence "
+"applies."
+msgstr ""
+"оператор ``%`` також використовується для форматування рядків; "
+"застосовується той самий пріоритет."

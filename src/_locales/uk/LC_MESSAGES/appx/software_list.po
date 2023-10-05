@@ -1,0 +1,275 @@
+# Copyright (C) 2023, Python training course authors and contributors
+# This file is distributed under the same license as the Python Training
+# Course package.
+# SERHII HORODILOV <sgorodil@gmail.com>
+msgid ""
+msgstr ""
+"Project-Id-Version: Python Training Course 2022.11.dev\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-10-05 19:49+0300\n"
+"PO-Revision-Date: 2023-10-05 20:02+0300\n"
+"Last-Translator: Serhii Horodilov <sgorodil@gmail.com>\n"
+"Language-Team: ua <LL@li.org>\n"
+"Language: uk\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<12 || n%100>14) ? 1 : 2);\n"
+"Generated-By: Babel 2.13.0\n"
+"X-Generator: Poedit 3.4\n"
+
+#: ../../src/appx/software_list.rst:-1
+msgid "Useful software list"
+msgstr "Список корисного програмного забезпечення"
+
+#: ../../src/appx/software_list.rst:-1
+msgid "Serhii Horodilov"
+msgstr "Serhii Horodilov"
+
+#: ../../src/appx/software_list.rst:-1
+msgid "software"
+msgstr "software"
+
+#: ../../src/appx/software_list.rst:7
+msgid "Software List"
+msgstr "Список Програмного Забезпечення"
+
+#: ../../src/appx/software_list.rst:10
+msgid "7zip"
+msgstr "7zip"
+
+#: ../../src/appx/software_list.rst:12
+msgid "**7-Zip** is **free software** with **open source**."
+msgstr ""
+"**7-Zip** — це **вільне програмне забезпечення** з **відкритим кодом**."
+
+#: ../../src/appx/software_list.rst:14
+msgid ""
+"High compression ratio in `7z format <https://7-zip.org/7z.html>`__ with "
+"**LZMA** and **LZMA2** compression"
+msgstr ""
+"Високий ступінь стиснення у `7z format <https://7-zip.org/7z.html>`__ зі "
+"стисненням **LZMA** і **LZMA2**"
+
+#: ../../src/appx/software_list.rst:16
+msgid "Supported formats:"
+msgstr "Підтримувані формати:"
+
+#: ../../src/appx/software_list.rst:18
+msgid "Packing / unpacking: 7z, XZ, BZIP2, GZIP, TAR, ZIP and WIM"
+msgstr "Пакування / розпакування: 7z, XZ, BZIP2, GZIP, TAR, ZIP і WIM"
+
+#: ../../src/appx/software_list.rst:19
+msgid ""
+"Unpacking only: APFS, AR, ARJ, CAB, CHM, CPIO, CramFS, DMG, EXT, FAT, GPT, "
+"HFS, IHEX, ISO, LZH, LZMA, MBR, MSI, NSIS, NTFS, QCOW2, RAR, RPM, SquashFS, "
+"UDF, UEFI, VDI, VHD, VHDX, VMDK, XAR and Z."
+msgstr ""
+"Лише розпакування: APFS, AR, ARJ, CAB, CHM, CPIO, CramFS, DMG, EXT, FAT, "
+"GPT, HFS, IHEX, ISO, LZH, LZMA, MBR, MSI, NSIS, NTFS, QCOW2, RAR, RPM, "
+"SquashFS , UDF, UEFI, VDI, VHD, VHDX, VMDK, XAR і Z."
+
+#: ../../src/appx/software_list.rst:23
+msgid "Self-extracting capability for 7z format"
+msgstr "Можливість саморозпакування для формату 7z"
+
+#: ../../src/appx/software_list.rst:24
+msgid "Integration with Windows Shell"
+msgstr "Інтеграція з Windows Shell"
+
+#: ../../src/appx/software_list.rst:26
+msgid "https://7-zip.org/"
+msgstr "https://7-zip.org/"
+
+#: ../../src/appx/software_list.rst:29
+msgid "cygwin"
+msgstr "cygwin"
+
+#: ../../src/appx/software_list.rst:31
+msgid ""
+"It is a large collection of GNU and Open Source tools which provide "
+"functionality similar to a `Linux distribution <https://en.wikipedia.org/"
+"wiki/Linux_distribution>`__ on Windows and a DLL (cygwin1.dll) which "
+"provides substantial POSIX API functionality."
+msgstr ""
+"Це велика колекція інструментів GNU та Open Source, які забезпечують "
+"функціональність, подібну до `дистрибутива Linux <https://en.wikipedia.org/"
+"wiki/Linux_distribution>`__ у Windows та DLL (cygwin1.dll), яка забезпечує "
+"значний POSIX Функціонал API."
+
+#: ../../src/appx/software_list.rst:37
+msgid "**Cygwin is not**:"
+msgstr "**Сygwin це не**:"
+
+#: ../../src/appx/software_list.rst:39
+msgid ""
+"a way to run native Linux apps on Windows. You must rebuild your application "
+"*from source* if you want it to run on Windows."
+msgstr ""
+"спосіб запуску рідних програм Linux у Windows. Ви повинні перебудувати свою "
+"програму *з вихідного коду*, якщо ви хочете, щоб вона запускалася в Windows."
+
+#: ../../src/appx/software_list.rst:41
+msgid ""
+"a way to magically make native Windows apps aware of UNIX® functionality "
+"like ``signals``, ``ptys`` etc. Again, you need to build your apps *from "
+"source* if you want to take advantage of Cygwin functionality."
+msgstr ""
+"спосіб чарівним чином зробити рідні програми Windows відомими "
+"функціональності UNIX®, як-от `signals`, `ptys` тощо. Знову ж таки, вам "
+"потрібно створити свої програми *з джерела*, якщо ви хочете скористатися "
+"перевагами функціональності Cygwin."
+
+#: ../../src/appx/software_list.rst:46
+msgid "https://www.cygwin.com/"
+msgstr "https://www.cygwin.com/"
+
+#: ../../src/appx/software_list.rst:49
+msgid "git [#cygwin]_"
+msgstr "git [#cygwin]_"
+
+#: ../../src/appx/software_list.rst:51
+msgid ""
+"Git is a `free and open source <https://git-scm.com/about/free-and-open-"
+"source>`__ distributed version control system designed to handle everything "
+"from small to very large projects with speed and efficiency."
+msgstr ""
+"Git — це `безкоштовна система з відкритим вихідним кодом <https://git-scm."
+"com/about/free-and-open-source>`__ розподілена система контролю версій, "
+"призначена для швидкого та ефективного керування всіма проектами, від малих "
+"до дуже великих."
+
+#: ../../src/appx/software_list.rst:56
+msgid "https://git-scm.com/"
+msgstr "https://git-scm.com/"
+
+#: ../../src/appx/software_list.rst:59
+msgid "Docker"
+msgstr "Docker"
+
+#: ../../src/appx/software_list.rst:61
+msgid "The most-loved Tool in Stack Overflow’s 2022 Developer Survey."
+msgstr ""
+"Найулюбленіший інструмент в опитуванні розробників Stack Overflow за 2022 "
+"рік."
+
+#: ../../src/appx/software_list.rst:63
+msgid ""
+"Docker helps developers bring their ideas to life by conquering the "
+"complexity of app development. We simplify and accelerate development "
+"workflows with an integrated dev pipeline and through the consolidation of "
+"application components. Actively used by millions of developers around the "
+"world, Docker Desktop and Docker Hub provide unmatched simplicity, agility "
+"and choice."
+msgstr ""
+"Docker допомагає розробникам втілювати свої ідеї в життя, долаючи складність "
+"розробки програм. Ми спрощуємо та прискорюємо робочі процеси розробки за "
+"допомогою інтегрованого конвеєра розробників і консолідації компонентів "
+"програми. Активно використовувані мільйонами розробників у всьому світі "
+"Docker Desktop і Docker Hub забезпечують неперевершену простоту, гнучкість і "
+"вибір."
+
+#: ../../src/appx/software_list.rst:70
+msgid "https://www.docker.com/"
+msgstr "https://www.docker.com/"
+
+#: ../../src/appx/software_list.rst:73
+msgid "PostgreSQL [#cygwin]_"
+msgstr "PostgreSQL [#cygwin]_"
+
+#: ../../src/appx/software_list.rst:75
+msgid ""
+"PostgreSQL is a powerful, open source object-relational database system with "
+"over 35 years of active development that has earned it a strong reputation "
+"for reliability, feature robustness, and performance."
+msgstr ""
+"PostgreSQL — це потужна об'єктно-реляційна база даних з відкритим вихідним "
+"кодом, активна розробка якої триває понад 35 років, завдяки чому вона "
+"заслужила міцну репутацію надійності, надійності функцій і продуктивності."
+
+#: ../../src/appx/software_list.rst:79
+msgid "https://www.postgresql.org/"
+msgstr "https://www.postgresql.org/"
+
+#: ../../src/appx/software_list.rst:84
+msgid "psql [#cygwin]_"
+msgstr "psql [#cygwin]_"
+
+#: ../../src/appx/software_list.rst:86
+msgid ""
+"A terminal-based front-end to PostgreSQL. It enables you to type in queries "
+"interactively, issue them to PostgreSQL, and see the query results. "
+"Alternatively, input can be from a file or from command line arguments. In "
+"addition, psql provides a number of meta-commands and various shell-like "
+"features to facilitate writing scripts and automating a wide variety of "
+"tasks."
+msgstr ""
+"Термінальний інтерфейс для PostgreSQL. Це дозволяє вводити запити в "
+"інтерактивному режимі, надсилати їх у PostgreSQL і переглядати результати "
+"запиту. Крім того, введення може бути з файлу або з аргументів командного "
+"рядка. Крім того, psql надає низку мета-команд і різноманітних функцій, "
+"подібних до оболонки, для полегшення написання сценаріїв і автоматизації "
+"різноманітних завдань."
+
+#: ../../src/appx/software_list.rst:93
+msgid ""
+"On Windows it will be installed within PostgreSQL RDBMS. For macOS and Linux "
+"look for ``postgresql-client`` package."
+msgstr ""
+"У Windows його буде встановлено в СУБД PostgreSQL. Для macOS і Linux "
+"знайдіть пакет ``postgresql-client``."
+
+#: ../../src/appx/software_list.rst:96
+msgid "https://www.postgresql.org/docs/current/app-psql.html"
+msgstr "https://www.postgresql.org/docs/current/app-psql.html"
+
+#: ../../src/appx/software_list.rst:99
+msgid "pgAdmin"
+msgstr "pgAdmin"
+
+#: ../../src/appx/software_list.rst:101
+msgid ""
+"pgAdmin is the most popular and feature rich Open Source administration and "
+"development platform for PostgreSQL, the most advanced Open Source database "
+"in the world."
+msgstr ""
+"pgAdmin — це найпопулярніша та багатофункціональна платформа адміністрування "
+"та розробки з відкритим кодом для PostgreSQL, найдосконалішої бази даних з "
+"відкритим кодом у світі."
+
+#: ../../src/appx/software_list.rst:105
+msgid "It is a PostgreSQL client (like a ``psql``), but with web based GUI."
+msgstr ""
+"Це клієнт PostgreSQL (як ``psql``), але з графічним інтерфейсом на основі "
+"веб-інтерфейсу."
+
+#: ../../src/appx/software_list.rst:107
+msgid "https://pgadmin.org/"
+msgstr "https://pgadmin.org/"
+
+#: ../../src/appx/software_list.rst:110
+msgid "SQLite [#cygwin]_"
+msgstr "SQLite [#cygwin]_"
+
+#: ../../src/appx/software_list.rst:112
+msgid ""
+"SQLite is a C-language library that implements a `small <https://sqlite.org/"
+"footprint.html>`__, `fast <https://sqlite.org/fasterthanfs.html>`__, `self-"
+"contained <https://sqlite.org/selfcontained.html>`__, `high-reliability "
+"<https://sqlite.org/hirely.html>`__, `full-featured <https://sqlite.org/"
+"fullsql.html>`__, SQL database engine."
+msgstr ""
+"SQLite — це бібліотека мовою C, яка реалізує `маленьку <https://sqlite.org/"
+"footprint.html>`__, `швидку <https://sqlite.org/fasterthanfs.html>`__, "
+"`самодостатню <https://sqlite.org/selfcontained.html>`__, `висока надійність "
+"<https://sqlite.org/hirely.html>`__, `повнофункціональний <https://sqlite."
+"org/fullsql.html>`__, двигун бази даних SQL."
+
+#: ../../src/appx/software_list.rst:120
+msgid "https://sqlite.org/"
+msgstr "https://sqlite.org/"
+
+#: ../../src/appx/software_list.rst:123
+msgid "available for installation as a cygwin package"
+msgstr "доступно для встановлення як пакет cygwin"
