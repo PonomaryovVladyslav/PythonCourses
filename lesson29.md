@@ -651,7 +651,7 @@ def index(request):
 
 Продолжаем собирать блог
 
-https://edu-python-course.github.io/_build/html/uk/appx/blog.html#challenge-templates
+https://edu-python-course.github.io/_build/html/uk/appx/blog/spec.html#challenge-templates
 
 На данном этапе мы пока не можем реализовать все что указанно в спецификации поэтому на текущем моменте надо реализовать такие страницы как:
 
