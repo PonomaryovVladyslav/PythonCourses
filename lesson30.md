@@ -527,7 +527,7 @@ class Membership(models.Model):
 
 # Домашнее задание / Практика:
 
-https://edu-python-course.github.io/_build/html/uk/appx/blog.html#challenge-data-models
+https://edu-python-course.github.io/_build/html/uk/appx/blog/spec.html#challenge-data-models
 
 topic <--> blogpost = m2m: у blogpost должен быть хотя бы 1 topic
 
