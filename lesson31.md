@@ -33,8 +33,8 @@ class Author(models.Model):
 class Article(models.Model):
     author = models.ForeignKey(Author, on_delete=models.CASCADE, null=True, related_name='articles')
     text = models.TextField(max_length=10000, null=True)
-    created_at = models.DateTimeField(default=timezone.now)
-    updated_at = models.DateTimeField(default=timezone.now)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
     genre = models.IntegerField(choices=GENRE_CHOICES, default=1)
 
     def __str__(self):
