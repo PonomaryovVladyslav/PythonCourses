@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: Python Training Course 2022.11.dev\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-10-05 19:49+0300\n"
-"PO-Revision-Date: 2023-10-17 23:16+0300\n"
+"PO-Revision-Date: 2023-10-18 00:17+0300\n"
 "Last-Translator: Serhii Horodilov <sgorodil@gmail.com>\n"
 "Language-Team: \n"
 "Language: uk\n"
@@ -20,29 +20,24 @@ msgstr ""
 "X-Generator: Poedit 3.4\n"
 
 #: ../../src/basics/bool_logic.txt:-1
-#, fuzzy
 msgid "this document covers usage of logic and comparison operators in Python"
 msgstr ""
 "у цьому документі розглядається використання логічних операторів та "
 "операторів порівняння у Python"
 
 #: ../../src/basics/bool_logic.txt:-1
-#, fuzzy
 msgid "Serhii Horodilov"
 msgstr "Serhii Horodilov"
 
 #: ../../src/basics/bool_logic.txt:-1
-#, fuzzy
 msgid "python, boolean, logic, comparison, operator"
 msgstr "python, boolean, logic, comparison, operator"
 
 #: ../../src/basics/bool_logic.txt:14
-#, fuzzy
 msgid "Boolean Logic"
 msgstr "Булева Логіка"
 
 #: ../../src/basics/bool_logic.txt:20
-#, fuzzy
 msgid ""
 "`George Boole`_ put together what is now known as `Boolean algebra`_, which "
 "relies on **true** and **false** values and define a set of boolean "
@@ -50,10 +45,9 @@ msgid ""
 msgstr ""
 "`Джордж Буль`_ створив те, що зараз відоме як `булева алгебра`_, яка "
 "спирається на значення **істина** та **хибність** і визначає набір булевих "
-"операцій: **не**, **і** та **або**."
+"операцій: **not**, **and** та **or**."
 
 #: ../../src/basics/bool_logic.txt:24
-#, fuzzy
 msgid ""
 "These Boolean values and operators are helpful in programming because they "
 "help you decide the course of action in your programs."
@@ -62,7 +56,6 @@ msgstr ""
 "допомагають вам визначати порядок дій у ваших програмах."
 
 #: ../../src/basics/bool_logic.txt:27
-#, fuzzy
 msgid ""
 "The **Python boolean** type is one of Python's built-in data types. It's "
 "used to represent the truth value of an expression. For example, the "
@@ -72,17 +65,15 @@ msgid ""
 msgstr ""
 "Тип **Python boolean** є одним із вбудованих типів даних Python. Він "
 "використовується для представлення значення істинності виразу. Наприклад, "
-"вираз ``1 < 2`` є ``True`` (істине), тоді як вираз ``0 == 1`` є ``False`` "
-"(хибне). Розуміння того, як поводяться булеві значення у Python, є важливим "
+"вираз ``1 < 2`` є ``True`` (істина), тоді як вираз ``0 == 1`` є ``False`` "
+"(хибний). Розуміння того, як поводяться булеві значення у Python, є важливим "
 "для якісного програмування на Python."
 
 #: ../../src/basics/bool_logic.txt:34
-#, fuzzy
 msgid "Understanding Boolean"
 msgstr "Розуміння булевих функцій"
 
 #: ../../src/basics/bool_logic.txt:36
-#, fuzzy
 msgid "The Boolean type has only two possible values:"
 msgstr "Тип Boolean має лише два можливих значення:"
 
@@ -91,7 +82,6 @@ msgstr "Тип Boolean має лише два можливих значення:
 #: ../../src/basics/bool_logic.txt:151 ../../src/basics/bool_logic.txt:153
 #: ../../src/basics/bool_logic.txt:189 ../../src/basics/bool_logic.txt:193
 #: ../../src/basics/bool_logic.txt:195
-#, fuzzy
 msgid "``True``"
 msgstr "``True``"
 
@@ -100,17 +90,14 @@ msgstr "``True``"
 #: ../../src/basics/bool_logic.txt:151 ../../src/basics/bool_logic.txt:153
 #: ../../src/basics/bool_logic.txt:191 ../../src/basics/bool_logic.txt:193
 #: ../../src/basics/bool_logic.txt:195
-#, fuzzy
 msgid "``False``"
 msgstr "``False``"
 
 #: ../../src/basics/bool_logic.txt:41
-#, fuzzy
 msgid "No other value will have ``bool`` as it type."
 msgstr "Жодне інше значення не буде мати тип ``bool``."
 
 #: ../../src/basics/bool_logic.txt:50
-#, fuzzy
 msgid ""
 "The type ``bool`` is **built-in**, meaning it's always available in Python. "
 "``True`` and ``False`` are keywords in Python and can't be used as variable "
@@ -119,16 +106,14 @@ msgid ""
 msgstr ""
 "Тип ``bool`` є **вбудованим**, тобто він завжди доступний у Python. ``True`` "
 "та ``False`` є ключовими словами у Python і не можуть використовуватися як "
-"імена змінних, але тип ``bool`` не є таким, і його можна присвоювати імені "
-"``bool``, однак це вважається поганим стилем."
+"імена змінних, але тип ``bool`` не є таким, і можна зробити змінну ``bool``, "
+"однак це вважається поганим стилем."
 
 #: ../../src/basics/bool_logic.txt:56
-#, fuzzy
 msgid "Boolean as numbers"
 msgstr "Булеві як числа"
 
 #: ../../src/basics/bool_logic.txt:58
-#, fuzzy
 msgid ""
 "Booleans are a subtype of **numeric** type in Python. This means they're "
 "numbers for all intents and purposes. In other words, you can apply "
@@ -138,37 +123,32 @@ msgstr ""
 "Булеві вирази є підтипом **числового** типу у Python. Це означає, що вони є "
 "числами за всіма ознаками. Іншими словами, до булевих типів можна "
 "застосовувати арифметичні операції, а також порівнювати їх з числами. "
-"Значення ``Істина`` розглядається як 1, а значення ``Неправда`` "
-"розглядається як 0."
+"Значення ``True`` розглядається як 1, а значення ``False`` розглядається як "
+"0."
 
 #: ../../src/basics/bool_logic.txt:63
-#, fuzzy
 msgid "There aren't many uses of the numerical nature of Boolean values."
 msgstr "Існує не так багато застосувань числової природи булевих значень."
 
 #: ../../src/basics/bool_logic.txt:66
-#, fuzzy
 msgid "Truth value testing"
 msgstr "Перевірка істинності"
 
 #: ../../src/basics/bool_logic.txt:68
-#, fuzzy
 msgid ""
 "Any object can be tested for truth value. By default an object considered "
 "``True``, unless its class defines either. Here are most of built-in objects "
 "considered ``False``:"
 msgstr ""
 "Будь-який об'єкт можна перевірити на істинність. За замовчуванням об'єкт "
-"вважається ``Істинним``, якщо його клас не визначає іншого значення. "
-"Більшість вбудованих об'єктів вважаються такими, що мають значення ``False``:"
+"вважається ``True``, якщо його клас не визначає іншого значення. Ось "
+"більшість вбудованих об'єктів, що мають значення ``False``:"
 
 #: ../../src/basics/bool_logic.txt:72
-#, fuzzy
 msgid "constant values: ``None`` and ``False``"
 msgstr "константні значення: ``None`` та ``False``"
 
 #: ../../src/basics/bool_logic.txt:73
-#, fuzzy
 msgid ""
 "zero of any numeric type: ``0``, ``0.0``, ``0j``, ``Decimal(0)``, "
 "``Fraction(0, 1)``"
@@ -177,7 +157,6 @@ msgstr ""
 "``Fraction(0, 1)``"
 
 #: ../../src/basics/bool_logic.txt:75
-#, fuzzy
 msgid ""
 "empty sequences and collections: ``''``, ``[]``, ``()``, ``{}``, ``set()``, "
 "``range(0)``."
@@ -186,7 +165,6 @@ msgstr ""
 "``set()``, ``range(0)``."
 
 #: ../../src/basics/bool_logic.txt:80
-#, fuzzy
 msgid ""
 "If ``len(something)`` is equal to 0, than ``something`` is cast to ``bool`` "
 "as ``False``."
@@ -195,57 +173,46 @@ msgstr ""
 "як ``False``."
 
 #: ../../src/basics/bool_logic.txt:84
-#, fuzzy
 msgid "Boolean comparison"
 msgstr "Логічне порівняння"
 
 #: ../../src/basics/bool_logic.txt:86
-#, fuzzy
 msgid "Python provides 3 logical operators:"
 msgstr "У мові Python передбачено 3 логічних оператори:"
 
 #: ../../src/basics/bool_logic.txt:92 ../../src/basics/bool_logic.txt:226
-#, fuzzy
 msgid "Operator"
 msgstr "Оператор"
 
 #: ../../src/basics/bool_logic.txt:92
-#, fuzzy
 msgid "Logic operator"
 msgstr "Логічний оператор"
 
 #: ../../src/basics/bool_logic.txt:94
-#, fuzzy
 msgid "``not``"
-msgstr "ні"
+msgstr "``not``"
 
 #: ../../src/basics/bool_logic.txt:94
-#, fuzzy
 msgid "Negation"
 msgstr "Заперечення"
 
 #: ../../src/basics/bool_logic.txt:96
-#, fuzzy
 msgid "``and``"
-msgstr "і.."
+msgstr "``and``"
 
 #: ../../src/basics/bool_logic.txt:96
-#, fuzzy
 msgid "Conjunction"
 msgstr "Кон'юнкція"
 
 #: ../../src/basics/bool_logic.txt:98
-#, fuzzy
 msgid "``or``"
-msgstr "або.."
+msgstr "``or``"
 
 #: ../../src/basics/bool_logic.txt:98
-#, fuzzy
 msgid "Disjunction"
 msgstr "Диз'юнкція"
 
 #: ../../src/basics/bool_logic.txt:101
-#, fuzzy
 msgid ""
 "With these operators, you can build expressions by connecting Boolean "
 "expressions with each other. These operators are **keywords** of the "
@@ -257,12 +224,10 @@ msgstr ""
 "можете використовувати їх як ідентифікатори, не викликавши *SyntaxError*."
 
 #: ../../src/basics/bool_logic.txt:106
-#, fuzzy
 msgid "Getting started with ``not`` operator"
 msgstr "Початок роботи з оператором ``not``"
 
 #: ../../src/basics/bool_logic.txt:108
-#, fuzzy
 msgid ""
 "The ``not`` operator is the Boolean or logic operator that implements "
 "negation in Python. It's **unary**, which means that it takes only one "
@@ -276,27 +241,22 @@ msgstr ""
 "свого операнда на протилежне."
 
 #: ../../src/basics/bool_logic.txt:113
-#, fuzzy
 msgid "not operator truth table"
 msgstr "таблиця істинності оператора not"
 
 #: ../../src/basics/bool_logic.txt:117
-#, fuzzy
 msgid "``operand``"
 msgstr "``операнд``"
 
 #: ../../src/basics/bool_logic.txt:117
-#, fuzzy
 msgid "``not operand``"
 msgstr "``not операнд``"
 
 #: ../../src/basics/bool_logic.txt:124
-#, fuzzy
 msgid "This functionality makes it worthwhile in several situations:"
 msgstr "Ця функціональність робить його корисним у кількох ситуаціях:"
 
 #: ../../src/basics/bool_logic.txt:127
-#, fuzzy
 msgid ""
 "Checking **unmet conditions** in the context of ``if`` statements and "
 "``while`` loops"
@@ -305,27 +265,22 @@ msgstr ""
 "``while``"
 
 #: ../../src/basics/bool_logic.txt:129
-#, fuzzy
 msgid "**Inverting the truth value** of an object or expression"
 msgstr "**Інвертування значення істинності** об'єкта або виразу"
 
 #: ../../src/basics/bool_logic.txt:130
-#, fuzzy
 msgid "Checking if a **value is not in a given container**"
 msgstr "Перевірка, чи **значення не знаходиться у заданому контейнері**"
 
 #: ../../src/basics/bool_logic.txt:131
-#, fuzzy
 msgid "Checking for an **object's identity**"
 msgstr "Перевірка **ідентичності об'єкта**"
 
 #: ../../src/basics/bool_logic.txt:134
-#, fuzzy
 msgid "Getting started with ``and`` operator"
 msgstr "Початок роботи з оператором ``and``"
 
 #: ../../src/basics/bool_logic.txt:136
-#, fuzzy
 msgid ""
 "Python's ``and`` operator is **binary**, which means it takes two "
 "**operands**. The operands in an ``and`` expression are commonly known as "
@@ -333,60 +288,48 @@ msgid ""
 "operands. It'll be ``True`` if **both** are true."
 msgstr ""
 "Оператор ``and`` у мові Python є **двійковим**, що означає, що він приймає "
-"два **операнди**. Операнди у виразі ``і`` зазвичай називають *умовами*. "
+"два **операнди**. Операнди у виразі ``and`` зазвичай називають *умовами*. "
 "Результат оператора залежить від значень істинності його операндів. "
-"Результат буде ``Істина``, якщо **обоє** є істинними."
+"Результат буде ``True``, якщо **обоє** є істинними."
 
 #: ../../src/basics/bool_logic.txt:141
-#, fuzzy
 msgid "and operator truth table"
 msgstr "таблиця істинності оператора and"
 
 #: ../../src/basics/bool_logic.txt:145 ../../src/basics/bool_logic.txt:187
-#, fuzzy
 msgid "``operand_1``"
 msgstr "``operand_1``"
 
 #: ../../src/basics/bool_logic.txt:145 ../../src/basics/bool_logic.txt:187
-#, fuzzy
 msgid "``operand_2``"
 msgstr "``operand_2``"
 
 #: ../../src/basics/bool_logic.txt:145
-#, fuzzy
 msgid "``operand_1 and operand_2``"
 msgstr "``operand_1 and operand_2``"
 
 #: ../../src/basics/bool_logic.txt:156
-#, fuzzy
 msgid ""
 "``and`` operator works not only with operands of Boolean type. It's behavior:"
-msgstr "``and`` працює не тільки з операндами булевого типу. Це поведінка:"
+msgstr "``and`` працює не тільки з операндами булевого типу. Ось алгоритм:"
 
 #: ../../src/basics/bool_logic.txt:159
-#, fuzzy
 msgid "evaluate 1st operand; return it, if it's ``False`` and finish"
-msgstr ""
-"обчислити 1-й операнд; повернути його, якщо він рівний ``False`` і завершити"
+msgstr "обчислити 1-й операнд; повернути його, якщо він ``False`` і завершити"
 
 #: ../../src/basics/bool_logic.txt:160
-#, fuzzy
 msgid "evaluate 2nd operand; return it, if it's ``False`` and finish"
-msgstr ""
-"обчислити 2-й операнд; повернути його, якщо він рівний ``False`` і завершити"
+msgstr "обчислити 2-й операнд; повернути його, якщо він ``False`` і завершити"
 
 #: ../../src/basics/bool_logic.txt:161 ../../src/basics/bool_logic.txt:203
-#, fuzzy
 msgid "return 2nd operand"
 msgstr "повернути 2-й операнд"
 
 #: ../../src/basics/bool_logic.txt:175
-#, fuzzy
 msgid "Getting started with ``or`` operator"
 msgstr "Початок роботи з оператором ``or``"
 
 #: ../../src/basics/bool_logic.txt:177
-#, fuzzy
 msgid ""
 "With Boolean ``or`` operator, you can connect two Boolean expressions into "
 "one compound expression. This makes ``or`` the **binary** operator. At least "
@@ -394,47 +337,38 @@ msgid ""
 "considered ``True``, and it doesn't matter which. If both subexpressions are "
 "``False``, then the expression is ``False``."
 msgstr ""
-"За допомогою булевого оператора ``або`` ви можете об'єднати два булевих "
-"вирази в один складений вираз. Це робить ``або`` **бінарним** оператором. "
+"За допомогою булевого оператора ``or`` ви можете об'єднати два булевих "
+"вирази в один складений вираз. Це робить ``or`` **бінарним** оператором. "
 "Принаймні один з підвиразів має бути ``True``, щоб складений вираз вважався "
 "``True``, і не має значення, який саме. Якщо обидва під-вирази мають "
 "значення ``False``, то вираз буде вважатися ``False``."
 
 #: ../../src/basics/bool_logic.txt:183
-#, fuzzy
 msgid "or operator truth table"
 msgstr "таблиця істинності оператора or"
 
 #: ../../src/basics/bool_logic.txt:187
-#, fuzzy
 msgid "``operand_1 or operand_2``"
 msgstr "``operand_1 or operand_2``"
 
 #: ../../src/basics/bool_logic.txt:198
-#, fuzzy
 msgid ""
 "``or`` operator works not only with operands of Boolean type. It's behavior:"
-msgstr "``or`` працює не тільки з операндами булевого типу. Це поведінка:"
+msgstr "``or`` працює не тільки з операндами булевого типу. Ось алгоритм:"
 
 #: ../../src/basics/bool_logic.txt:201
-#, fuzzy
 msgid "evaluate 1st operand; return it, if it's ``True`` and finish"
-msgstr ""
-"обчислити 1-й операнд; повернути його, якщо він рівний ``True`` і завершити"
+msgstr "обчислити 1-й операнд; повернути його, якщо він ``True`` і завершити"
 
 #: ../../src/basics/bool_logic.txt:202
-#, fuzzy
 msgid "evaluate 2nd operand; return it, if it's ``True`` and finish"
-msgstr ""
-"обчислити 2-й операнд; повернути його, якщо він рівний ``True`` і завершити"
+msgstr "обчислити 2-й операнд; повернути його, якщо він ``True`` і завершити"
 
 #: ../../src/basics/bool_logic.txt:217
-#, fuzzy
 msgid "Comparison"
 msgstr "Порівняння"
 
 #: ../../src/basics/bool_logic.txt:219
-#, fuzzy
 msgid ""
 "There are eight comparison operations in Python. They all have the same "
 "priority (which is higher than that of the Boolean operations)."
@@ -443,97 +377,78 @@ msgstr ""
 "пріоритет (вищий, ніж у булевих операцій)."
 
 #: ../../src/basics/bool_logic.txt:222
-#, fuzzy
 msgid "Comparison operators"
 msgstr "Оператори порівняння"
 
 #: ../../src/basics/bool_logic.txt:226
-#, fuzzy
 msgid "Meaning"
 msgstr "Значення"
 
 #: ../../src/basics/bool_logic.txt:228
-#, fuzzy
 msgid "``<``"
 msgstr "``<``"
 
 #: ../../src/basics/bool_logic.txt:228
-#, fuzzy
 msgid "strictly less than"
 msgstr "строго менше, ніж"
 
 #: ../../src/basics/bool_logic.txt:230
-#, fuzzy
 msgid "``<=``"
 msgstr "``<=``"
 
 #: ../../src/basics/bool_logic.txt:230
-#, fuzzy
 msgid "less than or equal"
 msgstr "менше або дорівнює"
 
 #: ../../src/basics/bool_logic.txt:232
-#, fuzzy
 msgid "``>``"
 msgstr "``>``"
 
 #: ../../src/basics/bool_logic.txt:232
-#, fuzzy
 msgid "strictly greater than"
 msgstr "строго більше, ніж"
 
 #: ../../src/basics/bool_logic.txt:234
-#, fuzzy
 msgid "``>=``"
 msgstr "``>=``"
 
 #: ../../src/basics/bool_logic.txt:234
-#, fuzzy
 msgid "greater or equal"
 msgstr "більше або дорівнює"
 
 #: ../../src/basics/bool_logic.txt:236
-#, fuzzy
 msgid "``==``"
 msgstr "``==``"
 
 #: ../../src/basics/bool_logic.txt:236
-#, fuzzy
 msgid "equal (aka *equality* comparison)"
 msgstr "дорівнює (також відоме як *equality* порівняння)"
 
 #: ../../src/basics/bool_logic.txt:238
-#, fuzzy
 msgid "``!=``"
 msgstr "``!=``"
 
 #: ../../src/basics/bool_logic.txt:238
-#, fuzzy
 msgid "not equal"
 msgstr "не дорівнює"
 
 #: ../../src/basics/bool_logic.txt:240
-#, fuzzy
 msgid "``is``"
-msgstr "це.."
+msgstr "``is``"
 
 #: ../../src/basics/bool_logic.txt:240
-#, fuzzy
 msgid "object identity"
 msgstr "ідентичність об'єктів"
 
 #: ../../src/basics/bool_logic.txt:242
-#, fuzzy
 msgid "``is not``"
-msgstr "не є"
+msgstr "``is not``"
 
 #: ../../src/basics/bool_logic.txt:242
-#, fuzzy
 msgid "negated object identity"
 msgstr "заперечення ідентичності об'єкта"
 
 #: ../../src/basics/bool_logic.txt:245
-#, fuzzy
 msgid ""
 "Each of these comparison operators return a Boolean value, it's always "
 "``True`` or ``False``."
@@ -542,21 +457,18 @@ msgstr ""
 "або ``False``."
 
 #: ../../src/basics/bool_logic.txt:248
-#, fuzzy
 msgid ""
 "You can chain comparison operators together: ``x < y < z`` is equal to ``x < "
 "y and y < z``."
 msgstr ""
-"Ви можете з'єднувати оператори порівняння ланцюжком: ``x < y < z`` дорівнює "
-"``x < y та y < z``."
+"Ви можете з'єднувати оператори порівняння ланцюжком: ``x < y < z`` "
+"еквівалентне ``x < y and y < z``."
 
 #: ../../src/basics/bool_logic.txt:252
-#, fuzzy
 msgid "Equality vs Identity"
-msgstr "Рівність vs Ідентичністі"
+msgstr "Рівність та Ідентичність"
 
 #: ../../src/basics/bool_logic.txt:254
-#, fuzzy
 msgid ""
 "It's easier to understand the difference between those by asking the "
 "question each answers to."
@@ -565,27 +477,22 @@ msgstr ""
 "кожна з них."
 
 #: ../../src/basics/bool_logic.txt:257
-#, fuzzy
 msgid "The question for ``==`` (*equality*) is:"
 msgstr "Питання для ``==`` (*рівності*) полягає у наступному:"
 
 #: ../../src/basics/bool_logic.txt:259
-#, fuzzy
 msgid "Is object on the left **equal** to the object on the right"
 msgstr "Чи є об'єкт зліва **рівним** об'єкту справа"
 
 #: ../../src/basics/bool_logic.txt:261
-#, fuzzy
 msgid "The question for ``is`` (*identity*) is:"
 msgstr "Питання для ``is`` (*ідентичність*) полягає в наступному:"
 
 #: ../../src/basics/bool_logic.txt:263
-#, fuzzy
 msgid "Is object on the left **the same** as the object on the right"
-msgstr "Чи є об'єкт ліворуч **таким самим**, як і об'єкт праворуч"
+msgstr "Чи є об'єкт ліворуч **тим самим**, як і об'єкт праворуч"
 
 #: ../../src/basics/bool_logic.txt:265
-#, fuzzy
 msgid ""
 "For example, if there are two cars of the same model, same color etc. in "
 "front of you - these cars are equal, but they aren't ident to each other. "
