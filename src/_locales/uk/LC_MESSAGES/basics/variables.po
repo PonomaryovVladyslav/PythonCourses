@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: Python Training Course 2022.11.dev\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-10-05 19:49+0300\n"
-"PO-Revision-Date: 2023-10-05 20:07+0300\n"
+"PO-Revision-Date: 2023-10-17 23:15+0300\n"
 "Last-Translator: Serhii Horodilov <sgorodil@gmail.com>\n"
 "Language-Team: \n"
 "Language: uk\n"
@@ -20,32 +20,38 @@ msgstr ""
 "X-Generator: Poedit 3.4\n"
 
 #: ../../src/basics/variables.txt:-1
+#, fuzzy
 msgid "Variables in programming"
 msgstr "Змінні в програмуванні"
 
 #: ../../src/basics/variables.txt:-1
+#, fuzzy
 msgid "Serhii Horodilov"
 msgstr "Serhii Horodilov"
 
 #: ../../src/basics/variables.txt:-1
+#, fuzzy
 msgid "programming, basics, variables"
 msgstr "programming, basics, variables"
 
 #: ../../src/basics/variables.txt:8
+#, fuzzy
 msgid "Variables"
 msgstr "Змінні"
 
 #: ../../src/basics/variables.txt:10
+#, fuzzy
 msgid ""
 "In computer science a **variable** is a named storage location in memory "
 "that can hold a value (*data*). The value stored in a variable can be "
 "changed or accessed by the program during its execution."
 msgstr ""
-"В інформатиці **variable** - це назване місце зберігання в пам'яті, яке може "
-"зберігати значення (дані). Значення, яке зберігається у змінній, може бути "
-"змінено або доступне програмою під час її виконання."
+"У комп'ютерних науках **змінна** - це іменована комірка пам'яті, яка може "
+"зберігати значення (*дані*). Значення, що зберігається у змінній, може бути "
+"змінене або доступне програмі під час її виконання."
 
 #: ../../src/basics/variables.txt:14
+#, fuzzy
 msgid ""
 "In Python, variables are created dynamically once a value is assigned to "
 "them. This makes Python a dynamically typed language, which means that the "
@@ -53,83 +59,97 @@ msgid ""
 "do not need to declare a variable before using it, as in statically typed "
 "languages."
 msgstr ""
-"У Python змінні створюються динамічно після присвоєння їм значення. Це "
-"робить Python динамічно типізованою мовою, а це означає, що тип даних "
-"змінної виводиться з присвоєного їй значення. Отже, вам не потрібно "
-"оголошувати змінну перед її використанням, як у статично типізованих мовах."
+"У Python змінні створюються динамічно, щойно їм присвоюється значення. Це "
+"робить Python динамічно типізованою мовою, що означає, що тип даних змінної "
+"виводиться з присвоєного їй значення. Отже, вам не потрібно оголошувати "
+"змінну перед її використанням, як у мовах зі статичною типізацією."
 
 #: ../../src/basics/variables.txt:19
+#, fuzzy
 msgid ""
 "The ability to create variables dynamically and infer their data type makes "
 "Python code more concise and easier to read. However, it also requires "
 "careful attention to variable naming and assignment to avoid unexpected "
 "behavior."
 msgstr ""
-"Можливість динамічно створювати змінні та виводити їхні типи даних робить "
-"код Python більш лаконічним і легшим для читання. Однак це також вимагає "
-"пильної уваги до іменування та призначення змінних, щоб уникнути "
+"Можливість динамічно створювати змінні та визначати тип їхніх даних робить "
+"код Python лаконічнішим і легшим для читання. Однак, це також вимагає "
+"ретельної уваги до іменування та присвоєння змінних, щоб уникнути "
 "неочікуваної поведінки."
 
 #: ../../src/basics/variables.txt:23
+#, fuzzy
 msgid ""
 "In Python ``=`` (assignment operator) is used to set a value to some "
 "variable, the portion on the left of the operator is a *variable name* and "
 "the portion on the right is a *value* to assign to a variable."
 msgstr ""
-"У Python ``=`` (оператор присвоєння) використовується для встановлення "
-"значення деякої змінної, частина ліворуч від оператора - це ім'я змінної, а "
-"частина праворуч - це значення, яке призначається для неї."
+"У Python ``=`` (оператор присвоювання) використовується для присвоєння "
+"значення деякій змінній, частина ліворуч від оператора - це *ім'я змінної*, "
+"а частина праворуч - це *значення*, яке потрібно присвоїти змінній."
 
 #: ../../src/basics/variables.txt:27
+#, fuzzy
 msgid "Variable assignment in Python"
-msgstr "Присвоєння змінної в Python"
+msgstr "Присвоєння змінних у Python"
 
 #: ../../src/basics/variables.txt:34
+#, fuzzy
 msgid "Variable assignment in Java"
-msgstr "Присвоєння змінної в Java"
+msgstr "Присвоєння змінних у Java"
 
 #: ../../src/basics/variables.txt:42
+#, fuzzy
 msgid "Naming"
-msgstr "Присвоєння назви"
+msgstr "Іменування"
 
 #: ../../src/basics/variables.txt:44
+#, fuzzy
 msgid ""
 "In Python there are several rules that describe how to name your variables. "
 "Some of these are requirements and cannot be ignored, others are rather "
 "recommended than required and can be omitted. For now note, that a variable "
 "name **cannot**:"
 msgstr ""
-"У Python є кілька правил, які описують, як іменувати ваші змінні. Деякі з "
-"них є вимогами, і їх не можна ігнорувати, інші скоріше рекомендовані, ніж "
-"обов'язкові, і їх можна пропустити. Наразі зауважте, що ім'я змінної не може:"
+"У Python є кілька правил, які описують, як називати ваші змінні. Деякі з них "
+"є обов'язковими і не можуть бути проігноровані, інші є скоріше "
+"рекомендаційними, ніж обов'язковими, і їх можна опустити. Наразі зауважте, "
+"що ім'я змінної **не може**:"
 
 #: ../../src/basics/variables.txt:49
+#, fuzzy
 msgid "a language keyword (like ``pass``, ``def`` or ``class``)"
-msgstr "бути ключовим словом мови (наприклад, ``pass``, ``def`` або ``class``)"
+msgstr "ключовим словом мови (наприклад, ``pass``, ``def`` або ``class``)"
 
 #: ../../src/basics/variables.txt:50
+#, fuzzy
 msgid "start with a number (e.g. ``123``, ``1_something``)"
-msgstr "починатися з числа (наприклад, ``123``, ``1_something``)"
+msgstr "починатись з числа (наприклад, ``123``, ``1_something``)"
 
 #: ../../src/basics/variables.txt:51
+#, fuzzy
 msgid "contain special operators in it (``+``, ``-``, ``=`` etc.)"
-msgstr "містити спеціальні оператори (``+``, ``-``, ``=`` тощо)"
+msgstr "містити спеціальні оператори (``+``, ``-``, ``=`` тощо)."
 
 #: ../../src/basics/variables.txt:52
+#, fuzzy
 msgid "contain white spaces"
 msgstr "містити пробіли"
 
 #: ../../src/basics/variables.txt:54
+#, fuzzy
 msgid "Also here are some general recommendation on naming anything:"
-msgstr "Також ось деякі загальні рекомендації щодо іменування будь-чого:"
+msgstr ""
+"Також тут є кілька загальних рекомендацій щодо того, як називати будь-що:"
 
 #: ../../src/basics/variables.txt:56
+#, fuzzy
 msgid "do not use built-in functions as a variable name (e.g. ``len = 42``)"
 msgstr ""
-"не використовуйте вбудовані функції як назву змінної (наприклад, ``len = "
-"42``)"
+"не використовуйте вбудовані функції як ім'я змінної (наприклад, ``len = 42``)"
 
 #: ../../src/basics/variables.txt:57
+#, fuzzy
 msgid "keep names meaningful (``x = 10`` vs ``number_of_student = 100``)"
 msgstr ""
-"зберігайте значення імен (``x = 10`` проти ``number_of_student = 100``)"
+"зберігайте змістовність імен (``x = 10`` проти ``number_of_student = 100``)"
