@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: Python Training Course 2022.11.dev\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-10-05 19:49+0300\n"
-"PO-Revision-Date: 2023-10-17 23:16+0300\n"
+"PO-Revision-Date: 2023-10-18 12:57+0300\n"
 "Last-Translator: Serhii Horodilov <sgorodil@gmail.com>\n"
 "Language-Team: \n"
 "Language: uk\n"
@@ -20,27 +20,22 @@ msgstr ""
 "X-Generator: Poedit 3.4\n"
 
 #: ../../src/basics/decorators.txt:-1
-#, fuzzy
 msgid "Python decorators"
 msgstr "Декоратори в Python"
 
 #: ../../src/basics/decorators.txt:-1
-#, fuzzy
 msgid "Serhii Horodilov"
 msgstr "Serhii Horodilov"
 
 #: ../../src/basics/decorators.txt:-1
-#, fuzzy
 msgid "python, basics, decorators"
 msgstr "python, basics, decorators"
 
 #: ../../src/basics/decorators.txt:11
-#, fuzzy
 msgid "Decorators"
 msgstr "Декоратори"
 
 #: ../../src/basics/decorators.txt:13
-#, fuzzy
 msgid ""
 "Decorators provide a simple syntax for calling higher-order functions :cite:"
 "`realpython:decorators`."
@@ -49,7 +44,6 @@ msgstr ""
 "cite:`realpython:decorators`."
 
 #: ../../src/basics/decorators.txt:18
-#, fuzzy
 msgid "There is some kind of misunderstanding in definitions."
 msgstr "Існує певне непорозуміння у визначеннях."
 
@@ -83,7 +77,6 @@ msgstr ""
 "які містять поведінку :cite:`refactoring.guru:decorator`."
 
 #: ../../src/basics/decorators.txt:31
-#, fuzzy
 msgid ""
 "Before you understand decorators, you must first understand how functions "
 "work."
@@ -91,12 +84,10 @@ msgstr ""
 "Перш ніж розбиратися в декораторах, потрібно зрозуміти, як працюють функції."
 
 #: ../../src/basics/decorators.txt:35
-#, fuzzy
 msgid "First-class objects"
 msgstr "Об'єкти першого класу"
 
 #: ../../src/basics/decorators.txt:37
-#, fuzzy
 msgid ""
 "In Python functions are `first-class objects`_. Everything in Python is an "
 "object. Functions are objects too."
@@ -105,12 +96,10 @@ msgstr ""
 "Функції також є об'єктами."
 
 #: ../../src/basics/decorators.txt:41
-#, fuzzy
 msgid "Inner functions"
 msgstr "Внутрішні функції"
 
 #: ../../src/basics/decorators.txt:43
-#, fuzzy
 msgid ""
 "Functions can be nested. This means it is possible to define functions "
 "inside other functions."
@@ -119,12 +108,10 @@ msgstr ""
 "всередині інших функцій."
 
 #: ../../src/basics/decorators.txt:46
-#, fuzzy
 msgid "Nested functions example"
 msgstr "Приклад вкладених функцій"
 
 #: ../../src/basics/decorators.txt:60
-#, fuzzy
 msgid ""
 "The order in which inner functions are defined no matters. The function "
 "definition does not execute the function body; this gets executed only when "
@@ -140,12 +127,10 @@ msgstr ""
 "``heapify`` поза ``heap_sort`` призведе до виключення ``NameError``."
 
 #: ../../src/basics/decorators.txt:68
-#, fuzzy
 msgid "Functions are objects"
 msgstr "Функції є об'єктами"
 
 #: ../../src/basics/decorators.txt:70
-#, fuzzy
 msgid ""
 "This means functions can be passed around and used as arguments, just like "
 "any other object (e.g. *int*, *str* etc.)."
@@ -154,12 +139,10 @@ msgstr ""
 "само, як і будь-які інші об'єкти (наприклад, *int*, *str* тощо)."
 
 #: ../../src/basics/decorators.txt:95
-#, fuzzy
 msgid "Returning functions"
 msgstr "Повернення функцій"
 
 #: ../../src/basics/decorators.txt:97
-#, fuzzy
 msgid ""
 "Since function can be passed as an argument, it may be returned from another "
 "function."
@@ -168,12 +151,10 @@ msgstr ""
 "іншої функції."
 
 #: ../../src/basics/decorators.txt:120
-#, fuzzy
 msgid "``parent`` returns functions themselves, there are no parentheses."
 msgstr "``parent`` повертає самі функції, дужок немає."
 
 #: ../../src/basics/decorators.txt:122
-#, fuzzy
 msgid ""
 "After running the code snippet above, ``first`` refers the ``first_child`` "
 "function from the inner ``parent`` scope. From now it can be used to call "
@@ -184,12 +165,10 @@ msgstr ""
 "можна використовувати для виклику цільової функції, на яку вона посилається."
 
 #: ../../src/basics/decorators.txt:134
-#, fuzzy
 msgid "Simple decorators"
 msgstr "Прості декоратори"
 
 #: ../../src/basics/decorators.txt:136
-#, fuzzy
 msgid ""
 "Now you're ready to move on and see the magical beast that is the Python "
 "decorators. Let's start with a simple example:"
@@ -198,12 +177,10 @@ msgstr ""
 "Python. Почнемо з простого прикладу:"
 
 #: ../../src/basics/decorators.txt:154
-#, fuzzy
 msgid "Running function:"
 msgstr "Запуск функцій:"
 
 #: ../../src/basics/decorators.txt:165
-#, fuzzy
 msgid ""
 "The common way to use decorators is to replace the original function with a "
 "decorated one:"
@@ -212,7 +189,6 @@ msgstr ""
 "функції на декоровану:"
 
 #: ../../src/basics/decorators.txt:176
-#, fuzzy
 msgid ""
 "``say_hello`` function is the reference to the ``decorator.<locals>."
 "wrapper``, which itself is bound to the original ``say_hello`` function. "
@@ -225,16 +201,14 @@ msgstr ""
 "робить те саме, що і перший приклад декоратора:"
 
 #: ../../src/basics/decorators.txt:198
-#, fuzzy
 msgid ""
 "There is no way to *undecorate* object in Python. Once something is bound to "
 "the decorator's wrapper - it is decorated forever."
 msgstr ""
-"У Python не існує способу *віддекорувати* об'єкт. Як тільки щось прив'язано "
+"У Python не існує способу *роздекорувати* об'єкт. Як тільки щось прив'язано "
 "до обгортки декоратора - воно прикрашене назавжди."
 
 #: ../../src/basics/decorators.txt:201
-#, fuzzy
 msgid ""
 "A decorated function still remains a **function**. So, it can be decorated "
 "once more time again, and again, and again..."
@@ -243,7 +217,6 @@ msgstr ""
 "прикрасити ще раз, і ще раз, і ще раз, і ще раз..."
 
 #: ../../src/basics/decorators.txt:253
-#, fuzzy
 msgid ""
 "\"Wrapper\" is the alternative nickname for the Decorator pattern that "
 "clearly expresses the main idea of the pattern. A wrapper is an object that "
@@ -260,12 +233,10 @@ msgstr ""
 "цільовому об'єкту."
 
 #: ../../src/basics/decorators.txt:261
-#, fuzzy
 msgid "Passing arguments to the wrapper"
 msgstr "Передача аргументів в обгортку"
 
 #: ../../src/basics/decorators.txt:263
-#, fuzzy
 msgid ""
 "Until now the examples use *simple* decorators. But what if the decorated "
 "function gets some arguments? This will cause ``TypeError`` exception that "
@@ -275,10 +246,9 @@ msgstr ""
 "Досі у прикладах використовувались *прості* декоратори. Але що, якщо "
 "декорована функція отримає якісь аргументи? Це викличе виключення "
 "``TypeError``, яке скаже, що \"аргументи пропущено\". Це можна виправити, "
-"просто передавши аргументи у внутрішню функцію ``обгортки``."
+"просто передавши аргументи у внутрішню функцію ``wrapper``."
 
 #: ../../src/basics/decorators.txt:289
-#, fuzzy
 msgid ""
 "If case you're trying to make a generic decorator, you may pass ``*args`` "
 "and ``**kwargs`` instead of exact arguments:"
@@ -287,12 +257,10 @@ msgstr ""
 "``*args`` і ``**kwargs`` замість точних аргументів:"
 
 #: ../../src/basics/decorators.txt:308
-#, fuzzy
 msgid "Passing arguments to decorator"
 msgstr "Передача аргументів до декоратора"
 
 #: ../../src/basics/decorators.txt:310
-#, fuzzy
 msgid ""
 "At last it's time to know how to pass arguments to the decorator. Here is a "
 "simple implementation of ``defer`` decorator which deferred the function "
@@ -303,12 +271,10 @@ msgstr ""
 "деякий час:"
 
 #: ../../src/basics/decorators.txt:353
-#, fuzzy
 msgid "Class decorators"
 msgstr "Декоратори класів"
 
 #: ../../src/basics/decorators.txt:355
-#, fuzzy
 msgid ""
 "There are some pre-defined decorators exists for usage together with "
 "classes. They are:"
@@ -317,22 +283,18 @@ msgstr ""
 "класами. Ось вони:"
 
 #: ../../src/basics/decorators.txt:358
-#, fuzzy
 msgid "``classmethod``"
 msgstr "``classmethod``"
 
 #: ../../src/basics/decorators.txt:359
-#, fuzzy
 msgid "``staticmethod``"
 msgstr "``staticmethod``"
 
 #: ../../src/basics/decorators.txt:360
-#, fuzzy
 msgid "``property``"
 msgstr "``property``"
 
 #: ../../src/basics/decorators.txt:362
-#, fuzzy
 msgid ""
 "If you develop an intuitive understanding for their differences you'll be "
 "able to write object-oriented Python that communicates its intent more "
@@ -345,12 +307,10 @@ msgstr ""
 "methods-demystified`."
 
 #: ../../src/basics/decorators.txt:368
-#, fuzzy
 msgid "Class methods"
 msgstr "Методи класу"
 
 #: ../../src/basics/decorators.txt:370
-#, fuzzy
 msgid ""
 "Instead of accepting a ``self`` parameter, class methods take a ``cls`` "
 "parameter that points to the class — and not the object instance — when the "
@@ -361,7 +321,6 @@ msgstr ""
 "виклику методу."
 
 #: ../../src/basics/decorators.txt:374
-#, fuzzy
 msgid ""
 "Because the class method only has access to this ``cls`` argument, it can't "
 "modify object instance state. That would require access to ``self``. "
@@ -374,7 +333,6 @@ msgstr ""
 "до всіх екземплярів класу."
 
 #: ../../src/basics/decorators.txt:379
-#, fuzzy
 msgid ""
 "The common usage for ``classmethod`` is provide alternative initializers."
 msgstr ""
@@ -382,12 +340,10 @@ msgstr ""
 "ініціалізаторів."
 
 #: ../../src/basics/decorators.txt:382
-#, fuzzy
 msgid "Static methods"
 msgstr "Статичні методи"
 
 #: ../../src/basics/decorators.txt:384
-#, fuzzy
 msgid ""
 "This type of method takes neither a ``self`` nor a ``cls`` parameter (but of "
 "course it's free to accept an arbitrary number of other parameters)."
@@ -396,7 +352,6 @@ msgstr ""
 "звичайно, він може приймати довільну кількість інших параметрів)."
 
 #: ../../src/basics/decorators.txt:387
-#, fuzzy
 msgid ""
 "Therefore a static method can neither modify object state nor class state. "
 "Static methods are restricted in what data they can access - and they're "
@@ -407,7 +362,6 @@ msgstr ""
 "це, насамперед, спосіб організації простору імен ваших методів."
 
 #: ../../src/basics/decorators.txt:391
-#, fuzzy
 msgid ""
 "It's tricky to explain ``staticmethod`` usage. Almost always you can create "
 "a dedicated function instead of static method. But sometimes you need to "
@@ -420,12 +374,10 @@ msgstr ""
 "екземплярів, і тоді прийнято інкапсулювати її за допомогою ``staticmethod``."
 
 #: ../../src/basics/decorators.txt:397
-#, fuzzy
 msgid "Properties"
 msgstr "Властивості"
 
 #: ../../src/basics/decorators.txt:399
-#, fuzzy
 msgid ""
 "It's a way to bind a method name to access it as an attribute. Properties "
 "are **read-only** by default. This means a value cannot be assigned to "
@@ -436,6 +388,5 @@ msgstr ""
 "властивості не можна присвоїти значення."
 
 #: ../../src/basics/decorators.txt:404
-#, fuzzy
 msgid "Some examples"
 msgstr "Деякі приклади"
