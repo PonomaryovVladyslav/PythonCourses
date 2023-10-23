@@ -120,4 +120,10 @@ You can call a function using both positional and keyword arguments.
 Once you've specified a keyword argument, there can't be any positional
 arguments to the right of it.
 
-.. todo: default argument value
+Default values
+--------------
+
+If a parameter specified in the function definition has the form of
+``<name>==<value>``, then ``<value>`` becomes a default value for that
+parameter. Parameters defined this way are referred to as
+**default or optional parameters**.
