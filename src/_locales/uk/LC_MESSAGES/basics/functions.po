@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Python Training Course 2022.11.dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-10-23 23:35+0300\n"
-"PO-Revision-Date: 2023-10-23 23:36+0300\n"
+"POT-Creation-Date: 2023-10-24 00:16+0300\n"
+"PO-Revision-Date: 2023-10-24 00:17+0300\n"
 "Last-Translator: Serhii Horodilov <sgorodil@gmail.com>\n"
 "Language-Team: \n"
 "Language: uk\n"
@@ -81,12 +81,12 @@ msgstr ""
 msgid "The usual syntax for defining a Python function is as follows:"
 msgstr "Звичайний синтаксис для визначення функції Python наступний:"
 
-#: ../../src/basics/functions.txt:36
+#: ../../src/basics/functions.txt:36 ../../src/basics/functions.txt:483
 #, fuzzy
 msgid "Component"
 msgstr "Компонент"
 
-#: ../../src/basics/functions.txt:36
+#: ../../src/basics/functions.txt:36 ../../src/basics/functions.txt:483
 #, fuzzy
 msgid "Meaning"
 msgstr "Значення"
@@ -96,7 +96,7 @@ msgstr "Значення"
 msgid "``def``"
 msgstr "``def``"
 
-#: ../../src/basics/functions.txt:38
+#: ../../src/basics/functions.txt:38 ../../src/basics/functions.txt:485
 #, fuzzy
 msgid "The keyword that informs Python that a function is being defined"
 msgstr "Ключове слово, яке інформує Python про те, що функція визначається"
@@ -111,12 +111,12 @@ msgstr "``<ім'я_функції>``"
 msgid "A valid Python identifier that names the function"
 msgstr "Правильний ідентифікатор Python, який називає функцію"
 
-#: ../../src/basics/functions.txt:43
+#: ../../src/basics/functions.txt:43 ../../src/basics/functions.txt:488
 #, fuzzy
 msgid "``<parameters>``"
 msgstr "Параметри"
 
-#: ../../src/basics/functions.txt:43
+#: ../../src/basics/functions.txt:43 ../../src/basics/functions.txt:488
 #, fuzzy
 msgid ""
 "An optional, comma-separated list of parameters that may be passed to the "
@@ -765,6 +765,88 @@ msgstr ""
 "перед аргументом у виклику функції, вона вказує на те, що аргумент є "
 "словником, який слід розпакувати, а отримані елементи передати у функцію як "
 "аргументи ключових слів."
+
+#: ../../src/basics/functions.txt:468
+#, fuzzy
+msgid "Lambda functions"
+msgstr "Функції"
+
+#: ../../src/basics/functions.txt:470
+#, fuzzy
+msgid ""
+"Lambda expressions in Python and other programming languages have their "
+"roots in lambda calculus, a model of computation invented by Alonzo Church. "
+"Python is not inherently a functional language, but it adopted some "
+"functional concepts early on. In January 1994, ``map()``, ``filter()``, "
+"``reduce()``, and the lambda operator were added to the language."
+msgstr ""
+"Лямбда-вирази в Python та інших мовах програмування беруть свій початок у "
+"лямбда-обчисленні - моделі обчислень, винайденій Алонзо Черчем. За своєю "
+"суттю Python не є функціональною мовою, але вона рано перейняла деякі "
+"функціональні концепції. У січні 1994 року до мови було додано ``map()``, "
+"``filter()``, ``reduce()`` та лямбда-оператор."
+
+#: ../../src/basics/functions.txt:476
+#, fuzzy
+msgid "General lambda function syntax is:"
+msgstr "Загальний синтаксис лямбда-функції такий:"
+
+#: ../../src/basics/functions.txt:485
+#, fuzzy
+msgid "``lambda``"
+msgstr "``lambda``"
+
+#: ../../src/basics/functions.txt:491
+#, fuzzy
+msgid "``<expression>``"
+msgstr "Вираз Await"
+
+#: ../../src/basics/functions.txt:491
+#, fuzzy
+msgid "A valid Python expression; return statement"
+msgstr "Оператор повернення"
+
+#: ../../src/basics/functions.txt:502
+#, fuzzy
+msgid ""
+"The code sample above demonstrates the ``get_fullname`` Python function and "
+"its lambda version. A lambda form presents syntactic distinctions from a "
+"normal function. In particular, a lambda function has the following "
+"characteristics:"
+msgstr ""
+"Наведений вище приклад коду демонструє функцію Python ``get_fullname`` та її "
+"лямбда-версію. Лямбда-форма має синтаксичні відмінності від звичайної "
+"функції. Зокрема, лямбда-функція має наступні характеристики:"
+
+#: ../../src/basics/functions.txt:506
+#, fuzzy
+msgid ""
+"It can only contain expressions and can’t include statements in its body."
+msgstr "Він може містити лише вирази і не може включати в себе оператори."
+
+#: ../../src/basics/functions.txt:507
+#, fuzzy
+msgid "It is written as a single line of execution."
+msgstr "Він написаний у вигляді одного рядка виконання."
+
+#: ../../src/basics/functions.txt:508
+#, fuzzy
+msgid "It does not support type annotations."
+msgstr "Він не підтримує анотації типів."
+
+#: ../../src/basics/functions.txt:509
+#, fuzzy
+msgid ""
+"It can be immediately invoked (:abbr:`IIFE (Immediately Invoked Function "
+"Execution)`)."
+msgstr ""
+"Її можна негайно викликати (:abbr:`IIFE (Immediately Invoked Function "
+"Execution)`)."
+
+#: ../../src/basics/functions.txt:517
+#, fuzzy
+msgid "Classic functional constructs"
+msgstr "Класичні функціональні конструкції"
 
 #~ msgid "Page is under construction"
 #~ msgstr "Сторінка в розробці"
