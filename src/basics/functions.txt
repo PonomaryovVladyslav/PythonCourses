@@ -127,3 +127,29 @@ If a parameter specified in the function definition has the form of
 ``<name>==<value>``, then ``<value>`` becomes a default value for that
 parameter. Parameters defined this way are referred to as
 **default or optional parameters**.
+
+.. rubric:: Mutable default parameter values
+
+Things can get weird if you specify a default parameter value that is
+a mutable object.
+
+.. code-block:: python
+
+    >>> def add_to_container(item, container = []):
+    ...     container.append(item)
+    ...
+    >>>
+    >>> add_to_container(42, [1, 2, 3])
+    [1, 2, 3, 42]
+    >>> add_to_container("foobar", ["foo", "bar"])
+    ["foo", "bar", "foobar"]
+    >>> add_to_container(42)
+    [42]
+    >>> add_to_container("foobar")  # ["foobar"]
+    [42, "foobar"]
+
+In Python default parameter values are **defined only once** when the function
+is defined. The default value isn't re-defined each time the function is
+called. For the example above, each time the ``add_to_container`` function is
+called without passing ``container`` argument, the ``.append`` statement is
+performed on the same list.
