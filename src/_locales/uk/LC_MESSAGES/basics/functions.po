@@ -4,15 +4,15 @@
 # OLEKSANDR YEROMIN <unicorn.in.pants@gmail.com>, 2023.
 msgid ""
 msgstr ""
-"Project-Id-Version: Python Training Course 2022.11.dev\n"
+"Project-Id-Version: Python Training Course 2023.10.dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-10-24 00:16+0300\n"
-"PO-Revision-Date: 2023-10-24 00:17+0300\n"
+"POT-Creation-Date: 2023-10-23 23:35+0300\n"
+"PO-Revision-Date: 2023-10-24 00:36+0300\n"
 "Last-Translator: Serhii Horodilov <sgorodil@gmail.com>\n"
 "Language-Team: \n"
 "Language: uk\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=utf-8\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
 "n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
@@ -36,30 +36,26 @@ msgid "Functions"
 msgstr "Функції"
 
 #: ../../src/basics/functions.txt:10
-#, fuzzy
 msgid ""
 "You may be familiar with the mathematical concept of a **function**. It is a "
 "relationship or mapping between one or more inputs and a set of outputs."
 msgstr ""
-"Можливо, ви знайомі з математичним поняттям **функція**. Це відношення або "
-"відображення між одним або декількома входами та набором виходів."
+"Можливо, ви знайомі з математичним поняттям **функція**. Це відношення між "
+"одним або декількома вхідними параметрами та набором результатів."
 
 #: ../../src/basics/functions.txt:13
-#, fuzzy
 msgid "z = f(x, y)"
 msgstr "z = f(x, y)"
 
 #: ../../src/basics/functions.txt:17
-#, fuzzy
 msgid ""
 "Here ``f`` is a function that operates on the inputs ``x`` and ``y``, and "
 "its output is bind to ``z``."
 msgstr ""
-"Тут ``f`` - це функція, яка оперує входами ``x`` та ``y``, а її вихід "
-"прив'язаний до ``z``."
+"Тут ``f`` - це функція, яка оперує параметрами ``x`` та ``y``, а її "
+"результат прив'язаний до ``z``."
 
 #: ../../src/basics/functions.txt:20
-#, fuzzy
 msgid ""
 "In programming a **function** is a self-contained block of code that "
 "encapsulate a specific task or related group of tasks."
@@ -68,7 +64,6 @@ msgstr ""
 "задачу або пов'язану групу задач."
 
 #: ../../src/basics/functions.txt:23
-#, fuzzy
 msgid ""
 "You may be familiar with some built-in functions like ``max``, ``min``, "
 "``len`` etc."
@@ -77,47 +72,38 @@ msgstr ""
 "``min``, ``len`` тощо."
 
 #: ../../src/basics/functions.txt:28
-#, fuzzy
 msgid "The usual syntax for defining a Python function is as follows:"
 msgstr "Звичайний синтаксис для визначення функції Python наступний:"
 
-#: ../../src/basics/functions.txt:36 ../../src/basics/functions.txt:483
-#, fuzzy
+#: ../../src/basics/functions.txt:36
 msgid "Component"
 msgstr "Компонент"
 
-#: ../../src/basics/functions.txt:36 ../../src/basics/functions.txt:483
-#, fuzzy
+#: ../../src/basics/functions.txt:36
 msgid "Meaning"
 msgstr "Значення"
 
 #: ../../src/basics/functions.txt:38
-#, fuzzy
 msgid "``def``"
 msgstr "``def``"
 
-#: ../../src/basics/functions.txt:38 ../../src/basics/functions.txt:485
-#, fuzzy
+#: ../../src/basics/functions.txt:38
 msgid "The keyword that informs Python that a function is being defined"
-msgstr "Ключове слово, яке інформує Python про те, що функція визначається"
+msgstr "Ключове слово, яке інформує Python про те, що визначається функція"
 
 #: ../../src/basics/functions.txt:41
-#, fuzzy
 msgid "``<function_name>``"
-msgstr "``<ім'я_функції>``"
+msgstr "``<function_name>``"
 
 #: ../../src/basics/functions.txt:41
-#, fuzzy
 msgid "A valid Python identifier that names the function"
-msgstr "Правильний ідентифікатор Python, який називає функцію"
+msgstr "Валідний ідентифікатор Python, який називає функцію"
 
-#: ../../src/basics/functions.txt:43 ../../src/basics/functions.txt:488
-#, fuzzy
+#: ../../src/basics/functions.txt:43
 msgid "``<parameters>``"
-msgstr "Параметри"
+msgstr "``<parameters>``"
 
-#: ../../src/basics/functions.txt:43 ../../src/basics/functions.txt:488
-#, fuzzy
+#: ../../src/basics/functions.txt:43
 msgid ""
 "An optional, comma-separated list of parameters that may be passed to the "
 "function"
@@ -126,22 +112,18 @@ msgstr ""
 "функцію"
 
 #: ../../src/basics/functions.txt:46
-#, fuzzy
 msgid "``<statement(s)>``"
-msgstr "''<висловлювання>''"
+msgstr "``<statement(s)>``"
 
 #: ../../src/basics/functions.txt:46
-#, fuzzy
 msgid "A block of valid Python statements; **body** of the function"
 msgstr "Блок допустимих операторів Python; **тіло** функції"
 
 #: ../../src/basics/functions.txt:50
-#, fuzzy
 msgid "The syntax for calling a Python function is as follows:"
 msgstr "Синтаксис виклику функції Python наступний:"
 
 #: ../../src/basics/functions.txt:56
-#, fuzzy
 msgid ""
 "The ``<arguments>`` are the values passed into the function. They correspond "
 "to the ``<parameters>`` in the function definition. You can define a "
@@ -156,22 +138,18 @@ msgstr ""
 "дужки, навіть якщо вони порожні."
 
 #: ../../src/basics/functions.txt:63
-#, fuzzy
 msgid "Argument passing"
-msgstr "Передача аргументу"
+msgstr "Передача аргументів"
 
 #: ../../src/basics/functions.txt:66
-#, fuzzy
 msgid "More often, you want to **pass data into a function**."
 msgstr "Найчастіше вам потрібно **передати дані у функцію**."
 
 #: ../../src/basics/functions.txt:69
-#, fuzzy
 msgid "Positional arguments"
 msgstr "Позиційні аргументи"
 
 #: ../../src/basics/functions.txt:73
-#, fuzzy
 msgid ""
 "Because of the way they're defined and used, positional arguments are also "
 "called *required arguments*."
@@ -180,7 +158,6 @@ msgstr ""
 "називають *обов'язковими аргументами*."
 
 #: ../../src/basics/functions.txt:76
-#, fuzzy
 msgid ""
 "The most straightforward way to pass arguments to a function is with "
 "**positional arguments**. In the function definition, you specify a comma-"
@@ -193,14 +170,12 @@ msgstr ""
 "викликається, ви вказуєте відповідний список аргументів."
 
 #: ../../src/basics/functions.txt:82
-#, fuzzy
 msgid ""
 "The parameters behave like **variables** that are defined locally to the "
 "function."
 msgstr "Параметри поводяться як **змінні**, визначені локально у функції."
 
 #: ../../src/basics/functions.txt:85
-#, fuzzy
 msgid ""
 "Although positional arguments are the most straightforward way to pass data "
 "to a function, they also afford the least flexibility. For starters, the "
@@ -212,7 +187,6 @@ msgstr ""
 "аргументів у виклику повинен відповідати порядку параметрів у визначенні."
 
 #: ../../src/basics/functions.txt:90
-#, fuzzy
 msgid ""
 "There's nothing to stop you from specifying positional arguments out of "
 "order. The function even may still run, but it's very unlikely to produce "
@@ -222,7 +196,6 @@ msgstr ""
 "Функція навіть може запуститися, але навряд чи видасть правильні результати."
 
 #: ../../src/basics/functions.txt:96
-#, fuzzy
 msgid ""
 "It's responsibility of the programmer who defines the function to document "
 "what the appropriate arguments should be, and it's the responsibility of the "
@@ -233,7 +206,6 @@ msgstr ""
 "інформацію і дотримуватися її."
 
 #: ../../src/basics/functions.txt:100
-#, fuzzy
 msgid ""
 "With positional arguments, the arguments in the call and the parameters in "
 "the definition must agree not only in order, but in number as well."
@@ -242,12 +214,10 @@ msgstr ""
 "повинні узгоджуватися не тільки за порядком, але й за кількістю."
 
 #: ../../src/basics/functions.txt:104
-#, fuzzy
 msgid "Keyword arguments"
 msgstr "Аргументи за ключовими словами"
 
 #: ../../src/basics/functions.txt:106
-#, fuzzy
 msgid ""
 "When calling a function, you can specify arguments in the form "
 "``<keyword>=<value>``. In that case, each ``<keyword>`` must match a "
@@ -260,7 +230,6 @@ msgstr ""
 "яке не відповідає жодному з цих оголошених параметрів, генерує виключення."
 
 #: ../../src/basics/functions.txt:111
-#, fuzzy
 msgid ""
 "Using keyword arguments lifts the restriction on arguments order. Each "
 "keyword argument explicitly designates a specific parameter by name, so you "
@@ -273,7 +242,6 @@ msgstr ""
 "знатиме, який аргумент йде з яким параметром."
 
 #: ../../src/basics/functions.txt:116
-#, fuzzy
 msgid ""
 "Like with positional arguments, though, the number of arguments and "
 "parameters must still match."
@@ -282,7 +250,6 @@ msgstr ""
 "має збігатися."
 
 #: ../../src/basics/functions.txt:119
-#, fuzzy
 msgid ""
 "You can call a function using both positional and keyword arguments. Once "
 "you've specified a keyword argument, there can't be any positional arguments "
@@ -293,12 +260,10 @@ msgstr ""
 "може бути жодних позиційних аргументів."
 
 #: ../../src/basics/functions.txt:124
-#, fuzzy
 msgid "Default values"
 msgstr "Значення за замовчуванням"
 
 #: ../../src/basics/functions.txt:126
-#, fuzzy
 msgid ""
 "If a parameter specified in the function definition has the form of "
 "``<name>==<value>``, then ``<value>`` becomes a default value for that "
@@ -311,12 +276,10 @@ msgstr ""
 "замовчуванням або необов'язковими параметрами**."
 
 #: ../../src/basics/functions.txt:132
-#, fuzzy
 msgid "Mutable default parameter values"
 msgstr "Змінювані значення параметрів за замовчуванням"
 
 #: ../../src/basics/functions.txt:133
-#, fuzzy
 msgid ""
 "Things can get weird if you specify a default parameter value that is a "
 "mutable object."
@@ -325,7 +288,6 @@ msgstr ""
 "замовчуванням, який є змінюваним об'єктом."
 
 #: ../../src/basics/functions.txt:151
-#, fuzzy
 msgid ""
 "In Python default parameter values are **defined only once** when the "
 "function is defined. The default value isn't re-defined each time the "
@@ -340,12 +302,10 @@ msgstr ""
 "``container``, оператор ``.append`` виконується над тим самим списком."
 
 #: ../../src/basics/functions.txt:158
-#, fuzzy
 msgid "Mutable and immutable arguments"
 msgstr "Змінні та незмінні аргументи"
 
 #: ../../src/basics/functions.txt:162
-#, fuzzy
 msgid ""
 "Roughly, you may consider immutable object as passed-by-value, and mutable "
 "objects as passed-by-reference. However, that's not actual true."
@@ -354,7 +314,6 @@ msgstr ""
 "змінювані об'єкти - переданим посиланням. Однак, це не зовсім так."
 
 #: ../../src/basics/functions.txt:166
-#, fuzzy
 msgid ""
 "In programming language design, there are two common paradigms for passing "
 "an argument to a function:"
@@ -363,34 +322,30 @@ msgstr ""
 "функцію:"
 
 #: ../../src/basics/functions.txt:169
-#, fuzzy
 msgid ""
 "**pass-by-value** means a copy of the argument is passed to the function."
 msgstr ""
-"**передати за значенням** означає, що у функцію передається копія аргументу."
+"**передати-за-значенням** означає, що у функцію передається копія аргументу."
 
 #: ../../src/basics/functions.txt:170
-#, fuzzy
 msgid ""
 "**pass-by-reference** means a reference to the argument is passed to the "
 "function."
 msgstr ""
-"**передача за посиланням** означає, що у функцію передається посилання на "
+"**передати-за-посиланням** означає, що у функцію передається посилання на "
 "аргумент."
 
 #: ../../src/basics/functions.txt:173
-#, fuzzy
 msgid ""
 "Are parameters in Python pass-by-value or pass-by-reference? They're "
 "neither, exactly. That's because a reference doesn't mean quite the same "
 "thing in Python as it does in C-like languages."
 msgstr ""
-"Чи є параметри в Python передачею за значенням або за посиланням? Вони не є "
+"Чи є параметри в Python переданими за значенням або за посиланням? Вони не є "
 "ні тими, ні іншими. Це тому, що посилання в Python означає не зовсім те "
 "саме, що в C-подібних мовах."
 
 #: ../../src/basics/functions.txt:177
-#, fuzzy
 msgid ""
 "Recall that in Python, every piece of data is an **object**. A reference "
 "points to an object, not a specific memory location."
@@ -399,33 +354,28 @@ msgstr ""
 "на об'єкт, а не на конкретну ділянку пам'яті."
 
 #: ../../src/basics/functions.txt:180
-#, fuzzy
 msgid "Take a look on the code below:"
 msgstr "Погляньте на код нижче:"
 
 #: ../../src/basics/functions.txt:188
-#, fuzzy
 msgid "These assignment statements have the following meaning:"
 msgstr "Ці оператори присвоювання мають наступне значення:"
 
 #: ../../src/basics/functions.txt:190
-#, fuzzy
 msgid "**Line 1** cause ``value`` to point to an object whose value is ``24``."
 msgstr ""
 "**Рядок 1** призводить до того, що ``value`` вказує на об'єкт, значенням "
 "якого є ``24``."
 
 #: ../../src/basics/functions.txt:191
-#, fuzzy
 msgid ""
 "**Line 2** reassign ``value`` as a new reference to a different object whose "
 "value is ``42``."
 msgstr ""
-"**Рядок 2** перепризначити ``value`` як нове посилання на інший об'єкт, "
+"**Рядок 2** перепризначає ``value`` як нове посилання на інший об'єкт, "
 "значенням якого є ``42``."
 
 #: ../../src/basics/functions.txt:194
-#, fuzzy
 msgid ""
 "In Python, when you pass an argument to a function, a similar *rebinding* "
 "occurs."
@@ -434,7 +384,6 @@ msgstr ""
 "*переприв'язування*."
 
 #: ../../src/basics/functions.txt:207
-#, fuzzy
 msgid ""
 "In the main program, the statement ``x = 5`` on line 5 creates a reference "
 "named ``x`` bound to an object whose value is ``5``. ``reassign`` is then "
@@ -458,7 +407,6 @@ msgstr ""
 "вказуватиме на об'єкт ``5``, як це було до виклику функції."
 
 #: ../../src/basics/functions.txt:218
-#, fuzzy
 msgid ""
 "You can confirm all this using ``id()``. Here's a slightly augmented version "
 "of the code above:"
@@ -467,12 +415,10 @@ msgstr ""
 "версія коду вище:"
 
 #: ../../src/basics/functions.txt:235
-#, fuzzy
 msgid "The outputs will look like:"
 msgstr "Результати будуть виглядати так:"
 
 #: ../../src/basics/functions.txt:246
-#, fuzzy
 msgid ""
 "Python's argument-passing mechanism has been called **pass-by-assignment**. "
 "You may also see terms pass-by-object, pass-by-object-reference, or pass-by-"
@@ -480,14 +426,13 @@ msgid ""
 "entry in Python, and assignment is also the process of binding a name to an "
 "object."
 msgstr ""
-"Механізм передачі аргументів у Python називається **передача за "
-"присвоєнням**. Ви також можете зустріти терміни pass-by-object, pass-by-"
-"object-reference або pass-by-sharing. Це пов'язано з тим, що імена "
-"параметрів прив'язуються до об'єктів під час виклику функції у Python, а "
-"присвоювання - це також процес прив'язки імені до об'єкта."
+"Механізм передачі аргументів у Python називається **передача-за-"
+"присвоєнням** (**pass-by-assignment**). Ви також можете зустріти терміни "
+"pass-by-object, pass-by-object-reference або pass-by-sharing. Це пов'язано з "
+"тим, що імена параметрів прив'язуються до об'єктів під час виклику функції у "
+"Python, а присвоювання - це також процес прив'язки імені до об'єкта."
 
 #: ../../src/basics/functions.txt:252
-#, fuzzy
 msgid ""
 "The key takeaway here is that Python function can't change the value of an "
 "argument by reassigning the corresponding parameter to something else."
@@ -496,7 +441,6 @@ msgstr ""
 "аргументу, перепризначивши відповідний параметр на щось інше."
 
 #: ../../src/basics/functions.txt:255
-#, fuzzy
 msgid ""
 "However, functions can use references to make modifications inside of a "
 "mutable objects."
@@ -505,17 +449,14 @@ msgstr ""
 "змінюваних об'єктів."
 
 #: ../../src/basics/functions.txt:271
-#, fuzzy
 msgid "The return statement"
 msgstr "Оператор повернення"
 
 #: ../../src/basics/functions.txt:273
-#, fuzzy
 msgid "It serves two purposes:"
 msgstr "Він служить двом цілям:"
 
 #: ../../src/basics/functions.txt:275
-#, fuzzy
 msgid ""
 "It immediately terminates the function and passes execution control back to "
 "the caller."
@@ -524,7 +465,6 @@ msgstr ""
 "її викликав."
 
 #: ../../src/basics/functions.txt:277
-#, fuzzy
 msgid ""
 "It provides a mechanism by which the function can pass data back to the "
 "caller."
@@ -533,7 +473,6 @@ msgstr ""
 "тому, хто її викликає."
 
 #: ../../src/basics/functions.txt:280
-#, fuzzy
 msgid ""
 "The return statement can be used inside of a function or a method to send "
 "the result back to the caller. It consists of the ``return`` Python keyword "
@@ -541,19 +480,17 @@ msgid ""
 msgstr ""
 "Оператор return можна використовувати всередині функції або методу, щоб "
 "відправити результат назад тому, хто його викликає. Він складається з "
-"ключового слова return та необов'язкового значення, що повертається."
+"ключового слова ``return`` та необов'язкового значення, що повертається."
 
 #: ../../src/basics/functions.txt:284
-#, fuzzy
 msgid ""
 "The return value of a Python function can be any Python object (and you "
 "should remember - everything in Python is an object)."
 msgstr ""
-"Значенням, що повертається функцією Python, може бути будь-який об'єкт "
-"Python (і ви повинні пам'ятати - все в Python є об'єктом)."
+"Значенням, що повертається функцією, може бути будь-який об'єкт Python (і ви "
+"повинні пам'ятати - все в Python є об'єктом)."
 
 #: ../../src/basics/functions.txt:287
-#, fuzzy
 msgid ""
 "You can omit the return value and use bare ``return`` without a return "
 "value. You can also omit the entire ``return`` statement. In both cases, the "
@@ -567,12 +504,10 @@ msgstr ""
 "якщо його не вказано - це ``None``."
 
 #: ../../src/basics/functions.txt:292
-#, fuzzy
 msgid "**Returning vs Printing**"
-msgstr "**Повернення проти друку**"
+msgstr "**return проти print**"
 
 #: ../../src/basics/functions.txt:294
-#, fuzzy
 msgid ""
 "If you're working in an interactive session, then you might think that "
 "printing a value and returning a value are equivalent. Consider the "
@@ -582,12 +517,10 @@ msgstr ""
 "значення і повернення значення еквівалентні. Розглянемо дві наступні функції:"
 
 #: ../../src/basics/functions.txt:310
-#, fuzzy
 msgid "And their output:"
-msgstr "Опис Результатів"
+msgstr "Та результати їх викликів:"
 
 #: ../../src/basics/functions.txt:319
-#, fuzzy
 msgid ""
 "Both functions seems to do the same thing. But only the second one function "
 "actually returns a value, when the first one returns nothing (or **NoneType "
@@ -598,12 +531,10 @@ msgstr ""
 "**NoneType об'єкт**)."
 
 #: ../../src/basics/functions.txt:324
-#, fuzzy
 msgid "Return multiple values"
-msgstr "Значення за замовчуванням"
+msgstr "Повернення декількох значень"
 
 #: ../../src/basics/functions.txt:326
-#, fuzzy
 msgid ""
 "You can use a return statement to return multiple values from a function. To "
 "do that, you just need to supply several return values separated by commas. "
@@ -611,10 +542,9 @@ msgid ""
 msgstr ""
 "Ви можете використовувати інструкцію return для повернення декількох значень "
 "з функції. Для цього вам просто потрібно вказати декілька значень, що "
-"повертаються, розділених комами. Функція поверне кортеж значень."
+"повертаються, розділених комами. Функція поверне їх як кортеж."
 
 #: ../../src/basics/functions.txt:342
-#, fuzzy
 msgid ""
 "The built-in ``divmod`` function is also an example of a function that "
 "returns multiple values. The function takes two (non-complex) numbers as "
@@ -627,12 +557,10 @@ msgstr ""
 "ділення."
 
 #: ../../src/basics/functions.txt:348
-#, fuzzy
 msgid "Variable-length argument list"
 msgstr "Список аргументів змінної довжини"
 
 #: ../../src/basics/functions.txt:350
-#, fuzzy
 msgid ""
 "In some cases, when you're defining a function, you may not know beforehand "
 "how many arguments you'll want it to take."
@@ -641,7 +569,6 @@ msgstr ""
 "заздалегідь, скільки аргументів ви хочете, щоб вона приймала."
 
 #: ../../src/basics/functions.txt:353
-#, fuzzy
 msgid ""
 "For example, a function that computes an average of several values may look "
 "something like this:"
@@ -650,7 +577,6 @@ msgstr ""
 "виглядати приблизно так:"
 
 #: ../../src/basics/functions.txt:361
-#, fuzzy
 msgid ""
 "However, as you're already seen, when positional arguments are used, the "
 "number of arguments passed must match the number of parameters declared."
@@ -665,7 +591,6 @@ msgid "Argument tuple packing"
 msgstr "Пакування кортежів аргументів"
 
 #: ../../src/basics/functions.txt:367
-#, fuzzy
 msgid ""
 "When a parameter name in a function definition is preceded by an asterisk "
 "(\\*), it indicates **argument tuple packing**. Any corresponding arguments "
@@ -678,7 +603,6 @@ msgstr ""
 "іменем параметра."
 
 #: ../../src/basics/functions.txt:377
-#, fuzzy
 msgid ""
 "Any name can be used, but *args* is so commonly chosen that it's practically "
 "a standard."
@@ -692,7 +616,6 @@ msgid "Argument tuple unpacking"
 msgstr "Розпакування кортежу аргументів"
 
 #: ../../src/basics/functions.txt:383
-#, fuzzy
 msgid ""
 "An analogous operation is available on the other side of the equation in a "
 "function call. When an argument in a function call is preceded by an "
@@ -704,18 +627,16 @@ msgstr ""
 "кортежем, який слід **розпакувати** і передати у функцію як окремі значення."
 
 #: ../../src/basics/functions.txt:399
-#, fuzzy
 msgid ""
 "Although this type of unpacking is called **tuple** unpacking, it doesn't "
 "only work with tuples. The asterisk can be applied to any iterable in a "
 "function call."
 msgstr ""
 "Хоча цей тип розпакування називається **розпакуванням кортежів**, він працює "
-"не лише з кортежами. Зірочка може бути застосована до будь-якого ітератора у "
-"виклику функції."
+"не лише з кортежами. Зірочка може бути застосована до будь-якого ітеруємого "
+"об'єкта у виклику функції."
 
 #: ../../src/basics/functions.txt:414
-#, fuzzy
 msgid "You can even do tuple packing and unpacking at the same time."
 msgstr "Ви навіть можете одночасно пакувати та розпаковувати кортежі."
 
@@ -725,7 +646,6 @@ msgid "Argument dictionary packing"
 msgstr "Пакування словника аргументів"
 
 #: ../../src/basics/functions.txt:428
-#, fuzzy
 msgid ""
 "Python has a similar operator, the double asterisk (\\*\\*), which can be "
 "used with function parameters to specify **dictionary packing**. Preceding "
@@ -740,13 +660,12 @@ msgstr ""
 "(пари ``ключ=значення``), мають бути упаковані у словник."
 
 #: ../../src/basics/functions.txt:444
-#, fuzzy
 msgid ""
 "Again, any name can be used, but the peculiar *kwargs* (which is short for "
 "*keyword args*) is nearly standard."
 msgstr ""
 "Знову ж таки, можна використовувати будь-яке ім'я, але особливе *kwargs* (що "
-"є скороченням від *ключове слово args*) є майже стандартним."
+"є скороченням від *keyword args*) є майже стандартним."
 
 #: ../../src/basics/functions.txt:448
 #, fuzzy
@@ -754,7 +673,6 @@ msgid "Argument dictionary unpacking"
 msgstr "Розпакування словника аргументів"
 
 #: ../../src/basics/functions.txt:450
-#, fuzzy
 msgid ""
 "This is analogous to argument tuple unpacking. When the double asterisk "
 "precedes an argument in a function call, it specifies that the argument is a "
@@ -765,88 +683,3 @@ msgstr ""
 "перед аргументом у виклику функції, вона вказує на те, що аргумент є "
 "словником, який слід розпакувати, а отримані елементи передати у функцію як "
 "аргументи ключових слів."
-
-#: ../../src/basics/functions.txt:468
-#, fuzzy
-msgid "Lambda functions"
-msgstr "Функції"
-
-#: ../../src/basics/functions.txt:470
-#, fuzzy
-msgid ""
-"Lambda expressions in Python and other programming languages have their "
-"roots in lambda calculus, a model of computation invented by Alonzo Church. "
-"Python is not inherently a functional language, but it adopted some "
-"functional concepts early on. In January 1994, ``map()``, ``filter()``, "
-"``reduce()``, and the lambda operator were added to the language."
-msgstr ""
-"Лямбда-вирази в Python та інших мовах програмування беруть свій початок у "
-"лямбда-обчисленні - моделі обчислень, винайденій Алонзо Черчем. За своєю "
-"суттю Python не є функціональною мовою, але вона рано перейняла деякі "
-"функціональні концепції. У січні 1994 року до мови було додано ``map()``, "
-"``filter()``, ``reduce()`` та лямбда-оператор."
-
-#: ../../src/basics/functions.txt:476
-#, fuzzy
-msgid "General lambda function syntax is:"
-msgstr "Загальний синтаксис лямбда-функції такий:"
-
-#: ../../src/basics/functions.txt:485
-#, fuzzy
-msgid "``lambda``"
-msgstr "``lambda``"
-
-#: ../../src/basics/functions.txt:491
-#, fuzzy
-msgid "``<expression>``"
-msgstr "Вираз Await"
-
-#: ../../src/basics/functions.txt:491
-#, fuzzy
-msgid "A valid Python expression; return statement"
-msgstr "Оператор повернення"
-
-#: ../../src/basics/functions.txt:502
-#, fuzzy
-msgid ""
-"The code sample above demonstrates the ``get_fullname`` Python function and "
-"its lambda version. A lambda form presents syntactic distinctions from a "
-"normal function. In particular, a lambda function has the following "
-"characteristics:"
-msgstr ""
-"Наведений вище приклад коду демонструє функцію Python ``get_fullname`` та її "
-"лямбда-версію. Лямбда-форма має синтаксичні відмінності від звичайної "
-"функції. Зокрема, лямбда-функція має наступні характеристики:"
-
-#: ../../src/basics/functions.txt:506
-#, fuzzy
-msgid ""
-"It can only contain expressions and can’t include statements in its body."
-msgstr "Він може містити лише вирази і не може включати в себе оператори."
-
-#: ../../src/basics/functions.txt:507
-#, fuzzy
-msgid "It is written as a single line of execution."
-msgstr "Він написаний у вигляді одного рядка виконання."
-
-#: ../../src/basics/functions.txt:508
-#, fuzzy
-msgid "It does not support type annotations."
-msgstr "Він не підтримує анотації типів."
-
-#: ../../src/basics/functions.txt:509
-#, fuzzy
-msgid ""
-"It can be immediately invoked (:abbr:`IIFE (Immediately Invoked Function "
-"Execution)`)."
-msgstr ""
-"Її можна негайно викликати (:abbr:`IIFE (Immediately Invoked Function "
-"Execution)`)."
-
-#: ../../src/basics/functions.txt:517
-#, fuzzy
-msgid "Classic functional constructs"
-msgstr "Класичні функціональні конструкції"
-
-#~ msgid "Page is under construction"
-#~ msgstr "Сторінка в розробці"
