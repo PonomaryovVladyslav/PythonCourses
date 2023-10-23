@@ -356,3 +356,45 @@ passed to the function as separate values.
 
         numbers = 10, 20, 30
         average = avg(*numbers)
+
+Argument dictionary packing
+---------------------------
+
+Python has a similar operator, the double asterisk (\*\*), which can be used
+with function parameters to specify **dictionary packing**. Preceding parameter
+in a function definition be a double asterisk indicates that the corresponding
+arguments, which are expected to be keyword arguments (``key=value`` pairs),
+should be packed into a dictionary.
+
+.. code-block:: python
+
+    def display_person(first_name: str, last_name: str, **kwargs) -> None:
+        print(f"{first_name.title()} {last_name.title()}")
+        for key, value in kwargs.items():
+            print(f"{key}:\t{value}")
+
+
+    display_person("serhii", "horodilov", school="A-Level", course="Python")
+
+Again, any name can be used, but the peculiar *kwargs* (which is short for
+*keyword args*) is nearly standard.
+
+Argument dictionary unpacking
+-----------------------------
+
+This is analogous to argument tuple unpacking.
+When the double asterisk precedes an argument in a function call, it specifies
+that the argument is a dictionary that should be unpacked, with the resulting
+items passed to the function as keyword arguments.
+
+.. code-block:: python
+
+    person_data = {
+        "first_name": "Serhii",
+        "last_name": "Horodilov",
+        "school": "A-Level",
+        "course": "Python",
+        "school_occupation": "teacher/mentor",
+        "job_title": "Software Engineer",
+    }
+    display_person(**person_data)
