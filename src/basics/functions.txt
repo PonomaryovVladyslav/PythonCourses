@@ -3,17 +3,61 @@
     :author: Serhii Horodilov
     :keywords: python, basics, functions
 
-.. attention:: Page is under construction
-
-    .. figure:: /../assets/img/construction.svg
-        :figwidth: 250
-        :align: center
-
 *******************************************************************************
                                    Functions
 *******************************************************************************
 
+You may be familiar with the mathematical concept of a **function**. It is
+a relationship or mapping between one or more inputs and a set of outputs.
+
+.. math::
+
+    z = f(x, y)
+
+Here ``f`` is a function that operates on the inputs ``x`` and ``y``, and
+its output is bind to ``z``.
+
+In programming a **function** is a self-contained block of code that
+encapsulate a specific task or related group of tasks.
+
+You may be familiar with some built-in functions like ``max``, ``min``, ``len``
+etc.
+
 .. todo: function definition
+
+The usual syntax for defining a Python function is as follows:
+
+::
+
+    def <function_name>([<parameters>]):
+        <statement>
+
++---------------------+-------------------------------------------------------+
+| Component           | Meaning                                               |
++=====================+=======================================================+
+| ``def``             | The keyword that informs Python that a function is    |
+|                     | being defined                                         |
++---------------------+-------------------------------------------------------+
+| ``<function_name>`` | A valid Python identifier that names the function     |
++---------------------+-------------------------------------------------------+
+| ``<parameters>``    | An optional, comma-separated list of parameters that  |
+|                     | may be passed to the function                         |
++---------------------+-------------------------------------------------------+
+| ``<statement(s)>``  | A block of valid Python statements;                   |
+|                     | **body** of the function                              |
++---------------------+-------------------------------------------------------+
+
+The syntax for calling a Python function is as follows:
+
+::
+
+    <function_name>([<arguments>])
+
+The ``<arguments>`` are the values passed into the function. They correspond
+to the ``<parameters>`` in the function definition. You can define a function
+that doesn't take any arguments, but the parentheses are still required. Both
+a function definition and a function call must always include parentheses,
+even if they're empty.
 
 .. todo: function arguments (positional and key-word)
 
