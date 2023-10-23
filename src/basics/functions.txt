@@ -59,6 +59,45 @@ that doesn't take any arguments, but the parentheses are still required. Both
 a function definition and a function call must always include parentheses,
 even if they're empty.
 
+Argument passing
+================
 .. todo: function arguments (positional and key-word)
+
+More often, you want to **pass data into a function**.
+
+Positional arguments
+--------------------
+
+.. note::
+
+    Because of the way they're defined and used, positional arguments are also
+    called *required arguments*.
+
+The most straightforward way to pass arguments to a function is with
+**positional arguments**.
+In the function definition, you specify a comma-separated list of parameters
+inside the parentheses.
+When the function is called, you specify a corresponding list of arguments.
+
+The parameters behave like **variables** that are defined locally to the
+function.
+
+Although positional arguments are the most straightforward way to pass data to
+a function, they also afford the least flexibility. For starters, the **order**
+of the arguments in the call must match the order of the parameters in the
+definition.
+
+There's nothing to stop you from specifying positional arguments out of order.
+The function even may still run, but it's very unlikely to produce the correct
+results.
+
+.. note::
+
+    It's responsibility of the programmer who defines the function to document
+    what the appropriate arguments should be, and it's the responsibility of
+    the user of the function to be aware of that information and abide by it.
+
+With positional arguments, the arguments in the call and the parameters in the
+definition must agree not only in order, but in number as well.
 
 .. todo: default argument value
