@@ -100,4 +100,24 @@ results.
 With positional arguments, the arguments in the call and the parameters in the
 definition must agree not only in order, but in number as well.
 
+Keyword arguments
+-----------------
+
+When calling a function, you can specify arguments in the form
+``<keyword>=<value>``. In that case, each ``<keyword>`` must match a parameter
+in the function definition. Referencing a keyword that doesn't match any of
+these declared parameters generates an exception.
+
+Using keyword arguments lifts the restriction on arguments order. Each keyword
+argument explicitly designates a specific parameter by name, so you can specify
+them in any order and Python will still know which argument goes with which
+parameter.
+
+Like with positional arguments, though, the number of arguments and parameters
+must still match.
+
+You can call a function using both positional and keyword arguments.
+Once you've specified a keyword argument, there can't be any positional
+arguments to the right of it.
+
 .. todo: default argument value
