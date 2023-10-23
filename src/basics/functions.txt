@@ -463,3 +463,67 @@ items passed to the function as keyword arguments.
         "job_title": "Software Engineer",
     }
     display_person(**person_data)
+
+Lambda functions
+================
+
+Lambda expressions in Python and other programming languages have their roots
+in lambda calculus, a model of computation invented by Alonzo Church.
+Python is not inherently a functional language, but it adopted some functional
+concepts early on. In January 1994, ``map()``, ``filter()``, ``reduce()``, and
+the lambda operator were added to the language.
+
+General lambda function syntax is:
+
+::
+
+    lambda [<parameters>]: <expression>
+
++---------------------+-------------------------------------------------------+
+| Component           | Meaning                                               |
++=====================+=======================================================+
+| ``lambda``          | The keyword that informs Python that a function is    |
+|                     | being defined                                         |
++---------------------+-------------------------------------------------------+
+| ``<parameters>``    | An optional, comma-separated list of parameters that  |
+|                     | may be passed to the function                         |
++---------------------+-------------------------------------------------------+
+| ``<expression>``    | A valid Python expression; return statement           |
++---------------------+-------------------------------------------------------+
+
+.. code-block:: python
+
+    def get_fullname(first_name: str, last_name: str):
+        return f"{first_name.title()} {last_name.title()}"
+
+
+    lambda first_name, last_name: f"{first_name.title()} {last_name.title()}"
+
+The code sample above demonstrates the ``get_fullname`` Python function and its
+lambda version. A lambda form presents syntactic distinctions from a normal
+function. In particular, a lambda function has the following characteristics:
+
+-   It can only contain expressions and can’t include statements in its body.
+-   It is written as a single line of execution.
+-   It does not support type annotations.
+-   It can be immediately invoked
+    (:abbr:`IIFE (Immediately Invoked Function Execution)`).
+
+    .. code-block:: python
+
+        (lambda number: "odd" if number % 2 else "even")(42)
+
+.. rubric:: Classic functional constructs
+
+.. code-block:: python
+
+    >>> # in-place data modifications
+    >>> list(map(lambda x: x.upper(), ["foo", "bar", "foobar"]))
+    ["FOO", "BAR", "FOOBAR"]
+    >>> # filtering values
+    >>> list(filter(lambda x: not x % 2, [1, 2, 3, 4, 5, 6, 7]))
+    [2, 4, 6]
+    >>> # reduce values
+    >>> from functools import reduce
+    >>> reduce(lambda acc, x: acc ^ x, [1, 2, 3, 1234, 3, 2, 1])
+    1234
