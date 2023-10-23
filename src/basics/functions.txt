@@ -266,3 +266,15 @@ objects.
     >>> insert_into_container(42, numbers)
     >>> numbers
     [42, 1, 2, 3]
+
+The return statement
+====================
+
+It serves two purposes:
+
+-   It immediately terminates the function and passes execution control back
+    to the caller.
+-   It provides a mechanism by which the function can pass data back
+    to the caller.
+
+.. todo: complete the return statement section
