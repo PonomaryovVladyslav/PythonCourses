@@ -278,3 +278,81 @@ It serves two purposes:
     to the caller.
 
 .. todo: complete the return statement section
+
+Variable-length argument list
+=============================
+
+In some cases, when you're defining a function, you may not know beforehand how
+many arguments you'll want it to take.
+
+For example, a function that computes an average of several values may look
+something like this:
+
+.. code-block:: python
+
+    def avg(a, b, c):
+        return (a + b + c) / 3
+
+However, as you're already seen, when positional arguments are used, the number
+of arguments passed must match the number of parameters declared.
+
+Argument tuple packing
+----------------------
+
+When a parameter name in a function definition is preceded by an asterisk (\*),
+it indicates **argument tuple packing**. Any corresponding arguments in
+a function call are packed into a tuple that the function can refer to by
+the given parameter name.
+
+.. code-block:: python
+
+    def avg(*args):
+        return sum(args) / len(args)
+
+Any name can be used, but *args* is so commonly chosen that it's practically
+a standard.
+
+Argument tuple unpacking
+------------------------
+
+An analogous operation is available on the other side of the equation in
+a function call. When an argument in a function call is preceded by an asterisk,
+it indicates that the argument is a tuple that should be **unpacked** and
+passed to the function as separate values.
+
+.. code-block:: python
+
+    def demo_args_unpacking(a, b, c):
+        print(f"{a = }, {b = }, {c = }")
+
+
+    args = 10, 20, 30
+    demo_args_unpacking(*args)
+
+.. note::
+
+    Although this type of unpacking is called **tuple** unpacking, it doesn't
+    only work with tuples. The asterisk can be applied to any iterable in
+    a function call.
+
+    .. code-block:: python
+
+        arguments_list = [10, 20, 30]
+        demo_args_unpacking(*arguments_list)
+        arguments_set = {10, 20, 30}
+        demo_args_unpacking(*arguments_set)
+        arguments_str = "ABC"
+        demo_args_unpacking(*arguments_str)
+
+.. note::
+
+    You can even do tuple packing and unpacking at the same time.
+
+    .. code-block:: python
+
+        def avg(*args) -> float:
+            return sum(args) / len(args)
+
+
+        numbers = 10, 20, 30
+        average = avg(*numbers)
