@@ -153,3 +153,116 @@ is defined. The default value isn't re-defined each time the function is
 called. For the example above, each time the ``add_to_container`` function is
 called without passing ``container`` argument, the ``.append`` statement is
 performed on the same list.
+
+Mutable and immutable arguments
+-------------------------------
+
+.. note::
+
+    Roughly, you may consider immutable object as passed-by-value,
+    and mutable objects as passed-by-reference.
+    However, that's not actual true.
+
+In programming language design, there are two common paradigms for passing an
+argument to a function:
+
+-   **pass-by-value** means a copy of the argument is passed to the function.
+-   **pass-by-reference** means a reference to the argument is passed to
+    the function.
+
+Are parameters in Python pass-by-value or pass-by-reference? They're neither,
+exactly. That's because a reference doesn't mean quite the same thing in
+Python as it does in C-like languages.
+
+Recall that in Python, every piece of data is an **object**. A reference points
+to an object, not a specific memory location.
+
+Take a look on the code below:
+
+.. code-block:: python
+    :linenos:
+
+    value = 24
+    value = 42
+
+These assignment statements have the following meaning:
+
+-   **Line 1** cause ``value`` to point to an object whose value is ``24``.
+-   **Line 2** reassign ``value`` as a new reference to a different object
+    whose value is ``42``.
+
+In Python, when you pass an argument to a function, a similar *rebinding*
+occurs.
+
+.. code-block:: python
+    :linenos:
+
+    def reassign(fx: int) -> None:
+        fx = 10
+
+
+    x = 5
+    reassign(x)
+
+In the main program, the statement ``x = 5`` on line 5 creates a reference
+named ``x`` bound to an object whose value is ``5``.
+``reassign`` is then called on line 6 with ``x`` as its argument.
+When a function first starts, a new reference called ``fx`` is created, which
+initially points to the same ``5`` object. However, when the statement
+``fx = 10`` on line 2 is executed, ``reassign`` rebinds ``fx`` to a new
+object whose value is ``10``. From now, the two references ``x`` and ``fx`` are
+uncoupled one from another. Nothing else that function does will affect ``x``,
+and when function terminates, ``x`` will still point to the object ``5``, as it
+did prior to the function call.
+
+You can confirm all this using ``id()``. Here's a slightly augmented version of
+the code above:
+
+.. code-block:: python
+    :linenos:
+
+    def reassign(fx: int) -> None:
+        print(f"{fx = }, {id(fx) = }")
+        fx = 10
+        print(f"{fx = }, {id(fx) = }")
+
+
+    x = 5
+    print(f"{x = }, {id(x) = }")
+    reassign(x)
+    print(f"{x = }, {id(x) = }")
+
+The outputs will look like:
+
+::
+
+    x = 5, id(x) = 140706772804520
+    fx = 5, id(fx) = 140706772804520
+    fx = 42, id(fx) = 140706772805704
+    x = 5, id(x) = 140706772804520
+
+.. note::
+
+    Python's argument-passing mechanism has been called **pass-by-assignment**.
+    You may also see terms pass-by-object, pass-by-object-reference, or
+    pass-by-sharing. This is because parameter names are bound to objects on
+    function entry in Python, and assignment is also the process of binding
+    a name to an object.
+
+The key takeaway here is that Python function can't change the value of an
+argument by reassigning the corresponding parameter to something else.
+
+However, functions can use references to make modifications inside of a mutable
+objects.
+
+.. code-block:: python
+    :linenos:
+
+    >>> def insert_into_container(item, container, idx = 0):
+    ...    container.insert(idx, item)
+    ...
+    >>>
+    >>> numbers = [1, 2, 3]
+    >>> insert_into_container(42, numbers)
+    >>> numbers
+    [42, 1, 2, 3]
