@@ -277,7 +277,72 @@ It serves two purposes:
 -   It provides a mechanism by which the function can pass data back
     to the caller.
 
-.. todo: complete the return statement section
+The return statement can be used inside of a function or a method to send
+the result back to the caller. It consists of the ``return`` Python keyword
+and an optional return value.
+
+The return value of a Python function can be any Python object (and you should
+remember - everything in Python is an object).
+
+You can omit the return value and use bare ``return`` without a return value.
+You can also omit the entire ``return`` statement. In both cases, the return
+value will be ``None``. So, Python functions always have the return value; in
+case it hasn't been specified - it's ``None``.
+
+.. important:: **Returning vs Printing**
+
+    If you're working in an interactive session, then you might think that
+    printing a value and returning a value are equivalent.
+    Consider the following two functions:
+
+    .. code-block:: python
+
+        from typing import List
+
+
+        def print_evens(numbers: List[int]) -> None:
+            print([number for number in numbers if not number % 2])
+
+
+        def return_evens(numbers: List[int]) -> List[int]:
+            return [number for number in numbers if not number % 2]
+
+    And their output:
+
+    ::
+
+        >>> print_evens([1, 2, 3, 4, 5, 6, 7, 8, 9])
+        [2, 4, 6, 8]
+        >>> return_evens([1, 2, 3, 4, 5, 6, 7, 8, 9])
+        [2, 4, 6, 8]
+
+    Both functions seems to do the same thing. But only the second one
+    function actually returns a value, when the first one returns nothing
+    (or **NoneType object**).
+
+Return multiple values
+----------------------
+
+You can use a return statement to return multiple values from a function.
+To do that, you just need to supply several return values separated by commas.
+The function will return a tuple of values.
+
+.. code-block:: python
+
+    import statistics as st
+
+
+    def describe(data):
+        return st.mean(data), st.median(data), st.mode(data)
+
+
+    sample = [8, 1, 9, 1, 4, 6, 1, 9, 8, 3]
+    mean, median, mode = describe(sample)
+
+The built-in ``divmod`` function is also an example of a function that returns
+multiple values. The function takes two (non-complex) numbers as arguments and
+returns two numbers, the quotient of the two input values and the remainder of
+the division.
 
 Variable-length argument list
 =============================

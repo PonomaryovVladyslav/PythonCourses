@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Python Training Course 2022.11.dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-10-23 22:17+0300\n"
-"PO-Revision-Date: 2023-10-23 22:18+0300\n"
+"POT-Creation-Date: 2023-10-23 23:35+0300\n"
+"PO-Revision-Date: 2023-10-23 23:36+0300\n"
 "Last-Translator: Serhii Horodilov <sgorodil@gmail.com>\n"
 "Language-Team: \n"
 "Language: uk\n"
@@ -532,12 +532,106 @@ msgstr ""
 "Він надає механізм, за допомогою якого функція може передавати дані назад "
 "тому, хто її викликає."
 
-#: ../../src/basics/functions.txt:283
+#: ../../src/basics/functions.txt:280
+#, fuzzy
+msgid ""
+"The return statement can be used inside of a function or a method to send "
+"the result back to the caller. It consists of the ``return`` Python keyword "
+"and an optional return value."
+msgstr ""
+"Оператор return можна використовувати всередині функції або методу, щоб "
+"відправити результат назад тому, хто його викликає. Він складається з "
+"ключового слова return та необов'язкового значення, що повертається."
+
+#: ../../src/basics/functions.txt:284
+#, fuzzy
+msgid ""
+"The return value of a Python function can be any Python object (and you "
+"should remember - everything in Python is an object)."
+msgstr ""
+"Значенням, що повертається функцією Python, може бути будь-який об'єкт "
+"Python (і ви повинні пам'ятати - все в Python є об'єктом)."
+
+#: ../../src/basics/functions.txt:287
+#, fuzzy
+msgid ""
+"You can omit the return value and use bare ``return`` without a return "
+"value. You can also omit the entire ``return`` statement. In both cases, the "
+"return value will be ``None``. So, Python functions always have the return "
+"value; in case it hasn't been specified - it's ``None``."
+msgstr ""
+"Ви можете опустити значення, що повертається, і використовувати просто "
+"``return`` без значення, що повертається. Ви також можете опустити всю "
+"інструкцію ``return``. В обох випадках значенням, що повертається, буде "
+"``None``. Отже, функції Python завжди мають значення, що повертається, а "
+"якщо його не вказано - це ``None``."
+
+#: ../../src/basics/functions.txt:292
+#, fuzzy
+msgid "**Returning vs Printing**"
+msgstr "**Повернення проти друку**"
+
+#: ../../src/basics/functions.txt:294
+#, fuzzy
+msgid ""
+"If you're working in an interactive session, then you might think that "
+"printing a value and returning a value are equivalent. Consider the "
+"following two functions:"
+msgstr ""
+"Якщо ви працюєте в інтерактивному сеансі, ви можете подумати, що виведення "
+"значення і повернення значення еквівалентні. Розглянемо дві наступні функції:"
+
+#: ../../src/basics/functions.txt:310
+#, fuzzy
+msgid "And their output:"
+msgstr "Опис Результатів"
+
+#: ../../src/basics/functions.txt:319
+#, fuzzy
+msgid ""
+"Both functions seems to do the same thing. But only the second one function "
+"actually returns a value, when the first one returns nothing (or **NoneType "
+"object**)."
+msgstr ""
+"Здається, що обидві функції роблять одне й те саме. Але тільки друга функція "
+"насправді повертає значення, тоді як перша не повертає нічого (або "
+"**NoneType об'єкт**)."
+
+#: ../../src/basics/functions.txt:324
+#, fuzzy
+msgid "Return multiple values"
+msgstr "Значення за замовчуванням"
+
+#: ../../src/basics/functions.txt:326
+#, fuzzy
+msgid ""
+"You can use a return statement to return multiple values from a function. To "
+"do that, you just need to supply several return values separated by commas. "
+"The function will return a tuple of values."
+msgstr ""
+"Ви можете використовувати інструкцію return для повернення декількох значень "
+"з функції. Для цього вам просто потрібно вказати декілька значень, що "
+"повертаються, розділених комами. Функція поверне кортеж значень."
+
+#: ../../src/basics/functions.txt:342
+#, fuzzy
+msgid ""
+"The built-in ``divmod`` function is also an example of a function that "
+"returns multiple values. The function takes two (non-complex) numbers as "
+"arguments and returns two numbers, the quotient of the two input values and "
+"the remainder of the division."
+msgstr ""
+"Вбудована функція ``divmod`` також є прикладом функції, яка повертає "
+"декілька значень. Функція отримує два (нескладних) числа як аргументи і "
+"повертає два числа - частку від ділення двох вхідних значень і залишок від "
+"ділення."
+
+#: ../../src/basics/functions.txt:348
 #, fuzzy
 msgid "Variable-length argument list"
 msgstr "Список аргументів змінної довжини"
 
-#: ../../src/basics/functions.txt:285
+#: ../../src/basics/functions.txt:350
 #, fuzzy
 msgid ""
 "In some cases, when you're defining a function, you may not know beforehand "
@@ -546,7 +640,7 @@ msgstr ""
 "У деяких випадках, коли ви визначаєте функцію, ви можете не знати "
 "заздалегідь, скільки аргументів ви хочете, щоб вона приймала."
 
-#: ../../src/basics/functions.txt:288
+#: ../../src/basics/functions.txt:353
 #, fuzzy
 msgid ""
 "For example, a function that computes an average of several values may look "
@@ -555,7 +649,7 @@ msgstr ""
 "Наприклад, функція, яка обчислює середнє арифметичне декількох значень, може "
 "виглядати приблизно так:"
 
-#: ../../src/basics/functions.txt:296
+#: ../../src/basics/functions.txt:361
 #, fuzzy
 msgid ""
 "However, as you're already seen, when positional arguments are used, the "
@@ -565,12 +659,12 @@ msgstr ""
 "кількість переданих аргументів повинна відповідати кількості оголошених "
 "параметрів."
 
-#: ../../src/basics/functions.txt:300
+#: ../../src/basics/functions.txt:365
 #, fuzzy
 msgid "Argument tuple packing"
 msgstr "Пакування кортежів аргументів"
 
-#: ../../src/basics/functions.txt:302
+#: ../../src/basics/functions.txt:367
 #, fuzzy
 msgid ""
 "When a parameter name in a function definition is preceded by an asterisk "
@@ -583,7 +677,7 @@ msgstr ""
 "функції упаковуються у кортеж, на який функція може посилатися за вказаним "
 "іменем параметра."
 
-#: ../../src/basics/functions.txt:312
+#: ../../src/basics/functions.txt:377
 #, fuzzy
 msgid ""
 "Any name can be used, but *args* is so commonly chosen that it's practically "
@@ -592,12 +686,12 @@ msgstr ""
 "Можна використовувати будь-яке ім'я, але *args* є настільки поширеним, що "
 "стало практично стандартом."
 
-#: ../../src/basics/functions.txt:316
+#: ../../src/basics/functions.txt:381
 #, fuzzy
 msgid "Argument tuple unpacking"
 msgstr "Розпакування кортежу аргументів"
 
-#: ../../src/basics/functions.txt:318
+#: ../../src/basics/functions.txt:383
 #, fuzzy
 msgid ""
 "An analogous operation is available on the other side of the equation in a "
@@ -609,7 +703,7 @@ msgstr ""
 "перед аргументом у виклику функції стоїть зірочка, це означає, що аргумент є "
 "кортежем, який слід **розпакувати** і передати у функцію як окремі значення."
 
-#: ../../src/basics/functions.txt:334
+#: ../../src/basics/functions.txt:399
 #, fuzzy
 msgid ""
 "Although this type of unpacking is called **tuple** unpacking, it doesn't "
@@ -620,17 +714,17 @@ msgstr ""
 "не лише з кортежами. Зірочка може бути застосована до будь-якого ітератора у "
 "виклику функції."
 
-#: ../../src/basics/functions.txt:349
+#: ../../src/basics/functions.txt:414
 #, fuzzy
 msgid "You can even do tuple packing and unpacking at the same time."
 msgstr "Ви навіть можете одночасно пакувати та розпаковувати кортежі."
 
-#: ../../src/basics/functions.txt:361
+#: ../../src/basics/functions.txt:426
 #, fuzzy
 msgid "Argument dictionary packing"
 msgstr "Пакування словника аргументів"
 
-#: ../../src/basics/functions.txt:363
+#: ../../src/basics/functions.txt:428
 #, fuzzy
 msgid ""
 "Python has a similar operator, the double asterisk (\\*\\*), which can be "
@@ -645,7 +739,7 @@ msgstr ""
 "що відповідні аргументи, які, як очікується, є аргументами ключових слів "
 "(пари ``ключ=значення``), мають бути упаковані у словник."
 
-#: ../../src/basics/functions.txt:379
+#: ../../src/basics/functions.txt:444
 #, fuzzy
 msgid ""
 "Again, any name can be used, but the peculiar *kwargs* (which is short for "
@@ -654,12 +748,12 @@ msgstr ""
 "Знову ж таки, можна використовувати будь-яке ім'я, але особливе *kwargs* (що "
 "є скороченням від *ключове слово args*) є майже стандартним."
 
-#: ../../src/basics/functions.txt:383
+#: ../../src/basics/functions.txt:448
 #, fuzzy
 msgid "Argument dictionary unpacking"
 msgstr "Розпакування словника аргументів"
 
-#: ../../src/basics/functions.txt:385
+#: ../../src/basics/functions.txt:450
 #, fuzzy
 msgid ""
 "This is analogous to argument tuple unpacking. When the double asterisk "
