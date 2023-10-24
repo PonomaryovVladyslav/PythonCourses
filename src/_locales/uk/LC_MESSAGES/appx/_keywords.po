@@ -1,0 +1,166 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2023, Python training course authors and contributors
+# This file is distributed under the same license as the Python Training
+# Course package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2023.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Python Training Course 2023.09.dev\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-10-24 21:59+0100\n"
+"PO-Revision-Date: 2023-10-25 00:01+0300\n"
+"Last-Translator: Serhii Horodilov <sgorodil@gmail.com>\n"
+"Language-Team: uk <LL@li.org>\n"
+"Language: uk\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Generated-By: Babel 2.13.0\n"
+"X-Generator: Poedit 3.4\n"
+
+#: ../../src/appx/_keywords.txt:1
+msgid "Python Keywords"
+msgstr "Ключові слова мови Python"
+
+#: ../../src/appx/_keywords.txt:5
+msgid "``False``"
+msgstr "``False``"
+
+#: ../../src/appx/_keywords.txt:5
+msgid "``await``"
+msgstr "``await``"
+
+#: ../../src/appx/_keywords.txt:5
+msgid "``else``"
+msgstr "``else``"
+
+#: ../../src/appx/_keywords.txt:5
+msgid "``import``"
+msgstr "``import``"
+
+#: ../../src/appx/_keywords.txt:5
+msgid "``pass``"
+msgstr "``pass``"
+
+#: ../../src/appx/_keywords.txt:7
+msgid "``None``"
+msgstr "``None``"
+
+#: ../../src/appx/_keywords.txt:7
+msgid "``break``"
+msgstr "``break``"
+
+#: ../../src/appx/_keywords.txt:7
+msgid "``except``"
+msgstr "``except``"
+
+#: ../../src/appx/_keywords.txt:7
+msgid "``in``"
+msgstr "``in``"
+
+#: ../../src/appx/_keywords.txt:7
+msgid "``raise``"
+msgstr "``raise``"
+
+#: ../../src/appx/_keywords.txt:9
+msgid "``True``"
+msgstr "``True``"
+
+#: ../../src/appx/_keywords.txt:9
+msgid "``class``"
+msgstr "``class``"
+
+#: ../../src/appx/_keywords.txt:9
+msgid "``finally``"
+msgstr "``finally``"
+
+#: ../../src/appx/_keywords.txt:9
+msgid "``is``"
+msgstr "``is``"
+
+#: ../../src/appx/_keywords.txt:9
+msgid "``return``"
+msgstr "``return``"
+
+#: ../../src/appx/_keywords.txt:11
+msgid "``and``"
+msgstr "``and``"
+
+#: ../../src/appx/_keywords.txt:11
+msgid "``continue``"
+msgstr "``continue``"
+
+#: ../../src/appx/_keywords.txt:11
+msgid "``for``"
+msgstr "``for``"
+
+#: ../../src/appx/_keywords.txt:11
+msgid "``lambda``"
+msgstr "``lambda``"
+
+#: ../../src/appx/_keywords.txt:11
+msgid "``try``"
+msgstr "``try``"
+
+#: ../../src/appx/_keywords.txt:13
+msgid "``as``"
+msgstr "``as``"
+
+#: ../../src/appx/_keywords.txt:13
+msgid "``def``"
+msgstr "``def``"
+
+#: ../../src/appx/_keywords.txt:13
+msgid "``from``"
+msgstr "``from``"
+
+#: ../../src/appx/_keywords.txt:13
+msgid "``nonlocal``"
+msgstr "``nonlocal``"
+
+#: ../../src/appx/_keywords.txt:13
+msgid "``while``"
+msgstr "``while``"
+
+#: ../../src/appx/_keywords.txt:15
+msgid "``assert``"
+msgstr "``assert``"
+
+#: ../../src/appx/_keywords.txt:15
+msgid "``del``"
+msgstr "``del``"
+
+#: ../../src/appx/_keywords.txt:15
+msgid "``global``"
+msgstr "``global``"
+
+#: ../../src/appx/_keywords.txt:15
+msgid "``not``"
+msgstr "``not``"
+
+#: ../../src/appx/_keywords.txt:15
+msgid "``with``"
+msgstr "``with``"
+
+#: ../../src/appx/_keywords.txt:17
+msgid "``async``"
+msgstr "``async``"
+
+#: ../../src/appx/_keywords.txt:17
+msgid "``elif``"
+msgstr "``elif``"
+
+#: ../../src/appx/_keywords.txt:17
+msgid "``if``"
+msgstr "``if``"
+
+#: ../../src/appx/_keywords.txt:17
+msgid "``or``"
+msgstr "``or``"
+
+#: ../../src/appx/_keywords.txt:17
+msgid "``yield``"
+msgstr "``yield``"
