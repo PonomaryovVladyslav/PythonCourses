@@ -23,8 +23,6 @@ encapsulate a specific task or related group of tasks.
 You may be familiar with some built-in functions like ``max``, ``min``, ``len``
 etc.
 
-.. todo: function definition
-
 The usual syntax for defining a Python function is as follows:
 
 ::
@@ -61,7 +59,6 @@ even if they're empty.
 
 Argument passing
 ================
-.. todo: function arguments (positional and key-word)
 
 More often, you want to **pass data into a function**.
 
