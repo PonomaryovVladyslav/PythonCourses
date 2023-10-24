@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: Python Training Course 2022.11.dev\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-10-05 19:49+0300\n"
-"PO-Revision-Date: 2023-10-17 23:16+0300\n"
+"PO-Revision-Date: 2023-10-24 23:41+0300\n"
 "Last-Translator: Serhii Horodilov <sgorodil@gmail.com>\n"
 "Language-Team: \n"
 "Language: uk\n"
@@ -20,27 +20,22 @@ msgstr ""
 "X-Generator: Poedit 3.4\n"
 
 #: ../../src/basics/stdtypes.txt:-1
-#, fuzzy
 msgid "Python built-in types"
 msgstr "Вбудовані типи даних в Python"
 
 #: ../../src/basics/stdtypes.txt:-1
-#, fuzzy
 msgid "Serhii Horodilov"
 msgstr "Serhii Horodilov"
 
 #: ../../src/basics/stdtypes.txt:-1
-#, fuzzy
 msgid "python, basics"
 msgstr "python, basics"
 
 #: ../../src/basics/stdtypes.txt:11
-#, fuzzy
 msgid "Built-in Types"
 msgstr "Вбудовані Типи"
 
 #: ../../src/basics/stdtypes.txt:13
-#, fuzzy
 msgid ""
 "The principal built-in types are numerics, sequences, mappings, classes, "
 "instances and exceptions :cite:`docs-python:stdtypes`. This section covers "
@@ -53,12 +48,10 @@ msgstr ""
 "відповідних темах."
 
 #: ../../src/basics/stdtypes.txt:19
-#, fuzzy
 msgid "Numeric types"
 msgstr "Числові типи"
 
 #: ../../src/basics/stdtypes.txt:21
-#, fuzzy
 msgid ""
 "There are 3 distinct numeric types: *integers*, *floating point numbers*, "
 "and *complex numbers*. In addition, Booleans are a subtype of integers. "
@@ -67,13 +60,12 @@ msgid ""
 "part, which are each a floating point number."
 msgstr ""
 "Існує 3 різних числових типи: *цілі числа*, *числа з плаваючою комою* та "
-"*комплексні числа*. Крім того, булеві числа є підтипом цілих чисел. Цілі "
+"*комплексні числа*. Крім того, булеві значення є підтипом цілих чисел. Цілі "
 "числа мають необмежену точність. Числа з плаваючою комою зазвичай "
 "реалізуються за допомогою ``double`` у C. Комплексні числа мають дійсну та "
 "уявну частини, кожна з яких є числом з плаваючою комою."
 
 #: ../../src/basics/stdtypes.txt:27
-#, fuzzy
 msgid ""
 "Numbers are created by numeric literals or as the result of built-in "
 "functions and operators. Unadorned integer literals (including hex, octal "
@@ -84,148 +76,121 @@ msgid ""
 "number with real and imaginary parts."
 msgstr ""
 "Числа створюються за допомогою числових літералів або як результат "
-"вбудованих функцій та операторів. Цілі літерали без прикрас (включаючи "
-"шістнадцяткові, вісімкові та двійкові числа) створюють цілі числа. Числові "
-"літерали, що містять десяткову крапку або знак експоненти, дають числа з "
-"плаваючою комою. Додавання ``j`` або ``J`` до числового літерала дає уявне "
-"число (комплексне число з нульовою дійсною частиною), яке ви можете додати "
-"до цілого числа або числа з плаваючою комою, щоб отримати комплексне число з "
-"дійсною та уявною частинами."
+"вбудованих функцій та операторів. Цілочислені літерали без додатків "
+"(включаючи шістнадцяткові, вісімкові та двійкові числа) створюють цілі "
+"числа. Числові літерали, що містять десяткову крапку або знак експоненти, "
+"дають числа з плаваючою комою. Додавання ``j`` або ``J`` до числового "
+"літерала дає уявне число (комплексне число з нульовою дійсною частиною), яке "
+"ви можете додати до цілого числа або числа з плаваючою комою, щоб отримати "
+"комплексне число з дійсною та уявною частинами."
 
 #: ../../src/basics/stdtypes.txt:36
-#, fuzzy
 msgid "Supported operations"
 msgstr "Операції, які підтримуються"
 
 #: ../../src/basics/stdtypes.txt:39 ../../src/basics/stdtypes.txt:159
 #: ../../src/basics/stdtypes.txt:209
-#, fuzzy
 msgid "Operation"
 msgstr "Операція"
 
 #: ../../src/basics/stdtypes.txt:39 ../../src/basics/stdtypes.txt:159
 #: ../../src/basics/stdtypes.txt:209
-#, fuzzy
 msgid "Result"
 msgstr "Результат"
 
 #: ../../src/basics/stdtypes.txt:41
-#, fuzzy
 msgid "``x + y``"
 msgstr "``x + y``"
 
 #: ../../src/basics/stdtypes.txt:41
-#, fuzzy
 msgid "sum of *x* and *y*"
 msgstr "сума *x* і *y*"
 
 #: ../../src/basics/stdtypes.txt:43
-#, fuzzy
 msgid "``x - y``"
 msgstr "``x - y``"
 
 #: ../../src/basics/stdtypes.txt:43
-#, fuzzy
 msgid "difference of *x* and *y*"
-msgstr "різниця між *x* і *y*"
+msgstr "різниця *x* і *y*"
 
 #: ../../src/basics/stdtypes.txt:45
-#, fuzzy
 msgid "``x * y``"
 msgstr "``x * y``"
 
 #: ../../src/basics/stdtypes.txt:45
-#, fuzzy
 msgid "product of *x* and *y*"
 msgstr "добуток *x* і *y*"
 
 #: ../../src/basics/stdtypes.txt:47
-#, fuzzy
 msgid "``x / y``"
-msgstr "``x + y``"
+msgstr "``x / y``"
 
 #: ../../src/basics/stdtypes.txt:47
-#, fuzzy
 msgid "quotient of *x* and *y*"
 msgstr "частка *x* і *y*"
 
 #: ../../src/basics/stdtypes.txt:49
-#, fuzzy
 msgid "``x // y``"
-msgstr "``x + y``"
+msgstr "``x // y``"
 
 #: ../../src/basics/stdtypes.txt:49
-#, fuzzy
 msgid "floored quotient of *x* and *y*"
-msgstr "цілочисельне ділення *x* і *y*"
+msgstr "поділ націло *x* і *y*"
 
 #: ../../src/basics/stdtypes.txt:51
-#, fuzzy
 msgid "``x % y``"
-msgstr "``x + y``"
+msgstr "``x % y``"
 
 #: ../../src/basics/stdtypes.txt:51
-#, fuzzy
 msgid "remainder of ``x / y``"
 msgstr "залишок від ділення ``x / y``"
 
 #: ../../src/basics/stdtypes.txt:53
-#, fuzzy
 msgid "``-x``"
 msgstr "``-x``"
 
 #: ../../src/basics/stdtypes.txt:53
-#, fuzzy
 msgid "*x* negated"
 msgstr "*x* від'ємне"
 
 #: ../../src/basics/stdtypes.txt:55
-#, fuzzy
 msgid "``+x``"
 msgstr "``+x``"
 
 #: ../../src/basics/stdtypes.txt:55
-#, fuzzy
 msgid "*x* unchanged"
-msgstr "*y* без змін"
+msgstr "*x* без змін"
 
 #: ../../src/basics/stdtypes.txt:57
-#, fuzzy
 msgid "``abs(x)``"
 msgstr "``abs(x)``"
 
 #: ../../src/basics/stdtypes.txt:57
-#, fuzzy
 msgid "absolute value or magnitude of *x*"
 msgstr "абсолютне значення або величина *x*"
 
 #: ../../src/basics/stdtypes.txt:59
-#, fuzzy
 msgid "``int(x)``"
 msgstr "``int(x)``"
 
 #: ../../src/basics/stdtypes.txt:59
-#, fuzzy
 msgid "*x* converted to integer"
-msgstr "*x* перетворено в ціле число"
+msgstr "*x* перетворене в ціле число"
 
 #: ../../src/basics/stdtypes.txt:61
-#, fuzzy
 msgid "``float(x)``"
 msgstr "``float(x)``"
 
 #: ../../src/basics/stdtypes.txt:61
-#, fuzzy
 msgid "*x* converted to floating point"
-msgstr "*x* перетворено у число з плаваючою комою"
+msgstr "*x* перетворене у число з плаваючою комою"
 
 #: ../../src/basics/stdtypes.txt:63
-#, fuzzy
 msgid "``complex(re, im)``"
 msgstr "``complex(re, im)``"
 
 #: ../../src/basics/stdtypes.txt:63
-#, fuzzy
 msgid ""
 "a complex number with real part *re*, imaginary part *im*. *im* defaults to "
 "zero."
@@ -234,27 +199,22 @@ msgstr ""
 "замовчуванням *im* дорівнює нулю."
 
 #: ../../src/basics/stdtypes.txt:66
-#, fuzzy
 msgid "``divmod(x, y)``"
 msgstr "``divmod(x, y)``"
 
 #: ../../src/basics/stdtypes.txt:66
-#, fuzzy
 msgid "the pair ``(x // y, x % y)``"
 msgstr "об'єднує ``(x // y, x % y)``"
 
 #: ../../src/basics/stdtypes.txt:68
-#, fuzzy
 msgid "``pow(x, y)`` ``x ** y``"
 msgstr "``pow(x, y)`` ``x ** y``"
 
 #: ../../src/basics/stdtypes.txt:68
-#, fuzzy
 msgid "*x* to the power *y*"
 msgstr "*x* у степені *y*"
 
 #: ../../src/basics/stdtypes.txt:72
-#, fuzzy
 msgid ""
 "``x // y`` also referred to as integer division. The resultant value is a "
 "whole integer, through the result's type is not necessarily int. The result "
@@ -265,7 +225,6 @@ msgstr ""
 "округлюється до мінус нескінченності: ``1 // 2`` є ``0``"
 
 #: ../../src/basics/stdtypes.txt:77
-#, fuzzy
 msgid ""
 "``float(x)`` also accepts the strings ``\"nan\"`` and ``\"inf\"`` with an "
 "optional prefix \"+\" or \"-\" for :abbr:`NaN(Not a Number)` and positive "
@@ -276,29 +235,24 @@ msgstr ""
 "від'ємної нескінченності."
 
 #: ../../src/basics/stdtypes.txt:82
-#, fuzzy
 msgid "Code examples"
 msgstr "Приклади коду"
 
 #: ../../src/basics/stdtypes.txt:84
-#, fuzzy
 msgid "Integer numbers"
 msgstr "Цілі числа"
 
 #: ../../src/basics/stdtypes.txt:98
-#, fuzzy
 msgid "Floating point numbers"
 msgstr "Числа з плаваючою комою"
 
 #: ../../src/basics/stdtypes.txt:114 ../../src/basics/stdtypes.txt:187
 #: ../../src/basics/stdtypes.txt:295 ../../src/basics/stdtypes.txt:304
 #: ../../src/basics/stdtypes.txt:333
-#, fuzzy
 msgid "Value comparisons"
 msgstr "Порівняння значень"
 
 #: ../../src/basics/stdtypes.txt:116
-#, fuzzy
 msgid ""
 "Numbers of built-in numeric types can be compared within and across their "
 "types (with the restriction that complex numbers do not support order "
@@ -310,7 +264,6 @@ msgstr ""
 "відповідних типів вони порівнюються математично коректно без втрати точності."
 
 #: ../../src/basics/stdtypes.txt:121
-#, fuzzy
 msgid ""
 "The \"not-a-number\" values ``float(\"NaN\")`` and ``decimal."
 "Decimal('NaN')`` are special. Any ordered comparison of a number to a not-a-"
@@ -321,12 +274,10 @@ msgstr ""
 "число\" є хибним."
 
 #: ../../src/basics/stdtypes.txt:125
-#, fuzzy
 msgid "Sequence types"
 msgstr "Типи послідовностей"
 
 #: ../../src/basics/stdtypes.txt:127
-#, fuzzy
 msgid ""
 "There are 3 basic sequence types: *lists*, *tuples*, and *range objects*. "
 "Additional sequence types tailored for processing of binary data and text "
@@ -337,12 +288,10 @@ msgstr ""
 "даних і текстових рядків, описано у відповідних розділах."
 
 #: ../../src/basics/stdtypes.txt:132
-#, fuzzy
 msgid "Lists"
 msgstr "Списки"
 
 #: ../../src/basics/stdtypes.txt:134
-#, fuzzy
 msgid ""
 "Lists are mutable sequences, typically used to store collections of items. "
 "They may be constructed in several ways:"
@@ -352,13 +301,11 @@ msgstr ""
 "способами:"
 
 #: ../../src/basics/stdtypes.txt:137
-#, fuzzy
 msgid "using a pair of square brackets to denote the empty list: ``[]``"
 msgstr ""
 "використовуючи пару квадратних дужок для позначення порожнього списку: ``[]``"
 
 #: ../../src/basics/stdtypes.txt:138
-#, fuzzy
 msgid ""
 "using square brackets, separating items with commas: ``[a]``, ``[a, b, c]``"
 msgstr ""
@@ -366,22 +313,18 @@ msgstr ""
 "b, c]``"
 
 #: ../../src/basics/stdtypes.txt:139
-#, fuzzy
 msgid "using a list comprehension: ``[x for x in iterable]``"
 msgstr "використовуючи генератори списків: ``[x for x in iterable]``"
 
 #: ../../src/basics/stdtypes.txt:140
-#, fuzzy
 msgid "using the type constructor: ``list()`` or ``list(iterable)``"
 msgstr "використовуючи конструктор типу: ``list()`` або ``list(iterable)``"
 
 #: ../../src/basics/stdtypes.txt:143
-#, fuzzy
 msgid "Tuples"
 msgstr "Кортежі"
 
 #: ../../src/basics/stdtypes.txt:145
-#, fuzzy
 msgid ""
 "Tuples are immutable sequences, typically used to store collections of data "
 "or for cases where an immutable sequence of data is needed (such as allowing "
@@ -394,40 +337,33 @@ msgstr ""
 "``dict``). Вони можуть бути побудовані кількома способами:"
 
 #: ../../src/basics/stdtypes.txt:150
-#, fuzzy
 msgid "using a pair of parentheses to denote the empty tuple: ``()``"
 msgstr ""
 "використовуючи пару круглих дужок для позначення порожнього кортежу: ``()``"
 
 #: ../../src/basics/stdtypes.txt:151
-#, fuzzy
 msgid "using a trailing comma for a singleton tuple: ``a,`` or ``(a, b, c)``"
 msgstr ""
 "з використанням кінцевої коми для одиночного кортежу: ``a,`` або ``(a, b, "
 "c)``"
 
 #: ../../src/basics/stdtypes.txt:152
-#, fuzzy
 msgid "separating items with commas: ``a, b, c`` or ``(a, b, c)``"
 msgstr "розділення елементів комами: ``a, b, c`` або ``(a, b, c)``"
 
 #: ../../src/basics/stdtypes.txt:153
-#, fuzzy
 msgid "using the type constructor: ``tuple()`` or ``tuple(iterable)``"
 msgstr "з використанням конструктора типу: ``tuple()`` або ``tuple(iterable)``"
 
 #: ../../src/basics/stdtypes.txt:156
-#, fuzzy
 msgid "Common operations"
 msgstr "Спільні операції"
 
 #: ../../src/basics/stdtypes.txt:161
-#, fuzzy
 msgid "``x in s`` ``x not in s``"
 msgstr "``x in s`` ``x not in s``"
 
 #: ../../src/basics/stdtypes.txt:161
-#, fuzzy
 msgid ""
 "``True`` if an item of *s* equal to *x* ``False`` if an item of *s* equal to "
 "*x*"
@@ -436,42 +372,34 @@ msgstr ""
 "*x*"
 
 #: ../../src/basics/stdtypes.txt:164
-#, fuzzy
 msgid "``s + t``"
 msgstr "``s + t``"
 
 #: ../../src/basics/stdtypes.txt:164
-#, fuzzy
 msgid "the concatenation of *s* and *t*"
 msgstr "конкатенація *s* та *t*"
 
 #: ../../src/basics/stdtypes.txt:166
-#, fuzzy
 msgid "``s * n``"
 msgstr "``s * n``"
 
 #: ../../src/basics/stdtypes.txt:166
-#, fuzzy
 msgid "equivalent to adding *s* to itself *n* times"
 msgstr "еквівалентно додаванню *s* до самого себе *n* разів"
 
 #: ../../src/basics/stdtypes.txt:168
-#, fuzzy
 msgid "``s[i]``"
 msgstr "``s[i]``"
 
 #: ../../src/basics/stdtypes.txt:168
-#, fuzzy
 msgid "*i*-th item of *s*, origin 0"
 msgstr "*i*-й елемент з *s*, походження 0"
 
 #: ../../src/basics/stdtypes.txt:170
-#, fuzzy
 msgid "``s[i:j]`` ``s[i:j:k]``"
 msgstr "``s[i:j]`` ``s[i:j:k]``"
 
 #: ../../src/basics/stdtypes.txt:170
-#, fuzzy
 msgid ""
 "slice of *s* from *i* to *j* with step *k*. any of these (or even all 3) may "
 "be omitted."
@@ -480,52 +408,42 @@ msgstr ""
 "можна опустити."
 
 #: ../../src/basics/stdtypes.txt:173
-#, fuzzy
 msgid "``len(s)``"
 msgstr "``len(s)``"
 
 #: ../../src/basics/stdtypes.txt:173
-#, fuzzy
 msgid "length of *s*"
 msgstr "довжина *s*"
 
 #: ../../src/basics/stdtypes.txt:175
-#, fuzzy
 msgid "``min(s)``"
 msgstr "``min(s)``"
 
 #: ../../src/basics/stdtypes.txt:175
-#, fuzzy
 msgid "smallest item of *s*"
 msgstr "найменший елемент *s*"
 
 #: ../../src/basics/stdtypes.txt:177
-#, fuzzy
 msgid "``max(s)``"
 msgstr "``max(s)``"
 
 #: ../../src/basics/stdtypes.txt:177
-#, fuzzy
 msgid "largest item of *s*"
 msgstr "найбільший елемент *s*"
 
 #: ../../src/basics/stdtypes.txt:179
-#, fuzzy
 msgid "``s.count(x)``"
 msgstr "``s.count(x)``"
 
 #: ../../src/basics/stdtypes.txt:179
-#, fuzzy
 msgid "total number of occurrences of *x* in *s*"
 msgstr "загальна кількість входжень *x* у *s*"
 
 #: ../../src/basics/stdtypes.txt:181
-#, fuzzy
 msgid "``s.index(x)`` ``s.index(x, i)`` ``s.index(x, i, j)``"
 msgstr "``s.index(x)`` ``s.index(x, i)`` ``s.index(x, i, j)``"
 
 #: ../../src/basics/stdtypes.txt:181
-#, fuzzy
 msgid ""
 "index of the first occurrence of *x* in *s* at or after index *i* and before "
 "index *j*"
@@ -534,7 +452,6 @@ msgstr ""
 "індексом *j*"
 
 #: ../../src/basics/stdtypes.txt:189
-#, fuzzy
 msgid ""
 "Sequences can be compared only within each of their types, with the "
 "restriction that ranges do not support order comparison. Equality comparison "
@@ -547,7 +464,6 @@ msgstr ""
 "викликає ``TypeError``."
 
 #: ../../src/basics/stdtypes.txt:194
-#, fuzzy
 msgid ""
 "Sequences compare lexicographically using comparison of corresponding "
 "elements. The built-in containers typically assume identical objects are "
@@ -560,7 +476,6 @@ msgstr ""
 "працює наступним чином:"
 
 #: ../../src/basics/stdtypes.txt:199
-#, fuzzy
 msgid ""
 "For two collections to compare equal, they must be of the same type, have "
 "the same length, and each pair of corresponding elements must compare equal."
@@ -570,7 +485,6 @@ msgstr ""
 "однаково."
 
 #: ../../src/basics/stdtypes.txt:201
-#, fuzzy
 msgid ""
 "Collections that supports order comparison are ordered the same as their "
 "first unequal elements. If corresponding element does not exist, the shorter "
@@ -581,67 +495,54 @@ msgstr ""
 "впорядковується коротша колекція."
 
 #: ../../src/basics/stdtypes.txt:206
-#, fuzzy
 msgid "Mutable sequence types"
 msgstr "Типи змінних послідовностей"
 
 #: ../../src/basics/stdtypes.txt:211
-#, fuzzy
 msgid "``s[i] = x``"
 msgstr "``s[i] = x``"
 
 #: ../../src/basics/stdtypes.txt:211
-#, fuzzy
 msgid "item *i* of *s* is replaced by *x*"
 msgstr "елемент *i* в *s* замінюється на *x*"
 
 #: ../../src/basics/stdtypes.txt:213
-#, fuzzy
 msgid "``s[i:j] = t``"
 msgstr "``s[i:j] = t``"
 
 #: ../../src/basics/stdtypes.txt:213
-#, fuzzy
 msgid "slice of *s* from *i* to *j* replaced by the contents of *t*"
 msgstr "фрагмент *s* від *i* до *j*, замінений вмістом *t*"
 
 #: ../../src/basics/stdtypes.txt:216
-#, fuzzy
 msgid "``del s[i:j]``"
 msgstr "``del s[i:j]``"
 
 #: ../../src/basics/stdtypes.txt:216
-#, fuzzy
 msgid "same as ``s[i:j] = []``"
 msgstr "те саме, що ``s[i:j] = []``"
 
 #: ../../src/basics/stdtypes.txt:218
-#, fuzzy
 msgid "``s[i:j:k] = t``"
 msgstr "``s[i:j:k] = t``"
 
 #: ../../src/basics/stdtypes.txt:218
-#, fuzzy
 msgid "the elements of *s* are replaced by those of *t* [#]_"
 msgstr "елементи *s* замінюються елементами *t* [#]_"
 
 #: ../../src/basics/stdtypes.txt:220
-#, fuzzy
 msgid "``del s[i:j:k]``"
 msgstr "``del s[i:j:k]``"
 
 #: ../../src/basics/stdtypes.txt:220
-#, fuzzy
 msgid "removes the elements of ``s[i:j:k]`` from the list"
 msgstr "видаляє елементи ``s[i:j:k]`` зі списку"
 
 #: ../../src/basics/stdtypes.txt:222
-#, fuzzy
 msgid "``s.append(x)``"
 msgstr "``s.append(x)``"
 
 #: ../../src/basics/stdtypes.txt:222
-#, fuzzy
 msgid ""
 "appends *x* to the end of the sequence; the same as ``s[len(s):len(s)] = "
 "[x]``"
@@ -649,52 +550,42 @@ msgstr ""
 "додає *x* до кінця послідовності; те саме, що ``s[len(s):len(s)] = [x]``"
 
 #: ../../src/basics/stdtypes.txt:225
-#, fuzzy
 msgid "``s.clear()``"
 msgstr "``s.clear()``"
 
 #: ../../src/basics/stdtypes.txt:225
-#, fuzzy
 msgid "removes all items from *s* (``del s[:]``) [#py33]_"
 msgstr "видаляє всі елементи з *s* (``del s[:]``) [#py33]_"
 
 #: ../../src/basics/stdtypes.txt:227
-#, fuzzy
 msgid "``s.copy()``"
 msgstr "``s.copy()``"
 
 #: ../../src/basics/stdtypes.txt:227
-#, fuzzy
 msgid "creates a shallow copy of *s* (``s[:]``) [#py33]_"
 msgstr "створює поверхневу копію *s* (``s[:]``) [#py33]_"
 
 #: ../../src/basics/stdtypes.txt:229
-#, fuzzy
 msgid "``s.extend(t)`` ``s += t``"
 msgstr "``s.extend(t)`` ``s += t``"
 
 #: ../../src/basics/stdtypes.txt:229
-#, fuzzy
 msgid "extends *s* with the contents of *t*"
 msgstr "розширює *s* вмістом *t*"
 
 #: ../../src/basics/stdtypes.txt:232
-#, fuzzy
 msgid "``s.insert(i, x)``"
 msgstr "``s.insert(i, x)``"
 
 #: ../../src/basics/stdtypes.txt:232
-#, fuzzy
 msgid "inserts *x* into *s* at the index *i*; same as ``s[i:i] = [x]``"
 msgstr "вставляє *x* у *s* за індексом *i*; те саме, що ``s[i:i] = [x]``"
 
 #: ../../src/basics/stdtypes.txt:235
-#, fuzzy
 msgid "``s.pop()``, ``s.pop(i)``"
 msgstr "``s.pop()``, ``s.pop(i)``"
 
 #: ../../src/basics/stdtypes.txt:235
-#, fuzzy
 msgid ""
 "retrieves the item at *i* and also removes it from *s* (if *i* is omitted - "
 "use the last one available index)"
@@ -703,47 +594,38 @@ msgstr ""
 "пропущено - використовуйте останній доступний індекс)"
 
 #: ../../src/basics/stdtypes.txt:238
-#, fuzzy
 msgid "``s.remove(x)``"
 msgstr "``s.remove(x)``"
 
 #: ../../src/basics/stdtypes.txt:238
-#, fuzzy
 msgid "remove the first item that is equal to *x* from *s*"
 msgstr "видалити перший елемент, який дорівнює *x*, із *s*"
 
 #: ../../src/basics/stdtypes.txt:240
-#, fuzzy
 msgid "``s.reverse()``"
 msgstr "``s.reverse()``"
 
 #: ../../src/basics/stdtypes.txt:240
-#, fuzzy
 msgid "reverses the items of *s* in place"
 msgstr "перевертає елементи *s* на місце"
 
 #: ../../src/basics/stdtypes.txt:243
-#, fuzzy
 msgid "*t* must have the same length as the slice it is replacing"
 msgstr "*t* повинен мати таку ж довжину, як і фрагмент, який він замінює"
 
 #: ../../src/basics/stdtypes.txt:244
-#, fuzzy
 msgid "new in Python version 3.3"
 msgstr "нове в Python версії 3.3"
 
 #: ../../src/basics/stdtypes.txt:247
-#, fuzzy
 msgid "Text sequence type"
 msgstr "Тип текстової послідовності"
 
 #: ../../src/basics/stdtypes.txt:250
-#, fuzzy
 msgid "String methods"
 msgstr "Методи рядків"
 
 #: ../../src/basics/stdtypes.txt:252
-#, fuzzy
 msgid ""
 "Strings implement all of the common sequence operations, along with the "
 "additional methods."
@@ -752,7 +634,6 @@ msgstr ""
 "методи."
 
 #: ../../src/basics/stdtypes.txt:297
-#, fuzzy
 msgid ""
 "Strings compare lexicographically using the numerical Unicode code points of "
 "their characters."
@@ -761,12 +642,10 @@ msgstr ""
 "символів у Юнікоді."
 
 #: ../../src/basics/stdtypes.txt:301
-#, fuzzy
 msgid "Set types"
 msgstr "Типи множин"
 
 #: ../../src/basics/stdtypes.txt:306
-#, fuzzy
 msgid ""
 "Sets (instances of ``set`` or ``frozenset``) can be compared within and "
 "across their types. They define order comparison operators to mean subset "
@@ -781,12 +660,10 @@ msgstr ""
 "не є підмножинами одна одної і не є надмножинами одна одної)."
 
 #: ../../src/basics/stdtypes.txt:313
-#, fuzzy
 msgid "Mapping type"
 msgstr "Тип відображення"
 
 #: ../../src/basics/stdtypes.txt:315
-#, fuzzy
 msgid ""
 "A mapping object maps hashable values to arbitrary objects. Mappings are "
 "mutable objects. There is currently ony one standard mapping type, the "
@@ -798,7 +675,6 @@ msgstr ""
 "набори ключів та їхніх значень."
 
 #: ../../src/basics/stdtypes.txt:319
-#, fuzzy
 msgid ""
 "A dictionary's keys are almost arbitrary values. Values that are not "
 "hashable may not be used as keys. Values that compare equal (such as ``1``, "
@@ -811,17 +687,14 @@ msgstr ""
 "взаємозамінні для індексації однієї і тієї ж словникової статті."
 
 #: ../../src/basics/stdtypes.txt:323
-#, fuzzy
 msgid "Dictionaries can be created by several means:"
 msgstr "Словники можна створювати кількома способами:"
 
 #: ../../src/basics/stdtypes.txt:325
-#, fuzzy
 msgid "Use braces to denote the empty dictionary: ``{}``"
 msgstr "Використовуйте дужки для позначення порожнього словника: ``{}``"
 
 #: ../../src/basics/stdtypes.txt:326
-#, fuzzy
 msgid ""
 "Use a comma-separated list of ``key: value`` pairs with braces: "
 "``{'first_name': 'Serhii', 'last_name': 'Horodilov', 'age': 34}``"
@@ -830,12 +703,10 @@ msgstr ""
 "``{'first_name': 'Serhii', 'last_name': 'Horodilov', 'age': 34}``"
 
 #: ../../src/basics/stdtypes.txt:328
-#, fuzzy
 msgid "Use a dict comprehension: ``{x: x ** 2 for x in range(10)}``"
 msgstr "Використовуючи генератори списків: ``{x: x 2 for x in range(10)}``"
 
 #: ../../src/basics/stdtypes.txt:329
-#, fuzzy
 msgid ""
 "Use the type constructor: ``dict()``, ``dict([('key', 100)])``, "
 "``dict(key=100)``"
@@ -844,7 +715,6 @@ msgstr ""
 "``dict(key=100)``"
 
 #: ../../src/basics/stdtypes.txt:335
-#, fuzzy
 msgid ""
 "Instances of ``dict`` compare equal if and only if they have equal key-value "
 "pairs."
@@ -853,6 +723,5 @@ msgstr ""
 "мають однакові пари ключ-значення."
 
 #: ../../src/basics/stdtypes.txt:338
-#, fuzzy
 msgid "Order comparisons raise ``TypeError``."
 msgstr "Порівняння порядку викликає ``TypeError``."
