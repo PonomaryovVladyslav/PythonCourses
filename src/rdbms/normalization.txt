@@ -1,3 +1,5 @@
+.. todo: review and update document
+
 .. meta::
     :description: Database normalization
     :author: Serhii Horodilov
