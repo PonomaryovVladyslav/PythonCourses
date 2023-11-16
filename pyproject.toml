@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "python-course"
-version = "2023.09.dev"
+version = "2023.11.dev"
 description = "Python training course materials"
 license = "MIT"
 authors = [
