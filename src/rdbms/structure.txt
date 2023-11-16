@@ -83,3 +83,22 @@ Constraints
 Columns can have constraints to enforce data integrity. For example, some
 columns cannot be empty, or store values under or above some threshold.
 Several constraints can be combined together.
+
+Examples
+========
+
+.. csv-table:: Authors table
+    :header-rows: 1
+    :stub-columns: 1
+
+    id,first_name,last_name,country,birthdate
+    1,Letta,Casbolt,Poland,1947-04-18
+    2,Robbyn,Attwoul,Poland,1954-10-17
+    3,Hesther,Kisby,Ukraine,1941-07-21
+    4,Gav,Jewett,Czech Republic,1988-02-05
+    5,Jorrie,Klehyn,United States,1941-08-07
+    6,Genevieve,Ollington,United States,1921-08-27
+    7,Carrissa,Arrandale,United Kingdom,1982-08-20
+    8,Josepha,Dominichelli,Poland,1976-12-03
+    9,Ario,Hepher,Ukraine,2003-10-11
+    10,Walker,Grolmann,Poland,1964-02-17
