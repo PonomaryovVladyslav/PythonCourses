@@ -192,13 +192,13 @@ columns, is unique among all the rows in the table.
 
 .. code-block:: postgresql
 
-CREATE TABLE example
-(
-    a INTEGER,
-    b INTEGER UNIQUE,
-    c INTEGER,
-    UNIQUE (a, c)
-);
+    CREATE TABLE example
+    (
+        a INTEGER,
+        b INTEGER UNIQUE,
+        c INTEGER,
+        UNIQUE (a, c)
+    );
 
 Modify objects
 ==============
