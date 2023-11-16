@@ -12,6 +12,10 @@ necessary changes as your requirements evolve.
 -   ``DROP`` used to delete database objects
 -   ``TRUNCATE`` used to remove all records from a table
 
+.. contents::
+    :local:
+    :maxdepth: 2
+
 Create objects
 ==============
 
