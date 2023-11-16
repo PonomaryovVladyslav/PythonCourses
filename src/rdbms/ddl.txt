@@ -130,6 +130,35 @@ There is a shorthand to generate serial numbers:
 
     product_no SERIAL
 
+.. rubric:: Generated Columns
+
+In case you need to calculate some column value based on other columns, you may
+use generated columns. A generated column is a special column that is always
+computed from other columns. Thus, it is for columns what a view is for tables.
+There are two kinds of generated columns: stored and virtual.
+
+A stored generated column is computed when it is written (inserted or updated)
+and occupies storage as if it were a normal column. A virtual generated column
+occupies no storage and is computed when it is read.
+
+.. code-block:: postgresql
+
+    CREATE TABLE person
+    (
+        height_cm NUMERIC,
+        height_in NUMERIC GENERATED ALWAYS AS (height_cm / 2.54) STORED
+    );
+
+.. note::
+
+    There are several restrictions applied to the definitions of generated
+    columns and tables involving generated columns (not all listed):
+
+    -   The generation expression can only use immutable functions and cannot
+        use sub-queries or reference anything other than the current row.
+    -   The generation expression cannot reference another generated column.
+    -   A generated column cannot have column default.
+
 Modify objects
 ==============
 
