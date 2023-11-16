@@ -15,7 +15,37 @@ necessary changes as your requirements evolve.
 Create objects
 ==============
 
-.. todo
+Creating database roles
+-----------------------
+
+.. note::
+
+    SQLite is a small database in a single file and it doesn't implement
+    role based access to data. Any user who have access to DB file will
+    have access to data within the database as well.
+
+In RDBMS, roles are used to manage database permissions. They are an essential
+part of database security and user management.
+
+In PostgreSQL a **role** is an entity that can own database objects and have
+database privileges; a role can be considered a *user*, a *group*, or both
+depending on how it is used.
+
+``CREATE ROLE`` statement defines a new database role.
+
+.. code-block:: postgresql
+
+    CREATE ROLE name;
+
+This statement also can have options:
+
+.. code-block:: postgresql
+
+    CREATE ROLE name WITH LOGIN SUPERUSER PASSWORD 'password';
+
+Options clarify if a role can login to the database server, connect to specific
+databases, create other roles etc. The full list of options is available in the
+official postgres documentation.
 
 Modify objects
 ==============
