@@ -10,6 +10,10 @@ updating, and deleting data within database tables.
 -   ``UPDATE`` used to modify existing data
 -   ``DELETE`` used to remove data from a table
 
+.. contents::
+    :local:
+    :depth: 2
+
 Querying data
 =============
 

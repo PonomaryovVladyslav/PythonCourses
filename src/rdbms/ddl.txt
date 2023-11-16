@@ -14,7 +14,7 @@ necessary changes as your requirements evolve.
 
 .. contents::
     :local:
-    :maxdepth: 2
+    :depth: 2
 
 Create objects
 ==============
