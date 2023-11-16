@@ -77,8 +77,7 @@ Creating tables
 
 To create a table, you use the aptly names ``CREATE TABLE`` command.
 In this command you specify at least a name for the new table, the names of
-the columns and the data type of each column. Constraints can be also applied
-within the table creation command.
+the columns and the data type of each column.
 
 .. code-block:: postgresql
 
@@ -90,7 +89,46 @@ within the table creation command.
         fourth_column TEXT
     );
 
-.. todo: constraints
+.. rubric:: Default value
+
+Constraints also can be applied for columns while creating a table.
+In this section, only most notable constraints will be described.
+
+A column can be assigned a default value. When a new row is created and
+no values are specified for some of the columns, those columns will be
+filled with their respective default values. If no default value is declared
+explicitly, the default value is the ``NULL`` value. This usually makes sense
+because a null value can be considered to represent unknown data.
+
+In a table definition the default values are listed after the data type.
+
+.. code-block:: postgresql
+
+    CREATE TABLE product
+    (
+        product_no INTEGER,
+        name       TEXT
+        price      NUMERIC DEFAULT 9.99
+    );
+
+The default value can be an expression, which will be evaluated whenever
+the default value is inserted (**not when the table is created**).
+A common example are timestamps columns representing the time a record was
+created and a "serial number" generator.
+
+.. code-block:: postgresql
+
+    CREATE TABLE product
+    (
+        product_no INTEGER   DEFAULT nextval('product_no_seq'),
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    );
+
+There is a shorthand to generate serial numbers:
+
+.. code-block:: postgresql
+
+    product_no SERIAL
 
 Modify objects
 ==============
