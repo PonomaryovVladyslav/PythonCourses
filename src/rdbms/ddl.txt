@@ -72,6 +72,26 @@ owner options may be used:
 There are lots of options for this statement available in the official postgres
 documentation.
 
+Creating tables
+---------------
+
+To create a table, you use the aptly names ``CREATE TABLE`` command.
+In this command you specify at least a name for the new table, the names of
+the columns and the data type of each column. Constraints can be also applied
+within the table creation command.
+
+.. code-block:: postgresql
+
+    CREATE TABLE table_name
+    (
+        first_column  INTEGER,
+        second_column NUMERIC,
+        third_column  VARCHAR(32),
+        fourth_column TEXT
+    );
+
+.. todo: constraints
+
 Modify objects
 ==============
 
