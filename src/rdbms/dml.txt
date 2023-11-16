@@ -1,0 +1,31 @@
+**************************
+Data Manipulation Language
+**************************
+
+:abbr:`DML (Data Manipulation Language)` is a subset of SQL used for adding,
+updating, and deleting data within database tables.
+
+-   ``SELECT`` used to query data from the database
+-   ``INSERT`` used to insert new data into a table
+-   ``UPDATE`` used to modify existing data
+-   ``DELETE`` used to remove data from a table
+
+Querying data
+=============
+
+.. todo
+
+Creating new records
+====================
+
+.. todo
+
+Modifying records
+=================
+
+.. todo
+
+Removing data
+=============
+
+.. todo

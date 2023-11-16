@@ -62,3 +62,5 @@ There are dozens of RDBMS, used in nowadays projects. But most widespread are:
     :name: rdbms
 
     structure
+    ddl
+    dml
