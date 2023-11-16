@@ -3,6 +3,21 @@
     :author: Serhii Horodilov
     :keywords: sql, db, database, intro, introduction, index
 
+.. |postgres| image:: /../assets/img/postgres.svg
+    :width: 32
+    :alt: PostgreSQL
+    :target: https://www.postgresql.org
+
+.. |mysql| image:: /../assets/img/mysql.svg
+    :width: 32
+    :alt: SQLite
+    :target: https://www.sqlite.org
+
+.. |sqlite| image:: /../assets/img/sqlite.svg
+    :width: 32
+    :alt: MySQL
+    :target: https://www.mysql.com
+
 ###############################################################################
                               Relational Database
 ###############################################################################
@@ -24,6 +39,24 @@ enforcing data constraints, supporting transactions, and providing backup
 and recovery capabilities. Additionally, RDBMS systems often provide tools
 for managing the database, such as user interfaces for creating and modifying
 tables and views, and monitoring tools for optimizing database performance.
+
+Security is a paramount aspect of managing databases. Even at the introductory
+level, it's crucial to be aware of the basic security measures:
+
+-   **Authentication and Authorization**: Ensuring that only authorized users
+    have access to the database.
+-   **Role-Based Access Control**: Assigning permissions based on roles within
+    the organization.
+-   **Data Encryption**: Protecting sensitive data both at rest and in transit.
+
+There are dozens of RDBMS, used in nowadays projects. But most widespread are:
+
+-   |postgres| **PostgreSQL**:
+    A Powerful, open source object-relational database system.
+-   |sqlite| **SQLite**:
+    A C-library that implements a small, full featured SQL database engine.
+-   |mysql| **MySQL**:
+    A fast, multithread, multi-user, and robust SQL database server.
 
 .. toctree::
     :name: rdbms
