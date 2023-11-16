@@ -19,6 +19,9 @@ a relational database.
 Tables
 ======
 
+..  in case updates are required - refer to documentation
+    https://www.postgresql.org/docs/current/ddl-basics.html
+
 Tables are the building blocks.
 
 .. note::
