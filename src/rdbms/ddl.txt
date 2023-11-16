@@ -47,6 +47,27 @@ Options clarify if a role can login to the database server, connect to specific
 databases, create other roles etc. The full list of options is available in the
 official postgres documentation.
 
+Creating databases
+------------------
+
+``CREATE DATABASE`` statement creates a new PostgreSQL database. To create
+a database, you must be a superuser or have ``CREATEDB`` privilege.
+
+.. code-block:: postgresql
+
+    CREATE DATABASE name;
+
+Databases within a PostgreSQL server have owners. By default a user who creates
+a database is assigned as its owner. To specify another user as a database
+owner options may be used:
+
+.. code-block:: postgresql
+
+    CREATE DATABASE name OWNER role_name;
+
+There are lots of options for this statement available in the official postgres
+documentation.
+
 Modify objects
 ==============
 
