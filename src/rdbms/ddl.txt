@@ -159,6 +159,47 @@ occupies no storage and is computed when it is read.
     -   The generation expression cannot reference another generated column.
     -   A generated column cannot have column default.
 
+.. rubric:: Constraints
+
+A check constraint is the most generic constraint type. It allows you to
+specify that the value in a certain column must satisfy a Boolean (truth-value)
+expression.
+
+.. code-block:: postgresql
+
+    CREATE TABLE product
+    (
+        product_no       INTEGER,
+        name             TEXT,
+        price            NUMERIC CONSTRAINT price_positive CHECK (price > 0),
+        discounted_price NUMERIC CHECK (discounted_price > 0),
+        CHECK (price > discounted_price)
+    );
+
+A not-null constraint simply specifies that a column must not assume the null
+value.
+
+.. code-block:: postgresql
+
+    CREATE TABLE product
+    (
+        product_no SERIAL NOT NULL,
+        name       TEXT   NOT NULL CHECK(length(name) > 0)
+    );
+
+Unique constraints ensure that the data contained in a column, or a group of
+columns, is unique among all the rows in the table.
+
+.. code-block:: postgresql
+
+CREATE TABLE example
+(
+    a INTEGER,
+    b INTEGER UNIQUE,
+    c INTEGER,
+    UNIQUE (a, c)
+);
+
 Modify objects
 ==============
 
