@@ -14,15 +14,15 @@ updating, and deleting data within database tables.
     :local:
     :depth: 2
 
-Querying data
-=============
-
-.. todo
-
 Creating new records
 ====================
 
-.. todo
+When a table is created, it contains no data. Inserting data will populate
+a table with values. Data is inserted one row at a time. You can also insert
+multiple rows with a single command. But it impossible to insert something
+that is not a complete row.
+
+To create a new row use ``INSERT`` command.
 
 Modifying records
 =================
@@ -30,6 +30,12 @@ Modifying records
 .. todo
 
 Removing data
+=============
+
+.. todo
+
+
+Querying data
 =============
 
 .. todo
