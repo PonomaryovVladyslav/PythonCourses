@@ -108,8 +108,25 @@ more than one assignment in the ``SET`` clause.
 Removing data
 =============
 
-.. todo
+So far we have explained how to add data to tables and how to change data.
+What remains to discuss how to remove data that is no longer needed. Just
+as adding data is only possible in whole rows, you can only remove entire
+rows from a table.
 
+You use ``DELETE`` command to remove rows; the syntax is very similar to
+the ``UPDATE`` command.
+
+.. code-block:: postgresql
+
+    DELETE FROM book WHERE publisher = 3;
+
+If you simply write:
+
+.. code-block:: postgresql
+
+    DELETE FROM book;
+
+then all rows in the table will be deleted!
 
 Querying data
 =============
