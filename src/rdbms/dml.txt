@@ -220,3 +220,15 @@ Here are some examples of ``WHERE`` clause:
 
     SELECT ... FROM fdt
     WHERE EXISTS (SELECT c1 FROM t2 WHERE c2 > fdt.c1);
+
+Grouping data
+-------------
+
+After passing the ``WHERE`` filter, the derived input table might be subject
+to grouping, using ``GROUP BY`` clause, and elimination of group rows using
+the ``HAVING`` clause. The ``GROUP BY`` clause is used to group together those
+rows in a table that have the same values in all the columns listed. The order
+in the columns are listed does not matter. The effect is to combine each set of
+rows having common values into one group row that represents all rows in the
+group. This is done to eliminate redundancy in the output and/or compute
+aggregates that apply to these groups.
