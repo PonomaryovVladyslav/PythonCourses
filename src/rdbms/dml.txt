@@ -24,6 +24,41 @@ that is not a complete row.
 
 To create a new row use ``INSERT`` command.
 
+.. literalinclude:: /../libms-db/libms.sql
+    :caption: Create publisher table
+    :language: postgresql
+    :start-after: -- label: ddl-publisher
+    :end-before: -- label:
+
+.. literalinclude:: /../libms-db/libms.sql
+    :caption: Insert data to publisher table
+    :language: postgresql
+    :start-after: -- label: dml-publisher
+    :end-before: -- label:
+    
+.. literalinclude:: /../libms-db/libms.sql
+    :caption: Create author table
+    :language: postgresql
+    :start-after: -- label: ddl-author
+    :end-before: -- label:
+
+.. literalinclude:: /../libms-db/libms.sql
+    :caption: Inserting multiple values at a time
+    :language: postgresql
+    :lines: 251-260,400-402
+    
+.. literalinclude:: /../libms-db/libms.sql
+    :caption: Create book table
+    :language: postgresql
+    :start-after: -- label: ddl-book
+    :end-before: -- label:
+
+.. literalinclude:: /../libms-db/libms.sql
+    :caption: Inserting records from file
+    :language: postgresql
+    :start-after: -- label: dml-book
+    :end-before: -- label:
+
 Modifying records
 =================
 
