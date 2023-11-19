@@ -126,3 +126,22 @@ For complex expressions, the system will generate a generic name.
 .. note::
 
     Labels are often referenced as "aliases".
+
+DISTINCT
+--------
+
+After the select list has been processed, the result table can optionally be
+subject to the elimination of duplicate rows. The ``DISTINCT`` key word is
+written directly after ``SELECT`` to specify this:
+
+.. note::
+
+    SELECT DISTINCT publisher FROM book;
+
+Obviously, two rows are considered distinct if they differ in at least one
+column value. Null values are considered equal in comparison. Alternatively,
+an arbitary expression can determine what rows are to be considered distinct.
+
+::
+
+    SELECT DISTINCT ON (expression [, expression ...]) select_list ...
