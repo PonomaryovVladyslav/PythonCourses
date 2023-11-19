@@ -145,3 +145,15 @@ an arbitary expression can determine what rows are to be considered distinct.
 .. code-block::
 
     SELECT DISTINCT ON (expression [, expression ...]) select_list ...
+
+Combining queries
+=================
+
+The results of two queries can be combined using the set operations union,
+intersection, and difference.
+
+.. code-block::
+
+    query1 UNION [ALL] query2
+    query1 INTERSECT [ALL] query2
+    query1 EXCEPT [ALL] query2
