@@ -138,3 +138,40 @@ values outside of the allowed range will result an error.
 +------------------+--------------+---------------------------------+--------------------------------------------------+
 | bigserial        | 8 bytes      | large auto incrementing integer | 1 to 9223372036854775807                         |
 +------------------+--------------+---------------------------------+--------------------------------------------------+
+
+Character types
+===============
+
++-------------------------------------+----------------------------+
+| Name                                | Description                |
++=====================================+============================+
+| ``character varying``, ``varchar``  | variable-length with limit |
++-------------------------------------+----------------------------+
+| ``character``, ``char``, ``bpchar`` | fixed-length, blank-padded |
++-------------------------------------+----------------------------+
+| ``bpchar`` without length specifier | variable unlimited length, |
+|                                     | blank-trimmed              |
++-------------------------------------+----------------------------+
+| ``text``                            | variable-unlimited length  |
++-------------------------------------+----------------------------+
+
+SQL defines two primary character types: ``character varying(n)`` and
+``character(n)``, where ``n`` is a positive integer. Both of these types can
+store string up to ``n`` characters length. An attempt to store a longer string
+into a column of these types will result an error, unless all the excess
+characters are all spaces, in which case the string will be truncated to
+the maximum length. However, if one explicitly casts a value to ``varchar(n)``
+or ``char(n)``, then an over-legth value will be truncated to ``n`` characters
+without raising an error. If the string to be stored is shorter than the
+declared length, value of type ``char`` will be space-padded; values of
+``varchar`` will simply store the storter string.
+
+In addition postgres provides the ``text`` type, which stores strings of any
+length.
+
+If specified, the length ``n`` must be greater than 0 and cannot exceed 
+10,485,760. If ``character varying`` is used without length specifier,
+the type accepts strings of any length. If ``bpchar`` lacks a length specifier,
+it also accepts strings of any length, but trailing spaces are semantically
+insignificant. If ``character`` lacks a specifier, it is equavivalent to 
+``character(1)``.
