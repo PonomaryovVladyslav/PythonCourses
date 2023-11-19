@@ -175,3 +175,40 @@ the result of ``query2``. Duplicate rows are eliminated unless
 ``EXCEPT`` returns all rows that are in the result of ``query1`` but not in
 the result of ``query2``. (This is sometimes called the difference between two
 queries.) Again, duplicates are eliminated unless ``EXCEPT ALL`` is used.
+
+Sorting rows
+============
+
+After a query has produced an output table it can optionally be sorted.
+If sorting is not choosen, the rows will be returned in an unspecified order.
+The actual order in this case will depend on the scan and join plan types and
+the order on disk, but it must not be relied on.
+
+The ``ORDER BY`` clause specifies the sort order:
+
+.. code-block:: postgresql
+
+    SELECT title, publisher_id FROM book ORDER BY title;
+
+The sort expression(s) can be any expression that would be valid in the query's
+select list.
+
+When more than one expression is specified, the later values are used to sort
+rows that are equal according to the earlier values. Each expression can be
+followed by an option ``ASC`` or ``DESC`` keyword to set the sort direction
+to asceding or desceding. ``ASC`` order is the default.
+
+The ``NULL FIRST`` and ``NULL LAST`` options can be used to determine whether
+null appear before or after non-null values in the sort ordering. By default,
+null values sort as if larget than any non-null value; that's, ``NULL FIRST``
+is the default for ``DESC`` order, and ``NULL LAST`` otherwise.
+
+Note that the ordering options are considered independently for each sort
+column. For example ``ORDER BY x, y DESC`` means ``ORDER BY x ASC, y DESC``,
+which is not the same as ``ORDER BY x DESC, y DESC``.
+
+A sort expression can also be the column label or number of an output column.
+
+``ORDER BY`` can be applied to the result of a ``UNION``, ``INTERSECT``, or
+``EXCEPT`` combination, but in this case it is only permitted to sort by
+output column names or numbers, not by expressions.
