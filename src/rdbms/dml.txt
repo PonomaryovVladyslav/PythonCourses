@@ -131,4 +131,23 @@ then all rows in the table will be deleted!
 Querying data
 =============
 
-.. todo
+Returning data from modified rows
+---------------------------------
+
+Sometimes it is useful to obtain data from modified rows while they are being
+manipulated. The ``INSERT``, ``UPDATE`` and ``DELETE`` commands all have an
+optional ``RETURNING`` clause that supports this. Use of ``RETURNING`` avoids
+performing an extra database query to collect the data, and is especially
+valuable when it would otherwise be difficult to identify the modified rows
+reliably.
+
+.. code-block:: postgresql
+
+    INSERT INTO author (first_name, last_name, country, birthdate)
+    VALUES ('Wendye', 'Rowbotham', 'Poland', '1932-12-16'),
+           ('Grannie', 'Kidner', 'United States', '1940-02-21'),
+           ('Godart', 'Van Driel', 'United Kingdom', '1980-01-02'),
+           ('Meara', 'Meenehan', 'United States', '1994-12-13')
+    RETURNING id;
+
+For example the query above provides the identifiers to new rows.
