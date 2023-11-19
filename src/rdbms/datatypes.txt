@@ -336,3 +336,13 @@ Special date/time inputs
 +--------------+---------------+----------------------------------------------+
 | allballs     | ``time``      | 00:00:00.00 UTC                              |
 +--------------+---------------+----------------------------------------------+
+
+.. todo: add interval rubric, usage examples (ref. libms.sql:author)
+
+.. todo: add boolean type section
+
+.. todo: add enumerate type section
+
+.. todo: add uuid type section, short description without details
+
+.. todo: add XML and JSON type section, short description without details
