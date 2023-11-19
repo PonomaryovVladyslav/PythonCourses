@@ -142,6 +142,6 @@ Obviously, two rows are considered distinct if they differ in at least one
 column value. Null values are considered equal in comparison. Alternatively,
 an arbitary expression can determine what rows are to be considered distinct.
 
-::
+.. code-block::
 
     SELECT DISTINCT ON (expression [, expression ...]) select_list ...
