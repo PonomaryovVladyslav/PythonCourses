@@ -24,6 +24,13 @@ that is not a complete row.
 
 To create a new row use ``INSERT`` command.
 
+The data values are listed in the order in which the columns appear in
+the table, separated by commas. This syntax has the drawback that you need to
+know the order of the columns in the table. To avoid this you can also list
+the columns explicitly. If you don't have values for all the columns, you can
+omit some of them. In that case, the columns will be filled with their default
+values.
+
 .. literalinclude:: /../libms-db/libms.sql
     :caption: Create publisher table
     :language: postgresql
@@ -36,12 +43,7 @@ To create a new row use ``INSERT`` command.
     :start-after: -- label: dml-publisher
     :end-before: -- label:
 
-The data values are listed in the order in which the columns appear in
-the table, separated by commas. This syntax has the drawback that you need to
-know the order of the columns in the table. To avoid this you can also list
-the columns explicitly. If you don't have values for all the columns, you can
-omit some of them. In that case, the columns will be filled with their default
-values.
+You can insert multiple rows in a single command.
 
 .. literalinclude:: /../libms-db/libms.sql
     :caption: Create author table
@@ -54,8 +56,11 @@ values.
     :language: postgresql
     :lines: 251-260,400-402
 
-You can insert multiple rows in a single command.
-    
+.. note::
+
+    There is a reference to the "publisher" table present below. Think of it
+    like placing the publisher information directly into "book" table for now.
+
 .. literalinclude:: /../libms-db/libms.sql
     :caption: Create book table
     :language: postgresql
@@ -71,7 +76,13 @@ You can insert multiple rows in a single command.
 Modifying records
 =================
 
-.. todo
+The modification of data that is already in the database is referred as
+updating. To update the existing rows, use the ``UPDATE`` command.
+This requires three pieces of information:
+
+#.  The name of the table and column(s) to update
+#.  The new value of the column(s)
+#.  Which row(s) to update
 
 Removing data
 =============
