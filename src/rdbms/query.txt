@@ -86,3 +86,24 @@ in the columns are listed does not matter. The effect is to combine each set of
 rows having common values into one group row that represents all rows in the
 group. This is done to eliminate redundancy in the output and/or compute
 aggregates that apply to these groups.
+
+Select lists
+============
+
+As shown is the previous section, the table expression in the ``SELECT``
+command constructs an intermediate virtual table by possibly combining tables,
+views, eliminating rows, grouping etc. This table is finally passed on to
+processing by the *select list*. The select list determines which *columns*
+of the intermediate table are actually output.
+
+Select list items
+-----------------
+
+The simplest kind of select is ``*`` which emits that the table expression
+produces. Otherwise, a select list is a comma-separated list of value
+expressions. For instance:
+
+.. code-block:: sql
+
+    SELECT first_name, last_name
+    FROM author;
