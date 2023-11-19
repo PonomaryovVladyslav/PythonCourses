@@ -1,3 +1,8 @@
+.. meta::
+    :description: Data manipulation language, DML
+    :author: Serhii Horodilov
+    :keywords: sql, db, database, dml, insert, update, delete
+
 **************************
 Data Manipulation Language
 **************************
