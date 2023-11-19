@@ -107,3 +107,22 @@ expressions. For instance:
 
     SELECT first_name, last_name
     FROM author;
+
+Columns labels
+--------------
+
+The entries listed in the select list can be assigned names for subsequent
+processing.
+
+.. code-block:: sql
+
+    SELECT title, page_count / 2 as sheets FROM book;
+
+If no output column name  is specified using ``AS``, the system will assign
+a default column name. For simple column references, this is the name of
+the referenced column. For function calls, this is the name of the function.
+For complex expressions, the system will generate a generic name.
+
+.. note::
+
+    Labels are often referenced as "aliases".
