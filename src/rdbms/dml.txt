@@ -35,7 +35,14 @@ To create a new row use ``INSERT`` command.
     :language: postgresql
     :start-after: -- label: dml-publisher
     :end-before: -- label:
-    
+
+The data values are listed in the order in which the columns appear in
+the table, separated by commas. This syntax has the drawback that you need to
+know the order of the columns in the table. To avoid this you can also list
+the columns explicitly. If you don't have values for all the columns, you can
+omit some of them. In that case, the columns will be filled with their default
+values.
+
 .. literalinclude:: /../libms-db/libms.sql
     :caption: Create author table
     :language: postgresql
@@ -46,6 +53,8 @@ To create a new row use ``INSERT`` command.
     :caption: Inserting multiple values at a time
     :language: postgresql
     :lines: 251-260,400-402
+
+You can insert multiple rows in a single command.
     
 .. literalinclude:: /../libms-db/libms.sql
     :caption: Create book table
