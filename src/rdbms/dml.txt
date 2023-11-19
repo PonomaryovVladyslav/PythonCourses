@@ -190,3 +190,33 @@ combinations of these. If more than one table reference is listed in the
 is an intermediate virtual table tant can then be subject to transformations
 by the ``WHERE``, ``GROUP BY``, and ``HAVING`` clauses and is finally the
 result of the overall table expression.
+
+Search conditions
+-----------------
+
+After the processing of the ``FROM`` clause is done, each row of the derived
+virtual table can be checked against the search condition. If the result of
+the condition is ``true``, the row is kept in the output table, otherwise it
+is discarded. The ``WHERE`` clause is used to handle search condition checks.
+
+Here are some examples of ``WHERE`` clause:
+
+.. code-block:: sql
+
+    SELECT ... FROM fdt
+    WHERE c1 > 5;
+
+    SELECT ... FROM fdt
+    WHERE c1 IN (1, 2, 3);
+
+    SELECT ... FROM fdt
+    WHERE c1 IN (SELECT c1 FROM t2);
+
+    SELECT ... FROM fdt
+    WHERE c1 IN (SELECT c3 FROM t2 WHERE c2 = fdt.c1 + 10);
+
+    SELECT ... FROM fdt
+    WHERE c1 BETWEEN (SELECT c3 FROM t2 WHERE c2 = fdt.c1 + 10) AND 100;
+
+    SELECT ... FROM fdt
+    WHERE EXISTS (SELECT c1 FROM t2 WHERE c2 > fdt.c1);
