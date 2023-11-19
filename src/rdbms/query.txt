@@ -158,15 +158,15 @@ intersection, and difference.
     query1 INTERSECT [ALL] query2
     query1 EXCEPT [ALL] query2
 
-UNION effectively appends the result of query2 to the result of query1
-(although there is no guarantee that this is the order in which the rows
-are actually returned). Furthermore, it eliminates duplicate rows from
-its result, in the same way as DISTINCT, unless UNION ALL is used.
+``UNION`` effectively appends the result of ``query2`` to the result of
+``query1`` (although there is no guarantee that this is the order in which
+the rows are actually returned). Furthermore, it eliminates duplicate rows from
+its result, in the same way as ``DISTINCT``, unless ``UNION ALL`` is used.
 
-INTERSECT returns all rows that are both in the result of query1 and in
-the result of query2. Duplicate rows are eliminated unless INTERSECT ALL
-is used.
+``INTERSECT`` returns all rows that are both in the result of ``query1`` and in
+the result of ``query2``. Duplicate rows are eliminated unless
+``INTERSECT ALL`` is used.
 
-EXCEPT returns all rows that are in the result of query1 but not in the result
-of query2. (This is sometimes called the difference between two queries.)
-Again, duplicates are eliminated unless EXCEPT ALL is used.
+``EXCEPT`` returns all rows that are in the result of ``query1`` but not in
+the result of ``query2``. (This is sometimes called the difference between two
+queries.) Again, duplicates are eliminated unless ``EXCEPT ALL`` is used.
