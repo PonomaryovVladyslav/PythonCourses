@@ -128,14 +128,8 @@ If you simply write:
 
 then all rows in the table will be deleted!
 
-Querying data
-=============
-
-The process of retrieving or the command to retrieve data from a database is
-called a *query*. In SQL the ``SELECT`` command is used to specify queries.
-
 Returning data from modified rows
----------------------------------
+=================================
 
 Sometimes it is useful to obtain data from modified rows while they are being
 manipulated. The ``INSERT``, ``UPDATE`` and ``DELETE`` commands all have an
@@ -154,81 +148,3 @@ reliably.
     RETURNING id;
 
 For example the query above provides the identifiers to new rows.
-
-Select rows from a table
-------------------------
-
-A simple kind of query has the form:
-
-.. code-block:: postgresql
-
-    SELECT * FROM publisher;
-
-This command would retrieve all rows and all user-defined columns from
-``publisher`` table. A select list can also select a subset of the available
-columns or make calculations using the columns.
-
-.. code-block:: postgresql
-
-    SELECT title, page_count / 2
-    FROM book;
-
-``FROM`` clause is a simple kind of table expression: it reads just one table.
-In general, table expression can be complex constructs of base tables, joins
-and sub-queries. But it is possible to omit the table expression entirely and
-use the ``SELECT`` command as a calculator (or in some another way):
-
-.. code-block:: sql
-
-    SELECT 40 + 2;
-
-The ``FROM`` clause derives a table from one or more other tables given in
-a comma-separated table reference list. A table reference can a table name,
-or derived table such as sub-query, a ``JOIN`` construct, or complex
-combinations of these. If more than one table reference is listed in the
-``FROM`` clause, the table are cross-joined. The result of the ``FROM`` list
-is an intermediate virtual table tant can then be subject to transformations
-by the ``WHERE``, ``GROUP BY``, and ``HAVING`` clauses and is finally the
-result of the overall table expression.
-
-Search conditions
------------------
-
-After the processing of the ``FROM`` clause is done, each row of the derived
-virtual table can be checked against the search condition. If the result of
-the condition is ``true``, the row is kept in the output table, otherwise it
-is discarded. The ``WHERE`` clause is used to handle search condition checks.
-
-Here are some examples of ``WHERE`` clause:
-
-.. code-block:: sql
-
-    SELECT ... FROM fdt
-    WHERE c1 > 5;
-
-    SELECT ... FROM fdt
-    WHERE c1 IN (1, 2, 3);
-
-    SELECT ... FROM fdt
-    WHERE c1 IN (SELECT c1 FROM t2);
-
-    SELECT ... FROM fdt
-    WHERE c1 IN (SELECT c3 FROM t2 WHERE c2 = fdt.c1 + 10);
-
-    SELECT ... FROM fdt
-    WHERE c1 BETWEEN (SELECT c3 FROM t2 WHERE c2 = fdt.c1 + 10) AND 100;
-
-    SELECT ... FROM fdt
-    WHERE EXISTS (SELECT c1 FROM t2 WHERE c2 > fdt.c1);
-
-Grouping data
--------------
-
-After passing the ``WHERE`` filter, the derived input table might be subject
-to grouping, using ``GROUP BY`` clause, and elimination of group rows using
-the ``HAVING`` clause. The ``GROUP BY`` clause is used to group together those
-rows in a table that have the same values in all the columns listed. The order
-in the columns are listed does not matter. The effect is to combine each set of
-rows having common values into one group row that represents all rows in the
-group. This is done to eliminate redundancy in the output and/or compute
-aggregates that apply to these groups.
