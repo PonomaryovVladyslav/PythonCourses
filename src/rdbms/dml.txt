@@ -84,6 +84,27 @@ This requires three pieces of information:
 #.  The new value of the column(s)
 #.  Which row(s) to update
 
+.. code-block:: postgresql
+
+    UPDATE book SET language = 'uk' WHERE publisher = 3;
+
+This might cause zero, one, or many rows to be updated. The update syntax
+is pretty straightforward. First the key word ``UPDATE`` followed by the table
+name. Next is the key word ``SET`` followed by the column name, an equal sign,
+and the new column value. The new column value can be any scalar expression,
+not just a constant. More than one column can be updated at a time by listing
+more than one assignment in the ``SET`` clause.
+
+.. important::
+
+    ``WHERE`` clause is optional, but it limits the rows affected by
+    ``UPDATE`` command. If there is no limitations all the records
+    within a table will be updated with new values.
+
+    .. code-block:: postgresql
+
+        UPDATE book SET language = 'uk';
+
 Removing data
 =============
 
