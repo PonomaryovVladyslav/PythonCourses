@@ -175,3 +175,109 @@ the type accepts strings of any length. If ``bpchar`` lacks a length specifier,
 it also accepts strings of any length, but trailing spaces are semantically
 insignificant. If ``character`` lacks a specifier, it is equavivalent to 
 ``character(1)``.
+
+Date/Time types
+===============
+
+PostgreSQL supports the full set of SQL date and time types. Dates are counted
+according to the Gregorian calendar, even in years before that calendar was
+introduced.
+
+``time``, ``timestamp``, and ``interval`` accept an optional precision value,
+which specifies the number of fractional digits retained in the seconds field.
+By default, there is no explicit bound on precision. The allowed of this value
+is from 0 to 6.
+
+The ``interval`` type has an additional option, which is to restrict the of
+stored fields by writing one of these phrases:
+
+.. code-block::
+
+    YEAR
+    MONTH
+    DAY
+    HOUR
+    MINUTE
+    SECOND
+    YEAR TO MONTH
+    DAY TO HOUR
+    DAY TO MINUTE
+    DAY TO SECOND
+    HOUR TO MINUTE
+    HOUR TO SECOND
+    MINUTE TO SECOND
+
+Dates
+-----
+
+Some possible inputs for the ``date`` type.
+
++-----------------------+-----------------------------------------------------+
+| Example               | Description                                         |
++=======================+=====================================================+
+| ``1999-01-08``        | ISO 8601; January 8 in any mode                     |
+|                       | (**recommended format**)                            |
++-----------------------+-----------------------------------------------------+
+| ``January 8, 1999``   | unambiguous in any datestyle input mode             |
++-----------------------+-----------------------------------------------------+
+| ``1/8/1999``          | January 8 in MDY mode; August 1 in DMY mode         |
++-----------------------+-----------------------------------------------------+
+| ``1/18/1999``         | January 18 in MDY mode;                             |
+|                       | rejected in other modes                             |
++-----------------------+-----------------------------------------------------+
+| ``01/02/03``          | January 2, 2003 in MDY mode;                        |
+|                       | February 1, 2003 in DMY mode;                       |
+|                       | February 3, 2001 in YMD mode                        |
++-----------------------+-----------------------------------------------------+
+| ``1999-Jan-08``       | January 8 in any mode                               |
+| ``Jan-08-1999``       |                                                     |
+| ``08-Jan-1999``       |                                                     |
++-----------------------+-----------------------------------------------------+
+| ``99-Jan-08``         | January 8 in YMD mode, else error                   |
++-----------------------+-----------------------------------------------------+
+| ``08-Jan-99``         | January 8, except error in YMD mode                 |
+| ``Jan-08-99``         |                                                     |
++-----------------------+-----------------------------------------------------+
+| ``19990108``          | ISO 8601; January 8, 1999 in any mode               |
+| ``990108``            |                                                     |
++-----------------------+-----------------------------------------------------+
+| ``1999.008``          | year and day of year                                |
++-----------------------+-----------------------------------------------------+
+| ``J2451187``          | Julian date                                         |
++-----------------------+-----------------------------------------------------+
+| ``January 8, 99 BC``  | year 99 BC                                          |
++-----------------------+-----------------------------------------------------+
+
+Times
+-----
+
+Some possible inputs for the ``time`` type.
+
++-----------------------+-----------------------------------------------------+
+| Example               | Description                                         |
++=======================+=====================================================+
+| ``04:05:06.789``      | ISO 8601                                            |
+| ``04:05:06``          |                                                     |
+| ``04:05``             |                                                     |
+| ``040506``            |                                                     |
++-----------------------+-----------------------------------------------------+
+| ``04:05 AM``          | same as 04:05; AM does not affect value             |
++-----------------------+-----------------------------------------------------+
+| ``04:05 PM``          | same as 16:05; input hour must be <= 12             |
++-----------------------+-----------------------------------------------------+
+| ``04:05:06.789-8``    | ISO 8601, with time zone as UTC offset              |
+| ``04:05:06-08:00``    |                                                     |
+| ``04:05-08:00``       |                                                     |
+| ``040506-08``         |                                                     |
++-----------------------+-----------------------------------------------------+
+| ``040506+0730``       | ISO 8601,                                           |
+|                       | with fractional-hour time zone as UTC offset        |
++-----------------------+-----------------------------------------------------+
+| ``040506+07:30:00``   | UTC offset specified to seconds                     |
+|                       | (not allowed in ISO 8601)                           |
++-----------------------+-----------------------------------------------------+
+| ``04:05:06 PST``      | time zone specified by abbreviation                 |
++-----------------------+-----------------------------------------------------+
+| ``2003-04-12 04:05:06 | time zone specified by full                         |
+| America/New_York``    |                                                     |
++-----------------------+-----------------------------------------------------+
