@@ -205,6 +205,20 @@ columns, is unique among all the rows in the table.
         UNIQUE (a, c)
     );
 
+.. rubric:: System columns
+
+Every table has several system columns that are implicitly defined by
+the system. Therefore, these names cannot be used as names of user-defined
+columns. These columns cannot be used in the generated columns (except
+``tableoid``). Columns are:
+
+-   ``tableoid``
+-   ``xmin``
+-   ``cmin``
+-   ``xmax``
+-   ``cmax``
+-   ``ctid``
+
 Modify objects
 ==============
 
