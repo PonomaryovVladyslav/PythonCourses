@@ -116,11 +116,6 @@ and only one matching record. Back to the example with employees. Multiple
 workstations (personal computers) are located in each office building.
 The only one person can occupy the only one work station at a time.
 
-.. mermaid::
-
-    erDiagram
-        employee ||--|| work_station : occupies
-
 Many-to-many relationship (N-to-N)
 ----------------------------------
 
