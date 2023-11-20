@@ -59,80 +59,9 @@ A table can have at most one primary key.
 Foreign key (FK)
 ================
 
-So far, you have knowledge about **primary** keys.
-The **foreign** key is a column, that *references* some another table.
-In common, it's a reference to another table's PK; but there is no limitation
-of this kind, any column can be referenced by another one.
-FKs handle data integrity only, it's not required for FK to be non-NULL value.
-
-The relation's properties are described by CONSTRAINTS and the database's
-structure.
-
-For example, modifying declaration with ``NOT NULL`` constraint grants
-that each record within a table has a matching one entity in another table.
-
-.. code-block:: sql
-
-    CREATE TABLE weather (
-            city      varchar(80) references cities(name) NOT NULL,
-            ...
-    );
-
-This brings us to various relationship models.
-
-One-to-many relationship (1-to-N)
----------------------------------
-
-This is the most common relationship.
-
-For the example above there are no limitations on temperature measurements in
-a specified city. So, a single city may has 0 or N related records in
-``weather`` table. But each weather record is related to the only one city.
-
-Another example is employees and office buildings they work in. Some big
-company may have multiple offices and employee across the globe.
-Multiple employees can be present in a single office building at a time.
-But each employee can be physically located only in a single office at a time.
-
-.. mermaid::
-
-    erDiagram
-        employee }o--|| office : located
-        employee {
-            int id
-            string first_name
-            string last_name
-            email email
-            int office_id fk
-        }
-        office {
-            int id
-            point location
-            text address
-        }
-
-One-to-one relationship (1-to-1)
---------------------------------
-
-``UNIQUE`` and ``NOT NULL`` constraints are used together to ensure there is
-and only one matching record. Back to the example with employees. Multiple
-workstations (personal computers) are located in each office building.
-The only one person can occupy the only one work station at a time.
-
-Many-to-many relationship (N-to-N)
-----------------------------------
-
-These relationships require additional table.
-A good example may be a *project role*. There are many of them in a production
-team. And some employees may be assigned to the same role (e.g. developers,
-testers etc.). But also a single person can be a developer and tester at
-a time.
-
-.. mermaid::
-
-    erDiagram
-        employee }o--|{ employee_role : execute
-        role }o--|{ employee_role : assign
+A foreign key constraint specifies that the value in a column (or a group of
+columns) must match the values appearing in some row of another table. We say
+this maintains the *referential integrity* between two tables.
 
 Joining data
 ============
