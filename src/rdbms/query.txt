@@ -308,3 +308,8 @@ Data modifying statements in WITH
 ---------------------------------
 
 .. todo:
+
+Join data from different tables
+===============================
+
+.. todo:
