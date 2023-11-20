@@ -156,6 +156,57 @@ values.
 ``SET DEFAULT`` will replace all referencing rows foreign key values with
 default values.
 
+Relationships
+-------------
+
+From the point of view of the RDBMS there are no other relationships between
+two tables except the **foreign key**.
+But the way the foreign keys are designed brings us three concepts of the data
+relations.
+
+.. rubric:: One-to-many
+
+In a relational database, two tables have a one-to-many relationship if each
+row in one table references multiple rows of the other table. For example
+``publisher`` can publish many books, but a single ``book`` is published by
+some specific publisher.
+
+.. literalinclude:: /../libms-db/libms.sql
+    :language: postgresql
+    :start-after: -- label: ddl-book
+    :end-before: -- label:
+
+.. rubric:: One-to-one
+
+.. note::
+
+    You can think of one-to-one relationship as a limited version of
+    *one-to-many*.
+
+In a relational database, two tables have a one-to-one relationship if each row
+in one table links to exactly one row in the other table, and vice versa.
+For example a table of ``members`` and a table of ``contacts`` might have
+a one-to-one relationship.
+
+.. literalinclude:: /../libms-db/libms.sql
+    :language: postgresql
+    :start-after: -- label: ddl-member
+    :end-before: -- label:
+
+.. rubric:: Many-to-many
+
+In relational database, two table have many-to-many relationship if each row
+in one table can reference multiple rows in another table, and vice versa.
+For example table ``book`` may contain records for books authored by many
+``authors``. On the other hand author can write multiple books. Implementing
+a many-to-many relationship requires creation of an intermediate table, that
+applies one-to-many relationship with both original tables.
+
+.. literalinclude:: /../libms-db/libms.sql
+    :language: postgresql
+    :start-after: -- label: ddl-book_author
+    :end-before: -- label:
+
 Joining data
 ============
 
