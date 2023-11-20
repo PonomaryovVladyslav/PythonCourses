@@ -10,6 +10,45 @@ Querying data
 The process of retrieving or the command to retrieve data from a database is
 called a *query*. In SQL the ``SELECT`` command is used to specify queries.
 
+``SELECT`` retrieves rows from zero or more tables. The general processing of
+``SELECT`` is as follows:
+
+#.  All queries in the ``WITH`` list are computed.
+    This effectively serve as temporary tables that can be referenced in the
+    ``FROM`` list.
+#.  All elements in the ``FROM`` list are computed. If more than one element
+    is specified in the ``FROM`` list, they are cross-joined together.
+#.  If ``WHERE`` clause is specified, all rows that do not satisfy
+    the condition are eliminated from the output.
+#.  If the ``GROUP BY`` clause is specified, or if there are aggregate function
+    calls, the output is combined into groups of rows that match on one or more
+    values, and the result of aggregate functions are computed.
+    If the ``HAVING`` clause is present, it eliminates groups that does not
+    satisfy the given condition.
+#.  The actual output rows are computed using the ``SELECT`` output expressions
+    for each row or row of group.
+#.  ``SELECT DISTINCT`` eliminates duplicate rows from the result.
+    ``SELECT DISTINCT ON`` eliminates rows that match on all the specified
+    expressions.
+#.  Using the operators ``UNION``, ``INTERSECT``, and ``EXCEPT``, the output
+    of more than one ``SELECT`` statement can be combined to form a single
+    result set.
+
+    -   The ``UNION`` operator returns **all** rows that are in one or both
+        result sets.
+    -   The ``INTERSECT`` operator returns all rows that are strictly in both
+        result sets.
+    -   The ``EXCEPT`` operator returns the rows that are in the first result
+        set, but not in the second.
+
+#.  If the ``ORDER BY`` clause is specified, the returned rows are sorted in
+    the specific order.
+#.  if the ``LIMIT`` or ``OFFSET`` clause is specified, the ``SELECT``
+    statement only returns a subset of the result rows.
+#.  If ``FOR UPDATE``, ``FOR NO KEY UPDATE``, ``FOR SHARE`` or
+    ``FOR KEY SHARE`` is specified, the ``SELECT`` statement locks the selected
+    rows against concurrent updates.
+
 .. contents::
     :local:
     :depth: 2
