@@ -24,11 +24,13 @@ the same data:
     CREATE TABLE publisher
     (
         id      INTEGER PRIMARY KEY,
+        ...
     );
 
     CREATE TABLE publisher
     (
         id      INTEGER NOT NULL UNIQUE,
+        ...
     );
 
 Primary keys can span more than one column; the syntax is similar to unique
