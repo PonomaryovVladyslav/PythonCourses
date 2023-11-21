@@ -2,3 +2,4 @@
                             PostgreSQL Installation
 ###############################################################################
 
+:doc:`Local PostgreSQL server using binaries <./pg_local>`
