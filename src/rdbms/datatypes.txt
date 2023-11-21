@@ -337,7 +337,41 @@ Special date/time inputs
 | allballs     | ``time``      | 00:00:00.00 UTC                              |
 +--------------+---------------+----------------------------------------------+
 
-.. todo: add interval rubric, usage examples (ref. libms.sql:author)
+Intervals
+---------
+
+``interval`` values can be written using the following verbose syntax:
+
+::
+
+    [@] quantity unit [quantity unit...] [direction]
+
+Intervals are useful when you need to move timestamp back in past or to
+the future.
+
++--------------+----------+
+| Abbreviation | Meaning  |
++==============+==========+
+| Y            |  Years   |
++--------------+----------+
+| M            |  Months  |
++--------------+----------+
+| W            |  Weeks   |
++--------------+----------+
+| D            |  Days    |
++--------------+----------+
+| H            |  Hours   |
++--------------+----------+
+| M            |  Minutes |
++--------------+----------+
+| S            |  Seconds |
++--------------+----------+
+
+.. code-block:: postgresql
+    :caption: 7 days before yesterday
+
+    SELECT 'yesterday'::TIMESTAMP + INTERVAL '7d ago';
+    SELECT 'yesterday'::TIMESTAMP - INTERVAL '7' DAY;
 
 .. todo: add boolean type section
 
