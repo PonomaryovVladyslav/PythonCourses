@@ -101,6 +101,23 @@ Users can add new types to PostgreSQL using the ``CREATE TYPE`` command.
 | ``xml``                       |                   | XML data                                                         |
 +-------------------------------+-------------------+------------------------------------------------------------------+
 
+Types casting
+=============
+
+SQL is a strong type language. That is, every data item has an associated data
+type which determines its behavior and allowed usage. PostgreSQL has an
+extensible type system that is more general and flexible than other SQL
+implementations.
+
+You can cast some types in place using ``::`` notation, like:
+
+.. code-block:: postgresql
+
+    SELECT '42'::INT;
+    SELECT '24.5'::REAL;
+    SELECT 'today'::DATE;
+    SELECT 'tomorrow'::TIMESTAMP;
+
 Numeric types
 =============
 
