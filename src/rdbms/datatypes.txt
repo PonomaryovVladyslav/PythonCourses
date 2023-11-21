@@ -400,7 +400,36 @@ writing Boolean constants in SQL queries. But, you can also use string
 representations by following the generic string-literal constant syntax, for
 example ``'yes':boolean``.
 
-.. todo: add enumerate type section
+Enumerated types
+================
+
+Enumerated (enums) types are data types that comprise a static, ordered set of
+values. They are equivalent to the ``enum`` types supported in a number of
+programming languages. An example of an enum might be the days of the week,
+or a set of status values for a piece of data.
+
+Enum types are created using the ``CREATE TYPE`` command; and once created,
+the enum type can be used in table in function definitions, much like other
+types:
+
+.. code-block:: postgresql
+
+    CREATE TYPE WORK_DAY AS ENUM ('mon', 'tue', 'wed', 'thu', 'fri');
+    CREATE TABLE work_log
+    (
+        amount INTEGER,
+        date   DATE,
+        day    WORK_DAY
+    );
+
+Ordering
+--------
+
+The ordering of the values in an enum type is the order in which the values
+were listed when the type was created. All standard comparison operators and
+related aggregate functions are supported for enums. However, remember that
+each enumerated data type is separated and cannot be compared with other
+enumerated types.
 
 .. todo: add uuid type section, short description without details
 
