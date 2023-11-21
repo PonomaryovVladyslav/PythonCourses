@@ -357,4 +357,15 @@ in the same query.
 Join data from different tables
 ===============================
 
-.. todo:
+A ``JOIN`` clause combines two ``FROM`` items, which for convenience we will
+refer as "tables", though in reality they can be any type of ``FROM`` items.
+Available join types are:
+
+-   ``[INNER] JOIN``
+-   ``LEFT [OUTER] JOIN``
+-   ``RIGHT [OUTER] JOIN``
+-   ``FULL [OUTER] JOIN``
+
+.. note::
+
+    Key words in bracket parentheses above are optional.
