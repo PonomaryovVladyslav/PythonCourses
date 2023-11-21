@@ -373,7 +373,32 @@ the future.
     SELECT 'yesterday'::TIMESTAMP + INTERVAL '7d ago';
     SELECT 'yesterday'::TIMESTAMP - INTERVAL '7' DAY;
 
-.. todo: add boolean type section
+Boolean type
+============
+
+PostgreSQL provides the standard SQL type ``boolean``. The ``boolean`` type can
+have several states: **true**, **false**, and a third state, **unknown**, which
+is represented by the SQL ``NULL`` value.
+
+The datetype input function for type ``boolean`` accepts these strings
+representations for the **true** state:
+
+-   ``true``
+-   ``yea``
+-   ``on``
+-   ``1``
+
+and these representations for the **false** state:
+
+-   ``false``
+-   ``no``
+-   ``off``
+-   ``0``
+
+The key words ``TRUE`` or ``FALSE`` are preferred (SQL-compliant) method for
+writing Boolean constants in SQL queries. But, you can also use string
+representations by following the generic string-literal constant syntax, for
+example ``'yes':boolean``.
 
 .. todo: add enumerate type section
 
