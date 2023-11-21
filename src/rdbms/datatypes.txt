@@ -430,7 +430,3 @@ were listed when the type was created. All standard comparison operators and
 related aggregate functions are supported for enums. However, remember that
 each enumerated data type is separated and cannot be compared with other
 enumerated types.
-
-.. todo: add uuid type section, short description without details
-
-.. todo: add XML and JSON type section, short description without details
