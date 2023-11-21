@@ -318,9 +318,10 @@ into simpler parts.
 Recursive queries
 -----------------
 
- The optional RECURSIVE modifier changes WITH from a mere syntactic convenience
-into a feature that accomplishes things not otherwise possible in standard SQL.
-Using RECURSIVE, a WITH query can refer to its own output.
+The optional ``RECURSIVE`` modifier changes WITH from a mere syntactic
+convenience into a feature that accomplishes things not otherwise possible in
+standard SQL. Using ``RECURSIVE``, a ``WITH`` query can refer to its own
+output.
 
 .. code-block:: postgresql
     :caption: Sum of first 10 numbers starting from 1
