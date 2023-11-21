@@ -297,17 +297,62 @@ clause can be a ``SELECT``, ``INSERT``, ``UPDATE`` or ``DELETE``; and the
 Select in WITH
 --------------
 
-.. todo: 
+The basic value of ``SELECT`` in ``WITH`` is to break down complicated queries
+into simpler parts.
+
+.. code-block:: postgresql
+    :caption: Get most profitable months
+
+    -- select top revenue months
+    WITH monthly_revenue AS (SELECT EXTRACT(YEAR FROM date)  AS year,
+                                    EXTRACT(MONTH FROM date) AS month,
+                                    SUM(amount)              AS total_amount
+                             FROM revenue
+                             GROUP BY year, month
+                             ORDER BY year, month)
+    SELECT *
+    FROM monthly_revenue
+    WHERE total_amount > (SELECT SUM(total_amount) / 100 FROM monthly_revenue)
+    ORDER BY total_amount DESC;
 
 Recursive queries
 -----------------
 
-.. todo:
+ The optional RECURSIVE modifier changes WITH from a mere syntactic convenience
+into a feature that accomplishes things not otherwise possible in standard SQL.
+Using RECURSIVE, a WITH query can refer to its own output.
+
+.. code-block:: postgresql
+    :caption: Sum of first 10 numbers starting from 1
+
+    WITH RECURSIVE t(n) AS (VALUES (1) UNION SELECT n + 1 FROM t WHERE n < 10)
+    SELECT sum(n)
+    FROM t;
+
+.. important::
+
+    When working with recursive queries it is important to be sure that
+    the recursive part of the query will eventually return no tuple, or else
+    the query will loop indefinitely.
 
 Data modifying statements in WITH
 ---------------------------------
 
-.. todo:
+You can use most data-modifying statements (``INSERT``, ``UPDATE``, ``DELETE``)
+in ``WITH``. This allows you to perform several different operations at a time,
+in the same query.
+
+.. code-block:: postgresql
+    :caption: Remove old revenue records and store them into history table
+
+    WITH deleted_rows AS (
+        DELETE FROM revenue
+            WHERE date < '2020-01-01'
+            RETURNING *)
+    INSERT
+    INTO revenue_log
+    SELECT *
+    FROM deleted_rows;
 
 Join data from different tables
 ===============================
