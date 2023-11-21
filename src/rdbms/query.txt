@@ -100,6 +100,7 @@ is discarded. The ``WHERE`` clause is used to handle search condition checks.
 Here are some examples of ``WHERE`` clause:
 
 .. code-block:: sql
+    :caption: WHERE clause usage examples
 
     SELECT ... FROM fdt
     WHERE c1 > 5;
@@ -178,7 +179,7 @@ After the select list has been processed, the result table can optionally be
 subject to the elimination of duplicate rows. The ``DISTINCT`` key word is
 written directly after ``SELECT`` to specify this:
 
-.. note::
+.. code-block:: postgresql
 
     SELECT DISTINCT publisher FROM book;
 
