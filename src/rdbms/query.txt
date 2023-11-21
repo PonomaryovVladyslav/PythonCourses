@@ -370,3 +370,237 @@ Available join types are:
 .. note::
 
     Key words in bracket parentheses above are optional.
+
+Joins between tables
+--------------------
+
+.. literalinclude:: /../libms-db/libms.sql
+    :caption: Publishers and books tables definitions
+    :language: postgresql
+    :lines: 14-23,50-62
+
+Following tables are related via ``FOREIGN KEY`` constraint. Each record in
+the ``book`` table references some record in the ``publisher`` table.
+
+.. important::
+
+    Since original tables contain lots of data, temporary tables will be
+    created instead before join query. Full tables content may be downloaded
+    via links:
+    :download:`publisher </../libms-db/assets/csv/publisher.csv>`,
+    :download:`book </../libms-db/assets/csv/book.csv>`.
+
+    The subsets from original queries defined as:
+
+    .. code-block:: postgresql
+
+        SELECT *
+        FROM (VALUES (1, 'Zoonoodle'),
+                     (3, 'Tanoodle'),
+                     (4, 'Skivee'))
+                 AS publisher(id, name);
+
+    +----+-----------+
+    | id |name       |
+    +====+===========+
+    |  1 | Zoonoodle |
+    +----+-----------+
+    |  3 | Tanoodle  |
+    +----+-----------+
+
+    .. code-block:: postgresql
+
+        SELECT *
+        FROM (VALUES (22, 'pretium nisl', 2),
+                     (38, 'ac est lacinia nisi venenatis', 3),
+                     (69, 'vel accumsan tellus nisi', 3),
+                     (72, 'nam dui proin', 2),
+                     (85, 'nam tristique', 2))
+                 AS book(id, title, publisher_id);
+
+    +----+-------------------------------+--------------+
+    | id | title                         | publisher_id |
+    +====+===============================+==============+
+    | 22 | pretium nisl                  | 2            |
+    +----+-------------------------------+--------------+
+    | 38 | ac est lacinia nisi venenatis | 3            |
+    +----+-------------------------------+--------------+
+    | 69 | vel accumsan tellus nisi      | 3            |
+    +----+-------------------------------+--------------+
+    | 72 | nam dui proin                 | 2            |
+    +----+-------------------------------+--------------+
+    | 85 | nam tristique                 | 2            |
+    +----+-------------------------------+--------------+
+
+By passing multiple tables to the ``FROM`` clause a ``CROSS JOIN`` query is
+executed. This means the resulting table is the Cartesian product of two
+original tables.
+
+.. code-block:: postgresql
+    :caption: Cross join (Cartesian product)
+
+    WITH publisher AS
+             (SELECT *
+              FROM (VALUES (1, 'Zoonoodle'),
+                           (3, 'Tanoodle'),
+                           (4, 'Skivee'))
+                  AS publisher(id, name)),
+         book AS
+             (SELECT *
+              FROM (VALUES (22, 'pretium nisl', 2),
+                           (38, 'ac est lacinia nisi venenatis', 3),
+                           (69, 'vel accumsan tellus nisi', 3),
+                           (72, 'nam dui proin', 2),
+                           (85, 'nam tristique', 2))
+                       AS book(id, title, publisher_id))
+    -- querying the joined result
+    SELECT *
+    FROM book,
+         publisher;
+
+.. table:: Query result
+
+    +----+-------------------------------+--------------+----+-----------+
+    | id | title                         | publisher_id | id | name      |
+    +====+===============================+==============+====+===========+
+    | 22 | pretium nisl                  | 2            |  1 | Zoonoodle |
+    +----+-------------------------------+--------------+----+-----------+
+    | 22 | pretium nisl                  | 2            |  3 | Tanoodle  |
+    +----+-------------------------------+--------------+----+-----------+
+    | 22 | pretium nisl                  | 2            |  4 | Skivee    |
+    +----+-------------------------------+--------------+----+-----------+
+    | 38 | ac est lacinia nisi venenatis | 3            |  1 | Zoonoodle |
+    +----+-------------------------------+--------------+----+-----------+
+    | 38 | ac est lacinia nisi venenatis | 3            |  3 | Tanoodle  |
+    +----+-------------------------------+--------------+----+-----------+
+    | 38 | ac est lacinia nisi venenatis | 3            |  4 | Skivee    |
+    +----+-------------------------------+--------------+----+-----------+
+    | 69 | vel accumsan tellus nisi      | 3            |  1 | Zoonoodle |
+    +----+-------------------------------+--------------+----+-----------+
+    | 69 | vel accumsan tellus nisi      | 3            |  3 | Tanoodle  |
+    +----+-------------------------------+--------------+----+-----------+
+    | 69 | vel accumsan tellus nisi      | 3            |  4 | Skivee    |
+    +----+-------------------------------+--------------+----+-----------+
+    | 72 | nam dui proin                 | 2            |  1 | Zoonoodle |
+    +----+-------------------------------+--------------+----+-----------+
+    | 72 | nam dui proin                 | 2            |  3 | Tanoodle  |
+    +----+-------------------------------+--------------+----+-----------+
+    | 72 | nam dui proin                 | 2            |  4 | Skivee    |
+    +----+-------------------------------+--------------+----+-----------+
+    | 85 | nam tristique                 | 2            |  1 | Zoonoodle |
+    +----+-------------------------------+--------------+----+-----------+
+    | 85 | nam tristique                 | 2            |  3 | Tanoodle  |
+    +----+-------------------------------+--------------+----+-----------+
+    | 85 | nam tristique                 | 2            |  4 | Skivee    |
+    +----+-------------------------------+--------------+----+-----------+
+
+By defining the ``WHERE`` clause rows that do not match the condition may
+be eliminated from the result.
+
+.. code-block:: postgresql
+
+    SELECT *
+    FROM book, publisher
+    WHERE book.publisher_id = publisher.id;
+
++----+-------------------------------+--------------+----+----------+
+| id | title                         | publisher_id | id | name     |
++====+===============================+==============+====+==========+
+| 38 | ac est lacinia nisi venenatis | 3            | 3  | Tanoodle |
++----+-------------------------------+--------------+----+----------+
+| 69 | vel accumsan tellus nisi      | 3            | 3  | Tanoodle |
++----+-------------------------------+--------------+----+----------+
+
+This is called ``INNER JOIN``, which means that the result table will contain
+only whose rows from left-hard and right-hand tables, that have corresponding
+records to each other.
+
+The same result may be obtained using ``JOIN`` clause. All ``JOIN`` options are
+just a notation convenience, since they do nothing you couldn't do with plain
+``FROM`` and ``WHERE``.
+
+.. code-block:: postgresql
+
+    SELECT *
+    FROM book b
+             JOIN publisher p ON b.publisher_id = p.id;
+
+``INNER JOIN`` is the default while joining two tables with each other.
+
+Right and left joins
+--------------------
+
+``LEFT OUTER JOIN`` returns all rows in the qualified Cartesian product
+(i.e., all combined rows that pass its condition), plus one copy of each
+row in the left-hand table for which there was no right-hand row that passed
+the join condition.
+
+.. code-block:: postgresql
+
+    SELECT *
+    FROM book b
+             LEFT JOIN publisher p ON b.publisher_id = p.id;
+
++----+-------------------------------+--------------+------+----------+
+| id | title                         | publisher_id | id   | name     |
++====+===============================+==============+======+==========+
+| 22 | pretium nisl                  | 2            | null | null     |
++----+-------------------------------+--------------+------+----------+
+| 38 | ac est lacinia nisi venenatis | 3            | 3    | Tanoodle |
++----+-------------------------------+--------------+------+----------+
+| 69 | vel accumsan tellus nisi      | 3            | 3    | Tanoodle |
++----+-------------------------------+--------------+------+----------+
+| 72 | nam dui proin                 | 2            | null | null     |
++----+-------------------------------+--------------+------+----------+
+| 85 | nam tristique                 | 2            | null | null     |
++----+-------------------------------+--------------+------+----------+
+
+Conversely, ``RIGHT OUTER JOIN`` returns all the joined rows, plus one row for
+each unmatched right-hand row. This is just a notation convenience, since you
+could convert it to a ``LEFT OUTER JOIN`` by switching the left and right
+tables.
+
+.. code-block:: postgresql
+
+    SELECT *
+    FROM book b
+             RIGHT JOIN publisher p ON b.publisher_id = p.id;
+
++------+-------------------------------+--------------+----+-----------+
+| id   | title                         | publisher_id | id | name      |
++======+===============================+==============+====+===========+
+| 38   | ac est lacinia nisi venenatis | 3            | 3  | Tanoodle  |
++------+-------------------------------+--------------+----+-----------+
+| 69   | vel accumsan tellus nisi      | 3            | 3  | Tanoodle  |
++------+-------------------------------+--------------+----+-----------+
+| null | null                          | null         | 4  | Skivee    |
++------+-------------------------------+--------------+----+-----------+
+| null | null                          | null         | 1  | Zoonoodle |
++------+-------------------------------+--------------+----+-----------+
+
+Full outer join
+---------------
+
+.. code-block:: postgresql
+
+    SELECT *
+    FROM book b
+             FULL JOIN publisher p ON b.publisher_id = p.id;
+
++------+-------------------------------+--------------+------+-----------+
+| id   | title                         | publisher_id | id   | name      |
++======+===============================+==============+======+===========+
+| 22   | pretium nisl                  | 2            | null | null      |
++------+-------------------------------+--------------+------+-----------+
+| 38   | ac est lacinia nisi venenatis | 3            | 3    | Tanoodle  |
++------+-------------------------------+--------------+------+-----------+
+| 69   | vel accumsan tellus nisi      | 3            | 3    | Tanoodle  |
++------+-------------------------------+--------------+------+-----------+
+| 72   | nam dui proin                 | 2            | null | null      |
++------+-------------------------------+--------------+------+-----------+
+| 85   | nam tristique                 | 2            | null | null      |
++------+-------------------------------+--------------+------+-----------+
+| null | null                          | null         | 4    | Skivee    |
++------+-------------------------------+--------------+------+-----------+
+| null | null                          | null         | 1    | Zoonoodle |
++------+-------------------------------+--------------+------+-----------+
