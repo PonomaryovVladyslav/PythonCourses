@@ -191,31 +191,6 @@ an arbitrary expression can determine what rows are to be considered distinct.
 
     SELECT DISTINCT ON (expression [, expression ...]) select_list ...
 
-Combining queries
-=================
-
-The results of two queries can be combined using the set operations union,
-intersection, and difference.
-
-.. code-block::
-
-    query1 UNION [ALL] query2
-    query1 INTERSECT [ALL] query2
-    query1 EXCEPT [ALL] query2
-
-``UNION`` effectively appends the result of ``query2`` to the result of
-``query1`` (although there is no guarantee that this is the order in which
-the rows are actually returned). Furthermore, it eliminates duplicate rows from
-its result, in the same way as ``DISTINCT``, unless ``UNION ALL`` is used.
-
-``INTERSECT`` returns all rows that are both in the result of ``query1`` and in
-the result of ``query2``. Duplicate rows are eliminated unless
-``INTERSECT ALL`` is used.
-
-``EXCEPT`` returns all rows that are in the result of ``query1`` but not in
-the result of ``query2``. (This is sometimes called the difference between two
-queries.) Again, duplicates are eliminated unless ``EXCEPT ALL`` is used.
-
 Sorting rows
 ============
 
@@ -355,6 +330,153 @@ in the same query.
     INTO revenue_log
     SELECT *
     FROM deleted_rows;
+
+Combining queries
+=================
+
+The results of two queries can be combined using the set operations union,
+intersection, and difference.
+
+.. code-block::
+
+    query1 UNION [ALL] query2
+    query1 INTERSECT [ALL] query2
+    query1 EXCEPT [ALL] query2
+
+``UNION`` effectively appends the result of ``query2`` to the result of
+``query1`` (although there is no guarantee that this is the order in which
+the rows are actually returned). Furthermore, it eliminates duplicate rows from
+its result, in the same way as ``DISTINCT``, unless ``UNION ALL`` is used.
+
+.. code-block:: postgresql
+
+    WITH north_lib_member AS
+             (SELECT *
+              FROM (VALUES (1, 'Mariska', 'Syson'),
+                           (2, 'Robenia', 'Dimitriades'),
+                           (3, 'Loren', 'Goretti'),
+                           (4, 'Dianna', 'Giacomuzzo'),
+                           (5, 'Anett', 'Hayland'),
+                           (6, 'Keeley', 'Grishelyov')) AS tbl(id, first_name, last_name)),
+         south_lib_member AS
+             (SELECT *
+              FROM (VALUES (5, 'Anett', 'Hayland'),
+                           (6, 'Keeley', 'Grishelyov'),
+                           (7, 'Say', 'Kliner'),
+                           (8, 'Charles', 'Ede'),
+                           (9, 'Florentia', 'Core'),
+                           (10, 'Tiffany', 'Tingly'))
+                       AS tbl(id, first_name, last_name))
+    SELECT *
+    FROM north_lib_member
+    UNION
+    SELECT *
+    FROM south_lib_member
+    ORDER BY id;
+
++----+------------+-------------+
+| id | first_name | last_name   |
++====+============+=============+
+| 1  | Mariska    | Syson       |
++----+------------+-------------+
+| 2  | Robenia    | Dimitriades |
++----+------------+-------------+
+| 3  | Loren      | Goretti     |
++----+------------+-------------+
+| 4  | Dianna     | Giacomuzzo  |
++----+------------+-------------+
+| 5  | Anett      | Hayland     |
++----+------------+-------------+
+| 6  | Keeley     | Grishelyov  |
++----+------------+-------------+
+| 7  | Say        | Kliner      |
++----+------------+-------------+
+| 8  | Charles    | Ede         |
++----+------------+-------------+
+| 9  | Florentia  | Core        |
++----+------------+-------------+
+| 10 | Tiffany    | Tingly      |
++----+------------+-------------+
+
+``INTERSECT`` returns all rows that are both in the result of ``query1`` and in
+the result of ``query2``. Duplicate rows are eliminated unless
+``INTERSECT ALL`` is used.
+
+.. code-block:: postgresql
+
+    WITH north_lib_member AS
+             (SELECT *
+              FROM (VALUES (1, 'Mariska', 'Syson'),
+                           (2, 'Robenia', 'Dimitriades'),
+                           (3, 'Loren', 'Goretti'),
+                           (4, 'Dianna', 'Giacomuzzo'),
+                           (5, 'Anett', 'Hayland'),
+                           (6, 'Keeley', 'Grishelyov')) AS tbl(id, first_name, last_name)),
+         south_lib_member AS
+             (SELECT *
+              FROM (VALUES (5, 'Anett', 'Hayland'),
+                           (6, 'Keeley', 'Grishelyov'),
+                           (7, 'Say', 'Kliner'),
+                           (8, 'Charles', 'Ede'),
+                           (9, 'Florentia', 'Core'),
+                           (10, 'Tiffany', 'Tingly'))
+                       AS tbl(id, first_name, last_name))
+    SELECT *
+    FROM north_lib_member
+    INTERSECT
+    SELECT *
+    FROM south_lib_member
+    ORDER BY id;
+
++----+------------+------------+
+| id | first_name | last_name  |
++====+============+============+
+| 5  | Anett      | Hayland    |
++----+------------+------------+
+| 6  | Keeley     | Grishelyov |
++----+------------+------------+
+
+``EXCEPT`` returns all rows that are in the result of ``query1`` but not in
+the result of ``query2``. (This is sometimes called the difference between two
+queries.) Again, duplicates are eliminated unless ``EXCEPT ALL`` is used.
+
+.. code-block:: postgresql
+
+    WITH north_lib_member AS
+             (SELECT *
+              FROM (VALUES (1, 'Mariska', 'Syson'),
+                           (2, 'Robenia', 'Dimitriades'),
+                           (3, 'Loren', 'Goretti'),
+                           (4, 'Dianna', 'Giacomuzzo'),
+                           (5, 'Anett', 'Hayland'),
+                           (6, 'Keeley', 'Grishelyov')) AS tbl(id, first_name, last_name)),
+         south_lib_member AS
+             (SELECT *
+              FROM (VALUES (5, 'Anett', 'Hayland'),
+                           (6, 'Keeley', 'Grishelyov'),
+                           (7, 'Say', 'Kliner'),
+                           (8, 'Charles', 'Ede'),
+                           (9, 'Florentia', 'Core'),
+                           (10, 'Tiffany', 'Tingly'))
+                       AS tbl(id, first_name, last_name))
+    SELECT *
+    FROM north_lib_member
+    EXCEPT
+    SELECT *
+    FROM south_lib_member
+    ORDER BY id;
+
++----+------------+-------------+
+| id | first_name | last_name   |
++====+============+=============+
+| 1  | Mariska    | Syson       |
++----+------------+-------------+
+| 2  | Robenia    | Dimitriades |
++----+------------+-------------+
+| 3  | Loren      | Goretti     |
++----+------------+-------------+
+| 4  | Dianna     | Giacomuzzo  |
++----+------------+-------------+
 
 Join data from different tables
 ===============================
