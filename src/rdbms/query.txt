@@ -102,22 +102,22 @@ Here are some examples of ``WHERE`` clause:
 .. code-block:: sql
     :caption: WHERE clause usage examples
 
-    SELECT ... FROM fdt
+    SELECT ... FROM tbl
     WHERE c1 > 5;
 
-    SELECT ... FROM fdt
+    SELECT ... FROM tbl
     WHERE c1 IN (1, 2, 3);
 
-    SELECT ... FROM fdt
+    SELECT ... FROM tbl
     WHERE c1 IN (SELECT c1 FROM t2);
 
-    SELECT ... FROM fdt
-    WHERE c1 IN (SELECT c3 FROM t2 WHERE c2 = fdt.c1 + 10);
+    SELECT ... FROM tbl
+    WHERE c1 IN (SELECT c3 FROM t2 WHERE c2 = tbl.c1 + 10);
 
-    SELECT ... FROM fdt
-    WHERE c1 BETWEEN (SELECT c3 FROM t2 WHERE c2 = fdt.c1 + 10) AND 100;
+    SELECT ... FROM tbl
+    WHERE c1 BETWEEN (SELECT c3 FROM t2 WHERE c2 = tbl.c1 + 10) AND 100;
 
-    SELECT ... FROM fdt
+    SELECT ... FROM tbl
     WHERE EXISTS (SELECT c1 FROM t2 WHERE c2 > fdt.c1);
 
 Grouping data
