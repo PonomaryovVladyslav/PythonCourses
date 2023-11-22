@@ -249,6 +249,7 @@ Mathematical functions and operators
         SELECT ||/ 64.0 -- returns 4
 
 .. data:: @ numeric_type
+
     Absolute value
 
     .. code-block:: sql

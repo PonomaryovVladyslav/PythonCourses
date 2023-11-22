@@ -46,18 +46,65 @@ The usual comparison operators are available.
 +-------------------------------------+--------------------------+
 | Operator                            | Description              |
 +=====================================+==========================+
-| datatype < datatype -> boolean      | Less than                |
+| ``datatype < datatype -> boolean``  | Less than                |
 +-------------------------------------+--------------------------+
-| datatype > datatype -> boolean      | Greater than             |
+| ``datatype > datatype -> boolean``  | Greater than             |
 +-------------------------------------+--------------------------+
-| datatype <= datatype -> boolean     | Less than or equal to    |
+| ``datatype <= datatype -> boolean`` | Less than or equal to    |
 +-------------------------------------+--------------------------+
-| datatype >= datatype -> boolean     | Greater than or equal to |
+| ``datatype >= datatype -> boolean`` | Greater than or equal to |
 +-------------------------------------+--------------------------+
-| datatype = datatype -> boolean      | Equal                    |
+| ``datatype = datatype -> boolean``  | Equal                    |
 +-------------------------------------+--------------------------+
-| datatype <> datatype -> boolean     | Not equal                |
+| ``datatype <> datatype -> boolean`` | Not equal                |
 +-------------------------------------+--------------------------+
-| datatype != datatype -> boolean     | Not equal                |
+| ``datatype != datatype -> boolean`` | Not equal                |
 +-------------------------------------+--------------------------+
 
+Mathematical functions and operators
+====================================
+
+Mathematical operators and provided for many PostgreSQL types.
+
++-----------------------------------------+-----------------------------------+
+| Operation                               | Description                       |
++=========================================+===================================+
+| ``numeric_type + numeric_type``         | Addition                          |
++-----------------------------------------+-----------------------------------+
+| ``+ numeric_type``                      | Unary plus (no operation)         |
++-----------------------------------------+-----------------------------------+
+| ``numeric_type - numeric_type``         | Subtraction                       |
++-----------------------------------------+-----------------------------------+
+| ``- numeric_type``                      | Negation                          |
++-----------------------------------------+-----------------------------------+
+| ``numeric_type * numeric_type``         | Multiplication                    |
++-----------------------------------------+-----------------------------------+
+| ``numeric_type / numeric_type``         | Division (for integral types,     |
+|                                         | division truncates the result     |
+|                                         | towards zero)                     |
++-----------------------------------------+-----------------------------------+
+| ``numeric_type % numeric_type``         | Modulo (remainder); available for |
+|                                         | ``smallint``, ``integer``,        |
+|                                         | ``bigint``, and ``numeric``       |
++-----------------------------------------+-----------------------------------+
+| ``numeric ^ numeric``                   | Exponentiation                    |
+| ``double precision ^ double precision`` |                                   |
++-----------------------------------------+-----------------------------------+
+| ``|/ double precision``                 | Square root                       |
++-----------------------------------------+-----------------------------------+
+| ``||/ double precision``                | Cube root                         |
++-----------------------------------------+-----------------------------------+
+| ``@ numeric_type``                      | Absolute value                    |
++-----------------------------------------+-----------------------------------+
+| ``integral_type & integral_type``       | Bitwise AND                       |
++-----------------------------------------+-----------------------------------+
+| ``integral_type | integral_type``       | Bitwise OR                        |
++-----------------------------------------+-----------------------------------+
+| ``integral_type # integral_type``       | Bitwise exclusive OR              |
++-----------------------------------------+-----------------------------------+
+| ``~ integral_type``                     | Bitwise NOT                       |
++-----------------------------------------+-----------------------------------+
+| ``integral_type << integer``            | Bitwise shift left                |
++-----------------------------------------+-----------------------------------+
+| ``integral_type >> integer``            | Bitwise shift right               |
++-----------------------------------------+-----------------------------------+
