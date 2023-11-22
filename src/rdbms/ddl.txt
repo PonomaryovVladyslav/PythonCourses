@@ -222,7 +222,166 @@ columns. These columns cannot be used in the generated columns (except
 Modify objects
 ==============
 
-.. todo
+When you create a table and you realize that you made a mistake, or the
+requirements of the application change, you can drop the table and create
+it again. But this is not a convenient option if the table is already filled
+with data, or if the table is referenced by other database objects.
+
+PostgreSQL provides a family of commands to make modifications to existing
+tables. You can:
+
+-   add columns
+-   remove columns
+-   add constraints
+-   remove constraints
+-   change default values
+-   change column data types
+-   rename columns
+-   rename tables
+
+All these actions are performed using the ``ALTER TABLE`` command.
+
+Adding a column
+---------------
+
+To add a column, use a command like:
+
+.. code-block:: postgresql
+
+    ALTER TABLE tbl_name ADD COLUMN cln_name cln_type
+
+.. literalinclude:: /../libms-db/libms.sql
+    :language: postgresql
+    :lines: 51-63,92-93
+
+.. note::
+
+    Constraints can be also defined on the column at the same time, using
+    general syntax.
+
+    In fact all the options that can be applied to a column description in
+    ``CREATE TABLE`` can be used here. Keep in mind however that the default
+    value must satisfy the given constraints, or the ``ADD`` will fail.
+
+Removing a column
+-----------------
+
+To remove a column, use ``DROP`` command like this:
+
+.. code-block:: postgresql
+
+    ALTER TABLE book
+        DROP COLUMN genre;
+
+Whatever data was in the column disappears. Table constraints involving
+the column are dropped, too. However, if the column is referenced by a
+foreign key constraint of another table, PostgreSQL will not silently drop
+that constraint. You can authorize dropping everything that depends on
+the column by adding ``CASCADE``:
+
+.. code-block:: postgresql
+
+    ALTER TABLE tbl_name
+        DROP COLUMN cln_name CASCADE;
+
+Adding a constraint
+-------------------
+
+To add a constraint, the table constraint syntax is used.
+
+.. literalinclude:: /../libms-db/libms.sql
+    :language: postgresql
+    :start-after: -- label: ddl-borrow_request
+    :end-before: -- label:
+
+Other examples:
+
+.. code-block:: postgresql
+
+    ALTER TABLE tbl_name
+        ADD CONSTRAINT cst_name UNIQUE (cln_name);
+
+    ALTER TABLE tbl_name
+        ADD FOREIGN KEY (cln_name) REFERENCES tbl_another;
+
+To add a non-null constraint, which cannot be written as a table constraint,
+use this syntax:
+
+.. code-block:: postgresql
+
+    ALTER TABLE tbl_name
+        ALTER COLUMN cln_name SET NOT NULL;
+
+Removing a constraint
+---------------------
+
+To remove a constraint you need to know its name. The **psql** command
+``\d table_name`` can be helpful to get the detailed information on
+a specific table, including all constraints' names assigned to it.
+
+.. code-block:: postgresql
+
+    ALTER TABLE tbl_name
+        DROP CONSTRAINT cst_name;
+
+Changing a column's default value
+---------------------------------
+
+To set a new default for a column, use command like this:
+
+.. code-block:: postgresql
+
+    ALTER TABLE tbl_name
+        ALTER COLUMN cln_name SET DEFAULT 0.0;
+
+To remove any default  value, use:
+
+.. code-block:: postgresql
+
+    ALTER TABLE tbl_name
+        ALTER COLUMN cln_name DROP DEFAULT;
+
+This is effectively the same as settings the default to ``NULL``.
+
+Changing a column's data type
+-----------------------------
+
+To convert a column to a different data type, use a command like this:
+
+.. code-block:: postgresql
+
+    ALTER TABLE tbl_name
+        ALTER COLUMN cln_name TYPE NUMERIC(10, 2);
+
+This will succeed only if each existing entry in the column can be converted
+to the new type by an implicit cast. If a more complex conversion is needed,
+you can add a ``USING`` clause that specifies how to compute the new values
+from old ones.
+
+PostgreSQL will attempt to convert the column's default value (if any) to the
+new type, as well as any constraint that involve the column. But these
+conversions might fail, or might produce surprising results. It's often best
+to drop any constraints on the column before altering its type, and then add
+back suitably modified constraints afterwards.
+
+Renaming objects
+----------------
+
+To rename objects use ``RENAME`` command, like this:
+
+.. code-block:: postgresql
+
+    ALTER TABLE tbl_name
+        RENAME COLUMN cln_name TO new_cln_name;
+    ALTER TABLE tbl_name
+        RENAME CONSTRAINT cst_name TO new_cst_name;
+
+To rename a table:
+
+.. code-block:: postgresql
+
+    ALTER TABLE tbl_name
+        RENAME TO new_tbl_name;
 
 Remove objects
 ==============
