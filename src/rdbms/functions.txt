@@ -64,78 +64,134 @@ The usual comparison operators are available.
 Comparison predicates
 ---------------------
 
-::
+.. data:: datatype BETWEEN datatype AND datatype
 
-    datatype BETWEEN datatype AND datatype -> boolean
-        Between (inclusive of the range endpoints).
-        2 BETWEEN 1 AND 3 -> t
-        2 BETWEEN 3 AND 1 -> f
+    Test if a value is within the range endpoints (inclusive)
 
-    datatype NOT BETWEEN datatype AND datatype -> boolean
-        Not between (the negation of BETWEEN).
-        2 NOT BETWEEN 1 AND 3 -> f
+    .. code-block:: postgresql
 
-    datatype BETWEEN SYMMETRIC datatype AND datatype -> boolean
-        Between, after sorting the two endpoint values.
-        2 BETWEEN SYMMETRIC 3 AND 1 -> t
+        2 BETWEEN 1 AND 3 -- true
+        2 BETWEEN 3 AND 1 -- false
 
-    datatype NOT BETWEEN SYMMETRIC datatype AND datatype -> boolean
-        Not between, after sorting the two endpoint values.
-        2 NOT BETWEEN SYMMETRIC 3 AND 1 -> f
+.. data:: datatype NOT BETWEEN datatype AND datatype
 
-    datatype IS DISTINCT FROM datatype -> boolean
-        Not equal, treating null as a comparable value.
-        1 IS DISTINCT FROM NULL -> t (rather than NULL)
-        NULL IS DISTINCT FROM NULL -> f (rather than NULL)
+    Not between (the negation of BETWEEN).
 
-    datatype IS NOT DISTINCT FROM datatype -> boolean
-        Equal, treating null as a comparable value.
-        1 IS NOT DISTINCT FROM NULL -> f (rather than NULL)
-        NULL IS NOT DISTINCT FROM NULL -> t (rather than NULL)
+    .. code-block:: postgresql
 
-    datatype IS NULL -> boolean
-        Test whether value is null.
-        1.5 IS NULL -> f
+        2 NOT BETWEEN 1 AND 3 -- false
 
-    datatype IS NOT NULL -> boolean
-        Test whether value is not null.
-        'null' IS NOT NULL -> t
+.. data:: datatype BETWEEN SYMMETRIC datatype AND datatype
 
-    datatype ISNULL -> boolean
-        Test whether value is null (nonstandard syntax).
+    Between, after sorting the two endpoint values.
 
-    datatype NOTNULL -> boolean
-        Test whether value is not null (nonstandard syntax).
+    .. code-block:: postgresql
 
-    boolean IS TRUE -> boolean
-        Test whether boolean expression yields true.
-        true IS TRUE -> t
-        NULL::boolean IS TRUE -> f (rather than NULL)
+        2 BETWEEN SYMMETRIC 3 AND 1 -- true
 
-    boolean IS NOT TRUE -> boolean
-        Test whether boolean expression yields false or unknown.
-        true IS NOT TRUE -> f
-        NULL::boolean IS NOT TRUE -> t (rather than NULL)
+.. data:: datatype NOT BETWEEN SYMMETRIC datatype AND datatype
 
-    boolean IS FALSE -> boolean
-        Test whether boolean expression yields false.
-        true IS FALSE -> f
-        NULL::boolean IS FALSE -> f (rather than NULL)
+    Not between, after sorting the two endpoint values.
 
-    boolean IS NOT FALSE -> boolean
-        Test whether boolean expression yields true or unknown.
-        true IS NOT FALSE -> t
-        NULL::boolean IS NOT FALSE -> t (rather than NULL)
+    .. code-block:: postgresql
 
-    boolean IS UNKNOWN -> boolean
-        Test whether boolean expression yields unknown.
-        true IS UNKNOWN -> f
-        NULL::boolean IS UNKNOWN -> t (rather than NULL)
+        2 NOT BETWEEN SYMMETRIC 3 AND 1 -- false
 
-    boolean IS NOT UNKNOWN -> boolean
-        Test whether boolean expression yields true or false.
-        true IS NOT UNKNOWN -> t
-        NULL::boolean IS NOT UNKNOWN -> f (rather than NULL)
+.. data:: datatype IS DISTINCT FROM datatype
+
+    Not equal, treating null as a comparable value.
+
+    .. code-block:: postgresql
+
+        1 IS DISTINCT FROM NULL -- true (rather than NULL)
+        NULL IS DISTINCT FROM NULL -- false (rather than NULL)
+
+.. data:: datatype IS NOT DISTINCT FROM datatype
+
+    Equal, treating null as a comparable value.
+
+    .. code-block:: postgresql
+
+        1 IS NOT DISTINCT FROM NULL -- false (rather than NULL)
+        NULL IS NOT DISTINCT FROM NULL -- true (rather than NULL)
+
+.. data:: datatype IS NULL
+
+    Test whether value is null.
+
+    .. code-block:: postgresql
+
+        1.5 IS NULL -- false
+
+.. data:: datatype IS NOT NULL
+
+    Test whether value is not null.
+
+    .. code-block:: postgresql
+
+        'null' IS NOT NULL -- true
+
+.. data:: datatype ISNULL
+
+    Test whether value is null (nonstandard syntax).
+
+.. data:: datatype NOTNULL
+
+    Test whether value is not null (nonstandard syntax).
+
+.. data:: boolean IS TRUE
+
+    Test whether boolean expression yields true.
+
+    .. code-block:: postgresql
+
+        true IS TRUE -- true
+        NULL::boolean IS TRUE -- false (rather than NULL)
+
+.. data:: boolean IS NOT TRUE
+
+    Test whether boolean expression yields false or unknown.
+
+    .. code-block:: postgresql
+
+        true IS NOT TRUE -- false
+        NULL::boolean IS NOT TRUE -- true (rather than NULL)
+
+.. data:: boolean IS FALSE
+
+    Test whether boolean expression yields false.
+
+    .. code-block:: postgresql
+
+        true IS FALSE -- false
+        NULL::boolean IS FALSE -- false (rather than NULL)
+
+.. data:: boolean IS NOT FALSE
+
+    Test whether boolean expression yields true or unknown.
+
+    .. code-block:: postgresql
+
+        true IS NOT FALSE -- true
+        NULL::boolean IS NOT FALSE -- true (rather than NULL)
+
+.. data:: boolean IS UNKNOWN
+
+    Test whether boolean expression yields unknown.
+
+    .. code-block:: postgresql
+
+        true IS UNKNOWN -- false
+        NULL::boolean IS UNKNOWN -- true (rather than NULL)
+
+.. data:: boolean IS NOT UNKNOWN
+
+    Test whether boolean expression yields true or false.
+
+    .. code-block:: postgresql
+
+        true IS NOT UNKNOWN -- true
+        NULL::boolean IS NOT UNKNOWN -- false (rather than NULL)
 
 Comparison functions
 --------------------
