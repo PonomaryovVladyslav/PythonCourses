@@ -2,7 +2,7 @@
 Functions and operators
 ***********************
 
-Logical operators and comparison
+Logical and comparison operators
 ================================
 
 The usual logical operators are still available:
