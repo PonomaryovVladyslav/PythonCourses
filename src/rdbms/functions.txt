@@ -108,3 +108,26 @@ Mathematical operators and provided for many PostgreSQL types.
 +-----------------------------------------+-----------------------------------+
 | ``integral_type >> integer``            | Bitwise shift right               |
 +-----------------------------------------+-----------------------------------+
+
+String functions
+================
+
+*Strings* in this context include values of the types ``character``, ``text``
+and ``character varying``.
+
+.. todo: concat, pattern matching (like)
+
+Date/Time functions and operators
+=================================
+
+.. todo: extract, date_part, date_trunc, current d/t, formatting d/t
+
+Conditional expressions
+=======================
+
+.. todo: case, coalesce
+
+Aggregate functions
+===================
+
+.. todo: sum, max, min, avg, count, + group by, + having
