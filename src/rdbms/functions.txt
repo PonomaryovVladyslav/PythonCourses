@@ -1,3 +1,39 @@
 ***********************
 Functions and operators
 ***********************
+
+Logical operators
+=================
+
+The usual logical operators are still available:
+
+.. code-block:: sql
+
+    boolean AND boolean -> boolean
+    boolean OR boolean -> boolean
+    NOT boolean -> boolean
+
+SQL uses a three-valued logic system with ``true``, ``false``, and ``null``,
+which represents *unknown*.
+
+.. table:: Truth table
+
+    +-----------+-----------+-------------+------------+-----------+
+    | ``a``     | ``b``     | ``a AND b`` | ``a OR b`` | ``NOT a`` |
+    +===========+===========+=============+============+===========+
+    | ``TRUE``  | ``TRUE``  | ``TRUE``    | ``TRUE``   | ``FALSE`` |
+    +-----------+-----------+-------------+------------+-----------+
+    | ``TRUE``  | ``FALSE`` | ``FALSE``   | ``TRUE``   | ``FALSE`` |
+    +-----------+-----------+-------------+------------+-----------+
+    | ``TRUE``  | ``NULL``  | ``NULL``    | ``TRUE``   | ``FALSE`` |
+    +-----------+-----------+-------------+------------+-----------+
+    | ``FALSE`` | ``FALSE`` | ``FALSE``   | ``FALSE``  | ``TRUE``  |
+    +-----------+-----------+-------------+------------+-----------+
+    | ``FALSE`` | ``NULL``  | ``FALSE``   | ``NULL``   | ``TRUE``  |
+    +-----------+-----------+-------------+------------+-----------+
+    | ``NULL``  | ``NULL``  | ``NULL``    | ``NULL``   | ``NULL``  |
+    +-----------+-----------+-------------+------------+-----------+
+
+The operators ``AND`` and ``OR`` are commutative, that is, you can switch
+the left and right operands without affecting the result. However, it is not
+guaranteed that the left operand is evaluated before the right operand.
