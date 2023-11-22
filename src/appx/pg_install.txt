@@ -2,4 +2,27 @@
                             PostgreSQL Installation
 ###############################################################################
 
-:doc:`Local PostgreSQL server using binaries <./pg_local>`
+Overview
+========
+
+PostgreSQL is a powerful, open source object-relational database system that
+uses and extends the SQL language combined with many features that safely store
+and scale the most complicated data workloads.
+
+PostgreSQL has earned a strong reputation for its proven architecture,
+reliability, data integrity, robust feature set, extensibility, and the
+dedication of the open source community behind the software to consistently
+deliver performant and innovative solutions.
+
+.. todo: add ref to acid document
+
+PostgreSQL runs on **all major operating systems**, and is ACID
+compliant.
+
+Installation
+============
+
+If you are not able to install postgres to your local computer, it is
+possible to use binaries distributions.
+Refer :doc:`Local PostgreSQL server using binaries <./pg_local>` for
+more information.
