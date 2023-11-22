@@ -102,10 +102,10 @@ Comparison predicates
         'null' IS NOT NULL -> t
 
     datatype ISNULL -> boolean
-    Test whether value is null (nonstandard syntax).
+        Test whether value is null (nonstandard syntax).
 
     datatype NOTNULL -> boolean
-    Test whether value is not null (nonstandard syntax).
+        Test whether value is not null (nonstandard syntax).
 
     boolean IS TRUE -> boolean
         Test whether boolean expression yields true.
