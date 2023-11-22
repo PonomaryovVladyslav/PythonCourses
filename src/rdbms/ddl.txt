@@ -263,27 +263,6 @@ To add a column, use a command like:
     ``CREATE TABLE`` can be used here. Keep in mind however that the default
     value must satisfy the given constraints, or the ``ADD`` will fail.
 
-Removing a column
------------------
-
-To remove a column, use ``DROP`` command like this:
-
-.. code-block:: postgresql
-
-    ALTER TABLE book
-        DROP COLUMN genre;
-
-Whatever data was in the column disappears. Table constraints involving
-the column are dropped, too. However, if the column is referenced by a
-foreign key constraint of another table, PostgreSQL will not silently drop
-that constraint. You can authorize dropping everything that depends on
-the column by adding ``CASCADE``:
-
-.. code-block:: postgresql
-
-    ALTER TABLE tbl_name
-        DROP COLUMN cln_name CASCADE;
-
 Adding a constraint
 -------------------
 
@@ -311,18 +290,6 @@ use this syntax:
 
     ALTER TABLE tbl_name
         ALTER COLUMN cln_name SET NOT NULL;
-
-Removing a constraint
----------------------
-
-To remove a constraint you need to know its name. The **psql** command
-``\d table_name`` can be helpful to get the detailed information on
-a specific table, including all constraints' names assigned to it.
-
-.. code-block:: postgresql
-
-    ALTER TABLE tbl_name
-        DROP CONSTRAINT cst_name;
 
 Changing a column's default value
 ---------------------------------
@@ -386,4 +353,57 @@ To rename a table:
 Remove objects
 ==============
 
-.. todo
+Removing tables
+---------------
+
+``DROP`` command is used to remove objects.
+
+.. code-block:: postgresql
+
+    DROP TABLE tbl_name;
+
+Remember, attempting to remove a table that does not exist is an error.
+Nevertheless, it is common in SQL script files to unconditionally try to
+drop each table before creating it, ignoring any error message, so that
+the script works whether or not the table exists. ``IF EXISTS`` variant
+can be used to avoid the error message, but this is not standard SQL.
+
+.. literalinclude:: /../libms-db/libms.sql
+    :language: postgresql
+    :lines: 1-20
+
+In case there are other objects referencing the object to drop ``CASCADE`` may
+be used to also remove any referencing objects.
+
+Removing a column
+-----------------
+
+To remove a column, use ``DROP`` command like this:
+
+.. code-block:: postgresql
+
+    ALTER TABLE book
+        DROP COLUMN genre;
+
+Whatever data was in the column disappears. Table constraints involving
+the column are dropped, too. However, if the column is referenced by a
+foreign key constraint of another table, PostgreSQL will not silently drop
+that constraint. You can authorize dropping everything that depends on
+the column by adding ``CASCADE``:
+
+.. code-block:: postgresql
+
+    ALTER TABLE tbl_name
+        DROP COLUMN cln_name CASCADE;
+
+Removing a constraint
+---------------------
+
+To remove a constraint you need to know its name. The **psql** command
+``\d table_name`` can be helpful to get the detailed information on
+a specific table, including all constraints' names assigned to it.
+
+.. code-block:: postgresql
+
+    ALTER TABLE tbl_name
+        DROP CONSTRAINT cst_name;
