@@ -136,3 +136,22 @@ Comparison predicates
         Test whether boolean expression yields true or false.
         true IS NOT UNKNOWN -> t
         NULL::boolean IS NOT UNKNOWN -> f (rather than NULL)
+
+Comparison functions
+--------------------
+
+.. function:: num_nonnulls(VARIADIC "any")
+
+    Returns the number of non-null arguments
+
+.. code-block:: postgresql
+
+    SELECT num_nonnulls(1, NULL, 2) -- return 2
+
+.. function:: num_nulls(VARIADIC "any")
+
+    Returns the number of null arguments
+
+.. code-block:: postgresql
+
+    SELECT num_nulls(1, NULL, 2) -- return 1
