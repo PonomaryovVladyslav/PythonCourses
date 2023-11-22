@@ -1,5 +1,7 @@
+.. _PostgreSQL downloads: https://www.postgresql.org/download/
+
 ###############################################################################
-                            PostgreSQL Installation
+                                  PostgreSQL
 ###############################################################################
 
 Overview
@@ -26,3 +28,11 @@ If you are not able to install postgres to your local computer, it is
 possible to use binaries distributions.
 Refer :doc:`Local PostgreSQL server using binaries <./pg_local>` for
 more information.
+
+PostgreSQL is available for download as ready-to-use packages or installers
+for various platforms, as well as a source code archive if you want to build
+it yourself.
+
+Refer to `PostgreSQL downloads`_ page to get the installer for your operating
+system. Follow the installation process instruction to get postgres server
+running on your local computer.
