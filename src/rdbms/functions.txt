@@ -211,3 +211,154 @@ Comparison functions
 .. code-block:: postgresql
 
     SELECT num_nulls(1, NULL, 2) -- return 1
+
+Mathematical functions and operators
+====================================
+
+.. data:: numeric_type + numeric_type
+
+    Addition
+
+    .. code-block:: sql
+
+        SELECT 2 + 3 -- returns 5
+
+.. data:: + numeric_type
+
+    Unary plus (no operation)
+
+    .. code-block:: sql
+
+        SELECT + 3.5 -- returns 3.5
+
+.. data:: numeric_type - numeric_type
+
+    Subtraction
+
+    .. code-block:: sql
+
+        SELECT 2 - 3 -- returns -1
+
+.. data:: - numeric_type
+
+    Negation
+
+    .. code-block:: sql
+
+        SELECT - (-4) -- returns 4
+
+.. data:: numeric_type * numeric_type
+
+    Multiplication
+
+    .. code-block:: sql
+
+        SELECT 2 * 3 -- returns 6
+
+.. data:: numeric_type / numeric_type
+
+    Division (for integral types, division truncates the result towards zero)
+
+    .. code-block:: sql
+
+        SELECT 5.0 / 2 -- returns 2.5000000000000000
+
+        SELECT 5 / 2 -- returns 2
+
+        SELECT (-5) / 2 -- returns -2
+
+.. data:: numeric_type % numeric_type
+
+    Modulo (remainder); available for smallint, integer, bigint, and numeric
+
+    .. code-block:: sql
+
+        SELECT 5 % 4 -- returns 1
+
+.. data:: numeric ^ numeric
+.. data:: double precision ^ double precision
+
+    Exponentiation
+
+    .. code-block:: sql
+
+        SELECT 2 ^ 3 -- returns 8
+
+    Unlike typical mathematical practice, multiple uses of ``^`` will associate
+    left to right by default:
+
+    .. code-block:: sql
+
+        SELECT 2 ^ 3 ^ 3 -- returns 512
+        SELECT 2 ^ (3 ^ 3) -- returns 134217728
+
+.. data:: |/ double precision
+
+    Square root
+
+    .. code-block:: sql
+
+        SELECT |/ 25.0 -- returns 5
+
+.. data:: ||/ double precision
+
+    Cube root
+
+    .. code-block:: sql
+
+        SELECT ||/ 64.0 -- returns 4
+
+.. data:: @ numeric_type
+    Absolute value
+
+    .. code-block:: sql
+
+        SELECT @ -5.0 -- returns 5.0
+
+.. data:: integral_type & integral_type
+
+    Bitwise AND
+
+    .. code-block:: sql
+
+        SELECT 91 & 15 -- returns 11
+
+.. data:: integral_type | integral_type
+
+    Bitwise OR
+
+    .. code-block:: sql
+
+        SELECT 32 | 3 -- returns 35
+
+.. data:: integral_type # integral_type
+
+    Bitwise exclusive OR
+
+    .. code-block:: sql
+
+        SELECT 17 # 5 -- returns 20
+
+.. data:: ~ integral_type
+
+    Bitwise NOT
+
+    .. code-block:: sql
+
+        SELECT ~1 -- returns -2
+
+.. data:: integral_type << integer
+
+    Bitwise shift left
+
+    .. code-block:: sql
+
+        SELECT 1 << 4 -- returns 16
+
+.. data:: integral_type >> integer
+
+    Bitwise shift right
+
+    .. code-block:: sql
+
+        SELECT 8 >> 2 -- returns 2
