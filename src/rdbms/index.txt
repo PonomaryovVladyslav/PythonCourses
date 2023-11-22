@@ -67,4 +67,5 @@ There are dozens of RDBMS, used in nowadays projects. But most widespread are:
     dml
     query
     relations
+    functions
     aggregate
