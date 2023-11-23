@@ -130,4 +130,103 @@ Conditional expressions
 Aggregate functions
 ===================
 
-.. todo: sum, max, min, avg, count, + group by, + having
+*Aggregate functions* compute a single result from a set of input values.
+There are lots of these, and different RDBMS implement different aggregation
+functions. In this section, we will focus on the most wide spread and often
+used aggregate functions only.
+
+The general schema of using is presented below:
+
+.. image:: /../assets/img/aggregate-function.svg
+
+Average value
+-------------
+
+.. function:: avg(smallint) -> numeric
+              avg(integer) -> numeric
+              avg(bigint) -> numeric
+              avg(numeric) -> numeric
+              avg(real) -> double precision
+              avg(double precision) -> double precision
+              avg(interval) -> interval
+
+    Computes the average (arithmetic mean) of all the non-null input values
+
+The ``avg`` function returns the average value of all non-null inputs within
+a group.
+
+.. important::
+
+    SQLite implements ``avg`` function in a manner to return ``NULL`` if and
+    only if all the inputs are nulls. On the other hand PostgreSQL will raise
+    an error in this scenario.
+
+.. code-block:: postgresql
+
+    SELECT avg(amount),
+           ceil(avg(amount)),
+           extract(MONTH FROM date) AS month,
+           extract(YEAR FROM date)  AS year
+    FROM revenue
+    GROUP BY month, year
+    ORDER BY year, month
+    LIMIT 5;
+
++-----------------------+-------+-------+------+
+| avg                   | ceil  | month | year |
++=======================+=======+=======+======+
+| 7797.6                | 7798  | 11    | 2013 |
++-----------------------+-------+-------+------+
+| 6708.2857142857142857 | 6709  | 12    | 2013 |
++-----------------------+-------+-------+------+
+| 6522.2                | 6523  | 1     | 2014 |
++-----------------------+-------+-------+------+
+| 6831.5                | 6832  | 2     | 2014 |
++-----------------------+-------+-------+------+
+| 10217.4               | 10218 | 3     | 2014 |
++-----------------------+-------+-------+------+
+
+Count
+-----
+
+.. function:: count(*) -> bigint
+
+    Computes the number of input rows
+
+.. function:: count("any") -> bigint
+
+    Computes the number of input rows in which the input value is not null
+
+.. code-block:: postgresql
+
+    SELECT *
+    FROM revenue
+    WHERE extract(month from date) = 1
+    AND extract(year from date) = 2014;
+
++-----+-----------+------------+--------+
+| id  | member_id | date       | amount |
++-----+-----------+------------+--------+
+| 91  | 42        | 2014-01-18 | 6662   |
++-----+-----------+------------+--------+
+| 196 | 214       | 2014-01-07 | 8853   |
++-----+-----------+------------+--------+
+| 571 | 131       | 2014-01-13 | 8541   |
++-----+-----------+------------+--------+
+| 671 | 64        | 2014-01-12 | 2636   |
++-----+-----------+------------+--------+
+| 758 | 90        | 2014-01-18 | 5919   |
++-----+-----------+------------+--------+
+
+.. code-block:: postgresql
+
+    SELECT count(*)
+    FROM revenue
+    WHERE extract(month from date) = 1
+    AND extract(year from date) = 2014;
+
++-------+
+| count |
++=======+
+| 5     |
++-------+
