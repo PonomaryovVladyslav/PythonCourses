@@ -151,9 +151,7 @@ Average value
               avg ( interval ) -> interval
 
     Computes the average (arithmetic mean) of all the non-null input values
-
-The ``avg`` function returns the average value of all non-null inputs within
-a group.
+    within a group
 
 .. important::
 
