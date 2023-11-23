@@ -68,4 +68,3 @@ There are dozens of RDBMS, used in nowadays projects. But most widespread are:
     query
     relations
     functions
-    aggregate
