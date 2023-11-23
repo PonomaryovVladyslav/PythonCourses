@@ -163,28 +163,27 @@ a group.
 
 .. code-block:: postgresql
 
-    SELECT avg(amount),
-           ceil(avg(amount)),
-           extract(MONTH FROM date) AS month,
-           extract(YEAR FROM date)  AS year
+    SELECT extract(year from date) as year,
+           extract(month from date) as month,
+           ceil(avg(amount)) as avg
     FROM revenue
     GROUP BY month, year
     ORDER BY year, month
     LIMIT 5;
 
-+-----------------------+-------+-------+------+
-| avg                   | ceil  | month | year |
-+=======================+=======+=======+======+
-| 7797.6                | 7798  | 11    | 2013 |
-+-----------------------+-------+-------+------+
-| 6708.2857142857142857 | 6709  | 12    | 2013 |
-+-----------------------+-------+-------+------+
-| 6522.2                | 6523  | 1     | 2014 |
-+-----------------------+-------+-------+------+
-| 6831.5                | 6832  | 2     | 2014 |
-+-----------------------+-------+-------+------+
-| 10217.4               | 10218 | 3     | 2014 |
-+-----------------------+-------+-------+------+
++------+-------+-------+
+| year | month | avg   |
++======+=======+=======+
+| 2013 | 11    | 7798  |
++------+-------+-------+
+| 2013 | 12    | 6709  |
++------+-------+-------+
+| 2014 | 1     | 6523  |
++------+-------+-------+
+| 2014 | 2     | 6832  |
++------+-------+-------+
+| 2014 | 3     | 10218 |
++------+-------+-------+
 
 Count
 -----
@@ -199,37 +198,27 @@ Count
 
 .. code-block:: postgresql
 
-    SELECT *
+    SELECT extract(year from date) as year,
+           extract(month from date) as month,
+           count(*)
     FROM revenue
-    WHERE extract(month from date) = 1
-    AND extract(year from date) = 2014;
+    GROUP BY month, year
+    ORDER BY year, month
+    LIMIT 5;
 
-+-----+-----------+------------+--------+
-| id  | member_id | date       | amount |
-+-----+-----------+------------+--------+
-| 91  | 42        | 2014-01-18 | 6662   |
-+-----+-----------+------------+--------+
-| 196 | 214       | 2014-01-07 | 8853   |
-+-----+-----------+------------+--------+
-| 571 | 131       | 2014-01-13 | 8541   |
-+-----+-----------+------------+--------+
-| 671 | 64        | 2014-01-12 | 2636   |
-+-----+-----------+------------+--------+
-| 758 | 90        | 2014-01-18 | 5919   |
-+-----+-----------+------------+--------+
-
-.. code-block:: postgresql
-
-    SELECT count(*)
-    FROM revenue
-    WHERE extract(month from date) = 1
-    AND extract(year from date) = 2014;
-
-+-------+
-| count |
-+=======+
-| 5     |
-+-------+
++------+-------+-------+
+| year | month | count |
++======+=======+=======+
+| 2013 | 11    | 5     |
++------+-------+-------+
+| 2013 | 12    | 7     |
++------+-------+-------+
+| 2014 | 1     | 5     |
++------+-------+-------+
+| 2014 | 2     | 8     |
++------+-------+-------+
+| 2014 | 3     | 5     |
++------+-------+-------+
 
 Maximum value
 -------------
@@ -239,7 +228,29 @@ Maximum value
     Computes the maximum of the non-null input values.
     Available for any numeric, string, date/time or enum type.
 
-.. todo: add code example
+.. code-block:: postgresql
+
+    SELECT extract(year from date) as year,
+           extract(month from date) as month,
+           max(amount)
+    FROM revenue
+    GROUP BY month, year
+    ORDER BY year, month
+    LIMIT 5;
+
++------+-------+-------+
+| year | month | max   |
++======+=======+=======+
+| 2013 | 11    | 12383 |
++------+-------+-------+
+| 2013 | 12    | 12264 |
++------+-------+-------+
+| 2014 | 1     | 8853  |
++------+-------+-------+
+| 2014 | 2     | 12919 |
++------+-------+-------+
+| 2014 | 3     | 14661 |
++------+-------+-------+
 
 Minimum value
 -------------
@@ -249,7 +260,29 @@ Minimum value
     Computes the minimum of the non-null inpout values.
     Available for any numeric, string, date/time or enum type.
 
-.. todo: add code example
+.. code-block:: postgresql
+
+    SELECT extract(year from date) as year,
+           extract(month from date) as month,
+           min(amount)
+    FROM revenue
+    GROUP BY month, year
+    ORDER BY year, month
+    LIMIT 5;
+
++------+-------+------+
+| year | month | min  |
++======+=======+======+
+| 2013 | 11    | 3365 |
++------+-------+------+
+| 2013 | 12    | 3564 |
++------+-------+------+
+| 2014 | 1     | 2636 |
++------+-------+------+
+| 2014 | 2     | 3442 |
++------+-------+------+
+| 2014 | 3     | 2654 |
++------+-------+------+
 
 Sum of values
 -------------
@@ -265,4 +298,26 @@ Sum of values
 
     Computes the sum of the non-null values
 
-.. todo: add code example
+.. code-block:: postgresql
+
+    SELECT extract(year from date) as year,
+           extract(month from date) as month,
+           sum(amount)
+    FROM revenue
+    GROUP BY month, year
+    ORDER BY year, month
+    LIMIT 5;
+
++------+-------+-------+
+| year | month | sum   |
++======+=======+=======+
+| 2013 | 11    | 38988 |
++------+-------+-------+
+| 2013 | 12    | 46958 |
++------+-------+-------+
+| 2014 | 1     | 32611 |
++------+-------+-------+
+| 2014 | 2     | 54652 |
++------+-------+-------+
+| 2014 | 3     | 51087 |
++------+-------+-------+
