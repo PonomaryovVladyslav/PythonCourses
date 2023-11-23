@@ -230,3 +230,39 @@ Count
 +=======+
 | 5     |
 +-------+
+
+Maximum value
+-------------
+
+.. function:: max(see text) -> same as input type
+
+    Computes the maximum of the non-null input values.
+    Available for any numeric, string, date/time or enum type.
+
+.. todo: add code example
+
+Minimum value
+-------------
+
+.. function:: min(see text) -> same as input type
+
+    Computes the minimum of the non-null inpout values.
+    Available for any numeric, string, date/time or enum type.
+
+.. todo: add code example
+
+Sum of values
+-------------
+
+.. function:: sum ( smallint ) → bigint
+              sum ( integer ) → bigint
+              sum ( bigint ) → numeric
+              sum ( numeric ) → numeric
+              sum ( real ) → real
+              sum ( double precision ) → double precision
+              sum ( interval ) → interval
+              sum ( money ) → money
+
+    Computes the sum of the non-null values
+
+.. todo: add code example
