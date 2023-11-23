@@ -142,13 +142,13 @@ The general schema of using is presented below:
 Average value
 -------------
 
-.. function:: avg(smallint) -> numeric
-              avg(integer) -> numeric
-              avg(bigint) -> numeric
-              avg(numeric) -> numeric
-              avg(real) -> double precision
-              avg(double precision) -> double precision
-              avg(interval) -> interval
+.. function:: avg ( smallint ) -> numeric
+              avg ( integer ) -> numeric
+              avg ( bigint ) -> numeric
+              avg ( numeric ) -> numeric
+              avg ( real ) -> double precision
+              avg ( double precision ) -> double precision
+              avg ( interval ) -> interval
 
     Computes the average (arithmetic mean) of all the non-null input values
 
@@ -188,11 +188,11 @@ a group.
 Count
 -----
 
-.. function:: count(*) -> bigint
+.. function:: count ( * ) -> bigint
 
     Computes the number of input rows
 
-.. function:: count("any") -> bigint
+.. function:: count ( "any" ) -> bigint
 
     Computes the number of input rows in which the input value is not null
 
@@ -223,7 +223,7 @@ Count
 Maximum value
 -------------
 
-.. function:: max(see text) -> same as input type
+.. function:: max ( see text ) -> same as input type
 
     Computes the maximum of the non-null input values.
     Available for any numeric, string, date/time or enum type.
@@ -255,7 +255,7 @@ Maximum value
 Minimum value
 -------------
 
-.. function:: min(see text) -> same as input type
+.. function:: max ( see text ) -> same as input type
 
     Computes the minimum of the non-null inpout values.
     Available for any numeric, string, date/time or enum type.
