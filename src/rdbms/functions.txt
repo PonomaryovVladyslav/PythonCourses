@@ -191,6 +191,7 @@ Count
     Computes the number of input rows
 
 .. function:: count ( "any" ) -> bigint
+    :noindex:
 
     Computes the number of input rows in which the input value is not null
 
@@ -253,7 +254,7 @@ Maximum value
 Minimum value
 -------------
 
-.. function:: max ( see text ) -> same as input type
+.. function:: min ( see text ) -> same as input type
 
     Computes the minimum of the non-null inpout values.
     Available for any numeric, string, date/time or enum type.
@@ -285,14 +286,14 @@ Minimum value
 Sum of values
 -------------
 
-.. function:: sum ( smallint ) → bigint
-              sum ( integer ) → bigint
-              sum ( bigint ) → numeric
-              sum ( numeric ) → numeric
-              sum ( real ) → real
-              sum ( double precision ) → double precision
-              sum ( interval ) → interval
-              sum ( money ) → money
+.. function:: sum ( smallint ) -> bigint
+              sum ( integer ) -> bigint
+              sum ( bigint ) -> numeric
+              sum ( numeric ) -> numeric
+              sum ( real ) -> real
+              sum ( double precision ) -> double precision
+              sum ( interval ) -> interval
+              sum ( money ) -> money
 
     Computes the sum of the non-null values
 
