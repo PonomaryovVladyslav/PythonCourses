@@ -534,7 +534,11 @@ class Membership(models.Model):
 https://edu-python-course.github.io/_build/html/uk/appx/blog.html#challenge-data-models
 
 topic <--> blogpost = m2m: у blogpost повинен бути хоча б 1 topic
+
 user <--> topic = m2m: 0 або більше з 2-х боків
+
 blogpost <--> user = fk: у поста 1 автор, автор може створити скільки завгодно постів
+
 comment <--> user = fk: те саме, що й вище
+
 comment <--> blogpost = fk: коментар прив'язаний до 1 поста, у поста скільки завгодно коментарів
