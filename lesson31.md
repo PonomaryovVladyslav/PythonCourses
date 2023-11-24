@@ -33,6 +33,7 @@ class Author(models.Model):
 
 
 class Article(models.Model):
+
     author = models.ForeignKey(Author, 
                                on_delete=models.CASCADE, 
                                null=True, 
