@@ -7,3 +7,12 @@
 [submodule "src/appx/libms"]
 	path = src/appx/libms
 	url = git@github.com:edu-python-course/libms-spec.git
+[submodule "src/spec/ecommerce"]
+	path = src/spec/ecommerce
+	url = git@github.com:edu-python-course/ecommerce-spec.git
+[submodule "src/spec/social"]
+	path = src/spec/social
+	url = git@github.com:edu-python-course/social-spec.git
+[submodule "src/spec/cinema"]
+	path = src/spec/cinema
+	url = git@github.com:edu-python-course/cinema-spec.git
