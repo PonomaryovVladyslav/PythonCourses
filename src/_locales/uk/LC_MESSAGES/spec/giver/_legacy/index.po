@@ -1,0 +1,330 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2023, Python training course authors and contributors
+# This file is distributed under the same license as the Python Training
+# Course package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2023.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Python Training Course 2023.09.dev\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-12-02 14:46+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: uk\n"
+"Language-Team: uk <LL@li.org>\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.13.1\n"
+
+#: ../../src/spec/giver/_legacy/index.md:1
+msgid "Anonymous Giver Site"
+msgstr ""
+
+#: ../../src/spec/giver/_legacy/index.md:3
+msgid ""
+"The project is inspired by \"Secret Santa\" (aka \"Secret Nicholas\") "
+"Christmas tradition, but it does not focus on specific celebrations or "
+"events. The primary objective is to create a place on the internet where "
+"people can gather together in groups and anonymously give gifts to each "
+"other."
+msgstr ""
+
+#: ../../src/spec/giver/_legacy/index.md:9
+msgid "Key features"
+msgstr ""
+
+#: ../../src/spec/giver/_legacy/index.md:11
+msgid "**Wish lists**"
+msgstr ""
+
+#: ../../src/spec/giver/_legacy/index.md:13
+msgid ""
+"Any registered user can create and modify their own wish lists. The wish "
+"list is generally private and is not visible to other users, unless they "
+"are assigned as a gift-giver to the wish list owner."
+msgstr ""
+
+#: ../../src/spec/giver/_legacy/index.md:17
+msgid "**Many gift-giving campaigns**"
+msgstr ""
+
+#: ../../src/spec/giver/_legacy/index.md:19
+msgid "Users can join multiple gift-giving campaigns without any limit."
+msgstr ""
+
+#: ../../src/spec/giver/_legacy/index.md:21
+msgid "**Personal reminders**"
+msgstr ""
+
+#: ../../src/spec/giver/_legacy/index.md:23
+msgid ""
+"Users with empty wish lists will be prompted to place something there. "
+"Similarly, dormant users will be prompted to join an existing gift-giving"
+" campaign."
+msgstr ""
+
+#: ../../src/spec/giver/_legacy/index.md:27
+msgid "**Administration can't interfere**"
+msgstr ""
+
+#: ../../src/spec/giver/_legacy/index.md:29
+msgid ""
+"Site admins provide moderation for wish lists and support gift-giving "
+"campaigns. But they cannot create their own campaigns, or modify or "
+"remove existing campaigns created by other users."
+msgstr ""
+
+#: ../../src/spec/giver/_legacy/index.md:33
+msgid "Registration and authentication"
+msgstr ""
+
+#: ../../src/spec/giver/_legacy/index.md:35
+msgid "Anonymous users may access any publicly available page."
+msgstr ""
+
+#: ../../src/spec/giver/_legacy/index.md:36
+msgid ""
+"Anonymous users can register by providing a username, fullname, and "
+"password."
+msgstr ""
+
+#: ../../src/spec/giver/_legacy/index.md:38
+msgid "Anonymous users can log in to their existing account."
+msgstr ""
+
+#: ../../src/spec/giver/_legacy/index.md:39
+msgid "Authenticated users can log out at any time."
+msgstr ""
+
+#: ../../src/spec/giver/_legacy/index.md:41
+msgid "Wish lists"
+msgstr ""
+
+#: ../../src/spec/giver/_legacy/index.md:43
+msgid "Wish lists are personal collections of desired gifts."
+msgstr ""
+
+#: ../../src/spec/giver/_legacy/index.md:45
+msgid "A wish list is created for any registered user, except admins."
+msgstr ""
+
+#: ../../src/spec/giver/_legacy/index.md:46
+msgid "Users must add at least one item to their wish list before using the site."
+msgstr ""
+
+#: ../../src/spec/giver/_legacy/index.md:48
+msgid "A wish list is available only to its owner and site admins."
+msgstr ""
+
+#: ../../src/spec/giver/_legacy/index.md:49
+msgid ""
+"A wish list is temporary available to other users assigned as a gift-"
+"giver to its owner."
+msgstr ""
+
+#: ../../src/spec/giver/_legacy/index.md:51
+msgid "Owners can add, modify, or remove entries in their wish lists."
+msgstr ""
+
+#: ../../src/spec/giver/_legacy/index.md:52
+msgid ""
+"Admins can mark any wish list item as restricted, which makes it act as a"
+" deleted one."
+msgstr ""
+
+#: ../../src/spec/giver/_legacy/index.md:55
+msgid "Gift-giving campaigns"
+msgstr ""
+
+#: ../../src/spec/giver/_legacy/index.md:57
+msgid "Non-admin users can create their own gift-giving campaigns."
+msgstr ""
+
+#: ../../src/spec/giver/_legacy/index.md:58
+msgid "Each campaign should have name, description and members list."
+msgstr ""
+
+#: ../../src/spec/giver/_legacy/index.md:59
+msgid "The campaign creator is automatically a member and cannot be excluded."
+msgstr ""
+
+#: ../../src/spec/giver/_legacy/index.md:61
+msgid "Campaigns status can be draft, public, private, or completed."
+msgstr ""
+
+#: ../../src/spec/giver/_legacy/index.md:62
+msgid ""
+"Admins or the campaign creator can run the campaign if it has at least 3 "
+"members."
+msgstr ""
+
+#: ../../src/spec/giver/_legacy/index.md:64
+msgid "Campaigns cannot be joined once they have started."
+msgstr ""
+
+#: ../../src/spec/giver/_legacy/index.md:65
+msgid "Any user, except the creator, can leave the campaign if it hasn't started."
+msgstr ""
+
+#: ../../src/spec/giver/_legacy/index.md:67
+msgid ""
+"The creator can remove non-running campaigns regardless of members list, "
+"creation time, or status."
+msgstr ""
+
+#: ../../src/spec/giver/_legacy/index.md:69
+msgid ""
+"Admins can remove the campaigns with 3 or fewer members that hasn't "
+"started within a specified time."
+msgstr ""
+
+#: ../../src/spec/giver/_legacy/index.md:71
+msgid ""
+"Admins can remove draft campaigns that haven't been published within a "
+"specified time."
+msgstr ""
+
+#: ../../src/spec/giver/_legacy/index.md:73
+msgid ""
+"The number of campaigns a user can be member of is limited by the number "
+"of items in their wish list."
+msgstr ""
+
+#: ../../src/spec/giver/_legacy/index.md:76
+msgid "**Draft campaigns**"
+msgstr ""
+
+#: ../../src/spec/giver/_legacy/index.md:78
+msgid "No user can join a draft campaign."
+msgstr ""
+
+#: ../../src/spec/giver/_legacy/index.md:79
+msgid "Campaigns can are marked as drafts by default at creation."
+msgstr ""
+
+#: ../../src/spec/giver/_legacy/index.md:80
+msgid "The creator can publish the campaign by making campaign private or public."
+msgstr ""
+
+#: ../../src/spec/giver/_legacy/index.md:82
+msgid "Draft campaigns cannot be initiated."
+msgstr ""
+
+#: ../../src/spec/giver/_legacy/index.md:84
+msgid "**Public campaigns**"
+msgstr ""
+
+#: ../../src/spec/giver/_legacy/index.md:86
+msgid "Public campaigns are accessible to both anonymous and authenticated users."
+msgstr ""
+
+#: ../../src/spec/giver/_legacy/index.md:88
+msgid ""
+"Authenticated users can join any public campaign, unless it hasn't "
+"started."
+msgstr ""
+
+#: ../../src/spec/giver/_legacy/index.md:91
+msgid "**Private campaigns**"
+msgstr ""
+
+#: ../../src/spec/giver/_legacy/index.md:93
+msgid "Private campaign are available only to their members."
+msgstr ""
+
+#: ../../src/spec/giver/_legacy/index.md:94
+msgid "The campaign creator can share a join link with other users."
+msgstr ""
+
+#: ../../src/spec/giver/_legacy/index.md:95
+msgid "Once joined, the campaign becomes visible in the user's campaigns list."
+msgstr ""
+
+#: ../../src/spec/giver/_legacy/index.md:98
+msgid "**Completed campaigns**"
+msgstr ""
+
+#: ../../src/spec/giver/_legacy/index.md:100
+msgid ""
+"Actually this means the campaign has been completed and archived. Admins "
+"can remove archived campaigns at any time (campaigns clean-up). Running "
+"campaigns cannot be manually moved to completed status. This is done "
+"automatically."
+msgstr ""
+
+#: ../../src/spec/giver/_legacy/index.md:105
+msgid "**Campaign life-cycle**"
+msgstr ""
+
+#: ../../src/spec/giver/_legacy/index.md:149
+msgid "Running the gift-giving campaign"
+msgstr ""
+
+#: ../../src/spec/giver/_legacy/index.md:151
+msgid "The option to start campaigns is available to their creators or admins."
+msgstr ""
+
+#: ../../src/spec/giver/_legacy/index.md:153
+msgid "Once the campaign has started, no one can join or leave it."
+msgstr ""
+
+#: ../../src/spec/giver/_legacy/index.md:154
+msgid ""
+"Each campaign member is assigned to give a gift to a randomly chosen "
+"person within the same campaign members list."
+msgstr ""
+
+#: ../../src/spec/giver/_legacy/index.md:157
+msgid "**Giver access for wish list**"
+msgstr ""
+
+#: ../../src/spec/giver/_legacy/index.md:159
+msgid "The wish list of the assigned person becomes visible to the gift giver."
+msgstr ""
+
+#: ../../src/spec/giver/_legacy/index.md:161
+msgid "The giver can mark any single item within this list as a given gift."
+msgstr ""
+
+#: ../../src/spec/giver/_legacy/index.md:162
+msgid "After the gift is given, wish list returns to normal."
+msgstr ""
+
+#: ../../src/spec/giver/_legacy/index.md:163
+msgid "Wish list entry marked as given, cannot be changed by other givers."
+msgstr ""
+
+#: ../../src/spec/giver/_legacy/index.md:165
+msgid "**Multiple gifts**"
+msgstr ""
+
+#: ../../src/spec/giver/_legacy/index.md:167
+msgid ""
+"Generally, gift-giving campaigns allow for one gift at a time. However, "
+"if a user is assigned twice to the same giver from different campaigns, "
+"the giver can mark as many entries as the number of assignments."
+msgstr ""
+
+#: ../../src/spec/giver/_legacy/index.md:171
+msgid "**Autocomplete**"
+msgstr ""
+
+#: ../../src/spec/giver/_legacy/index.md:173
+msgid ""
+"Once all the assignments within a campaign are completed, the campaign "
+"itself is considered to be completed."
+msgstr ""
+
+#: ../../src/spec/giver/_legacy/index.md:176
+msgid "REST API"
+msgstr ""
+
+#: ../../src/spec/giver/_legacy/index.md:178
+msgid "**All site functions** will be implemented within REST API."
+msgstr ""
+
