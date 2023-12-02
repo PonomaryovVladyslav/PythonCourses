@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Python Training Course 2023.09.dev\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-12-02 14:46+0200\n"
-"PO-Revision-Date: 2023-12-02 14:53+0200\n"
+"PO-Revision-Date: 2023-12-02 16:54+0200\n"
 "Last-Translator: Serhii Horodilov <sgorodil@gmail.com>\n"
 "Language-Team: uk <LL@li.org>\n"
 "Language: uk\n"
@@ -22,12 +22,10 @@ msgstr ""
 "X-Generator: Poedit 3.4.1\n"
 
 #: ../../src/spec/giver/index.rst:4
-#, fuzzy
 msgid "Anonymous Giver Site"
-msgstr "Сайт анонімних дарувальників"
+msgstr "Сайт Анонімних Дарульвальників"
 
 #: ../../src/spec/giver/index.rst:6
-#, fuzzy
 msgid ""
 "The project is inspired by \"Secret Santa\" (aka \"Secret Nicholas\") "
 "Christmas tradition, but it does not focus on specific celebrations or "
@@ -41,17 +39,14 @@ msgstr ""
 "в групи і анонімно дарувати один одному подарунки."
 
 #: ../../src/spec/giver/index.rst:12
-#, fuzzy
 msgid "Key features"
 msgstr "Ключові особливості"
 
 #: ../../src/spec/giver/index.rst:15 ../../src/spec/giver/index.rst:46
-#, fuzzy
 msgid "Wish lists"
 msgstr "Списки побажань"
 
 #: ../../src/spec/giver/index.rst:16
-#, fuzzy
 msgid ""
 "Any registered user can create and modify their own wish lists. The wish "
 "list is generally private and is not visible to other users, unless they are "
@@ -60,27 +55,21 @@ msgstr ""
 "Будь-який зареєстрований користувач може створювати і змінювати власні "
 "списки бажань. Список бажань, як правило, є приватним і не видимим для інших "
 "користувачів, якщо тільки вони не призначені дарувальником для власника "
-"списку бажань."
+"списку."
 
 #: ../../src/spec/giver/index.rst:21
-#, fuzzy
 msgid "Many gift-giving campaigns"
-msgstr "Багато кампаній з роздачі подарунків"
+msgstr "Багаточисельні кампанії з роздачі подарунків"
 
 #: ../../src/spec/giver/index.rst:22
-#, fuzzy
 msgid "Users can join multiple gift-giving campaigns without any limit."
-msgstr ""
-"Користувачі можуть долучатися до кількох кампаній з дарування подарунків без "
-"обмежень."
+msgstr "Користувачі можуть долучатися до кількох кампаній без обмежень."
 
 #: ../../src/spec/giver/index.rst:25
-#, fuzzy
 msgid "Personal reminders"
 msgstr "Персональні нагадування"
 
 #: ../../src/spec/giver/index.rst:26
-#, fuzzy
 msgid ""
 "Users with empty wish lists will be prompted to place something there. "
 "Similarly, dormant users will be prompted to join an existing gift-giving "
@@ -91,12 +80,10 @@ msgstr ""
 "існуючої кампанії з дарування подарунків."
 
 #: ../../src/spec/giver/index.rst:31
-#, fuzzy
 msgid "Administration can't interfere"
 msgstr "Адміністрація не може втручатися"
 
 #: ../../src/spec/giver/index.rst:32
-#, fuzzy
 msgid ""
 "Site admins provide moderation for wish lists and support gift-giving "
 "campaigns. But they cannot create their own campaigns, or modify or remove "
@@ -107,19 +94,16 @@ msgstr ""
 "змінювати або видаляти існуючі кампанії, створені іншими користувачами."
 
 #: ../../src/spec/giver/index.rst:37
-#, fuzzy
 msgid "Registration and authentication"
-msgstr "Реєстрація та Аутентифікація Користувачів"
+msgstr "Реєстрація та аутентифікація користувачів"
 
 #: ../../src/spec/giver/index.rst:39
-#, fuzzy
 msgid "Anonymous users may access any publicly available page."
 msgstr ""
 "Анонімні користувачі можуть отримати доступ до будь-якої загальнодоступної "
 "сторінки."
 
 #: ../../src/spec/giver/index.rst:40
-#, fuzzy
 msgid ""
 "Anonymous users can register by providing a username, fullname, and password."
 msgstr ""
@@ -127,29 +111,24 @@ msgstr ""
 "повне ім'я та пароль."
 
 #: ../../src/spec/giver/index.rst:42
-#, fuzzy
 msgid "Anonymous users can log in to their existing account."
 msgstr "Анонімні користувачі можуть увійти до свого облікового запису."
 
 #: ../../src/spec/giver/index.rst:43
-#, fuzzy
 msgid "Authenticated users can log out at any time."
 msgstr "Авторизовані користувачі можуть вийти з системи в будь-який час."
 
 #: ../../src/spec/giver/index.rst:48
-#, fuzzy
 msgid "Wish lists are personal collections of desired gifts."
 msgstr "Список бажань - це особиста колекція бажаних подарунків."
 
 #: ../../src/spec/giver/index.rst:50
-#, fuzzy
 msgid "A wish list is created for any registered user, except admins."
 msgstr ""
 "Список побажань створюється для будь-якого зареєстрованого користувача, "
 "окрім адміністраторів."
 
 #: ../../src/spec/giver/index.rst:51
-#, fuzzy
 msgid ""
 "Users must add at least one item to their wish list before using the site."
 msgstr ""
@@ -157,12 +136,10 @@ msgstr ""
 "один пункт до свого списку бажань."
 
 #: ../../src/spec/giver/index.rst:52
-#, fuzzy
 msgid "A wish list is available only to its owner and site admins."
 msgstr "Список побажань доступний лише його власнику та адміністраторам сайту."
 
 #: ../../src/spec/giver/index.rst:53
-#, fuzzy
 msgid ""
 "A wish list is temporary available to other users assigned as a gift-giver "
 "to its owner."
@@ -171,14 +148,12 @@ msgstr ""
 "дарувальником його власнику."
 
 #: ../../src/spec/giver/index.rst:55
-#, fuzzy
 msgid "Owners can add, modify, or remove entries in their wish lists."
 msgstr ""
 "Власники можуть додавати, змінювати або видаляти записи у своїх списках "
 "бажань."
 
 #: ../../src/spec/giver/index.rst:56
-#, fuzzy
 msgid ""
 "Admins can mark any wish list item as restricted, which makes it act as a "
 "deleted one."
@@ -187,48 +162,40 @@ msgstr ""
 "і тоді вона буде діяти як видалена."
 
 #: ../../src/spec/giver/index.rst:60
-#, fuzzy
 msgid "Gift-giving campaigns"
 msgstr "Кампанії з роздачі подарунків"
 
 #: ../../src/spec/giver/index.rst:62
-#, fuzzy
 msgid "Non-admin users can create their own gift-giving campaigns."
 msgstr ""
 "Користувачі, які не є адміністраторами, можуть створювати власні кампанії з "
 "дарування подарунків."
 
 #: ../../src/spec/giver/index.rst:63
-#, fuzzy
 msgid "Each campaign should have name, description and members list."
 msgstr "Кожна кампанія повинна мати назву, опис та список учасників."
 
 #: ../../src/spec/giver/index.rst:64
-#, fuzzy
 msgid "The campaign creator is automatically a member and cannot be excluded."
 msgstr "Творець кампанії автоматично стає учасником і не може бути виключений."
 
 #: ../../src/spec/giver/index.rst:65
-#, fuzzy
 msgid "Campaigns status can be draft, public, private, or completed."
 msgstr "Статус кампанії може бути чернетка, публічна, приватна або завершена."
 
 #: ../../src/spec/giver/index.rst:66
-#, fuzzy
 msgid ""
 "Admins or the campaign creator can run the campaign if it has at least 3 "
 "members."
 msgstr ""
-"Адміни або творець кампанії можуть керувати кампанією, якщо в ній є "
+"Адміни або творець кампанії можуть запустити кампанію, якщо в ній є "
 "щонайменше 3 учасники."
 
 #: ../../src/spec/giver/index.rst:68
-#, fuzzy
 msgid "Campaigns cannot be joined once they have started."
 msgstr "Приєднатися до кампанії після її початку неможливо."
 
 #: ../../src/spec/giver/index.rst:69
-#, fuzzy
 msgid ""
 "Any user, except the creator, can leave the campaign if it hasn't started."
 msgstr ""
@@ -236,7 +203,6 @@ msgstr ""
 "розпочалася."
 
 #: ../../src/spec/giver/index.rst:70
-#, fuzzy
 msgid ""
 "The creator can remove non-running campaigns regardless of members list, "
 "creation time, or status."
@@ -245,7 +211,6 @@ msgstr ""
 "часу створення або статусу."
 
 #: ../../src/spec/giver/index.rst:72
-#, fuzzy
 msgid ""
 "Admins can remove the campaigns with 3 or fewer members that hasn't started "
 "within a specified time."
@@ -254,7 +219,6 @@ msgstr ""
 "розпочалися протягом певного часу."
 
 #: ../../src/spec/giver/index.rst:74
-#, fuzzy
 msgid ""
 "Admins can remove draft campaigns that haven't been published within a "
 "specified time."
@@ -263,7 +227,6 @@ msgstr ""
 "протягом певного часу."
 
 #: ../../src/spec/giver/index.rst:76
-#, fuzzy
 msgid ""
 "The number of campaigns a user can be member of is limited by the number of "
 "items in their wish list."
@@ -272,45 +235,37 @@ msgstr ""
 "пунктів у його списку бажань."
 
 #: ../../src/spec/giver/index.rst:80
-#, fuzzy
 msgid "Draft campaigns"
-msgstr "Проекти кампаній"
+msgstr "Проекти (чернетки) кампаній"
 
 #: ../../src/spec/giver/index.rst:81
-#, fuzzy
 msgid "No user can join a draft campaign."
-msgstr "Жоден користувач не може приєднатися до кампанії зі створення проекту."
+msgstr "Жоден користувач не може приєднатися до неопублікованної кампанії."
 
 #: ../../src/spec/giver/index.rst:82
-#, fuzzy
 msgid "Campaigns can are marked as drafts by default at creation."
 msgstr "Кампанії за замовчуванням позначаються як чернетки під час створення."
 
 #: ../../src/spec/giver/index.rst:83
-#, fuzzy
 msgid ""
 "The creator can publish the campaign by making campaign private or public."
 msgstr "Автор може опублікувати кампанію, зробивши її приватною або публічною."
 
 #: ../../src/spec/giver/index.rst:84
-#, fuzzy
 msgid "Draft campaigns cannot be initiated."
-msgstr "Проектні кампанії не можуть бути ініційовані."
+msgstr "Чернетки кампанії не можуть бути ініційовані."
 
 #: ../../src/spec/giver/index.rst:87
-#, fuzzy
 msgid "Public campaigns"
-msgstr "Громадські кампанії"
+msgstr "Публічні кампанії"
 
 #: ../../src/spec/giver/index.rst:88
-#, fuzzy
 msgid ""
 "Public campaigns are accessible to both anonymous and authenticated users."
 msgstr ""
 "Публічні кампанії доступні як анонімним, так і авторизованим користувачам."
 
 #: ../../src/spec/giver/index.rst:89
-#, fuzzy
 msgid ""
 "Authenticated users can join any public campaign, unless it hasn't started."
 msgstr ""
@@ -318,34 +273,28 @@ msgstr ""
 "якщо вона ще не розпочалася."
 
 #: ../../src/spec/giver/index.rst:92
-#, fuzzy
 msgid "Private campaigns"
 msgstr "Приватні кампанії"
 
 #: ../../src/spec/giver/index.rst:93
-#, fuzzy
 msgid "Private campaign are available only to their members."
 msgstr "Приватні кампанії доступні тільки їх учасникам."
 
 #: ../../src/spec/giver/index.rst:94
-#, fuzzy
 msgid "The campaign creator can share a join link with other users."
 msgstr ""
 "Творець кампанії може поділитися посиланням для приєднання з іншими "
 "користувачами."
 
 #: ../../src/spec/giver/index.rst:95
-#, fuzzy
 msgid "Once joined, the campaign becomes visible in the user's campaigns list."
 msgstr "Після приєднання кампанія стає видимою у списку кампаній користувача."
 
 #: ../../src/spec/giver/index.rst:98
-#, fuzzy
 msgid "Completed campaigns"
 msgstr "Завершені кампанії"
 
 #: ../../src/spec/giver/index.rst:99
-#, fuzzy
 msgid ""
 "Actually this means the campaign has been completed and archived. Admins can "
 "remove archived campaigns at any time (campaigns clean-up). Running "
@@ -358,29 +307,24 @@ msgstr ""
 "відбувається автоматично."
 
 #: ../../src/spec/giver/index.rst:105
-#, fuzzy
 msgid "Campaign life-cycle"
 msgstr "Життєвий цикл кампанії"
 
 #: ../../src/spec/giver/index.rst:110
-#, fuzzy
 msgid "Running the gift-giving campaign"
 msgstr "Проведення кампанії з роздачі подарунків"
 
 #: ../../src/spec/giver/index.rst:112
-#, fuzzy
 msgid "The option to start campaigns is available to their creators or admins."
 msgstr ""
 "Можливість запускати кампанії доступна їхнім творцям або адміністраторам."
 
 #: ../../src/spec/giver/index.rst:113
-#, fuzzy
 msgid "Once the campaign has started, no one can join or leave it."
 msgstr ""
 "Після початку кампанії ніхто не може приєднатися до неї або вийти з неї."
 
 #: ../../src/spec/giver/index.rst:114
-#, fuzzy
 msgid ""
 "Each campaign member is assigned to give a gift to a randomly chosen person "
 "within the same campaign members list."
@@ -389,58 +333,48 @@ msgstr ""
 "людині з того ж списку учасників кампанії."
 
 #: ../../src/spec/giver/index.rst:118
-#, fuzzy
 msgid "Giver access for wish list"
-msgstr "Надайте доступ до списку бажань"
+msgstr "Доступ до списку бажань для дарувальника"
 
 #: ../../src/spec/giver/index.rst:119
-#, fuzzy
 msgid "The wish list of the assigned person becomes visible to the gift giver."
 msgstr "Список побажань призначеної особи стає видимим для дарувальника."
 
 #: ../../src/spec/giver/index.rst:120
-#, fuzzy
 msgid "The giver can mark any single item within this list as a given gift."
 msgstr ""
 "Дарувальник може позначити будь-яку позицію з цього списку як подарунок."
 
 #: ../../src/spec/giver/index.rst:121
-#, fuzzy
 msgid "After the gift is given, wish list returns to normal."
 msgstr ""
 "Після вручення подарунка список бажань повертається до нормального стану."
 
 #: ../../src/spec/giver/index.rst:122
-#, fuzzy
 msgid "Wish list entry marked as given, cannot be changed by other givers."
 msgstr ""
 "Пункт списку бажань, позначений як подарований, не може бути змінений іншими "
 "дарувальниками."
 
 #: ../../src/spec/giver/index.rst:125
-#, fuzzy
 msgid "Multiple gifts"
 msgstr "Кілька подарунків"
 
 #: ../../src/spec/giver/index.rst:126
-#, fuzzy
 msgid ""
 "Generally, gift-giving campaigns allow for one gift at a time. However, if a "
 "user is assigned twice to the same giver from different campaigns, the giver "
 "can mark as many entries as the number of assignments."
 msgstr ""
-"Зазвичай, кампанії з дарування подарунків дозволяють дарувати один подарунок "
-"за раз. Однак, якщо користувач двічі призначений одному і тому ж "
-"дарувальнику з різних кампаній, дарувальник може позначити стільки записів, "
-"скільки призначень."
+"Зазвичай, кампанії дозволяють дарувати один подарунок за раз. Однак, якщо "
+"користувач двічі призначений одному і тому ж дарувальнику з різних кампаній, "
+"дарувальник може позначити стільки записів, скільки має призначень."
 
 #: ../../src/spec/giver/index.rst:131
-#, fuzzy
 msgid "Autocomplete"
-msgstr "Автозаповнення"
+msgstr "Автозавершення"
 
 #: ../../src/spec/giver/index.rst:132
-#, fuzzy
 msgid ""
 "Once all the assignments within a campaign are completed, the campaign "
 "itself is considered to be completed."
@@ -449,11 +383,9 @@ msgstr ""
 "завершеною."
 
 #: ../../src/spec/giver/index.rst:136
-#, fuzzy
 msgid "REST API"
 msgstr "REST API"
 
 #: ../../src/spec/giver/index.rst:138
-#, fuzzy
 msgid "**All site functions** will be implemented within REST API."
 msgstr "**Всі функції сайту** будуть реалізовані за допомогою REST API."
