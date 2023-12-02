@@ -7,6 +7,9 @@
 [submodule "src/appx/libms"]
 	path = src/appx/libms
 	url = git@github.com:edu-python-course/libms-spec.git
+[submodule "src/spec/giver"]
+	path = src/spec/giver
+	url = git@github.com:edu-python-course/giver-spec.git
 [submodule "libms-db"]
 	path = libms-db
 	url = git@github.com:edu-python-course/libms-db.git
