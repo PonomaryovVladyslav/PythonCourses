@@ -125,7 +125,58 @@ Date/Time functions and operators
 Conditional expressions
 =======================
 
-.. todo: case, coalesce
+CASE
+----
+
+The SQL ``CASE`` expression is a generic conditional expression, similar to
+if/else statements in other programming languages.
+
+.. todo: add case example
+
+COALESCE
+--------
+
+The ``COALESCE`` function returns the first of its arguments that is not null.
+Null is returned only if all arguments are null. It is often used to substitute
+a default value for null values when data is retrieved for display:
+
+.. code-block:: postgresql
+
+    SELECT COALESCE(description, short_description, '(none)') ...
+
+This returns ``description`` if it is not null, otherwise ``short_description``
+if it is not null, otherwise ``(none)``.
+
+Like the ``CASE`` expression, ``COALESCE`` only evaluates the arguments that
+are needed to determine the result; that is, arguments to the right of the
+first non-null argument are not evaluated.
+
+NULLIF
+------
+
+.. code-block:: postgresql
+
+    NULLIF(value_1, value_2)
+
+The ``NULLIF`` function returns a null ``value_1`` equals ``value_2``;
+otherwise it returns ``value_1``. This can be used to perform the inverse
+operation of the ``COALESCE``.
+
+.. code-block:: postgresql
+
+    SELECT NULLIF(value, '(none)') ...
+
+In the example above, if ``value`` is ``(none)``, null is returned, otherwise
+the value of ``value`` is returned.
+
+The two arguments must be of comparable types.
+To be specific, they are compared exactly as if you had written
+``value_1 = value_2``, so there must be a suitable ``=`` operator available.
+
+The result has the same type as the first argument -- but there is a subtlety.
+What is actual returned is the first argument of the implied ``=`` operator,
+and in some cases that will have been promoted to match the second argument's
+type.
 
 Aggregate functions
 ===================
