@@ -219,6 +219,47 @@ Date/Time functions and operators
 
 .. todo: extract, date_part, date_trunc, current d/t, formatting d/t
 
+Extract
+-------
+
+.. function:: exctract(field FROM source)
+
+    The ``extract`` function retrieves subfields such as year or hour from
+    date/time value. The ``source`` must be a value expression of type
+    ``timestamp``, ``time``, or ``interval``. Expressions of type ``date``
+    are cast to ``timestamp`` and can therefore be used as well. ``field`` is
+    an identifier or string that selects what field to extract from the source
+    value. The extract function returns value of type ``numeric``.
+    The following are valid field names:
+    
+    -   ``centurty``
+    -   ``day``
+    -   ``decade``
+    -   ``dow``
+    -   ``doy``
+    -   ``epoch``
+    -   ``hour``
+    -   ``isodow``
+    -   ``isoyear``
+    -   ``julian``
+    -   ``microseconds``
+    -   ``millennium``
+    -   ``milliseconds``
+    -   ``minute``
+    -   ``month``
+    -   ``quarter``
+    -   ``second``
+    -   ``timezone``
+    -   ``timezone_hour``
+    -   ``timezone_minute``
+    -   ``week``
+    -   ``year``
+
+The ``date_part`` function is modeled on the traditional Ingres equivalent to
+the SQL-standard function ``extract``:
+
+.. function:: date_part('field', source)
+
 Conditional expressions
 =======================
 
