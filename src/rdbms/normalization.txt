@@ -38,14 +38,34 @@ Normalized tables are:
 First normal form (1NF)
 =======================
 
-.. todo
+.. todo: definition, example
+
+..  using row order to convey information violates 1NF
+..  mixing data types within the same column violates 1NF
+    (and the DB platform won't let you do it anyway)
+..  a table without a primary key violates 1NF
+..  storing a repeating group of data items on a single row violates 1NF
 
 Second normal form (2NF)
 ========================
 
-.. todo
+.. todo: definition, example
+
+..  2NF: each non-key attribute must depend on the entire primary key
+    (partial dependency)
 
 Third normal form (3NF)
 =======================
 
+.. todo: definition, bcnf, example
+
+..  every non-key attribute in a table should depend on the key, the whole key,
+    and nothing but the key (no transitive dependency)
+..  Boyce-Codd normal form: **every attribute** in a table should...
+
+Conclusion
+==========
+
 .. todo
+
+..  1nf -> 2nf -> 3nf -> bcnf -> 4nf -> 5nf
