@@ -25,6 +25,16 @@ There are 6 **normal forms**, but this section focuses on the first 3 only,
 since the commonest normal form you'll see out there is *3NF* (third normal
 form).
 
+Normalized tables are:
+
+-   Easier to understand
+-   Easier to enhance and extend
+-   Protected from:
+
+    -   insertion anomalies
+    -   update anomalies
+    -   deletion anomalies
+
 First normal form (1NF)
 =======================
 
