@@ -115,7 +115,6 @@ String functions
 *Strings* in this context include values of the types ``character``, ``text``
 and ``character varying``.
 
-
 .. function:: text || text -> text
 
     Concatenates the two strings.
@@ -168,7 +167,52 @@ and ``character varying``.
 
     ``trim(both 'xyz' from 'yxTomxx') -> Tom``
 
-.. todo: concat, pattern matching (like)
+Pattern matching
+----------------
+
+There are three separate approaches to pattern matching provided by PostgreSQL:
+the traditional ``LIKE`` operator, the most recent ``SIMILAR TO`` operator, and
+POSIX-style regular expressions.
+
+This section will focus on ``LIKE`` operator only.
+
+::
+
+    string LIKE pattern [ESCAPE escape-character]
+    string NOT LIKE pattern [ESCAPE escape-character]
+
+The ``LIKE`` expression returns ``true`` if the ``string`` matches the supplied
+``pattern`` (as expected, the ``NOT LIKE`` expression returns ``false`` if
+``LIKE`` returns ``true``, and vice versa).
+
+If ``pattern`` does not contain percent signs or underscores, then the pattern
+only represents the string itself; in than case ``LIKE`` acts like the equals
+operator. An underscore (``_``) in ``pattern`` stands for (matches) any single
+character; a percent sign (``%``) matches any sequence of zero or more
+characters.
+
+Some examples:
+
+::
+
+    'abc' LIKE 'abc'  -- true
+    'abc' LIKE 'a%'   -- true
+    'abc' LIKE '_b_'  -- true
+    'abc' LIKE 'c'    -- false
+
+``LIKE`` patterns matching always covers the entire string. Therefore, if it's
+desired to match a sequence anywhere within a string, the pattern must start
+and end with a percent sign.
+
+To match a literal underscore or percent sing without matching other characters
+the respective character in ``pattern`` must be preceded by the escape
+character. The default escape character is backslash but a different one can be
+selected by using the ``ESCAPE`` clause. To match the escape character itself,
+write two escape characters.
+
+The key word ``ILIKE`` can be used instead of ``LIKE`` to make the match
+case-insensitive according to the active locale. This is not in the SQL
+standard but is a PostgreSQL extension.
 
 Date/Time functions and operators
 =================================
