@@ -19,7 +19,7 @@ redundancy and dependency, making the database more efficient, flexible, and
 scalable. It also helps in maintaining data consistency and accuracy, and
 ensures that updates and deletions are properly handled.
 
-There are 6 **normal forms**, but this section focuses on the first 3 only,
+There are 6 **normal forms**, but this chapter focuses on the first 3 only,
 since the commonest normal form you'll see out there is *3NF* (third normal
 form).
 
