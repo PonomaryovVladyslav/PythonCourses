@@ -1,5 +1,3 @@
-.. todo: review and update document
-
 .. meta::
     :description: Database normalization
     :author: Serhii Horodilov
@@ -38,34 +36,69 @@ Normalized tables are:
 First normal form (1NF)
 =======================
 
-.. todo: definition, example
+.. rubric:: Data example
 
-..  using row order to convey information violates 1NF
-..  mixing data types within the same column violates 1NF
-    (and the DB platform won't let you do it anyway)
-..  a table without a primary key violates 1NF
-..  storing a repeating group of data items on a single row violates 1NF
+.. todo: add data example (no NF)
+
+Requirements
+------------
+
+-   Row order should not be used to convey information.
+-   Data types should not be mixed within the same column
+    (and the RDBMS won't let you do in anyway).
+-   Tables should have their primary keys.
+-   Repeating groups should be eliminated.
+
+Applying 1NF
+------------
+
+.. todo: complete subsection
+.. todo: add data example in 1NF
 
 Second normal form (2NF)
 ========================
 
-.. todo: definition, example
+Requirements
+------------
 
-..  2NF: each non-key attribute must depend on the entire primary key
-    (partial dependency)
+-   Each non-key attribute must depend on the entire primary key
+
+Applying 2NF
+------------
+
+.. todo: complete subsection
+.. todo: add data example in 2NF
 
 Third normal form (3NF)
 =======================
 
 .. todo: definition, bcnf, example
 
-..  every non-key attribute in a table should depend on the key, the whole key,
-    and nothing but the key (no transitive dependency)
-..  Boyce-Codd normal form: **every attribute** in a table should...
+Requirements
+------------
+
+-   Every non-key attribute in a table should depend on the key, the whole key,
+    and nothing but the key (no transitive dependency).
+
+.. note::
+
+    **Boyce-Codd normal form**
+
+    :abbr:`BCNF (Boyce-Codd Normal Form)` is the stronger version of 3NF.
+    It also is called as 3.5NF (three-and-a-half normal form).
+
+    **Every attribute** in a table should depend on the key, the whole key,
+    and nothing but the key.
+
+Applying 3NF
+------------
+
+.. todo: complete subsection
+.. todo: add data example in 3NF
 
 Conclusion
 ==========
 
-.. todo
+Each next normal form includes all the requirements for the previous one.
 
-..  1nf -> 2nf -> 3nf -> bcnf -> 4nf -> 5nf
+.. todo: complete the conclusion
