@@ -33,6 +33,24 @@ Normalized tables are:
     -   update anomalies
     -   deletion anomalies
 
+Anomalies
+=========
+
+Insertion anomalies
+-------------------
+
+.. todo: complete subsection
+
+Update anomalies
+----------------
+
+.. todo: complete subsection
+
+Deletion anomalies
+------------------
+
+.. todo: complete subsection
+
 First normal form (1NF)
 =======================
 
