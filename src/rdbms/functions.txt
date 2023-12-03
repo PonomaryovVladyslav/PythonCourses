@@ -115,6 +115,59 @@ String functions
 *Strings* in this context include values of the types ``character``, ``text``
 and ``character varying``.
 
+
+.. function:: text || text -> text
+
+    Concatenates the two strings.
+
+    ``'Post' || 'greSQL' -> PostgreSQL``
+
+.. function:: text || anynonarray -> text
+              anynonarray || text -> text
+
+    Converts the non-string input to text, then concatenates the two strings.
+    (The non-string input cannot be of an array type, because that would create
+    ambiguity with the array ``||`` operators. If you want to concatenate
+    an array's text equivalent, cast it to text explicitly.)
+
+    ``'Value: ' || 42 -> Value: 42``
+
+.. function:: char_length ( text ) -> integer
+              character_length ( text ) -> integer
+
+    Returns number of characters in the string.
+
+    ``char_length('josé') -> 4``
+
+.. function:: lower ( text ) -> text
+
+    Converts the string to all lower case, according to the rules of
+    the database's locale.
+
+    ``lower('TOM') -> tom``
+
+.. function:: ltrim ( string text [, characters text ] ) -> text
+
+    Removes the longest string containing only characters in characters
+    (a space by default) from the start of string.
+
+    ``ltrim('zzzytest', 'xyz') -> test``
+
+.. function:: rtrim ( string text [, characters text ] ) -> text
+
+    Removes the longest string containing only characters in characters
+    (a space by default) from the end of string.
+
+    ``rtrim('testxxzx', 'xyz') -> test``
+
+.. function:: trim ( [ LEADING | TRAILING | BOTH ] [ characters text ] FROM string text ) -> text
+
+    Removes the longest string containing only characters in characters
+    (a space by default) from the start, end, or both ends
+    (BOTH is the default) of string.
+
+    ``trim(both 'xyz' from 'yxTomxx') -> Tom``
+
 .. todo: concat, pattern matching (like)
 
 Date/Time functions and operators
