@@ -217,8 +217,6 @@ standard but is a PostgreSQL extension.
 Date/Time functions and operators
 =================================
 
-.. todo: extract, date_part, date_trunc, current d/t, formatting d/t
-
 Extract
 -------
 
@@ -259,6 +257,54 @@ The ``date_part`` function is modeled on the traditional Ingres equivalent to
 the SQL-standard function ``extract``:
 
 .. function:: date_part('field', source)
+
+Current date/time
+-----------------
+
+PostgreSQL provides a number of functions that return values related to the
+current date and time. These SQL-standard functions all return values based on
+the start time of the current transaction:
+
+.. function:: CURRENT_DATE
+.. function:: CURRENT_TIME
+              CURRENT_TIME(precision)
+
+    Deliver current time value with time zone.
+    
+    :precision:
+        An optional parameter, which causes the result to be rounded to that
+        many fractional digits in the second field. Without a precision,
+        the result is given to the full available precision.
+
+.. function:: CURRENT_TIMESTAMP
+              CURRENT_TIMESTAMP(precision)
+
+    Deliver current timestamp value with time zone.
+
+    :precision:
+        An optional parameter, which causes the result to be rounded to that
+        many fractional digits in the second field. Without a precision,
+        the result is given to the full available precision.
+
+.. function:: LOCALTIME
+              LOCALTIME(precision)
+
+    Deliver current time value without time zone.
+
+    :precision:
+        An optional parameter, which causes the result to be rounded to that
+        many fractional digits in the second field. Without a precision,
+        the result is given to the full available precision.
+
+.. function:: LOCALTIMESTAMP
+              LOCALTIMESTAMP(precision)
+
+    Deliver current time value without time zone.
+
+    :precision:
+        An optional parameter, which causes the result to be rounded to that
+        many fractional digits in the second field. Without a precision,
+        the result is given to the full available precision.
 
 Conditional expressions
 =======================
