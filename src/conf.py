@@ -4,17 +4,22 @@ import sys
 from datetime import datetime
 from pathlib import Path
 
+import toml
+
 # set up paths
 BASE_DIR = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(BASE_DIR / "problem-sets" / "src"))
+
+# read project data from toml file
+with open(BASE_DIR / "pyproject.toml") as io_buff:
+    project_data = toml.load(io_buff)["tool"]["poetry"]
 
 # project information
 project = "Python Training Course"
 project_copyright = \
     f"{datetime.now().year}, Python training course authors and contributors"
-authors = "Vladyslav Ponomaryov \\and " \
-          "Serhii Horodilov"
-version = "2023.09.dev"
+authors = " \\and ".join(project_data["authors"])
+version = project_data["version"]
 
 # general configuration
 master_doc = root_doc = "index"
@@ -63,17 +68,9 @@ latex_documents = [
     ("appx/software_list", "Software.tex", project, authors, "howto", False),
     ("appx/code_edit", "IDE.tex", project, authors, "howto", False),
     ("appx/blog/spec", "DjangoBlog.tex", project, authors, "howto", False),
-    ("appx/assignments", "CreatingPullRequest.tex", "Creating the Pull Request",
-     authors, "howto", False),
+    ("appx/assignments", "CreatingPullRequest.tex",
+     "Creating the Pull Request", authors, "howto", False),
 ]
 latex_appendices = [
-    "appx/software_list",
-    "appx/code_edit",
-    "appx/env_path",
-    "appx/precedence",
-    "appx/printf",
-    "appx/assignments",
-    "appx/conv_store",
-    "appx/wtk",
-    "appx/blog/spec",
+    # TODO: review appendices list
 ]
