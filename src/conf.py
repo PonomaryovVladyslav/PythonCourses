@@ -57,8 +57,22 @@ language = "en"
 locale_dirs = ["_locales"]
 
 # options for HTML output
-html_theme = "sphinx_rtd_theme"
 html_favicon = str(BASE_DIR / "assets" / "favicon.ico")
+html_theme = "sphinx_material"
+html_theme_options = {
+    "nav_title": project,
+
+    "repo_url": project_data["repository"],
+    "repo_name": project,
+    "repo_type": "github",
+
+    "base_url": project_data["homepage"],
+
+    "globaltoc_depth": 2,
+
+    "html_minify": True,
+    "css_minify": True,
+}
 
 # options for LaTeX output
 latex_doc = project.title().replace(" ", "") + ".tex"
