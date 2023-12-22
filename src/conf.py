@@ -72,7 +72,6 @@ html_theme_options = {
 
     "globaltoc_depth": 2,
 
-    "html_minify": True,
     "css_minify": True,
 }
 
