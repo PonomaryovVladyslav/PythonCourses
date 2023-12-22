@@ -6,10 +6,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Python Training Course 2023.09.dev\n"
+"Project-Id-Version: Python Training Course 2023.11.dev\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-12-16 13:55+0000\n"
-"PO-Revision-Date: 2023-12-21 04:02+0200\n"
+"PO-Revision-Date: 2023-12-22 14:19+0200\n"
 "Last-Translator: Serhii Horodilov <sgorodil@gmail.com>\n"
 "Language-Team: uk <LL@li.org>\n"
 "Language: uk\n"
@@ -26,12 +26,10 @@ msgid "PostgreSQL"
 msgstr "PostgreSQL"
 
 #: ../../src/appx/postgres.txt:8
-#, fuzzy
 msgid "Overview"
 msgstr "Огляд"
 
 #: ../../src/appx/postgres.txt:10
-#, fuzzy
 msgid ""
 "PostgreSQL is a powerful, open source object-relational database system that "
 "uses and extends the SQL language combined with many features that safely "
@@ -40,10 +38,9 @@ msgstr ""
 "PostgreSQL - це потужна об'єктно-реляційна система баз даних з відкритим "
 "вихідним кодом, яка використовує і розширює мову SQL у поєднанні з багатьма "
 "функціями, що дозволяють безпечно зберігати і масштабувати найскладніші "
-"робочі навантаження даних."
+"структури даних."
 
 #: ../../src/appx/postgres.txt:14
-#, fuzzy
 msgid ""
 "PostgreSQL has earned a strong reputation for its proven architecture, "
 "reliability, data integrity, robust feature set, extensibility, and the "
@@ -56,19 +53,16 @@ msgstr ""
 "вихідним кодом постійно створювати ефективні та інноваційні рішення."
 
 #: ../../src/appx/postgres.txt:21
-#, fuzzy
 msgid ""
 "PostgreSQL runs on **all major operating systems**, and is ACID compliant."
 msgstr ""
 "PostgreSQL працює на **всіх основних операційних системах** і сумісна з ACID."
 
 #: ../../src/appx/postgres.txt:25
-#, fuzzy
 msgid "Installation"
 msgstr "Встановлення"
 
 #: ../../src/appx/postgres.txt:27
-#, fuzzy
 msgid ""
 "If you are not able to install postgres to your local computer, it is "
 "possible to use binaries distributions. Refer :doc:`Local PostgreSQL server "
@@ -80,7 +74,6 @@ msgstr ""
 "додаткової інформації."
 
 #: ../../src/appx/postgres.txt:32
-#, fuzzy
 msgid ""
 "PostgreSQL is available for download as ready-to-use packages or installers "
 "for various platforms, as well as a source code archive if you want to build "
@@ -91,7 +84,6 @@ msgstr ""
 "вихідного коду, якщо ви хочете зібрати її самостійно."
 
 #: ../../src/appx/postgres.txt:36
-#, fuzzy
 msgid ""
 "Refer to `PostgreSQL downloads`_ page to get the installer for your "
 "operating system. Follow the installation process instruction to get "
@@ -99,4 +91,4 @@ msgid ""
 msgstr ""
 "Зверніться до сторінки `Завантаження PostgreSQL`_, щоб отримати інсталятор "
 "для вашої операційної системи. Дотримуйтесь інструкцій процесу встановлення, "
-"щоб запустити сервер Postgres на вашому локальному комп'ютері."
+"щоб запустити сервер postgres на вашому локальному комп'ютері."
