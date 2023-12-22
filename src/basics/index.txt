@@ -9,6 +9,7 @@
 
 .. toctree::
     :name: basics
+    :maxdepth: 2
 
     variables
     syntax

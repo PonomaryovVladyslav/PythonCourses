@@ -60,6 +60,7 @@ There are dozens of RDBMS, used in nowadays projects. But most widespread are:
 
 .. toctree::
     :name: rdbms
+    :maxdepth: 2
 
     structure
     datatypes
