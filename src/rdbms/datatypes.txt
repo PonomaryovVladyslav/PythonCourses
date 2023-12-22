@@ -401,7 +401,7 @@ The datetype input function for type ``boolean`` accepts these strings
 representations for the **true** state:
 
 -   ``true``
--   ``yea``
+-   ``yes``
 -   ``on``
 -   ``1``
 
@@ -415,7 +415,7 @@ and these representations for the **false** state:
 The key words ``TRUE`` or ``FALSE`` are preferred (SQL-compliant) method for
 writing Boolean constants in SQL queries. But, you can also use string
 representations by following the generic string-literal constant syntax, for
-example ``'yes':boolean``.
+example ``'yes'::boolean``.
 
 Enumerated types
 ================

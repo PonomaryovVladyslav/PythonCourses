@@ -6,10 +6,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Python Training Course 2023.09.dev\n"
+"Project-Id-Version: Python Training Course 2023.11.dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-12-16 13:55+0000\n"
-"PO-Revision-Date: 2023-12-21 03:52+0200\n"
+"POT-Creation-Date: 2023-12-22 13:15+0000\n"
+"PO-Revision-Date: 2023-12-22 15:15+0200\n"
 "Last-Translator: Serhii Horodilov <sgorodil@gmail.com>\n"
 "Language-Team: uk <LL@li.org>\n"
 "Language: uk\n"
@@ -18,21 +18,18 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
 "n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
-"Generated-By: Babel 2.13.1\n"
+"Generated-By: Babel 2.12.1\n"
 "X-Generator: Poedit 3.4.1\n"
 
 #: ../../src/rdbms/datatypes.txt:3
-#, fuzzy
 msgid "PostgreSQL RDBMS: Data types"
-msgstr "СУБД PostgreSQL: типи даних"
+msgstr "СУБД PostgreSQL: Типи даних"
 
 #: ../../src/rdbms/datatypes.txt:5
-#, fuzzy
 msgid "PostgreSQL has a rich set of data types available to users."
 msgstr "PostgreSQL має багатий набір типів даних, доступних для користувачів."
 
 #: ../../src/rdbms/datatypes.txt:7
-#, fuzzy
 msgid ""
 "Users can add new types to PostgreSQL using the ``CREATE TYPE`` command."
 msgstr ""
@@ -40,18 +37,15 @@ msgstr ""
 "``CREATE TYPE``."
 
 #: ../../src/rdbms/datatypes.txt:9
-#, fuzzy
 msgid "Custom data type definition"
 msgstr "Визначення користувацького типу даних"
 
 #: ../../src/rdbms/datatypes.txt:15 ../../src/rdbms/datatypes.txt:132
 #: ../../src/rdbms/datatypes.txt:163
-#, fuzzy
 msgid "Name"
-msgstr "Ім'я"
+msgstr "Назва"
 
 #: ../../src/rdbms/datatypes.txt:15
-#, fuzzy
 msgid "Aliases"
 msgstr "Псевдоніми"
 
@@ -59,7 +53,6 @@ msgstr "Псевдоніми"
 #: ../../src/rdbms/datatypes.txt:163 ../../src/rdbms/datatypes.txt:233
 #: ../../src/rdbms/datatypes.txt:274 ../../src/rdbms/datatypes.txt:305
 #: ../../src/rdbms/datatypes.txt:330
-#, fuzzy
 msgid "Description"
 msgstr "Опис"
 
@@ -72,7 +65,6 @@ msgid "``int8``"
 msgstr "``int8``"
 
 #: ../../src/rdbms/datatypes.txt:17
-#, fuzzy
 msgid "signed eight-byte integer"
 msgstr "знакове восьмибайтне ціле число"
 
@@ -85,7 +77,6 @@ msgid "``serial8``"
 msgstr "``serial8``"
 
 #: ../../src/rdbms/datatypes.txt:19
-#, fuzzy
 msgid "auto incrementing eight-byte integer"
 msgstr "автоінкрементоване восьмибайтне ціле число"
 
@@ -94,7 +85,6 @@ msgid "``bit``"
 msgstr "``bit``"
 
 #: ../../src/rdbms/datatypes.txt:21
-#, fuzzy
 msgid "fixed-length bit string"
 msgstr "бітовий рядок фіксованої довжини"
 
@@ -107,7 +97,6 @@ msgid "``varbit``"
 msgstr "``varbit``"
 
 #: ../../src/rdbms/datatypes.txt:23
-#, fuzzy
 msgid "variable-length bit string"
 msgstr "бітовий рядок змінної довжини"
 
@@ -120,26 +109,22 @@ msgid "``bool``"
 msgstr "``bool``"
 
 #: ../../src/rdbms/datatypes.txt:25
-#, fuzzy
 msgid "logical Boolean (true/false)"
-msgstr "логічний булевий (true/false)"
+msgstr "логічний тип даних (true/false)"
 
 #: ../../src/rdbms/datatypes.txt:27
 msgid "``box``"
 msgstr "``box``"
 
 #: ../../src/rdbms/datatypes.txt:27
-#, fuzzy
 msgid "rectangular box on a plane"
-msgstr "прямокутна коробка на площині"
+msgstr "прямокутник на площині"
 
 #: ../../src/rdbms/datatypes.txt:29
-#, fuzzy
 msgid "``bytea``"
-msgstr "\"Байті\""
+msgstr "``bytea``"
 
 #: ../../src/rdbms/datatypes.txt:29
-#, fuzzy
 msgid "binary data (“byte array”)"
 msgstr "двійкові дані (\"байтовий масив\")"
 
@@ -152,7 +137,6 @@ msgid "``char``"
 msgstr "``char``"
 
 #: ../../src/rdbms/datatypes.txt:31
-#, fuzzy
 msgid "fixed-length character string"
 msgstr "символьний рядок фіксованої довжини"
 
@@ -165,7 +149,6 @@ msgid "``varchar``"
 msgstr "``varchar``"
 
 #: ../../src/rdbms/datatypes.txt:33 ../../src/rdbms/datatypes.txt:83
-#, fuzzy
 msgid "variable-length character string"
 msgstr "символьний рядок змінної довжини"
 
@@ -174,7 +157,6 @@ msgid "``cidr``"
 msgstr "``cidr``"
 
 #: ../../src/rdbms/datatypes.txt:35
-#, fuzzy
 msgid "IPv4 or IPv6 network address"
 msgstr "Мережева адреса IPv4 або IPv6"
 
@@ -183,7 +165,6 @@ msgid "``circle``"
 msgstr "``circle``"
 
 #: ../../src/rdbms/datatypes.txt:37
-#, fuzzy
 msgid "circle on a plane"
 msgstr "коло на площині"
 
@@ -196,7 +177,6 @@ msgid "``float8``"
 msgstr "``float8``"
 
 #: ../../src/rdbms/datatypes.txt:39
-#, fuzzy
 msgid "double precision floating-point number (8 bytes)"
 msgstr "число з плаваючою комою подвійної точності (8 байт)"
 
@@ -205,7 +185,6 @@ msgid "``date``"
 msgstr "``date``"
 
 #: ../../src/rdbms/datatypes.txt:41
-#, fuzzy
 msgid "calendar date (year, month, day)"
 msgstr "календарна дата (рік, місяць, день)"
 
@@ -214,7 +193,6 @@ msgid "``inet``"
 msgstr "``inet``"
 
 #: ../../src/rdbms/datatypes.txt:43
-#, fuzzy
 msgid "IPv4 or IPv6 host address"
 msgstr "IPv4 або IPv6 адреса хосту"
 
@@ -227,7 +205,6 @@ msgid "``int``, ``int4``"
 msgstr "``int``, ``int4``"
 
 #: ../../src/rdbms/datatypes.txt:45
-#, fuzzy
 msgid "signed four-byte integer"
 msgstr "знакове чотирибайтне ціле число"
 
@@ -236,7 +213,6 @@ msgid "``interval``"
 msgstr "``interval``"
 
 #: ../../src/rdbms/datatypes.txt:47
-#, fuzzy
 msgid "time span"
 msgstr "проміжок часу"
 
@@ -245,7 +221,6 @@ msgid "``json``"
 msgstr "``json``"
 
 #: ../../src/rdbms/datatypes.txt:49
-#, fuzzy
 msgid "textual JSON data"
 msgstr "текстові дані JSON"
 
@@ -254,7 +229,6 @@ msgid "``jsonb``"
 msgstr "``jsonb``"
 
 #: ../../src/rdbms/datatypes.txt:51
-#, fuzzy
 msgid "binary JSON data, decomposed"
 msgstr "двійкові дані JSON, декомпоновані"
 
@@ -263,7 +237,6 @@ msgid "``line``"
 msgstr "``line``"
 
 #: ../../src/rdbms/datatypes.txt:53
-#, fuzzy
 msgid "infinite line on a plane"
 msgstr "нескінченна пряма на площині"
 
@@ -272,7 +245,6 @@ msgid "``lseg``"
 msgstr "``lseg``"
 
 #: ../../src/rdbms/datatypes.txt:55
-#, fuzzy
 msgid "line segment on a plane"
 msgstr "відрізок прямої на площині"
 
@@ -281,7 +253,6 @@ msgid "``macaddr``"
 msgstr "``macaddr``"
 
 #: ../../src/rdbms/datatypes.txt:57
-#, fuzzy
 msgid "MAC (Media Access Control) address"
 msgstr "MAC-адреса (Media Access Control)"
 
@@ -290,7 +261,6 @@ msgid "``macaddr8``"
 msgstr "``macaddr8``"
 
 #: ../../src/rdbms/datatypes.txt:59
-#, fuzzy
 msgid "MAC (Media Access Control) address (EUI-64 format)"
 msgstr "MAC-адреса (Media Access Control) (формат EUI-64)"
 
@@ -299,7 +269,6 @@ msgid "``money``"
 msgstr "``money``"
 
 #: ../../src/rdbms/datatypes.txt:61
-#, fuzzy
 msgid "currency amount"
 msgstr "сума валюти"
 
@@ -312,7 +281,6 @@ msgid "``decimal``"
 msgstr "``decimal``"
 
 #: ../../src/rdbms/datatypes.txt:63
-#, fuzzy
 msgid "exact numeric of selectable precision"
 msgstr "точне число з обраною точністю"
 
@@ -321,7 +289,6 @@ msgid "``path``"
 msgstr "``path``"
 
 #: ../../src/rdbms/datatypes.txt:65
-#, fuzzy
 msgid "geometric path on a plane"
 msgstr "геометричний шлях на площині"
 
@@ -330,7 +297,6 @@ msgid "``pg_lsn``"
 msgstr "``pg_lsn``"
 
 #: ../../src/rdbms/datatypes.txt:67
-#, fuzzy
 msgid "PostgreSQL Log Sequence Number"
 msgstr "Номер послідовності журналу PostgreSQL"
 
@@ -339,7 +305,6 @@ msgid "``pg_snapshot``"
 msgstr "``pg_snapshot``"
 
 #: ../../src/rdbms/datatypes.txt:69
-#, fuzzy
 msgid "user-level transaction ID snapshot"
 msgstr "знімок ідентифікатора транзакції на рівні користувача"
 
@@ -348,7 +313,6 @@ msgid "``point``"
 msgstr "``point``"
 
 #: ../../src/rdbms/datatypes.txt:71
-#, fuzzy
 msgid "geometric point on a plane"
 msgstr "геометрична точка на площині"
 
@@ -357,7 +321,6 @@ msgid "``polygon``"
 msgstr "``polygon``"
 
 #: ../../src/rdbms/datatypes.txt:73
-#, fuzzy
 msgid "closed geometric path on a plane"
 msgstr "замкнений геометричний шлях на площині"
 
@@ -370,7 +333,6 @@ msgid "``float4``"
 msgstr "``float4``"
 
 #: ../../src/rdbms/datatypes.txt:75
-#, fuzzy
 msgid "single precision floating-point number (4 bytes)"
 msgstr "число з плаваючою комою одинарної точності (4 байти)"
 
@@ -383,7 +345,6 @@ msgid "``int2``"
 msgstr "``int2``"
 
 #: ../../src/rdbms/datatypes.txt:77
-#, fuzzy
 msgid "signed two-byte integer"
 msgstr "знакове двобайтне ціле число"
 
@@ -396,7 +357,6 @@ msgid "``serial2``"
 msgstr "``serial2``"
 
 #: ../../src/rdbms/datatypes.txt:79
-#, fuzzy
 msgid "auto incrementing two-byte integer"
 msgstr "автоінкрементоване двобайтне ціле число"
 
@@ -409,7 +369,6 @@ msgid "``serial4``"
 msgstr "``serial4``"
 
 #: ../../src/rdbms/datatypes.txt:81
-#, fuzzy
 msgid "auto incrementing four-byte integer"
 msgstr "автоінкрементоване чотирибайтне ціле число"
 
@@ -422,7 +381,6 @@ msgid "``time``"
 msgstr "``time``"
 
 #: ../../src/rdbms/datatypes.txt:85
-#, fuzzy
 msgid "time of day (no time zone)"
 msgstr "час доби (без часового поясу)"
 
@@ -435,7 +393,6 @@ msgid "``timetz``"
 msgstr "``timetz``"
 
 #: ../../src/rdbms/datatypes.txt:87
-#, fuzzy
 msgid "time of day, including time zone"
 msgstr "час доби, включаючи часовий пояс"
 
@@ -444,7 +401,6 @@ msgid "``timestamp``"
 msgstr "``timestamp``"
 
 #: ../../src/rdbms/datatypes.txt:89
-#, fuzzy
 msgid "date and time (no time zone)"
 msgstr "дата і час (без часового поясу)"
 
@@ -457,7 +413,6 @@ msgid "``timestamptz``"
 msgstr "``timestamptz``"
 
 #: ../../src/rdbms/datatypes.txt:91
-#, fuzzy
 msgid "date and time, including time zone"
 msgstr "дата і час, включаючи часовий пояс"
 
@@ -466,7 +421,6 @@ msgid "``tsquery``"
 msgstr "``tsquery``"
 
 #: ../../src/rdbms/datatypes.txt:93
-#, fuzzy
 msgid "text search query"
 msgstr "текстовий пошуковий запит"
 
@@ -475,7 +429,6 @@ msgid "``tsvector``"
 msgstr "``tsvector``"
 
 #: ../../src/rdbms/datatypes.txt:95
-#, fuzzy
 msgid "text search document"
 msgstr "текстовий пошуковий документ"
 
@@ -484,7 +437,6 @@ msgid "``txid_snapshot``"
 msgstr "``txid_snapshot``"
 
 #: ../../src/rdbms/datatypes.txt:97
-#, fuzzy
 msgid "user-level transaction ID snapshot (deprecated; see pg_snapshot)"
 msgstr ""
 "знімок ідентифікатора транзакції на рівні користувача (застарілий; див. "
@@ -495,7 +447,6 @@ msgid "``uuid``"
 msgstr "``uuid``"
 
 #: ../../src/rdbms/datatypes.txt:99
-#, fuzzy
 msgid "universally unique identifier"
 msgstr "універсальний унікальний ідентифікатор"
 
@@ -504,17 +455,14 @@ msgid "``xml``"
 msgstr "``xml``"
 
 #: ../../src/rdbms/datatypes.txt:101
-#, fuzzy
 msgid "XML data"
 msgstr "XML-дані"
 
 #: ../../src/rdbms/datatypes.txt:105
-#, fuzzy
 msgid "Types casting"
-msgstr "Типи лиття"
+msgstr "Перетворення типів"
 
 #: ../../src/rdbms/datatypes.txt:107
-#, fuzzy
 msgid ""
 "SQL is a strong type language. That is, every data item has an associated "
 "data type which determines its behavior and allowed usage. PostgreSQL has an "
@@ -527,19 +475,16 @@ msgstr ""
 "загальною і гнучкою, ніж інші реалізації SQL."
 
 #: ../../src/rdbms/datatypes.txt:112
-#, fuzzy
 msgid "You can cast some types in place using ``::`` notation, like:"
 msgstr ""
 "Ви можете приводити деякі типи на місці, використовуючи нотацію ``::``, "
 "наприклад:"
 
 #: ../../src/rdbms/datatypes.txt:122
-#, fuzzy
 msgid "Numeric types"
 msgstr "Числові типи"
 
 #: ../../src/rdbms/datatypes.txt:124
-#, fuzzy
 msgid ""
 "Numeric types consist of two-, four-, and eight-byte integers, four- and "
 "eight-byte floating-point numbers, and selectable-precision decimals."
@@ -549,7 +494,6 @@ msgstr ""
 "довільною точністю."
 
 #: ../../src/rdbms/datatypes.txt:127
-#, fuzzy
 msgid ""
 "Type types ``smallint``, ``integer`` and ``bigint`` store whole numbers, "
 "that is, numbers without fractional component, of various ranges. Attempts "
@@ -560,94 +504,76 @@ msgstr ""
 "виходять за межі допустимого діапазону, призведуть до помилки."
 
 #: ../../src/rdbms/datatypes.txt:132
-#, fuzzy
 msgid "Storage Size"
-msgstr "Розмір сховища"
+msgstr "Розмір"
 
 #: ../../src/rdbms/datatypes.txt:132
-#, fuzzy
 msgid "Range"
 msgstr "Діапазон"
 
 #: ../../src/rdbms/datatypes.txt:134
-#, fuzzy
 msgid "smallint"
 msgstr "smallint"
 
 #: ../../src/rdbms/datatypes.txt:134 ../../src/rdbms/datatypes.txt:152
-#, fuzzy
 msgid "2 bytes"
 msgstr "2 байти"
 
 #: ../../src/rdbms/datatypes.txt:134
-#, fuzzy
 msgid "small-range integer"
 msgstr "ціле число малого діапазону"
 
 #: ../../src/rdbms/datatypes.txt:134
-#, fuzzy
 msgid "-32768 to +32767"
 msgstr "-32768 до +32767"
 
 #: ../../src/rdbms/datatypes.txt:136
-#, fuzzy
 msgid "integer"
-msgstr "*x* перетворене в ціле число"
+msgstr "integer"
 
 #: ../../src/rdbms/datatypes.txt:136 ../../src/rdbms/datatypes.txt:146
 #: ../../src/rdbms/datatypes.txt:154
-#, fuzzy
 msgid "4 bytes"
 msgstr "4 байти"
 
 #: ../../src/rdbms/datatypes.txt:136
-#, fuzzy
 msgid "typical choice for integer"
 msgstr "типовий вибір для цілого числа"
 
 #: ../../src/rdbms/datatypes.txt:136
-#, fuzzy
 msgid "-2147483648 to +2147483647"
-msgstr "-2147483648 на +2147483647"
+msgstr "-2147483648 до +2147483647"
 
 #: ../../src/rdbms/datatypes.txt:138
-#, fuzzy
 msgid "bigint"
 msgstr "bigint"
 
 #: ../../src/rdbms/datatypes.txt:138 ../../src/rdbms/datatypes.txt:149
 #: ../../src/rdbms/datatypes.txt:156
-#, fuzzy
 msgid "8 bytes"
 msgstr "8 байт"
 
 #: ../../src/rdbms/datatypes.txt:138
-#, fuzzy
 msgid "large-range integer"
 msgstr "ціле число великого діапазону"
 
 #: ../../src/rdbms/datatypes.txt:138
-#, fuzzy
 msgid "-9223372036854775808 to +9223372036854775807"
-msgstr "-9223372036854775808 на +9223372036854775807"
+msgstr "-9223372036854775808 до +9223372036854775807"
 
 #: ../../src/rdbms/datatypes.txt:140
-#, fuzzy
 msgid "decimal"
-msgstr "десятковий"
+msgstr "decimal"
 
 #: ../../src/rdbms/datatypes.txt:140 ../../src/rdbms/datatypes.txt:143
-#, fuzzy
 msgid "variable"
 msgstr "змінна"
 
 #: ../../src/rdbms/datatypes.txt:140 ../../src/rdbms/datatypes.txt:143
-#, fuzzy
 msgid "user-specified precision, exact"
 msgstr "задана користувачем точність, точна"
 
 #: ../../src/rdbms/datatypes.txt:140 ../../src/rdbms/datatypes.txt:143
-#, fuzzy
 msgid ""
 "up to 131072 digits before the decimal point; up to 16383 digits after the "
 "decimal point"
@@ -657,88 +583,73 @@ msgstr ""
 
 #: ../../src/rdbms/datatypes.txt:143
 msgid "numeric"
-msgstr ""
+msgstr "numeric"
 
 #: ../../src/rdbms/datatypes.txt:146
 msgid "real"
-msgstr ""
+msgstr "real"
 
 #: ../../src/rdbms/datatypes.txt:146 ../../src/rdbms/datatypes.txt:149
-#, fuzzy
 msgid "variable-precision, inexact"
 msgstr "змінної точності, неточний"
 
 #: ../../src/rdbms/datatypes.txt:146
-#, fuzzy
 msgid "6 decimal digits precision"
 msgstr "6 десяткових знаків після коми"
 
 #: ../../src/rdbms/datatypes.txt:149
-#, fuzzy
 msgid "double precision"
-msgstr "подвійна точність"
+msgstr "double precision"
 
 #: ../../src/rdbms/datatypes.txt:149
-#, fuzzy
 msgid "15 decimal digits precision"
 msgstr "точність до 15 знаків після коми"
 
 #: ../../src/rdbms/datatypes.txt:152
-#, fuzzy
 msgid "smallserial"
-msgstr "дрібносерійний"
+msgstr "smallserial"
 
 #: ../../src/rdbms/datatypes.txt:152
-#, fuzzy
 msgid "small auto incrementing integer"
 msgstr "невелике ціле число, що автоматично збільшується"
 
 #: ../../src/rdbms/datatypes.txt:152
-#, fuzzy
 msgid "1 to 32767"
 msgstr "1 до 32767"
 
 #: ../../src/rdbms/datatypes.txt:154
-#, fuzzy
 msgid "serial"
-msgstr "серійний"
+msgstr "serial"
 
 #: ../../src/rdbms/datatypes.txt:154
-#, fuzzy
 msgid "auto incrementing integer"
 msgstr "автоінкрементоване ціле число"
 
 #: ../../src/rdbms/datatypes.txt:154
-#, fuzzy
 msgid "1 to 2147483647"
-msgstr "1 на 2147483647"
+msgstr "1 до 2147483647"
 
 #: ../../src/rdbms/datatypes.txt:156
-#, fuzzy
 msgid "bigserial"
-msgstr "багатосерійний фільм"
+msgstr "bigserial"
 
 #: ../../src/rdbms/datatypes.txt:156
-#, fuzzy
 msgid "large auto incrementing integer"
 msgstr "велике ціле число, що автоматично збільшується"
 
 #: ../../src/rdbms/datatypes.txt:156
-#, fuzzy
 msgid "1 to 9223372036854775807"
-msgstr "1 на 9223372036854775807"
+msgstr "1 до 9223372036854775807"
 
 #: ../../src/rdbms/datatypes.txt:160
-#, fuzzy
 msgid "Character types"
-msgstr "Типи символів"
+msgstr "Символьні типи"
 
 #: ../../src/rdbms/datatypes.txt:165
 msgid "``character varying``, ``varchar``"
 msgstr "``character varying``, ``varchar``"
 
 #: ../../src/rdbms/datatypes.txt:165
-#, fuzzy
 msgid "variable-length with limit"
 msgstr "змінної довжини з обмеженням"
 
@@ -747,27 +658,22 @@ msgid "``character``, ``char``, ``bpchar``"
 msgstr "``character``, ``char``, ``bpchar``"
 
 #: ../../src/rdbms/datatypes.txt:167
-#, fuzzy
 msgid "fixed-length, blank-padded"
 msgstr "фіксованої довжини, пустотілі"
 
 #: ../../src/rdbms/datatypes.txt:169
-#, fuzzy
 msgid "``bpchar`` without length specifier"
 msgstr "``bpchar`` без специфікатора довжини"
 
 #: ../../src/rdbms/datatypes.txt:169
-#, fuzzy
 msgid "variable unlimited length, blank-trimmed"
 msgstr "змінна необмеженої довжини, без обрізів"
 
 #: ../../src/rdbms/datatypes.txt:172
-#, fuzzy
 msgid "variable-unlimited length"
 msgstr "змінна необмеженої довжини"
 
 #: ../../src/rdbms/datatypes.txt:175
-#, fuzzy
 msgid ""
 "SQL defines two primary character types: ``character varying(n)`` and "
 "``character(n)``, where ``n`` is a positive integer. Both of these types can "
@@ -780,11 +686,11 @@ msgid ""
 "shorter than the declared length, value of type ``char`` will be space-"
 "padded; values of ``varchar`` will simply store the shorter string."
 msgstr ""
-"У мові SQL визначено два основних типи символів: ``символ-змінна(n)`` та "
-"``символ(n)``, де ``n`` - натуральне число. Обидва ці типи можуть зберігати "
-"рядок довжиною до ``n`` символів. Спроба зберегти довший рядок у стовпці цих "
-"типів призведе до помилки, якщо тільки всі надлишкові символи не є "
-"пробілами, у цьому випадку рядок буде урізано до максимальної довжини. "
+"У мові SQL визначено два основних типи символів: ``character varying(n)`` та "
+"``character(n)``, де ``n`` - натуральне число. Обидва ці типи можуть "
+"зберігати рядок довжиною до ``n`` символів. Спроба зберегти довший рядок у "
+"стовпці цих типів призведе до помилки, якщо тільки всі надлишкові символи не "
+"є пробілами, у цьому випадку рядок буде урізано до максимальної довжини. "
 "Однак, якщо явно привести значення до ``varchar(n)`` або ``char(n)``, то "
 "значення надмірної довжини буде урізано до ``n`` символів без виникнення "
 "помилки. Якщо рядок, що зберігається, коротший за оголошену довжину, "
@@ -792,7 +698,6 @@ msgstr ""
 "просто збереже коротший рядок."
 
 #: ../../src/rdbms/datatypes.txt:186
-#, fuzzy
 msgid ""
 "In addition postgres provides the ``text`` type, which stores strings of any "
 "length."
@@ -801,7 +706,6 @@ msgstr ""
 "довільної довжини."
 
 #: ../../src/rdbms/datatypes.txt:189
-#, fuzzy
 msgid ""
 "If specified, the length ``n`` must be greater than 0 and cannot exceed "
 "10,485,760. If ``character varying`` is used without length specifier, the "
@@ -811,19 +715,17 @@ msgid ""
 "``character(1)``."
 msgstr ""
 "Якщо вказано, довжина ``n`` повинна бути більшою за 0 і не може перевищувати "
-"10 485 760. Якщо ``character varying`` використовується без специфікатора "
-"довжини, тип приймає рядки будь-якої довжини. Якщо ``bpchar`` не має "
-"специфікатора довжини, він також приймає рядки будь-якої довжини, але "
+"10 485 760 символів. Якщо ``character varying`` використовується без "
+"специфікатора довжини, тип приймає рядки будь-якої довжини. Якщо ``bpchar`` "
+"не має специфікатора довжини, він також приймає рядки будь-якої довжини, але "
 "кінцеві пробіли є семантично несуттєвими. Якщо ``character`` не має "
-"специфікатора, він еквівалентний ``character(1)``."
+"специфікатора, він еквівалентний до ``character(1)``."
 
 #: ../../src/rdbms/datatypes.txt:197
-#, fuzzy
 msgid "Date/Time types"
 msgstr "Типи дати/часу"
 
 #: ../../src/rdbms/datatypes.txt:199
-#, fuzzy
 msgid ""
 "PostgreSQL supports the full set of SQL date and time types. Dates are "
 "counted according to the Gregorian calendar, even in years before that "
@@ -834,7 +736,6 @@ msgstr ""
 "запроваджено."
 
 #: ../../src/rdbms/datatypes.txt:203
-#, fuzzy
 msgid ""
 "``time``, ``timestamp``, and ``interval`` accept an optional precision "
 "value, which specifies the number of fractional digits retained in the "
@@ -847,7 +748,6 @@ msgstr ""
 "значення цього параметра - від 0 до 6."
 
 #: ../../src/rdbms/datatypes.txt:208
-#, fuzzy
 msgid ""
 "The ``interval`` type has an additional option, which is to restrict the of "
 "stored fields by writing one of these phrases:"
@@ -856,18 +756,15 @@ msgstr ""
 "зберігаються, шляхом написання однієї з цих фраз:"
 
 #: ../../src/rdbms/datatypes.txt:228
-#, fuzzy
 msgid "Dates"
 msgstr "Дати"
 
 #: ../../src/rdbms/datatypes.txt:230
-#, fuzzy
 msgid "Some possible inputs for the ``date`` type."
 msgstr "Деякі можливі вхідні дані для типу ``date``."
 
 #: ../../src/rdbms/datatypes.txt:233 ../../src/rdbms/datatypes.txt:274
 #: ../../src/rdbms/datatypes.txt:305
-#, fuzzy
 msgid "Example"
 msgstr "Приклад"
 
@@ -876,7 +773,6 @@ msgid "``1999-01-08``"
 msgstr "``1999-01-08``"
 
 #: ../../src/rdbms/datatypes.txt:235
-#, fuzzy
 msgid "ISO 8601; January 8 in any mode (**recommended format**)"
 msgstr "ISO 8601; 8 січня в будь-якому режимі (**рекомендований формат**)"
 
@@ -885,7 +781,6 @@ msgid "``January 8, 1999``"
 msgstr "``January 8, 1999``"
 
 #: ../../src/rdbms/datatypes.txt:238
-#, fuzzy
 msgid "unambiguous in any date style input mode"
 msgstr "однозначний у будь-якому режимі введення стилю дати"
 
@@ -894,7 +789,6 @@ msgid "``1/8/1999``"
 msgstr "``1/8/1999``"
 
 #: ../../src/rdbms/datatypes.txt:240
-#, fuzzy
 msgid "January 8 in MDY mode; August 1 in DMY mode"
 msgstr "8 січня в режимі MDY; 1 серпня в режимі DMY"
 
@@ -903,7 +797,6 @@ msgid "``1/18/1999``"
 msgstr "``1/18/1999``"
 
 #: ../../src/rdbms/datatypes.txt:242
-#, fuzzy
 msgid "January 18 in MDY mode; rejected in other modes"
 msgstr "18 січня в режимі MDY; відхилено в інших режимах"
 
@@ -912,7 +805,6 @@ msgid "``01/02/03``"
 msgstr "``01/02/03``"
 
 #: ../../src/rdbms/datatypes.txt:245
-#, fuzzy
 msgid ""
 "January 2, 2003 in MDY mode; February 1, 2003 in DMY mode; February 3, 2001 "
 "in YMD mode"
@@ -925,7 +817,6 @@ msgid "``1999-Jan-08`` ``Jan-08-1999`` ``08-Jan-1999``"
 msgstr "``1999-Jan-08`` ``Jan-08-1999`` ``08-Jan-1999``"
 
 #: ../../src/rdbms/datatypes.txt:249
-#, fuzzy
 msgid "January 8 in any mode"
 msgstr "8 січня в будь-якому режимі"
 
@@ -934,7 +825,6 @@ msgid "``99-Jan-08``"
 msgstr "``99-Jan-08``"
 
 #: ../../src/rdbms/datatypes.txt:253
-#, fuzzy
 msgid "January 8 in YMD mode, else error"
 msgstr "8 січня в режимі YMD, інакше помилка"
 
@@ -943,7 +833,6 @@ msgid "``08-Jan-99`` ``Jan-08-99``"
 msgstr "``08-Jan-99`` ``Jan-08-99``"
 
 #: ../../src/rdbms/datatypes.txt:255
-#, fuzzy
 msgid "January 8, except error in YMD mode"
 msgstr "8 січня, крім помилки в режимі YMD"
 
@@ -952,7 +841,6 @@ msgid "``19990108`` ``990108``"
 msgstr "``19990108`` ``990108``"
 
 #: ../../src/rdbms/datatypes.txt:258
-#, fuzzy
 msgid "ISO 8601; January 8, 1999 in any mode"
 msgstr "ISO 8601; 8 січня 1999 року в будь-якому режимі"
 
@@ -961,16 +849,14 @@ msgid "``1999.008``"
 msgstr "``1999.008``"
 
 #: ../../src/rdbms/datatypes.txt:261
-#, fuzzy
 msgid "year and day of year"
-msgstr "рік і день року"
+msgstr "рік та день року"
 
 #: ../../src/rdbms/datatypes.txt:263
 msgid "``J2451187``"
 msgstr "``J2451187``"
 
 #: ../../src/rdbms/datatypes.txt:263
-#, fuzzy
 msgid "Julian date"
 msgstr "Дата за юліанським календарем"
 
@@ -979,17 +865,14 @@ msgid "``January 8, 99 BC``"
 msgstr "``January 8, 99 BC``"
 
 #: ../../src/rdbms/datatypes.txt:265
-#, fuzzy
 msgid "year 99 BC"
 msgstr "99 рік до н.е"
 
 #: ../../src/rdbms/datatypes.txt:269
-#, fuzzy
 msgid "Times"
-msgstr "Разів"
+msgstr "Час"
 
 #: ../../src/rdbms/datatypes.txt:271
-#, fuzzy
 msgid "Some possible inputs for the ``time`` type."
 msgstr "Деякі можливі вхідні дані для типу ``time``."
 
@@ -998,7 +881,6 @@ msgid "``04:05:06.789`` ``04:05:06`` ``04:05`` ``040506``"
 msgstr "``04:05:06.789`` ``04:05:06`` ``04:05`` ``040506``"
 
 #: ../../src/rdbms/datatypes.txt:276
-#, fuzzy
 msgid "ISO 8601"
 msgstr "ISO 8601"
 
@@ -1007,7 +889,6 @@ msgid "``04:05 AM``"
 msgstr "``04:05 AM``"
 
 #: ../../src/rdbms/datatypes.txt:281
-#, fuzzy
 msgid "same as 04:05; AM does not affect value"
 msgstr "те саме, що і 04:05; AM не впливає на значення"
 
@@ -1016,7 +897,6 @@ msgid "``04:05 PM``"
 msgstr "``04:05 PM``"
 
 #: ../../src/rdbms/datatypes.txt:283
-#, fuzzy
 msgid "same as 16:05; input hour must be <= 12"
 msgstr "збігається з 16:05; вхідна година повинна бути <= 12"
 
@@ -1025,25 +905,22 @@ msgid "``04:05:06.789-8`` ``04:05:06-08:00`` ``04:05-08:00`` ``040506-08``"
 msgstr "``04:05:06.789-8`` ``04:05:06-08:00`` ``04:05-08:00`` ``040506-08``"
 
 #: ../../src/rdbms/datatypes.txt:285
-#, fuzzy
 msgid "ISO 8601, with time zone as UTC offset"
-msgstr "ISO 8601, з часовим поясом як зміщенням UTC"
+msgstr "ISO 8601, з часовим поясом відносно UTC"
 
 #: ../../src/rdbms/datatypes.txt:290
 msgid "``040506+0730``"
 msgstr "``040506+0730``"
 
 #: ../../src/rdbms/datatypes.txt:290
-#, fuzzy
 msgid "ISO 8601, with fractional-hour time zone as UTC offset"
-msgstr "ISO 8601, з часовим поясом у дробових годинах як зміщенням UTC"
+msgstr "ISO 8601, з часовим поясом у дробових годинах відносно UTC"
 
 #: ../../src/rdbms/datatypes.txt:293
 msgid "``040506+07:30:00``"
 msgstr "``040506+07:30:00``"
 
 #: ../../src/rdbms/datatypes.txt:293
-#, fuzzy
 msgid "UTC offset specified to seconds (not allowed in ISO 8601)"
 msgstr "Зміщення UTC вказано в секундах (не дозволено в ISO 8601)"
 
@@ -1052,7 +929,6 @@ msgid "``04:05:06 PST``"
 msgstr "``04:05:06 PST``"
 
 #: ../../src/rdbms/datatypes.txt:296
-#, fuzzy
 msgid "time zone specified by abbreviation"
 msgstr "часовий пояс, вказаний абревіатурою"
 
@@ -1061,12 +937,10 @@ msgid "``2003-04-12 04:05:06 America/New_York``"
 msgstr "``2003-04-12 04:05:06 America/New_York``"
 
 #: ../../src/rdbms/datatypes.txt:298
-#, fuzzy
 msgid "time zone specified by full"
 msgstr "часовий пояс вказано повністю"
 
 #: ../../src/rdbms/datatypes.txt:303
-#, fuzzy
 msgid "Time zone input"
 msgstr "Введення часового поясу"
 
@@ -1075,7 +949,6 @@ msgid "``PST``"
 msgstr "``PST``"
 
 #: ../../src/rdbms/datatypes.txt:307
-#, fuzzy
 msgid "Abbreviation (for Pacific Standard Time)"
 msgstr "Скорочення (для Тихоокеанського стандартного часу)"
 
@@ -1084,7 +957,6 @@ msgid "``America/New_York``"
 msgstr "``America/New_York``"
 
 #: ../../src/rdbms/datatypes.txt:309
-#, fuzzy
 msgid "Full time zone name"
 msgstr "Повна назва часового поясу"
 
@@ -1093,7 +965,6 @@ msgid "``PST8PDT``"
 msgstr "``PST8PDT``"
 
 #: ../../src/rdbms/datatypes.txt:311
-#, fuzzy
 msgid "POSIX-style time zone specification"
 msgstr "Специфікація часових поясів у стилі POSIX"
 
@@ -1102,27 +973,24 @@ msgid "``-8:00:00``"
 msgstr "``-8:00:00``"
 
 #: ../../src/rdbms/datatypes.txt:313
-#, fuzzy
 msgid "UTC offset for PST"
-msgstr "Зміщення UTC для PST"
+msgstr "Зміщення відносно UTC для PST"
 
 #: ../../src/rdbms/datatypes.txt:315
 msgid "``-8:00``"
 msgstr "``-8:00``"
 
 #: ../../src/rdbms/datatypes.txt:315
-#, fuzzy
 msgid "UTC offset for PST (ISO 8601 extended format)"
-msgstr "Зміщення UTC для PST (розширений формат ISO 8601)"
+msgstr "Зміщення відносно UTC для PST (розширений формат ISO 8601)"
 
 #: ../../src/rdbms/datatypes.txt:317
 msgid "``-800``"
 msgstr "``-800``"
 
 #: ../../src/rdbms/datatypes.txt:317 ../../src/rdbms/datatypes.txt:319
-#, fuzzy
 msgid "UTC offset for PST (ISO 8601 basic format)"
-msgstr "Зміщення UTC для PST (базовий формат ISO 8601)"
+msgstr "Зміщення відносно UTC для PST (базовий формат ISO 8601)"
 
 #: ../../src/rdbms/datatypes.txt:319
 msgid "``-8``"
@@ -1133,7 +1001,6 @@ msgid "``zulu``"
 msgstr "``zulu``"
 
 #: ../../src/rdbms/datatypes.txt:321
-#, fuzzy
 msgid "Military abbreviation for UTC"
 msgstr "Військове скорочення UTC"
 
@@ -1142,29 +1009,24 @@ msgid "``z``"
 msgstr "``z``"
 
 #: ../../src/rdbms/datatypes.txt:323
-#, fuzzy
 msgid "Short form of zulu (also in ISO 8601)"
 msgstr "Коротка форма зулу (також в ISO 8601)"
 
 #: ../../src/rdbms/datatypes.txt:327
-#, fuzzy
 msgid "Special date/time inputs"
 msgstr "Спеціальне введення дати/часу"
 
 #: ../../src/rdbms/datatypes.txt:330
-#, fuzzy
 msgid "Input String"
-msgstr "Вхідний рядок"
+msgstr "Вхідний Рядок"
 
 #: ../../src/rdbms/datatypes.txt:330
-#, fuzzy
 msgid "Valid Types"
-msgstr "Допустимі типи"
+msgstr "Допустимі Типи"
 
 #: ../../src/rdbms/datatypes.txt:332
-#, fuzzy
 msgid "epoch"
-msgstr "епоха"
+msgstr "epoch"
 
 #: ../../src/rdbms/datatypes.txt:332 ../../src/rdbms/datatypes.txt:335
 #: ../../src/rdbms/datatypes.txt:345 ../../src/rdbms/datatypes.txt:348
@@ -1173,101 +1035,84 @@ msgid "``date``, ``timestamp``"
 msgstr "``date``, ``timestamp``"
 
 #: ../../src/rdbms/datatypes.txt:332
-#, fuzzy
 msgid "1970-01-01 00:00:00+00 (Unix system time zero)"
 msgstr "1970-01-01 00:00:00+00 (нульовий системний час Unix)"
 
 #: ../../src/rdbms/datatypes.txt:335
-#, fuzzy
 msgid "infinity"
-msgstr "нескінченність"
+msgstr "infinity"
 
 #: ../../src/rdbms/datatypes.txt:335
-#, fuzzy
 msgid "later than all other time stamps"
 msgstr "пізніше за всі інші часові мітки"
 
 #: ../../src/rdbms/datatypes.txt:338
-#, fuzzy
 msgid "-infinity"
-msgstr "-нескінченність"
+msgstr "-infinity"
 
 #: ../../src/rdbms/datatypes.txt:338
 msgid "``date, ``timestamp``"
 msgstr "``date, ``timestamp``"
 
 #: ../../src/rdbms/datatypes.txt:338
-#, fuzzy
 msgid "earlier than all other time stamps"
 msgstr "раніше за всі інші мітки часу"
 
 #: ../../src/rdbms/datatypes.txt:341
-#, fuzzy
 msgid "now"
-msgstr "зараз"
+msgstr "now"
 
 #: ../../src/rdbms/datatypes.txt:341
 msgid "``date``, ``time``, ``timestamp``"
 msgstr "``date``, ``time``, ``timestamp``"
 
 #: ../../src/rdbms/datatypes.txt:341
-#, fuzzy
 msgid "current transaction's start time"
 msgstr "час початку поточної транзакції"
 
 #: ../../src/rdbms/datatypes.txt:345
-#, fuzzy
 msgid "today"
-msgstr "сьогодні"
+msgstr "today"
 
 #: ../../src/rdbms/datatypes.txt:345
-#, fuzzy
 msgid "midnight (00:00) today"
 msgstr "опівночі (00:00) сьогодні"
 
 #: ../../src/rdbms/datatypes.txt:348
-#, fuzzy
 msgid "tomorrow"
-msgstr "завтра"
+msgstr "tomorrow"
 
 #: ../../src/rdbms/datatypes.txt:348
-#, fuzzy
 msgid "midnight (00:00) tomorrow"
 msgstr "опівночі (00:00) завтра"
 
 #: ../../src/rdbms/datatypes.txt:351
-#, fuzzy
 msgid "yesterday"
-msgstr "вчора"
+msgstr "yesterday"
 
 #: ../../src/rdbms/datatypes.txt:351
-#, fuzzy
 msgid "midnight (00:00) yesterday"
 msgstr "опівночі (00:00) вчора"
 
 #: ../../src/rdbms/datatypes.txt:354
-#, fuzzy
 msgid "allballs"
-msgstr "оллболи"
+msgstr "allballs"
 
 #: ../../src/rdbms/datatypes.txt:354
 msgid "00:00:00.00 UTC"
 msgstr "00:00:00.00 UTC"
 
 #: ../../src/rdbms/datatypes.txt:358
-#, fuzzy
 msgid "Intervals"
 msgstr "Інтервали"
 
 #: ../../src/rdbms/datatypes.txt:360
-#, fuzzy
 msgid "``interval`` values can be written using the following verbose syntax:"
 msgstr ""
-"значення ``інтервалу`` можна записати, використовуючи наступний розгорнутий "
+"значення ``interval`` можна записати, використовуючи наступний розгорнутий "
 "синтаксис:"
 
 #: ../../src/rdbms/datatypes.txt:366
-#, fuzzy
 msgid ""
 "Intervals are useful when you need to move timestamp back in past or to the "
 "future."
@@ -1276,12 +1121,10 @@ msgstr ""
 "майбутнє."
 
 #: ../../src/rdbms/datatypes.txt:370
-#, fuzzy
 msgid "Abbreviation"
 msgstr "Абревіатура"
 
 #: ../../src/rdbms/datatypes.txt:370
-#, fuzzy
 msgid "Meaning"
 msgstr "Значення"
 
@@ -1290,16 +1133,14 @@ msgid "Y"
 msgstr "Y"
 
 #: ../../src/rdbms/datatypes.txt:372
-#, fuzzy
 msgid "Years"
-msgstr "Років"
+msgstr "Роки"
 
 #: ../../src/rdbms/datatypes.txt:374 ../../src/rdbms/datatypes.txt:382
 msgid "M"
 msgstr "M"
 
 #: ../../src/rdbms/datatypes.txt:374
-#, fuzzy
 msgid "Months"
 msgstr "Місяці"
 
@@ -1308,7 +1149,6 @@ msgid "W"
 msgstr "W"
 
 #: ../../src/rdbms/datatypes.txt:376
-#, fuzzy
 msgid "Weeks"
 msgstr "Тижні"
 
@@ -1317,7 +1157,6 @@ msgid "D"
 msgstr "D"
 
 #: ../../src/rdbms/datatypes.txt:378
-#, fuzzy
 msgid "Days"
 msgstr "Дні"
 
@@ -1326,12 +1165,10 @@ msgid "H"
 msgstr "H"
 
 #: ../../src/rdbms/datatypes.txt:380
-#, fuzzy
 msgid "Hours"
 msgstr "Години"
 
 #: ../../src/rdbms/datatypes.txt:382
-#, fuzzy
 msgid "Minutes"
 msgstr "Хвилини"
 
@@ -1340,22 +1177,18 @@ msgid "S"
 msgstr "S"
 
 #: ../../src/rdbms/datatypes.txt:384
-#, fuzzy
 msgid "Seconds"
 msgstr "Секунди"
 
 #: ../../src/rdbms/datatypes.txt:387
-#, fuzzy
 msgid "7 days before yesterday"
-msgstr "7 днів позавчора"
+msgstr "7 днів перед вчора"
 
 #: ../../src/rdbms/datatypes.txt:394
-#, fuzzy
 msgid "Boolean type"
-msgstr "Булевий тип"
+msgstr "Логічний тип"
 
 #: ../../src/rdbms/datatypes.txt:396
-#, fuzzy
 msgid ""
 "PostgreSQL provides the standard SQL type ``boolean``. The ``boolean`` type "
 "can have several states: **true**, **false**, and a third state, "
@@ -1366,7 +1199,6 @@ msgstr ""
 "представляється значенням SQL ``NULL``."
 
 #: ../../src/rdbms/datatypes.txt:400
-#, fuzzy
 msgid ""
 "The datetype input function for type ``boolean`` accepts these strings "
 "representations for the **true** state:"
@@ -1379,8 +1211,8 @@ msgid "``true``"
 msgstr "``true``"
 
 #: ../../src/rdbms/datatypes.txt:404
-msgid "``yea``"
-msgstr "``yea``"
+msgid "``yes``"
+msgstr "``yes``"
 
 #: ../../src/rdbms/datatypes.txt:405
 msgid "``on``"
@@ -1391,7 +1223,6 @@ msgid "``1``"
 msgstr "``1``"
 
 #: ../../src/rdbms/datatypes.txt:408
-#, fuzzy
 msgid "and these representations for the **false** state:"
 msgstr "і ці представлення для стану **false**:"
 
@@ -1412,25 +1243,22 @@ msgid "``0``"
 msgstr "``0``"
 
 #: ../../src/rdbms/datatypes.txt:415
-#, fuzzy
 msgid ""
 "The key words ``TRUE`` or ``FALSE`` are preferred (SQL-compliant) method for "
 "writing Boolean constants in SQL queries. But, you can also use string "
 "representations by following the generic string-literal constant syntax, for "
-"example ``'yes':boolean``."
+"example ``'yes'::boolean``."
 msgstr ""
 "Ключові слова ``TRUE`` або ``FALSE`` є найкращим (SQL-сумісним) методом "
 "запису булевих констант у SQL-запитах. Але ви також можете використовувати "
 "рядкові представлення, дотримуючись загального синтаксису рядково-літерних "
-"констант, наприклад, ``'yes':boolean``."
+"констант, наприклад, ``'yes'::boolean``."
 
 #: ../../src/rdbms/datatypes.txt:421
-#, fuzzy
 msgid "Enumerated types"
 msgstr "Перераховані типи"
 
 #: ../../src/rdbms/datatypes.txt:423
-#, fuzzy
 msgid ""
 "Enumerated (enums) types are data types that comprise a static, ordered set "
 "of values. They are equivalent to the ``enum`` types supported in a number "
@@ -1443,7 +1271,6 @@ msgstr ""
 "бути дні тижня або набір значень статусу елемента даних."
 
 #: ../../src/rdbms/datatypes.txt:428
-#, fuzzy
 msgid ""
 "Enum types are created using the ``CREATE TYPE`` command; and once created, "
 "the enum type can be used in table in function definitions, much like other "
@@ -1454,12 +1281,10 @@ msgstr ""
 "функцій, як і інші типи:"
 
 #: ../../src/rdbms/datatypes.txt:443
-#, fuzzy
 msgid "Ordering"
-msgstr "Перевірка та підтвердження замовлення (відсутній)"
+msgstr "Упорядкування"
 
 #: ../../src/rdbms/datatypes.txt:445
-#, fuzzy
 msgid ""
 "The ordering of the values in an enum type is the order in which the values "
 "were listed when the type was created. All standard comparison operators and "
@@ -1467,8 +1292,8 @@ msgid ""
 "each enumerated data type is separated and cannot be compared with other "
 "enumerated types."
 msgstr ""
-"Порядок значень у зчислювальному типі - це порядок, у якому значення були "
-"перераховані при створенні типу. Усі стандартні оператори порівняння та "
-"пов'язані з ними агрегатні функції підтримуються для зчислень. Однак "
-"пам'ятайте, що кожен перелічуваний тип даних є окремим і не може "
-"порівнюватися з іншими перелічуваними типами."
+"Порядок значень у типі enum - це порядок, у якому значення були перераховані "
+"при створенні типу. Усі стандартні оператори порівняння та пов'язані з ними "
+"агрегатні функції підтримуються для перелічуваних типів. Однак пам'ятайте, "
+"що кожен перелічуваний тип даних є окремим і не може порівнюватися з іншими "
+"перелічуваними типами."
