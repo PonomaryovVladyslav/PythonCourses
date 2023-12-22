@@ -40,6 +40,8 @@ source_suffix = {
 }
 needs_sphinx = "4.0"
 exclude_patterns = [
+    "**/legacy/**",
+    "**/_legacy/**",
     "**/README.*",
 ]
 suppress_warnings = []
