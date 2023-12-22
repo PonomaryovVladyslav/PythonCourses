@@ -2,10 +2,10 @@
 	path = problem-sets
 	url = git@github.com:edu-python-course/problem-sets
 [submodule "src/appx/blog"]
-	path = src/appx/blog
+	path = src/spec/blog
 	url = git@github.com:edu-python-course/blog-spec
 [submodule "src/appx/libms"]
-	path = src/appx/libms
+	path = src/spec/libms
 	url = git@github.com:edu-python-course/libms-spec.git
 [submodule "src/spec/giver"]
 	path = src/spec/giver
