@@ -1,369 +1,208 @@
 .. meta::
     :description: This document describes the database relationships
     :author: Serhii Horodilov
-    :keywords: sql, db, database, relationship
+    :keywords: sql, db, database, relationship, primary key, foreign key,
+               pk, fk, one-to-one, one-to-many, many-to-many, 1-1, 1-n, n-m
 
 *******************************************************************************
                               Data Relationships
 *******************************************************************************
 
-It's time to talk about **data relations**.
+Before dive into relationships, there is a need explain core concepts on how
+data are referenced between different tables.
 
-For example your database contains two tables: ``weather`` and ``city``. The
-diagram below demonstrates the overall data structure:
+Primary key
+===========
 
-.. mermaid::
-    :align: center
+A primary key constraint indicates that a column, or group of columns, can be
+used as a unique identifier for rows in the table. This requires that values
+be both unique and not null. So, the following two table definitions accept
+the same data:
 
-    erDiagram
-        weather {
-            string city
-            int temp_lo
-            int temp_hi
-            date date
-        }
-        city {
-            string name
-            point location
-        }
+.. code-block:: postgresql
 
-Consider the following problem: you want to make sure no one can insert
-a record into ``weather`` without a matching entry in ``city`` table.
-This is called maintaining the *referential integrity* of your data.
-In simplistic database systems this would be implemented (if at all) by first
-looking at the cities table to check if a matching record exists, and then
-inserting or rejecting the new weather records. This approach has a number of
-problems and is very inconvenient.
-
-.. code-block:: sql
-
-    CREATE TABLE city (
-            name     varchar(80) primary key,
-            location point
+    CREATE TABLE publisher
+    (
+        id      INTEGER PRIMARY KEY,
+        ...
     );
 
-    CREATE TABLE weather (
-            city      varchar(80) references cities(name),
-            temp_lo   int,
-            temp_hi   int,
-            date      date
+    CREATE TABLE publisher
+    (
+        id      INTEGER NOT NULL UNIQUE,
+        ...
     );
 
-This declaration creates a relationship between two (or even more) tables.
+Primary keys can span more than one column; the syntax is similar to unique
+constraint:
+
+.. code-block:: postgresql
+
+    CREATE TABLE example
+    (
+        a INTEGER,
+        b INTEGER,
+        c INTEGER,
+        PRIMARY KEY (a, c)
+    );
+
+Adding a primary key will automatically create a unique B-tree index on
+the column or group of columns listed in the primary key, and will force
+the column(s) to be marked ``NOT NULL``.
+
+A table can have at most one primary key.
+
+.. note::
+
+    There can be any number of unique and not-null constraints, which are
+    functionally almost the same thing, but only one can be identified as
+    the primary key.
 
 Foreign key (FK)
 ================
 
-So far, you have knowledge about **primary** keys.
-The **foreign** key is a column, that *references* some another table.
-In common, it's a reference to another table's PK; but there is no limitation
-of this kind, any column can be referenced by another one.
-FKs handle data integrity only, it's not required for FK to be non-NULL value.
+A foreign key constraint specifies that the value in a column (or a group of
+columns) must match the values appearing in some row of another table. We say
+this maintains the *referential integrity* between two tables.
 
-The relation's properties are described by CONSTRAINTS and the database's
-structure.
+A table can have more than one foreign key constraint. Foreign key can also
+overlaps with the primary key.
 
-For example, modifying declaration with ``NOT NULL`` constraint grants
-that each record within a table has a matching one entity in another table.
+To define a FK constraint:
 
-.. code-block:: sql
+.. code-block:: postgresql
 
-    CREATE TABLE weather (
-            city      varchar(80) references cities(name) NOT NULL,
-            ...
-    );
-
-This brings us to various relationship models.
-
-One-to-many relationship (1-to-N)
----------------------------------
-
-This is the most common relationship.
-
-For the example above there are no limitations on temperature measurements in
-a specified city. So, a single city may has 0 or N related records in
-``weather`` table. But each weather record is related to the only one city.
-
-Another example is employees and office buildings they work in. Some big
-company may have multiple offices and employee across the globe.
-Multiple employees can be present in a single office building at a time.
-But each employee can be physically located only in a single office at a time.
-
-.. mermaid::
-
-    erDiagram
-        employee }o--|| office : located
-        employee {
-            int id
-            string first_name
-            string last_name
-            email email
-            int office_id fk
-        }
-        office {
-            int id
-            point location
-            text address
-        }
-
-One-to-one relationship (1-to-1)
---------------------------------
-
-``UNIQUE`` and ``NOT NULL`` constraints are used together to ensure there is
-and only one matching record. Back to the example with employees. Multiple
-workstations (personal computers) are located in each office building.
-The only one person can occupy the only one work station at a time.
-
-.. mermaid::
-
-    erDiagram
-        employee ||--|| work_station : occupies
-
-Many-to-many relationship (N-to-N)
-----------------------------------
-
-These relationships require additional table.
-A good example may be a *project role*. There are many of them in a production
-team. And some employees may be assigned to the same role (e.g. developers,
-testers etc.). But also a single person can be a developer and tester at
-a time.
-
-.. mermaid::
-
-    erDiagram
-        employee }o--|{ employee_role : execute
-        role }o--|{ employee_role : assign
-
-Joining data
-============
-
-``JOIN`` is used to *join* data fetched from multiple related tables.
-To build a valid query you are to set the tables to join and parameter to use
-for this operation.
-
-Common syntax is:
-
-::
-
-    T1 join_type T2 [ join_condition ]
-
-There are various join types available.
-Here are is some dummy data to demonstrate their purpose.
-
-.. table:: poem
-
-    +----+------------------------+-----------+
-    | id | title                  | author_id |
-    +====+========================+===========+
-    |  1 | On the Field of Battle | 1         |
-    +----+------------------------+-----------+
-    |  2 | Moses                  | 2         |
-    +----+------------------------+-----------+
-    |  3 | The Forest Song        | 1         |
-    +----+------------------------+-----------+
-    |  4 | In the Catacombs       | null      |
-    +----+------------------------+-----------+
-    |  5 | The Singing Stones     | 1         |
-    +----+------------------------+-----------+
-    |  6 | Ancient Fairy Tales    | null      |
-    +----+------------------------+-----------+
-    |  7 | My Thoughts            | 2         |
-    +----+------------------------+-----------+
-    |  8 | To Shevchenko          | null      |
-    +----+------------------------+-----------+
-
-
-.. table:: author
-
-    +----+---------------+
-    | id | name          |
-    +====+===============+
-    | 1  | Larysa Kosach |
-    +----+---------------+
-    | 2  | Ivan Franko   |
-    +----+---------------+
-    | 3  | John Doe      |
-    +----+---------------+
-
-.. code-block:: sql
-
-    CREATE TABLE author
+    CREATE TABLE book
     (
-        id   SERIAL PRIMARY KEY,
-        name VARCHAR(32) NOT NULL UNIQUE
+        id           SERIAL PRIMARY KEY,
+        publisher_id INTEGER REFERENCES publisher
     );
-    CREATE TABLE poem
+
+    CREATE TABLE book
+    (
+        id           SERIAL PRIMARY KEY,
+        publisher_id INTEGER REFERENCES publisher (id)
+    );
+
+    CREATE TABLE book
+    (
+        id           SERIAL PRIMARY KEY,
+        publisher_id INTEGER,
+        FOREIGN KEY (publisher_id) REFERENCES publisher
+    );
+
+In this situation the ``book`` table is the *referencing* table, and
+the ``publisher`` table is the *referenced* table. Similarly there are
+referencing and referenced columns.
+
+In case the referenced column is not explicitly defined, the primary key
+of the referenced table will be used as the referenced column.
+
+It is not possible to create a row with non-null foreign key, that does not
+appear in the referenced table.
+
+Self-referential foreign key
+----------------------------
+
+Sometimes it is useful to the referenced table to be the same table as
+referencing. This makes possible to create a tree-structures with nodes,
+there a top-level node would have ``NULL`` ``parent_id``.
+
+.. code-block:: postgresql
+
+    CREATE TABLE tree
     (
         id        SERIAL PRIMARY KEY,
-        title     VARCHAR(32) NOT NULL UNIQUE,
-        author_id INT REFERENCES author (id)
+        parent_id INTEGER REFERENCES tree
     );
-    INSERT INTO author(name)
-    VALUES ('Larysa Kosach'),
-           ('Ivan Franko'),
-           ('John Doe');
-    INSERT INTO poem(title, author_id)
-    VALUES ('On the Field of Battle', 1),
-           ('Moses', 2),
-           ('The Forest Song', 1),
-           ('In the Catacombs', null),
-           ('The Singing Stones', 1),
-           ('Ancient Fairy Tales', null),
-           ('My Thoughts', 2),
-           ('To Shevchenko', null)
-    ;
 
-Join types
-----------
+Deleting referenced rows
+------------------------
 
-:Cross join:
+So far we know that the foreign keys disallows creation of rows that do not
+relate to any row inside the referenced table. But what if a referenced row
+needs to be removed? Intuitively, there are few options:
 
-    .. code-block::
+-   disallow deletion
+-   delete referencing rows as well
+-   something else...
 
-        T1 CROSS JOIN T2
+Restricting and cascading deletes are the two most common options.
+``RESTRICT`` prevents deletion of a referenced row. ``CASCADE`` will also
+delete all referencing rows as well as the referenced one.
 
-    For every possible combination of rows from T1 and T2
-    (i.e., a Cartesian product), the joined table will contain a row consisting
-    of all columns in T1 followed by all columns in T2. If the tables have N
-    and M rows respectively, the joined table will have N * M rows.
+.. code-block:: postgresql
 
-:Qualified joins:
+    CREATE TABLE book
+    (
+        id           SERIAL PRIMARY KEY,
+        publisher_id INTEGER REFERENCES publisher ON DELETE RESTRICT
+    );
 
-    .. code-block::
+    CREATE TABLE book
+    (
+        id           SERIAL PRIMARY KEY,
+        publisher_id INTEGER REFERENCES publisher ON DELETE CASCADE
+    );
 
-        T1 { [INNER] | { LEFT | RIGHT | FULL } [OUTER] } JOIN T2 ON condition
+There are others options.
 
-    The words ``INNER`` and ``OUTER`` are optional for all forms.
-    ``INNER`` is the default; ``LEFT``, ``RIGHT`` and ``FULL`` imply ``OUTER``
-    join.
+``NO ACTION`` means that if any referencing rows still exist when
+the constraint is checked, an error is raised; this is the default behavior.
 
-INNER JOIN
-----------
+``SET NULL`` will replace all referencing rows foreign key values with ``NULL``
+values.
 
-For each row R1 of T1, the joined table has a row for each row in T2 that
-satisfies the join condition with R1.
+``SET DEFAULT`` will replace all referencing rows foreign key values with
+default values.
 
-.. code-block:: sql
-    :caption: Inner join
+Relationships
+-------------
 
-    SELECT p.title, a.name
-    FROM poem p
-             JOIN author a on p.author_id = a.id;
+From the point of view of the RDBMS there are no other relationships between
+two tables except the **foreign key**.
+But the way the foreign keys are designed brings us three concepts of the data
+relations.
 
-+------------------------+---------------+
-| title                  | name          |
-+========================+===============+
-| On the Field of Battle | Larysa Kosach |
-+------------------------+---------------+
-| Moses                  | Ivan Franko   |
-+------------------------+---------------+
-| The Forest Song        | Larysa Kosach |
-+------------------------+---------------+
-| The Singing Stones     | Larysa Kosach |
-+------------------------+---------------+
-| My Thoughts            | Ivan Franko   |
-+------------------------+---------------+
+.. rubric:: One-to-many
 
-LEFT OUTER JOIN
----------------
+In a relational database, two tables have a one-to-many relationship if each
+row in one table references multiple rows of the other table. For example
+``publisher`` can publish many books, but a single ``book`` is published by
+some specific publisher.
 
-First, an inner join is performed. Then, for each row in T1 that does not
-satisfy the join condition with any row in T2, a joined row is added with null
-values in columns of T2. Thus, the joined table always has at least one row for
-each row in T1.
+.. literalinclude:: /../libms-db/libms.sql
+    :language: postgresql
+    :start-after: -- label: ddl-book
+    :end-before: -- label:
 
-.. code-block:: sql
-    :caption: Left join
+.. rubric:: One-to-one
 
-    SELECT p.title, a.name
-    FROM poem p
-             LEFT JOIN author a on p.author_id = a.id;
+.. note::
 
-+------------------------+---------------+
-| title                  | name          |
-+========================+===============+
-| On the Field of Battle | Larysa Kosach |
-+------------------------+---------------+
-| Moses                  | Ivan Franko   |
-+------------------------+---------------+
-| The Forest Song        | Larysa Kosach |
-+------------------------+---------------+
-| In the Catacombs       | null          |
-+------------------------+---------------+
-| The Singing Stones     | Larysa Kosach |
-+------------------------+---------------+
-| Ancient Fairy Tales    | null          |
-+------------------------+---------------+
-| My Thoughts            | Ivan Franko   |
-+------------------------+---------------+
-| To Shevchenko          | null          |
-+------------------------+---------------+
+    You can think of one-to-one relationship as a limited version of
+    *one-to-many*.
 
-RIGHT OUTER JOIN
-----------------
+In a relational database, two tables have a one-to-one relationship if each row
+in one table links to exactly one row in the other table, and vice versa.
+For example a table of ``members`` and a table of ``contacts`` might have
+a one-to-one relationship.
 
-First, an inner join is performed. Then, for each row in T2 that does not
-satisfy the join condition with any row in T1, a joined row is added with
-null values in columns of T1. This is the converse of a left join: the result
-table will always have a row for each row in T2.
+.. literalinclude:: /../libms-db/libms.sql
+    :language: postgresql
+    :start-after: -- label: ddl-member
+    :end-before: -- label:
 
-.. code-block:: sql
-    :caption: Right join
+.. rubric:: Many-to-many
 
-    SELECT p.title, a.name
-    FROM poem p
-             RIGHT JOIN author a on p.author_id = a.id;
+In relational database, two table have many-to-many relationship if each row
+in one table can reference multiple rows in another table, and vice versa.
+For example table ``book`` may contain records for books authored by many
+``authors``. On the other hand author can write multiple books. Implementing
+a many-to-many relationship requires creation of an intermediate table, that
+applies one-to-many relationship with both original tables.
 
-+------------------------+---------------+
-| title                  | name          |
-+========================+===============+
-| On the Field of Battle | Larysa Kosach |
-+------------------------+---------------+
-| Moses                  | Ivan Franko   |
-+------------------------+---------------+
-| The Forest Song        | Larysa Kosach |
-+------------------------+---------------+
-| The Singing Stones     | Larysa Kosach |
-+------------------------+---------------+
-| My Thoughts            | Ivan Franko   |
-+------------------------+---------------+
-| null                   | John Doe      |
-+------------------------+---------------+
-
-FULL OUTER JOIN
----------------
-
-First, an inner join is performed. Then, for each row in T1 that does not
-satisfy the join condition with any row in T2, a joined row is added with
-null values in columns of T2. Also, for each row of T2 that does not satisfy
-the join condition with any row in T1, a joined row with null values in
-the columns of T1 is added.
-
-.. code-block:: sql
-    :caption: Full join
-
-    SELECT p.title, a.name
-    FROM poem p
-             FULL JOIN author a on p.author_id = a.id;
-
-+------------------------+---------------+
-| title                  | name          |
-+========================+===============+
-| On the Field of Battle | Larysa Kosach |
-+------------------------+---------------+
-| Moses                  | Ivan Franko   |
-+------------------------+---------------+
-| The Forest Song        | Larysa Kosach |
-+------------------------+---------------+
-| In the Catacombs       | null          |
-+------------------------+---------------+
-| The Singing Stones     | Larysa Kosach |
-+------------------------+---------------+
-| Ancient Fairy Tales    | null          |
-+------------------------+---------------+
-| My Thoughts            | Ivan Franko   |
-+------------------------+---------------+
-| To Shevchenko          | null          |
-+------------------------+---------------+
-| null                   | John Doe      |
-+------------------------+---------------+
+.. literalinclude:: /../libms-db/libms.sql
+    :language: postgresql
+    :start-after: -- label: ddl-book_author
+    :end-before: -- label:

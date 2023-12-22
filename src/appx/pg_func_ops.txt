@@ -1,0 +1,307 @@
+:orphan:
+
+Comparison
+==========
+
+Comparison predicates
+---------------------
+
+.. data:: datatype BETWEEN datatype AND datatype
+
+    Test if a value is within the range endpoints (inclusive)
+
+    .. code-block:: postgresql
+
+        2 BETWEEN 1 AND 3 -- true
+        2 BETWEEN 3 AND 1 -- false
+
+.. data:: datatype NOT BETWEEN datatype AND datatype
+
+    Not between (the negation of BETWEEN).
+
+    .. code-block:: postgresql
+
+        2 NOT BETWEEN 1 AND 3 -- false
+
+.. data:: datatype BETWEEN SYMMETRIC datatype AND datatype
+
+    Between, after sorting the two endpoint values.
+
+    .. code-block:: postgresql
+
+        2 BETWEEN SYMMETRIC 3 AND 1 -- true
+
+.. data:: datatype NOT BETWEEN SYMMETRIC datatype AND datatype
+
+    Not between, after sorting the two endpoint values.
+
+    .. code-block:: postgresql
+
+        2 NOT BETWEEN SYMMETRIC 3 AND 1 -- false
+
+.. data:: datatype IS DISTINCT FROM datatype
+
+    Not equal, treating null as a comparable value.
+
+    .. code-block:: postgresql
+
+        1 IS DISTINCT FROM NULL -- true (rather than NULL)
+        NULL IS DISTINCT FROM NULL -- false (rather than NULL)
+
+.. data:: datatype IS NOT DISTINCT FROM datatype
+
+    Equal, treating null as a comparable value.
+
+    .. code-block:: postgresql
+
+        1 IS NOT DISTINCT FROM NULL -- false (rather than NULL)
+        NULL IS NOT DISTINCT FROM NULL -- true (rather than NULL)
+
+.. data:: datatype IS NULL
+
+    Test whether value is null.
+
+    .. code-block:: postgresql
+
+        1.5 IS NULL -- false
+
+.. data:: datatype IS NOT NULL
+
+    Test whether value is not null.
+
+    .. code-block:: postgresql
+
+        'null' IS NOT NULL -- true
+
+.. data:: datatype ISNULL
+
+    Test whether value is null (nonstandard syntax).
+
+.. data:: datatype NOTNULL
+
+    Test whether value is not null (nonstandard syntax).
+
+.. data:: boolean IS TRUE
+
+    Test whether boolean expression yields true.
+
+    .. code-block:: postgresql
+
+        true IS TRUE -- true
+        NULL::boolean IS TRUE -- false (rather than NULL)
+
+.. data:: boolean IS NOT TRUE
+
+    Test whether boolean expression yields false or unknown.
+
+    .. code-block:: postgresql
+
+        true IS NOT TRUE -- false
+        NULL::boolean IS NOT TRUE -- true (rather than NULL)
+
+.. data:: boolean IS FALSE
+
+    Test whether boolean expression yields false.
+
+    .. code-block:: postgresql
+
+        true IS FALSE -- false
+        NULL::boolean IS FALSE -- false (rather than NULL)
+
+.. data:: boolean IS NOT FALSE
+
+    Test whether boolean expression yields true or unknown.
+
+    .. code-block:: postgresql
+
+        true IS NOT FALSE -- true
+        NULL::boolean IS NOT FALSE -- true (rather than NULL)
+
+.. data:: boolean IS UNKNOWN
+
+    Test whether boolean expression yields unknown.
+
+    .. code-block:: postgresql
+
+        true IS UNKNOWN -- false
+        NULL::boolean IS UNKNOWN -- true (rather than NULL)
+
+.. data:: boolean IS NOT UNKNOWN
+
+    Test whether boolean expression yields true or false.
+
+    .. code-block:: postgresql
+
+        true IS NOT UNKNOWN -- true
+        NULL::boolean IS NOT UNKNOWN -- false (rather than NULL)
+
+Comparison functions
+--------------------
+
+.. function:: num_nonnulls(VARIADIC "any")
+
+    Returns the number of non-null arguments
+
+.. code-block:: postgresql
+
+    SELECT num_nonnulls(1, NULL, 2) -- return 2
+
+.. function:: num_nulls(VARIADIC "any")
+
+    Returns the number of null arguments
+
+.. code-block:: postgresql
+
+    SELECT num_nulls(1, NULL, 2) -- return 1
+
+Mathematical functions and operators
+====================================
+
+.. data:: numeric_type + numeric_type
+
+    Addition
+
+    .. code-block:: sql
+
+        SELECT 2 + 3 -- returns 5
+
+.. data:: + numeric_type
+
+    Unary plus (no operation)
+
+    .. code-block:: sql
+
+        SELECT + 3.5 -- returns 3.5
+
+.. data:: numeric_type - numeric_type
+
+    Subtraction
+
+    .. code-block:: sql
+
+        SELECT 2 - 3 -- returns -1
+
+.. data:: - numeric_type
+
+    Negation
+
+    .. code-block:: sql
+
+        SELECT - (-4) -- returns 4
+
+.. data:: numeric_type * numeric_type
+
+    Multiplication
+
+    .. code-block:: sql
+
+        SELECT 2 * 3 -- returns 6
+
+.. data:: numeric_type / numeric_type
+
+    Division (for integral types, division truncates the result towards zero)
+
+    .. code-block:: sql
+
+        SELECT 5.0 / 2 -- returns 2.5000000000000000
+
+        SELECT 5 / 2 -- returns 2
+
+        SELECT (-5) / 2 -- returns -2
+
+.. data:: numeric_type % numeric_type
+
+    Modulo (remainder); available for smallint, integer, bigint, and numeric
+
+    .. code-block:: sql
+
+        SELECT 5 % 4 -- returns 1
+
+.. data:: numeric ^ numeric
+.. data:: double precision ^ double precision
+
+    Exponentiation
+
+    .. code-block:: sql
+
+        SELECT 2 ^ 3 -- returns 8
+
+    Unlike typical mathematical practice, multiple uses of ``^`` will associate
+    left to right by default:
+
+    .. code-block:: sql
+
+        SELECT 2 ^ 3 ^ 3 -- returns 512
+        SELECT 2 ^ (3 ^ 3) -- returns 134217728
+
+.. data:: |/ double precision
+
+    Square root
+
+    .. code-block:: sql
+
+        SELECT |/ 25.0 -- returns 5
+
+.. data:: ||/ double precision
+
+    Cube root
+
+    .. code-block:: sql
+
+        SELECT ||/ 64.0 -- returns 4
+
+.. data:: @ numeric_type
+
+    Absolute value
+
+    .. code-block:: sql
+
+        SELECT @ -5.0 -- returns 5.0
+
+.. data:: integral_type & integral_type
+
+    Bitwise AND
+
+    .. code-block:: sql
+
+        SELECT 91 & 15 -- returns 11
+
+.. data:: integral_type | integral_type
+
+    Bitwise OR
+
+    .. code-block:: sql
+
+        SELECT 32 | 3 -- returns 35
+
+.. data:: integral_type # integral_type
+
+    Bitwise exclusive OR
+
+    .. code-block:: sql
+
+        SELECT 17 # 5 -- returns 20
+
+.. data:: ~ integral_type
+
+    Bitwise NOT
+
+    .. code-block:: sql
+
+        SELECT ~1 -- returns -2
+
+.. data:: integral_type << integer
+
+    Bitwise shift left
+
+    .. code-block:: sql
+
+        SELECT 1 << 4 -- returns 16
+
+.. data:: integral_type >> integer
+
+    Bitwise shift right
+
+    .. code-block:: sql
+
+        SELECT 8 >> 2 -- returns 2

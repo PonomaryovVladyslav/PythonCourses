@@ -1,0 +1,94 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2023, Python training course authors and contributors
+# This file is distributed under the same license as the Python Training
+# Course package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2023.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Python Training Course 2023.11.dev\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-12-16 13:55+0000\n"
+"PO-Revision-Date: 2023-12-22 14:19+0200\n"
+"Last-Translator: Serhii Horodilov <sgorodil@gmail.com>\n"
+"Language-Team: uk <LL@li.org>\n"
+"Language: uk\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Generated-By: Babel 2.13.1\n"
+"X-Generator: Poedit 3.4.1\n"
+
+#: ../../src/appx/postgres.txt:5
+msgid "PostgreSQL"
+msgstr "PostgreSQL"
+
+#: ../../src/appx/postgres.txt:8
+msgid "Overview"
+msgstr "Огляд"
+
+#: ../../src/appx/postgres.txt:10
+msgid ""
+"PostgreSQL is a powerful, open source object-relational database system that "
+"uses and extends the SQL language combined with many features that safely "
+"store and scale the most complicated data workloads."
+msgstr ""
+"PostgreSQL - це потужна об'єктно-реляційна система баз даних з відкритим "
+"вихідним кодом, яка використовує і розширює мову SQL у поєднанні з багатьма "
+"функціями, що дозволяють безпечно зберігати і масштабувати найскладніші "
+"структури даних."
+
+#: ../../src/appx/postgres.txt:14
+msgid ""
+"PostgreSQL has earned a strong reputation for its proven architecture, "
+"reliability, data integrity, robust feature set, extensibility, and the "
+"dedication of the open source community behind the software to consistently "
+"deliver performant and innovative solutions."
+msgstr ""
+"PostgreSQL завоювала міцну репутацію завдяки своїй перевіреній архітектурі, "
+"надійності, цілісності даних, потужному набору функцій, розширюваності та "
+"прагненню спільноти розробників програмного забезпечення з відкритим "
+"вихідним кодом постійно створювати ефективні та інноваційні рішення."
+
+#: ../../src/appx/postgres.txt:21
+msgid ""
+"PostgreSQL runs on **all major operating systems**, and is ACID compliant."
+msgstr ""
+"PostgreSQL працює на **всіх основних операційних системах** і сумісна з ACID."
+
+#: ../../src/appx/postgres.txt:25
+msgid "Installation"
+msgstr "Встановлення"
+
+#: ../../src/appx/postgres.txt:27
+msgid ""
+"If you are not able to install postgres to your local computer, it is "
+"possible to use binaries distributions. Refer :doc:`Local PostgreSQL server "
+"using binaries <./pg_local>` for more information."
+msgstr ""
+"Якщо ви не можете встановити postgres на ваш локальний комп'ютер, ви можете "
+"скористатися бінарними дистрибутивами. Зверніться до :doc:`Локальний сервер "
+"PostgreSQL за допомогою двійкових файлів <./pg_local>` для отримання "
+"додаткової інформації."
+
+#: ../../src/appx/postgres.txt:32
+msgid ""
+"PostgreSQL is available for download as ready-to-use packages or installers "
+"for various platforms, as well as a source code archive if you want to build "
+"it yourself."
+msgstr ""
+"PostgreSQL доступна для завантаження у вигляді готових до використання "
+"пакетів або інсталяторів для різних платформ, а також у вигляді архіву "
+"вихідного коду, якщо ви хочете зібрати її самостійно."
+
+#: ../../src/appx/postgres.txt:36
+msgid ""
+"Refer to `PostgreSQL downloads`_ page to get the installer for your "
+"operating system. Follow the installation process instruction to get "
+"postgres server running on your local computer."
+msgstr ""
+"Зверніться до сторінки `Завантаження PostgreSQL`_, щоб отримати інсталятор "
+"для вашої операційної системи. Дотримуйтесь інструкцій процесу встановлення, "
+"щоб запустити сервер postgres на вашому локальному комп'ютері."

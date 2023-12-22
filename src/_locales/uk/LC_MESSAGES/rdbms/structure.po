@@ -1,0 +1,409 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2023, Python training course authors and contributors
+# This file is distributed under the same license as the Python Training
+# Course package.
+# SERHII HORODILOV <sgorodil@gmail.com>
+msgid ""
+msgstr ""
+"Project-Id-Version: Python Training Course 2023.11.dev\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-12-16 13:55+0000\n"
+"PO-Revision-Date: 2023-12-21 04:01+0200\n"
+"Last-Translator: Serhii Horodilov <sgorodil@gmail.com>\n"
+"Language-Team: uk <LL@li.org>\n"
+"Language: uk\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Generated-By: Babel 2.13.1\n"
+"X-Generator: Poedit 3.4.1\n"
+
+#: ../../src/rdbms/structure.txt:3
+msgid "Structure of Data in RDBMS"
+msgstr "Структура даних в СУБД"
+
+#: ../../src/rdbms/structure.txt:5
+msgid ""
+"The database itself is a set of data stored in a computer. This data is "
+"usually structured in a way that makes them easily accessible. Relational "
+"databases use the structure that allows us to identify and access data in "
+"*relation* to another piece of data in the database."
+msgstr ""
+"База даних - це набір даних, що зберігається в комп'ютері. Ці дані зазвичай "
+"структуровані таким чином, щоб зробити їх легкодоступними. Реляційні бази "
+"даних використовують структуру, яка дозволяє ідентифікувати та отримувати "
+"доступ до даних у \"зв'язку\" з іншими даними в базі даних."
+
+#: ../../src/rdbms/structure.txt:10
+msgid ""
+"Understanding the basic structure of an RDBMS is crucial for effectively "
+"managing and querying data. In this section, we delve into the core "
+"components: *tables*, *rows*, and *columns*, and how they form the "
+"foundation of a relational database."
+msgstr ""
+"Розуміння базової структури СКБД має вирішальне значення для ефективного "
+"керування даними та запитами до них. У цьому розділі ми заглибимося в "
+"основні компоненти: *таблиці*, *рядки* та *стовпці*, а також те, як вони "
+"формують основу реляційної бази даних."
+
+#: ../../src/rdbms/structure.txt:20
+msgid "Tables"
+msgstr "Таблиці"
+
+#: ../../src/rdbms/structure.txt:25
+msgid "Tables are the building blocks."
+msgstr "Столи - це будівельні блоки."
+
+#: ../../src/rdbms/structure.txt:29
+msgid "Some documents may name tables as *relations*."
+msgstr "У деяких документах таблиці можуть називатися *зв'язками*."
+
+#: ../../src/rdbms/structure.txt:31
+msgid ""
+"A table in an RDBMS is akin to a spreadsheet. It is where data is stored and "
+"organized. Each table in a database represents a specific entity or concept, "
+"like ``Customers`` or ``Orders``."
+msgstr ""
+"Таблиця в СКБД схожа на електронну таблицю. Це місце, де зберігаються та "
+"організовуються дані. Кожна таблиця в базі даних представляє певну сутність "
+"або концепцію, наприклад, \"Клієнти\" або \"Замовлення\"."
+
+#: ../../src/rdbms/structure.txt:36
+msgid "Structure and purpose"
+msgstr "Структура та призначення"
+
+#: ../../src/rdbms/structure.txt:38
+msgid ""
+"A table consists of rows and columns, similar to a grid. All the rows and "
+"cols together are the data *related* to some subject or concept within a "
+"database."
+msgstr ""
+"Таблиця складається з рядків і стовпців, подібно до сітки. Всі рядки і "
+"стовпчики разом - це дані, \"пов'язані\" з певним предметом або поняттям у "
+"базі даних."
+
+#: ../../src/rdbms/structure.txt:41
+msgid ""
+"Tables hold data about a particular subject, such as all the information "
+"related to customer transactions, or books available in a local library."
+msgstr ""
+"Таблиці містять дані про певний предмет, наприклад, всю інформацію, "
+"пов'язану з транзакціями клієнтів, або книги, доступні в місцевій бібліотеці."
+
+#: ../../src/rdbms/structure.txt:45
+msgid "Naming conventions"
+msgstr "Умовні позначення"
+
+#: ../../src/rdbms/structure.txt:49
+msgid ""
+"The conventions below aren't related to tables only, but also they are used "
+"when naming databases and columns."
+msgstr ""
+"Умовні позначення, наведені нижче, стосуються не лише таблиць, вони також "
+"використовуються при іменуванні баз даних і стовпців."
+
+#: ../../src/rdbms/structure.txt:52
+msgid "Use nouns that describe the subject the best."
+msgstr "Використовуйте іменники, які найкраще описують предмет."
+
+#: ../../src/rdbms/structure.txt:53
+msgid "Use lowercase names, e.g. ``user`` instead of ``Users`` or ``USERS``."
+msgstr ""
+"Використовуйте малі літери, наприклад, ``user`` замість ``Users`` або "
+"``USERS``."
+
+#: ../../src/rdbms/structure.txt:54
+msgid ""
+"If the name must consist of two or more words, use underscore to connect "
+"them, e.g. ``snake_case``, ``user_account``."
+msgstr ""
+"Якщо назва складається з двох або більше слів, використовуйте підкреслення, "
+"щоб з'єднати їх, наприклад, ``nake_case``, ``user_account``."
+
+#: ../../src/rdbms/structure.txt:56
+msgid "Avoid use of dots, spaces, or dashes."
+msgstr "Уникайте використання крапок, пробілів або тире."
+
+#: ../../src/rdbms/structure.txt:57
+msgid ""
+"When naming objects, balance the objective of keeping names short and easy "
+"to use with the objective of making names as descriptive as possible."
+msgstr ""
+"Називаючи об'єкти, балансуйте між бажанням, щоб назви були короткими і "
+"простими у використанні, та бажанням, щоб вони були максимально описовими."
+
+#: ../../src/rdbms/structure.txt:59
+msgid "Singular names are preferred over plurals."
+msgstr "Імена в однині мають перевагу над множиною."
+
+#: ../../src/rdbms/structure.txt:62
+msgid "Rows: Individual Records"
+msgstr "Ряди: Індивідуальні записи"
+
+#: ../../src/rdbms/structure.txt:64
+msgid ""
+"Tables can have hundreds, thousands, sometimes even millions of rows of "
+"data. These rows are offer called *records*. Each row in a table represents "
+"a single entity of a subject. For example, ``book`` table represents an "
+"abstract book with all its attributes, like title, author etc. And a "
+"specific row within this table represents a concrete book."
+msgstr ""
+"Таблиці можуть містити сотні, тисячі, іноді навіть мільйони рядків даних. Ці "
+"рядки називаються *записами*. Кожен рядок у таблиці представляє одну "
+"сутність предмета. Наприклад, таблиця ``книга`` представляє абстрактну книгу "
+"з усіма її атрибутами, такими як назва, автор тощо. А конкретний рядок у цій "
+"таблиці представляє конкретну книгу."
+
+#: ../../src/rdbms/structure.txt:70
+msgid "Every row should ideally have something that make it unique."
+msgstr "В ідеалі кожен ряд повинен мати щось, що робить його унікальним."
+
+#: ../../src/rdbms/structure.txt:72
+msgid ""
+"Rows in a table can be linked to other rows in other tables or within the "
+"same table, maintaining relationships and data integrity."
+msgstr ""
+"Рядки в таблиці можуть бути пов'язані з іншими рядками в інших таблицях або "
+"в межах однієї таблиці, зберігаючи зв'язки і цілісність даних."
+
+#: ../../src/rdbms/structure.txt:76
+msgid "Columns: Attributes of Data"
+msgstr "Стовпці: Атрибути даних"
+
+#: ../../src/rdbms/structure.txt:78
+msgid ""
+"Columns in a table represent the attributes of the entity. For instance, "
+"``book`` table may contain columns ``title``, ``author``, ``publisher`` etc."
+msgstr ""
+"Стовпці у таблиці представляють атрибути сутності. Наприклад, таблиця "
+"``книга`` може містити стовпці ``назва``, ``автор``, ``видавництво`` тощо."
+
+#: ../../src/rdbms/structure.txt:81
+msgid "Each column has a defined data type, like ``integer``, ``string`` etc."
+msgstr ""
+"Кожен стовпець має певний тип даних, наприклад, ``ціле число``, ``рядок`` "
+"тощо."
+
+#: ../../src/rdbms/structure.txt:84
+msgid "Constraints"
+msgstr "Обмеження"
+
+#: ../../src/rdbms/structure.txt:86
+msgid ""
+"Columns can have constraints to enforce data integrity. For example, some "
+"columns cannot be empty, or store values under or above some threshold. "
+"Several constraints can be combined together."
+msgstr ""
+"Стовпці можуть мати обмеження для забезпечення цілісності даних. Наприклад, "
+"деякі стовпці не можуть бути порожніми або зберігати значення нижче або вище "
+"певного порогу. Кілька обмежень можна комбінувати разом."
+
+#: ../../src/rdbms/structure.txt:91
+msgid "Examples"
+msgstr "Приклади"
+
+#: ../../src/rdbms/structure.txt:93
+msgid "Authors table"
+msgstr "Таблиця авторів"
+
+#: ../../src/rdbms/structure.txt:1
+msgid "id"
+msgstr "id"
+
+#: ../../src/rdbms/structure.txt:1
+msgid "first_name"
+msgstr "first_name"
+
+#: ../../src/rdbms/structure.txt:1
+msgid "last_name"
+msgstr "last_name"
+
+#: ../../src/rdbms/structure.txt:1
+msgid "country"
+msgstr "country"
+
+#: ../../src/rdbms/structure.txt:1
+msgid "birthdate"
+msgstr "birthdate"
+
+#: ../../src/rdbms/structure.txt:1
+msgid "1"
+msgstr "1"
+
+#: ../../src/rdbms/structure.txt:1
+msgid "Letta"
+msgstr "Letta"
+
+#: ../../src/rdbms/structure.txt:1
+msgid "Casbolt"
+msgstr "Casbolt"
+
+#: ../../src/rdbms/structure.txt:1
+msgid "Poland"
+msgstr "Poland"
+
+#: ../../src/rdbms/structure.txt:1
+msgid "1947-04-18"
+msgstr "1947-04-18"
+
+#: ../../src/rdbms/structure.txt:1
+msgid "2"
+msgstr "2"
+
+#: ../../src/rdbms/structure.txt:1
+msgid "Robbyn"
+msgstr "Robbyn"
+
+#: ../../src/rdbms/structure.txt:1
+msgid "Attwoul"
+msgstr "Attwoul"
+
+#: ../../src/rdbms/structure.txt:1
+msgid "1954-10-17"
+msgstr "1954-10-17"
+
+#: ../../src/rdbms/structure.txt:1
+msgid "3"
+msgstr "3"
+
+#: ../../src/rdbms/structure.txt:1
+msgid "Hesther"
+msgstr "Hesther"
+
+#: ../../src/rdbms/structure.txt:1
+msgid "Kisby"
+msgstr "Kisby"
+
+#: ../../src/rdbms/structure.txt:1
+msgid "Ukraine"
+msgstr "Ukraine"
+
+#: ../../src/rdbms/structure.txt:1
+msgid "1941-07-21"
+msgstr "1941-07-21"
+
+#: ../../src/rdbms/structure.txt:1
+msgid "4"
+msgstr "4"
+
+#: ../../src/rdbms/structure.txt:1
+msgid "Gav"
+msgstr "Gav"
+
+#: ../../src/rdbms/structure.txt:1
+msgid "Jewett"
+msgstr "Jewett"
+
+#: ../../src/rdbms/structure.txt:1
+msgid "Czech Republic"
+msgstr "Czech Republic"
+
+#: ../../src/rdbms/structure.txt:1
+msgid "1988-02-05"
+msgstr "1988-02-05"
+
+#: ../../src/rdbms/structure.txt:1
+msgid "5"
+msgstr "5"
+
+#: ../../src/rdbms/structure.txt:1
+msgid "Jorrie"
+msgstr "Jorrie"
+
+#: ../../src/rdbms/structure.txt:1
+msgid "Klehyn"
+msgstr "Klehyn"
+
+#: ../../src/rdbms/structure.txt:1
+msgid "United States"
+msgstr "United States"
+
+#: ../../src/rdbms/structure.txt:1
+msgid "1941-08-07"
+msgstr "1941-08-07"
+
+#: ../../src/rdbms/structure.txt:1
+msgid "6"
+msgstr "6"
+
+#: ../../src/rdbms/structure.txt:1
+msgid "Genevieve"
+msgstr "Genevieve"
+
+#: ../../src/rdbms/structure.txt:1
+msgid "Ollington"
+msgstr "Ollington"
+
+#: ../../src/rdbms/structure.txt:1
+msgid "1921-08-27"
+msgstr "1921-08-27"
+
+#: ../../src/rdbms/structure.txt:1
+msgid "7"
+msgstr "7"
+
+#: ../../src/rdbms/structure.txt:1
+msgid "Carrissa"
+msgstr "Carrissa"
+
+#: ../../src/rdbms/structure.txt:1
+msgid "Arrandale"
+msgstr "Arrandale"
+
+#: ../../src/rdbms/structure.txt:1
+msgid "United Kingdom"
+msgstr "United Kingdom"
+
+#: ../../src/rdbms/structure.txt:1
+msgid "1982-08-20"
+msgstr "1982-08-20"
+
+#: ../../src/rdbms/structure.txt:1
+msgid "8"
+msgstr "8"
+
+#: ../../src/rdbms/structure.txt:1
+msgid "Josepha"
+msgstr "Josepha"
+
+#: ../../src/rdbms/structure.txt:1
+msgid "Dominichelli"
+msgstr "Dominichelli"
+
+#: ../../src/rdbms/structure.txt:1
+msgid "1976-12-03"
+msgstr "1976-12-03"
+
+#: ../../src/rdbms/structure.txt:1
+msgid "9"
+msgstr "9"
+
+#: ../../src/rdbms/structure.txt:1
+msgid "Ario"
+msgstr "Ario"
+
+#: ../../src/rdbms/structure.txt:1
+msgid "Hepher"
+msgstr "Hepher"
+
+#: ../../src/rdbms/structure.txt:1
+msgid "2003-10-11"
+msgstr "2003-10-11"
+
+#: ../../src/rdbms/structure.txt:1
+msgid "10"
+msgstr "10"
+
+#: ../../src/rdbms/structure.txt:1
+msgid "Walker"
+msgstr "Walker"
+
+#: ../../src/rdbms/structure.txt:1
+msgid "Grolmann"
+msgstr "Grolmann"
+
+#: ../../src/rdbms/structure.txt:1
+msgid "1964-02-17"
+msgstr "1964-02-17"

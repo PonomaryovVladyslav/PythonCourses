@@ -1,0 +1,38 @@
+.. _PostgreSQL downloads: https://www.postgresql.org/download/
+
+###############################################################################
+                                  PostgreSQL
+###############################################################################
+
+Overview
+========
+
+PostgreSQL is a powerful, open source object-relational database system that
+uses and extends the SQL language combined with many features that safely store
+and scale the most complicated data workloads.
+
+PostgreSQL has earned a strong reputation for its proven architecture,
+reliability, data integrity, robust feature set, extensibility, and the
+dedication of the open source community behind the software to consistently
+deliver performant and innovative solutions.
+
+.. todo: add ref to acid document
+
+PostgreSQL runs on **all major operating systems**, and is ACID
+compliant.
+
+Installation
+============
+
+If you are not able to install postgres to your local computer, it is
+possible to use binaries distributions.
+Refer :doc:`Local PostgreSQL server using binaries <./pg_local>` for
+more information.
+
+PostgreSQL is available for download as ready-to-use packages or installers
+for various platforms, as well as a source code archive if you want to build
+it yourself.
+
+Refer to `PostgreSQL downloads`_ page to get the installer for your operating
+system. Follow the installation process instruction to get postgres server
+running on your local computer.

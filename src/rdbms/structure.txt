@@ -1,0 +1,107 @@
+**************************
+Structure of Data in RDBMS
+**************************
+
+The database itself is a set of data stored in a computer. This data is usually
+structured in a way that makes them easily accessible. Relational databases
+use the structure that allows us to identify and access data in *relation* to
+another piece of data in the database.
+
+Understanding the basic structure of an RDBMS is crucial for effectively
+managing and querying data. In this section, we delve into the core components:
+*tables*, *rows*, and *columns*, and how they form the foundation of
+a relational database.
+
+.. contents::
+   :local:
+   :depth: 2
+
+Tables
+======
+
+..  in case updates are required - refer to documentation
+    https://www.postgresql.org/docs/current/ddl-basics.html
+
+Tables are the building blocks.
+
+.. note::
+
+    Some documents may name tables as *relations*.
+
+A table in an RDBMS is akin to a spreadsheet. It is where data is stored and
+organized. Each table in a database represents a specific entity or concept,
+like ``Customers`` or ``Orders``.
+
+Structure and purpose
+---------------------
+
+A table consists of rows and columns, similar to a grid. All the rows and cols
+together are the data *related* to some subject or concept within a database.
+
+Tables hold data about a particular subject, such as all the information
+related to customer transactions, or books available in a local library.
+
+Naming conventions
+------------------
+
+.. important::
+
+    The conventions below aren't related to tables only, but also they are
+    used when naming databases and columns.
+
+-   Use nouns that describe the subject the best.
+-   Use lowercase names, e.g. ``user`` instead of ``Users`` or ``USERS``.
+-   If the name must consist of two or more words, use underscore to connect
+    them, e.g. ``snake_case``, ``user_account``.
+-   Avoid use of dots, spaces, or dashes.
+-   When naming objects, balance the objective of keeping names short and easy
+    to use with the objective of making names as descriptive as possible.
+-   Singular names are preferred over plurals.
+
+Rows: Individual Records
+========================
+
+Tables can have hundreds, thousands, sometimes even millions of rows of data.
+These rows are offer called *records*. Each row in a table represents a single
+entity of a subject. For example, ``book`` table represents an abstract book
+with all its attributes, like title, author etc. And a specific row within this
+table represents a concrete book.
+
+Every row should ideally have something that make it unique.
+
+Rows in a table can be linked to other rows in other tables or within the same
+table, maintaining relationships and data integrity.
+
+Columns: Attributes of Data
+===========================
+
+Columns in a table represent the attributes of the entity. For instance,
+``book`` table may contain columns ``title``, ``author``, ``publisher`` etc.
+
+Each column has a defined data type, like ``integer``, ``string`` etc.
+
+Constraints
+-----------
+
+Columns can have constraints to enforce data integrity. For example, some
+columns cannot be empty, or store values under or above some threshold.
+Several constraints can be combined together.
+
+Examples
+========
+
+.. csv-table:: Authors table
+    :header-rows: 1
+    :stub-columns: 1
+
+    id,first_name,last_name,country,birthdate
+    1,Letta,Casbolt,Poland,1947-04-18
+    2,Robbyn,Attwoul,Poland,1954-10-17
+    3,Hesther,Kisby,Ukraine,1941-07-21
+    4,Gav,Jewett,Czech Republic,1988-02-05
+    5,Jorrie,Klehyn,United States,1941-08-07
+    6,Genevieve,Ollington,United States,1921-08-27
+    7,Carrissa,Arrandale,United Kingdom,1982-08-20
+    8,Josepha,Dominichelli,Poland,1976-12-03
+    9,Ario,Hepher,Ukraine,2003-10-11
+    10,Walker,Grolmann,Poland,1964-02-17

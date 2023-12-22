@@ -1,0 +1,279 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2023, Python training course authors and contributors
+# This file is distributed under the same license as the Python Training
+# Course package.
+# SERHII HORODILOV <sgorodil@gmail.com>
+msgid ""
+msgstr ""
+"Project-Id-Version: Python Training Course 2023.11.dev\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-12-16 13:55+0000\n"
+"PO-Revision-Date: 2023-12-21 03:53+0200\n"
+"Last-Translator: Serhii Horodilov <sgorodil@gmail.com>\n"
+"Language-Team: uk <LL@li.org>\n"
+"Language: uk\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Generated-By: Babel 2.13.1\n"
+"X-Generator: Poedit 3.4.1\n"
+
+#: ../../src/rdbms/dml.txt:-1
+#, fuzzy
+msgid "Data manipulation language, DML"
+msgstr "Мова маніпулювання даними, DML"
+
+#: ../../src/rdbms/dml.txt:-1
+#, fuzzy
+msgid "Serhii Horodilov"
+msgstr "Serhii Horodilov"
+
+#: ../../src/rdbms/dml.txt:-1
+#, fuzzy
+msgid "sql, db, database, dml, insert, update, delete"
+msgstr "sql, db, база даних, dml, вставка, оновлення, видалення"
+
+#: ../../src/rdbms/dml.txt:8
+#, fuzzy
+msgid "Data Manipulation Language"
+msgstr "Мова маніпулювання даними"
+
+#: ../../src/rdbms/dml.txt:10
+#, fuzzy
+msgid ""
+":abbr:`DML (Data Manipulation Language)` is a subset of SQL used for adding, "
+"updating, and deleting data within database tables."
+msgstr ""
+"abbr:`DML (Data Manipulation Language) - це підмножина мови SQL, яка "
+"використовується для додавання, оновлення та видалення даних у таблицях бази "
+"даних."
+
+#: ../../src/rdbms/dml.txt:13
+#, fuzzy
+msgid "``SELECT`` used to query data from the database"
+msgstr "``SELECT`` використовується для запиту даних з бази даних"
+
+#: ../../src/rdbms/dml.txt:14
+#, fuzzy
+msgid "``INSERT`` used to insert new data into a table"
+msgstr "``INSERT`` використовується для вставки нових даних у таблицю"
+
+#: ../../src/rdbms/dml.txt:15
+#, fuzzy
+msgid "``UPDATE`` used to modify existing data"
+msgstr "''UPDATE'' використовується для зміни існуючих даних"
+
+#: ../../src/rdbms/dml.txt:16
+#, fuzzy
+msgid "``DELETE`` used to remove data from a table"
+msgstr "``DELETE`` використовується для видалення даних з таблиці"
+
+#: ../../src/rdbms/dml.txt:23
+#, fuzzy
+msgid "Creating new records"
+msgstr "Створення нових записів"
+
+#: ../../src/rdbms/dml.txt:25
+#, fuzzy
+msgid ""
+"When a table is created, it contains no data. Inserting data will populate a "
+"table with values. Data is inserted one row at a time. You can also insert "
+"multiple rows with a single command. But it impossible to insert something "
+"that is not a complete row."
+msgstr ""
+"Коли таблицю створено, вона не містить даних. Вставлення даних заповнить "
+"таблицю значеннями. Дані вставляються по одному рядку за раз. Ви також "
+"можете вставити кілька рядків за допомогою однієї команди. Але неможливо "
+"вставити щось, що не є повним рядком."
+
+#: ../../src/rdbms/dml.txt:30
+#, fuzzy
+msgid "To create a new row use ``INSERT`` command."
+msgstr "Для створення нового рядка використовується команда ``INSERT``."
+
+#: ../../src/rdbms/dml.txt:32
+#, fuzzy
+msgid ""
+"The data values are listed in the order in which the columns appear in the "
+"table, separated by commas. This syntax has the drawback that you need to "
+"know the order of the columns in the table. To avoid this you can also list "
+"the columns explicitly. If you don't have values for all the columns, you "
+"can omit some of them. In that case, the columns will be filled with their "
+"default values."
+msgstr ""
+"Значення даних перераховані в порядку, в якому стовпці з'являються в "
+"таблиці, розділені комами. Цей синтаксис має той недолік, що вам потрібно "
+"знати порядок стовпців у таблиці. Щоб уникнути цього, ви також можете "
+"перерахувати стовпці явно. Якщо ви не маєте значень для всіх стовпців, ви "
+"можете опустити деякі з них. У цьому випадку стовпці будуть заповнені "
+"значеннями за замовчуванням."
+
+#: ../../src/rdbms/dml.txt:39
+#, fuzzy
+msgid "Create publisher table"
+msgstr "Створення таблиці видавців"
+
+#: ../../src/rdbms/dml.txt:45
+#, fuzzy
+msgid "Insert data to publisher table"
+msgstr "Вставка даних до таблиці видавця"
+
+#: ../../src/rdbms/dml.txt:51
+#, fuzzy
+msgid "You can insert multiple rows in a single command."
+msgstr "Ви можете вставити кілька рядків однією командою."
+
+#: ../../src/rdbms/dml.txt:53
+#, fuzzy
+msgid "Create author table"
+msgstr "Створення таблиці авторів"
+
+#: ../../src/rdbms/dml.txt:59
+#, fuzzy
+msgid "Inserting multiple values at a time"
+msgstr "Вставлення декількох значень одночасно"
+
+#: ../../src/rdbms/dml.txt:66
+#, fuzzy
+msgid ""
+"There is a reference to the \"publisher\" table present below. Think of it "
+"like placing the publisher information directly into \"book\" table for now."
+msgstr ""
+"Нижче є посилання на таблицю \"видавництво\". Подумайте про це, як про "
+"розміщення інформації про видавця безпосередньо в таблиці \"книга\"."
+
+#: ../../src/rdbms/dml.txt:69
+#, fuzzy
+msgid "Create book table"
+msgstr "Створити таблицю книг"
+
+#: ../../src/rdbms/dml.txt:75
+#, fuzzy
+msgid "Inserting records from file"
+msgstr "Вставка записів з файлу"
+
+#: ../../src/rdbms/dml.txt:82
+#, fuzzy
+msgid "Modifying records"
+msgstr "Змінення записів"
+
+#: ../../src/rdbms/dml.txt:84
+#, fuzzy
+msgid ""
+"The modification of data that is already in the database is referred as "
+"updating. To update the existing rows, use the ``UPDATE`` command. This "
+"requires three pieces of information:"
+msgstr ""
+"Зміна даних, які вже є в базі даних, називається оновленням. Щоб оновити "
+"існуючі рядки, скористайтеся командою ``UPDATE``. Для цього потрібні три "
+"частини інформації:"
+
+#: ../../src/rdbms/dml.txt:88
+#, fuzzy
+msgid "The name of the table and column(s) to update"
+msgstr "Назва таблиці та стовпця(ів) для оновлення"
+
+#: ../../src/rdbms/dml.txt:89
+#, fuzzy
+msgid "The new value of the column(s)"
+msgstr "Нове значення стовпця(ів)"
+
+#: ../../src/rdbms/dml.txt:90
+#, fuzzy
+msgid "Which row(s) to update"
+msgstr "Який(і) рядок(и) оновити"
+
+#: ../../src/rdbms/dml.txt:96
+#, fuzzy
+msgid ""
+"This might cause zero, one, or many rows to be updated. The update syntax is "
+"pretty straightforward. First the key word ``UPDATE`` followed by the table "
+"name. Next is the key word ``SET`` followed by the column name, an equal "
+"sign, and the new column value. The new column value can be any scalar "
+"expression, not just a constant. More than one column can be updated at a "
+"time by listing more than one assignment in the ``SET`` clause."
+msgstr ""
+"Це може призвести до оновлення нульового, одного або багатьох рядків. "
+"Синтаксис оновлення досить простий. Спочатку ключове слово ``UPDATE``, за "
+"яким слідує назва таблиці. Далі йде ключове слово ``SET``, за яким слідує "
+"назва стовпця, знак рівності і нове значення стовпця. Нове значення стовпця "
+"може бути будь-яким скалярним виразом, а не лише константою. Більш ніж один "
+"стовпчик можна оновити за один раз, вказавши більше ніж одне присвоєння у "
+"реченні ``SET``."
+
+#: ../../src/rdbms/dml.txt:105
+#, fuzzy
+msgid ""
+"``WHERE`` clause is optional, but it limits the rows affected by ``UPDATE`` "
+"command. If there is no limitations all the records within a table will be "
+"updated with new values."
+msgstr ""
+"речення ``WHERE`` є необов'язковим, але воно обмежує рядки, на які впливає "
+"команда ``UPDATE``. Якщо обмежень не вказано, то всі записи в таблиці буде "
+"оновлено новими значеннями."
+
+#: ../../src/rdbms/dml.txt:114
+#, fuzzy
+msgid "Removing data"
+msgstr "Видалення даних"
+
+#: ../../src/rdbms/dml.txt:116
+#, fuzzy
+msgid ""
+"So far we have explained how to add data to tables and how to change data. "
+"What remains to discuss how to remove data that is no longer needed. Just as "
+"adding data is only possible in whole rows, you can only remove entire rows "
+"from a table."
+msgstr ""
+"Досі ми пояснювали, як додавати дані до таблиць і як їх змінювати. "
+"Залишилося обговорити, як видалити дані, які більше не потрібні. Так само, "
+"як додавання даних можливе лише цілими рядками, ви можете видаляти дані з "
+"таблиці лише цілими рядками."
+
+#: ../../src/rdbms/dml.txt:121
+#, fuzzy
+msgid ""
+"You use ``DELETE`` command to remove rows; the syntax is very similar to the "
+"``UPDATE`` command."
+msgstr ""
+"Для видалення рядків використовується команда ``DELETE``, синтаксис якої "
+"дуже схожий на команду ``UPDATE``."
+
+#: ../../src/rdbms/dml.txt:128
+#, fuzzy
+msgid "If you simply write:"
+msgstr "Якщо просто писати:"
+
+#: ../../src/rdbms/dml.txt:134
+#, fuzzy
+msgid "then all rows in the table will be deleted!"
+msgstr "то всі рядки в таблиці будуть видалені!"
+
+#: ../../src/rdbms/dml.txt:137
+#, fuzzy
+msgid "Returning data from modified rows"
+msgstr "Повернення даних зі змінених рядків"
+
+#: ../../src/rdbms/dml.txt:139
+#, fuzzy
+msgid ""
+"Sometimes it is useful to obtain data from modified rows while they are "
+"being manipulated. The ``INSERT``, ``UPDATE`` and ``DELETE`` commands all "
+"have an optional ``RETURNING`` clause that supports this. Use of "
+"``RETURNING`` avoids performing an extra database query to collect the data, "
+"and is especially valuable when it would otherwise be difficult to identify "
+"the modified rows reliably."
+msgstr ""
+"Іноді буває корисно отримати дані зі змінених рядків під час маніпуляцій з "
+"ними. Команди ``INSERT``, ``UPDATE`` і ``DELETE`` мають необов'язковий "
+"параметр ``RETURNING``, який підтримує цю можливість. Використання "
+"``ПОВЕРНЕННЯ`` дозволяє уникнути виконання додаткового запиту до бази даних "
+"для збору даних і є особливо цінним, коли інакше було б важко достовірно "
+"ідентифікувати змінені рядки."
+
+#: ../../src/rdbms/dml.txt:155
+#, fuzzy
+msgid "For example the query above provides the identifiers to new rows."
+msgstr "Наприклад, наведений вище запит надає ідентифікатори для нових рядків."

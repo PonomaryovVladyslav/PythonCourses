@@ -1,0 +1,613 @@
+***********************
+Functions and operators
+***********************
+
+Logical and comparison operators
+================================
+
+The usual logical operators are still available:
+
+.. code-block:: sql
+
+    boolean AND boolean -> boolean
+    boolean OR boolean -> boolean
+    NOT boolean -> boolean
+
+SQL uses a three-valued logic system with ``true``, ``false``, and ``null``,
+which represents *unknown*.
+
+.. table:: Truth table
+
+    +-----------+-----------+-------------+------------+-----------+
+    | ``a``     | ``b``     | ``a AND b`` | ``a OR b`` | ``NOT a`` |
+    +===========+===========+=============+============+===========+
+    | ``TRUE``  | ``TRUE``  | ``TRUE``    | ``TRUE``   | ``FALSE`` |
+    +-----------+-----------+-------------+------------+-----------+
+    | ``TRUE``  | ``FALSE`` | ``FALSE``   | ``TRUE``   | ``FALSE`` |
+    +-----------+-----------+-------------+------------+-----------+
+    | ``TRUE``  | ``NULL``  | ``NULL``    | ``TRUE``   | ``FALSE`` |
+    +-----------+-----------+-------------+------------+-----------+
+    | ``FALSE`` | ``FALSE`` | ``FALSE``   | ``FALSE``  | ``TRUE``  |
+    +-----------+-----------+-------------+------------+-----------+
+    | ``FALSE`` | ``NULL``  | ``FALSE``   | ``NULL``   | ``TRUE``  |
+    +-----------+-----------+-------------+------------+-----------+
+    | ``NULL``  | ``NULL``  | ``NULL``    | ``NULL``   | ``NULL``  |
+    +-----------+-----------+-------------+------------+-----------+
+
+The operators ``AND`` and ``OR`` are commutative, that is, you can switch
+the left and right operands without affecting the result. However, it is not
+guaranteed that the left operand is evaluated before the right operand.
+
+Comparison operators
+--------------------
+
+The usual comparison operators are available.
+
++-------------------------------------+--------------------------+
+| Operator                            | Description              |
++=====================================+==========================+
+| ``datatype < datatype -> boolean``  | Less than                |
++-------------------------------------+--------------------------+
+| ``datatype > datatype -> boolean``  | Greater than             |
++-------------------------------------+--------------------------+
+| ``datatype <= datatype -> boolean`` | Less than or equal to    |
++-------------------------------------+--------------------------+
+| ``datatype >= datatype -> boolean`` | Greater than or equal to |
++-------------------------------------+--------------------------+
+| ``datatype = datatype -> boolean``  | Equal                    |
++-------------------------------------+--------------------------+
+| ``datatype <> datatype -> boolean`` | Not equal                |
++-------------------------------------+--------------------------+
+| ``datatype != datatype -> boolean`` | Not equal                |
++-------------------------------------+--------------------------+
+
+Mathematical functions and operators
+====================================
+
+Mathematical operators and provided for many PostgreSQL types.
+
++-----------------------------------------+-----------------------------------+
+| Operation                               | Description                       |
++=========================================+===================================+
+| ``numeric_type + numeric_type``         | Addition                          |
++-----------------------------------------+-----------------------------------+
+| ``+ numeric_type``                      | Unary plus (no operation)         |
++-----------------------------------------+-----------------------------------+
+| ``numeric_type - numeric_type``         | Subtraction                       |
++-----------------------------------------+-----------------------------------+
+| ``- numeric_type``                      | Negation                          |
++-----------------------------------------+-----------------------------------+
+| ``numeric_type * numeric_type``         | Multiplication                    |
++-----------------------------------------+-----------------------------------+
+| ``numeric_type / numeric_type``         | Division (for integral types,     |
+|                                         | division truncates the result     |
+|                                         | towards zero)                     |
++-----------------------------------------+-----------------------------------+
+| ``numeric_type % numeric_type``         | Modulo (remainder); available for |
+|                                         | ``smallint``, ``integer``,        |
+|                                         | ``bigint``, and ``numeric``       |
++-----------------------------------------+-----------------------------------+
+| ``numeric ^ numeric``                   | Exponentiation                    |
+| ``double precision ^ double precision`` |                                   |
++-----------------------------------------+-----------------------------------+
+| ``|/ double precision``                 | Square root                       |
++-----------------------------------------+-----------------------------------+
+| ``||/ double precision``                | Cube root                         |
++-----------------------------------------+-----------------------------------+
+| ``@ numeric_type``                      | Absolute value                    |
++-----------------------------------------+-----------------------------------+
+| ``integral_type & integral_type``       | Bitwise AND                       |
++-----------------------------------------+-----------------------------------+
+| ``integral_type | integral_type``       | Bitwise OR                        |
++-----------------------------------------+-----------------------------------+
+| ``integral_type # integral_type``       | Bitwise exclusive OR              |
++-----------------------------------------+-----------------------------------+
+| ``~ integral_type``                     | Bitwise NOT                       |
++-----------------------------------------+-----------------------------------+
+| ``integral_type << integer``            | Bitwise shift left                |
++-----------------------------------------+-----------------------------------+
+| ``integral_type >> integer``            | Bitwise shift right               |
++-----------------------------------------+-----------------------------------+
+
+String functions
+================
+
+*Strings* in this context include values of the types ``character``, ``text``
+and ``character varying``.
+
+.. function:: text || text -> text
+
+    Concatenates the two strings.
+
+    ``'Post' || 'greSQL' -> PostgreSQL``
+
+.. function:: text || anynonarray -> text
+              anynonarray || text -> text
+
+    Converts the non-string input to text, then concatenates the two strings.
+    (The non-string input cannot be of an array type, because that would create
+    ambiguity with the array ``||`` operators. If you want to concatenate
+    an array's text equivalent, cast it to text explicitly.)
+
+    ``'Value: ' || 42 -> Value: 42``
+
+.. function:: char_length ( text ) -> integer
+              character_length ( text ) -> integer
+
+    Returns number of characters in the string.
+
+    ``char_length('josé') -> 4``
+
+.. function:: lower ( text ) -> text
+
+    Converts the string to all lower case, according to the rules of
+    the database's locale.
+
+    ``lower('TOM') -> tom``
+
+.. function:: ltrim ( string text [, characters text ] ) -> text
+
+    Removes the longest string containing only characters in characters
+    (a space by default) from the start of string.
+
+    ``ltrim('zzzytest', 'xyz') -> test``
+
+.. function:: rtrim ( string text [, characters text ] ) -> text
+
+    Removes the longest string containing only characters in characters
+    (a space by default) from the end of string.
+
+    ``rtrim('testxxzx', 'xyz') -> test``
+
+.. function:: trim ( [ LEADING | TRAILING | BOTH ] [ characters text ] FROM string text ) -> text
+
+    Removes the longest string containing only characters in characters
+    (a space by default) from the start, end, or both ends
+    (BOTH is the default) of string.
+
+    ``trim(both 'xyz' from 'yxTomxx') -> Tom``
+
+Pattern matching
+----------------
+
+There are three separate approaches to pattern matching provided by PostgreSQL:
+the traditional ``LIKE`` operator, the most recent ``SIMILAR TO`` operator, and
+POSIX-style regular expressions.
+
+This section will focus on ``LIKE`` operator only.
+
+::
+
+    string LIKE pattern [ESCAPE escape-character]
+    string NOT LIKE pattern [ESCAPE escape-character]
+
+The ``LIKE`` expression returns ``true`` if the ``string`` matches the supplied
+``pattern`` (as expected, the ``NOT LIKE`` expression returns ``false`` if
+``LIKE`` returns ``true``, and vice versa).
+
+If ``pattern`` does not contain percent signs or underscores, then the pattern
+only represents the string itself; in than case ``LIKE`` acts like the equals
+operator. An underscore (``_``) in ``pattern`` stands for (matches) any single
+character; a percent sign (``%``) matches any sequence of zero or more
+characters.
+
+Some examples:
+
+::
+
+    'abc' LIKE 'abc'  -- true
+    'abc' LIKE 'a%'   -- true
+    'abc' LIKE '_b_'  -- true
+    'abc' LIKE 'c'    -- false
+
+``LIKE`` patterns matching always covers the entire string. Therefore, if it's
+desired to match a sequence anywhere within a string, the pattern must start
+and end with a percent sign.
+
+To match a literal underscore or percent sing without matching other characters
+the respective character in ``pattern`` must be preceded by the escape
+character. The default escape character is backslash but a different one can be
+selected by using the ``ESCAPE`` clause. To match the escape character itself,
+write two escape characters.
+
+The key word ``ILIKE`` can be used instead of ``LIKE`` to make the match
+case-insensitive according to the active locale. This is not in the SQL
+standard but is a PostgreSQL extension.
+
+Date/Time functions and operators
+=================================
+
+Extract
+-------
+
+.. function:: exctract(field FROM source)
+
+    The ``extract`` function retrieves subfields such as year or hour from
+    date/time value. The ``source`` must be a value expression of type
+    ``timestamp``, ``time``, or ``interval``. Expressions of type ``date``
+    are cast to ``timestamp`` and can therefore be used as well. ``field`` is
+    an identifier or string that selects what field to extract from the source
+    value. The extract function returns value of type ``numeric``.
+    The following are valid field names:
+    
+    -   ``centurty``
+    -   ``day``
+    -   ``decade``
+    -   ``dow``
+    -   ``doy``
+    -   ``epoch``
+    -   ``hour``
+    -   ``isodow``
+    -   ``isoyear``
+    -   ``julian``
+    -   ``microseconds``
+    -   ``millennium``
+    -   ``milliseconds``
+    -   ``minute``
+    -   ``month``
+    -   ``quarter``
+    -   ``second``
+    -   ``timezone``
+    -   ``timezone_hour``
+    -   ``timezone_minute``
+    -   ``week``
+    -   ``year``
+
+The ``date_part`` function is modeled on the traditional Ingres equivalent to
+the SQL-standard function ``extract``:
+
+.. function:: date_part('field', source)
+
+Current date/time
+-----------------
+
+PostgreSQL provides a number of functions that return values related to the
+current date and time. These SQL-standard functions all return values based on
+the start time of the current transaction:
+
+.. function:: CURRENT_DATE
+.. function:: CURRENT_TIME
+              CURRENT_TIME(precision)
+
+    Deliver current time value with time zone.
+    
+    :precision:
+        An optional parameter, which causes the result to be rounded to that
+        many fractional digits in the second field. Without a precision,
+        the result is given to the full available precision.
+
+.. function:: CURRENT_TIMESTAMP
+              CURRENT_TIMESTAMP(precision)
+
+    Deliver current timestamp value with time zone.
+
+    :precision:
+        An optional parameter, which causes the result to be rounded to that
+        many fractional digits in the second field. Without a precision,
+        the result is given to the full available precision.
+
+.. function:: LOCALTIME
+              LOCALTIME(precision)
+
+    Deliver current time value without time zone.
+
+    :precision:
+        An optional parameter, which causes the result to be rounded to that
+        many fractional digits in the second field. Without a precision,
+        the result is given to the full available precision.
+
+.. function:: LOCALTIMESTAMP
+              LOCALTIMESTAMP(precision)
+
+    Deliver current time value without time zone.
+
+    :precision:
+        An optional parameter, which causes the result to be rounded to that
+        many fractional digits in the second field. Without a precision,
+        the result is given to the full available precision.
+
+Formatting functions
+--------------------
+
+.. todo: move to its own section
+
+The PostgreSQL formatting functions provide a powerful set of tools for
+converting various  data types (date/time, integer, floatting point, numeric)
+to formatted strings and for converting from formatted strings to specific
+data types.
+
+These functions all follow a common calling convention: the first argument is
+the value to be formatted and the second argument is a template that defines
+the output or input format.
+
+.. function:: to_char ( timestamp, text ) → text
+              to_char ( timestamp with time zone, text ) → text
+
+    Converts time stamp to string according to the given format.
+
+    ``to_char(timestamp '2002-04-20 17:31:12.66', 'HH12:MI:SS') → 05:31:12``
+
+.. function:: to_char ( interval, text ) → text
+
+    Converts interval to string according to the given format.
+
+    ``to_char(interval '15h 2m 12s', 'HH24:MI:SS') → 15:02:12``
+
+.. function:: to_char ( numeric_type, text ) → text
+
+    Converts number to string according to the given format;
+    available for integer, bigint, numeric, real, double precision.
+
+    -   ``to_char(125, '999') → 125``
+    -   ``to_char(125.8::real, '999D9') → 125.8``
+    -   ``to_char(-125.8, '999D99S') → 125.80-``
+
+.. function:: to_date ( text, text ) → date
+
+    Converts string to date according to the given format.
+
+    ``to_date('05 Dec 2000', 'DD Mon YYYY') → 2000-12-05``
+
+.. function:: to_number ( text, text ) → numeric
+
+    Converts string to numeric according to the given format.
+
+    ``to_number('12,454.8-', '99G999D9S') → -12454.8``
+
+.. function:: to_timestamp ( text, text ) → timestamp with time zone
+
+    Converts string to time stamp according to the given format.
+
+    ``to_timestamp('05 Dec 2000', 'DD Mon YYYY') → 2000-12-05 00:00:00-05``
+
+.. todo: add template patterns for date/time formatting
+
+Conditional expressions
+=======================
+
+CASE
+----
+
+The SQL ``CASE`` expression is a generic conditional expression, similar to
+if/else statements in other programming languages.
+
+.. todo: add case example
+
+COALESCE
+--------
+
+The ``COALESCE`` function returns the first of its arguments that is not null.
+Null is returned only if all arguments are null. It is often used to substitute
+a default value for null values when data is retrieved for display:
+
+.. code-block:: postgresql
+
+    SELECT COALESCE(description, short_description, '(none)') ...
+
+This returns ``description`` if it is not null, otherwise ``short_description``
+if it is not null, otherwise ``(none)``.
+
+Like the ``CASE`` expression, ``COALESCE`` only evaluates the arguments that
+are needed to determine the result; that is, arguments to the right of the
+first non-null argument are not evaluated.
+
+NULLIF
+------
+
+.. code-block:: postgresql
+
+    NULLIF(value_1, value_2)
+
+The ``NULLIF`` function returns a null ``value_1`` equals ``value_2``;
+otherwise it returns ``value_1``. This can be used to perform the inverse
+operation of the ``COALESCE``.
+
+.. code-block:: postgresql
+
+    SELECT NULLIF(value, '(none)') ...
+
+In the example above, if ``value`` is ``(none)``, null is returned, otherwise
+the value of ``value`` is returned.
+
+The two arguments must be of comparable types.
+To be specific, they are compared exactly as if you had written
+``value_1 = value_2``, so there must be a suitable ``=`` operator available.
+
+The result has the same type as the first argument -- but there is a subtlety.
+What is actual returned is the first argument of the implied ``=`` operator,
+and in some cases that will have been promoted to match the second argument's
+type.
+
+Aggregate functions
+===================
+
+*Aggregate functions* compute a single result from a set of input values.
+There are lots of these, and different RDBMS implement different aggregation
+functions. In this section, we will focus on the most wide spread and often
+used aggregate functions only.
+
+The general schema of using is presented below:
+
+.. image:: /../assets/img/aggregate-function.svg
+
+Average value
+-------------
+
+.. function:: avg ( smallint ) -> numeric
+              avg ( integer ) -> numeric
+              avg ( bigint ) -> numeric
+              avg ( numeric ) -> numeric
+              avg ( real ) -> double precision
+              avg ( double precision ) -> double precision
+              avg ( interval ) -> interval
+
+    Computes the average (arithmetic mean) of all the non-null input values
+    within a group
+
+.. important::
+
+    SQLite implements ``avg`` function in a manner to return ``NULL`` if and
+    only if all the inputs are nulls. On the other hand PostgreSQL will raise
+    an error in this scenario.
+
+.. code-block:: postgresql
+
+    SELECT extract(year from date) as year,
+           extract(month from date) as month,
+           ceil(avg(amount)) as avg
+    FROM revenue
+    GROUP BY month, year
+    ORDER BY year, month
+    LIMIT 5;
+
++------+-------+-------+
+| year | month | avg   |
++======+=======+=======+
+| 2013 | 11    | 7798  |
++------+-------+-------+
+| 2013 | 12    | 6709  |
++------+-------+-------+
+| 2014 | 1     | 6523  |
++------+-------+-------+
+| 2014 | 2     | 6832  |
++------+-------+-------+
+| 2014 | 3     | 10218 |
++------+-------+-------+
+
+Count
+-----
+
+.. function:: count ( * ) -> bigint
+
+    Computes the number of input rows
+
+.. function:: count ( "any" ) -> bigint
+    :noindex:
+
+    Computes the number of input rows in which the input value is not null
+
+.. code-block:: postgresql
+
+    SELECT extract(year from date) as year,
+           extract(month from date) as month,
+           count(*)
+    FROM revenue
+    GROUP BY month, year
+    ORDER BY year, month
+    LIMIT 5;
+
++------+-------+-------+
+| year | month | count |
++======+=======+=======+
+| 2013 | 11    | 5     |
++------+-------+-------+
+| 2013 | 12    | 7     |
++------+-------+-------+
+| 2014 | 1     | 5     |
++------+-------+-------+
+| 2014 | 2     | 8     |
++------+-------+-------+
+| 2014 | 3     | 5     |
++------+-------+-------+
+
+Maximum value
+-------------
+
+.. function:: max ( see text ) -> same as input type
+
+    Computes the maximum of the non-null input values.
+    Available for any numeric, string, date/time or enum type.
+
+.. code-block:: postgresql
+
+    SELECT extract(year from date) as year,
+           extract(month from date) as month,
+           max(amount)
+    FROM revenue
+    GROUP BY month, year
+    ORDER BY year, month
+    LIMIT 5;
+
++------+-------+-------+
+| year | month | max   |
++======+=======+=======+
+| 2013 | 11    | 12383 |
++------+-------+-------+
+| 2013 | 12    | 12264 |
++------+-------+-------+
+| 2014 | 1     | 8853  |
++------+-------+-------+
+| 2014 | 2     | 12919 |
++------+-------+-------+
+| 2014 | 3     | 14661 |
++------+-------+-------+
+
+Minimum value
+-------------
+
+.. function:: min ( see text ) -> same as input type
+
+    Computes the minimum of the non-null inpout values.
+    Available for any numeric, string, date/time or enum type.
+
+.. code-block:: postgresql
+
+    SELECT extract(year from date) as year,
+           extract(month from date) as month,
+           min(amount)
+    FROM revenue
+    GROUP BY month, year
+    ORDER BY year, month
+    LIMIT 5;
+
++------+-------+------+
+| year | month | min  |
++======+=======+======+
+| 2013 | 11    | 3365 |
++------+-------+------+
+| 2013 | 12    | 3564 |
++------+-------+------+
+| 2014 | 1     | 2636 |
++------+-------+------+
+| 2014 | 2     | 3442 |
++------+-------+------+
+| 2014 | 3     | 2654 |
++------+-------+------+
+
+Sum of values
+-------------
+
+.. function:: sum ( smallint ) -> bigint
+              sum ( integer ) -> bigint
+              sum ( bigint ) -> numeric
+              sum ( numeric ) -> numeric
+              sum ( real ) -> real
+              sum ( double precision ) -> double precision
+              sum ( interval ) -> interval
+              sum ( money ) -> money
+
+    Computes the sum of the non-null values
+
+.. code-block:: postgresql
+
+    SELECT extract(year from date) as year,
+           extract(month from date) as month,
+           sum(amount)
+    FROM revenue
+    GROUP BY month, year
+    ORDER BY year, month
+    LIMIT 5;
+
++------+-------+-------+
+| year | month | sum   |
++======+=======+=======+
+| 2013 | 11    | 38988 |
++------+-------+-------+
+| 2013 | 12    | 46958 |
++------+-------+-------+
+| 2014 | 1     | 32611 |
++------+-------+-------+
+| 2014 | 2     | 54652 |
++------+-------+-------+
+| 2014 | 3     | 51087 |
++------+-------+-------+

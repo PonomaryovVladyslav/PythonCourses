@@ -1,0 +1,1298 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2023, Python training course authors and contributors
+# This file is distributed under the same license as the Python Training
+# Course package.
+# SERHII HORODILOV <sgorodil@gmail.com>
+msgid ""
+msgstr ""
+"Project-Id-Version: Python Training Course 2023.11.dev\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-12-22 13:15+0000\n"
+"PO-Revision-Date: 2023-12-22 15:15+0200\n"
+"Last-Translator: Serhii Horodilov <sgorodil@gmail.com>\n"
+"Language-Team: uk <LL@li.org>\n"
+"Language: uk\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Generated-By: Babel 2.12.1\n"
+"X-Generator: Poedit 3.4.1\n"
+
+#: ../../src/rdbms/datatypes.txt:3
+msgid "PostgreSQL RDBMS: Data types"
+msgstr "СУБД PostgreSQL: Типи даних"
+
+#: ../../src/rdbms/datatypes.txt:5
+msgid "PostgreSQL has a rich set of data types available to users."
+msgstr "PostgreSQL має багатий набір типів даних, доступних для користувачів."
+
+#: ../../src/rdbms/datatypes.txt:7
+msgid ""
+"Users can add new types to PostgreSQL using the ``CREATE TYPE`` command."
+msgstr ""
+"Користувачі можуть додавати нові типи до PostgreSQL за допомогою команди "
+"``CREATE TYPE``."
+
+#: ../../src/rdbms/datatypes.txt:9
+msgid "Custom data type definition"
+msgstr "Визначення користувацького типу даних"
+
+#: ../../src/rdbms/datatypes.txt:15 ../../src/rdbms/datatypes.txt:132
+#: ../../src/rdbms/datatypes.txt:163
+msgid "Name"
+msgstr "Назва"
+
+#: ../../src/rdbms/datatypes.txt:15
+msgid "Aliases"
+msgstr "Псевдоніми"
+
+#: ../../src/rdbms/datatypes.txt:15 ../../src/rdbms/datatypes.txt:132
+#: ../../src/rdbms/datatypes.txt:163 ../../src/rdbms/datatypes.txt:233
+#: ../../src/rdbms/datatypes.txt:274 ../../src/rdbms/datatypes.txt:305
+#: ../../src/rdbms/datatypes.txt:330
+msgid "Description"
+msgstr "Опис"
+
+#: ../../src/rdbms/datatypes.txt:17
+msgid "``bigint``"
+msgstr "``bigint``"
+
+#: ../../src/rdbms/datatypes.txt:17
+msgid "``int8``"
+msgstr "``int8``"
+
+#: ../../src/rdbms/datatypes.txt:17
+msgid "signed eight-byte integer"
+msgstr "знакове восьмибайтне ціле число"
+
+#: ../../src/rdbms/datatypes.txt:19
+msgid "``bigserial``"
+msgstr "``bigserial``"
+
+#: ../../src/rdbms/datatypes.txt:19
+msgid "``serial8``"
+msgstr "``serial8``"
+
+#: ../../src/rdbms/datatypes.txt:19
+msgid "auto incrementing eight-byte integer"
+msgstr "автоінкрементоване восьмибайтне ціле число"
+
+#: ../../src/rdbms/datatypes.txt:21
+msgid "``bit``"
+msgstr "``bit``"
+
+#: ../../src/rdbms/datatypes.txt:21
+msgid "fixed-length bit string"
+msgstr "бітовий рядок фіксованої довжини"
+
+#: ../../src/rdbms/datatypes.txt:23
+msgid "``bit varying``"
+msgstr "``bit varying``"
+
+#: ../../src/rdbms/datatypes.txt:23
+msgid "``varbit``"
+msgstr "``varbit``"
+
+#: ../../src/rdbms/datatypes.txt:23
+msgid "variable-length bit string"
+msgstr "бітовий рядок змінної довжини"
+
+#: ../../src/rdbms/datatypes.txt:25
+msgid "``boolean``"
+msgstr "``boolean``"
+
+#: ../../src/rdbms/datatypes.txt:25
+msgid "``bool``"
+msgstr "``bool``"
+
+#: ../../src/rdbms/datatypes.txt:25
+msgid "logical Boolean (true/false)"
+msgstr "логічний тип даних (true/false)"
+
+#: ../../src/rdbms/datatypes.txt:27
+msgid "``box``"
+msgstr "``box``"
+
+#: ../../src/rdbms/datatypes.txt:27
+msgid "rectangular box on a plane"
+msgstr "прямокутник на площині"
+
+#: ../../src/rdbms/datatypes.txt:29
+msgid "``bytea``"
+msgstr "``bytea``"
+
+#: ../../src/rdbms/datatypes.txt:29
+msgid "binary data (“byte array”)"
+msgstr "двійкові дані (\"байтовий масив\")"
+
+#: ../../src/rdbms/datatypes.txt:31
+msgid "``character``"
+msgstr "``character``"
+
+#: ../../src/rdbms/datatypes.txt:31
+msgid "``char``"
+msgstr "``char``"
+
+#: ../../src/rdbms/datatypes.txt:31
+msgid "fixed-length character string"
+msgstr "символьний рядок фіксованої довжини"
+
+#: ../../src/rdbms/datatypes.txt:33
+msgid "``character varying``"
+msgstr "``character varying``"
+
+#: ../../src/rdbms/datatypes.txt:33
+msgid "``varchar``"
+msgstr "``varchar``"
+
+#: ../../src/rdbms/datatypes.txt:33 ../../src/rdbms/datatypes.txt:83
+msgid "variable-length character string"
+msgstr "символьний рядок змінної довжини"
+
+#: ../../src/rdbms/datatypes.txt:35
+msgid "``cidr``"
+msgstr "``cidr``"
+
+#: ../../src/rdbms/datatypes.txt:35
+msgid "IPv4 or IPv6 network address"
+msgstr "Мережева адреса IPv4 або IPv6"
+
+#: ../../src/rdbms/datatypes.txt:37
+msgid "``circle``"
+msgstr "``circle``"
+
+#: ../../src/rdbms/datatypes.txt:37
+msgid "circle on a plane"
+msgstr "коло на площині"
+
+#: ../../src/rdbms/datatypes.txt:39
+msgid "``double precision``"
+msgstr "``double precision``"
+
+#: ../../src/rdbms/datatypes.txt:39
+msgid "``float8``"
+msgstr "``float8``"
+
+#: ../../src/rdbms/datatypes.txt:39
+msgid "double precision floating-point number (8 bytes)"
+msgstr "число з плаваючою комою подвійної точності (8 байт)"
+
+#: ../../src/rdbms/datatypes.txt:41
+msgid "``date``"
+msgstr "``date``"
+
+#: ../../src/rdbms/datatypes.txt:41
+msgid "calendar date (year, month, day)"
+msgstr "календарна дата (рік, місяць, день)"
+
+#: ../../src/rdbms/datatypes.txt:43
+msgid "``inet``"
+msgstr "``inet``"
+
+#: ../../src/rdbms/datatypes.txt:43
+msgid "IPv4 or IPv6 host address"
+msgstr "IPv4 або IPv6 адреса хосту"
+
+#: ../../src/rdbms/datatypes.txt:45
+msgid "``integer``"
+msgstr "``integer``"
+
+#: ../../src/rdbms/datatypes.txt:45
+msgid "``int``, ``int4``"
+msgstr "``int``, ``int4``"
+
+#: ../../src/rdbms/datatypes.txt:45
+msgid "signed four-byte integer"
+msgstr "знакове чотирибайтне ціле число"
+
+#: ../../src/rdbms/datatypes.txt:47
+msgid "``interval``"
+msgstr "``interval``"
+
+#: ../../src/rdbms/datatypes.txt:47
+msgid "time span"
+msgstr "проміжок часу"
+
+#: ../../src/rdbms/datatypes.txt:49
+msgid "``json``"
+msgstr "``json``"
+
+#: ../../src/rdbms/datatypes.txt:49
+msgid "textual JSON data"
+msgstr "текстові дані JSON"
+
+#: ../../src/rdbms/datatypes.txt:51
+msgid "``jsonb``"
+msgstr "``jsonb``"
+
+#: ../../src/rdbms/datatypes.txt:51
+msgid "binary JSON data, decomposed"
+msgstr "двійкові дані JSON, декомпоновані"
+
+#: ../../src/rdbms/datatypes.txt:53
+msgid "``line``"
+msgstr "``line``"
+
+#: ../../src/rdbms/datatypes.txt:53
+msgid "infinite line on a plane"
+msgstr "нескінченна пряма на площині"
+
+#: ../../src/rdbms/datatypes.txt:55
+msgid "``lseg``"
+msgstr "``lseg``"
+
+#: ../../src/rdbms/datatypes.txt:55
+msgid "line segment on a plane"
+msgstr "відрізок прямої на площині"
+
+#: ../../src/rdbms/datatypes.txt:57
+msgid "``macaddr``"
+msgstr "``macaddr``"
+
+#: ../../src/rdbms/datatypes.txt:57
+msgid "MAC (Media Access Control) address"
+msgstr "MAC-адреса (Media Access Control)"
+
+#: ../../src/rdbms/datatypes.txt:59
+msgid "``macaddr8``"
+msgstr "``macaddr8``"
+
+#: ../../src/rdbms/datatypes.txt:59
+msgid "MAC (Media Access Control) address (EUI-64 format)"
+msgstr "MAC-адреса (Media Access Control) (формат EUI-64)"
+
+#: ../../src/rdbms/datatypes.txt:61
+msgid "``money``"
+msgstr "``money``"
+
+#: ../../src/rdbms/datatypes.txt:61
+msgid "currency amount"
+msgstr "сума валюти"
+
+#: ../../src/rdbms/datatypes.txt:63
+msgid "``numeric``"
+msgstr "``numeric``"
+
+#: ../../src/rdbms/datatypes.txt:63
+msgid "``decimal``"
+msgstr "``decimal``"
+
+#: ../../src/rdbms/datatypes.txt:63
+msgid "exact numeric of selectable precision"
+msgstr "точне число з обраною точністю"
+
+#: ../../src/rdbms/datatypes.txt:65
+msgid "``path``"
+msgstr "``path``"
+
+#: ../../src/rdbms/datatypes.txt:65
+msgid "geometric path on a plane"
+msgstr "геометричний шлях на площині"
+
+#: ../../src/rdbms/datatypes.txt:67
+msgid "``pg_lsn``"
+msgstr "``pg_lsn``"
+
+#: ../../src/rdbms/datatypes.txt:67
+msgid "PostgreSQL Log Sequence Number"
+msgstr "Номер послідовності журналу PostgreSQL"
+
+#: ../../src/rdbms/datatypes.txt:69
+msgid "``pg_snapshot``"
+msgstr "``pg_snapshot``"
+
+#: ../../src/rdbms/datatypes.txt:69
+msgid "user-level transaction ID snapshot"
+msgstr "знімок ідентифікатора транзакції на рівні користувача"
+
+#: ../../src/rdbms/datatypes.txt:71
+msgid "``point``"
+msgstr "``point``"
+
+#: ../../src/rdbms/datatypes.txt:71
+msgid "geometric point on a plane"
+msgstr "геометрична точка на площині"
+
+#: ../../src/rdbms/datatypes.txt:73
+msgid "``polygon``"
+msgstr "``polygon``"
+
+#: ../../src/rdbms/datatypes.txt:73
+msgid "closed geometric path on a plane"
+msgstr "замкнений геометричний шлях на площині"
+
+#: ../../src/rdbms/datatypes.txt:75
+msgid "``real``"
+msgstr "``real``"
+
+#: ../../src/rdbms/datatypes.txt:75
+msgid "``float4``"
+msgstr "``float4``"
+
+#: ../../src/rdbms/datatypes.txt:75
+msgid "single precision floating-point number (4 bytes)"
+msgstr "число з плаваючою комою одинарної точності (4 байти)"
+
+#: ../../src/rdbms/datatypes.txt:77
+msgid "``smallint``"
+msgstr "``smallint``"
+
+#: ../../src/rdbms/datatypes.txt:77
+msgid "``int2``"
+msgstr "``int2``"
+
+#: ../../src/rdbms/datatypes.txt:77
+msgid "signed two-byte integer"
+msgstr "знакове двобайтне ціле число"
+
+#: ../../src/rdbms/datatypes.txt:79
+msgid "``smallserial``"
+msgstr "``smallserial``"
+
+#: ../../src/rdbms/datatypes.txt:79
+msgid "``serial2``"
+msgstr "``serial2``"
+
+#: ../../src/rdbms/datatypes.txt:79
+msgid "auto incrementing two-byte integer"
+msgstr "автоінкрементоване двобайтне ціле число"
+
+#: ../../src/rdbms/datatypes.txt:81
+msgid "``serial``"
+msgstr "``serial``"
+
+#: ../../src/rdbms/datatypes.txt:81
+msgid "``serial4``"
+msgstr "``serial4``"
+
+#: ../../src/rdbms/datatypes.txt:81
+msgid "auto incrementing four-byte integer"
+msgstr "автоінкрементоване чотирибайтне ціле число"
+
+#: ../../src/rdbms/datatypes.txt:83 ../../src/rdbms/datatypes.txt:172
+msgid "``text``"
+msgstr "``text``"
+
+#: ../../src/rdbms/datatypes.txt:85 ../../src/rdbms/datatypes.txt:354
+msgid "``time``"
+msgstr "``time``"
+
+#: ../../src/rdbms/datatypes.txt:85
+msgid "time of day (no time zone)"
+msgstr "час доби (без часового поясу)"
+
+#: ../../src/rdbms/datatypes.txt:87
+msgid "``time with time zone``"
+msgstr "``time with time zone``"
+
+#: ../../src/rdbms/datatypes.txt:87
+msgid "``timetz``"
+msgstr "``timetz``"
+
+#: ../../src/rdbms/datatypes.txt:87
+msgid "time of day, including time zone"
+msgstr "час доби, включаючи часовий пояс"
+
+#: ../../src/rdbms/datatypes.txt:89
+msgid "``timestamp``"
+msgstr "``timestamp``"
+
+#: ../../src/rdbms/datatypes.txt:89
+msgid "date and time (no time zone)"
+msgstr "дата і час (без часового поясу)"
+
+#: ../../src/rdbms/datatypes.txt:91
+msgid "``timestamp with time zone``"
+msgstr "``timestamp with time zone``"
+
+#: ../../src/rdbms/datatypes.txt:91
+msgid "``timestamptz``"
+msgstr "``timestamptz``"
+
+#: ../../src/rdbms/datatypes.txt:91
+msgid "date and time, including time zone"
+msgstr "дата і час, включаючи часовий пояс"
+
+#: ../../src/rdbms/datatypes.txt:93
+msgid "``tsquery``"
+msgstr "``tsquery``"
+
+#: ../../src/rdbms/datatypes.txt:93
+msgid "text search query"
+msgstr "текстовий пошуковий запит"
+
+#: ../../src/rdbms/datatypes.txt:95
+msgid "``tsvector``"
+msgstr "``tsvector``"
+
+#: ../../src/rdbms/datatypes.txt:95
+msgid "text search document"
+msgstr "текстовий пошуковий документ"
+
+#: ../../src/rdbms/datatypes.txt:97
+msgid "``txid_snapshot``"
+msgstr "``txid_snapshot``"
+
+#: ../../src/rdbms/datatypes.txt:97
+msgid "user-level transaction ID snapshot (deprecated; see pg_snapshot)"
+msgstr ""
+"знімок ідентифікатора транзакції на рівні користувача (застарілий; див. "
+"pg_snapshot)"
+
+#: ../../src/rdbms/datatypes.txt:99
+msgid "``uuid``"
+msgstr "``uuid``"
+
+#: ../../src/rdbms/datatypes.txt:99
+msgid "universally unique identifier"
+msgstr "універсальний унікальний ідентифікатор"
+
+#: ../../src/rdbms/datatypes.txt:101
+msgid "``xml``"
+msgstr "``xml``"
+
+#: ../../src/rdbms/datatypes.txt:101
+msgid "XML data"
+msgstr "XML-дані"
+
+#: ../../src/rdbms/datatypes.txt:105
+msgid "Types casting"
+msgstr "Перетворення типів"
+
+#: ../../src/rdbms/datatypes.txt:107
+msgid ""
+"SQL is a strong type language. That is, every data item has an associated "
+"data type which determines its behavior and allowed usage. PostgreSQL has an "
+"extensible type system that is more general and flexible than other SQL "
+"implementations."
+msgstr ""
+"SQL - це мова сильних типів. Це означає, що кожен елемент даних має "
+"асоційований тип даних, який визначає його поведінку та дозволене "
+"використання. PostgreSQL має розширювану систему типів, яка є більш "
+"загальною і гнучкою, ніж інші реалізації SQL."
+
+#: ../../src/rdbms/datatypes.txt:112
+msgid "You can cast some types in place using ``::`` notation, like:"
+msgstr ""
+"Ви можете приводити деякі типи на місці, використовуючи нотацію ``::``, "
+"наприклад:"
+
+#: ../../src/rdbms/datatypes.txt:122
+msgid "Numeric types"
+msgstr "Числові типи"
+
+#: ../../src/rdbms/datatypes.txt:124
+msgid ""
+"Numeric types consist of two-, four-, and eight-byte integers, four- and "
+"eight-byte floating-point numbers, and selectable-precision decimals."
+msgstr ""
+"Числові типи складаються з двох-, чотирьох- і восьмибайтових цілих чисел, "
+"чотирьох- і восьмибайтових чисел з плаваючою комою та десяткових чисел з "
+"довільною точністю."
+
+#: ../../src/rdbms/datatypes.txt:127
+msgid ""
+"Type types ``smallint``, ``integer`` and ``bigint`` store whole numbers, "
+"that is, numbers without fractional component, of various ranges. Attempts "
+"to store values outside of the allowed range will result an error."
+msgstr ""
+"Типи ``smallint``, ``integer`` і ``bigint`` зберігають цілі числа, тобто "
+"числа без дробової частини, різних діапазонів. Спроби зберігати значення, що "
+"виходять за межі допустимого діапазону, призведуть до помилки."
+
+#: ../../src/rdbms/datatypes.txt:132
+msgid "Storage Size"
+msgstr "Розмір"
+
+#: ../../src/rdbms/datatypes.txt:132
+msgid "Range"
+msgstr "Діапазон"
+
+#: ../../src/rdbms/datatypes.txt:134
+msgid "smallint"
+msgstr "smallint"
+
+#: ../../src/rdbms/datatypes.txt:134 ../../src/rdbms/datatypes.txt:152
+msgid "2 bytes"
+msgstr "2 байти"
+
+#: ../../src/rdbms/datatypes.txt:134
+msgid "small-range integer"
+msgstr "ціле число малого діапазону"
+
+#: ../../src/rdbms/datatypes.txt:134
+msgid "-32768 to +32767"
+msgstr "-32768 до +32767"
+
+#: ../../src/rdbms/datatypes.txt:136
+msgid "integer"
+msgstr "integer"
+
+#: ../../src/rdbms/datatypes.txt:136 ../../src/rdbms/datatypes.txt:146
+#: ../../src/rdbms/datatypes.txt:154
+msgid "4 bytes"
+msgstr "4 байти"
+
+#: ../../src/rdbms/datatypes.txt:136
+msgid "typical choice for integer"
+msgstr "типовий вибір для цілого числа"
+
+#: ../../src/rdbms/datatypes.txt:136
+msgid "-2147483648 to +2147483647"
+msgstr "-2147483648 до +2147483647"
+
+#: ../../src/rdbms/datatypes.txt:138
+msgid "bigint"
+msgstr "bigint"
+
+#: ../../src/rdbms/datatypes.txt:138 ../../src/rdbms/datatypes.txt:149
+#: ../../src/rdbms/datatypes.txt:156
+msgid "8 bytes"
+msgstr "8 байт"
+
+#: ../../src/rdbms/datatypes.txt:138
+msgid "large-range integer"
+msgstr "ціле число великого діапазону"
+
+#: ../../src/rdbms/datatypes.txt:138
+msgid "-9223372036854775808 to +9223372036854775807"
+msgstr "-9223372036854775808 до +9223372036854775807"
+
+#: ../../src/rdbms/datatypes.txt:140
+msgid "decimal"
+msgstr "decimal"
+
+#: ../../src/rdbms/datatypes.txt:140 ../../src/rdbms/datatypes.txt:143
+msgid "variable"
+msgstr "змінна"
+
+#: ../../src/rdbms/datatypes.txt:140 ../../src/rdbms/datatypes.txt:143
+msgid "user-specified precision, exact"
+msgstr "задана користувачем точність, точна"
+
+#: ../../src/rdbms/datatypes.txt:140 ../../src/rdbms/datatypes.txt:143
+msgid ""
+"up to 131072 digits before the decimal point; up to 16383 digits after the "
+"decimal point"
+msgstr ""
+"до 131072 знаків до десяткової крапки; до 16383 знаків після десяткової "
+"крапки"
+
+#: ../../src/rdbms/datatypes.txt:143
+msgid "numeric"
+msgstr "numeric"
+
+#: ../../src/rdbms/datatypes.txt:146
+msgid "real"
+msgstr "real"
+
+#: ../../src/rdbms/datatypes.txt:146 ../../src/rdbms/datatypes.txt:149
+msgid "variable-precision, inexact"
+msgstr "змінної точності, неточний"
+
+#: ../../src/rdbms/datatypes.txt:146
+msgid "6 decimal digits precision"
+msgstr "6 десяткових знаків після коми"
+
+#: ../../src/rdbms/datatypes.txt:149
+msgid "double precision"
+msgstr "double precision"
+
+#: ../../src/rdbms/datatypes.txt:149
+msgid "15 decimal digits precision"
+msgstr "точність до 15 знаків після коми"
+
+#: ../../src/rdbms/datatypes.txt:152
+msgid "smallserial"
+msgstr "smallserial"
+
+#: ../../src/rdbms/datatypes.txt:152
+msgid "small auto incrementing integer"
+msgstr "невелике ціле число, що автоматично збільшується"
+
+#: ../../src/rdbms/datatypes.txt:152
+msgid "1 to 32767"
+msgstr "1 до 32767"
+
+#: ../../src/rdbms/datatypes.txt:154
+msgid "serial"
+msgstr "serial"
+
+#: ../../src/rdbms/datatypes.txt:154
+msgid "auto incrementing integer"
+msgstr "автоінкрементоване ціле число"
+
+#: ../../src/rdbms/datatypes.txt:154
+msgid "1 to 2147483647"
+msgstr "1 до 2147483647"
+
+#: ../../src/rdbms/datatypes.txt:156
+msgid "bigserial"
+msgstr "bigserial"
+
+#: ../../src/rdbms/datatypes.txt:156
+msgid "large auto incrementing integer"
+msgstr "велике ціле число, що автоматично збільшується"
+
+#: ../../src/rdbms/datatypes.txt:156
+msgid "1 to 9223372036854775807"
+msgstr "1 до 9223372036854775807"
+
+#: ../../src/rdbms/datatypes.txt:160
+msgid "Character types"
+msgstr "Символьні типи"
+
+#: ../../src/rdbms/datatypes.txt:165
+msgid "``character varying``, ``varchar``"
+msgstr "``character varying``, ``varchar``"
+
+#: ../../src/rdbms/datatypes.txt:165
+msgid "variable-length with limit"
+msgstr "змінної довжини з обмеженням"
+
+#: ../../src/rdbms/datatypes.txt:167
+msgid "``character``, ``char``, ``bpchar``"
+msgstr "``character``, ``char``, ``bpchar``"
+
+#: ../../src/rdbms/datatypes.txt:167
+msgid "fixed-length, blank-padded"
+msgstr "фіксованої довжини, пустотілі"
+
+#: ../../src/rdbms/datatypes.txt:169
+msgid "``bpchar`` without length specifier"
+msgstr "``bpchar`` без специфікатора довжини"
+
+#: ../../src/rdbms/datatypes.txt:169
+msgid "variable unlimited length, blank-trimmed"
+msgstr "змінна необмеженої довжини, без обрізів"
+
+#: ../../src/rdbms/datatypes.txt:172
+msgid "variable-unlimited length"
+msgstr "змінна необмеженої довжини"
+
+#: ../../src/rdbms/datatypes.txt:175
+msgid ""
+"SQL defines two primary character types: ``character varying(n)`` and "
+"``character(n)``, where ``n`` is a positive integer. Both of these types can "
+"store string up to ``n`` characters length. An attempt to store a longer "
+"string into a column of these types will result an error, unless all the "
+"excess characters are all spaces, in which case the string will be truncated "
+"to the maximum length. However, if one explicitly casts a value to "
+"``varchar(n)`` or ``char(n)``, then an over-length value will be truncated "
+"to ``n`` characters without raising an error. If the string to be stored is "
+"shorter than the declared length, value of type ``char`` will be space-"
+"padded; values of ``varchar`` will simply store the shorter string."
+msgstr ""
+"У мові SQL визначено два основних типи символів: ``character varying(n)`` та "
+"``character(n)``, де ``n`` - натуральне число. Обидва ці типи можуть "
+"зберігати рядок довжиною до ``n`` символів. Спроба зберегти довший рядок у "
+"стовпці цих типів призведе до помилки, якщо тільки всі надлишкові символи не "
+"є пробілами, у цьому випадку рядок буде урізано до максимальної довжини. "
+"Однак, якщо явно привести значення до ``varchar(n)`` або ``char(n)``, то "
+"значення надмірної довжини буде урізано до ``n`` символів без виникнення "
+"помилки. Якщо рядок, що зберігається, коротший за оголошену довжину, "
+"значення типу ``char`` буде доповнено пробілами; значення типу ``varchar`` "
+"просто збереже коротший рядок."
+
+#: ../../src/rdbms/datatypes.txt:186
+msgid ""
+"In addition postgres provides the ``text`` type, which stores strings of any "
+"length."
+msgstr ""
+"Крім того, у postgres передбачено тип ``text``, який зберігає рядки "
+"довільної довжини."
+
+#: ../../src/rdbms/datatypes.txt:189
+msgid ""
+"If specified, the length ``n`` must be greater than 0 and cannot exceed "
+"10,485,760. If ``character varying`` is used without length specifier, the "
+"type accepts strings of any length. If ``bpchar`` lacks a length specifier, "
+"it also accepts strings of any length, but trailing spaces are semantically "
+"insignificant. If ``character`` lacks a specifier, it is equivalent to "
+"``character(1)``."
+msgstr ""
+"Якщо вказано, довжина ``n`` повинна бути більшою за 0 і не може перевищувати "
+"10 485 760 символів. Якщо ``character varying`` використовується без "
+"специфікатора довжини, тип приймає рядки будь-якої довжини. Якщо ``bpchar`` "
+"не має специфікатора довжини, він також приймає рядки будь-якої довжини, але "
+"кінцеві пробіли є семантично несуттєвими. Якщо ``character`` не має "
+"специфікатора, він еквівалентний до ``character(1)``."
+
+#: ../../src/rdbms/datatypes.txt:197
+msgid "Date/Time types"
+msgstr "Типи дати/часу"
+
+#: ../../src/rdbms/datatypes.txt:199
+msgid ""
+"PostgreSQL supports the full set of SQL date and time types. Dates are "
+"counted according to the Gregorian calendar, even in years before that "
+"calendar was introduced."
+msgstr ""
+"PostgreSQL підтримує повний набір типів дати і часу SQL. Дати відраховуються "
+"за григоріанським календарем, навіть у роки, коли цей календар ще не було "
+"запроваджено."
+
+#: ../../src/rdbms/datatypes.txt:203
+msgid ""
+"``time``, ``timestamp``, and ``interval`` accept an optional precision "
+"value, which specifies the number of fractional digits retained in the "
+"seconds field. By default, there is no explicit bound on precision. The "
+"allowed of this value is from 0 to 6."
+msgstr ""
+"``time``, ``timestamp`` та ``interval`` приймають необов'язкове значення "
+"точності, яке визначає кількість дробових знаків, що зберігаються у полі "
+"секунд. За замовчуванням, немає явного обмеження на точність. Допустиме "
+"значення цього параметра - від 0 до 6."
+
+#: ../../src/rdbms/datatypes.txt:208
+msgid ""
+"The ``interval`` type has an additional option, which is to restrict the of "
+"stored fields by writing one of these phrases:"
+msgstr ""
+"Тип ``інтервал`` має додаткову опцію, яка полягає в обмеженні полів, що "
+"зберігаються, шляхом написання однієї з цих фраз:"
+
+#: ../../src/rdbms/datatypes.txt:228
+msgid "Dates"
+msgstr "Дати"
+
+#: ../../src/rdbms/datatypes.txt:230
+msgid "Some possible inputs for the ``date`` type."
+msgstr "Деякі можливі вхідні дані для типу ``date``."
+
+#: ../../src/rdbms/datatypes.txt:233 ../../src/rdbms/datatypes.txt:274
+#: ../../src/rdbms/datatypes.txt:305
+msgid "Example"
+msgstr "Приклад"
+
+#: ../../src/rdbms/datatypes.txt:235
+msgid "``1999-01-08``"
+msgstr "``1999-01-08``"
+
+#: ../../src/rdbms/datatypes.txt:235
+msgid "ISO 8601; January 8 in any mode (**recommended format**)"
+msgstr "ISO 8601; 8 січня в будь-якому режимі (**рекомендований формат**)"
+
+#: ../../src/rdbms/datatypes.txt:238
+msgid "``January 8, 1999``"
+msgstr "``January 8, 1999``"
+
+#: ../../src/rdbms/datatypes.txt:238
+msgid "unambiguous in any date style input mode"
+msgstr "однозначний у будь-якому режимі введення стилю дати"
+
+#: ../../src/rdbms/datatypes.txt:240
+msgid "``1/8/1999``"
+msgstr "``1/8/1999``"
+
+#: ../../src/rdbms/datatypes.txt:240
+msgid "January 8 in MDY mode; August 1 in DMY mode"
+msgstr "8 січня в режимі MDY; 1 серпня в режимі DMY"
+
+#: ../../src/rdbms/datatypes.txt:242
+msgid "``1/18/1999``"
+msgstr "``1/18/1999``"
+
+#: ../../src/rdbms/datatypes.txt:242
+msgid "January 18 in MDY mode; rejected in other modes"
+msgstr "18 січня в режимі MDY; відхилено в інших режимах"
+
+#: ../../src/rdbms/datatypes.txt:245
+msgid "``01/02/03``"
+msgstr "``01/02/03``"
+
+#: ../../src/rdbms/datatypes.txt:245
+msgid ""
+"January 2, 2003 in MDY mode; February 1, 2003 in DMY mode; February 3, 2001 "
+"in YMD mode"
+msgstr ""
+"2 січня 2003 року в режимі MDY; 1 лютого 2003 року в режимі DMY; 3 лютого "
+"2001 року в режимі YMD"
+
+#: ../../src/rdbms/datatypes.txt:249
+msgid "``1999-Jan-08`` ``Jan-08-1999`` ``08-Jan-1999``"
+msgstr "``1999-Jan-08`` ``Jan-08-1999`` ``08-Jan-1999``"
+
+#: ../../src/rdbms/datatypes.txt:249
+msgid "January 8 in any mode"
+msgstr "8 січня в будь-якому режимі"
+
+#: ../../src/rdbms/datatypes.txt:253
+msgid "``99-Jan-08``"
+msgstr "``99-Jan-08``"
+
+#: ../../src/rdbms/datatypes.txt:253
+msgid "January 8 in YMD mode, else error"
+msgstr "8 січня в режимі YMD, інакше помилка"
+
+#: ../../src/rdbms/datatypes.txt:255
+msgid "``08-Jan-99`` ``Jan-08-99``"
+msgstr "``08-Jan-99`` ``Jan-08-99``"
+
+#: ../../src/rdbms/datatypes.txt:255
+msgid "January 8, except error in YMD mode"
+msgstr "8 січня, крім помилки в режимі YMD"
+
+#: ../../src/rdbms/datatypes.txt:258
+msgid "``19990108`` ``990108``"
+msgstr "``19990108`` ``990108``"
+
+#: ../../src/rdbms/datatypes.txt:258
+msgid "ISO 8601; January 8, 1999 in any mode"
+msgstr "ISO 8601; 8 січня 1999 року в будь-якому режимі"
+
+#: ../../src/rdbms/datatypes.txt:261
+msgid "``1999.008``"
+msgstr "``1999.008``"
+
+#: ../../src/rdbms/datatypes.txt:261
+msgid "year and day of year"
+msgstr "рік та день року"
+
+#: ../../src/rdbms/datatypes.txt:263
+msgid "``J2451187``"
+msgstr "``J2451187``"
+
+#: ../../src/rdbms/datatypes.txt:263
+msgid "Julian date"
+msgstr "Дата за юліанським календарем"
+
+#: ../../src/rdbms/datatypes.txt:265
+msgid "``January 8, 99 BC``"
+msgstr "``January 8, 99 BC``"
+
+#: ../../src/rdbms/datatypes.txt:265
+msgid "year 99 BC"
+msgstr "99 рік до н.е"
+
+#: ../../src/rdbms/datatypes.txt:269
+msgid "Times"
+msgstr "Час"
+
+#: ../../src/rdbms/datatypes.txt:271
+msgid "Some possible inputs for the ``time`` type."
+msgstr "Деякі можливі вхідні дані для типу ``time``."
+
+#: ../../src/rdbms/datatypes.txt:276
+msgid "``04:05:06.789`` ``04:05:06`` ``04:05`` ``040506``"
+msgstr "``04:05:06.789`` ``04:05:06`` ``04:05`` ``040506``"
+
+#: ../../src/rdbms/datatypes.txt:276
+msgid "ISO 8601"
+msgstr "ISO 8601"
+
+#: ../../src/rdbms/datatypes.txt:281
+msgid "``04:05 AM``"
+msgstr "``04:05 AM``"
+
+#: ../../src/rdbms/datatypes.txt:281
+msgid "same as 04:05; AM does not affect value"
+msgstr "те саме, що і 04:05; AM не впливає на значення"
+
+#: ../../src/rdbms/datatypes.txt:283
+msgid "``04:05 PM``"
+msgstr "``04:05 PM``"
+
+#: ../../src/rdbms/datatypes.txt:283
+msgid "same as 16:05; input hour must be <= 12"
+msgstr "збігається з 16:05; вхідна година повинна бути <= 12"
+
+#: ../../src/rdbms/datatypes.txt:285
+msgid "``04:05:06.789-8`` ``04:05:06-08:00`` ``04:05-08:00`` ``040506-08``"
+msgstr "``04:05:06.789-8`` ``04:05:06-08:00`` ``04:05-08:00`` ``040506-08``"
+
+#: ../../src/rdbms/datatypes.txt:285
+msgid "ISO 8601, with time zone as UTC offset"
+msgstr "ISO 8601, з часовим поясом відносно UTC"
+
+#: ../../src/rdbms/datatypes.txt:290
+msgid "``040506+0730``"
+msgstr "``040506+0730``"
+
+#: ../../src/rdbms/datatypes.txt:290
+msgid "ISO 8601, with fractional-hour time zone as UTC offset"
+msgstr "ISO 8601, з часовим поясом у дробових годинах відносно UTC"
+
+#: ../../src/rdbms/datatypes.txt:293
+msgid "``040506+07:30:00``"
+msgstr "``040506+07:30:00``"
+
+#: ../../src/rdbms/datatypes.txt:293
+msgid "UTC offset specified to seconds (not allowed in ISO 8601)"
+msgstr "Зміщення UTC вказано в секундах (не дозволено в ISO 8601)"
+
+#: ../../src/rdbms/datatypes.txt:296
+msgid "``04:05:06 PST``"
+msgstr "``04:05:06 PST``"
+
+#: ../../src/rdbms/datatypes.txt:296
+msgid "time zone specified by abbreviation"
+msgstr "часовий пояс, вказаний абревіатурою"
+
+#: ../../src/rdbms/datatypes.txt:298
+msgid "``2003-04-12 04:05:06 America/New_York``"
+msgstr "``2003-04-12 04:05:06 America/New_York``"
+
+#: ../../src/rdbms/datatypes.txt:298
+msgid "time zone specified by full"
+msgstr "часовий пояс вказано повністю"
+
+#: ../../src/rdbms/datatypes.txt:303
+msgid "Time zone input"
+msgstr "Введення часового поясу"
+
+#: ../../src/rdbms/datatypes.txt:307
+msgid "``PST``"
+msgstr "``PST``"
+
+#: ../../src/rdbms/datatypes.txt:307
+msgid "Abbreviation (for Pacific Standard Time)"
+msgstr "Скорочення (для Тихоокеанського стандартного часу)"
+
+#: ../../src/rdbms/datatypes.txt:309
+msgid "``America/New_York``"
+msgstr "``America/New_York``"
+
+#: ../../src/rdbms/datatypes.txt:309
+msgid "Full time zone name"
+msgstr "Повна назва часового поясу"
+
+#: ../../src/rdbms/datatypes.txt:311
+msgid "``PST8PDT``"
+msgstr "``PST8PDT``"
+
+#: ../../src/rdbms/datatypes.txt:311
+msgid "POSIX-style time zone specification"
+msgstr "Специфікація часових поясів у стилі POSIX"
+
+#: ../../src/rdbms/datatypes.txt:313
+msgid "``-8:00:00``"
+msgstr "``-8:00:00``"
+
+#: ../../src/rdbms/datatypes.txt:313
+msgid "UTC offset for PST"
+msgstr "Зміщення відносно UTC для PST"
+
+#: ../../src/rdbms/datatypes.txt:315
+msgid "``-8:00``"
+msgstr "``-8:00``"
+
+#: ../../src/rdbms/datatypes.txt:315
+msgid "UTC offset for PST (ISO 8601 extended format)"
+msgstr "Зміщення відносно UTC для PST (розширений формат ISO 8601)"
+
+#: ../../src/rdbms/datatypes.txt:317
+msgid "``-800``"
+msgstr "``-800``"
+
+#: ../../src/rdbms/datatypes.txt:317 ../../src/rdbms/datatypes.txt:319
+msgid "UTC offset for PST (ISO 8601 basic format)"
+msgstr "Зміщення відносно UTC для PST (базовий формат ISO 8601)"
+
+#: ../../src/rdbms/datatypes.txt:319
+msgid "``-8``"
+msgstr "``-8``"
+
+#: ../../src/rdbms/datatypes.txt:321
+msgid "``zulu``"
+msgstr "``zulu``"
+
+#: ../../src/rdbms/datatypes.txt:321
+msgid "Military abbreviation for UTC"
+msgstr "Військове скорочення UTC"
+
+#: ../../src/rdbms/datatypes.txt:323
+msgid "``z``"
+msgstr "``z``"
+
+#: ../../src/rdbms/datatypes.txt:323
+msgid "Short form of zulu (also in ISO 8601)"
+msgstr "Коротка форма зулу (також в ISO 8601)"
+
+#: ../../src/rdbms/datatypes.txt:327
+msgid "Special date/time inputs"
+msgstr "Спеціальне введення дати/часу"
+
+#: ../../src/rdbms/datatypes.txt:330
+msgid "Input String"
+msgstr "Вхідний Рядок"
+
+#: ../../src/rdbms/datatypes.txt:330
+msgid "Valid Types"
+msgstr "Допустимі Типи"
+
+#: ../../src/rdbms/datatypes.txt:332
+msgid "epoch"
+msgstr "epoch"
+
+#: ../../src/rdbms/datatypes.txt:332 ../../src/rdbms/datatypes.txt:335
+#: ../../src/rdbms/datatypes.txt:345 ../../src/rdbms/datatypes.txt:348
+#: ../../src/rdbms/datatypes.txt:351
+msgid "``date``, ``timestamp``"
+msgstr "``date``, ``timestamp``"
+
+#: ../../src/rdbms/datatypes.txt:332
+msgid "1970-01-01 00:00:00+00 (Unix system time zero)"
+msgstr "1970-01-01 00:00:00+00 (нульовий системний час Unix)"
+
+#: ../../src/rdbms/datatypes.txt:335
+msgid "infinity"
+msgstr "infinity"
+
+#: ../../src/rdbms/datatypes.txt:335
+msgid "later than all other time stamps"
+msgstr "пізніше за всі інші часові мітки"
+
+#: ../../src/rdbms/datatypes.txt:338
+msgid "-infinity"
+msgstr "-infinity"
+
+#: ../../src/rdbms/datatypes.txt:338
+msgid "``date, ``timestamp``"
+msgstr "``date, ``timestamp``"
+
+#: ../../src/rdbms/datatypes.txt:338
+msgid "earlier than all other time stamps"
+msgstr "раніше за всі інші мітки часу"
+
+#: ../../src/rdbms/datatypes.txt:341
+msgid "now"
+msgstr "now"
+
+#: ../../src/rdbms/datatypes.txt:341
+msgid "``date``, ``time``, ``timestamp``"
+msgstr "``date``, ``time``, ``timestamp``"
+
+#: ../../src/rdbms/datatypes.txt:341
+msgid "current transaction's start time"
+msgstr "час початку поточної транзакції"
+
+#: ../../src/rdbms/datatypes.txt:345
+msgid "today"
+msgstr "today"
+
+#: ../../src/rdbms/datatypes.txt:345
+msgid "midnight (00:00) today"
+msgstr "опівночі (00:00) сьогодні"
+
+#: ../../src/rdbms/datatypes.txt:348
+msgid "tomorrow"
+msgstr "tomorrow"
+
+#: ../../src/rdbms/datatypes.txt:348
+msgid "midnight (00:00) tomorrow"
+msgstr "опівночі (00:00) завтра"
+
+#: ../../src/rdbms/datatypes.txt:351
+msgid "yesterday"
+msgstr "yesterday"
+
+#: ../../src/rdbms/datatypes.txt:351
+msgid "midnight (00:00) yesterday"
+msgstr "опівночі (00:00) вчора"
+
+#: ../../src/rdbms/datatypes.txt:354
+msgid "allballs"
+msgstr "allballs"
+
+#: ../../src/rdbms/datatypes.txt:354
+msgid "00:00:00.00 UTC"
+msgstr "00:00:00.00 UTC"
+
+#: ../../src/rdbms/datatypes.txt:358
+msgid "Intervals"
+msgstr "Інтервали"
+
+#: ../../src/rdbms/datatypes.txt:360
+msgid "``interval`` values can be written using the following verbose syntax:"
+msgstr ""
+"значення ``interval`` можна записати, використовуючи наступний розгорнутий "
+"синтаксис:"
+
+#: ../../src/rdbms/datatypes.txt:366
+msgid ""
+"Intervals are useful when you need to move timestamp back in past or to the "
+"future."
+msgstr ""
+"Інтервали корисні, коли вам потрібно перемістити мітку часу в минуле або в "
+"майбутнє."
+
+#: ../../src/rdbms/datatypes.txt:370
+msgid "Abbreviation"
+msgstr "Абревіатура"
+
+#: ../../src/rdbms/datatypes.txt:370
+msgid "Meaning"
+msgstr "Значення"
+
+#: ../../src/rdbms/datatypes.txt:372
+msgid "Y"
+msgstr "Y"
+
+#: ../../src/rdbms/datatypes.txt:372
+msgid "Years"
+msgstr "Роки"
+
+#: ../../src/rdbms/datatypes.txt:374 ../../src/rdbms/datatypes.txt:382
+msgid "M"
+msgstr "M"
+
+#: ../../src/rdbms/datatypes.txt:374
+msgid "Months"
+msgstr "Місяці"
+
+#: ../../src/rdbms/datatypes.txt:376
+msgid "W"
+msgstr "W"
+
+#: ../../src/rdbms/datatypes.txt:376
+msgid "Weeks"
+msgstr "Тижні"
+
+#: ../../src/rdbms/datatypes.txt:378
+msgid "D"
+msgstr "D"
+
+#: ../../src/rdbms/datatypes.txt:378
+msgid "Days"
+msgstr "Дні"
+
+#: ../../src/rdbms/datatypes.txt:380
+msgid "H"
+msgstr "H"
+
+#: ../../src/rdbms/datatypes.txt:380
+msgid "Hours"
+msgstr "Години"
+
+#: ../../src/rdbms/datatypes.txt:382
+msgid "Minutes"
+msgstr "Хвилини"
+
+#: ../../src/rdbms/datatypes.txt:384
+msgid "S"
+msgstr "S"
+
+#: ../../src/rdbms/datatypes.txt:384
+msgid "Seconds"
+msgstr "Секунди"
+
+#: ../../src/rdbms/datatypes.txt:387
+msgid "7 days before yesterday"
+msgstr "7 днів перед вчора"
+
+#: ../../src/rdbms/datatypes.txt:394
+msgid "Boolean type"
+msgstr "Логічний тип"
+
+#: ../../src/rdbms/datatypes.txt:396
+msgid ""
+"PostgreSQL provides the standard SQL type ``boolean``. The ``boolean`` type "
+"can have several states: **true**, **false**, and a third state, "
+"**unknown**, which is represented by the SQL ``NULL`` value."
+msgstr ""
+"PostgreSQL надає стандартний тип SQL ``boolean``. Тип ``boolean`` може мати "
+"декілька станів: **true**, **false** і третій стан, **unknown**, який "
+"представляється значенням SQL ``NULL``."
+
+#: ../../src/rdbms/datatypes.txt:400
+msgid ""
+"The datetype input function for type ``boolean`` accepts these strings "
+"representations for the **true** state:"
+msgstr ""
+"Функція введення типу даних для типу ``boolean`` приймає ці представлення "
+"рядків для стану **true**:"
+
+#: ../../src/rdbms/datatypes.txt:403
+msgid "``true``"
+msgstr "``true``"
+
+#: ../../src/rdbms/datatypes.txt:404
+msgid "``yes``"
+msgstr "``yes``"
+
+#: ../../src/rdbms/datatypes.txt:405
+msgid "``on``"
+msgstr "``on``"
+
+#: ../../src/rdbms/datatypes.txt:406
+msgid "``1``"
+msgstr "``1``"
+
+#: ../../src/rdbms/datatypes.txt:408
+msgid "and these representations for the **false** state:"
+msgstr "і ці представлення для стану **false**:"
+
+#: ../../src/rdbms/datatypes.txt:410
+msgid "``false``"
+msgstr "``false``"
+
+#: ../../src/rdbms/datatypes.txt:411
+msgid "``no``"
+msgstr "``no``"
+
+#: ../../src/rdbms/datatypes.txt:412
+msgid "``off``"
+msgstr "``off``"
+
+#: ../../src/rdbms/datatypes.txt:413
+msgid "``0``"
+msgstr "``0``"
+
+#: ../../src/rdbms/datatypes.txt:415
+msgid ""
+"The key words ``TRUE`` or ``FALSE`` are preferred (SQL-compliant) method for "
+"writing Boolean constants in SQL queries. But, you can also use string "
+"representations by following the generic string-literal constant syntax, for "
+"example ``'yes'::boolean``."
+msgstr ""
+"Ключові слова ``TRUE`` або ``FALSE`` є найкращим (SQL-сумісним) методом "
+"запису булевих констант у SQL-запитах. Але ви також можете використовувати "
+"рядкові представлення, дотримуючись загального синтаксису рядково-літерних "
+"констант, наприклад, ``'yes'::boolean``."
+
+#: ../../src/rdbms/datatypes.txt:421
+msgid "Enumerated types"
+msgstr "Перераховані типи"
+
+#: ../../src/rdbms/datatypes.txt:423
+msgid ""
+"Enumerated (enums) types are data types that comprise a static, ordered set "
+"of values. They are equivalent to the ``enum`` types supported in a number "
+"of programming languages. An example of an enum might be the days of the "
+"week, or a set of status values for a piece of data."
+msgstr ""
+"Перечислювальні типи - це типи даних, які складаються зі статичного, "
+"впорядкованого набору значень. Вони еквівалентні типам ``список``, що "
+"підтримуються у багатьох мовах програмування. Прикладом перечислення можуть "
+"бути дні тижня або набір значень статусу елемента даних."
+
+#: ../../src/rdbms/datatypes.txt:428
+msgid ""
+"Enum types are created using the ``CREATE TYPE`` command; and once created, "
+"the enum type can be used in table in function definitions, much like other "
+"types:"
+msgstr ""
+"Типи перечислення створюються за допомогою команди ``CREATE TYPE``; і після "
+"створення тип перечислення можна використовувати у таблицях та визначеннях "
+"функцій, як і інші типи:"
+
+#: ../../src/rdbms/datatypes.txt:443
+msgid "Ordering"
+msgstr "Упорядкування"
+
+#: ../../src/rdbms/datatypes.txt:445
+msgid ""
+"The ordering of the values in an enum type is the order in which the values "
+"were listed when the type was created. All standard comparison operators and "
+"related aggregate functions are supported for enums. However, remember that "
+"each enumerated data type is separated and cannot be compared with other "
+"enumerated types."
+msgstr ""
+"Порядок значень у типі enum - це порядок, у якому значення були перераховані "
+"при створенні типу. Усі стандартні оператори порівняння та пов'язані з ними "
+"агрегатні функції підтримуються для перелічуваних типів. Однак пам'ятайте, "
+"що кожен перелічуваний тип даних є окремим і не може порівнюватися з іншими "
+"перелічуваними типами."

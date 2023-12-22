@@ -1,0 +1,449 @@
+****************************
+PostgreSQL RDBMS: Data types
+****************************
+
+PostgreSQL has a rich set of data types available to users.
+
+Users can add new types to PostgreSQL using the ``CREATE TYPE`` command.
+
+.. literalinclude:: /../libms-db/libms.sql
+    :caption: Custom data type definition
+    :language: postgresql
+    :lines: 72-89
+
++-------------------------------+-------------------+------------------------------------------------------------------+
+| Name                          | Aliases           | Description                                                      |
++===============================+===================+==================================================================+
+| ``bigint``                    | ``int8``          | signed eight-byte integer                                        |
++-------------------------------+-------------------+------------------------------------------------------------------+
+| ``bigserial``                 | ``serial8``       | auto incrementing eight-byte integer                             |
++-------------------------------+-------------------+------------------------------------------------------------------+
+| ``bit``                       |                   | fixed-length bit string                                          |
++-------------------------------+-------------------+------------------------------------------------------------------+
+| ``bit varying``               | ``varbit``        | variable-length bit string                                       |
++-------------------------------+-------------------+------------------------------------------------------------------+
+| ``boolean``                   | ``bool``          | logical Boolean (true/false)                                     |
++-------------------------------+-------------------+------------------------------------------------------------------+
+| ``box``                       |                   | rectangular box on a plane                                       |
++-------------------------------+-------------------+------------------------------------------------------------------+
+| ``bytea``                     |                   | binary data (“byte array”)                                       |
++-------------------------------+-------------------+------------------------------------------------------------------+
+| ``character``                 | ``char``          | fixed-length character string                                    |
++-------------------------------+-------------------+------------------------------------------------------------------+
+| ``character varying``         | ``varchar``       | variable-length character string                                 |
++-------------------------------+-------------------+------------------------------------------------------------------+
+| ``cidr``                      |                   | IPv4 or IPv6 network address                                     |
++-------------------------------+-------------------+------------------------------------------------------------------+
+| ``circle``                    |                   | circle on a plane                                                |
++-------------------------------+-------------------+------------------------------------------------------------------+
+| ``double precision``          | ``float8``        | double precision floating-point number (8 bytes)                 |
++-------------------------------+-------------------+------------------------------------------------------------------+
+| ``date``                      |                   | calendar date (year, month, day)                                 |
++-------------------------------+-------------------+------------------------------------------------------------------+
+| ``inet``                      |                   | IPv4 or IPv6 host address                                        |
++-------------------------------+-------------------+------------------------------------------------------------------+
+| ``integer``                   | ``int``, ``int4`` | signed four-byte integer                                         |
++-------------------------------+-------------------+------------------------------------------------------------------+
+| ``interval``                  |                   | time span                                                        |
++-------------------------------+-------------------+------------------------------------------------------------------+
+| ``json``                      |                   | textual JSON data                                                |
++-------------------------------+-------------------+------------------------------------------------------------------+
+| ``jsonb``                     |                   | binary JSON data, decomposed                                     |
++-------------------------------+-------------------+------------------------------------------------------------------+
+| ``line``                      |                   | infinite line on a plane                                         |
++-------------------------------+-------------------+------------------------------------------------------------------+
+| ``lseg``                      |                   | line segment on a plane                                          |
++-------------------------------+-------------------+------------------------------------------------------------------+
+| ``macaddr``                   |                   | MAC (Media Access Control) address                               |
++-------------------------------+-------------------+------------------------------------------------------------------+
+| ``macaddr8``                  |                   | MAC (Media Access Control) address (EUI-64 format)               |
++-------------------------------+-------------------+------------------------------------------------------------------+
+| ``money``                     |                   | currency amount                                                  |
++-------------------------------+-------------------+------------------------------------------------------------------+
+| ``numeric``                   | ``decimal``       | exact numeric of selectable precision                            |
++-------------------------------+-------------------+------------------------------------------------------------------+
+| ``path``                      |                   | geometric path on a plane                                        |
++-------------------------------+-------------------+------------------------------------------------------------------+
+| ``pg_lsn``                    |                   | PostgreSQL Log Sequence Number                                   |
++-------------------------------+-------------------+------------------------------------------------------------------+
+| ``pg_snapshot``               |                   | user-level transaction ID snapshot                               |
++-------------------------------+-------------------+------------------------------------------------------------------+
+| ``point``                     |                   | geometric point on a plane                                       |
++-------------------------------+-------------------+------------------------------------------------------------------+
+| ``polygon``                   |                   | closed geometric path on a plane                                 |
++-------------------------------+-------------------+------------------------------------------------------------------+
+| ``real``                      | ``float4``        | single precision floating-point number (4 bytes)                 |
++-------------------------------+-------------------+------------------------------------------------------------------+
+| ``smallint``                  | ``int2``          | signed two-byte integer                                          |
++-------------------------------+-------------------+------------------------------------------------------------------+
+| ``smallserial``               | ``serial2``       | auto incrementing two-byte integer                               |
++-------------------------------+-------------------+------------------------------------------------------------------+
+| ``serial``                    | ``serial4``       | auto incrementing four-byte integer                              |
++-------------------------------+-------------------+------------------------------------------------------------------+
+| ``text``                      |                   | variable-length character string                                 |
++-------------------------------+-------------------+------------------------------------------------------------------+
+| ``time``                      |                   | time of day (no time zone)                                       |
++-------------------------------+-------------------+------------------------------------------------------------------+
+| ``time with time zone``       | ``timetz``        | time of day, including time zone                                 |
++-------------------------------+-------------------+------------------------------------------------------------------+
+| ``timestamp``                 |                   | date and time (no time zone)                                     |
++-------------------------------+-------------------+------------------------------------------------------------------+
+| ``timestamp with time zone``  | ``timestamptz``   | date and time, including time zone                               |
++-------------------------------+-------------------+------------------------------------------------------------------+
+| ``tsquery``                   |                   | text search query                                                |
++-------------------------------+-------------------+------------------------------------------------------------------+
+| ``tsvector``                  |                   | text search document                                             |
++-------------------------------+-------------------+------------------------------------------------------------------+
+| ``txid_snapshot``             |                   | user-level transaction ID snapshot (deprecated; see pg_snapshot) |
++-------------------------------+-------------------+------------------------------------------------------------------+
+| ``uuid``                      |                   | universally unique identifier                                    |
++-------------------------------+-------------------+------------------------------------------------------------------+
+| ``xml``                       |                   | XML data                                                         |
++-------------------------------+-------------------+------------------------------------------------------------------+
+
+Types casting
+=============
+
+SQL is a strong type language. That is, every data item has an associated data
+type which determines its behavior and allowed usage. PostgreSQL has an
+extensible type system that is more general and flexible than other SQL
+implementations.
+
+You can cast some types in place using ``::`` notation, like:
+
+.. code-block:: postgresql
+
+    SELECT '42'::INT;
+    SELECT '24.5'::REAL;
+    SELECT 'today'::DATE;
+    SELECT 'tomorrow'::TIMESTAMP;
+
+Numeric types
+=============
+
+Numeric types consist of two-, four-, and eight-byte integers, four- and
+eight-byte floating-point numbers, and selectable-precision decimals.
+
+Type types ``smallint``, ``integer`` and ``bigint`` store whole numbers, that
+is, numbers without fractional component, of various ranges. Attempts to store
+values outside of the allowed range will result an error.
+
++------------------+--------------+---------------------------------+--------------------------------------------------+
+| Name             | Storage Size | Description                     | Range                                            |
++==================+==============+=================================+==================================================+
+| smallint         | 2 bytes      | small-range integer             | -32768 to +32767                                 |
++------------------+--------------+---------------------------------+--------------------------------------------------+
+| integer          | 4 bytes      | typical choice for integer      | -2147483648 to +2147483647                       |
++------------------+--------------+---------------------------------+--------------------------------------------------+
+| bigint           | 8 bytes      | large-range integer             | -9223372036854775808 to +9223372036854775807     |
++------------------+--------------+---------------------------------+--------------------------------------------------+
+| decimal          | variable     | user-specified precision,       | up to 131072 digits before the decimal point;    |
+|                  |              | exact                           | up to 16383 digits after the decimal point       |
++------------------+--------------+---------------------------------+--------------------------------------------------+
+| numeric          | variable     | user-specified precision,       | up to 131072 digits before the decimal point;    |
+|                  |              | exact                           | up to 16383 digits after the decimal point       |
++------------------+--------------+---------------------------------+--------------------------------------------------+
+| real             | 4 bytes      | variable-precision,             | 6 decimal digits precision                       |
+|                  |              | inexact                         |                                                  |
++------------------+--------------+---------------------------------+--------------------------------------------------+
+| double precision | 8 bytes      | variable-precision,             | 15 decimal digits precision                      |
+|                  |              | inexact                         |                                                  |
++------------------+--------------+---------------------------------+--------------------------------------------------+
+| smallserial      | 2 bytes      | small auto incrementing integer | 1 to 32767                                       |
++------------------+--------------+---------------------------------+--------------------------------------------------+
+| serial           | 4 bytes      | auto incrementing integer       | 1 to 2147483647                                  |
++------------------+--------------+---------------------------------+--------------------------------------------------+
+| bigserial        | 8 bytes      | large auto incrementing integer | 1 to 9223372036854775807                         |
++------------------+--------------+---------------------------------+--------------------------------------------------+
+
+Character types
+===============
+
++-------------------------------------+----------------------------+
+| Name                                | Description                |
++=====================================+============================+
+| ``character varying``, ``varchar``  | variable-length with limit |
++-------------------------------------+----------------------------+
+| ``character``, ``char``, ``bpchar`` | fixed-length, blank-padded |
++-------------------------------------+----------------------------+
+| ``bpchar`` without length specifier | variable unlimited length, |
+|                                     | blank-trimmed              |
++-------------------------------------+----------------------------+
+| ``text``                            | variable-unlimited length  |
++-------------------------------------+----------------------------+
+
+SQL defines two primary character types: ``character varying(n)`` and
+``character(n)``, where ``n`` is a positive integer. Both of these types can
+store string up to ``n`` characters length. An attempt to store a longer string
+into a column of these types will result an error, unless all the excess
+characters are all spaces, in which case the string will be truncated to
+the maximum length. However, if one explicitly casts a value to ``varchar(n)``
+or ``char(n)``, then an over-length value will be truncated to ``n`` characters
+without raising an error. If the string to be stored is shorter than the
+declared length, value of type ``char`` will be space-padded; values of
+``varchar`` will simply store the shorter string.
+
+In addition postgres provides the ``text`` type, which stores strings of any
+length.
+
+If specified, the length ``n`` must be greater than 0 and cannot exceed 
+10,485,760. If ``character varying`` is used without length specifier,
+the type accepts strings of any length. If ``bpchar`` lacks a length specifier,
+it also accepts strings of any length, but trailing spaces are semantically
+insignificant. If ``character`` lacks a specifier, it is equivalent to
+``character(1)``.
+
+Date/Time types
+===============
+
+PostgreSQL supports the full set of SQL date and time types. Dates are counted
+according to the Gregorian calendar, even in years before that calendar was
+introduced.
+
+``time``, ``timestamp``, and ``interval`` accept an optional precision value,
+which specifies the number of fractional digits retained in the seconds field.
+By default, there is no explicit bound on precision. The allowed of this value
+is from 0 to 6.
+
+The ``interval`` type has an additional option, which is to restrict the of
+stored fields by writing one of these phrases:
+
+.. code-block::
+
+    YEAR
+    MONTH
+    DAY
+    HOUR
+    MINUTE
+    SECOND
+    YEAR TO MONTH
+    DAY TO HOUR
+    DAY TO MINUTE
+    DAY TO SECOND
+    HOUR TO MINUTE
+    HOUR TO SECOND
+    MINUTE TO SECOND
+
+Dates
+-----
+
+Some possible inputs for the ``date`` type.
+
++-----------------------+-----------------------------------------------------+
+| Example               | Description                                         |
++=======================+=====================================================+
+| ``1999-01-08``        | ISO 8601; January 8 in any mode                     |
+|                       | (**recommended format**)                            |
++-----------------------+-----------------------------------------------------+
+| ``January 8, 1999``   | unambiguous in any date style input mode            |
++-----------------------+-----------------------------------------------------+
+| ``1/8/1999``          | January 8 in MDY mode; August 1 in DMY mode         |
++-----------------------+-----------------------------------------------------+
+| ``1/18/1999``         | January 18 in MDY mode;                             |
+|                       | rejected in other modes                             |
++-----------------------+-----------------------------------------------------+
+| ``01/02/03``          | January 2, 2003 in MDY mode;                        |
+|                       | February 1, 2003 in DMY mode;                       |
+|                       | February 3, 2001 in YMD mode                        |
++-----------------------+-----------------------------------------------------+
+| ``1999-Jan-08``       | January 8 in any mode                               |
+| ``Jan-08-1999``       |                                                     |
+| ``08-Jan-1999``       |                                                     |
++-----------------------+-----------------------------------------------------+
+| ``99-Jan-08``         | January 8 in YMD mode, else error                   |
++-----------------------+-----------------------------------------------------+
+| ``08-Jan-99``         | January 8, except error in YMD mode                 |
+| ``Jan-08-99``         |                                                     |
++-----------------------+-----------------------------------------------------+
+| ``19990108``          | ISO 8601; January 8, 1999 in any mode               |
+| ``990108``            |                                                     |
++-----------------------+-----------------------------------------------------+
+| ``1999.008``          | year and day of year                                |
++-----------------------+-----------------------------------------------------+
+| ``J2451187``          | Julian date                                         |
++-----------------------+-----------------------------------------------------+
+| ``January 8, 99 BC``  | year 99 BC                                          |
++-----------------------+-----------------------------------------------------+
+
+Times
+-----
+
+Some possible inputs for the ``time`` type.
+
++-----------------------+-----------------------------------------------------+
+| Example               | Description                                         |
++=======================+=====================================================+
+| ``04:05:06.789``      | ISO 8601                                            |
+| ``04:05:06``          |                                                     |
+| ``04:05``             |                                                     |
+| ``040506``            |                                                     |
++-----------------------+-----------------------------------------------------+
+| ``04:05 AM``          | same as 04:05; AM does not affect value             |
++-----------------------+-----------------------------------------------------+
+| ``04:05 PM``          | same as 16:05; input hour must be <= 12             |
++-----------------------+-----------------------------------------------------+
+| ``04:05:06.789-8``    | ISO 8601, with time zone as UTC offset              |
+| ``04:05:06-08:00``    |                                                     |
+| ``04:05-08:00``       |                                                     |
+| ``040506-08``         |                                                     |
++-----------------------+-----------------------------------------------------+
+| ``040506+0730``       | ISO 8601,                                           |
+|                       | with fractional-hour time zone as UTC offset        |
++-----------------------+-----------------------------------------------------+
+| ``040506+07:30:00``   | UTC offset specified to seconds                     |
+|                       | (not allowed in ISO 8601)                           |
++-----------------------+-----------------------------------------------------+
+| ``04:05:06 PST``      | time zone specified by abbreviation                 |
++-----------------------+-----------------------------------------------------+
+| ``2003-04-12 04:05:06 | time zone specified by full                         |
+| America/New_York``    |                                                     |
++-----------------------+-----------------------------------------------------+
+
+.. rubric:: Time zone input
+
++-----------------------+-----------------------------------------------------+
+| Example               | Description                                         |
++=======================+=====================================================+
+| ``PST``               | Abbreviation (for Pacific Standard Time)            |
++-----------------------+-----------------------------------------------------+
+| ``America/New_York``  | Full time zone name                                 |
++-----------------------+-----------------------------------------------------+
+| ``PST8PDT``           | POSIX-style time zone specification                 |
++-----------------------+-----------------------------------------------------+
+| ``-8:00:00``          | UTC offset for PST                                  |
++-----------------------+-----------------------------------------------------+
+| ``-8:00``             | UTC offset for PST (ISO 8601 extended format)       |
++-----------------------+-----------------------------------------------------+
+| ``-800``              | UTC offset for PST (ISO 8601 basic format)          |
++-----------------------+-----------------------------------------------------+
+| ``-8``                | UTC offset for PST (ISO 8601 basic format)          |
++-----------------------+-----------------------------------------------------+
+| ``zulu``              | Military abbreviation for UTC                       |
++-----------------------+-----------------------------------------------------+
+| ``z``                 | Short form of zulu (also in ISO 8601)               |
++-----------------------+-----------------------------------------------------+
+
+Special date/time inputs
+------------------------
+
++--------------+---------------+----------------------------------------------+
+| Input String | Valid Types   | Description                                  |
++==============+===============+==============================================+
+| epoch        | ``date``,     | 1970-01-01 00:00:00+00                       |
+|              | ``timestamp`` | (Unix system time zero)                      |
++--------------+---------------+----------------------------------------------+
+| infinity     | ``date``,     | later than all other time stamps             |
+|              | ``timestamp`` |                                              |
++--------------+---------------+----------------------------------------------+
+| -infinity    | ``date,       | earlier than all other time stamps           |
+|              | ``timestamp`` |                                              |
++--------------+---------------+----------------------------------------------+
+| now          | ``date``,     | current transaction's start time             |
+|              | ``time``,     |                                              |
+|              | ``timestamp`` |                                              |
++--------------+---------------+----------------------------------------------+
+| today        | ``date``,     | midnight (00:00) today                       |
+|              | ``timestamp`` |                                              |
++--------------+---------------+----------------------------------------------+
+| tomorrow     | ``date``,     | midnight (00:00) tomorrow                    |
+|              | ``timestamp`` |                                              |
++--------------+---------------+----------------------------------------------+
+| yesterday    | ``date``,     | midnight (00:00) yesterday                   |
+|              | ``timestamp`` |                                              |
++--------------+---------------+----------------------------------------------+
+| allballs     | ``time``      | 00:00:00.00 UTC                              |
++--------------+---------------+----------------------------------------------+
+
+Intervals
+---------
+
+``interval`` values can be written using the following verbose syntax:
+
+::
+
+    [@] quantity unit [quantity unit...] [direction]
+
+Intervals are useful when you need to move timestamp back in past or to
+the future.
+
++--------------+----------+
+| Abbreviation | Meaning  |
++==============+==========+
+| Y            |  Years   |
++--------------+----------+
+| M            |  Months  |
++--------------+----------+
+| W            |  Weeks   |
++--------------+----------+
+| D            |  Days    |
++--------------+----------+
+| H            |  Hours   |
++--------------+----------+
+| M            |  Minutes |
++--------------+----------+
+| S            |  Seconds |
++--------------+----------+
+
+.. code-block:: postgresql
+    :caption: 7 days before yesterday
+
+    SELECT 'yesterday'::TIMESTAMP + INTERVAL '7d ago';
+    SELECT 'yesterday'::TIMESTAMP - INTERVAL '7' DAY;
+
+Boolean type
+============
+
+PostgreSQL provides the standard SQL type ``boolean``. The ``boolean`` type can
+have several states: **true**, **false**, and a third state, **unknown**, which
+is represented by the SQL ``NULL`` value.
+
+The datetype input function for type ``boolean`` accepts these strings
+representations for the **true** state:
+
+-   ``true``
+-   ``yes``
+-   ``on``
+-   ``1``
+
+and these representations for the **false** state:
+
+-   ``false``
+-   ``no``
+-   ``off``
+-   ``0``
+
+The key words ``TRUE`` or ``FALSE`` are preferred (SQL-compliant) method for
+writing Boolean constants in SQL queries. But, you can also use string
+representations by following the generic string-literal constant syntax, for
+example ``'yes'::boolean``.
+
+Enumerated types
+================
+
+Enumerated (enums) types are data types that comprise a static, ordered set of
+values. They are equivalent to the ``enum`` types supported in a number of
+programming languages. An example of an enum might be the days of the week,
+or a set of status values for a piece of data.
+
+Enum types are created using the ``CREATE TYPE`` command; and once created,
+the enum type can be used in table in function definitions, much like other
+types:
+
+.. code-block:: postgresql
+
+    CREATE TYPE WORK_DAY AS ENUM ('mon', 'tue', 'wed', 'thu', 'fri');
+    CREATE TABLE work_log
+    (
+        amount INTEGER,
+        date   DATE,
+        day    WORK_DAY
+    );
+
+Ordering
+--------
+
+The ordering of the values in an enum type is the order in which the values
+were listed when the type was created. All standard comparison operators and
+related aggregate functions are supported for enums. However, remember that
+each enumerated data type is separated and cannot be compared with other
+enumerated types.

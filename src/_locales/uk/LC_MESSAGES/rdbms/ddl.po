@@ -1,0 +1,663 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2023, Python training course authors and contributors
+# This file is distributed under the same license as the Python Training
+# Course package.
+# SERHII HORODILOV <sgorodil@gmail.com>
+msgid ""
+msgstr ""
+"Project-Id-Version: Python Training Course 2023.11.dev\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-12-22 13:19+0000\n"
+"PO-Revision-Date: 2023-12-22 15:20+0200\n"
+"Last-Translator: Serhii Horodilov <sgorodil@gmail.com>\n"
+"Language-Team: uk <LL@li.org>\n"
+"Language: uk\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Generated-By: Babel 2.12.1\n"
+"X-Generator: Poedit 3.4.1\n"
+
+#: ../../src/rdbms/ddl.txt:-1
+#, fuzzy
+msgid "Data definition language, DDL"
+msgstr "Мова визначення даних, DDL"
+
+#: ../../src/rdbms/ddl.txt:-1
+#, fuzzy
+msgid "Serhii Horodilov"
+msgstr "Serhii Horodilov"
+
+#: ../../src/rdbms/ddl.txt:-1
+#, fuzzy
+msgid "sql, db, database, ddl, create, alter, drop"
+msgstr "sql, db, база даних, ddl, create, alter, drop"
+
+#: ../../src/rdbms/ddl.txt:8
+#, fuzzy
+msgid "Data Definition Language"
+msgstr "Мова опису даних"
+
+#: ../../src/rdbms/ddl.txt:10
+#, fuzzy
+msgid ""
+":abbr:`DDL (Data Definition Language)` is a subset of SQL used for defining "
+"and modifying the database structure. Understanding DDL is fundamental to "
+"working with RDBMS. It allows you to define the structure of your data and "
+"make necessary changes as your requirements evolve."
+msgstr ""
+"abbr:`DDL (Data Definition Language) - це підмножина мови SQL, яка "
+"використовується для визначення та модифікації структури бази даних. "
+"Розуміння DDL є фундаментальним для роботи з СКБД. Це дозволяє вам визначати "
+"структуру ваших даних і вносити необхідні зміни в міру розвитку ваших вимог."
+
+#: ../../src/rdbms/ddl.txt:15
+#, fuzzy
+msgid "``CREATE`` used to create new objects within a RDBMS"
+msgstr "``CREATE`` використовується для створення нових об'єктів у СКБД"
+
+#: ../../src/rdbms/ddl.txt:16
+#, fuzzy
+msgid "``ALTER`` used to modify existing objects"
+msgstr "``ALTER`` використовується для зміни існуючих об'єктів"
+
+#: ../../src/rdbms/ddl.txt:17
+#, fuzzy
+msgid "``DROP`` used to delete database objects"
+msgstr "``DROP`` використовується для видалення об'єктів бази даних"
+
+#: ../../src/rdbms/ddl.txt:18
+#, fuzzy
+msgid "``TRUNCATE`` used to remove all records from a table"
+msgstr "``TRUNCATE`` використовується для видалення всіх записів з таблиці"
+
+#: ../../src/rdbms/ddl.txt:25
+#, fuzzy
+msgid "Create objects"
+msgstr "Створення об'єктів"
+
+#: ../../src/rdbms/ddl.txt:28
+#, fuzzy
+msgid "Creating database roles"
+msgstr "Створення ролей бази даних"
+
+#: ../../src/rdbms/ddl.txt:32
+#, fuzzy
+msgid ""
+"SQLite is a small database in a single file and it doesn't implement role "
+"based access to data. Any user who have access to DB file will have access "
+"to data within the database as well."
+msgstr ""
+"SQLite - це невелика база даних в одному файлі, і вона не реалізує рольовий "
+"доступ до даних. Будь-який користувач, який має доступ до файлу бази даних, "
+"також має доступ до даних всередині бази даних."
+
+#: ../../src/rdbms/ddl.txt:36
+#, fuzzy
+msgid ""
+"In RDBMS, roles are used to manage database permissions. They are an "
+"essential part of database security and user management."
+msgstr ""
+"У СКБД ролі використовуються для керування правами доступу до бази даних. "
+"Вони є невід'ємною частиною безпеки бази даних та управління користувачами."
+
+#: ../../src/rdbms/ddl.txt:39
+#, fuzzy
+msgid ""
+"In PostgreSQL a **role** is an entity that can own database objects and have "
+"database privileges; a role can be considered a *user*, a *group*, or both "
+"depending on how it is used."
+msgstr ""
+"У PostgreSQL **роль** - це сутність, яка може володіти об'єктами бази даних "
+"і мати привілеї до бази даних; роль може розглядатися як *користувач*, "
+"*група* або і те, і інше, залежно від того, як вона використовується."
+
+#: ../../src/rdbms/ddl.txt:43
+#, fuzzy
+msgid "``CREATE ROLE`` statement defines a new database role."
+msgstr "оператор ``CREATE ROLE`` визначає нову роль бази даних."
+
+#: ../../src/rdbms/ddl.txt:49
+#, fuzzy
+msgid "This statement also can have options:"
+msgstr "Це твердження також може мати варіанти:"
+
+#: ../../src/rdbms/ddl.txt:55
+#, fuzzy
+msgid ""
+"Options clarify if a role can login to the database server, connect to "
+"specific databases, create other roles etc. The full list of options is "
+"available in the official postgres documentation."
+msgstr ""
+"Опції пояснюють, чи може роль входити на сервер бази даних, підключатися до "
+"певних баз даних, створювати інші ролі тощо. Повний список опцій доступний в "
+"офіційній документації postgres."
+
+#: ../../src/rdbms/ddl.txt:60
+#, fuzzy
+msgid "Creating databases"
+msgstr "Створення баз даних"
+
+#: ../../src/rdbms/ddl.txt:62
+#, fuzzy
+msgid ""
+"``CREATE DATABASE`` statement creates a new PostgreSQL database. To create a "
+"database, you must be a superuser or have ``CREATEDB`` privilege."
+msgstr ""
+"оператор ``CREATE DATABASE`` створює нову базу даних PostgreSQL. Для "
+"створення бази даних ви повинні бути суперкористувачем або мати привілей "
+"``CREATEDB``."
+
+#: ../../src/rdbms/ddl.txt:69
+#, fuzzy
+msgid ""
+"Databases within a PostgreSQL server have owners. By default a user who "
+"creates a database is assigned as its owner. To specify another user as a "
+"database owner options may be used:"
+msgstr ""
+"Бази даних на сервері PostgreSQL мають власників. За замовчуванням власником "
+"бази даних призначається користувач, який її створив. Щоб вказати іншого "
+"користувача як власника бази даних, можна скористатися опціями:"
+
+#: ../../src/rdbms/ddl.txt:77
+#, fuzzy
+msgid ""
+"There are lots of options for this statement available in the official "
+"postgres documentation."
+msgstr ""
+"В офіційній документації postgres є багато варіантів цього твердження, "
+"доступних в офіційній документації postgres."
+
+#: ../../src/rdbms/ddl.txt:81
+#, fuzzy
+msgid "Creating tables"
+msgstr "Створення таблиць"
+
+#: ../../src/rdbms/ddl.txt:83
+#, fuzzy
+msgid ""
+"To create a table, you use the aptly names ``CREATE TABLE`` command. In this "
+"command you specify at least a name for the new table, the names of the "
+"columns and the data type of each column."
+msgstr ""
+"Для створення таблиці використовується команда ``CREATE TABLE``, яка має "
+"влучну назву. У цій команді ви вказуєте принаймні назву нової таблиці, назви "
+"стовпців і тип даних для кожного стовпця."
+
+#: ../../src/rdbms/ddl.txt:98
+#, fuzzy
+msgid "Default value"
+msgstr "Значення за замовчуванням"
+
+#: ../../src/rdbms/ddl.txt:99
+#, fuzzy
+msgid ""
+"Constraints also can be applied for columns while creating a table. In this "
+"section, only most notable constraints will be described."
+msgstr ""
+"Обмеження також можуть бути застосовані до стовпців під час створення "
+"таблиці. У цьому розділі буде описано лише найпоширеніші обмеження."
+
+#: ../../src/rdbms/ddl.txt:102
+#, fuzzy
+msgid ""
+"A column can be assigned a default value. When a new row is created and no "
+"values are specified for some of the columns, those columns will be filled "
+"with their respective default values. If no default value is declared "
+"explicitly, the default value is the ``NULL`` value. This usually makes "
+"sense because a null value can be considered to represent unknown data."
+msgstr ""
+"Стовпчику можна призначити значення за замовчуванням. Коли створюється новий "
+"рядок і для деяких стовпців не вказано жодних значень, ці стовпці буде "
+"заповнено відповідними значеннями за замовчуванням. Якщо значення за "
+"замовчуванням не вказано явно, значенням за замовчуванням буде значення "
+"``NULL``. Зазвичай це має сенс, оскільки нульове значення можна вважати "
+"таким, що представляє невідомі дані."
+
+#: ../../src/rdbms/ddl.txt:108
+#, fuzzy
+msgid ""
+"In a table definition the default values are listed after the data type."
+msgstr ""
+"У визначенні таблиці значення за замовчуванням перераховані після типу даних."
+
+#: ../../src/rdbms/ddl.txt:119
+#, fuzzy
+msgid ""
+"The default value can be an expression, which will be evaluated whenever the "
+"default value is inserted (**not when the table is created**). A common "
+"example are timestamps columns representing the time a record was created "
+"and a \"serial number\" generator."
+msgstr ""
+"Значення за замовчуванням може бути виразом, який буде обчислюватися щоразу, "
+"коли вставляється значення за замовчуванням (**не під час створення "
+"таблиці**). Типовим прикладом є стовпці з позначками часу, що відображають "
+"час створення запису, та генератор \"серійних номерів\"."
+
+#: ../../src/rdbms/ddl.txt:132
+#, fuzzy
+msgid "There is a shorthand to generate serial numbers:"
+msgstr "Існує скорочення для генерації серійних номерів:"
+
+#: ../../src/rdbms/ddl.txt:139
+#, fuzzy
+msgid "Generated Columns"
+msgstr "Згенеровані стовпці"
+
+#: ../../src/rdbms/ddl.txt:140
+#, fuzzy
+msgid ""
+"In case you need to calculate some column value based on other columns, you "
+"may use generated columns. A generated column is a special column that is "
+"always computed from other columns. Thus, it is for columns what a view is "
+"for tables. There are two kinds of generated columns: stored and virtual."
+msgstr ""
+"Якщо вам потрібно обчислити значення якогось стовпця на основі інших "
+"стовпців, ви можете використовувати згенеровані стовпці. Згенерований "
+"стовпець - це спеціальний стовпець, який завжди обчислюється на основі інших "
+"стовпців. Таким чином, для стовпців це те саме, що подання для таблиць. "
+"Існує два типи згенерованих стовпців: збережені та віртуальні."
+
+#: ../../src/rdbms/ddl.txt:145
+#, fuzzy
+msgid ""
+"A stored generated column is computed when it is written (inserted or "
+"updated) and occupies storage as if it were a normal column. A virtual "
+"generated column occupies no storage and is computed when it is read."
+msgstr ""
+"Збережений згенерований стовпець обчислюється, коли він записується "
+"(вставляється або оновлюється) і займає пам'ять, як звичайний стовпець. "
+"Віртуальний згенерований стовпець не займає місця в пам'яті і обчислюється "
+"під час читання."
+
+#: ../../src/rdbms/ddl.txt:159
+#, fuzzy
+msgid ""
+"There are several restrictions applied to the definitions of generated "
+"columns and tables involving generated columns (not all listed):"
+msgstr ""
+"Існує кілька обмежень, що застосовуються до визначень згенерованих стовпців "
+"і таблиць, що містять згенеровані стовпці (не всі з них перераховані):"
+
+#: ../../src/rdbms/ddl.txt:162
+#, fuzzy
+msgid ""
+"The generation expression can only use immutable functions and cannot use "
+"sub-queries or reference anything other than the current row."
+msgstr ""
+"Вираз генерації може використовувати лише незмінні функції і не може "
+"використовувати підзапити або посилатися на щось, крім поточного рядка."
+
+#: ../../src/rdbms/ddl.txt:164
+#, fuzzy
+msgid "The generation expression cannot reference another generated column."
+msgstr "Вираз генерації не може посилатися на інший згенерований стовпець."
+
+#: ../../src/rdbms/ddl.txt:165
+#, fuzzy
+msgid "A generated column cannot have column default."
+msgstr "Створений стовпець не може мати стовпець за замовчуванням."
+
+#: ../../src/rdbms/ddl.txt:168
+#, fuzzy
+msgid "Constraints"
+msgstr "Обмеження"
+
+#: ../../src/rdbms/ddl.txt:169
+#, fuzzy
+msgid ""
+"A check constraint is the most generic constraint type. It allows you to "
+"specify that the value in a certain column must satisfy a Boolean (truth-"
+"value) expression."
+msgstr ""
+"Обмеження перевірки є найбільш загальним типом обмежень. Воно дозволяє "
+"вказати, що значення в певному стовпчику має задовольняти булевому (істинно-"
+"неістинному) виразу."
+
+#: ../../src/rdbms/ddl.txt:184
+#, fuzzy
+msgid ""
+"A not-null constraint simply specifies that a column must not assume the "
+"null value."
+msgstr ""
+"Обмеження не-нуль просто вказує, що стовпець не повинен приймати нульове "
+"значення."
+
+#: ../../src/rdbms/ddl.txt:195
+#, fuzzy
+msgid ""
+"Unique constraints ensure that the data contained in a column, or a group of "
+"columns, is unique among all the rows in the table."
+msgstr ""
+"Унікальні обмеження гарантують, що дані, які містяться у стовпчику або групі "
+"стовпчиків, є унікальними серед усіх рядків таблиці."
+
+#: ../../src/rdbms/ddl.txt:209
+#, fuzzy
+msgid "System columns"
+msgstr "Системні колонки"
+
+#: ../../src/rdbms/ddl.txt:210
+#, fuzzy
+msgid ""
+"Every table has several system columns that are implicitly defined by the "
+"system. Therefore, these names cannot be used as names of user-defined "
+"columns. These columns cannot be used in the generated columns (except "
+"``tableoid``). Columns are:"
+msgstr ""
+"Кожна таблиця має декілька системних стовпців, які неявно визначені "
+"системою. Тому ці назви не можуть бути використані як назви стовпців, "
+"визначених користувачем. Ці стовпці не можуть бути використані у створених "
+"стовпцях (крім ``tableoid``). Стовпці можна:"
+
+#: ../../src/rdbms/ddl.txt:215
+msgid "``tableoid``"
+msgstr "``tableoid``"
+
+#: ../../src/rdbms/ddl.txt:216
+msgid "``xmin``"
+msgstr "``xmin``"
+
+#: ../../src/rdbms/ddl.txt:217
+msgid "``cmin``"
+msgstr "``cmin``"
+
+#: ../../src/rdbms/ddl.txt:218
+msgid "``xmax``"
+msgstr "``xmax``"
+
+#: ../../src/rdbms/ddl.txt:219
+msgid "``cmax``"
+msgstr "``cmax``"
+
+#: ../../src/rdbms/ddl.txt:220
+msgid "``ctid``"
+msgstr "``ctid``"
+
+#: ../../src/rdbms/ddl.txt:223
+#, fuzzy
+msgid "Modify objects"
+msgstr "Модифікація об'єктів"
+
+#: ../../src/rdbms/ddl.txt:225
+#, fuzzy
+msgid ""
+"When you create a table and you realize that you made a mistake, or the "
+"requirements of the application change, you can drop the table and create it "
+"again. But this is not a convenient option if the table is already filled "
+"with data, or if the table is referenced by other database objects."
+msgstr ""
+"Коли ви створюєте таблицю і розумієте, що зробили помилку, або вимоги "
+"програми змінюються, ви можете видалити таблицю і створити її заново. Але це "
+"не дуже зручний варіант, якщо таблиця вже заповнена даними або якщо на неї "
+"посилаються інші об'єкти бази даних."
+
+#: ../../src/rdbms/ddl.txt:230
+#, fuzzy
+msgid ""
+"PostgreSQL provides a family of commands to make modifications to existing "
+"tables. You can:"
+msgstr ""
+"PostgreSQL надає сімейство команд для внесення змін до існуючих таблиць. Ви "
+"можете це робити:"
+
+#: ../../src/rdbms/ddl.txt:233
+#, fuzzy
+msgid "add columns"
+msgstr "додати стовпці"
+
+#: ../../src/rdbms/ddl.txt:234
+#, fuzzy
+msgid "remove columns"
+msgstr "видалити стовпці"
+
+#: ../../src/rdbms/ddl.txt:235
+#, fuzzy
+msgid "add constraints"
+msgstr "додати обмеження"
+
+#: ../../src/rdbms/ddl.txt:236
+#, fuzzy
+msgid "remove constraints"
+msgstr "зняти обмеження"
+
+#: ../../src/rdbms/ddl.txt:237
+#, fuzzy
+msgid "change default values"
+msgstr "змінити значення за замовчуванням"
+
+#: ../../src/rdbms/ddl.txt:238
+#, fuzzy
+msgid "change column data types"
+msgstr "змінити типи даних стовпців"
+
+#: ../../src/rdbms/ddl.txt:239
+#, fuzzy
+msgid "rename columns"
+msgstr "перейменувати стовпці"
+
+#: ../../src/rdbms/ddl.txt:240
+#, fuzzy
+msgid "rename tables"
+msgstr "перейменовувати таблиці"
+
+#: ../../src/rdbms/ddl.txt:242
+#, fuzzy
+msgid "All these actions are performed using the ``ALTER TABLE`` command."
+msgstr "Всі ці дії виконуються за допомогою команди ``ALTER TABLE``."
+
+#: ../../src/rdbms/ddl.txt:245
+#, fuzzy
+msgid "Adding a column"
+msgstr "Додавання стовпця"
+
+#: ../../src/rdbms/ddl.txt:247
+#, fuzzy
+msgid "To add a column, use a command like:"
+msgstr "Щоб додати стовпець, використовуйте команду like:"
+
+#: ../../src/rdbms/ddl.txt:259
+#, fuzzy
+msgid ""
+"Constraints can be also defined on the column at the same time, using "
+"general syntax."
+msgstr ""
+"Обмеження можуть бути визначені для стовпця одночасно, використовуючи "
+"загальний синтаксис."
+
+#: ../../src/rdbms/ddl.txt:262
+#, fuzzy
+msgid ""
+"In fact all the options that can be applied to a column description in "
+"``CREATE TABLE`` can be used here. Keep in mind however that the default "
+"value must satisfy the given constraints, or the ``ADD`` will fail."
+msgstr ""
+"Фактично, тут можна використовувати всі опції, які можна застосувати до "
+"опису стовпця у ``CREATE TABLE``. Однак майте на увазі, що значення за "
+"замовчуванням має задовольняти заданим обмеженням, інакше команда ``ADD`` не "
+"спрацює."
+
+#: ../../src/rdbms/ddl.txt:267
+#, fuzzy
+msgid "Adding a constraint"
+msgstr "Додавання обмеження"
+
+#: ../../src/rdbms/ddl.txt:269
+#, fuzzy
+msgid "To add a constraint, the table constraint syntax is used."
+msgstr "Для додавання обмеження використовується синтаксис обмеження таблиці."
+
+#: ../../src/rdbms/ddl.txt:276
+#, fuzzy
+msgid "Other examples:"
+msgstr "Інші приклади:"
+
+#: ../../src/rdbms/ddl.txt:286
+#, fuzzy
+msgid ""
+"To add a non-null constraint, which cannot be written as a table constraint, "
+"use this syntax:"
+msgstr ""
+"Щоб додати ненульове обмеження, яке не можна записати як обмеження таблиці, "
+"використовуйте цей синтаксис:"
+
+#: ../../src/rdbms/ddl.txt:295
+#, fuzzy
+msgid "Changing a column's default value"
+msgstr "Зміна значення стовпця за замовчуванням"
+
+#: ../../src/rdbms/ddl.txt:297
+#, fuzzy
+msgid "To set a new default for a column, use command like this:"
+msgstr ""
+"Щоб встановити нове значення за замовчуванням для стовпця, скористайтеся "
+"такою командою:"
+
+#: ../../src/rdbms/ddl.txt:304
+msgid "To remove any default value, use:"
+msgstr "Щоб видалити будь-яке значення за замовчуванням, використовуйте:"
+
+#: ../../src/rdbms/ddl.txt:311
+#, fuzzy
+msgid "This is effectively the same as settings the default to ``NULL``."
+msgstr "Це фактично те саме, що встановити значення за замовчуванням ``NULL``."
+
+#: ../../src/rdbms/ddl.txt:314
+#, fuzzy
+msgid "Changing a column's data type"
+msgstr "Зміна типу даних стовпця"
+
+#: ../../src/rdbms/ddl.txt:316
+#, fuzzy
+msgid "To convert a column to a different data type, use a command like this:"
+msgstr ""
+"Щоб перетворити стовпець в інший тип даних, скористайтеся такою командою:"
+
+#: ../../src/rdbms/ddl.txt:323
+#, fuzzy
+msgid ""
+"This will succeed only if each existing entry in the column can be converted "
+"to the new type by an implicit cast. If a more complex conversion is needed, "
+"you can add a ``USING`` clause that specifies how to compute the new values "
+"from old ones."
+msgstr ""
+"Це вдасться лише у тому випадку, якщо кожен існуючий запис у стовпчику може "
+"бути перетворено до нового типу неявним приведенням. Якщо потрібне більш "
+"складне перетворення, ви можете додати речення ``ВИКОРИСТАННЯ``, яке вказує, "
+"як обчислювати нові значення зі старих."
+
+#: ../../src/rdbms/ddl.txt:328
+#, fuzzy
+msgid ""
+"PostgreSQL will attempt to convert the column's default value (if any) to "
+"the new type, as well as any constraint that involve the column. But these "
+"conversions might fail, or might produce surprising results. It's often best "
+"to drop any constraints on the column before altering its type, and then add "
+"back suitably modified constraints afterwards."
+msgstr ""
+"PostgreSQL спробує перетворити значення стовпця за замовчуванням (якщо таке "
+"є) до нового типу, а також будь-які обмеження, пов'язані зі стовпцем. Але ці "
+"перетворення можуть виявитися невдалими або призвести до несподіваних "
+"результатів. Часто краще зняти будь-які обмеження зі стовпця перед зміною "
+"його типу, а потім додати назад відповідним чином змінені обмеження."
+
+#: ../../src/rdbms/ddl.txt:335
+#, fuzzy
+msgid "Renaming objects"
+msgstr "Перейменування об'єктів"
+
+#: ../../src/rdbms/ddl.txt:337
+#, fuzzy
+msgid "To rename objects use ``RENAME`` command, like this:"
+msgstr ""
+"Для перейменування об'єктів використовуйте команду ``RENAME``, наприклад, "
+"так:"
+
+#: ../../src/rdbms/ddl.txt:346
+#, fuzzy
+msgid "To rename a table:"
+msgstr "Перейменувати таблицю:"
+
+#: ../../src/rdbms/ddl.txt:354
+#, fuzzy
+msgid "Remove objects"
+msgstr "Видалення об'єктів"
+
+#: ../../src/rdbms/ddl.txt:357
+#, fuzzy
+msgid "Removing tables"
+msgstr "Видалення столів"
+
+#: ../../src/rdbms/ddl.txt:359
+#, fuzzy
+msgid "``DROP`` command is used to remove objects."
+msgstr "команда ``DROP`` використовується для видалення об'єктів."
+
+#: ../../src/rdbms/ddl.txt:365
+#, fuzzy
+msgid ""
+"Remember, attempting to remove a table that does not exist is an error. "
+"Nevertheless, it is common in SQL script files to unconditionally try to "
+"drop each table before creating it, ignoring any error message, so that the "
+"script works whether or not the table exists. ``IF EXISTS`` variant can be "
+"used to avoid the error message, but this is not standard SQL."
+msgstr ""
+"Пам'ятайте, що спроба видалити неіснуючу таблицю є помилкою. Тим не менш, у "
+"файлах скриптів SQL часто зустрічається безумовна спроба видалити кожну "
+"таблицю перед її створенням, ігноруючи будь-які повідомлення про помилки, "
+"щоб скрипт працював незалежно від того, чи існує таблиця чи ні. варіант "
+"``ЯКЩО ІСНУЄ`` можна використовувати для уникнення повідомлення про помилку, "
+"але це не є стандартним для SQL."
+
+#: ../../src/rdbms/ddl.txt:375
+#, fuzzy
+msgid ""
+"In case there are other objects referencing the object to drop ``CASCADE`` "
+"may be used to also remove any referencing objects."
+msgstr ""
+"Якщо є інші об'єкти, що посилаються на об'єкт, який потрібно вилучити, "
+"``CASCADE`` може бути використано для вилучення всіх об'єктів, що "
+"посилаються на об'єкт, який потрібно вилучити."
+
+#: ../../src/rdbms/ddl.txt:379
+#, fuzzy
+msgid "Removing a column"
+msgstr "Видалення стовпця"
+
+#: ../../src/rdbms/ddl.txt:381
+#, fuzzy
+msgid "To remove a column, use ``DROP`` command like this:"
+msgstr "Щоб видалити стовпець, використовуйте команду ``DROP`` ось так:"
+
+#: ../../src/rdbms/ddl.txt:388
+#, fuzzy
+msgid ""
+"Whatever data was in the column disappears. Table constraints involving the "
+"column are dropped, too. However, if the column is referenced by a foreign "
+"key constraint of another table, PostgreSQL will not silently drop that "
+"constraint. You can authorize dropping everything that depends on the column "
+"by adding ``CASCADE``:"
+msgstr ""
+"Усі дані, що були у стовпчику, зникають. Обмеження таблиці, що стосуються "
+"стовпця, також зникають. Однак, якщо на стовпець посилається обмеження "
+"зовнішнього ключа іншої таблиці, PostgreSQL не буде мовчки вилучати це "
+"обмеження. Ви можете дозволити вилучення всього, що залежить від стовпця, "
+"додавши ``CASCADE``:"
+
+#: ../../src/rdbms/ddl.txt:400
+#, fuzzy
+msgid "Removing a constraint"
+msgstr "Зняття обмеження"
+
+#: ../../src/rdbms/ddl.txt:402
+#, fuzzy
+msgid ""
+"To remove a constraint you need to know its name. The **psql** command ``\\d "
+"table_name`` can be helpful to get the detailed information on a specific "
+"table, including all constraints' names assigned to it."
+msgstr ""
+"Щоб видалити обмеження, вам потрібно знати його ім'я. Команда **psql** ``\\d "
+"ім'я_таблиці`` може бути корисною для отримання детальної інформації про "
+"конкретну таблицю, включно з іменами всіх обмежень, призначених для неї."

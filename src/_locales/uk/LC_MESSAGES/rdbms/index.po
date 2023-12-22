@@ -7,16 +7,16 @@ msgstr ""
 "Project-Id-Version: Python Training Course 2022.11.dev\n"
 "Report-Msgid-Bugs-To: https://github.com/edu-python-course/edu-python-course."
 "github.io/issues\n"
-"POT-Creation-Date: 2023-10-05 19:49+0300\n"
-"PO-Revision-Date: 2023-10-05 20:15+0300\n"
+"POT-Creation-Date: 2023-12-16 13:55+0000\n"
+"PO-Revision-Date: 2023-12-21 03:58+0200\n"
 "Last-Translator: Serhii Horodilov <sgorodil@gmail.com>\n"
 "Language-Team: ua <LL@li.org>\n"
 "Language: ua\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 2.13.0\n"
-"X-Generator: Poedit 3.4\n"
+"Generated-By: Babel 2.12.1\n"
+"X-Generator: Poedit 3.4.1\n"
 
 #: ../../src/rdbms/index.txt:-1
 msgid "Relational databases"
@@ -30,11 +30,23 @@ msgstr "Serhii Horodilov"
 msgid "sql, db, database, intro, introduction, index"
 msgstr "sql, db, database, intro, introduction, index"
 
-#: ../../src/rdbms/index.txt:8
+#: ../../src/rdbms/index.txt
+msgid "PostgreSQL"
+msgstr ""
+
+#: ../../src/rdbms/index.txt
+msgid "SQLite"
+msgstr ""
+
+#: ../../src/rdbms/index.txt
+msgid "MySQL"
+msgstr ""
+
+#: ../../src/rdbms/index.txt:23
 msgid "Relational Database"
 msgstr "Реляційні бази даних"
 
-#: ../../src/rdbms/index.txt:10
+#: ../../src/rdbms/index.txt:25
 msgid ""
 ":abbr:`RDBMS (Relational Database Management System)` is a type of software "
 "that helps users to create, update, manage, and access relational databases. "
@@ -49,7 +61,7 @@ msgstr ""
 "стовпець представляє певний атрибут даних, тоді як кожен рядок представляє "
 "конкретний екземпляр цих даних."
 
-#: ../../src/rdbms/index.txt:16
+#: ../../src/rdbms/index.txt:31
 msgid ""
 "RDBMS allow users to interact with the database using :abbr:`SQL (Structured "
 "Query Language)`, which is a standard language for managing and manipulating "
@@ -63,7 +75,7 @@ msgstr ""
 "різноманітність операцій з базою даних, включаючи додавання, оновлення та "
 "видалення даних, а також отримання даних на основі певних критеріїв."
 
-#: ../../src/rdbms/index.txt:22
+#: ../../src/rdbms/index.txt:37
 msgid ""
 "RDBMS also provide a range of features to ensure data integrity, such as "
 "enforcing data constraints, supporting transactions, and providing backup "
@@ -78,3 +90,50 @@ msgstr ""
 "інструменти для керування базою даних, такі як інтерфейси користувача для "
 "створення та модифікації таблиць і представлень, а також інструменти "
 "моніторингу для оптимізації продуктивності бази даних."
+
+#: ../../src/rdbms/index.txt:43
+msgid ""
+"Security is a paramount aspect of managing databases. Even at the "
+"introductory level, it's crucial to be aware of the basic security measures:"
+msgstr ""
+
+#: ../../src/rdbms/index.txt:46
+msgid ""
+"**Authentication and Authorization**: Ensuring that only authorized users "
+"have access to the database."
+msgstr ""
+
+#: ../../src/rdbms/index.txt:48
+msgid ""
+"**Role-Based Access Control**: Assigning permissions based on roles within "
+"the organization."
+msgstr ""
+
+#: ../../src/rdbms/index.txt:50
+msgid ""
+"**Data Encryption**: Protecting sensitive data both at rest and in transit."
+msgstr ""
+
+#: ../../src/rdbms/index.txt:52
+msgid ""
+"There are dozens of RDBMS, used in nowadays projects. But most widespread "
+"are:"
+msgstr ""
+
+#: ../../src/rdbms/index.txt:54
+msgid ""
+"|postgres| **PostgreSQL**: A Powerful, open source object-relational "
+"database system."
+msgstr ""
+
+#: ../../src/rdbms/index.txt:56
+msgid ""
+"|sqlite| **SQLite**: A C-library that implements a small, full featured SQL "
+"database engine."
+msgstr ""
+
+#: ../../src/rdbms/index.txt:58
+msgid ""
+"|mysql| **MySQL**: A fast, multithread, multi-user, and robust SQL database "
+"server."
+msgstr ""

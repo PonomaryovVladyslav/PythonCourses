@@ -13,135 +13,110 @@ anomalies, thereby improving data integrity. Normalization is a set of rules or
 guidelines to design a database schema in such a way that it avoids data
 duplication, data redundancy, and data inconsistency.
 
-There are several normal forms, each building on the previous one, which guide
-us in the normalization process. The most commonly used normal forms are:
+The main purpose of database normalization is to avoid complexities, eliminate
+duplicates, and organize data in a consistent way. Normalization reduces data
+redundancy and dependency, making the database more efficient, flexible, and
+scalable. It also helps in maintaining data consistency and accuracy, and
+ensures that updates and deletions are properly handled.
 
--   **First Normal Form (1NF)**:
-    Each column should hold atomic (indivisible) values.
-    There should be no repeating groups or arrays of data in a table.
--   **Second Normal Form (2NF)**:
-    Each non-key column should be functionally dependent on the entire primary
-    key. In other words, every column in a table should be related to
-    the primary key and not dependent on any other non-key columns.
--   **Third Normal Form (3NF)**:
-    All non-key columns should be dependent only on the primary key and not on
-    any other non-key columns. This eliminates transitive dependencies.
+There are 6 **normal forms**, but this chapter focuses on the first 3 only,
+since the commonest normal form you'll see out there is *3NF* (third normal
+form).
 
-Normalization reduces data redundancy and dependency, making the database more
-efficient, flexible, and scalable. It also helps in maintaining data
-consistency and accuracy, and ensures that updates and deletions are properly
-handled.
+Normalized tables are:
+
+-   Easier to understand
+-   Easier to enhance and extend
+-   Protected from:
+
+    -   insertion anomalies
+    -   update anomalies
+    -   deletion anomalies
+
+Anomalies
+=========
+
+Insertion anomalies
+-------------------
+
+.. todo: complete subsection
+
+Update anomalies
+----------------
+
+.. todo: complete subsection
+
+Deletion anomalies
+------------------
+
+.. todo: complete subsection
 
 First normal form (1NF)
 =======================
 
-It's easier to understand normalization via examples.
-Let's start with some dummy orders data.
+.. rubric:: Data example
 
-.. csv-table:: Initial data
-    :header-rows: 1
+.. todo: add data example (no NF)
 
-    order,customer,product,quantity,price,total
-    1,"John Doe","(Apple, Orange)","(2, 3)","(100, 50)","(200, 150)"
-    2,"Jane Smith","Banana",4,25,100
+Requirements
+------------
 
-This table violates 1NF, since its columns contain multiple values. To bring
-this to 1NF all data within the table are to be atomic.
+-   Row order should not be used to convey information.
+-   Data types should not be mixed within the same column
+    (and the RDBMS won't let you do in anyway).
+-   Tables should have their primary keys.
+-   Repeating groups should be eliminated.
 
-.. csv-table:: 1NF applied
-    :header-rows: 1
+Applying 1NF
+------------
 
-    order,customer,product,quantity,price,total
-    1,"John Doe","Apple",2,100 ,200
-    2,"John Doe","Orange",3,50 ,150
-    3,"Jane Smith","Banana",4,25,100
-
-From now each peace of data is represented as atomic value.
+.. todo: complete subsection
+.. todo: add data example in 1NF
 
 Second normal form (2NF)
 ========================
 
-The table above is in 1NF, but ``item price`` is dependent on the *item* entity
-itself and have low cohesion to *orders*. To bring it into 2NF a dedicated
-table to store information about items themselves is to be created. After that
-``order`` and ``product`` table are connected (related) to each other via a
-foreign key.
+Requirements
+------------
 
-.. csv-table:: ``order`` table
-    :header-rows: 1
+-   Each non-key attribute must depend on the entire primary key
 
-    id, customer, product_id, quantity
-    1, "John Doe", 1, 2
-    2, "John Doe", 2, 3
-    3, "Jane Smith", 3, 4
+Applying 2NF
+------------
 
-.. csv-table:: ``product`` table
-    :header-rows: 1
-
-    id, product, price
-    1, "Apple", 100
-    2, "Orange", 50
-    3, "Banana", 25
-
-.. mermaid::
-    :align: center
-
-    erDiagram
-        ORDER ||--|{ PRODUCT : contains
-        ORDER {
-            int id pk
-            string customer
-            int product_id fk
-            int quantity
-        }
-        PRODUCT {
-            int id pk
-            string name
-            int price
-        }
-
-.. note:: ``total`` field is also removed, since now it can be calculated
-          as product of ``product.price`` and ``order.quantity``.
+.. todo: complete subsection
+.. todo: add data example in 2NF
 
 Third normal form (3NF)
 =======================
 
-At last it's time to remove a transitive functional dependency. Customer's name
-is not actually dependent on a product, but on a person, who places an order.
+.. todo: definition, bcnf, example
 
-.. csv-table:: ``order`` table
-    :header-rows: 1
+Requirements
+------------
 
-    id, customer_id, product_id, quantity
-    1, 1, 1, 2
-    2, 1, 2, 3
-    3, 2, 3, 4
+-   Every non-key attribute in a table should depend on the key, the whole key,
+    and nothing but the key (no transitive dependency).
 
-.. csv-table:: ``customer`` table
-    :header-rows: 1
+.. note::
 
-    id, customer
-    1, "John Doe"
-    3, "Jane Smith"
+    **Boyce-Codd normal form**
 
-.. mermaid::
-    :align: center
+    :abbr:`BCNF (Boyce-Codd Normal Form)` is the stronger version of 3NF.
+    It also is called as 3.5NF (three-and-a-half normal form).
 
-    erDiagram
-        CUSTOMER }o--|| ORDER : places
-        ORDER ||--|{ PRODUCT : contains
-        ORDER {
-            int id pk
-            int customer_id fk
-            int product_id fk
-            int quantity
-        }
-        PRODUCT {
-            int id pk
-            string name
-            int price
-        }
-        CUSTOMER {
-            int id pk
-            string name
-        }
+    **Every attribute** in a table should depend on the key, the whole key,
+    and nothing but the key.
+
+Applying 3NF
+------------
+
+.. todo: complete subsection
+.. todo: add data example in 3NF
+
+Conclusion
+==========
+
+Each next normal form includes all the requirements for the previous one.
+
+.. todo: complete the conclusion

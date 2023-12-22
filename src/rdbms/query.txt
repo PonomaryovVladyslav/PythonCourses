@@ -1,0 +1,729 @@
+.. meta::
+    :description: Query data from database
+    :author: Serhii Horodilov
+    :keywords: sql, db, database, query, select, fetch
+
+*************
+Querying data
+*************
+
+The process of retrieving or the command to retrieve data from a database is
+called a *query*. In SQL the ``SELECT`` command is used to specify queries.
+
+``SELECT`` retrieves rows from zero or more tables. The general processing of
+``SELECT`` is as follows:
+
+#.  All queries in the ``WITH`` list are computed.
+    This effectively serve as temporary tables that can be referenced in the
+    ``FROM`` list.
+#.  All elements in the ``FROM`` list are computed. If more than one element
+    is specified in the ``FROM`` list, they are cross-joined together.
+#.  If ``WHERE`` clause is specified, all rows that do not satisfy
+    the condition are eliminated from the output.
+#.  If the ``GROUP BY`` clause is specified, or if there are aggregate function
+    calls, the output is combined into groups of rows that match on one or more
+    values, and the result of aggregate functions are computed.
+    If the ``HAVING`` clause is present, it eliminates groups that does not
+    satisfy the given condition.
+#.  The actual output rows are computed using the ``SELECT`` output expressions
+    for each row or row of group.
+#.  ``SELECT DISTINCT`` eliminates duplicate rows from the result.
+    ``SELECT DISTINCT ON`` eliminates rows that match on all the specified
+    expressions.
+#.  Using the operators ``UNION``, ``INTERSECT``, and ``EXCEPT``, the output
+    of more than one ``SELECT`` statement can be combined to form a single
+    result set.
+
+    -   The ``UNION`` operator returns **all** rows that are in one or both
+        result sets.
+    -   The ``INTERSECT`` operator returns all rows that are strictly in both
+        result sets.
+    -   The ``EXCEPT`` operator returns the rows that are in the first result
+        set, but not in the second.
+
+#.  If the ``ORDER BY`` clause is specified, the returned rows are sorted in
+    the specific order.
+#.  if the ``LIMIT`` or ``OFFSET`` clause is specified, the ``SELECT``
+    statement only returns a subset of the result rows.
+#.  If ``FOR UPDATE``, ``FOR NO KEY UPDATE``, ``FOR SHARE`` or
+    ``FOR KEY SHARE`` is specified, the ``SELECT`` statement locks the selected
+    rows against concurrent updates.
+
+.. contents::
+    :local:
+    :depth: 2
+
+Select rows from a table
+========================
+
+A simple kind of query has the form:
+
+.. code-block:: postgresql
+
+    SELECT * FROM publisher;
+
+This command would retrieve all rows and all user-defined columns from
+``publisher`` table. A select list can also select a subset of the available
+columns or make calculations using the columns.
+
+.. code-block:: postgresql
+
+    SELECT title, page_count / 2
+    FROM book;
+
+``FROM`` clause is a simple kind of table expression: it reads just one table.
+In general, table expression can be complex constructs of base tables, joins
+and sub-queries. But it is possible to omit the table expression entirely and
+use the ``SELECT`` command as a calculator (or in some another way):
+
+.. code-block:: sql
+
+    SELECT 40 + 2;
+
+The ``FROM`` clause derives a table from one or more other tables given in
+a comma-separated table reference list. A table reference can a table name,
+or derived table such as sub-query, a ``JOIN`` construct, or complex
+combinations of these. If more than one table reference is listed in the
+``FROM`` clause, the table are cross-joined. The result of the ``FROM`` list
+is an intermediate virtual table tant can then be subject to transformations
+by the ``WHERE``, ``GROUP BY``, and ``HAVING`` clauses and is finally the
+result of the overall table expression.
+
+Search conditions
+=================
+
+After the processing of the ``FROM`` clause is done, each row of the derived
+virtual table can be checked against the search condition. If the result of
+the condition is ``true``, the row is kept in the output table, otherwise it
+is discarded. The ``WHERE`` clause is used to handle search condition checks.
+
+Here are some examples of ``WHERE`` clause:
+
+.. code-block:: sql
+    :caption: WHERE clause usage examples
+
+    SELECT ... FROM tbl
+    WHERE c1 > 5;
+
+    SELECT ... FROM tbl
+    WHERE c1 IN (1, 2, 3);
+
+    SELECT ... FROM tbl
+    WHERE c1 IN (SELECT c1 FROM t2);
+
+    SELECT ... FROM tbl
+    WHERE c1 IN (SELECT c3 FROM t2 WHERE c2 = tbl.c1 + 10);
+
+    SELECT ... FROM tbl
+    WHERE c1 BETWEEN (SELECT c3 FROM t2 WHERE c2 = tbl.c1 + 10) AND 100;
+
+    SELECT ... FROM tbl
+    WHERE EXISTS (SELECT c1 FROM t2 WHERE c2 > fdt.c1);
+
+Grouping data
+=============
+
+After passing the ``WHERE`` filter, the derived input table might be subject
+to grouping, using ``GROUP BY`` clause, and elimination of group rows using
+the ``HAVING`` clause. The ``GROUP BY`` clause is used to group together those
+rows in a table that have the same values in all the columns listed. The order
+in the columns are listed does not matter. The effect is to combine each set of
+rows having common values into one group row that represents all rows in the
+group. This is done to eliminate redundancy in the output and/or compute
+aggregates that apply to these groups.
+
+Select lists
+============
+
+As shown is the previous section, the table expression in the ``SELECT``
+command constructs an intermediate virtual table by possibly combining tables,
+views, eliminating rows, grouping etc. This table is finally passed on to
+processing by the *select list*. The select list determines which *columns*
+of the intermediate table are actually output.
+
+Select list items
+-----------------
+
+The simplest kind of select is ``*`` which emits that the table expression
+produces. Otherwise, a select list is a comma-separated list of value
+expressions. For instance:
+
+.. code-block:: sql
+
+    SELECT first_name, last_name
+    FROM author;
+
+Columns labels
+--------------
+
+The entries listed in the select list can be assigned names for subsequent
+processing.
+
+.. code-block:: sql
+
+    SELECT title, page_count / 2 as sheets FROM book;
+
+If no output column name  is specified using ``AS``, the system will assign
+a default column name. For simple column references, this is the name of
+the referenced column. For function calls, this is the name of the function.
+For complex expressions, the system will generate a generic name.
+
+.. note::
+
+    Labels are often referenced as "aliases".
+
+DISTINCT
+--------
+
+After the select list has been processed, the result table can optionally be
+subject to the elimination of duplicate rows. The ``DISTINCT`` key word is
+written directly after ``SELECT`` to specify this:
+
+.. code-block:: postgresql
+
+    SELECT DISTINCT publisher FROM book;
+
+Obviously, two rows are considered distinct if they differ in at least one
+column value. Null values are considered equal in comparison. Alternatively,
+an arbitrary expression can determine what rows are to be considered distinct.
+
+.. code-block::
+
+    SELECT DISTINCT ON (expression [, expression ...]) select_list ...
+
+Sorting rows
+============
+
+After a query has produced an output table it can optionally be sorted.
+If sorting is not chosen, the rows will be returned in an unspecified order.
+The actual order in this case will depend on the scan and join plan types and
+the order on disk, but it must not be relied on.
+
+The ``ORDER BY`` clause specifies the sort order:
+
+.. code-block:: postgresql
+
+    SELECT title, publisher_id FROM book ORDER BY title;
+
+The sort expression(s) can be any expression that would be valid in the query's
+select list.
+
+When more than one expression is specified, the later values are used to sort
+rows that are equal according to the earlier values. Each expression can be
+followed by an option ``ASC`` or ``DESC`` keyword to set the sort direction
+to ascending or descending. ``ASC`` order is the default.
+
+The ``NULL FIRST`` and ``NULL LAST`` options can be used to determine whether
+null appear before or after non-null values in the sort ordering. By default,
+null values sort as if larger than any non-null value; that's, ``NULL FIRST``
+is the default for ``DESC`` order, and ``NULL LAST`` otherwise.
+
+Note that the ordering options are considered independently for each sort
+column. For example ``ORDER BY x, y DESC`` means ``ORDER BY x ASC, y DESC``,
+which is not the same as ``ORDER BY x DESC, y DESC``.
+
+A sort expression can also be the column label or number of an output column.
+
+``ORDER BY`` can be applied to the result of a ``UNION``, ``INTERSECT``, or
+``EXCEPT`` combination, but in this case it is only permitted to sort by
+output column names or numbers, not by expressions.
+
+Limit and Offset
+================
+
+``LIMIT`` and ``OFFSET`` allow you to retrieve just a portion of the rows that
+are generated by the rest of the query.
+
+.. code-block:: postgresql
+
+    SELECT * FROM publisher LIMIT 10;
+
+The query above fetches only first 10 rows from the "publisher" table.
+
+If a limit count is given, no more than that many rows will be returned.
+But possibly fewer, if the query itself yields fewer rows.
+``LIMIT ALL`` is the same as omitting the ``LIMIT`` clause, as is ``LIMIT``
+with ``NULL`` argument.
+
+``OFFSET`` says to skip that many rows before beginning to return rows.
+``OFFSET 0`` is the same as omitting the ``OFFSET`` clause, as is ``OFFSET``
+with a ``NULL`` argument.
+
+.. code-block:: postgresql
+
+    SELECT * FROM publisher LIMIT 10 OFFSET 10;
+    
+The query above fetches 10 publishers starting from the 11-th one.
+
+When using ``LIMIT`` and/or ``OFFSET``, it's important to use ``ORDER BY``
+clause that constraints the result rows into a unique order. Otherwise you
+will get an unpredictable subset of the query's rows.
+
+WITH queries
+============
+
+``WITH`` provides a way to write auxiliary statements for use in a larger
+query. These statements, which are often referred to as
+:abbr:`CTE (Common Table Expression)`, can be thought of as defining temporary
+tables that exist just for one query. Each auxiliary statement in a ``WITH``
+clause can be a ``SELECT``, ``INSERT``, ``UPDATE`` or ``DELETE``; and the
+``WITH`` clause itself is attached to a primary statement that can be a
+``SELECT``, ``INSERT``, ``UPDATE``, ``DELETE`` or ``MERGE``.
+
+Select in WITH
+--------------
+
+The basic value of ``SELECT`` in ``WITH`` is to break down complicated queries
+into simpler parts.
+
+.. code-block:: postgresql
+    :caption: Get most profitable months
+
+    -- select top revenue months
+    WITH monthly_revenue AS (SELECT EXTRACT(YEAR FROM date)  AS year,
+                                    EXTRACT(MONTH FROM date) AS month,
+                                    SUM(amount)              AS total_amount
+                             FROM revenue
+                             GROUP BY year, month
+                             ORDER BY year, month)
+    SELECT *
+    FROM monthly_revenue
+    WHERE total_amount > (SELECT SUM(total_amount) / 100 FROM monthly_revenue)
+    ORDER BY total_amount DESC;
+
+Recursive queries
+-----------------
+
+The optional ``RECURSIVE`` modifier changes WITH from a mere syntactic
+convenience into a feature that accomplishes things not otherwise possible in
+standard SQL. Using ``RECURSIVE``, a ``WITH`` query can refer to its own
+output.
+
+.. code-block:: postgresql
+    :caption: Sum of first 10 numbers starting from 1
+
+    WITH RECURSIVE t(n) AS (VALUES (1) UNION SELECT n + 1 FROM t WHERE n < 10)
+    SELECT sum(n)
+    FROM t;
+
+.. important::
+
+    When working with recursive queries it is important to be sure that
+    the recursive part of the query will eventually return no tuple, or else
+    the query will loop indefinitely.
+
+Data modifying statements in WITH
+---------------------------------
+
+You can use most data-modifying statements (``INSERT``, ``UPDATE``, ``DELETE``)
+in ``WITH``. This allows you to perform several different operations at a time,
+in the same query.
+
+.. code-block:: postgresql
+    :caption: Remove old revenue records and store them into history table
+
+    WITH deleted_rows AS (
+        DELETE FROM revenue
+            WHERE date < '2020-01-01'
+            RETURNING *)
+    INSERT
+    INTO revenue_log
+    SELECT *
+    FROM deleted_rows;
+
+Combining queries
+=================
+
+The results of two queries can be combined using the set operations union,
+intersection, and difference.
+
+.. code-block::
+
+    query1 UNION [ALL] query2
+    query1 INTERSECT [ALL] query2
+    query1 EXCEPT [ALL] query2
+
+``UNION`` effectively appends the result of ``query2`` to the result of
+``query1`` (although there is no guarantee that this is the order in which
+the rows are actually returned). Furthermore, it eliminates duplicate rows from
+its result, in the same way as ``DISTINCT``, unless ``UNION ALL`` is used.
+
+.. code-block:: postgresql
+
+    WITH north_lib_member AS
+             (SELECT *
+              FROM (VALUES (1, 'Mariska', 'Syson'),
+                           (2, 'Robenia', 'Dimitriades'),
+                           (3, 'Loren', 'Goretti'),
+                           (4, 'Dianna', 'Giacomuzzo'),
+                           (5, 'Anett', 'Hayland'),
+                           (6, 'Keeley', 'Grishelyov')) AS tbl(id, first_name, last_name)),
+         south_lib_member AS
+             (SELECT *
+              FROM (VALUES (5, 'Anett', 'Hayland'),
+                           (6, 'Keeley', 'Grishelyov'),
+                           (7, 'Say', 'Kliner'),
+                           (8, 'Charles', 'Ede'),
+                           (9, 'Florentia', 'Core'),
+                           (10, 'Tiffany', 'Tingly'))
+                       AS tbl(id, first_name, last_name))
+    SELECT *
+    FROM north_lib_member
+    UNION
+    SELECT *
+    FROM south_lib_member
+    ORDER BY id;
+
++----+------------+-------------+
+| id | first_name | last_name   |
++====+============+=============+
+| 1  | Mariska    | Syson       |
++----+------------+-------------+
+| 2  | Robenia    | Dimitriades |
++----+------------+-------------+
+| 3  | Loren      | Goretti     |
++----+------------+-------------+
+| 4  | Dianna     | Giacomuzzo  |
++----+------------+-------------+
+| 5  | Anett      | Hayland     |
++----+------------+-------------+
+| 6  | Keeley     | Grishelyov  |
++----+------------+-------------+
+| 7  | Say        | Kliner      |
++----+------------+-------------+
+| 8  | Charles    | Ede         |
++----+------------+-------------+
+| 9  | Florentia  | Core        |
++----+------------+-------------+
+| 10 | Tiffany    | Tingly      |
++----+------------+-------------+
+
+``INTERSECT`` returns all rows that are both in the result of ``query1`` and in
+the result of ``query2``. Duplicate rows are eliminated unless
+``INTERSECT ALL`` is used.
+
+.. code-block:: postgresql
+
+    WITH north_lib_member AS
+             (SELECT *
+              FROM (VALUES (1, 'Mariska', 'Syson'),
+                           (2, 'Robenia', 'Dimitriades'),
+                           (3, 'Loren', 'Goretti'),
+                           (4, 'Dianna', 'Giacomuzzo'),
+                           (5, 'Anett', 'Hayland'),
+                           (6, 'Keeley', 'Grishelyov')) AS tbl(id, first_name, last_name)),
+         south_lib_member AS
+             (SELECT *
+              FROM (VALUES (5, 'Anett', 'Hayland'),
+                           (6, 'Keeley', 'Grishelyov'),
+                           (7, 'Say', 'Kliner'),
+                           (8, 'Charles', 'Ede'),
+                           (9, 'Florentia', 'Core'),
+                           (10, 'Tiffany', 'Tingly'))
+                       AS tbl(id, first_name, last_name))
+    SELECT *
+    FROM north_lib_member
+    INTERSECT
+    SELECT *
+    FROM south_lib_member
+    ORDER BY id;
+
++----+------------+------------+
+| id | first_name | last_name  |
++====+============+============+
+| 5  | Anett      | Hayland    |
++----+------------+------------+
+| 6  | Keeley     | Grishelyov |
++----+------------+------------+
+
+``EXCEPT`` returns all rows that are in the result of ``query1`` but not in
+the result of ``query2``. (This is sometimes called the difference between two
+queries.) Again, duplicates are eliminated unless ``EXCEPT ALL`` is used.
+
+.. code-block:: postgresql
+
+    WITH north_lib_member AS
+             (SELECT *
+              FROM (VALUES (1, 'Mariska', 'Syson'),
+                           (2, 'Robenia', 'Dimitriades'),
+                           (3, 'Loren', 'Goretti'),
+                           (4, 'Dianna', 'Giacomuzzo'),
+                           (5, 'Anett', 'Hayland'),
+                           (6, 'Keeley', 'Grishelyov')) AS tbl(id, first_name, last_name)),
+         south_lib_member AS
+             (SELECT *
+              FROM (VALUES (5, 'Anett', 'Hayland'),
+                           (6, 'Keeley', 'Grishelyov'),
+                           (7, 'Say', 'Kliner'),
+                           (8, 'Charles', 'Ede'),
+                           (9, 'Florentia', 'Core'),
+                           (10, 'Tiffany', 'Tingly'))
+                       AS tbl(id, first_name, last_name))
+    SELECT *
+    FROM north_lib_member
+    EXCEPT
+    SELECT *
+    FROM south_lib_member
+    ORDER BY id;
+
++----+------------+-------------+
+| id | first_name | last_name   |
++====+============+=============+
+| 1  | Mariska    | Syson       |
++----+------------+-------------+
+| 2  | Robenia    | Dimitriades |
++----+------------+-------------+
+| 3  | Loren      | Goretti     |
++----+------------+-------------+
+| 4  | Dianna     | Giacomuzzo  |
++----+------------+-------------+
+
+Join data from different tables
+===============================
+
+A ``JOIN`` clause combines two ``FROM`` items, which for convenience we will
+refer as "tables", though in reality they can be any type of ``FROM`` items.
+Available join types are:
+
+-   ``[INNER] JOIN``
+-   ``LEFT [OUTER] JOIN``
+-   ``RIGHT [OUTER] JOIN``
+-   ``FULL [OUTER] JOIN``
+
+.. note::
+
+    Key words in bracket parentheses above are optional.
+
+Joins between tables
+--------------------
+
+.. literalinclude:: /../libms-db/libms.sql
+    :caption: Publishers and books tables definitions
+    :language: postgresql
+    :lines: 14-23,50-62
+
+Following tables are related via ``FOREIGN KEY`` constraint. Each record in
+the ``book`` table references some record in the ``publisher`` table.
+
+.. important::
+
+    Since original tables contain lots of data, temporary tables will be
+    created instead before join query. Full tables content may be downloaded
+    via links:
+    :download:`publisher </../libms-db/assets/csv/publisher.csv>`,
+    :download:`book </../libms-db/assets/csv/book.csv>`.
+
+    The subsets from original queries defined as:
+
+    .. code-block:: postgresql
+
+        SELECT *
+        FROM (VALUES (1, 'Zoonoodle'),
+                     (3, 'Tanoodle'),
+                     (4, 'Skivee'))
+                 AS publisher(id, name);
+
+    +----+-----------+
+    | id |name       |
+    +====+===========+
+    |  1 | Zoonoodle |
+    +----+-----------+
+    |  3 | Tanoodle  |
+    +----+-----------+
+
+    .. code-block:: postgresql
+
+        SELECT *
+        FROM (VALUES (22, 'pretium nisl', 2),
+                     (38, 'ac est lacinia nisi venenatis', 3),
+                     (69, 'vel accumsan tellus nisi', 3),
+                     (72, 'nam dui proin', 2),
+                     (85, 'nam tristique', 2))
+                 AS book(id, title, publisher_id);
+
+    +----+-------------------------------+--------------+
+    | id | title                         | publisher_id |
+    +====+===============================+==============+
+    | 22 | pretium nisl                  | 2            |
+    +----+-------------------------------+--------------+
+    | 38 | ac est lacinia nisi venenatis | 3            |
+    +----+-------------------------------+--------------+
+    | 69 | vel accumsan tellus nisi      | 3            |
+    +----+-------------------------------+--------------+
+    | 72 | nam dui proin                 | 2            |
+    +----+-------------------------------+--------------+
+    | 85 | nam tristique                 | 2            |
+    +----+-------------------------------+--------------+
+
+By passing multiple tables to the ``FROM`` clause a ``CROSS JOIN`` query is
+executed. This means the resulting table is the Cartesian product of two
+original tables.
+
+.. code-block:: postgresql
+    :caption: Cross join (Cartesian product)
+
+    WITH publisher AS
+             (SELECT *
+              FROM (VALUES (1, 'Zoonoodle'),
+                           (3, 'Tanoodle'),
+                           (4, 'Skivee'))
+                  AS publisher(id, name)),
+         book AS
+             (SELECT *
+              FROM (VALUES (22, 'pretium nisl', 2),
+                           (38, 'ac est lacinia nisi venenatis', 3),
+                           (69, 'vel accumsan tellus nisi', 3),
+                           (72, 'nam dui proin', 2),
+                           (85, 'nam tristique', 2))
+                       AS book(id, title, publisher_id))
+    -- querying the joined result
+    SELECT *
+    FROM book,
+         publisher;
+
+.. table:: Query result
+
+    +----+-------------------------------+--------------+----+-----------+
+    | id | title                         | publisher_id | id | name      |
+    +====+===============================+==============+====+===========+
+    | 22 | pretium nisl                  | 2            |  1 | Zoonoodle |
+    +----+-------------------------------+--------------+----+-----------+
+    | 22 | pretium nisl                  | 2            |  3 | Tanoodle  |
+    +----+-------------------------------+--------------+----+-----------+
+    | 22 | pretium nisl                  | 2            |  4 | Skivee    |
+    +----+-------------------------------+--------------+----+-----------+
+    | 38 | ac est lacinia nisi venenatis | 3            |  1 | Zoonoodle |
+    +----+-------------------------------+--------------+----+-----------+
+    | 38 | ac est lacinia nisi venenatis | 3            |  3 | Tanoodle  |
+    +----+-------------------------------+--------------+----+-----------+
+    | 38 | ac est lacinia nisi venenatis | 3            |  4 | Skivee    |
+    +----+-------------------------------+--------------+----+-----------+
+    | 69 | vel accumsan tellus nisi      | 3            |  1 | Zoonoodle |
+    +----+-------------------------------+--------------+----+-----------+
+    | 69 | vel accumsan tellus nisi      | 3            |  3 | Tanoodle  |
+    +----+-------------------------------+--------------+----+-----------+
+    | 69 | vel accumsan tellus nisi      | 3            |  4 | Skivee    |
+    +----+-------------------------------+--------------+----+-----------+
+    | 72 | nam dui proin                 | 2            |  1 | Zoonoodle |
+    +----+-------------------------------+--------------+----+-----------+
+    | 72 | nam dui proin                 | 2            |  3 | Tanoodle  |
+    +----+-------------------------------+--------------+----+-----------+
+    | 72 | nam dui proin                 | 2            |  4 | Skivee    |
+    +----+-------------------------------+--------------+----+-----------+
+    | 85 | nam tristique                 | 2            |  1 | Zoonoodle |
+    +----+-------------------------------+--------------+----+-----------+
+    | 85 | nam tristique                 | 2            |  3 | Tanoodle  |
+    +----+-------------------------------+--------------+----+-----------+
+    | 85 | nam tristique                 | 2            |  4 | Skivee    |
+    +----+-------------------------------+--------------+----+-----------+
+
+By defining the ``WHERE`` clause rows that do not match the condition may
+be eliminated from the result.
+
+.. code-block:: postgresql
+
+    SELECT *
+    FROM book, publisher
+    WHERE book.publisher_id = publisher.id;
+
++----+-------------------------------+--------------+----+----------+
+| id | title                         | publisher_id | id | name     |
++====+===============================+==============+====+==========+
+| 38 | ac est lacinia nisi venenatis | 3            | 3  | Tanoodle |
++----+-------------------------------+--------------+----+----------+
+| 69 | vel accumsan tellus nisi      | 3            | 3  | Tanoodle |
++----+-------------------------------+--------------+----+----------+
+
+This is called ``INNER JOIN``, which means that the result table will contain
+only whose rows from left-hard and right-hand tables, that have corresponding
+records to each other.
+
+The same result may be obtained using ``JOIN`` clause. All ``JOIN`` options are
+just a notation convenience, since they do nothing you couldn't do with plain
+``FROM`` and ``WHERE``.
+
+.. code-block:: postgresql
+
+    SELECT *
+    FROM book b
+             JOIN publisher p ON b.publisher_id = p.id;
+
+``INNER JOIN`` is the default while joining two tables with each other.
+
+Right and left joins
+--------------------
+
+``LEFT OUTER JOIN`` returns all rows in the qualified Cartesian product
+(i.e., all combined rows that pass its condition), plus one copy of each
+row in the left-hand table for which there was no right-hand row that passed
+the join condition.
+
+.. code-block:: postgresql
+
+    SELECT *
+    FROM book b
+             LEFT JOIN publisher p ON b.publisher_id = p.id;
+
++----+-------------------------------+--------------+------+----------+
+| id | title                         | publisher_id | id   | name     |
++====+===============================+==============+======+==========+
+| 22 | pretium nisl                  | 2            | null | null     |
++----+-------------------------------+--------------+------+----------+
+| 38 | ac est lacinia nisi venenatis | 3            | 3    | Tanoodle |
++----+-------------------------------+--------------+------+----------+
+| 69 | vel accumsan tellus nisi      | 3            | 3    | Tanoodle |
++----+-------------------------------+--------------+------+----------+
+| 72 | nam dui proin                 | 2            | null | null     |
++----+-------------------------------+--------------+------+----------+
+| 85 | nam tristique                 | 2            | null | null     |
++----+-------------------------------+--------------+------+----------+
+
+Conversely, ``RIGHT OUTER JOIN`` returns all the joined rows, plus one row for
+each unmatched right-hand row. This is just a notation convenience, since you
+could convert it to a ``LEFT OUTER JOIN`` by switching the left and right
+tables.
+
+.. code-block:: postgresql
+
+    SELECT *
+    FROM book b
+             RIGHT JOIN publisher p ON b.publisher_id = p.id;
+
++------+-------------------------------+--------------+----+-----------+
+| id   | title                         | publisher_id | id | name      |
++======+===============================+==============+====+===========+
+| 38   | ac est lacinia nisi venenatis | 3            | 3  | Tanoodle  |
++------+-------------------------------+--------------+----+-----------+
+| 69   | vel accumsan tellus nisi      | 3            | 3  | Tanoodle  |
++------+-------------------------------+--------------+----+-----------+
+| null | null                          | null         | 4  | Skivee    |
++------+-------------------------------+--------------+----+-----------+
+| null | null                          | null         | 1  | Zoonoodle |
++------+-------------------------------+--------------+----+-----------+
+
+Full outer join
+---------------
+
+.. code-block:: postgresql
+
+    SELECT *
+    FROM book b
+             FULL JOIN publisher p ON b.publisher_id = p.id;
+
++------+-------------------------------+--------------+------+-----------+
+| id   | title                         | publisher_id | id   | name      |
++======+===============================+==============+======+===========+
+| 22   | pretium nisl                  | 2            | null | null      |
++------+-------------------------------+--------------+------+-----------+
+| 38   | ac est lacinia nisi venenatis | 3            | 3    | Tanoodle  |
++------+-------------------------------+--------------+------+-----------+
+| 69   | vel accumsan tellus nisi      | 3            | 3    | Tanoodle  |
++------+-------------------------------+--------------+------+-----------+
+| 72   | nam dui proin                 | 2            | null | null      |
++------+-------------------------------+--------------+------+-----------+
+| 85   | nam tristique                 | 2            | null | null      |
++------+-------------------------------+--------------+------+-----------+
+| null | null                          | null         | 4    | Skivee    |
++------+-------------------------------+--------------+------+-----------+
+| null | null                          | null         | 1    | Zoonoodle |
++------+-------------------------------+--------------+------+-----------+
