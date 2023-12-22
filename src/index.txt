@@ -22,7 +22,7 @@
     .. toctree::
         :name: appx
         :caption: Additional materials
-	:maxdepth: 1
+        :maxdepth: 1
 
         appx/software_list
         appx/code_edit
