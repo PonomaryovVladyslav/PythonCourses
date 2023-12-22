@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Python Training Course 2023.09.dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-12-16 13:55+0000\n"
-"PO-Revision-Date: 2023-12-21 03:52+0200\n"
+"POT-Creation-Date: 2023-12-22 13:19+0000\n"
+"PO-Revision-Date: 2023-12-22 15:20+0200\n"
 "Last-Translator: Serhii Horodilov <sgorodil@gmail.com>\n"
 "Language-Team: uk <LL@li.org>\n"
 "Language: uk\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
 "n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
-"Generated-By: Babel 2.13.1\n"
+"Generated-By: Babel 2.12.1\n"
 "X-Generator: Poedit 3.4.1\n"
 
 #: ../../src/rdbms/ddl.txt:-1
@@ -517,9 +517,8 @@ msgstr ""
 "такою командою:"
 
 #: ../../src/rdbms/ddl.txt:304
-#, fuzzy
-msgid "To remove any default  value, use:"
-msgstr "Щоб видалити будь-яке значення за замовчуванням, використовуйте"
+msgid "To remove any default value, use:"
+msgstr "Щоб видалити будь-яке значення за замовчуванням, використовуйте:"
 
 #: ../../src/rdbms/ddl.txt:311
 #, fuzzy

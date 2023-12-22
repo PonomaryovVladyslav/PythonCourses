@@ -301,7 +301,7 @@ To set a new default for a column, use command like this:
     ALTER TABLE tbl_name
         ALTER COLUMN cln_name SET DEFAULT 0.0;
 
-To remove any default  value, use:
+To remove any default value, use:
 
 .. code-block:: postgresql
 
