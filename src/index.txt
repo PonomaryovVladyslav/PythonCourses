@@ -6,6 +6,7 @@
 
 .. toctree::
     :name: master
+    :maxdepth: 2
 
     intro/index
     basics/index

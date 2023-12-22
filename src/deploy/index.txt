@@ -17,3 +17,4 @@
 
 .. toctree::
     :name: deploy
+    :maxdepth: 2

@@ -25,6 +25,7 @@ collaborate using remote repositories and platforms like GitHub.
 
 .. toctree::
     :name: vcs
+    :maxdepth: 2
 
     intro
     setup

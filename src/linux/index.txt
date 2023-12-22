@@ -17,3 +17,4 @@
 
 .. toctree::
     :name: linux
+    :maxdepth: 2

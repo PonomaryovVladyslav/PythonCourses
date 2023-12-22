@@ -106,6 +106,7 @@ are :cite:`python-usage`:
 .. toctree::
     :caption: Contents
     :name: intro
+    :maxdepth: 2
 
     install
     interact
