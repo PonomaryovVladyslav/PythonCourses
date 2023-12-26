@@ -1,0 +1,1224 @@
+# Copyright (C) 2023, Python training course authors and contributors
+# This file is distributed under the same license as the Python Training
+# Course package.
+# SERHII HORODILOV <sgorodil@gmail.com>
+msgid ""
+msgstr ""
+"Project-Id-Version: Python Training Course 2022.11.dev\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-11-17 23:49+0200\n"
+"PO-Revision-Date: 2023-11-17 23:56+0200\n"
+"Last-Translator: Serhii Horodilov <sgorodil@gmail.com>\n"
+"Language-Team: ua <LL@li.org>\n"
+"Language: uk\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<12 || n%100>14) ? 1 : 2);\n"
+"Generated-By: Babel 2.13.1\n"
+"X-Generator: Poedit 3.4.1\n"
+
+#: ../../src/spec/blog/index.rst:10
+msgid "Blog Site"
+msgstr "Сайт Блогу"
+
+#: ../../src/spec/blog/index.rst:12
+msgid ""
+"The project aims to develop a robust and user-friendly web application using "
+"the Django framework. The primary objective is to create a blogging platform "
+"that allows users to publish and manage articles on various topics. The "
+"application will provide an intuitive interface for authors to compose and "
+"format their articles, while also offering a seamless reading experience for "
+"visitors."
+msgstr ""
+"Проект має на меті розробку міцного та зручного у використанні веб-додатка "
+"за допомогою фреймворку Django. Основна мета полягає у створенні платформи "
+"для блогів, яка дозволить користувачам публікувати та керувати статтями на "
+"різні теми. Додаток надасть інтуїтивний інтерфейс авторам для створення та "
+"форматування своїх статей, а також забезпечить безперешкодний досвід читання "
+"для відвідувачів."
+
+#: ../../src/spec/blog/index.rst:19
+msgid "**Key Features**"
+msgstr "**Основні функції**"
+
+#: ../../src/spec/blog/index.rst:22
+msgid "User Registration and Authentication"
+msgstr "Реєстрація та Аутентифікація Користувачів"
+
+#: ../../src/spec/blog/index.rst:23
+msgid ""
+"The application will provide user registration and authentication "
+"functionality, allowing individuals to create accounts, log in, and manage "
+"their profile information. This feature will enable authors to have "
+"personalized accounts and maintain ownership of their published articles."
+msgstr ""
+"Застосунок надасть функціональність реєстрації та аутентифікації "
+"користувачів, дозволяючи індивідуумам створювати облікові записи, входити в "
+"систему та керувати інформацією свого профілю. Ця функція дозволить авторам "
+"мати персоналізовані облікові записи та зберігати право власності на їхні "
+"опубліковані статті."
+
+#: ../../src/spec/blog/index.rst:30
+msgid "Article Management"
+msgstr "Керування Статтями"
+
+#: ../../src/spec/blog/index.rst:31
+msgid ""
+"Authors will have the ability to create, edit, and delete articles within "
+"the application. The system will offer a user-friendly editor. Additionally, "
+"authors will be able to categorize articles by assigning relevant topics to "
+"them."
+msgstr ""
+"Автори матимуть можливість створювати, редагувати та видаляти статті в "
+"рамках додатка. Система надасть зручний редактор. Крім того, автори зможуть "
+"категоризувати статті, присвоюючи їм відповідні теми."
+
+#: ../../src/spec/blog/index.rst:37
+msgid "Topic Subscription:"
+msgstr "Підписка на Теми:"
+
+#: ../../src/spec/blog/index.rst:38
+msgid ""
+"The application will include a subscription feature that allows users to "
+"subscribe to topics of interest. By subscribing to specific topics, users "
+"will receive notifications or updates whenever new articles are published in "
+"those categories. This feature will enhance user engagement and ensure that "
+"readers stay informed about the topics they find most valuable."
+msgstr ""
+"Автори матимуть можливість створювати, редагувати та видаляти статті в "
+"рамках додатка. Система надасть зручний редактор. Крім того, автори зможуть "
+"категоризувати статті, присвоюючи їм відповідні теми."
+
+#: ../../src/spec/blog/index.rst:45
+msgid ""
+"Overall, the project aims to deliver an efficient blogging platform that "
+"caters to both authors and readers. By providing a seamless user experience "
+"and incorporating essential functionalities such as user authentication, "
+"article management, and topic subscriptions, the application will empower "
+"users to create, share, and explore engaging content within a well-"
+"structured and organized platform."
+msgstr ""
+"Застосунок буде містити функцію підписки, яка дозволить користувачам "
+"підписуватися на цікаві їм теми. Підписавшись на конкретні теми, користувачі "
+"отримуватимуть повідомлення або оновлення кожного разу, коли в цих "
+"категоріях будуть публікуватися нові статті. Ця функція покращить "
+"залученість користувачів та забезпечить, що читачі будуть інформовані про "
+"найцікавіші для них теми."
+
+#: ../../src/spec/blog/index.rst:52
+msgid ""
+"Here is a starter repository template, that may helps: `Starter template`_."
+msgstr ""
+"Ось шаблон стартового репозиторію, який може допомогти: `Starter template`_."
+
+#: ../../src/spec/blog/index.rst:55
+msgid "Challenge: Functional views"
+msgstr "Виклик: Функціональні представлення"
+
+#: ../../src/spec/blog/index.rst:57
+msgid ""
+"It's ok not to return **actual** content for now. Just ensure all the routes "
+"are available and provide correct data. Use anything you like to return "
+"within HTTP response."
+msgstr ""
+"Зараз немає потреби повертати **фактичний** вміст. Просто переконайтеся, що "
+"всі маршрути доступні та надають правильні дані. Використовуйте будь-що, що "
+"ви хочете повернути в HTTP-відповіді."
+
+#: ../../src/spec/blog/index.rst:61
+msgid ""
+"``/about/``: Provides a regular text for a user, describing the "
+"functionalities of the django site."
+msgstr ""
+"``/about/``: надає звичайний текст для користувача, що описує функції сайту "
+"django."
+
+#: ../../src/spec/blog/index.rst:63
+msgid ""
+"``/``: A site's homepage. This will contain a list of blogs published via "
+"the django site."
+msgstr ""
+"``/``: Головна сторінка сайту. Тут буде перелік блогів, опублікованих через "
+"сайт Django."
+
+#: ../../src/spec/blog/index.rst:65
+msgid ""
+"``/<article>/``: A single article detail view. The URL contains dynamic part "
+"in it. This will be used to fetch a single article from the database."
+msgstr ""
+"``/<article>/``: Представлення деталей однієї статті. URL містить динамічну "
+"частину. Вона буде використовуватися для отримання однієї статті з бази "
+"даних."
+
+#: ../../src/spec/blog/index.rst:68
+msgid ""
+"``/<article>/comment/``: This view will be used to add comments to a article."
+msgstr ""
+"``/<article>/comment/``: Це представлення буде використовуватися для "
+"додавання коментарів до статті."
+
+#: ../../src/spec/blog/index.rst:70
+msgid "``/create/``: A article creation form."
+msgstr "``/create/``: Форма створення статті."
+
+#: ../../src/spec/blog/index.rst:71
+msgid "``/<article>/update/``: A view to update an existing article data."
+msgstr ""
+"``/<article>/update/``: Представлення для оновлення існуючих даних статті."
+
+#: ../../src/spec/blog/index.rst:72
+msgid "``/<article>/delete/``: A view to confirm article deletion."
+msgstr ""
+"``/<article>/delete/``: Представлення для підтвердження видалення статті."
+
+#: ../../src/spec/blog/index.rst:73
+msgid "``/topics/``: A list of topics available on the site."
+msgstr "``/topics/``: Перелік доступних тем на сайті."
+
+#: ../../src/spec/blog/index.rst:74
+msgid ""
+"``/topics/<topic>/add/``: Add the selected topic to preferred topics list."
+msgstr "``/topics/<topic>/add/``: Додати обрану тему до списку обраних тем."
+
+#: ../../src/spec/blog/index.rst:75
+msgid "``/topics/<topic>/remove/``: Removes the selected topic from preferred."
+msgstr "``/topics/<topic>/remove/``: Видаляє вибрану тему з обраних."
+
+#: ../../src/spec/blog/index.rst:76
+msgid "``/topics/<topic>/subscribe/``: A view to subscribe for a topic."
+msgstr "``/topics/<topic>/subscribe/``: Представлення для підписки на тему."
+
+#: ../../src/spec/blog/index.rst:77
+msgid "``/topics/<topic>/unsubscribe/``: A view to unsubscribe from a topic."
+msgstr "``/topics/<topic>/unsubscribe/``: Представлення для відписки від теми."
+
+#: ../../src/spec/blog/index.rst:78
+msgid "``/profile/<str:username>/``: A site user's personal page."
+msgstr "``/profile/<str:username>/``: Особиста сторінка користувача сайту."
+
+#: ../../src/spec/blog/index.rst:79
+msgid ""
+"``/set-password/``: This route will be used to change users' credential data."
+msgstr ""
+"``/set-password/``: Цей маршрут буде використовуватися для зміни облікових "
+"даних користувачів."
+
+#: ../../src/spec/blog/index.rst:81
+msgid "``/set-userdata/``: This route will be user to change users' data."
+msgstr ""
+"``/set-userdata/``: Цей маршрут буде використовуватися для зміни даних "
+"користувачів."
+
+#: ../../src/spec/blog/index.rst:82
+msgid "``/deactivate/``: Account deactivation (deletion) view."
+msgstr ""
+"``/deactivate/``: Представлення для деактивації облікового запису "
+"(видалення)."
+
+#: ../../src/spec/blog/index.rst:83
+msgid "``/register/``: This view contains a user registration form."
+msgstr "``/register/``: Сторінка з формою для реєстрації нового користувача."
+
+#: ../../src/spec/blog/index.rst:84
+msgid "``/login/``: This view contains a login form."
+msgstr "``/login/``: Сторінка з формою для логіна."
+
+#: ../../src/spec/blog/index.rst:85
+msgid ""
+"``/logout/``: Logout page. This view should redirect user back to homepage."
+msgstr ""
+"``/logout/``: Логаут. Має перенаправляти користувача назад на домашню "
+"сторінку.."
+
+#: ../../src/spec/blog/index.rst:89 ../../src/spec/blog/index.rst:201
+#: ../../src/spec/blog/index.rst:231 ../../src/spec/blog/index.rst:409
+msgid "Optional task(s)"
+msgstr "Додаткові завдання"
+
+#: ../../src/spec/blog/index.rst:91
+msgid ""
+"``/archive/<int:year>/<int:month>/``: This view provides a list of articles "
+"published on a specified month of a specified year. This view should apply "
+"date validation and raise ``Http404`` for invalid paths. The valid date is a "
+"year's 4-digits form followed by 1 or 2 digits representing month. Month "
+"range should be limited as [1..12], leading zero may be omitted. Valid URLs "
+"are:"
+msgstr ""
+"``/archive/<int:year>/<int:month>/``: Це представлення надає список статей, "
+"опублікованих у певному місяці певного року. Це представлення повинно "
+"застосовувати перевірку дати та викидати помилку ``Http404`` для "
+"неприпустимих шляхів. Припустимою датою є 4-значний формат року, за яким "
+"слідує 1 або 2 цифри, що представляють місяць. Діапазон місяця повинен бути "
+"обмежений [1..12], ведучий нуль може бути пропущений. Приклади правильних "
+"URL-адрес:"
+
+#: ../../src/spec/blog/index.rst:105
+msgid "Challenge: Data models"
+msgstr "Завдання: моделі даних"
+
+#: ../../src/spec/blog/index.rst:108
+msgid ""
+"Django admin may be used to create some dummy data. To gather access to "
+"admin section you need to create a superuser. The easiest way to do that is "
+"to use a django command:"
+msgstr ""
+"Для створення деяких фіктивних даних можна використовувати Django Admin. Щоб "
+"отримати доступ до адміністративного розділу, вам потрібно створити "
+"суперкористувача. Найпростіший спосіб зробити це - використовувати команду "
+"Django:"
+
+#: ../../src/spec/blog/index.rst:117 ../../src/spec/blog/index.rst:218
+msgid "General"
+msgstr "Основне"
+
+#: ../../src/spec/blog/index.rst:118
+msgid "Each model will be registered for admin site."
+msgstr "Кожна модель буде зареєстрована на сторінці адміністрації сайту."
+
+#: ../../src/spec/blog/index.rst:121 ../../src/spec/blog/index.rst:456
+msgid "Article topic"
+msgstr "Тема статті"
+
+#: ../../src/spec/blog/index.rst:122
+msgid "This is a simple model, that contains information about topic:"
+msgstr "Ось проста модель, що містить інформацію про тему:"
+
+#: ../../src/spec/blog/index.rst:124
+msgid "topic title (unique value, 64 characters or fewer)"
+msgstr "назва теми (унікальне значення, не більше 64 символів)"
+
+#: ../../src/spec/blog/index.rst:125
+msgid "topic short description (255 characters or fewer)"
+msgstr "короткий опис теми (не більше 255 символів)"
+
+#: ../../src/spec/blog/index.rst:128 ../../src/spec/blog/index.rst:470
+msgid "Article"
+msgstr "Стаття"
+
+#: ../../src/spec/blog/index.rst:129
+msgid "Article requires title (255 characters or fewer)."
+msgstr "Стаття вимагає наявності заголовка (не більше 255 символів)."
+
+#: ../../src/spec/blog/index.rst:130
+msgid "Article requires content (at least 255 characters)."
+msgstr "Стаття вимагає наявності змісту (принаймні 255 символів)."
+
+#: ../../src/spec/blog/index.rst:131
+msgid ""
+"Creation date should be autogenerated at article creation, and would never "
+"be updated."
+msgstr ""
+"Дата створення буде автоматично генеруватися при створенні статті і не буде "
+"оновлюватися пізніше."
+
+#: ../../src/spec/blog/index.rst:133
+msgid "Updated date will be update at each article save."
+msgstr "Дата оновлення буде оновлюватися при кожному збереженні статті."
+
+#: ../../src/spec/blog/index.rst:136 ../../src/spec/blog/index.rst:463
+msgid "Article comment"
+msgstr "Коментар до статті"
+
+#: ../../src/spec/blog/index.rst:137
+msgid "Comment requires creation date (autogenerated)."
+msgstr "Коментар вимагає наявності дати створення (автоматично генерується)."
+
+#: ../../src/spec/blog/index.rst:138
+msgid "Comment requires message text."
+msgstr "Коментар вимагає наявності тексту повідомлення."
+
+#: ../../src/spec/blog/index.rst:141
+msgid "Relationships"
+msgstr "Відносини"
+
+#: ../../src/spec/blog/index.rst:143
+msgid ""
+"Standard Django user model **will be** used for now. To apply model "
+"reference pass ``\"auth.User\"`` as related model. Users can be created via "
+"admin page. You can also refer the same model as shown below:"
+msgstr ""
+"Стандартна модель користувача Django **буде** використовуватися наразі. Для "
+"застосування посилання на модель передайте ``\"auth.User\"`` як пов'язану "
+"модель. Користувачі можуть бути створені через адміністративну сторінку. Ви "
+"також можете посилатися на ту саму модель, як показано нижче:"
+
+#: ../../src/spec/blog/index.rst:156
+msgid "``article`` and ``topics`` have *many-to-many* relationship."
+msgstr "``article`` та ``topics`` мають *багато-до-багатьох* відношення."
+
+#: ../../src/spec/blog/index.rst:157
+msgid ""
+"``article`` and ``user`` have *one-to-many* relationship. A article can have "
+"**only one** author, but users can create as many articles as they want."
+msgstr ""
+"``article`` та ``user`` мають *один-до-багатьох* відношення. У статті може "
+"бути **лише один** автор, але користувачі можуть створювати стільки статей, "
+"скільки їм потрібно."
+
+#: ../../src/spec/blog/index.rst:160
+msgid ""
+"``article`` and ``comment`` have *one-to-many* relationship. A article may "
+"be a container for many comments, but a comment is related to a single "
+"article."
+msgstr ""
+"``article`` та ``comment`` мають *один-до-багатьох* відношення. Стаття може "
+"бути контейнером для багатьох коментарів, але коментар пов'язаний лише з "
+"однією статтею."
+
+#: ../../src/spec/blog/index.rst:163
+msgid ""
+"``comment`` and ``user`` have *one-to-many* relationship. It's similar to "
+"*article - user* relationship."
+msgstr ""
+"``comment`` та ``user`` мають *один-до-багатьох* відношення. Це схоже на "
+"відношення *стаття - користувач*."
+
+#: ../../src/spec/blog/index.rst:165
+msgid ""
+"``topic`` and ``user`` use *many-to-many* relationship. A single user can "
+"prefer none or as many topics as needed and vice versa. This relationship "
+"represents topics preferred by a certain blog user. Also this provides an "
+"additional option to mark some of preferred topics with a **notify** flag, "
+"to receive newsletters about specified topics updates. The difference "
+"between *prefer* and *notify* is that *preferred* topics affect the articles "
+"list for a user, and *notify* is responsible for newsletters for the user."
+msgstr ""
+"``topic`` та ``user`` використовують відношення *багато-до-багатьох*. Один "
+"користувач може вибрати будь-яку кількість тем, і навпаки. Це відношення "
+"представляє теми, які вибрані певним користувачем блогу. Крім того, це надає "
+"додаткову опцію позначити деякі з вибраних тем прапорцем **notify**, щоб "
+"отримувати розсилки про оновлення зазначених тем. Відмінність між *prefer* "
+"(вибір) та *notify* (сповіщення) полягає в тому, що *prefer* впливає на "
+"список статей для користувача, а *notify* відповідає за розсилку новин для "
+"користувача."
+
+#: ../../src/spec/blog/index.rst:176
+msgid "UML diagram"
+msgstr "UML діаграми"
+
+#: ../../src/spec/blog/index.rst:181
+msgid "Challenge: ORM"
+msgstr "Завдання: ORM"
+
+#: ../../src/spec/blog/index.rst:183
+msgid ""
+"Update existing views to represent entities that are actually stored inside "
+"the project's database."
+msgstr ""
+"Оновіть існуючі подання, щоб представити сутності, які фактично зберігаються "
+"в базі даних проекту."
+
+#: ../../src/spec/blog/index.rst:186
+msgid "``/``: should represent a list of existing articles."
+msgstr "``/``: повинен представляти список існуючих статей."
+
+#: ../../src/spec/blog/index.rst:187
+msgid "``/<article>/``: should represent a single existing article."
+msgstr "``/<article>/``: повинен представляти окрему існуючу статтю."
+
+#: ../../src/spec/blog/index.rst:188
+msgid "Detail view should obtain a list of article related comments."
+msgstr ""
+"Вью для перегляду окремої статті повинен отримувати зв'язані коментарі."
+
+#: ../../src/spec/blog/index.rst:189
+msgid ""
+"``/profile/<str:username>/``: should contain information about user and a "
+"list of articles authored by this user."
+msgstr ""
+"``/profile/<str:username>/``: повинен містити інформацію про користувача та "
+"список статей, написаних цим користувачем."
+
+#: ../../src/spec/blog/index.rst:191
+msgid ""
+"All views related to a single entity (*detail*, *update*, *delete*, "
+"*profile*) should raise ``Http404`` in case entity could not be fetched."
+msgstr ""
+"Усі ресурси, пов'язані з окремою сутністю (*деталі*, *оновлення*, "
+"*видалення*, *профіль*) мають викликати ``Http404`` у випадку, якщо сутність "
+"не вдалося отримати."
+
+#: ../../src/spec/blog/index.rst:196
+msgid ""
+"It's common to store dedicated functions/classes that supports some specific "
+"business logic in a separate module called ``services.py`` or ``utils.py`` "
+"within an application directory."
+msgstr ""
+"Звичайно, функції/класи, що підтримують певну специфічну бізнес-логіку, "
+"розумно зберігати в окремому модулі з назвою ``services.py`` або ``utils."
+"py`` всередині директорії додатку."
+
+#: ../../src/spec/blog/index.rst:203
+msgid ""
+"Create a service to fetch articles, ordered by a specified user preferences. "
+"This means, topics preferred by a user affects articles orders. Queryset "
+"should be ordered in way, to have articles with most corresponding topics at "
+"the begging."
+msgstr ""
+"Створіть сервіс для того, щоб отримувати статі у вигляді відсортованому "
+"згідно вподобань зазначеного користувача. Це означає, що чим більше тем "
+"зазначених у статті співпадає з вподобаннями користувача, тим ближче вона до "
+"початку видачі."
+
+#: ../../src/spec/blog/index.rst:209
+msgid "Challenge: Templates"
+msgstr "Завдання: Шаблони"
+
+#: ../../src/spec/blog/index.rst:212
+msgid "Helpful link: `Bootstrap template`_"
+msgstr "Корисне посилання: `Bootstrap template`_"
+
+#: ../../src/spec/blog/index.rst:215
+msgid "Links related to user data **may be** placeholders for now."
+msgstr ""
+"Посилання, що стосуються даних користувача, **можуть бути** плейсхолдерами "
+"наразі."
+
+#: ../../src/spec/blog/index.rst:219
+msgid "**All** templates should be inherited from the ``base.html`` template."
+msgstr "**Усі** шаблони повинні успадковувати ``base.html`` шаблон."
+
+#: ../../src/spec/blog/index.rst:220
+msgid ""
+"Each page has a descriptive title HTML tag, which included ``| Blog`` "
+"suffix, e.g. \"Articles | Blogs\", \"Sample | Blog\", \"Login | Blog\" etc."
+msgstr ""
+"Кожна сторінка має описовий тег HTML заголовка, включаючи суфікс ``| Blog``, "
+"наприклад, \"Articles | Blogs\", \"Sample | Blog\", \"Login | Blog\" і т.д."
+
+#: ../../src/spec/blog/index.rst:222
+msgid "Each page should contain a link to homepage (``/`` URL route)."
+msgstr ""
+"Кожна сторінка повинна містити посилання на головну сторінку (шлях URL ``/"
+"``)."
+
+#: ../../src/spec/blog/index.rst:223
+msgid ""
+"Each page contains a list of registered topics. Each view of this kind "
+"filters only articles of a relevant topic. This should be implemented with a "
+"custom template context processor."
+msgstr ""
+"Кожна сторінка містить список зареєстрованих тем. Кожне представлення цього "
+"типу фільтрує лише статті відповідної теми. Це слід реалізувати за допомогою "
+"власного обробника контексту шаблону (template context processor)."
+
+#: ../../src/spec/blog/index.rst:226
+msgid "Replace content block for *about* page with some static content."
+msgstr ""
+"Замініть блок вмісту (content block) для сторінки *about* на деякий "
+"статичний вміст."
+
+#: ../../src/spec/blog/index.rst:227
+msgid ""
+"Application-level templates should be located within appropriate "
+"applications."
+msgstr "Шаблони рівня застосунків розташовуватися у відповідних застосунках."
+
+#: ../../src/spec/blog/index.rst:233
+msgid ""
+"Each page should contain a list of links to archive views for the last year."
+msgstr ""
+"Кожна сторінка має містити список посилань на перегляди архіву за останній "
+"рік."
+
+#: ../../src/spec/blog/index.rst:235
+msgid "Each page should contain an inclusion-block(s) with following links:"
+msgstr "Кожна сторінка повинна містити блок(и) включення з такими посиланнями:"
+
+#: ../../src/spec/blog/index.rst:237
+msgid "``/registration/``: new user registration form"
+msgstr "``/register/``: форма реєстрації нового користувача"
+
+#: ../../src/spec/blog/index.rst:238
+msgid "``/login/``: user login form"
+msgstr "``/login/``: форма логіна користувача"
+
+#: ../../src/spec/blog/index.rst:239
+msgid "``/create/``: article creation page"
+msgstr "``/create/``: форма створення статті"
+
+#: ../../src/spec/blog/index.rst:242
+msgid "Articles list"
+msgstr "Список статей"
+
+#: ../../src/spec/blog/index.rst:243
+msgid "Main page contains a list of published articles."
+msgstr "Головна сторінка містить список опублікованих статей."
+
+#: ../../src/spec/blog/index.rst:244
+msgid "Each article entity is rendered using a custom template tag."
+msgstr ""
+"Кожен елемент статті відображається за допомогою власного шаблонного тегу."
+
+#: ../../src/spec/blog/index.rst:245
+msgid "``article`` template tag renders information about a article object:"
+msgstr "Шаблонний тег ``article`` відображає інформацію про об'єкт статті:"
+
+#: ../../src/spec/blog/index.rst:247
+msgid "article title"
+msgstr "заголовок статті"
+
+#: ../../src/spec/blog/index.rst:248
+msgid "article content (trimmed to ~50 characters)"
+msgstr "зміст статті (обрізаний до ~50 символів)"
+
+#: ../../src/spec/blog/index.rst:249
+msgid "article creation date"
+msgstr "дата створення статті"
+
+#: ../../src/spec/blog/index.rst:250
+msgid "related topics (3 topics or fewer)"
+msgstr "пов'язані теми (3 або менше)"
+
+#: ../../src/spec/blog/index.rst:251
+msgid "number of related comments"
+msgstr "кількість коментарів до статті"
+
+#: ../../src/spec/blog/index.rst:258
+msgid "Article details"
+msgstr "Деталі статті"
+
+#: ../../src/spec/blog/index.rst:260
+msgid "Article update and deletion views **would not** affect data for now."
+msgstr "Оновлення та видалення статей **не будуть** впливати на дані наразі."
+
+#: ../../src/spec/blog/index.rst:262
+msgid ""
+"A article detail page contains links to **update** or **delete** current "
+"article."
+msgstr ""
+"На сторінці деталей статті мають бути посилання на **оновлення** або "
+"**видалення** поточної статті."
+
+#: ../../src/spec/blog/index.rst:264
+msgid "Page provides information about article:"
+msgstr "Сторінка надає інформацію про статтю:"
+
+#: ../../src/spec/blog/index.rst:266
+msgid "Article title"
+msgstr "Заголовок статті"
+
+#: ../../src/spec/blog/index.rst:267
+msgid "Creation date"
+msgstr "Дата створення"
+
+#: ../../src/spec/blog/index.rst:268 ../../src/spec/blog/index.rst:275
+msgid "Author name"
+msgstr "Ім'я автора"
+
+#: ../../src/spec/blog/index.rst:269
+msgid "Related topics"
+msgstr "Пов'язані теми"
+
+#: ../../src/spec/blog/index.rst:270
+msgid "Article content"
+msgstr "Вміст статті"
+
+#: ../../src/spec/blog/index.rst:272
+msgid "Page contains a list of related comments."
+msgstr "Сторінка містить список пов'язаних коментарів."
+
+#: ../../src/spec/blog/index.rst:273
+msgid "Each comment contains:"
+msgstr "Кожен коментар містить:"
+
+#: ../../src/spec/blog/index.rst:276
+msgid "Comment creation time"
+msgstr "Час створення коментаря"
+
+#: ../../src/spec/blog/index.rst:277
+msgid "Comment message"
+msgstr "Текст комментаря"
+
+#: ../../src/spec/blog/index.rst:280
+msgid "Profile page"
+msgstr "Строніка профілю"
+
+#: ../../src/spec/blog/index.rst:281
+msgid "Author page contains information about author:"
+msgstr "Сторінка автора містить інформацію про автора:"
+
+#: ../../src/spec/blog/index.rst:283
+msgid "First name"
+msgstr "Ім'я"
+
+#: ../../src/spec/blog/index.rst:284
+msgid "Last name"
+msgstr "Прізвище"
+
+#: ../../src/spec/blog/index.rst:286
+msgid "Add more information, if needed."
+msgstr "Додайте більше інформації за бажанням."
+
+#: ../../src/spec/blog/index.rst:288
+msgid "Author page contains a list of articles created by this author."
+msgstr "Сторінка автора містить список статей, створених цим автором."
+
+#: ../../src/spec/blog/index.rst:289
+msgid ""
+"Author page contains buttons/links to change user data and password or "
+"deactivate a user's account."
+msgstr ""
+"Сторінка автора містить кнопки/посилання для зміни користувача та пароля або "
+"деактивації облікового запису користувача."
+
+#: ../../src/spec/blog/index.rst:293
+msgid "Forms"
+msgstr "Форми"
+
+#: ../../src/spec/blog/index.rst:295
+msgid ""
+"There is **no need** to add actual forms now. They will be generated by "
+"Django. This section describes the final view of these pages. It's ok just "
+"to create a dedicated templates for future use."
+msgstr ""
+"Наразі **немає потреби** додавати фактичні форми. Вони будуть створені "
+"Django. Цей розділ описує кінцевий вигляд цих сторінок. Для майбутнього "
+"використання достатньо створити окремі шаблони."
+
+#: ../../src/spec/blog/index.rst:299
+msgid ""
+"``/register/`` page contains a new user registration form. It should take "
+"inputs from the user:"
+msgstr ""
+"Сторінка ``/register/`` містить форму реєстрації нового користувача. Вона "
+"повинна отримувати введені дані від користувача:"
+
+#: ../../src/spec/blog/index.rst:302 ../../src/spec/blog/index.rst:310
+msgid "username"
+msgstr "username"
+
+#: ../../src/spec/blog/index.rst:303
+msgid "email"
+msgstr "email"
+
+#: ../../src/spec/blog/index.rst:304 ../../src/spec/blog/index.rst:311
+msgid "password"
+msgstr "password"
+
+#: ../../src/spec/blog/index.rst:305 ../../src/spec/blog/index.rst:324
+msgid "confirm password"
+msgstr "confirm password"
+
+#: ../../src/spec/blog/index.rst:307
+msgid ""
+"``/login/`` page contains a user login form. It should take the inputs from "
+"the user:"
+msgstr ""
+"Сторінка ``/login/`` містить форму входу користувача. Вона повинна "
+"отримувати введені дані від користувача:"
+
+#: ../../src/spec/blog/index.rst:313
+msgid ""
+"``/create/`` and ``/<article>/update/`` pages contain a form to collect a "
+"article's data:"
+msgstr ""
+"Сторінки ``/create/`` та ``/<article>/update/`` містять форму для збору "
+"даних статті:"
+
+#: ../../src/spec/blog/index.rst:316
+msgid "title"
+msgstr "title"
+
+#: ../../src/spec/blog/index.rst:317
+msgid "relevant topics"
+msgstr "відповідні теми"
+
+#: ../../src/spec/blog/index.rst:318
+msgid "content"
+msgstr "content"
+
+#: ../../src/spec/blog/index.rst:320
+msgid "``/<article>/delete`` page contains a simple delete confirmation form."
+msgstr ""
+"Сторінка ``/<article>/delete`` містить просту форму для підтвердження "
+"видалення."
+
+#: ../../src/spec/blog/index.rst:321
+msgid "Change password form has two fields:"
+msgstr "Форма зміни пароля має два поля:"
+
+#: ../../src/spec/blog/index.rst:323
+msgid "new password"
+msgstr "new password"
+
+#: ../../src/spec/blog/index.rst:326
+msgid ""
+"Change user's data form collects all information, that can be changed, e.g. "
+"``username``, ``first name``, ``last name`` etc."
+msgstr ""
+"Форма зміни даних користувача збирає всю інформацію, яка може бути змінена, "
+"наприклад, ``username``, ``first name``, ``last name`` та інше."
+
+#: ../../src/spec/blog/index.rst:328
+msgid ""
+"User preferences page contains a list of available topics. User can mark "
+"some topics as preferred. Also for preferred topics an option to *subscribe* "
+"for the newsletters becomes available."
+msgstr ""
+"Сторінка налаштувань користувача містить список доступних тем. Користувач "
+"може відмітити деякі теми як пріоритетні (переваги). Також для пріоритетних "
+"тем стає доступною опція *підписки* на розсилку новинних листів."
+
+#: ../../src/spec/blog/index.rst:333
+msgid "Challenge: Articles' slugs"
+msgstr "Виклик: Slug-и статей"
+
+#: ../../src/spec/blog/index.rst:336
+msgid "This is an optional challenge in addition to:"
+msgstr "Це додатковий виклик у додаток до:"
+
+#: ../../src/spec/blog/index.rst:338
+msgid "`Challenge: Functional views`_"
+msgstr "`Challenge: Functional views`_"
+
+#: ../../src/spec/blog/index.rst:339
+msgid "`Challenge: Templates`_"
+msgstr "`Challenge: Templates`_"
+
+#: ../../src/spec/blog/index.rst:340
+msgid "`Challenge: Data models`_"
+msgstr "`Challenge: Data models`_"
+
+#: ../../src/spec/blog/index.rst:341
+msgid "`Challenge: ORM`_"
+msgstr "`Challenge: ORM`_"
+
+#: ../../src/spec/blog/index.rst:343
+msgid "Update ``Article`` model with ``slug`` field. The slug value is:"
+msgstr ""
+"Оновіть модель ``Article``, додавши поле ``slug``. Значення slug поля є:"
+
+#: ../../src/spec/blog/index.rst:345
+msgid "required for each article"
+msgstr "обов'язкове для кожної статті"
+
+#: ../../src/spec/blog/index.rst:346
+msgid "unique for each article"
+msgstr "унікальне для кожної статті"
+
+#: ../../src/spec/blog/index.rst:348
+msgid "Create a data migration to provide slugs for existing articles."
+msgstr "Створіть міграцію даних для надання slug-ів існуючим статтям."
+
+#: ../../src/spec/blog/index.rst:349
+msgid ""
+"``slug`` should be auto-generated on article save. The pattern is ``article."
+"title-article.created_date``, e.g. \"Sample article\" created at "
+"\"03/24/2023\" should receive slug: ``sample-article-2023-03-24``."
+msgstr ""
+"Поле ``slug`` повинно автоматично генеруватися при збереженні статті. Шаблон "
+"для генерації поля ``slug``: ``назва-статті-дата-створення-статті``, "
+"наприклад, стаття з назвою \"Sample article\", створена \"24/03/2023\", "
+"отримає slug: ``sample-article-2023-03-24``."
+
+#: ../../src/spec/blog/index.rst:353
+msgid "Update detail view URL path with article slug as dynamic portion."
+msgstr ""
+"Оновіть шлях URL для представлення деталей статті з динамічною частиною, "
+"якою буде slug статті."
+
+#: ../../src/spec/blog/index.rst:356
+msgid "Challenge: Auth forms"
+msgstr "Завдання: форми авторизації"
+
+#: ../../src/spec/blog/index.rst:358
+msgid "Create form for new users registration with required fields:"
+msgstr ""
+"Створити форму для реєстрації нових користувачів із обов'язковими полями:"
+
+#: ../../src/spec/blog/index.rst:360
+msgid "``username``"
+msgstr "``username``"
+
+#: ../../src/spec/blog/index.rst:361
+msgid "``email``"
+msgstr "``email``"
+
+#: ../../src/spec/blog/index.rst:362
+msgid "``password``"
+msgstr "``password``"
+
+#: ../../src/spec/blog/index.rst:363
+msgid "``confirm password``"
+msgstr "``confirm password``"
+
+#: ../../src/spec/blog/index.rst:365
+msgid "``username`` value should be validated against existing values."
+msgstr ""
+"Значення ``username`` повинно перевірятися на відповідність існуючим "
+"значенням."
+
+#: ../../src/spec/blog/index.rst:366
+msgid "``password`` and ``confirm password`` values should match."
+msgstr "Значення ``password`` і ``confirm password`` мають збігатися."
+
+#: ../../src/spec/blog/index.rst:367
+msgid "Create form for existing users login."
+msgstr "Створити форму для входу існуючих користувачів."
+
+#: ../../src/spec/blog/index.rst:368
+msgid "Validations errors are to be rendered on the template."
+msgstr "Помилки перевірки повинні відображатися на шаблоні."
+
+#: ../../src/spec/blog/index.rst:371
+msgid "Challenge: Authentication"
+msgstr "Завдання: Автентифікація"
+
+#: ../../src/spec/blog/index.rst:373
+msgid ""
+"For anonymous users ``/register/`` and ``/login/`` links should be visible "
+"in navbar."
+msgstr ""
+"Для анонімних користувачів посилання ``/register/`` і ``/login/`` мають бути "
+"видимими на панелі навігації."
+
+#: ../../src/spec/blog/index.rst:375
+msgid ""
+"For authenticated users ``/logout/`` and ``/create/`` links should be "
+"visible in navbar."
+msgstr ""
+"Для автентифікованих користувачів посилання ``/logout/`` і ``/create/`` "
+"мають бути видимими на панелі навігації."
+
+#: ../../src/spec/blog/index.rst:377
+msgid ""
+"If authenticated user is admin or stuff they should see a link to admin page."
+msgstr ""
+"Якщо автентифікований користувач є адміністратором або іншим, він має "
+"побачити посилання на сторінку адміністратора."
+
+#: ../../src/spec/blog/index.rst:379
+msgid ""
+"``/register/``: Users should provide all required information about them: "
+"desired username and email. Name data (both first and last) is optional. "
+"After user creation they should be redirected to login page to perform "
+"authentication process. Invalid form should provide information about "
+"error(s)."
+msgstr ""
+"``/register/``: користувачі повинні надати всю необхідну інформацію про "
+"себе: бажане ім'я користувача та електронну адресу. Дані імені (ім'я та "
+"прізвище) необов'язкові. Після створення користувача вони повинні бути "
+"перенаправлені на сторінку входу для виконання процесу автентифікації. "
+"Недійсна форма повинна надавати інформацію про помилку(и)."
+
+#: ../../src/spec/blog/index.rst:384
+msgid ""
+"``/login/``: Users should provide their credentials to login. In case login "
+"is successful they should be redirected to their profile (if no ``?"
+"next=url`` query string available)."
+msgstr ""
+"``/login/``: користувачі повинні надати свої облікові дані для входу. У разі "
+"успішного входу вони повинні бути перенаправлені до свого профілю (якщо "
+"немає рядка запиту ``?next=url``)."
+
+#: ../../src/spec/blog/index.rst:387
+msgid ""
+"``/create/``: Only authenticated users should be able to visit this page. In "
+"case anonymous user is trying to request this view they should be redirected "
+"to the login view first, and after successful authentication get back to "
+"article creation. Then a article is created, it should be authored by the "
+"currently authenticated user."
+msgstr ""
+"``/create/``: Лише аутентифіковані користувачі повинні мати доступ до цієї "
+"сторінки. Якщо анонімний користувач намагається отримати доступ до цього "
+"представлення, його повинно перенаправити спочатку на сторінку входу, а "
+"після успішної аутентифікації повернути на сторінку створення статті. При "
+"створенні статті вона повинна мати автором поточного аутентифікованого "
+"користувача."
+
+#: ../../src/spec/blog/index.rst:392
+msgid ""
+"``/<article>/comment/``: Currently authenticated user should be referenced "
+"as a comment's author."
+msgstr ""
+"``/<article>/comment/``: У коментарі поточного аутентифікованого користувача "
+"повинна бути зазначена його ідентифікація як автора."
+
+#: ../../src/spec/blog/index.rst:394
+msgid ""
+"Articles may be modified or deleted only by their authors from the detail "
+"article page. However, admins can still performs articles actions from the "
+"admin page."
+msgstr ""
+"Змінювати або видаляти статті можуть тільки їх автори на сторінці деталей "
+"статті. Однак адміністратори все ще можуть виконувати дії зі статтями через "
+"адміністративну сторінку."
+
+#: ../../src/spec/blog/index.rst:397
+msgid "User related paths are restricted for non-authorized users."
+msgstr ""
+"Шляхи, пов'язані з користувачем, обмежені для неаутентифікованих "
+"користувачів."
+
+#: ../../src/spec/blog/index.rst:399
+msgid "``/set-password/``"
+msgstr "``/set-password/``"
+
+#: ../../src/spec/blog/index.rst:400
+msgid "``/set-userdata/``"
+msgstr "``/set-userdata/``"
+
+#: ../../src/spec/blog/index.rst:402
+msgid ""
+"``POST`` request ``/deactivate/`` should mark current authenticated user as "
+"*deleted* and log them user."
+msgstr ""
+"Запит ``POST`` на ``/deactivate/`` повинен позначати поточного "
+"аутентифікованого користувача як *видаленого* і виходити з системи для цього "
+"користувача."
+
+#: ../../src/spec/blog/index.rst:404
+msgid ""
+"Authenticated users should be able to adjust their preferred topics lists."
+msgstr ""
+"Авторизовані користувачі повинні мати можливість налаштовувати свої списки "
+"обраних тем."
+
+#: ../../src/spec/blog/index.rst:405
+msgid ""
+"Authenticated users should be able to **subscribe** or **unsubscribe** for a "
+"selected topic."
+msgstr ""
+"Авторизовані користувачі повинні мати можливість **підписатися** або "
+"**відписатися** на обрану тему."
+
+#: ../../src/spec/blog/index.rst:411
+msgid ""
+"Adjust the order of article list according to authenticated user "
+"preferences. For anonymous users keep default ordering."
+msgstr ""
+"Призначте зміну порядку списку статей відповідно до вподобань "
+"аутентифікованого користувача. Для анонімних користувачів залиште типове "
+"сортування за замовчуванням."
+
+#: ../../src/spec/blog/index.rst:413
+msgid ""
+"Implement account reactivation behavior. The exact workflow does not mater. "
+"The sample scenario is to collect email for the user and check it for "
+"existing in the database. After that create a request for admin to activate "
+"an account and send a confirmation email, when all is done."
+msgstr ""
+"Реалізуйте поведінку щодо відновлення облікового запису. Точний порядок дій "
+"не має значення. Один зі зразків сценаріїв може полягати у зборі електронної "
+"пошти користувача та перевірки наявності цієї адреси в базі даних. Після "
+"цього створіть запит для адміністратора на активацію облікового запису та "
+"надішліть підтверджувальний лист електронною поштою, коли все буде готово."
+
+#: ../../src/spec/blog/index.rst:419
+msgid "Challenge: Article related forms"
+msgstr "Виклик: Форми пов'язані зі статтями"
+
+#: ../../src/spec/blog/index.rst:421
+msgid ""
+"Implement a article form. This form will be used to create new articles and "
+"to update existing ones."
+msgstr ""
+"Реалізуйте форму статті. Ця форма буде використовуватися для створення нових "
+"статей та оновлення існуючих."
+
+#: ../../src/spec/blog/index.rst:423
+msgid "Each created article should have at least one related topic."
+msgstr "Кожна створена стаття повинна мати принаймні одну пов'язану тему."
+
+#: ../../src/spec/blog/index.rst:424
+msgid "Implement a comment form to gather a comment from a user."
+msgstr "Реалізуйте форму коментаря, щоб збирати коментарі від користувача."
+
+#: ../../src/spec/blog/index.rst:425
+msgid ""
+"Only ``POST`` requests to ``/<article>/comment/`` are allowed from this "
+"moment."
+msgstr ""
+"З даного моменту дозволені лише запити типу ``POST`` до ``/<article>/comment/"
+"``."
+
+#: ../../src/spec/blog/index.rst:427
+msgid "Implement functionality:"
+msgstr "Реалізуйте функціональність:"
+
+#: ../../src/spec/blog/index.rst:429
+msgid "article creation"
+msgstr "створення статті"
+
+#: ../../src/spec/blog/index.rst:430
+msgid "article update"
+msgstr "оновлення статті"
+
+#: ../../src/spec/blog/index.rst:431
+msgid "article comment (create a related comment)"
+msgstr "коментування статті (створення коментаря)"
+
+#: ../../src/spec/blog/index.rst:432
+msgid "article deletion"
+msgstr "видалення статті"
+
+#: ../../src/spec/blog/index.rst:434
+msgid "Only authenticated users can create articles."
+msgstr "Лише аутентифіковані користувачі можуть створювати статі."
+
+#: ../../src/spec/blog/index.rst:435
+msgid "Article can be edited only by its author."
+msgstr "Стаття може редагуватись лише її автором."
+
+#: ../../src/spec/blog/index.rst:436
+msgid "Article can be deleted only by its author."
+msgstr "Стаття може видалятись лише її автором."
+
+#: ../../src/spec/blog/index.rst:437
+msgid "Only authenticated users can comment articles."
+msgstr "Лише аутентифіковані користувачі можуть коментувати статті."
+
+#: ../../src/spec/blog/index.rst:444
+msgid "Challenge: Class-Based Views"
+msgstr "Завдання: Class-Based Views"
+
+#: ../../src/spec/blog/index.rst:446
+msgid "Replace **all** existing views via ``CBV``."
+msgstr "Замінити **всі** існуючі перегляди через ``CBV``."
+
+#: ../../src/spec/blog/index.rst:447
+msgid "Existing functionality should not be corrupted."
+msgstr "Існуюча функціональність не повинна бути пошкоджена."
+
+#: ../../src/spec/blog/index.rst:450
+msgid "It's ok to use built-in Django CBV if needed."
+msgstr ""
+"Якщо потрібно, можна використовувати вбудовані класи відображення у Django "
+"(CBV)."
+
+#: ../../src/spec/blog/index.rst:453
+msgid "Challenge: Serializers"
+msgstr "Завдання: Серіалізатори"
+
+#: ../../src/spec/blog/index.rst:457
+msgid ""
+"Topic serializer is for read-only purposes only. Topics can be created via "
+"admin page only."
+msgstr ""
+"Серіалізатор для теми призначений лише для операцій читання (read-only). "
+"Теми можна створювати лише через адміністративну сторінку."
+
+#: ../../src/spec/blog/index.rst:459
+msgid ""
+"Serialized data should contain all available data, e.g. ``pk``, ``title``, "
+"``description``."
+msgstr ""
+"Серіалізовані дані повинні містити всю доступну інформацію, наприклад, "
+"``pk``, ``title``, ``description``."
+
+#: ../../src/spec/blog/index.rst:464
+msgid ""
+"article comment serializer can perform both reading and writing operations. "
+"But it can't be used to *update* or *delete* comment."
+msgstr ""
+"серіалізатор коментаря статті може виконувати як операції читання, так і "
+"операції запису. Проте він не може використовуватися для оновлення або "
+"видалення коментаря."
+
+#: ../../src/spec/blog/index.rst:466
+msgid ""
+"Random, or pre-defined user may be used as comment's author for now. This "
+"will be fixed in the future."
+msgstr ""
+"Наразі можна використовувати випадкового або попередньо визначеного "
+"користувача як автора коментаря. Це буде виправлено у майбутньому."
+
+#: ../../src/spec/blog/index.rst:471
+msgid ""
+"article serializer provides full access to articles. All operations are "
+"available: list, retrieve, create, update and destroy."
+msgstr ""
+"серіалізатор статей надає повний доступ до статей. Доступні всі операції: "
+"отримання списку, отримання окремої статті, створення нової статті, "
+"оновлення та видалення."
+
+#: ../../src/spec/blog/index.rst:475
+msgid "User"
+msgstr "Користувач"
+
+#: ../../src/spec/blog/index.rst:476
+msgid ""
+"User serializer provides full access to site users data. All operations are "
+"available for now: list, retrieve, create, update and destroy. This behavior "
+"will be fixed in the future, to prevent unauthorized data modifications."
+msgstr ""
+"Серіалізатор користувача надає повний доступ до даних користувачів сайту. "
+"Усі операції доступні наразі: отримання списку користувачів, отримання "
+"окремого користувача, створення нового користувача, оновлення та видалення. "
+"Однак, ця поведінка буде виправлена у майбутньому для запобігання "
+"несанкціонованим змінам даних."
+
+#: ../../src/spec/blog/index.rst:482
+msgid "Challenge: API views"
+msgstr "Завдання: API views"
+
+#: ../../src/spec/blog/index.rst:484
+msgid "All blog-site functionality are to be mirrored via REST API."
+msgstr ""
+"Вся функціональність сайту повинна бути відображена за допомогою REST API."
+
+#: ../../src/spec/blog/index.rst:487
+msgid ""
+"It's ok to pass *pre-defined* user as argument in request's body. This will "
+"be fixed in the next challenge."
+msgstr ""
+"Наразі дозволяється передавати *наперед визначеного* користувача у тілі "
+"запиту. Це буде виправлено у наступному розділі."
+
+#: ../../src/spec/blog/index.rst:491
+msgid "Challenge: Authentication and Permissions"
+msgstr "Завдання: Автентифікація та Дозволи"
+
+#: ../../src/spec/blog/index.rst:493
+msgid "Implement authentication system for REST API."
+msgstr "Реалізуйте систему аутентифікації для REST API."
+
+#: ../../src/spec/blog/index.rst:495
+msgid "For non-authenticated users it is possible to create a new account"
+msgstr ""
+"Для неаутентифікованих користувачів можлива створення нового облікового "
+"запису"
+
+#: ../../src/spec/blog/index.rst:496
+msgid ""
+"For non-authenticated users it is possible to obtain authentication data."
+msgstr ""
+"Для неаутентифікованих користувачів можлива отримання даних аутентифікації."
+
+#: ../../src/spec/blog/index.rst:499
+msgid ""
+"Access to user data is restricted. Authorized users can manipulate only "
+"their own data (e.g. ``retrieve``, ``update``)."
+msgstr ""
+"Доступ до даних користувача обмежений. Авторизовані користувачі можуть "
+"маніпулювати лише своїми власними даними (наприклад, ``retrieve``, "
+"``update``)."
+
+#: ../../src/spec/blog/index.rst:501
+msgid ""
+"Admins can retrieve all users data (``list``), but can't change them via "
+"REST API. However, it is still possible via admin page."
+msgstr ""
+"Адміністратори можуть отримати дані всіх користувачів (``list``), але не "
+"можуть змінювати їх через REST API. Однак це все ще можливо через "
+"адміністративну сторінку."
+
+#: ../../src/spec/blog/index.rst:503
+msgid ""
+"Authorized users can ``create`` articles or ``update`` and ``delete`` "
+"articles created by them."
+msgstr ""
+"Авторизовані користувачі можуть ``create`` статті або ``update`` та "
+"``delete`` статті, створені ними."
+
+#: ../../src/spec/blog/index.rst:505
+msgid "Authorized users can add comments to a specified article."
+msgstr "Авторизовані користувачі можуть додавати коментарі до вказаної статті."
+
+#: ../../src/spec/blog/index.rst:506
+msgid "Authorized users can adjust their topics preferences."
+msgstr ""
+"Авторизовані користувачі можуть налаштовувати свої уподобання щодо тем."
