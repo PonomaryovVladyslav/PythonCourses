@@ -54,6 +54,14 @@ bibtex_reference_style = "label"
 # TODO: configure options for mermaid output for pdf
 #       mermaid-js/mermaid-cli is added to project's dependencies
 
+# options for redirects
+redirects = {
+     "appx/blog/spec": "../../spec/blog/index.html",
+     "appx/blog/index": "../../spec/blog/index.html",
+     "appx/libms/spec": "../../spec/libms/index.html",
+     "appx/libms/index": "../../spec/libms/index.html",
+}
+
 # options for internationalization
 gettext_compact = False
 language = "en"
