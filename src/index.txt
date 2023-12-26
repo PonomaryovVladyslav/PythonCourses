@@ -31,8 +31,8 @@
         appx/assignments
         appx/conv_store
         appx/wtk
-        appx/blog/index
-        appx/libms/index
+        spec/blog/index
+        spec/libms/index
 
 .. rubric:: References
 
