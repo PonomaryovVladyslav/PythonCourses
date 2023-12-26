@@ -32,6 +32,7 @@ extensions = [
     "sphinx_rtd_theme",
     "myst_parser",
     "sphinx_copybutton",
+    "sphinx_reredirects",
 ]
 source_suffix = {
     ".txt": "restructuredtext",
