@@ -5,9 +5,9 @@
 
 .. todo: add code examples
 
-##################################
-``printf-style`` String Formatting
-##################################
+###############################
+String Formatting: printf-style
+###############################
 
 String objects have one unique built-in operation: the ``%`` operator (modulo).
 This is also known as the string *formatting* or *interpolation* operator
