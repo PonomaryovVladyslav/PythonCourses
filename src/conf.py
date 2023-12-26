@@ -32,6 +32,7 @@ extensions = [
     "sphinx_rtd_theme",
     "myst_parser",
     "sphinx_copybutton",
+    "sphinx_reredirects",
 ]
 source_suffix = {
     ".txt": "restructuredtext",
@@ -40,6 +41,8 @@ source_suffix = {
 }
 needs_sphinx = "4.0"
 exclude_patterns = [
+    "**/_legacy/**",
+    "**/legacy/**",
     "**/README.*",
 ]
 suppress_warnings = []
@@ -50,6 +53,14 @@ bibtex_reference_style = "label"
 
 # TODO: configure options for mermaid output for pdf
 #       mermaid-js/mermaid-cli is added to project's dependencies
+
+# options for redirects
+redirects = {
+     "appx/blog/spec": "../../spec/blog/index.html",
+     "appx/blog/index": "../../spec/blog/index.html",
+     "appx/libms/spec": "../../spec/libms/index.html",
+     "appx/libms/index": "../../spec/libms/index.html",
+}
 
 # options for internationalization
 gettext_compact = False

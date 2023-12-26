@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Python Training Course 2022.11.dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-10-05 19:49+0300\n"
-"PO-Revision-Date: 2023-10-05 20:02+0300\n"
+"POT-Creation-Date: 2023-12-26 23:58+0200\n"
+"PO-Revision-Date: 2023-12-27 00:02+0200\n"
 "Last-Translator: Serhii Horodilov <sgorodil@gmail.com>\n"
 "Language-Team: ua <LL@li.org>\n"
 "Language: uk\n"
@@ -16,8 +16,8 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
 "n%10<=4 && (n%100<12 || n%100>14) ? 1 : 2);\n"
-"Generated-By: Babel 2.13.0\n"
-"X-Generator: Poedit 3.4\n"
+"Generated-By: Babel 2.14.0\n"
+"X-Generator: Poedit 3.4.2\n"
 
 #: ../../src/appx/printf.txt:-1
 msgid "Formatted strings usage in Python"
@@ -32,8 +32,8 @@ msgid "python, string, formatting"
 msgstr "python, string, formatting"
 
 #: ../../src/appx/printf.txt:10
-msgid "``printf-style`` String Formatting"
-msgstr "``printf-style`` Форматування рядків"
+msgid "String Formatting: printf-style"
+msgstr "Форматування рядка: стиль printf"
 
 #: ../../src/appx/printf.txt:12
 msgid ""
