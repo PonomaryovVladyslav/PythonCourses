@@ -52,9 +52,11 @@ Repository structure
     |-- assets/
     |-- src/
     |-- index.txt
-    |-- <topic>/
     |---- index.txt
-    |-- problem-sets/
+    |---- <topic>/
+
+**assets** directory contains various static content for the documentation,
+like CSS, images etc.
 
 **src** directory is the main documentation source, and it's considered to be
 a *content-root*. It means you may refer this directory as ``/`` for the Sphinx
@@ -65,12 +67,7 @@ together. All topics are described in their own "topic" directories, each with
 its own *index.txt*. Topic index file is the :abbr:`TOC (Table of Content)` for
 the topic, and it should be added to the master TOC.
 
-**assets** directory contains various static content for the documentation,
-like CSS, images etc.
-
-**problem-sets** is a sub-module, that contains various challenges and demos.
-It's already included to the documentation generator config, so any materials
-from this repo can be referred in the documents.
+.. todo: describe submodules
 
 ***************************
 Documentation markup syntax
@@ -192,8 +189,8 @@ We use GitFlow approach on this project. This means you would not commit to
 branch to work with.
 
 For example, if you want to describe "Django middleware", you will create
-a new branch ``[topic/]django-middleware``, and you will commit all your work
-to this branch.
+a new branch ``[topic/|feature/]django-middleware``, and you will commit all
+your work to this branch.
 
 Once you consider the work is done - just open a pull request from your topic
 branch to ``devel``.
