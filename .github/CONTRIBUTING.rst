@@ -241,4 +241,28 @@ to the master doc (toctree): **src/index.txt**.
 How to translate
 ================
 
-.. todo
+There is a target defined in Makefile to build and/or update translations
+called ``locales``. To gather newly added or updated strings and prepare
+portable object files, do:
+
+.. code-block:: shell
+
+    make locales
+    
+This will create/update po files in *src/_locales* directory. Navigate to
+the file and perform translations.
+
+Original strings are marked as ``msgid``, and the translated versions are
+marked as ``msgstr``.
+
+Using software like `poedit`_ can make the translation process more efficient.
+
+In case, you don't have cmake/make installed on your computer, you may use
+the full commands to gather the text, and prepare po file:
+
+.. code-block:: shell
+
+    sphinx-build -b gettext src _build/gettext
+    sphinx-intl -c src/conf.py update -p _build/gettext
+
+Actually, ``make locales`` is the shortcut to the same set of commands.
