@@ -233,7 +233,10 @@ are to ``:orphan:`` mark at its begging.
 How to add new topic(s)
 =======================
 
-.. todo
+Most of the topics are already present in the documents root. However, in case
+of need to add a new topic - you are to create a new directory inside of *src*
+folder. Create a file called ``index.txt`` within a new directory, and add it
+to the master doc (toctree): **src/index.txt**.
 
 How to translate
 ================
