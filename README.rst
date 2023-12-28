@@ -48,7 +48,7 @@ To do the same using poetry:
 .. _poetry: https://python-poetry.org
 
 Building documentation
-----------------------
+======================
 
 This repository comes with *Makefile*. For now this is the easiest way to do
 anything within this source code. There are several targets defined:
@@ -84,3 +84,20 @@ This command is equal to:
     make clean
     LANGUAGE=en make html
     LANGUAGE=uk make html
+
+Building without make
+---------------------
+
+``make`` just automates the build process, however in case you don't have it
+installed, you can run builds manually:
+
+.. code-block:: shell
+
+    sphinx-build -b html -D language=en src _build/html/en
+    sphinx-build -b html -D language=uk src _build/html/uk
+
+Contributing to the project
+===========================
+
+This is an open-source project, so anyone is welcome to contribute to it.
+Please see `contributing guide <./.github/CONTRIBUTING.rst>`_ for more details.
