@@ -1,6 +1,6 @@
 .. _Sphinx: https://www.sphinx-doc.org/
 .. _sphinxcontrib-mermaid: https://pypi.org/project/sphinxcontrib-mermaid/
-,, _poedit: https://poedit.net/
+.. _poedit: https://poedit.net/
 
 ###############################################################################
                               CONTRIBUTING GUIDES
