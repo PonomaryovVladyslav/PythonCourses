@@ -1,5 +1,6 @@
 .. _Sphinx: https://www.sphinx-doc.org/
 .. _sphinxcontrib-mermaid: https://pypi.org/project/sphinxcontrib-mermaid/
+,, _poedit: https://poedit.net/
 
 ###############################################################################
                               CONTRIBUTING GUIDES
@@ -38,9 +39,9 @@ syntax. Just install all project dependencies (including development).
 Other useful tools
 ==================
 
-We found ``poedit`` software very useful for working with translations.
-
-.. todo
+We found `poedit`_ software very useful for working with translations.
+It can be used for documents automatic translation, storing translation
+memories, proofreading etc.
 
 ********************
 Repository structure
