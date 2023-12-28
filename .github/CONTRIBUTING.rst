@@ -67,7 +67,17 @@ together. All topics are described in their own "topic" directories, each with
 its own *index.txt*. Topic index file is the :abbr:`TOC (Table of Content)` for
 the topic, and it should be added to the master TOC.
 
-.. todo: describe submodules
+Submodules
+==========
+
+There are two major approaches in the code base organization: monorepo and
+multirepo.
+
+This repository uses **hybrid poly-as-mono** approach. It includes several
+other repositories as its submodules to glue the content from different repos
+together.
+
+Make sure submodules are pulled from the ``devel`` branch.
 
 ***************************
 Documentation markup syntax
