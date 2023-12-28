@@ -218,7 +218,17 @@ inside of an existing topic directory.
 How to add new document(s)
 ==========================
 
-.. todo
+Locate the corresponding topic and create a new text file.
+Use ``.txt`` extension for the reStructuredText documents, and ``.md`` for
+the Markdown markup. Keep filename meaningful.
+
+To attach the newly created document to the documentation builds, just add
+its name to the ``toctree`` directive content in the **index.txt** file
+within the appropriate topic directory. Do not add file extension while adding
+file to the ``toctree``.
+
+In rare cases, when the new document should not be a part of any toctree, you
+are to ``:orphan:`` mark at its begging.
 
 How to add new topic(s)
 =======================
