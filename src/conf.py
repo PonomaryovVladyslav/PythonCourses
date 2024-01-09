@@ -51,9 +51,6 @@ suppress_warnings = []
 bibtex_bibfiles = ["refs.bib"]
 bibtex_reference_style = "label"
 
-# TODO: configure options for mermaid output for pdf
-#       mermaid-js/mermaid-cli is added to project's dependencies
-
 # options for redirects
 redirects = {
      "appx/blog/spec": "../../spec/blog/index.html",
