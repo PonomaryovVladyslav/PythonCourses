@@ -844,6 +844,24 @@ lint = ["docutils-stubs", "flake8", "mypy"]
 test = ["pytest"]
 
 [[package]]
+name = "sphinxcontrib-svg2pdfconverter"
+version = "1.2.2"
+description = "Sphinx SVG to PDF converter extension"
+category = "main"
+optional = false
+python-versions = "~=3.4"
+files = [
+    {file = "sphinxcontrib-svg2pdfconverter-1.2.2.tar.gz", hash = "sha256:80a55ca61f70eae93efc65f3814f2f177c86ba55934a9f6c5022f1778b62146b"},
+    {file = "sphinxcontrib_svg2pdfconverter-1.2.2-py3-none-any.whl", hash = "sha256:04ec767b55780a6b18d89cc1a8ada6d900c6efde9d1683abdb98a49b144465ca"},
+]
+
+[package.dependencies]
+Sphinx = ">=1.6.3"
+
+[package.extras]
+cairosvg = ["cairosvg (>=1.0)"]
+
+[[package]]
 name = "toml"
 version = "0.10.2"
 description = "Python Library for Tom's Obvious, Minimal Language"
@@ -891,4 +909,4 @@ testing = ["big-O", "jaraco.functools", "jaraco.itertools", "more-itertools", "p
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.9"
-content-hash = "f071d183d2f1e5bc624eabe1397898b37da6b54f2ee0cc293240741d1219fd66"
+content-hash = "f5c86228397ade865057c3a908f9ab397b846cce48f7ad0cd432e0002227f5ed"

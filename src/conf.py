@@ -25,8 +25,8 @@ version = project_data["version"]
 master_doc = root_doc = "index"
 extensions = [
     "sphinx.ext.autodoc",
-    "sphinx.ext.imgconverter",
 
+    "sphinxcontrib.inkscapeconverter",
     "sphinxcontrib.bibtex",
     "sphinxcontrib.mermaid",
     "sphinx_rtd_theme",
