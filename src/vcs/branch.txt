@@ -21,9 +21,18 @@ zero parents for the initial commit, one parent for a normal commit,
 and multiple parents for a commit that results from a merge of two or more
 branches.
 
-.. mermaid:: /../assets/mermaid/git/commits.mmd
-    :align: center
-    :caption: Commits tree
+.. only:: html
+
+    .. mermaid:: /../assets/mermaid/git/commits.mmd
+        :align: center
+        :caption: Commits tree
+
+.. only:: latex
+
+    .. figure:: /../assets/mermaid/git/commits.mmd.png
+        :align: center
+
+        Commits tree
 
 A branch in Git is simply a lightweight movable pointer to one of these
 commits. The default branch name in Git is master. As you start making commits,
@@ -156,9 +165,18 @@ last commit on ``master`` branch, Git simply moves the pointer forward.
 Changes from ``feature/issue53`` are now in the snapshot of the commit pointed
 to by the ``master`` branch.
 
-.. mermaid:: /../assets/mermaid/git/merge-1.mmd
-    :align: center
-    :caption: Fast-forward merge
+.. only:: html
+
+    .. mermaid:: /../assets/mermaid/git/merge-1.mmd
+        :align: center
+        :caption: Fast-forward merge
+
+.. only:: latex
+
+    .. figure:: /../assets/mermaid/git/merge-1.mmd.png
+        :align: center
+
+        Fast-forward merge
 
 Now, lets assume another developer started working on ``feature/issue54`` at
 the same time. And there are few commits on this feature branch. Suppose,
@@ -188,9 +206,18 @@ that results from this three-way merge and automatically creates a new commit
 that points to it. This is referred to as a *merge commit*, and is a special in
 that it has more than one parent.
 
-.. mermaid:: /../assets/mermaid/git/merge-2.mmd
-    :align: center
-    :caption: Merge commit
+.. only:: html
+
+    .. mermaid:: /../assets/mermaid/git/merge-2.mmd
+        :align: center
+        :caption: Merge commit
+
+.. only:: latex
+
+    .. figure:: /../assets/mermaid/git/merge-2.mmd.png
+        :align: center
+
+        Merge commit
 
 Merge conflicts
 ---------------
@@ -271,9 +298,18 @@ the ``merge`` and the ``rebase``.
 Earlier, there was an example of diverged work and commits made on two
 different branches.
 
-.. mermaid:: /../assets/mermaid/git/rebase-1.mmd
-    :align: center
-    :caption: Before rebase
+.. only:: html
+
+    .. mermaid:: /../assets/mermaid/git/rebase-1.mmd
+        :align: center
+        :caption: Before rebase
+
+.. only:: latex
+
+    .. figure:: /../assets/mermaid/git/merge-2.mmd.png
+        :align: center
+
+        Merge commit
 
 The easiest way to integrate the branches, as we've already covered, is
 the ``merge`` command. It performs a three-way merge between the two latest
@@ -298,9 +334,18 @@ those diffs to temporary files, resetting the current branch to the same
 commit as the branch you are rebasing onto, and finally applying each change
 in turn.
 
-.. mermaid:: /../assets/mermaid/git/rebase-2.mmd
-    :align: center
-    :caption: After rebase
+.. only:: html
+
+    .. mermaid:: /../assets/mermaid/git/rebase-2.mmd
+        :align: center
+        :caption: After rebase
+
+.. only:: latex
+
+    .. figure:: /../assets/mermaid/git/rebase-2.mmd.png
+        :align: center
+
+        After rebase
 
 .. note::
     Other maintainers prefer to rebase (or cherry-pick) contributed work on
@@ -318,9 +363,18 @@ of commits on a topic branch and you want to integrate only one of them,
 or if you only have one commit on a topic branch and you'd prefer to
 cherry-pick it rather than run rebase.
 
-.. mermaid:: /../assets/mermaid/git/cherry-pick.mmd
-    :align: center
-    :caption: Cherry-pick a commit
+.. only:: html
+
+    .. mermaid:: /../assets/mermaid/git/cherry-pick.mmd
+        :align: center
+        :caption: Cherry-pick a commit
+
+.. only:: latex
+
+    .. figure:: /../assets/mermaid/git/cherry-pick.mmd.png
+        :align: center
+
+        Cherry-pick a commit
 
 ::
 
@@ -368,6 +422,15 @@ new features and bug fixes are integrated smoothly before being released.
 This strategy is particularly useful for projects with regular releases and
 a team working on multiple features concurrently.
 
-.. mermaid:: /../assets/mermaid/git/gitflow.mmd
-    :align: center
-    :caption: GitFlow diagram
+.. only:: html
+
+    .. mermaid:: /../assets/mermaid/git/gitflow.mmd
+        :align: center
+        :caption: GitFlow diagram
+
+.. only:: latex
+
+    .. figure:: /../assets/mermaid/git/gitflow.mmd.png
+        :align: center
+
+        GitFlow diagram

@@ -68,10 +68,15 @@ Git has three main states that your files can reside in:
     to go into your next commit snapshot.
 -   Committed means that the data is safely stored in your local database.
 
-.. mermaid:: /../assets/mermaid/git/states.mmd
-    :align: center
+.. only:: html
 
+    .. mermaid:: /../assets/mermaid/git/states.mmd
+        :align: center
 
+.. only:: latex
+
+    .. figure:: /../assets/mermaid/git/states.mmd.png
+        :align: center
 
 The basic Git workflow goes something like this:
 

@@ -25,8 +25,8 @@ version = project_data["version"]
 master_doc = root_doc = "index"
 extensions = [
     "sphinx.ext.autodoc",
-    "sphinx.ext.imgconverter",
 
+    "sphinxcontrib.inkscapeconverter",
     "sphinxcontrib.bibtex",
     "sphinxcontrib.mermaid",
     "sphinx_rtd_theme",
@@ -50,9 +50,6 @@ suppress_warnings = []
 # options for bibliography
 bibtex_bibfiles = ["refs.bib"]
 bibtex_reference_style = "label"
-
-# TODO: configure options for mermaid output for pdf
-#       mermaid-js/mermaid-cli is added to project's dependencies
 
 # options for redirects
 redirects = {
