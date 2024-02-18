@@ -19,7 +19,7 @@ redundancy and dependency, making the database more efficient, flexible, and
 scalable. It also helps in maintaining data consistency and accuracy, and
 ensures that updates and deletions are properly handled.
 
-There are 6 **normal forms**, but this chapter focuses on the first 3 only,
+There are 6 + 3 **normal forms**, but this chapter focuses on the first 3 only,
 since the commonest normal form you'll see out there is *3NF* (third normal
 form).
 
@@ -39,17 +39,64 @@ Anomalies
 Insertion anomalies
 -------------------
 
-.. todo: complete subsection
+There are circumstances in which certain facts cannot be recorded at all.
+For example, each record in the "Faculty and Their Courses" relation might
+contain a *Faculty ID*, *Faculty Name* and *Course Code*. Therefore, the
+details of any faculty member who teaches at least one course can be recorded,
+but a newly hired faculty member who has not yet been assigned to teach any
+courses cannot be recorded, except by setting the course code to ``null``.
+
++------------+----------------+-------------+
+| Faculty ID | Faculty Name   | Course Code |
++============+================+=============+
+|        389 | Dr. Headstrong | ENG-206     |
++------------+----------------+-------------+
+|        407 | Dr. Mugwort    | CMP-101     |
++------------+----------------+-------------+
+|        407 | Dr. Mugwort    | CMP-201     |
++------------+----------------+-------------+
+
++------------+----------------+-------------+
+| Faculty ID | Faculty Name   | Course Code |
++============+================+=============+
+|        389 | Dr. Newone     | ???         |
++------------+----------------+-------------+
 
 Update anomalies
 ----------------
 
-.. todo: complete subsection
+The same information can be expressed on multiple rows; therefore updates to
+the relation may result in logical inconsistencies. For example, each record
+in an "Employees' Skills" relation might contain ah *Employee ID*, *Employee
+Address*, and *Skill*; thus a charge of address for a particular employee may
+need to be applied to multiple records (one for each skill). If the update is
+only partially successful -- the employee's address is updated on some records
+but not others -- then the relation is left in an inconsistent state.
+Specifically, the relation provides conflicting answers to the question of what
+this particular employee's address is.
+
++-------------+-----------------------+-----------------+
+| Employee ID | Employee Address      | Skill           |
++=============+=======================+=================+
+| 426         | 230 Parkland Crescent | typing          |
++-------------+-----------------------+-----------------+
+| 426         | 230 Parkland Crescent | shorthand       |
++-------------+-----------------------+-----------------+
+| 529         | 158 Watkins Place     | public speaking |
++-------------+-----------------------+-----------------+
+| 529         | 108 Church Street     | carpentry       |
++-------------+-----------------------+-----------------+
 
 Deletion anomalies
 ------------------
 
-.. todo: complete subsection
+Under certain circumstances, the deletion of data representing certain facts
+necessitates the deletion of data representing completely different facts.
+The "Faculty and Their Courses" relation described in the previous example
+suffers from this type of anomaly, for if a faculty member temporary ceases to
+be assigned to any courses, the last of the records on which that faculty
+member appears must be deleted, effectively also deleting the faculty member,
+unless the *Course Code* field is set to ``null``.
 
 First normal form (1NF)
 =======================
