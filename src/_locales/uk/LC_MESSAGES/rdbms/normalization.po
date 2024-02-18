@@ -747,7 +747,7 @@ msgid ""
 ":abbr:`BCNF (Boyce-Codd Normal Form)` is the stronger version of 3NF. It "
 "also is called as 3.5NF (three-and-a-half normal form)."
 msgstr ""
-"abbr:`BCNF (нормальна форма Бойса-Кодда)` - це сильніша версія 3NF. Її також "
+":abbr:`BCNF (нормальна форма Бойса-Кодда)` - це сильніша версія 3NF. Її також "
 "називають 3.5NF (третя з половиною нормальна форма)."
 
 #: ../../src/rdbms/normalization.txt:351
