@@ -103,7 +103,18 @@ First normal form (1NF)
 
 .. rubric:: Data example
 
-.. todo: add data example (no NF)
+The table below represents players and their characters inventory, ordered by
+their characters' levels.
+
++------------+----------------------------------------------------------------+
+| username   | inventory                                                      |
++============+================================================================+
+| prombery87 | 2 amulets, 3 rings                                             |
++------------+----------------------------------------------------------------+
+| wheed1997  | 18 copper coins, 1 bow, 5 arrows                               |
++------------+----------------------------------------------------------------+
+| acen1999   | 1 sword, 1 shield, 4 rings                                     |
++------------+----------------------------------------------------------------+
 
 Requirements
 ------------
@@ -117,8 +128,74 @@ Requirements
 Applying 1NF
 ------------
 
-.. todo: complete subsection
-.. todo: add data example in 1NF
+First of all, using the rows order to represent the information violates 1NF.
+This can be easily fixed by adding additional column *level* to store the info
+about the character's level. From this, the ordered sequences can be fetched
+by using the query:
+
+.. code-block:: sql
+
+    SELECT username FROM player ORDER BY level;
+
+The second rule is **do not** mix data types within the same column.
+As example, the characters' level might be described as follows:
+
++------------+----------------------------------+-----------------------------+
+| username   | inventory                        | level                       |
++============+==================================+=============================+
+| prombery87 | 2 amulets, 3 rings               | 10                          |
++------------+----------------------------------+-----------------------------+
+| wheed1997  | 18 copper coins, 1 bow, 5 arrows | almost 8                    |
++------------+----------------------------------+-----------------------------+
+| acen1999   | 1 sword, 1 shield, 4 rings       | 5.5                         |
++------------+----------------------------------+-----------------------------+
+
+The data types are mixed in *level* column, which violates 1NF; and normally,
+RDBMS won't let you do this.
+
+The tables without a **primary key** violates 1NF as well. *username* field
+may be used as **PK** for the players relation example. This would prevent
+the data duplication, like having both ``wheed1997``  players at level 7 and 8
+at the same time, which makes no sense.
+
++------------+----------------------------------+-----------------------------+
+| username   | inventory                        | level                       |
++============+==================================+=============================+
+| prombery87 | 2 amulets, 3 rings               | 10                          |
++------------+----------------------------------+-----------------------------+
+| wheed1997  | 18 copper coins, 1 bow, 5 arrows | 8                           |
++------------+----------------------------------+-----------------------------+
+| wheed1997  | 18 copper coins, 1 bow, 5 arrows | 7                           |
++------------+----------------------------------+-----------------------------+
+| acen1999   | 1 sword, 1 shield, 4 rings       | 5                           |
++------------+----------------------------------+-----------------------------+
+
+At last, *inventory* column contains repeating groups of data (also called
+*non-atomic data*), which violates 1NF. To normalize the table, it should be
+altered in a way, to represent only one inventory item per row.
+
++------------+-------------+---------------+
+| player_id  | item_type   | item_quantity |
++============+=============+===============+
+| prombery87 | amulet      | 2             |
++------------+-------------+---------------+
+| prombery87 | ring        | 3             |
++------------+-------------+---------------+
+| wheed1997  | copper coin | 18            |
++------------+-------------+---------------+
+| wheed1997  | bow         | 1             |
++------------+-------------+---------------+
+| wheed1997  | arrow       | 5             |
++------------+-------------+---------------+
+| acen1999   | sword       | 1             |
++------------+-------------+---------------+
+| acen1999   | shield      | 1             |
++------------+-------------+---------------+
+| acen1999   | ring        | 4             |
++------------+-------------+---------------+
+
+The primary key for this table is the combination of *player_id* and
+*item_type* -- a composite primary key.
 
 Second normal form (2NF)
 ========================
