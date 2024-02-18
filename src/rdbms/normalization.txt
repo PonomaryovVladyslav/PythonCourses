@@ -399,4 +399,5 @@ Conclusion
 
 Each next normal form includes all the requirements for the previous one.
 
-.. todo: complete the conclusion
+Following the rules above will lead you to having a fully normalized tables
+in 99% of time.
