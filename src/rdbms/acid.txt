@@ -72,7 +72,22 @@ foreign key relationship.
 Isolation
 =========
 
-.. todo: concurrent execution safe.
+Transactions are often executed concurrently (e.g. multiple transactions
+reading and writing to a table at the same time). Isolation ensures that
+concurrent execution of transactions leaves the database in the state that
+would have been obtained if the transactions were executed sequentially.
+Isolation is the main goal of concurrency control; depending on the isolation
+level used, the effects of an incomplete transaction might not be visible to
+other transaction.
+
+For example, two persons have access to the same account having $1,000 on it,
+and both persons tries to get the money out of this account. Dora tries to
+get $1,000, and Toby tries to get $100.
+
+The sum of the money to get out of the account is $1,100, which cause an issue
+of leaving negative amount of money. So, one of these transactions fails.
+
+Isolation ensures the concurrent executions are safe.
 
 Durability
 ==========
