@@ -1,0 +1,36 @@
+.. meta::
+    :description: Database normalization
+    :author: Serhii Horodilov
+    :keywords: sql, db, database, acid, atomic, consistent, isolated, durable
+
+*******************************************************************************
+                                     ACID
+*******************************************************************************
+
+:abbr:`ACID (Atomicity, Consistency, Isolation, Durability)` is a set of
+properties of database transactions intended to guarantee data validity despite
+errors, power failures, and other mishaps. In the context of databases,
+a sequence of database operations that satisfies the ACID properties is called
+a transaction.
+
+Atomicity
+=========
+
+.. todo: entire transaction must finish, or revert the database to old state.
+
+Consistency
+===========
+
+.. todo: help ensure the data to be in correct state,
+         data integrity constraints must be followed.
+         consistency = correctness
+
+Isolation
+=========
+
+.. todo: concurrent execution safe.
+
+Durability
+==========
+
+.. todo: committed transactions to be persisted in non-volatile memory.
