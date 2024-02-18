@@ -370,8 +370,6 @@ Introducing the "player_rating_levels" will fix the problem.
 
 .. table:: player_rating_levels
 
-.. table:: player
-
     +--------------+---------------+
     | player_level | player_rating |
     +==============+===============+
