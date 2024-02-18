@@ -16,7 +16,47 @@ a transaction.
 Atomicity
 =========
 
-.. todo: entire transaction must finish, or revert the database to old state.
+Transactions are often composed of multiple statements. Atomicity guarantees
+that each transaction is treated as a single "unit", which either succeeds
+completely, or fails completely: if any of the statements constituting
+a transaction fails to complete, the entire transaction fails and the database
+left unchanged. A guarantee of atomicity prevents updates to the database from
+occurring only partially, which can cause greater problems, than rejecting the
+whole series outright.
+
+As an example, there are few rows in an accounting table:
+
+.. table:: accounting
+
+    +-----------+-----------------+---------+
+    | person_id | name            | balance |
+    +===========+=================+=========+
+    |       ... | ...             | ...     |
+    +-----------+-----------------+---------+
+    |       529 | Dora Headstrong | $1,000  |
+    +-----------+-----------------+---------+
+    |       402 | Toby Mugwort    | $100    |
+    +-----------+-----------------+---------+
+    |       ... | ...             | ...     |
+    +-----------+-----------------+---------+
+
+In case, Dora wants to transfer $100 to Toby, this can be split into
+3 statements:
+
+-   Check if $100 is available
+-   Deduct $100 from Dora's balance
+-   Add $100 to Toby's balance
+
+In case the 3rd statement fails, the data may stay as:
+
++-----------+-----------------+---------+
+|       529 | Dora Headstrong | $900    |
++-----------+-----------------+---------+
+|       402 | Toby Mugwort    | $100    |
++-----------+-----------------+---------+
+
+Atomicity guarantee reverting database to an old state, in case any statement
+fails.
 
 Consistency
 ===========
