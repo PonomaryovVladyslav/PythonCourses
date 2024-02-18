@@ -4,19 +4,19 @@
 # SERHII HORODILOV <sgorodil@gmail.com>
 msgid ""
 msgstr ""
-"Project-Id-Version: Python Training Course 2022.11.dev\n"
+"Project-Id-Version: Python Training Course 2024.02.dev\n"
 "Report-Msgid-Bugs-To: https://github.com/edu-python-course/edu-python-course."
 "github.io/issues\n"
-"POT-Creation-Date: 2023-12-16 13:55+0000\n"
-"PO-Revision-Date: 2023-12-21 03:59+0200\n"
+"POT-Creation-Date: 2024-02-18 16:49+0200\n"
+"PO-Revision-Date: 2024-02-18 17:26+0200\n"
 "Last-Translator: Serhii Horodilov <sgorodil@gmail.com>\n"
-"Language-Team: ua <LL@li.org>\n"
-"Language: ua\n"
+"Language-Team: \n"
+"Language: uk\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=utf-8\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 2.12.1\n"
-"X-Generator: Poedit 3.4.1\n"
+"Generated-By: Babel 2.14.0\n"
+"X-Generator: Poedit 3.4.2\n"
 
 #: ../../src/rdbms/normalization.txt:-1
 msgid "Database normalization"
@@ -51,7 +51,6 @@ msgstr ""
 "неузгодженості даних."
 
 #: ../../src/rdbms/normalization.txt:16
-#, fuzzy
 msgid ""
 "The main purpose of database normalization is to avoid complexities, "
 "eliminate duplicates, and organize data in a consistent way. Normalization "
@@ -66,316 +65,724 @@ msgstr ""
 
 #: ../../src/rdbms/normalization.txt:22
 msgid ""
-"There are 6 **normal forms**, but this chapter focuses on the first 3 only, "
-"since the commonest normal form you'll see out there is *3NF* (third normal "
-"form)."
+"There are 6 + 3 **normal forms**, but this chapter focuses on the first 3 "
+"only, since the commonest normal form you'll see out there is *3NF* (third "
+"normal form)."
 msgstr ""
+"Існує 6 + 3 **нормальних форми**, але у цій главі ми розглянемо лише перші "
+"3, оскільки найпоширенішою нормальною формою, яку ви побачите, є *3НФ* "
+"(третя нормальна форма)."
 
 #: ../../src/rdbms/normalization.txt:26
 msgid "Normalized tables are:"
-msgstr ""
+msgstr "Нормалізовані таблиці:"
 
 #: ../../src/rdbms/normalization.txt:28
 msgid "Easier to understand"
-msgstr ""
+msgstr "Легше зрозуміти"
 
 #: ../../src/rdbms/normalization.txt:29
 msgid "Easier to enhance and extend"
-msgstr ""
+msgstr "Легше вдосконалювати та розширювати"
 
 #: ../../src/rdbms/normalization.txt:30
 msgid "Protected from:"
-msgstr ""
+msgstr "Захищені від:"
 
 #: ../../src/rdbms/normalization.txt:32
 msgid "insertion anomalies"
-msgstr ""
+msgstr "аномалій вставки"
 
 #: ../../src/rdbms/normalization.txt:33
 msgid "update anomalies"
-msgstr ""
+msgstr "аномалій оновлення"
 
 #: ../../src/rdbms/normalization.txt:34
 msgid "deletion anomalies"
-msgstr ""
+msgstr "аномалій видалення"
 
 #: ../../src/rdbms/normalization.txt:37
 msgid "Anomalies"
-msgstr ""
+msgstr "Аномалії"
 
 #: ../../src/rdbms/normalization.txt:40
 msgid "Insertion anomalies"
-msgstr ""
+msgstr "Аномалії вставки"
 
-#: ../../src/rdbms/normalization.txt:45
+#: ../../src/rdbms/normalization.txt:42
+msgid ""
+"There are circumstances in which certain facts cannot be recorded at all. "
+"For example, each record in the \"Faculty and Their Courses\" relation might "
+"contain a *Faculty ID*, *Faculty Name* and *Course Code*. Therefore, the "
+"details of any faculty member who teaches at least one course can be "
+"recorded, but a newly hired faculty member who has not yet been assigned to "
+"teach any courses cannot be recorded, except by setting the course code to "
+"``null``."
+msgstr ""
+"Існують обставини, за яких певні факти взагалі не можуть бути записані. "
+"Наприклад, кожен запис у відношенні \"Викладачі та їхні курси\" може містити "
+"*ідентифікатор викладача*, *ім'я викладача* та *код курсу*. Таким чином, "
+"можна записати інформацію про будь-якого викладача, який викладає хоча б "
+"один курс, але не можна записати інформацію про новоприйнятого викладача, "
+"якому ще не було призначено викладання жодного курсу, окрім як встановивши "
+"код курсу на ``нуль``."
+
+#: ../../src/rdbms/normalization.txt:50 ../../src/rdbms/normalization.txt:60
+msgid "Faculty ID"
+msgstr "Faculty ID"
+
+#: ../../src/rdbms/normalization.txt:50 ../../src/rdbms/normalization.txt:60
+msgid "Faculty Name"
+msgstr "Faculty Name"
+
+#: ../../src/rdbms/normalization.txt:50 ../../src/rdbms/normalization.txt:60
+msgid "Course Code"
+msgstr "Course Code"
+
+#: ../../src/rdbms/normalization.txt:52 ../../src/rdbms/normalization.txt:62
+msgid "389"
+msgstr "389"
+
+#: ../../src/rdbms/normalization.txt:52
+msgid "Dr. Headstrong"
+msgstr "Dr. Headstrong"
+
+#: ../../src/rdbms/normalization.txt:52
+msgid "ENG-206"
+msgstr "ENG-206"
+
+#: ../../src/rdbms/normalization.txt:54 ../../src/rdbms/normalization.txt:56
+msgid "407"
+msgstr "407"
+
+#: ../../src/rdbms/normalization.txt:54 ../../src/rdbms/normalization.txt:56
+msgid "Dr. Mugwort"
+msgstr "Dr. Mugwort"
+
+#: ../../src/rdbms/normalization.txt:54
+msgid "CMP-101"
+msgstr "CMP-101"
+
+#: ../../src/rdbms/normalization.txt:56
+msgid "CMP-201"
+msgstr "CMP-201"
+
+#: ../../src/rdbms/normalization.txt:62
+msgid "Dr. Newone"
+msgstr "Dr. Newone"
+
+#: ../../src/rdbms/normalization.txt:62
+msgid "???"
+msgstr "???"
+
+#: ../../src/rdbms/normalization.txt:66
 msgid "Update anomalies"
-msgstr ""
+msgstr "Анамолії оновлення"
 
-#: ../../src/rdbms/normalization.txt:50
+#: ../../src/rdbms/normalization.txt:68
+msgid ""
+"The same information can be expressed on multiple rows; therefore updates to "
+"the relation may result in logical inconsistencies. For example, each record "
+"in an \"Employees' Skills\" relation might contain ah *Employee ID*, "
+"*Employee Address*, and *Skill*; thus a charge of address for a particular "
+"employee may need to be applied to multiple records (one for each skill). If "
+"the update is only partially successful -- the employee's address is updated "
+"on some records but not others -- then the relation is left in an "
+"inconsistent state. Specifically, the relation provides conflicting answers "
+"to the question of what this particular employee's address is."
+msgstr ""
+"Одна й та сама інформація може бути виражена в декількох рядках, тому "
+"оновлення відношення може призвести до логічної неузгодженості. Наприклад, "
+"кожен запис у відношенні \"Навички працівників\" може містити ах "
+"*Ідентифікатор працівника*, *Адреса працівника* та *Навичка*; таким чином, "
+"може виникнути потреба в оновленні адреси для певного працівника в декількох "
+"записах (по одному для кожної навички). Якщо оновлення відбувається лише "
+"частково - адреса працівника оновлюється в одних записах, але не в інших - "
+"то відношення залишається в неузгодженому стані. Зокрема, відношення надає "
+"суперечливі відповіді на питання про те, якою є адреса конкретного "
+"працівника."
+
+#: ../../src/rdbms/normalization.txt:79
+msgid "Employee ID"
+msgstr "Employee ID"
+
+#: ../../src/rdbms/normalization.txt:79
+msgid "Employee Address"
+msgstr "Employee Address"
+
+#: ../../src/rdbms/normalization.txt:79
+msgid "Skill"
+msgstr "Skill"
+
+#: ../../src/rdbms/normalization.txt:81 ../../src/rdbms/normalization.txt:83
+msgid "426"
+msgstr "426"
+
+#: ../../src/rdbms/normalization.txt:81 ../../src/rdbms/normalization.txt:83
+msgid "230 Parkland Crescent"
+msgstr "230 Parkland Crescent"
+
+#: ../../src/rdbms/normalization.txt:81
+msgid "typing"
+msgstr "typing"
+
+#: ../../src/rdbms/normalization.txt:83
+msgid "shorthand"
+msgstr "shorthand"
+
+#: ../../src/rdbms/normalization.txt:85 ../../src/rdbms/normalization.txt:87
+msgid "529"
+msgstr "529"
+
+#: ../../src/rdbms/normalization.txt:85
+msgid "158 Watkins Place"
+msgstr "158 Watkins Place"
+
+#: ../../src/rdbms/normalization.txt:85
+msgid "public speaking"
+msgstr "public speaking"
+
+#: ../../src/rdbms/normalization.txt:87
+msgid "108 Church Street"
+msgstr "108 Church Street"
+
+#: ../../src/rdbms/normalization.txt:87
+msgid "carpentry"
+msgstr "carpentry"
+
+#: ../../src/rdbms/normalization.txt:91
 msgid "Deletion anomalies"
-msgstr ""
+msgstr "Аномалії видалення"
 
-#: ../../src/rdbms/normalization.txt:55
+#: ../../src/rdbms/normalization.txt:93
+msgid ""
+"Under certain circumstances, the deletion of data representing certain facts "
+"necessitates the deletion of data representing completely different facts. "
+"The \"Faculty and Their Courses\" relation described in the previous example "
+"suffers from this type of anomaly, for if a faculty member temporary ceases "
+"to be assigned to any courses, the last of the records on which that faculty "
+"member appears must be deleted, effectively also deleting the faculty "
+"member, unless the *Course Code* field is set to ``null``."
+msgstr ""
+"За певних обставин видалення даних, що представляють певні факти, призводить "
+"до видалення даних, що представляють зовсім інші факти. Відношення "
+"\"Викладачі та їхні курси\", описане в попередньому прикладі, страждає від "
+"цього типу аномалії, тому що якщо викладач тимчасово перестає бути "
+"призначеним на будь-який курс, останній запис, в якому він з'являється, має "
+"бути видалений, фактично видаляючи і самого викладача, якщо тільки поле *Код "
+"курсу* не встановлено в ``нуль``."
+
+#: ../../src/rdbms/normalization.txt:102
 msgid "First normal form (1NF)"
 msgstr "Перша нормальна форма (1NF)"
 
-#: ../../src/rdbms/normalization.txt:58
+#: ../../src/rdbms/normalization.txt:105
 msgid "Data example"
-msgstr ""
+msgstr "Приклад даних"
 
-#: ../../src/rdbms/normalization.txt:62 ../../src/rdbms/normalization.txt:80
-#: ../../src/rdbms/normalization.txt:96
+#: ../../src/rdbms/normalization.txt:106
+msgid ""
+"The table below represents players and their characters inventory, ordered "
+"by their characters' levels."
+msgstr ""
+"У таблиці нижче представлені гравці та інвентар їхніх персонажів, "
+"впорядковані за рівнями персонажів."
+
+#: ../../src/rdbms/normalization.txt:110 ../../src/rdbms/normalization.txt:144
+#: ../../src/rdbms/normalization.txt:162
+msgid "username"
+msgstr "username"
+
+#: ../../src/rdbms/normalization.txt:110 ../../src/rdbms/normalization.txt:144
+#: ../../src/rdbms/normalization.txt:162
+msgid "inventory"
+msgstr "inventory"
+
+#: ../../src/rdbms/normalization.txt:112 ../../src/rdbms/normalization.txt:146
+#: ../../src/rdbms/normalization.txt:164 ../../src/rdbms/normalization.txt:180
+#: ../../src/rdbms/normalization.txt:182 ../../src/rdbms/normalization.txt:209
+#: ../../src/rdbms/normalization.txt:211 ../../src/rdbms/normalization.txt:266
+#: ../../src/rdbms/normalization.txt:278 ../../src/rdbms/normalization.txt:280
+#: ../../src/rdbms/normalization.txt:313 ../../src/rdbms/normalization.txt:364
+msgid "prombery87"
+msgstr "prombery87"
+
+#: ../../src/rdbms/normalization.txt:112 ../../src/rdbms/normalization.txt:146
+#: ../../src/rdbms/normalization.txt:164
+msgid "2 amulets, 3 rings"
+msgstr "2 амулети, 3 каблучки"
+
+#: ../../src/rdbms/normalization.txt:114 ../../src/rdbms/normalization.txt:148
+#: ../../src/rdbms/normalization.txt:166 ../../src/rdbms/normalization.txt:168
+#: ../../src/rdbms/normalization.txt:184 ../../src/rdbms/normalization.txt:186
+#: ../../src/rdbms/normalization.txt:188 ../../src/rdbms/normalization.txt:213
+#: ../../src/rdbms/normalization.txt:215 ../../src/rdbms/normalization.txt:217
+#: ../../src/rdbms/normalization.txt:268 ../../src/rdbms/normalization.txt:282
+#: ../../src/rdbms/normalization.txt:284 ../../src/rdbms/normalization.txt:286
+#: ../../src/rdbms/normalization.txt:315 ../../src/rdbms/normalization.txt:366
+msgid "wheed1997"
+msgstr "wheed1997"
+
+#: ../../src/rdbms/normalization.txt:114 ../../src/rdbms/normalization.txt:148
+#: ../../src/rdbms/normalization.txt:166 ../../src/rdbms/normalization.txt:168
+msgid "18 copper coins, 1 bow, 5 arrows"
+msgstr "18 мідних монет, 1 лук, 5 стріл"
+
+#: ../../src/rdbms/normalization.txt:116 ../../src/rdbms/normalization.txt:150
+#: ../../src/rdbms/normalization.txt:170 ../../src/rdbms/normalization.txt:190
+#: ../../src/rdbms/normalization.txt:192 ../../src/rdbms/normalization.txt:194
+#: ../../src/rdbms/normalization.txt:219 ../../src/rdbms/normalization.txt:221
+#: ../../src/rdbms/normalization.txt:223 ../../src/rdbms/normalization.txt:270
+#: ../../src/rdbms/normalization.txt:288 ../../src/rdbms/normalization.txt:290
+#: ../../src/rdbms/normalization.txt:292 ../../src/rdbms/normalization.txt:317
+#: ../../src/rdbms/normalization.txt:335 ../../src/rdbms/normalization.txt:368
+msgid "acen1999"
+msgstr "acen1999"
+
+#: ../../src/rdbms/normalization.txt:116 ../../src/rdbms/normalization.txt:150
+#: ../../src/rdbms/normalization.txt:170
+msgid "1 sword, 1 shield, 4 rings"
+msgstr "1 меч, 1 щит, 4 персні"
+
+#: ../../src/rdbms/normalization.txt:120 ../../src/rdbms/normalization.txt:230
+#: ../../src/rdbms/normalization.txt:339
 msgid "Requirements"
-msgstr ""
+msgstr "Вимоги"
 
-#: ../../src/rdbms/normalization.txt:64
+#: ../../src/rdbms/normalization.txt:122
 msgid "Row order should not be used to convey information."
-msgstr ""
+msgstr "Порядок рядків не повинен використовуватися для передачі інформації."
 
-#: ../../src/rdbms/normalization.txt:65
+#: ../../src/rdbms/normalization.txt:123
 msgid ""
 "Data types should not be mixed within the same column (and the RDBMS won't "
 "let you do in anyway)."
 msgstr ""
+"Типи даних не повинні змішуватися в одному стовпчику (і СУБД не дозволить "
+"вам цього зробити в будь-якому випадку)."
 
-#: ../../src/rdbms/normalization.txt:67
+#: ../../src/rdbms/normalization.txt:125
 msgid "Tables should have their primary keys."
-msgstr ""
+msgstr "Таблиці повинні мати первинні ключі."
 
-#: ../../src/rdbms/normalization.txt:68
+#: ../../src/rdbms/normalization.txt:126
 msgid "Repeating groups should be eliminated."
-msgstr ""
+msgstr "Групи, що повторюються, мають бути виключені."
 
-#: ../../src/rdbms/normalization.txt:71
+#: ../../src/rdbms/normalization.txt:129
 msgid "Applying 1NF"
-msgstr ""
+msgstr "Застосування 1NF"
 
-#: ../../src/rdbms/normalization.txt:77
+#: ../../src/rdbms/normalization.txt:131
+msgid ""
+"First of all, using the rows order to represent the information violates "
+"1NF. This can be easily fixed by adding additional column *level* to store "
+"the info about the character's level. From this, the ordered sequences can "
+"be fetched by using the query:"
+msgstr ""
+"Перш за все, використання порядку рядків для представлення інформації "
+"порушує 1NF. Це можна легко виправити, додавши додатковий стовпець *level* "
+"для зберігання інформації про рівень персонажа. Звідси впорядковані "
+"послідовності можуть бути отримані за допомогою запиту:"
+
+#: ../../src/rdbms/normalization.txt:140
+msgid ""
+"The second rule is **do not** mix data types within the same column. As "
+"example, the characters' level might be described as follows:"
+msgstr ""
+"Друге правило - не змішувати типи даних в одному стовпчику. Наприклад, "
+"рівень символів можна описати наступним чином:"
+
+#: ../../src/rdbms/normalization.txt:144 ../../src/rdbms/normalization.txt:162
+msgid "level"
+msgstr "level"
+
+#: ../../src/rdbms/normalization.txt:146 ../../src/rdbms/normalization.txt:164
+#: ../../src/rdbms/normalization.txt:209 ../../src/rdbms/normalization.txt:211
+#: ../../src/rdbms/normalization.txt:266 ../../src/rdbms/normalization.txt:305
+#: ../../src/rdbms/normalization.txt:313 ../../src/rdbms/normalization.txt:364
+#: ../../src/rdbms/normalization.txt:376
+msgid "9"
+msgstr "9"
+
+#: ../../src/rdbms/normalization.txt:148
+msgid "almost 8"
+msgstr "almost 8"
+
+#: ../../src/rdbms/normalization.txt:150
+msgid "5.5"
+msgstr "5.5"
+
+#: ../../src/rdbms/normalization.txt:153
+msgid ""
+"The data types are mixed in *level* column, which violates 1NF; and "
+"normally, RDBMS won't let you do this."
+msgstr ""
+"У стовпчику *level* змішано типи даних, що порушує 1NF; і зазвичай СУБД не "
+"дозволяє цього робити."
+
+#: ../../src/rdbms/normalization.txt:156
+msgid ""
+"The tables without a **primary key** violates 1NF as well. *username* field "
+"may be used as **PK** for the players relation example. This would prevent "
+"the data duplication, like having both ``wheed1997``  players at level 7 and "
+"8 at the same time, which makes no sense."
+msgstr ""
+"Таблиці без **первинного ключа** також порушують 1NF. *поле username* можна "
+"використовувати як **PK** для прикладу відношення гравців. Це запобігатиме "
+"дублюванню даних, наприклад, наявності обох гравців ``wheed1997`` на 7 і 8 "
+"рівнях одночасно, що не має сенсу."
+
+#: ../../src/rdbms/normalization.txt:166 ../../src/rdbms/normalization.txt:305
+#: ../../src/rdbms/normalization.txt:378
+msgid "8"
+msgstr "8"
+
+#: ../../src/rdbms/normalization.txt:168 ../../src/rdbms/normalization.txt:305
+#: ../../src/rdbms/normalization.txt:380
+msgid "7"
+msgstr "7"
+
+#: ../../src/rdbms/normalization.txt:170 ../../src/rdbms/normalization.txt:188
+#: ../../src/rdbms/normalization.txt:217 ../../src/rdbms/normalization.txt:286
+#: ../../src/rdbms/normalization.txt:305 ../../src/rdbms/normalization.txt:384
+msgid "5"
+msgstr "5"
+
+#: ../../src/rdbms/normalization.txt:173
+msgid ""
+"At last, *inventory* column contains repeating groups of data (also called "
+"*non-atomic data*), which violates 1NF. To normalize the table, it should be "
+"altered in a way, to represent only one inventory item per row."
+msgstr ""
+"Нарешті, стовпчик *інвентар* містить групи даних, що повторюються (також "
+"звані *неатомними даними*), що порушує 1НФ. Щоб нормалізувати таблицю, її "
+"слід змінити таким чином, щоб у кожному рядку було представлено лише одну "
+"інвентарну одиницю."
+
+#: ../../src/rdbms/normalization.txt:178 ../../src/rdbms/normalization.txt:207
+#: ../../src/rdbms/normalization.txt:264 ../../src/rdbms/normalization.txt:276
+#: ../../src/rdbms/normalization.txt:311 ../../src/rdbms/normalization.txt:362
+msgid "player_id"
+msgstr "player_id"
+
+#: ../../src/rdbms/normalization.txt:178 ../../src/rdbms/normalization.txt:207
+#: ../../src/rdbms/normalization.txt:276
+msgid "item_type"
+msgstr "item_type"
+
+#: ../../src/rdbms/normalization.txt:178 ../../src/rdbms/normalization.txt:207
+#: ../../src/rdbms/normalization.txt:276
+msgid "item_quantity"
+msgstr "item_quantity"
+
+#: ../../src/rdbms/normalization.txt:180 ../../src/rdbms/normalization.txt:209
+#: ../../src/rdbms/normalization.txt:278
+msgid "amulet"
+msgstr "амулет"
+
+#: ../../src/rdbms/normalization.txt:180 ../../src/rdbms/normalization.txt:209
+#: ../../src/rdbms/normalization.txt:278 ../../src/rdbms/normalization.txt:305
+#: ../../src/rdbms/normalization.txt:390
+msgid "2"
+msgstr "2"
+
+#: ../../src/rdbms/normalization.txt:182 ../../src/rdbms/normalization.txt:194
+#: ../../src/rdbms/normalization.txt:211 ../../src/rdbms/normalization.txt:223
+#: ../../src/rdbms/normalization.txt:280 ../../src/rdbms/normalization.txt:292
+msgid "ring"
+msgstr "каблучка"
+
+#: ../../src/rdbms/normalization.txt:182 ../../src/rdbms/normalization.txt:211
+#: ../../src/rdbms/normalization.txt:219 ../../src/rdbms/normalization.txt:221
+#: ../../src/rdbms/normalization.txt:223 ../../src/rdbms/normalization.txt:270
+#: ../../src/rdbms/normalization.txt:280 ../../src/rdbms/normalization.txt:305
+#: ../../src/rdbms/normalization.txt:317 ../../src/rdbms/normalization.txt:368
+#: ../../src/rdbms/normalization.txt:388
+msgid "3"
+msgstr "3"
+
+#: ../../src/rdbms/normalization.txt:184 ../../src/rdbms/normalization.txt:213
+#: ../../src/rdbms/normalization.txt:282
+msgid "copper coin"
+msgstr "мідна монета"
+
+#: ../../src/rdbms/normalization.txt:184 ../../src/rdbms/normalization.txt:213
+#: ../../src/rdbms/normalization.txt:282
+msgid "18"
+msgstr "18"
+
+#: ../../src/rdbms/normalization.txt:186 ../../src/rdbms/normalization.txt:215
+#: ../../src/rdbms/normalization.txt:284
+msgid "bow"
+msgstr "лук"
+
+#: ../../src/rdbms/normalization.txt:186 ../../src/rdbms/normalization.txt:190
+#: ../../src/rdbms/normalization.txt:192 ../../src/rdbms/normalization.txt:215
+#: ../../src/rdbms/normalization.txt:219 ../../src/rdbms/normalization.txt:221
+#: ../../src/rdbms/normalization.txt:284 ../../src/rdbms/normalization.txt:288
+#: ../../src/rdbms/normalization.txt:290 ../../src/rdbms/normalization.txt:305
+#: ../../src/rdbms/normalization.txt:392
+msgid "1"
+msgstr "1"
+
+#: ../../src/rdbms/normalization.txt:188 ../../src/rdbms/normalization.txt:217
+#: ../../src/rdbms/normalization.txt:286
+msgid "arrow"
+msgstr "стріла"
+
+#: ../../src/rdbms/normalization.txt:190 ../../src/rdbms/normalization.txt:219
+#: ../../src/rdbms/normalization.txt:288
+msgid "sword"
+msgstr "меч"
+
+#: ../../src/rdbms/normalization.txt:192 ../../src/rdbms/normalization.txt:221
+#: ../../src/rdbms/normalization.txt:290
+msgid "shield"
+msgstr "щит"
+
+#: ../../src/rdbms/normalization.txt:194 ../../src/rdbms/normalization.txt:223
+#: ../../src/rdbms/normalization.txt:292 ../../src/rdbms/normalization.txt:305
+#: ../../src/rdbms/normalization.txt:335 ../../src/rdbms/normalization.txt:386
+msgid "4"
+msgstr "4"
+
+#: ../../src/rdbms/normalization.txt:197
+msgid ""
+"The primary key for this table is the combination of *player_id* and "
+"*item_type* -- a composite primary key."
+msgstr ""
+"Первинним ключем для цієї таблиці є комбінація *player_id* та *item_type* - "
+"складений первинний ключ."
+
+#: ../../src/rdbms/normalization.txt:201
 msgid "Second normal form (2NF)"
 msgstr "Друга нормальна форма (2NF)"
 
-#: ../../src/rdbms/normalization.txt:82
+#: ../../src/rdbms/normalization.txt:203
+msgid ""
+"Here, 2NF starts. For example, let's bring back *level* info to the table, "
+"representing players and theirs inventory."
+msgstr ""
+"Тут починається 2NF. Наприклад, давайте повернемо до таблиці інформацію про "
+"*рівень*, що представляє гравців та їхній інвентар."
+
+#: ../../src/rdbms/normalization.txt:207 ../../src/rdbms/normalization.txt:264
+#: ../../src/rdbms/normalization.txt:311 ../../src/rdbms/normalization.txt:362
+#: ../../src/rdbms/normalization.txt:374
+msgid "player_level"
+msgstr "player_level"
+
+#: ../../src/rdbms/normalization.txt:213 ../../src/rdbms/normalization.txt:215
+#: ../../src/rdbms/normalization.txt:217 ../../src/rdbms/normalization.txt:268
+#: ../../src/rdbms/normalization.txt:305 ../../src/rdbms/normalization.txt:315
+#: ../../src/rdbms/normalization.txt:366 ../../src/rdbms/normalization.txt:382
+msgid "6"
+msgstr "6"
+
+#: ../../src/rdbms/normalization.txt:226
+msgid ""
+"The player's *level* should be duplicated for each row. This table design "
+"keeps the doors open for **insertion**, **update** and **deletion** "
+"anomalies."
+msgstr ""
+"Рівень гравця повинен дублюватися в кожному рядку. Такий дизайн таблиці "
+"залишає двері відкритими для **вставки**, **оновлення** та **видалення** "
+"аномалій."
+
+#: ../../src/rdbms/normalization.txt:232
 msgid "Each non-key attribute must depend on the entire primary key"
-msgstr ""
+msgstr "Кожен неключовий атрибут повинен залежати від усього первинного ключа"
 
-#: ../../src/rdbms/normalization.txt:85
+#: ../../src/rdbms/normalization.txt:235
 msgid "Applying 2NF"
-msgstr ""
+msgstr "Застосування 2NF"
 
-#: ../../src/rdbms/normalization.txt:91
+#: ../../src/rdbms/normalization.txt:237
+msgid ""
+"The 2NF is all about \"how non-key columns related to the primary key\". The "
+"example above has *non-key attributes* (which is another term for the \"non-"
+"key columns\") are: *item_quantity* and *player_level*."
+msgstr ""
+"2NF - це все про те, \"як неключові стовпці пов'язані з первинним ключем\". "
+"У наведеному вище прикладі *неключові атрибути* (що є іншим терміном для "
+"\"неключових стовпців\") є: *item_quantity* та *player_level*."
+
+#: ../../src/rdbms/normalization.txt:241
+msgid ""
+"The relations between the *primary key* and *non-key attributes* can be "
+"described as:"
+msgstr ""
+"Відношення між *первинним ключем* та *неключовими атрибутами* можна описати "
+"так:"
+
+#: ../../src/rdbms/normalization.txt:249
+msgid ""
+"The *item_quantity* column depends on the *player_id* and *item_type* "
+"columns, which creates a 1-to-1 dependency for this column on the entire "
+"primary key. This means, there is no way to place different values in the "
+"*item_quantity* column for the same primary key."
+msgstr ""
+"Стовпець *item_quantity* залежить від стовпців *player_id* і *item_type*, що "
+"створює залежність 1 до 1 для цього стовпця від усього первинного ключа. Це "
+"означає, що не існує способу розмістити різні значення у стовпці "
+"*item_quantity* для одного первинного ключа."
+
+#: ../../src/rdbms/normalization.txt:254
+msgid ""
+"But, the *player_level* column depends on the *player_id* only. It's a "
+"problem, because the *player_id* is not the primary key, but a part of a "
+"primary key. This violates the 2NF, and what's why the table is vulnerable "
+"to the problems."
+msgstr ""
+"Але стовпець *player_level* залежить тільки від *player_id*. Це проблема, "
+"тому що *player_id* не є первинним ключем, але є частиною первинного ключа. "
+"Це порушує 2НФ, і саме тому таблиця вразлива до проблем."
+
+#: ../../src/rdbms/normalization.txt:258
+msgid ""
+"The **player** is the important concept for representing the data. So, it's "
+"the best solution to store player related data in a separate table."
+msgstr ""
+"Важливим поняттям для представлення даних є **гравець**. Тому найкращим "
+"рішенням буде зберігати дані, пов'язані з гравцями, в окремій таблиці."
+
+#: ../../src/rdbms/normalization.txt:261 ../../src/rdbms/normalization.txt:308
+#: ../../src/rdbms/normalization.txt:359
+msgid "player"
+msgstr "player"
+
+#: ../../src/rdbms/normalization.txt:273
+msgid "player_inventory"
+msgstr "player_inventory"
+
+#: ../../src/rdbms/normalization.txt:296
 msgid "Third normal form (3NF)"
 msgstr "3-тя нормальна форма (3NF)"
 
-#: ../../src/rdbms/normalization.txt:98
+#: ../../src/rdbms/normalization.txt:298
+msgid ""
+"Let's assume, the player table is extended with the *player_rating* column, "
+"which describes the players' skills as \"beginner\", \"intermediate\", or "
+"\"advanced\". And let's assume, the skills are arranged in some like:"
+msgstr ""
+"Припустимо, таблиця гравців доповнена стовпчиком *рейтинг гравця*, який "
+"описує навички гравців як \"початківець\", \"середній\" або \"просунутий\". "
+"І припустимо, що навички впорядковані за типом \"like\":"
+
+#: ../../src/rdbms/normalization.txt:303
+msgid "Skill Level"
+msgstr "Skill Level"
+
+#: ../../src/rdbms/normalization.txt:303
+msgid "Beginner"
+msgstr "Beginner"
+
+#: ../../src/rdbms/normalization.txt:303
+msgid "Intermediate"
+msgstr "Intermediate"
+
+#: ../../src/rdbms/normalization.txt:303
+msgid "Advanced"
+msgstr "Advanced"
+
+#: ../../src/rdbms/normalization.txt:305
+msgid "Player Level"
+msgstr "Player Level"
+
+#: ../../src/rdbms/normalization.txt:311 ../../src/rdbms/normalization.txt:374
+msgid "player_rating"
+msgstr "player_rating"
+
+#: ../../src/rdbms/normalization.txt:313 ../../src/rdbms/normalization.txt:376
+#: ../../src/rdbms/normalization.txt:378 ../../src/rdbms/normalization.txt:380
+msgid "advanced"
+msgstr "advanced"
+
+#: ../../src/rdbms/normalization.txt:315 ../../src/rdbms/normalization.txt:382
+#: ../../src/rdbms/normalization.txt:384 ../../src/rdbms/normalization.txt:386
+msgid "intermediate"
+msgstr "intermediate"
+
+#: ../../src/rdbms/normalization.txt:317 ../../src/rdbms/normalization.txt:335
+#: ../../src/rdbms/normalization.txt:388 ../../src/rdbms/normalization.txt:390
+#: ../../src/rdbms/normalization.txt:392
+msgid "beginner"
+msgstr "beginner"
+
+#: ../../src/rdbms/normalization.txt:320
+msgid "The *non-key attributes* dependencies can be described as follows:"
+msgstr "Залежності *неключових атрибутів* можна описати наступним чином:"
+
+#: ../../src/rdbms/normalization.txt:327
+msgid ""
+"The *player_rating* does not depend on the primary key, but it depends on "
+"the *player_level* attribute, which is dependent on the primary key. These "
+"type of dependencies is called **transitive dependency**. Having these in a "
+"table opens a way for having data in an inconsistent form. E.g. let's assume "
+"player \"acen1999\" have increase their level to 4, but something went "
+"wrong, and *player_rating* has not been updated."
+msgstr ""
+"Атрибут *рейтинг_гравця* не залежить від первинного ключа, але залежить від "
+"атрибута *рівень_гравця*, який залежить від первинного ключа. Цей тип "
+"залежностей називається **транзитивною залежністю**. Наявність таких "
+"залежностей у таблиці відкриває шлях до отримання даних у непослідовній "
+"формі. Наприклад, припустимо, що гравець \"acen1999\" підвищив свій рівень "
+"до 4, але щось пішло не так, і *рейтинг_гравця* не було оновлено."
+
+#: ../../src/rdbms/normalization.txt:341
 msgid ""
 "Every non-key attribute in a table should depend on the key, the whole key, "
 "and nothing but the key (no transitive dependency)."
 msgstr ""
+"Кожен неключовий атрибут у таблиці повинен залежати від ключа, всього ключа "
+"і ні від чого, крім ключа (без транзитивної залежності)."
 
-#: ../../src/rdbms/normalization.txt:103
+#: ../../src/rdbms/normalization.txt:346
 msgid "**Boyce-Codd normal form**"
-msgstr ""
+msgstr "**Нормальна форма Бойса-Кодда**"
 
-#: ../../src/rdbms/normalization.txt:105
+#: ../../src/rdbms/normalization.txt:348
 msgid ""
 ":abbr:`BCNF (Boyce-Codd Normal Form)` is the stronger version of 3NF. It "
 "also is called as 3.5NF (three-and-a-half normal form)."
 msgstr ""
+"abbr:`BCNF (нормальна форма Бойса-Кодда)` - це сильніша версія 3NF. Її також "
+"називають 3.5NF (третя з половиною нормальна форма)."
 
-#: ../../src/rdbms/normalization.txt:108
+#: ../../src/rdbms/normalization.txt:351
 msgid ""
 "**Every attribute** in a table should depend on the key, the whole key, and "
 "nothing but the key."
 msgstr ""
+"**Кожен атрибут** у таблиці повинен залежати від ключа, всього ключа і ні "
+"від чого, крім ключа."
 
-#: ../../src/rdbms/normalization.txt:112
+#: ../../src/rdbms/normalization.txt:355
 msgid "Applying 3NF"
-msgstr ""
+msgstr "Застосування 3NF"
 
-#: ../../src/rdbms/normalization.txt:118
+#: ../../src/rdbms/normalization.txt:357
+msgid "Introducing the \"player_rating_levels\" will fix the problem."
+msgstr "Використання таблиці \"player_rating_levels\" вирішить цю проблему."
+
+#: ../../src/rdbms/normalization.txt:371
+msgid "player_rating_levels"
+msgstr "player_rating_levels"
+
+#: ../../src/rdbms/normalization.txt:396
 msgid "Conclusion"
-msgstr ""
+msgstr "Висновок"
 
-#: ../../src/rdbms/normalization.txt:120
+#: ../../src/rdbms/normalization.txt:398
 msgid ""
 "Each next normal form includes all the requirements for the previous one."
+msgstr "Кожна наступна нормальна форма включає всі вимоги до попередньої."
+
+#: ../../src/rdbms/normalization.txt:400
+msgid ""
+"Following the rules above will lead you to having a fully normalized tables "
+"in 99% of time."
 msgstr ""
-
-#~ msgid ""
-#~ "There are several normal forms, each building on the previous one, which "
-#~ "guide us in the normalization process. The most commonly used normal "
-#~ "forms are:"
-#~ msgstr ""
-#~ "Існує кілька нормальних форм, кожна з яких будується на попередній, які "
-#~ "скеровують нас у процесі нормалізації. Найпоширенішими звичайними формами "
-#~ "є:"
-
-#~ msgid ""
-#~ "**First Normal Form (1NF)**: Each column should hold atomic (indivisible) "
-#~ "values. There should be no repeating groups or arrays of data in a table."
-#~ msgstr ""
-#~ "Перша нормальна форма (1NF): кожен стовпець має містити атомарні "
-#~ "(неподільні) значення. У таблиці не повинно бути повторюваних груп або "
-#~ "масивів даних."
-
-#~ msgid ""
-#~ "**Second Normal Form (2NF)**: Each non-key column should be functionally "
-#~ "dependent on the entire primary key. In other words, every column in a "
-#~ "table should be related to the primary key and not dependent on any other "
-#~ "non-key columns."
-#~ msgstr ""
-#~ "Друга нормальна форма (2NF): кожен неключовий стовпець має функціонально "
-#~ "залежати від усього первинного ключа. Іншими словами, кожен стовпець у "
-#~ "таблиці має бути пов'язаний із первинним ключем, а не залежати від будь-"
-#~ "яких інших неключових стовпців."
-
-#~ msgid ""
-#~ "**Third Normal Form (3NF)**: All non-key columns should be dependent only "
-#~ "on the primary key and not on any other non-key columns. This eliminates "
-#~ "transitive dependencies."
-#~ msgstr ""
-#~ "Третя нормальна форма (3NF): усі неключові стовпці мають залежати лише "
-#~ "від первинного ключа, а не від будь-яких інших неключових стовпців. Це "
-#~ "усуває транзитивні залежності."
-
-#~ msgid ""
-#~ "It's easier to understand normalization via examples. Let's start with "
-#~ "some dummy orders data."
-#~ msgstr ""
-#~ "Легше зрозуміти нормалізацію на прикладах. Почнемо з деяких фіктивних "
-#~ "даних про замовлення."
-
-#~ msgid "Initial data"
-#~ msgstr "Початкові дані"
-
-#~ msgid "order"
-#~ msgstr "order"
-
-#~ msgid "customer"
-#~ msgstr "customer"
-
-#~ msgid "product"
-#~ msgstr "product"
-
-#~ msgid "quantity"
-#~ msgstr "quantity"
-
-#~ msgid "price"
-#~ msgstr "price"
-
-#~ msgid "total"
-#~ msgstr "total"
-
-#~ msgid "1"
-#~ msgstr "1"
-
-#~ msgid "John Doe"
-#~ msgstr "John Doe"
-
-#~ msgid "(Apple, Orange)"
-#~ msgstr "(Apple, Orange)"
-
-#~ msgid "(2, 3)"
-#~ msgstr "(2, 3)"
-
-#~ msgid "(100, 50)"
-#~ msgstr "(100, 50)"
-
-#~ msgid "(200, 150)"
-#~ msgstr "(200, 150)"
-
-#~ msgid "2"
-#~ msgstr "2"
-
-#~ msgid "Jane Smith"
-#~ msgstr "Jane Smith"
-
-#~ msgid "Banana"
-#~ msgstr "Banana"
-
-#~ msgid "4"
-#~ msgstr "4"
-
-#~ msgid "25"
-#~ msgstr "25"
-
-#~ msgid "100"
-#~ msgstr "100"
-
-#~ msgid ""
-#~ "This table violates 1NF, since its columns contain multiple values. To "
-#~ "bring this to 1NF all data within the table are to be atomic."
-#~ msgstr ""
-#~ "Ця таблиця порушує 1NF, оскільки її стовпці містять кілька значень. Щоб "
-#~ "привести це до 1NF, усі дані в таблиці мають бути атомарними."
-
-#~ msgid "1NF applied"
-#~ msgstr "Застосовано 1NF"
-
-#~ msgid "Apple"
-#~ msgstr "Apple"
-
-#~ msgid "200"
-#~ msgstr "200"
-
-#~ msgid "Orange"
-#~ msgstr "Orange"
-
-#~ msgid "3"
-#~ msgstr "3"
-
-#~ msgid "50"
-#~ msgstr "50"
-
-#~ msgid "150"
-#~ msgstr "150"
-
-#~ msgid "From now each peace of data is represented as atomic value."
-#~ msgstr "Відтепер кожна частина даних представлена як атомарне значення."
-
-#~ msgid ""
-#~ "The table above is in 1NF, but ``item price`` is dependent on the *item* "
-#~ "entity itself and have low cohesion to *orders*. To bring it into 2NF a "
-#~ "dedicated table to store information about items themselves is to be "
-#~ "created. After that ``order`` and ``product`` table are connected "
-#~ "(related) to each other via a foreign key."
-#~ msgstr ""
-#~ "Таблиця вище міститься в 1NF, але ``item price`` залежить від самого "
-#~ "*елемента* і має низьку зв'язність із замовленнями. Щоб перенести її в "
-#~ "2NF, потрібно створити окрему таблицю для зберігання інформації про самі "
-#~ "товари. Після цього таблиці ``order`` і ``product`` з'єднуються "
-#~ "(пов'язані) одна з одною за допомогою зовнішнього ключа."
-
-#~ msgid "``order`` table"
-#~ msgstr "таблиця ``order``"
-
-#~ msgid "id"
-#~ msgstr "id"
-
-#~ msgid "product_id"
-#~ msgstr "product_id"
-
-#~ msgid "``product`` table"
-#~ msgstr "таблиця ``product``"
-
-#~ msgid ""
-#~ "``total`` field is also removed, since now it can be calculated as "
-#~ "product of ``product.price`` and ``order.quantity``."
-#~ msgstr ""
-#~ "Поле ``total`` також видалено, оскільки тепер його можна обчислити як "
-#~ "добуток ``product.price`` і ``order.quantity``."
-
-#~ msgid ""
-#~ "At last it's time to remove a transitive functional dependency. "
-#~ "Customer's name is not actually dependent on a product, but on a person, "
-#~ "who places an order."
-#~ msgstr ""
-#~ "Нарешті настав час видалити транзитивну функціональну залежність. Ім'я "
-#~ "клієнта насправді залежить не від продукту, а від особи, яка робить "
-#~ "замовлення."
-
-#~ msgid "customer_id"
-#~ msgstr "customer_id"
-
-#~ msgid "``customer`` table"
-#~ msgstr "таблиця ``customer``"
+"Дотримуючись наведених вище правил, ви отримаєте повністю нормалізовані "
+"таблиці у 99% випадків."
