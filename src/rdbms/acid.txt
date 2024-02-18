@@ -92,4 +92,6 @@ Isolation ensures the concurrent executions are safe.
 Durability
 ==========
 
-.. todo: committed transactions to be persisted in non-volatile memory.
+The durability means once the transaction has been committed, the data must
+be writen to non-volatile memory. So, even if a crash happens, or something
+wrong with the database, the data must be where, and must not be corrupted.
