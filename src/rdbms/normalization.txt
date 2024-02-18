@@ -143,7 +143,7 @@ As example, the characters' level might be described as follows:
 +------------+----------------------------------+-----------------------------+
 | username   | inventory                        | level                       |
 +============+==================================+=============================+
-| prombery87 | 2 amulets, 3 rings               | 10                          |
+| prombery87 | 2 amulets, 3 rings               | 9                           |
 +------------+----------------------------------+-----------------------------+
 | wheed1997  | 18 copper coins, 1 bow, 5 arrows | almost 8                    |
 +------------+----------------------------------+-----------------------------+
@@ -161,7 +161,7 @@ at the same time, which makes no sense.
 +------------+----------------------------------+-----------------------------+
 | username   | inventory                        | level                       |
 +============+==================================+=============================+
-| prombery87 | 2 amulets, 3 rings               | 10                          |
+| prombery87 | 2 amulets, 3 rings               | 9                           |
 +------------+----------------------------------+-----------------------------+
 | wheed1997  | 18 copper coins, 1 bow, 5 arrows | 8                           |
 +------------+----------------------------------+-----------------------------+
@@ -206,21 +206,21 @@ representing players and theirs inventory.
 +------------+-------------+---------------+--------------+
 | player_id  | item_type   | item_quantity | player_level |
 +============+=============+===============+==============+
-| prombery87 | amulet      | 2             | 10           |
+| prombery87 | amulet      | 2             | 9            |
 +------------+-------------+---------------+--------------+
-| prombery87 | ring        | 3             | 10           |
+| prombery87 | ring        | 3             | 9            |
 +------------+-------------+---------------+--------------+
-| wheed1997  | copper coin | 18            | 7            |
+| wheed1997  | copper coin | 18            | 6            |
 +------------+-------------+---------------+--------------+
-| wheed1997  | bow         | 1             | 7            |
+| wheed1997  | bow         | 1             | 6            |
 +------------+-------------+---------------+--------------+
-| wheed1997  | arrow       | 5             | 7            |
+| wheed1997  | arrow       | 5             | 6            |
 +------------+-------------+---------------+--------------+
-| acen1999   | sword       | 1             | 5            |
+| acen1999   | sword       | 1             | 3            |
 +------------+-------------+---------------+--------------+
-| acen1999   | shield      | 1             | 5            |
+| acen1999   | shield      | 1             | 3            |
 +------------+-------------+---------------+--------------+
-| acen1999   | ring        | 4             | 5            |
+| acen1999   | ring        | 4             | 3            |
 +------------+-------------+---------------+--------------+
 
 The player's *level* should be duplicated for each row. This table design
@@ -263,11 +263,11 @@ So, it's the best solution to store player related data in a separate table.
     +------------+--------------+
     | player_id  | player_level |
     +============+==============+
-    | prombery87 | 10           |
+    | prombery87 | 9            |
     +------------+--------------+
-    | wheed1997  | 7            |
+    | wheed1997  | 6            |
     +------------+--------------+
-    | acen1999   | 5            |
+    | acen1999   | 3            |
     +------------+--------------+
 
 .. table:: player_inventory
@@ -295,7 +295,45 @@ So, it's the best solution to store player related data in a separate table.
 Third normal form (3NF)
 =======================
 
-.. todo: definition, bcnf, example
+Let's assume, the player table is extended with the *player_rating* column,
+which describes the players' skills as "beginner", "intermediate", or
+"advanced". And let's assume, the skills are arranged in some like:
+
++--------------+-----------+--------------+-----------+
+| Skill Level  | Beginner  | Intermediate | Advanced  |
++--------------+---+---+---+----+----+----+---+---+---+
+| Player Level | 1 | 2 | 3 | 4  | 5  | 6  | 7 | 8 | 9 |
++--------------+---+---+---+----+----+----+---+---+---+
+
+.. table:: player
+
+    +------------+--------------+---------------+
+    | player_id  | player_level | player_rating |
+    +============+==============+===============+
+    | prombery87 | 9            | advanced      |
+    +------------+--------------+---------------+
+    | wheed1997  | 6            | intermediate  |
+    +------------+--------------+---------------+
+    | acen1999   | 3            | beginner      |
+    +------------+--------------+---------------+
+
+The *non-key attributes* dependencies can be described as follows:
+
+::
+
+    { player_id } -> { player_level }
+    { player_id } -> { player_level } -> { player_skill }
+
+The *player_rating* does not depend on the primary key, but it depends on
+the *player_level* attribute, which is dependent on the primary key. These
+type of dependencies is called **transitive dependency**. Having these in
+a table opens a way for having data in an inconsistent form. E.g. let's assume
+player "acen1999" have increase their level to 4, but something went wrong,
+and *player_rating* has not been updated.
+
++------------+--------------+---------------+
+| acen1999   | 4            | beginner      |
++------------+--------------+---------------+
 
 Requirements
 ------------
@@ -316,8 +354,45 @@ Requirements
 Applying 3NF
 ------------
 
-.. todo: complete subsection
-.. todo: add data example in 3NF
+Introducing the "player_rating_levels" will fix the problem.
+
+.. table:: player
+
+    +------------+--------------+
+    | player_id  | player_level |
+    +============+==============+
+    | prombery87 | 9            |
+    +------------+--------------+
+    | wheed1997  | 6            |
+    +------------+--------------+
+    | acen1999   | 3            |
+    +------------+--------------+
+
+.. table:: player_rating_levels
+
+.. table:: player
+
+    +--------------+---------------+
+    | player_level | player_rating |
+    +==============+===============+
+    | 9            | advanced      |
+    +--------------+---------------+
+    | 8            | advanced      |
+    +--------------+---------------+
+    | 7            | advanced      |
+    +--------------+---------------+
+    | 6            | intermediate  |
+    +--------------+---------------+
+    | 5            | intermediate  |
+    +--------------+---------------+
+    | 4            | intermediate  |
+    +--------------+---------------+
+    | 3            | beginner      |
+    +--------------+---------------+
+    | 2            | beginner      |
+    +--------------+---------------+
+    | 1            | beginner      |
+    +--------------+---------------+
 
 Conclusion
 ==========
