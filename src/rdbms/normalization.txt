@@ -200,6 +200,32 @@ The primary key for this table is the combination of *player_id* and
 Second normal form (2NF)
 ========================
 
+Here, 2NF starts. For example, let's bring back *level* info to the table,
+representing players and theirs inventory.
+
++------------+-------------+---------------+--------------+
+| player_id  | item_type   | item_quantity | player_level |
++============+=============+===============+==============+
+| prombery87 | amulet      | 2             | 10           |
++------------+-------------+---------------+--------------+
+| prombery87 | ring        | 3             | 10           |
++------------+-------------+---------------+--------------+
+| wheed1997  | copper coin | 18            | 7            |
++------------+-------------+---------------+--------------+
+| wheed1997  | bow         | 1             | 7            |
++------------+-------------+---------------+--------------+
+| wheed1997  | arrow       | 5             | 7            |
++------------+-------------+---------------+--------------+
+| acen1999   | sword       | 1             | 5            |
++------------+-------------+---------------+--------------+
+| acen1999   | shield      | 1             | 5            |
++------------+-------------+---------------+--------------+
+| acen1999   | ring        | 4             | 5            |
++------------+-------------+---------------+--------------+
+
+The player's *level* should be duplicated for each row. This table design
+keeps the doors open for **insertion**, **update** and **deletion** anomalies.
+
 Requirements
 ------------
 
@@ -208,8 +234,63 @@ Requirements
 Applying 2NF
 ------------
 
-.. todo: complete subsection
-.. todo: add data example in 2NF
+The 2NF is all about "how non-key columns related to the primary key".
+The example above has *non-key attributes* (which is another term for
+the "non-key columns") are: *item_quantity* and *player_level*.
+
+The relations between the *primary key* and *non-key attributes* can be
+described as:
+
+::
+
+    { player_id, item_type } -> { item_quantity }
+    { player_id } -> { player_level }
+
+The *item_quantity* column depends on the *player_id* and *item_type* columns,
+which creates a 1-to-1 dependency for this column on the entire primary key.
+This means, there is no way to place different values in the *item_quantity*
+column for the same primary key.
+
+But, the *player_level* column depends on the *player_id* only. It's a problem,
+because the *player_id* is not the primary key, but a part of a primary key.
+This violates the 2NF, and what's why the table is vulnerable to the problems.
+
+The **player** is the important concept for representing the data.
+So, it's the best solution to store player related data in a separate table.
+
+.. table:: player
+
+    +------------+--------------+
+    | player_id  | player_level |
+    +============+==============+
+    | prombery87 | 10           |
+    +------------+--------------+
+    | wheed1997  | 7            |
+    +------------+--------------+
+    | acen1999   | 5            |
+    +------------+--------------+
+
+.. table:: player_inventory
+
+    +------------+-------------+---------------+
+    | player_id  | item_type   | item_quantity |
+    +============+=============+===============+
+    | prombery87 | amulet      | 2             |
+    +------------+-------------+---------------+
+    | prombery87 | ring        | 3             |
+    +------------+-------------+---------------+
+    | wheed1997  | copper coin | 18            |
+    +------------+-------------+---------------+
+    | wheed1997  | bow         | 1             |
+    +------------+-------------+---------------+
+    | wheed1997  | arrow       | 5             |
+    +------------+-------------+---------------+
+    | acen1999   | sword       | 1             |
+    +------------+-------------+---------------+
+    | acen1999   | shield      | 1             |
+    +------------+-------------+---------------+
+    | acen1999   | ring        | 4             |
+    +------------+-------------+---------------+
 
 Third normal form (3NF)
 =======================
