@@ -192,3 +192,13 @@ ATTACK_PAIRS_OUTCOME = {
 - create_player - спросить игрока имя и сложность, создать объект игрока с указанным именем, и передать объект игрока и сложность в класс игры.
 - show_scores - показать очки, используя класс `ScoreHandler`
 - exit - выйти из игры
+
+## Пример как выглядит содержимое файла с очками
+
+
+Name        Mode       Score
+Vlad        Normal     14
+Test        Hard       12
+Jack        Normal     12
+Vlad        Hard       10
+Jack        Hard       9
