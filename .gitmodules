@@ -1,15 +1,15 @@
 [submodule "problem-sets"]
 	path = problem-sets
 	url = git@github.com:edu-python-course/problem-sets
-[submodule "src/appx/blog"]
+[submodule "blog-spec"]
 	path = src/spec/blog
 	url = git@github.com:edu-python-course/blog-spec
-[submodule "src/appx/libms"]
-	path = src/spec/libms
-	url = git@github.com:edu-python-course/libms-spec.git
-[submodule "src/spec/giver"]
-	path = src/spec/giver
-	url = git@github.com:edu-python-course/giver-spec.git
 [submodule "libms-db"]
 	path = libms-db
-	url = git@github.com:edu-python-course/libms-db.git
+	url = git@github.com:edu-python-course/libms-db
+[submodule "libms-spec"]
+	path = src/spec/libms
+	url = git@github.com:edu-python-course/libms-spec
+[submodule "giver-spec"]
+	path = src/spec/giver
+	url = git@github.com:edu-python-course/giver-spec
