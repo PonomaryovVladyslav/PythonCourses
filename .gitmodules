@@ -13,3 +13,6 @@
 [submodule "giver-spec"]
 	path = src/spec/giver
 	url = git@github.com:edu-python-course/giver-spec
+[submodule "impress.js"]
+	path = assets/impress.js
+	url = https://github.com/impress/impress.js
