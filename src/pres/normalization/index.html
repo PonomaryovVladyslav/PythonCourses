@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="description" content="Database normalization presentation - Python course">
+  <meta name="author" content="Serhii Horodilov <sgorodil@gmail.com>">
+  <meta name="licence" content="MIT">
+  <title>Database Normalization</title>
+  <link rel="stylesheet" href="../../../assets/impress.js/css/impress-common.css">
+  <style>
+      .slide {
+          border-width: 5px;
+          border-style: solid;
+          width: 800px;
+          height: 600px;
+      }
+
+      #title h1 {
+          text-align: center;
+      }
+
+      #definition * {
+          text-align: right;
+      }
+
+      #sample {
+          height: 600px;
+          width: 600px;
+      }
+  </style>
+</head>
+<body>
+<div id="impress"
+     data-transition-duration="1000"
+
+     data-width="800"
+     data-height="600"
+     data-max-scale="3"
+     data-min-scale="0"
+     data-perspective="1000">
+
+  <div class="step slide title" id="title" data-x="0" data-y="0" style="border-color: #00ff00">
+    <h1>title</h1>
+  </div>
+
+  <div class="step slide" id="definition" data-rel-x="440" data-rel-y="-440" data-rotate-z="45" data-rotate-x="30"
+       style="border-color: #00ffff">
+    <p>definition</p>
+  </div>
+
+  <div class="step slide" id="sample" data-x="-95" data-y="-595" style="border-color:#ffcc00">
+    <table>
+      <caption>Player Information</caption>
+      <thead>
+      <tr>
+        <th scope="col">name</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr>
+        <td></td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="step slide" id="insertionAnomalies" data-x="-900" data-y="-800" data-rotate-z="-60"
+       style="border-color: #000080">
+    <h2 style="text-align:center">Insertion anomalies</h2>
+  </div>
+  <div class="step slide" id="updateAnomalies" data-rel-x="440" data-rel-y="-435" data-rotate-z="-30"
+       style="border-color: #000080">
+    <h2 style="text-align:center">Update anomalies</h2>
+  </div>
+  <div class="step slide" id="deletionAnomalies" data-rel-x="600" data-rel-y="-160" data-rotate-z="0"
+       style="border-color: #000080">
+    <h2 style="text-align:center">Deletion anomalies</h2>
+  </div>
+
+  <div class="step slide" id="1nf" data-x="1310" data-y="105" data-rotate-z="-75"
+       style="border-color: #000080">
+    <h2 style="text-align:center">First normal form</h2>
+  </div>
+  <div class="step slide" id="2nf" data-rel-x="-310" data-rel-y="540" data-rotate-z="-45"
+       style="border-color: #000080">
+    <h2 style="text-align:center">Second normal form</h2>
+  </div>
+  <div class="step slide" id="3nf" data-rel-x="-535" data-rel-y="310" data-rotate-z="-15"
+       style="border-color: #000080">
+    <h2 style="text-align:center">Third normal form</h2>
+  </div>
+
+  <div class="step" id="overview" data-x="0" data-y="-250" data-scale="5" style="border:none"></div>
+
+</div>
+<script src="../../../assets/impress.js/js/impress.js"></script>
+<script type="text/javascript">
+    impress().init()
+</script>
+</body>
+</html>
