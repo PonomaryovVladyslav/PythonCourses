@@ -12,72 +12,225 @@
   <link rel="shortcut icon" href="../../../assets/favicon.ico" type="image/x-icon">
 </head>
 <body>
-<div id="impress"
-     data-transition-duration="1000"
+<main id="normalization" aria-label="Database normalization" aria-roledescription="presentation">
+  <div id="impress" aria-label="presentation"
+       data-transition-duration="1000"
 
-     data-width="800"
-     data-height="600"
-     data-max-scale="3"
-     data-min-scale="0"
-     data-perspective="1000">
+       data-width="1920"
+       data-height="1080"
+       data-max-scale="3"
+       data-min-scale="0"
+       data-perspective="1000">
 
-  <div class="step slide title" id="title" data-x="0" data-y="0" style="border-color: #00ff00">
-    <h1>title</h1>
-  </div>
+    <div class="step slide title" id="title">
+      <h1>Database normalization</h1>
+    </div>
 
-  <div class="step slide" id="definition" data-rel-x="440" data-rel-y="-440" data-rotate-z="45" data-rotate-x="30"
-       style="border-color: #00ffff">
-    <p>definition</p>
-  </div>
+    <div class="step slide" id="definition"
+         data-rel-x="440"
+         data-rel-y="-440"
+         data-rotate-x="30"
+         data-rotate-z="45">
+      <p>
+        Normalization is a process of organizing data in a database so that it is free from redundancy and dependency.
+        It helps to eliminate data inconsistencies and anomalies, thereby improving data integrity. Normalization is a
+        set of rules or guidelines to design a database schema in such a way that it avoids data duplication, data
+        redundancy, and data inconsistency.
+      </p>
+    </div>
 
-  <div class="step slide" id="sample" data-x="-95" data-y="-595" style="border-color:#ffcc00">
-    <table>
-      <caption>Player Information</caption>
-      <thead>
-      <tr>
-        <th scope="col">name</th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr>
-        <td></td>
-      </tr>
-      </tbody>
-    </table>
-  </div>
+    <div class="step slide" id="sample"
+         data-x="-95"
+         data-y="-595">
+      <section class="sample-data" aria-label="sample data">
+        <table aria-label="data">
+          <thead>
+          <tr>
+            <th>username</th>
+            <th>level</th>
+            <th>rank</th>
+            <th>inventory</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <td>prombery87</td>
+            <td>7.75</td>
+            <td>Advanced</td>
+            <td>1 sword, 4 rings</td>
+          </tr>
+          <tr>
+            <td>wheed1997</td>
+            <td>Almost 7</td>
+            <td>Intermediate</td>
+            <td>1 spell book</td>
+          </tr>
+          </tbody>
+        </table>
+      </section>
+    </div>
 
-  <div class="step slide" id="insertionAnomalies" data-x="-900" data-y="-800" data-rotate-z="-60"
-       style="border-color: #000080">
-    <h2 style="text-align:center">Insertion anomalies</h2>
-  </div>
-  <div class="step slide" id="updateAnomalies" data-rel-x="440" data-rel-y="-435" data-rotate-z="-30"
-       style="border-color: #000080">
-    <h2 style="text-align:center">Update anomalies</h2>
-  </div>
-  <div class="step slide" id="deletionAnomalies" data-rel-x="600" data-rel-y="-160" data-rotate-z="0"
-       style="border-color: #000080">
-    <h2 style="text-align:center">Deletion anomalies</h2>
-  </div>
+    <div class="step slide" id="insertionAnomalies"
+         data-x="-900"
+         data-y="-800"
+         data-rotate-z="-60">
+      <h2>Insertion anomalies</h2>
+      <p class="description">
+        There are circumstances in which certain facts cannot be recorded at all.
+      </p>
+      <hr>
+      <section class="sample-data" aria-label="sample data">
+        <table aria-label="data">
+          <thead>
+          <tr>
+            <th>username</th>
+            <th>level</th>
+            <th>rank</th>
+            <th>inventory</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <td>prombery87</td>
+            <td>7.75</td>
+            <td>Advanced</td>
+            <td>1 sword, 4 rings</td>
+          </tr>
+          <tr>
+            <td>wheed1997</td>
+            <td>Almost 7</td>
+            <td>Intermediate</td>
+            <td>1 spell book</td>
+          </tr>
+          <tr class="fly-in">
+            <td class="lost-data">acen1999</td>
+            <td class="lost-data">1</td>
+            <td class="lost-data">Beginner</td>
+            <td class="invalid"></td>
+          </tr>
+          </tbody>
+        </table>
+      </section>
+    </div>
 
-  <div class="step slide" id="1nf" data-x="1310" data-y="105" data-rotate-z="-75"
-       style="border-color: #000080">
-    <h2 style="text-align:center">First normal form</h2>
-  </div>
-  <div class="step slide" id="2nf" data-rel-x="-310" data-rel-y="540" data-rotate-z="-45"
-       style="border-color: #000080">
-    <h2 style="text-align:center">Second normal form</h2>
-  </div>
-  <div class="step slide" id="3nf" data-rel-x="-535" data-rel-y="310" data-rotate-z="-15"
-       style="border-color: #000080">
-    <h2 style="text-align:center">Third normal form</h2>
-  </div>
+    <div class="step slide" id="updateAnomalies"
+         data-rel-x="440"
+         data-rel-y="-435"
+         data-rotate-z="-30">
+      <h2>Update anomalies</h2>
+      <p class="description">
+        The same information can be expressed on multiple rows; therefore updates to
+        the relation may result in logical inconsistencies.
+      </p>
+      <hr>
+      <section class="sample-data" aria-label="sample data">
+        <table aria-label="data">
+          <thead>
+          <tr>
+            <th>username</th>
+            <th>level</th>
+            <th>rank</th>
+            <th>inventory</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <td>prombery87</td>
+            <td>7.75</td>
+            <td>Advanced</td>
+            <td>1 sword, 4 rings</td>
+          </tr>
+          <tr>
+            <td>acen1999</td>
+            <td class="invalid inconsistent-data">1</td>
+            <td>Beginner</td>
+            <td class="invalid inconsistent-data">1 wizard hat</td>
+          </tr>
+          <tr>
+            <td>wheed1997</td>
+            <td class="invalid inconsistent-data">Greater than 7</td>
+            <td class="invalid inconsistent-data">Intermediate</td>
+            <td>1 spell book</td>
+          </tr>
+          <tr>
+            <td>acen1999</td>
+            <td class="invalid inconsistent-data">2</td>
+            <td>Beginner</td>
+            <td class="invalid inconsistent-data">1 wizard hat, 1 robe</td>
+          </tr>
+          </tbody>
+        </table>
+      </section>
+    </div>
 
-  <div class="step" id="overview" data-x="0" data-y="-250" data-scale="5" style="border:none"></div>
+    <div class="step slide" id="deletionAnomalies"
+         data-rel-x="600"
+         data-rel-y="-160"
+         data-rotate-z="0">
+      <h2>Deletion anomalies</h2>
+      <p class="description">
+        Under certain circumstances, the deletion of data representing certain facts
+        necessitates the deletion of data representing completely different facts.
+      </p>
+      <hr>
+      <section class="sample-data" aria-label="sample data">
+        <table aria-label="data">
+          <thead>
+          <tr>
+            <th>username</th>
+            <th>level</th>
+            <th>rank</th>
+            <th>inventory</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <td>prombery87</td>
+            <td>7.75</td>
+            <td>Advanced</td>
+            <td>1 sword, 4 rings</td>
+          </tr>
+          <tr>
+            <td class="rotating lost-data">wheed1997</td>
+            <td class="rotating lost-data">Almost 7</td>
+            <td class="rotating lost-data">Intermediate</td>
+            <td class="fade-out">1 spell book</td>
+          </tr>
+          <tr>
+            <td>acen1999</td>
+            <td>1</td>
+            <td>Beginner</td>
+            <td class="invalid"></td>
+          </tr>
+          </tbody>
+        </table>
+      </section>
+    </div>
 
-</div>
-<script src="../../../assets/impress.js/js/impress.js"></script>
-<script type="text/javascript">
-    impress().init()
-</script>
+    <div class="step slide" id="1nf"
+         data-x="1310"
+         data-y="105"
+         data-rotate-z="-75">
+      <h2>First normal form</h2>
+    </div>
+
+    <div class="step slide" id="2nf"
+         data-rel-x="-310"
+         data-rel-y="540"
+         data-rotate-z="-45">
+      <h2>Second normal form</h2>
+    </div>
+
+    <div class="step slide" id="3nf"
+         data-rel-x="-535"
+         data-rel-y="310"
+         data-rotate-z="-15">
+      <h2>Third normal form</h2>
+    </div>
+
+    <div class="step" id="overview" data-scale="5"></div>
+
+  </div>
+</main>
 </body>
 </html>
