@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Python Training Course 2023.11.dev\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-12-16 13:55+0000\n"
-"PO-Revision-Date: 2023-12-21 03:58+0200\n"
+"PO-Revision-Date: 2024-02-18 17:44+0200\n"
 "Last-Translator: Serhii Horodilov <sgorodil@gmail.com>\n"
 "Language-Team: uk <LL@li.org>\n"
 "Language: uk\n"
@@ -18,25 +18,21 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
 "n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 "Generated-By: Babel 2.13.1\n"
-"X-Generator: Poedit 3.4.1\n"
+"X-Generator: Poedit 3.4.2\n"
 
 #: ../../src/rdbms/functions.txt:3
-#, fuzzy
 msgid "Functions and operators"
 msgstr "Функції та оператори"
 
 #: ../../src/rdbms/functions.txt:6
-#, fuzzy
 msgid "Logical and comparison operators"
 msgstr "Логічні оператори та оператори порівняння"
 
 #: ../../src/rdbms/functions.txt:8
-#, fuzzy
 msgid "The usual logical operators are still available:"
 msgstr "Звичні логічні оператори все ще доступні:"
 
 #: ../../src/rdbms/functions.txt:16
-#, fuzzy
 msgid ""
 "SQL uses a three-valued logic system with ``true``, ``false``, and ``null``, "
 "which represents *unknown*."
@@ -45,7 +41,6 @@ msgstr ""
 "``нулем``, який представляє собою *невідоме*."
 
 #: ../../src/rdbms/functions.txt:19
-#, fuzzy
 msgid "Truth table"
 msgstr "Таблиця істини"
 
@@ -87,7 +82,6 @@ msgid "``NULL``"
 msgstr "``NULL``"
 
 #: ../../src/rdbms/functions.txt:37
-#, fuzzy
 msgid ""
 "The operators ``AND`` and ``OR`` are commutative, that is, you can switch "
 "the left and right operands without affecting the result. However, it is not "
@@ -98,22 +92,18 @@ msgstr ""
 "лівий операнд буде обчислено раніше правого."
 
 #: ../../src/rdbms/functions.txt:42
-#, fuzzy
 msgid "Comparison operators"
 msgstr "Оператори порівняння"
 
 #: ../../src/rdbms/functions.txt:44
-#, fuzzy
 msgid "The usual comparison operators are available."
 msgstr "Доступні звичайні оператори порівняння."
 
 #: ../../src/rdbms/functions.txt:47
-#, fuzzy
 msgid "Operator"
 msgstr "Оператор"
 
 #: ../../src/rdbms/functions.txt:47 ../../src/rdbms/functions.txt:70
-#, fuzzy
 msgid "Description"
 msgstr "Опис"
 
@@ -122,7 +112,6 @@ msgid "``datatype < datatype -> boolean``"
 msgstr "``datatype < datatype -> boolean``"
 
 #: ../../src/rdbms/functions.txt:49
-#, fuzzy
 msgid "Less than"
 msgstr "Менше ніж"
 
@@ -131,7 +120,6 @@ msgid "``datatype > datatype -> boolean``"
 msgstr "``datatype > datatype -> boolean``"
 
 #: ../../src/rdbms/functions.txt:51
-#, fuzzy
 msgid "Greater than"
 msgstr "Більше ніж"
 
@@ -140,7 +128,6 @@ msgid "``datatype <= datatype -> boolean``"
 msgstr "``datatype <= datatype -> boolean``"
 
 #: ../../src/rdbms/functions.txt:53
-#, fuzzy
 msgid "Less than or equal to"
 msgstr "Менше ніж або дорівнює"
 
@@ -149,7 +136,6 @@ msgid "``datatype >= datatype -> boolean``"
 msgstr "``datatype >= datatype -> boolean``"
 
 #: ../../src/rdbms/functions.txt:55
-#, fuzzy
 msgid "Greater than or equal to"
 msgstr "Більше або дорівнює"
 
@@ -158,16 +144,14 @@ msgid "``datatype = datatype -> boolean``"
 msgstr "``datatype = datatype -> boolean``"
 
 #: ../../src/rdbms/functions.txt:57
-#, fuzzy
 msgid "Equal"
-msgstr "Однаковий"
+msgstr "Дорівнює"
 
 #: ../../src/rdbms/functions.txt:59
 msgid "``datatype <> datatype -> boolean``"
 msgstr "``datatype <> datatype -> boolean``"
 
 #: ../../src/rdbms/functions.txt:59 ../../src/rdbms/functions.txt:61
-#, fuzzy
 msgid "Not equal"
 msgstr "Не дорівнює"
 
@@ -176,17 +160,14 @@ msgid "``datatype != datatype -> boolean``"
 msgstr "``datatype != datatype -> boolean``"
 
 #: ../../src/rdbms/functions.txt:65
-#, fuzzy
 msgid "Mathematical functions and operators"
 msgstr "Математичні функції та оператори"
 
 #: ../../src/rdbms/functions.txt:67
-#, fuzzy
 msgid "Mathematical operators and provided for many PostgreSQL types."
 msgstr "Математичні оператори і передбачені для багатьох типів PostgreSQL."
 
 #: ../../src/rdbms/functions.txt:70
-#, fuzzy
 msgid "Operation"
 msgstr "Операція"
 
@@ -244,7 +225,6 @@ msgid "``numeric_type % numeric_type``"
 msgstr "``numeric_type % numeric_type``"
 
 #: ../../src/rdbms/functions.txt:86
-#, fuzzy
 msgid ""
 "Modulo (remainder); available for ``smallint``, ``integer``, ``bigint``, and "
 "``numeric``"
@@ -333,12 +313,10 @@ msgid "Bitwise shift right"
 msgstr "Порозрядний зсув вправо"
 
 #: ../../src/rdbms/functions.txt:113
-#, fuzzy
 msgid "String functions"
 msgstr "Рядкові функції"
 
 #: ../../src/rdbms/functions.txt:115
-#, fuzzy
 msgid ""
 "*Strings* in this context include values of the types ``character``, "
 "``text`` and ``character varying``."
@@ -347,7 +325,6 @@ msgstr ""
 "``символьна змінна``."
 
 #: ../../src/rdbms/functions.txt:120
-#, fuzzy
 msgid "Concatenates the two strings."
 msgstr "З'єднує два рядки."
 
@@ -356,7 +333,6 @@ msgid "``'Post' || 'greSQL' -> PostgreSQL``"
 msgstr "``'Post' || 'greSQL' -> PostgreSQL``"
 
 #: ../../src/rdbms/functions.txt:127
-#, fuzzy
 msgid ""
 "Converts the non-string input to text, then concatenates the two strings. "
 "(The non-string input cannot be of an array type, because that would create "
@@ -373,7 +349,6 @@ msgid "``'Value: ' || 42 -> Value: 42``"
 msgstr "``'Value: ' || 42 -> Value: 42``"
 
 #: ../../src/rdbms/functions.txt:137
-#, fuzzy
 msgid "Returns number of characters in the string."
 msgstr "Повертає кількість символів у рядку."
 
@@ -382,7 +357,6 @@ msgid "``char_length('josé') -> 4``"
 msgstr "``char_length('josé') -> 4``"
 
 #: ../../src/rdbms/functions.txt:143
-#, fuzzy
 msgid ""
 "Converts the string to all lower case, according to the rules of the "
 "database's locale."
@@ -395,7 +369,6 @@ msgid "``lower('TOM') -> tom``"
 msgstr "``lower('TOM') -> tom``"
 
 #: ../../src/rdbms/functions.txt:150
-#, fuzzy
 msgid ""
 "Removes the longest string containing only characters in characters (a space "
 "by default) from the start of string."
@@ -408,7 +381,6 @@ msgid "``ltrim('zzzytest', 'xyz') -> test``"
 msgstr "``ltrim('zzzytest', 'xyz') -> test``"
 
 #: ../../src/rdbms/functions.txt:157
-#, fuzzy
 msgid ""
 "Removes the longest string containing only characters in characters (a space "
 "by default) from the end of string."
@@ -421,7 +393,6 @@ msgid "``rtrim('testxxzx', 'xyz') -> test``"
 msgstr "``rtrim('testxxzx', 'xyz') -> test``"
 
 #: ../../src/rdbms/functions.txt:164
-#, fuzzy
 msgid ""
 "Removes the longest string containing only characters in characters (a space "
 "by default) from the start, end, or both ends (BOTH is the default) of "
@@ -435,12 +406,10 @@ msgid "``trim(both 'xyz' from 'yxTomxx') -> Tom``"
 msgstr "``trim(both 'xyz' from 'yxTomxx') -> Tom``"
 
 #: ../../src/rdbms/functions.txt:171
-#, fuzzy
 msgid "Pattern matching"
 msgstr "Зіставлення шаблонів"
 
 #: ../../src/rdbms/functions.txt:173
-#, fuzzy
 msgid ""
 "There are three separate approaches to pattern matching provided by "
 "PostgreSQL: the traditional ``LIKE`` operator, the most recent ``SIMILAR "
@@ -451,12 +420,10 @@ msgstr ""
 "стилі POSIX."
 
 #: ../../src/rdbms/functions.txt:177
-#, fuzzy
 msgid "This section will focus on ``LIKE`` operator only."
 msgstr "У цьому розділі буде розглянуто лише оператор ``LIKE``."
 
 #: ../../src/rdbms/functions.txt:184
-#, fuzzy
 msgid ""
 "The ``LIKE`` expression returns ``true`` if the ``string`` matches the "
 "supplied ``pattern`` (as expected, the ``NOT LIKE`` expression returns "
@@ -467,7 +434,6 @@ msgstr ""
 "``false``, якщо ``LIKE`` повертає значення ``true``, і навпаки)."
 
 #: ../../src/rdbms/functions.txt:188
-#, fuzzy
 msgid ""
 "If ``pattern`` does not contain percent signs or underscores, then the "
 "pattern only represents the string itself; in than case ``LIKE`` acts like "
@@ -482,12 +448,10 @@ msgstr ""
 "нуля або більше символів."
 
 #: ../../src/rdbms/functions.txt:194
-#, fuzzy
 msgid "Some examples:"
-msgstr "Деякі приклади"
+msgstr "Деякі приклади:"
 
 #: ../../src/rdbms/functions.txt:203
-#, fuzzy
 msgid ""
 "``LIKE`` patterns matching always covers the entire string. Therefore, if "
 "it's desired to match a sequence anywhere within a string, the pattern must "
@@ -498,7 +462,6 @@ msgstr ""
 "закінчуватися знаком відсотка."
 
 #: ../../src/rdbms/functions.txt:207
-#, fuzzy
 msgid ""
 "To match a literal underscore or percent sing without matching other "
 "characters the respective character in ``pattern`` must be preceded by the "
@@ -513,7 +476,6 @@ msgstr ""
 "Щоб відповідати самому символу екранування, напишіть два символи екранування."
 
 #: ../../src/rdbms/functions.txt:213
-#, fuzzy
 msgid ""
 "The key word ``ILIKE`` can be used instead of ``LIKE`` to make the match "
 "case-insensitive according to the active locale. This is not in the SQL "
@@ -524,17 +486,14 @@ msgstr ""
 "стандартом SQL, але є розширенням PostgreSQL."
 
 #: ../../src/rdbms/functions.txt:218
-#, fuzzy
 msgid "Date/Time functions and operators"
 msgstr "Функції та оператори дати/часу"
 
 #: ../../src/rdbms/functions.txt:221
-#, fuzzy
 msgid "Extract"
-msgstr "Витяг"
+msgstr "Вилучення"
 
 #: ../../src/rdbms/functions.txt:225
-#, fuzzy
 msgid ""
 "The ``extract`` function retrieves subfields such as year or hour from date/"
 "time value. The ``source`` must be a value expression of type ``timestamp``, "
@@ -545,11 +504,11 @@ msgid ""
 "field names:"
 msgstr ""
 "Функція ``extract`` витягує підполя, такі як рік або година, зі значення "
-"дати/часу. Джерело має бути виразом типу ``мітка часу``, ``час`` або "
-"``інтервал``. Вирази типу ``date`` приводяться до ``timestamp``, тому їх "
-"також можна використовувати. ``поле`` - це ідентифікатор або рядок, який "
+"дати/часу. Джерело має бути виразом типу ``timestamp``, ``time`` або "
+"``interval``. Вирази типу ``date`` приводяться до ``timestamp``, тому їх "
+"також можна використовувати. ``field`` - це ідентифікатор або рядок, який "
 "вказує, яке саме поле потрібно витягти з вихідного значення. Функція extract "
-"повертає значення типу ``число``. Нижче наведено припустимі імена полів:"
+"повертає значення типу ``numeric``. Нижче наведено припустимі імена полів:"
 
 #: ../../src/rdbms/functions.txt:233
 msgid "``centurty``"
@@ -640,7 +599,6 @@ msgid "``year``"
 msgstr "``year``"
 
 #: ../../src/rdbms/functions.txt:256
-#, fuzzy
 msgid ""
 "The ``date_part`` function is modeled on the traditional Ingres equivalent "
 "to the SQL-standard function ``extract``:"
@@ -649,12 +607,10 @@ msgstr ""
 "еквівалента стандартної функції SQL ``extract``:"
 
 #: ../../src/rdbms/functions.txt:262
-#, fuzzy
 msgid "Current date/time"
 msgstr "Поточна дата/час"
 
 #: ../../src/rdbms/functions.txt:264
-#, fuzzy
 msgid ""
 "PostgreSQL provides a number of functions that return values related to the "
 "current date and time. These SQL-standard functions all return values based "
@@ -665,18 +621,15 @@ msgstr ""
 "часу початку поточної транзакції:"
 
 #: ../../src/rdbms/functions.txt:272
-#, fuzzy
 msgid "Deliver current time value with time zone."
 msgstr "Надавати поточне значення часу з часовим поясом."
 
 #: ../../src/rdbms/functions.txt
-#, fuzzy
 msgid "precision"
 msgstr "точність"
 
 #: ../../src/rdbms/functions.txt:275 ../../src/rdbms/functions.txt:285
 #: ../../src/rdbms/functions.txt:295 ../../src/rdbms/functions.txt:305
-#, fuzzy
 msgid ""
 "An optional parameter, which causes the result to be rounded to that many "
 "fractional digits in the second field. Without a precision, the result is "
@@ -687,22 +640,18 @@ msgstr ""
 "буде надано з повною доступною точністю."
 
 #: ../../src/rdbms/functions.txt:282
-#, fuzzy
 msgid "Deliver current timestamp value with time zone."
 msgstr "Видавати поточне значення мітки часу з часовим поясом."
 
 #: ../../src/rdbms/functions.txt:292 ../../src/rdbms/functions.txt:302
-#, fuzzy
 msgid "Deliver current time value without time zone."
 msgstr "Надавати поточне значення часу без часового поясу."
 
 #: ../../src/rdbms/functions.txt:310
-#, fuzzy
 msgid "Formatting functions"
 msgstr "Функції форматування"
 
 #: ../../src/rdbms/functions.txt:314
-#, fuzzy
 msgid ""
 "The PostgreSQL formatting functions provide a powerful set of tools for "
 "converting various  data types (date/time, integer, floatting point, "
@@ -715,7 +664,6 @@ msgstr ""
 "рядків у певні типи даних."
 
 #: ../../src/rdbms/functions.txt:319
-#, fuzzy
 msgid ""
 "These functions all follow a common calling convention: the first argument "
 "is the value to be formatted and the second argument is a template that "
@@ -726,7 +674,6 @@ msgstr ""
 "формат виводу або вводу."
 
 #: ../../src/rdbms/functions.txt:326
-#, fuzzy
 msgid "Converts time stamp to string according to the given format."
 msgstr "Конвертує мітку часу в рядок відповідно до заданого формату."
 
@@ -737,7 +684,6 @@ msgstr ""
 "``to_char(timestamp '2002-04-20 17:31:12.66', 'HH12:MI:SS') → 05:31:12``"
 
 #: ../../src/rdbms/functions.txt:332
-#, fuzzy
 msgid "Converts interval to string according to the given format."
 msgstr "Перетворює інтервал у рядок відповідно до заданого формату."
 
@@ -746,7 +692,6 @@ msgid "``to_char(interval '15h 2m 12s', 'HH24:MI:SS') → 15:02:12``"
 msgstr "``to_char(interval '15h 2m 12s', 'HH24:MI:SS') → 15:02:12``"
 
 #: ../../src/rdbms/functions.txt:338
-#, fuzzy
 msgid ""
 "Converts number to string according to the given format; available for "
 "integer, bigint, numeric, real, double precision."
@@ -767,7 +712,6 @@ msgid "``to_char(-125.8, '999D99S') → 125.80-``"
 msgstr "``to_char(-125.8, '999D99S') → 125.80-``"
 
 #: ../../src/rdbms/functions.txt:347
-#, fuzzy
 msgid "Converts string to date according to the given format."
 msgstr "Конвертує рядок у дату відповідно до заданого формату."
 
@@ -776,7 +720,6 @@ msgid "``to_date('05 Dec 2000', 'DD Mon YYYY') → 2000-12-05``"
 msgstr "``to_date('05 Dec 2000', 'DD Mon YYYY') → 2000-12-05``"
 
 #: ../../src/rdbms/functions.txt:353
-#, fuzzy
 msgid "Converts string to numeric according to the given format."
 msgstr "Перетворює рядок у число відповідно до заданого формату."
 
@@ -785,7 +728,6 @@ msgid "``to_number('12,454.8-', '99G999D9S') → -12454.8``"
 msgstr "``to_number('12,454.8-', '99G999D9S') → -12454.8``"
 
 #: ../../src/rdbms/functions.txt:359
-#, fuzzy
 msgid "Converts string to time stamp according to the given format."
 msgstr "Перетворює рядок у мітку часу відповідно до заданого формату."
 
@@ -795,7 +737,6 @@ msgstr ""
 "``to_timestamp('05 Dec 2000', 'DD Mon YYYY') → 2000-12-05 00:00:00-05``"
 
 #: ../../src/rdbms/functions.txt:366
-#, fuzzy
 msgid "Conditional expressions"
 msgstr "Умовні вирази"
 
@@ -804,7 +745,6 @@ msgid "CASE"
 msgstr ""
 
 #: ../../src/rdbms/functions.txt:371
-#, fuzzy
 msgid ""
 "The SQL ``CASE`` expression is a generic conditional expression, similar to "
 "if/else statements in other programming languages."
@@ -813,12 +753,10 @@ msgstr ""
 "else в інших мовах програмування."
 
 #: ../../src/rdbms/functions.txt:377
-#, fuzzy
 msgid "COALESCE"
 msgstr "НАГЛЕЮЄТЬСЯ"
 
 #: ../../src/rdbms/functions.txt:379
-#, fuzzy
 msgid ""
 "The ``COALESCE`` function returns the first of its arguments that is not "
 "null. Null is returned only if all arguments are null. It is often used to "
@@ -831,7 +769,6 @@ msgstr ""
 "коли дані отримуються для відображення:"
 
 #: ../../src/rdbms/functions.txt:387
-#, fuzzy
 msgid ""
 "This returns ``description`` if it is not null, otherwise "
 "``short_description`` if it is not null, otherwise ``(none)``."
@@ -840,7 +777,6 @@ msgstr ""
 "``short_description``, якщо він не є нульовим, інакше ``(none)``."
 
 #: ../../src/rdbms/functions.txt:390
-#, fuzzy
 msgid ""
 "Like the ``CASE`` expression, ``COALESCE`` only evaluates the arguments that "
 "are needed to determine the result; that is, arguments to the right of the "
@@ -851,12 +787,10 @@ msgstr ""
 "аргументу не обчислюються."
 
 #: ../../src/rdbms/functions.txt:395
-#, fuzzy
 msgid "NULLIF"
 msgstr "NULLIF"
 
 #: ../../src/rdbms/functions.txt:401
-#, fuzzy
 msgid ""
 "The ``NULLIF`` function returns a null ``value_1`` equals ``value_2``; "
 "otherwise it returns ``value_1``. This can be used to perform the inverse "
@@ -867,7 +801,6 @@ msgstr ""
 "виконання оберненої операції до ``COALESCE``."
 
 #: ../../src/rdbms/functions.txt:409
-#, fuzzy
 msgid ""
 "In the example above, if ``value`` is ``(none)``, null is returned, "
 "otherwise the value of ``value`` is returned."
@@ -876,7 +809,6 @@ msgstr ""
 "нуль, інакше повертається значення ``value``."
 
 #: ../../src/rdbms/functions.txt:412
-#, fuzzy
 msgid ""
 "The two arguments must be of comparable types. To be specific, they are "
 "compared exactly as if you had written ``value_1 = value_2``, so there must "
@@ -887,7 +819,6 @@ msgstr ""
 "бути відповідний оператор ``=``."
 
 #: ../../src/rdbms/functions.txt:416
-#, fuzzy
 msgid ""
 "The result has the same type as the first argument -- but there is a "
 "subtlety. What is actual returned is the first argument of the implied ``=`` "
@@ -899,12 +830,10 @@ msgstr ""
 "випадках він буде приведений до типу другого аргументу."
 
 #: ../../src/rdbms/functions.txt:422
-#, fuzzy
 msgid "Aggregate functions"
 msgstr "Агрегатні функції"
 
 #: ../../src/rdbms/functions.txt:424
-#, fuzzy
 msgid ""
 "*Aggregate functions* compute a single result from a set of input values. "
 "There are lots of these, and different RDBMS implement different aggregation "
@@ -917,17 +846,14 @@ msgstr ""
 "агрегатних функціях."
 
 #: ../../src/rdbms/functions.txt:429
-#, fuzzy
 msgid "The general schema of using is presented below:"
 msgstr "Загальна схема використання представлена нижче:"
 
 #: ../../src/rdbms/functions.txt:434
-#, fuzzy
 msgid "Average value"
 msgstr "Середнє значення"
 
 #: ../../src/rdbms/functions.txt:444
-#, fuzzy
 msgid ""
 "Computes the average (arithmetic mean) of all the non-null input values "
 "within a group"
@@ -936,7 +862,6 @@ msgstr ""
 "значень у групі"
 
 #: ../../src/rdbms/functions.txt:449
-#, fuzzy
 msgid ""
 "SQLite implements ``avg`` function in a manner to return ``NULL`` if and "
 "only if all the inputs are nulls. On the other hand PostgreSQL will raise an "
@@ -949,19 +874,16 @@ msgstr ""
 #: ../../src/rdbms/functions.txt:464 ../../src/rdbms/functions.txt:500
 #: ../../src/rdbms/functions.txt:532 ../../src/rdbms/functions.txt:564
 #: ../../src/rdbms/functions.txt:602
-#, fuzzy
 msgid "year"
 msgstr "рік"
 
 #: ../../src/rdbms/functions.txt:464 ../../src/rdbms/functions.txt:500
 #: ../../src/rdbms/functions.txt:532 ../../src/rdbms/functions.txt:564
 #: ../../src/rdbms/functions.txt:602
-#, fuzzy
 msgid "month"
 msgstr "місяць"
 
 #: ../../src/rdbms/functions.txt:464
-#, fuzzy
 msgid "avg"
 msgstr "в середньому"
 
@@ -1035,23 +957,19 @@ msgid "10218"
 msgstr "10218"
 
 #: ../../src/rdbms/functions.txt:478
-#, fuzzy
 msgid "Count"
 msgstr "Кількість"
 
 #: ../../src/rdbms/functions.txt:482
-#, fuzzy
 msgid "Computes the number of input rows"
 msgstr "Обчислює кількість вхідних рядків"
 
 #: ../../src/rdbms/functions.txt:487
-#, fuzzy
 msgid "Computes the number of input rows in which the input value is not null"
 msgstr ""
 "Обчислює кількість вхідних рядків, в яких вхідне значення не дорівнює нулю"
 
 #: ../../src/rdbms/functions.txt:500
-#, fuzzy
 msgid "count"
 msgstr "рахувати"
 
@@ -1069,12 +987,10 @@ msgid "8"
 msgstr "8"
 
 #: ../../src/rdbms/functions.txt:514
-#, fuzzy
 msgid "Maximum value"
 msgstr "Максимальне значення"
 
 #: ../../src/rdbms/functions.txt:518
-#, fuzzy
 msgid ""
 "Computes the maximum of the non-null input values. Available for any "
 "numeric, string, date/time or enum type."
@@ -1083,7 +999,6 @@ msgstr ""
 "чисел, рядків, дати/часу або перелічуваних типів."
 
 #: ../../src/rdbms/functions.txt:532
-#, fuzzy
 msgid "max"
 msgstr "макс"
 
@@ -1108,12 +1023,10 @@ msgid "14661"
 msgstr "14661"
 
 #: ../../src/rdbms/functions.txt:546
-#, fuzzy
 msgid "Minimum value"
 msgstr "Мінімальне значення"
 
 #: ../../src/rdbms/functions.txt:550
-#, fuzzy
 msgid ""
 "Computes the minimum of the non-null inpout values. Available for any "
 "numeric, string, date/time or enum type."
@@ -1122,7 +1035,6 @@ msgstr ""
 "числового, рядкового, дати/часу або перелічуваного типу."
 
 #: ../../src/rdbms/functions.txt:564
-#, fuzzy
 msgid "min"
 msgstr "мін"
 
@@ -1147,17 +1059,14 @@ msgid "2654"
 msgstr "2654"
 
 #: ../../src/rdbms/functions.txt:578
-#, fuzzy
 msgid "Sum of values"
 msgstr "Сума значень"
 
 #: ../../src/rdbms/functions.txt:589
-#, fuzzy
 msgid "Computes the sum of the non-null values"
 msgstr "Обчислює суму ненульових значень"
 
 #: ../../src/rdbms/functions.txt:602
-#, fuzzy
 msgid "sum"
 msgstr "сума"
 

@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Python Training Course 2023.11.dev\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-12-16 13:55+0000\n"
-"PO-Revision-Date: 2023-12-21 04:00+0200\n"
+"PO-Revision-Date: 2024-02-18 17:54+0200\n"
 "Last-Translator: Serhii Horodilov <sgorodil@gmail.com>\n"
 "Language-Team: uk <LL@li.org>\n"
 "Language: uk\n"
@@ -18,30 +18,25 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
 "n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 "Generated-By: Babel 2.13.1\n"
-"X-Generator: Poedit 3.4.1\n"
+"X-Generator: Poedit 3.4.2\n"
 
 #: ../../src/rdbms/query.txt:-1
-#, fuzzy
 msgid "Query data from database"
 msgstr "Запит даних з бази даних"
 
 #: ../../src/rdbms/query.txt:-1
-#, fuzzy
 msgid "Serhii Horodilov"
 msgstr "Serhii Horodilov"
 
 #: ../../src/rdbms/query.txt:-1
-#, fuzzy
 msgid "sql, db, database, query, select, fetch"
-msgstr "sql, db, база даних, запит, вибірка, вибірка"
+msgstr "sql, db, database, query, select, fetch"
 
 #: ../../src/rdbms/query.txt:8
-#, fuzzy
 msgid "Querying data"
 msgstr "Запит даних"
 
 #: ../../src/rdbms/query.txt:10
-#, fuzzy
 msgid ""
 "The process of retrieving or the command to retrieve data from a database is "
 "called a *query*. In SQL the ``SELECT`` command is used to specify queries."
@@ -51,7 +46,6 @@ msgstr ""
 "``SELECT``."
 
 #: ../../src/rdbms/query.txt:13
-#, fuzzy
 msgid ""
 "``SELECT`` retrieves rows from zero or more tables. The general processing "
 "of ``SELECT`` is as follows:"
@@ -60,7 +54,6 @@ msgstr ""
 "``SELECT`` відбувається наступним чином:"
 
 #: ../../src/rdbms/query.txt:16
-#, fuzzy
 msgid ""
 "All queries in the ``WITH`` list are computed. This effectively serve as "
 "temporary tables that can be referenced in the ``FROM`` list."
@@ -69,25 +62,22 @@ msgstr ""
 "таблицями, на які можна посилатися у списку ``FROM``."
 
 #: ../../src/rdbms/query.txt:19
-#, fuzzy
 msgid ""
 "All elements in the ``FROM`` list are computed. If more than one element is "
 "specified in the ``FROM`` list, they are cross-joined together."
 msgstr ""
-"Обчислюються всі елементи списку ``З''. Якщо у списку ``FROM`` вказано "
+"Обчислюються всі елементи списку ``FROM``. Якщо у списку ``FROM`` вказано "
 "більше одного елемента, вони об'єднуються разом."
 
 #: ../../src/rdbms/query.txt:21
-#, fuzzy
 msgid ""
 "If ``WHERE`` clause is specified, all rows that do not satisfy the condition "
 "are eliminated from the output."
 msgstr ""
-"Якщо вказано оператор `WHERE`, то всі рядки, які не задовольняють умові, "
+"Якщо вказано оператор ``WHERE``, то всі рядки, які не задовольняють умові, "
 "вилучаються з виводу."
 
 #: ../../src/rdbms/query.txt:23
-#, fuzzy
 msgid ""
 "If the ``GROUP BY`` clause is specified, or if there are aggregate function "
 "calls, the output is combined into groups of rows that match on one or more "
@@ -102,7 +92,6 @@ msgstr ""
 "заданій умові."
 
 #: ../../src/rdbms/query.txt:28
-#, fuzzy
 msgid ""
 "The actual output rows are computed using the ``SELECT`` output expressions "
 "for each row or row of group."
@@ -111,7 +100,6 @@ msgstr ""
 "кожного рядка або рядка групи."
 
 #: ../../src/rdbms/query.txt:30
-#, fuzzy
 msgid ""
 "``SELECT DISTINCT`` eliminates duplicate rows from the result. ``SELECT "
 "DISTINCT ON`` eliminates rows that match on all the specified expressions."
@@ -120,7 +108,6 @@ msgstr ""
 "DISTINCT ON`` вилучає рядки, які збігаються за всіма вказаними виразами."
 
 #: ../../src/rdbms/query.txt:33
-#, fuzzy
 msgid ""
 "Using the operators ``UNION``, ``INTERSECT``, and ``EXCEPT``, the output of "
 "more than one ``SELECT`` statement can be combined to form a single result "
@@ -131,7 +118,6 @@ msgstr ""
 "єдиний набір результатів."
 
 #: ../../src/rdbms/query.txt:37
-#, fuzzy
 msgid ""
 "The ``UNION`` operator returns **all** rows that are in one or both result "
 "sets."
@@ -140,7 +126,6 @@ msgstr ""
 "результатів."
 
 #: ../../src/rdbms/query.txt:39
-#, fuzzy
 msgid ""
 "The ``INTERSECT`` operator returns all rows that are strictly in both result "
 "sets."
@@ -149,7 +134,6 @@ msgstr ""
 "наборах результатів."
 
 #: ../../src/rdbms/query.txt:41
-#, fuzzy
 msgid ""
 "The ``EXCEPT`` operator returns the rows that are in the first result set, "
 "but not in the second."
@@ -158,16 +142,14 @@ msgstr ""
 "відсутні в другому."
 
 #: ../../src/rdbms/query.txt:44
-#, fuzzy
 msgid ""
 "If the ``ORDER BY`` clause is specified, the returned rows are sorted in the "
 "specific order."
 msgstr ""
-"Якщо вказано параметр ``Впорядкувати за'', повернуті рядки буде відсортовано "
-"у певному порядку."
+"Якщо вказано параметр ``ORDER BY``, повернуті рядки буде відсортовано у "
+"певному порядку."
 
 #: ../../src/rdbms/query.txt:46
-#, fuzzy
 msgid ""
 "if the ``LIMIT`` or ``OFFSET`` clause is specified, the ``SELECT`` statement "
 "only returns a subset of the result rows."
@@ -176,7 +158,6 @@ msgstr ""
 "повертає лише підмножину рядків результату."
 
 #: ../../src/rdbms/query.txt:48
-#, fuzzy
 msgid ""
 "If ``FOR UPDATE``, ``FOR NO KEY UPDATE``, ``FOR SHARE`` or ``FOR KEY SHARE`` "
 "is specified, the ``SELECT`` statement locks the selected rows against "
@@ -187,17 +168,14 @@ msgstr ""
 "оновлення."
 
 #: ../../src/rdbms/query.txt:57
-#, fuzzy
 msgid "Select rows from a table"
 msgstr "Виберіть рядки з таблиці"
 
 #: ../../src/rdbms/query.txt:59
-#, fuzzy
 msgid "A simple kind of query has the form:"
 msgstr "Простий вид запиту має вигляд:"
 
 #: ../../src/rdbms/query.txt:65
-#, fuzzy
 msgid ""
 "This command would retrieve all rows and all user-defined columns from "
 "``publisher`` table. A select list can also select a subset of the available "
@@ -208,7 +186,6 @@ msgstr ""
 "стовпців або виконувати обчислення за цими стовпцями."
 
 #: ../../src/rdbms/query.txt:74
-#, fuzzy
 msgid ""
 "``FROM`` clause is a simple kind of table expression: it reads just one "
 "table. In general, table expression can be complex constructs of base "
@@ -223,7 +200,6 @@ msgstr ""
 "інший спосіб):"
 
 #: ../../src/rdbms/query.txt:83
-#, fuzzy
 msgid ""
 "The ``FROM`` clause derives a table from one or more other tables given in a "
 "comma-separated table reference list. A table reference can a table name, or "
@@ -238,19 +214,17 @@ msgstr ""
 "наведених у списку посилань на таблиці, розділених комами. Посилання на "
 "таблицю може бути ім'ям таблиці або похідною таблицею, наприклад, "
 "підзапитом, конструкцією ``JOIN`` або їх складними комбінаціями. Якщо в "
-"реченні ``З'' вказано більше одного посилання на таблицю, то таблиці "
+"реченні ``FROM`` вказано більше одного посилання на таблицю, то таблиці "
 "з'єднуються перехресним зв'язком. Результатом списку ``FROM`` є проміжна "
 "віртуальна таблиця, яка потім може бути піддана перетворенням за допомогою "
 "речень ``WHERE``, ``GROUP BY`` і ``HAVING`` і, нарешті, є результатом "
 "загального табличного виразу."
 
 #: ../../src/rdbms/query.txt:93
-#, fuzzy
 msgid "Search conditions"
 msgstr "Умови пошуку"
 
 #: ../../src/rdbms/query.txt:95
-#, fuzzy
 msgid ""
 "After the processing of the ``FROM`` clause is done, each row of the derived "
 "virtual table can be checked against the search condition. If the result of "
@@ -259,26 +233,22 @@ msgid ""
 msgstr ""
 "Після обробки оператора ``FROM`` кожен рядок отриманої віртуальної таблиці "
 "може бути перевірений на відповідність умові пошуку. Якщо результат умови "
-"рівний ``істина``, то рядок зберігається у вихідній таблиці, інакше він "
+"рівний ``true``, то рядок зберігається у вихідній таблиці, інакше він "
 "відкидається. Для перевірки умови пошуку використовується оператор `WHERE`."
 
 #: ../../src/rdbms/query.txt:100
-#, fuzzy
 msgid "Here are some examples of ``WHERE`` clause:"
-msgstr "Ось кілька прикладів речення \"ДЕ\":"
+msgstr "Ось кілька прикладів речення ``WHERE``:"
 
 #: ../../src/rdbms/query.txt:102
-#, fuzzy
 msgid "WHERE clause usage examples"
 msgstr "Приклади використання речення WHERE"
 
 #: ../../src/rdbms/query.txt:124
-#, fuzzy
 msgid "Grouping data"
 msgstr "Дані для групування"
 
 #: ../../src/rdbms/query.txt:126
-#, fuzzy
 msgid ""
 "After passing the ``WHERE`` filter, the derived input table might be subject "
 "to grouping, using ``GROUP BY`` clause, and elimination of group rows using "
@@ -291,21 +261,19 @@ msgid ""
 msgstr ""
 "Після проходження фільтра ``WHERE`` отримана таблиця може бути згрупована за "
 "допомогою речення ``GROUP BY`` і видалена з групи рядків за допомогою "
-"речення ``HAVING``. Речення ``ГРУПУВАТИ ЗА`` використовується для групування "
-"тих рядків таблиці, які мають однакові значення у всіх перелічених "
-"стовпчиках. Порядок перерахування стовпчиків не має значення. Ефект полягає "
-"в об'єднанні кожного набору рядків зі спільними значеннями в один груповий "
-"рядок, який представляє всі рядки в групі. Це робиться для того, щоб усунути "
-"надмірність у вихідних даних та/або обчислювальних агрегатах, які "
-"застосовуються до цих груп."
+"речення ``HAVING``. Речення ``GROUP BY`` використовується для групування тих "
+"рядків таблиці, які мають однакові значення у всіх перелічених стовпчиках. "
+"Порядок перерахування стовпчиків не має значення. Ефект полягає в об'єднанні "
+"кожного набору рядків зі спільними значеннями в один груповий рядок, який "
+"представляє всі рядки в групі. Це робиться для того, щоб усунути надмірність "
+"у вихідних даних та/або обчислювальних агрегатах, які застосовуються до цих "
+"груп."
 
 #: ../../src/rdbms/query.txt:136
-#, fuzzy
 msgid "Select lists"
 msgstr "Виберіть списки"
 
 #: ../../src/rdbms/query.txt:138
-#, fuzzy
 msgid ""
 "As shown is the previous section, the table expression in the ``SELECT`` "
 "command constructs an intermediate virtual table by possibly combining "
@@ -320,12 +288,10 @@ msgstr ""
 "визначає, які саме *стовпці* проміжної таблиці буде виведено на екран."
 
 #: ../../src/rdbms/query.txt:145
-#, fuzzy
 msgid "Select list items"
 msgstr "Вибір елементів списку"
 
 #: ../../src/rdbms/query.txt:147
-#, fuzzy
 msgid ""
 "The simplest kind of select is ``*`` which emits that the table expression "
 "produces. Otherwise, a select list is a comma-separated list of value "
@@ -336,12 +302,10 @@ msgstr ""
 "Наприклад:"
 
 #: ../../src/rdbms/query.txt:157
-#, fuzzy
 msgid "Columns labels"
 msgstr "Мітки стовпців"
 
 #: ../../src/rdbms/query.txt:159
-#, fuzzy
 msgid ""
 "The entries listed in the select list can be assigned names for subsequent "
 "processing."
@@ -350,7 +314,6 @@ msgstr ""
 "обробки."
 
 #: ../../src/rdbms/query.txt:166
-#, fuzzy
 msgid ""
 "If no output column name  is specified using ``AS``, the system will assign "
 "a default column name. For simple column references, this is the name of the "
@@ -363,17 +326,14 @@ msgstr ""
 "функції. Для складних виразів система згенерує загальну назву."
 
 #: ../../src/rdbms/query.txt:173
-#, fuzzy
 msgid "Labels are often referenced as \"aliases\"."
 msgstr "Етикетки часто називають \"псевдонімами\"."
 
 #: ../../src/rdbms/query.txt:176
-#, fuzzy
 msgid "DISTINCT"
-msgstr "РОЗРІЗНИТИ"
+msgstr "DISTINCT"
 
 #: ../../src/rdbms/query.txt:178
-#, fuzzy
 msgid ""
 "After the select list has been processed, the result table can optionally be "
 "subject to the elimination of duplicate rows. The ``DISTINCT`` key word is "
@@ -384,7 +344,6 @@ msgstr ""
 "записується ключове слово ``DISTINCT``:"
 
 #: ../../src/rdbms/query.txt:186
-#, fuzzy
 msgid ""
 "Obviously, two rows are considered distinct if they differ in at least one "
 "column value. Null values are considered equal in comparison. Alternatively, "
@@ -396,12 +355,10 @@ msgstr ""
 "того, довільний вираз може визначати, які рядки вважати різними."
 
 #: ../../src/rdbms/query.txt:195
-#, fuzzy
 msgid "Sorting rows"
 msgstr "Сортування рядків"
 
 #: ../../src/rdbms/query.txt:197
-#, fuzzy
 msgid ""
 "After a query has produced an output table it can optionally be sorted. If "
 "sorting is not chosen, the rows will be returned in an unspecified order. "
@@ -415,12 +372,10 @@ msgstr ""
 "покладатися."
 
 #: ../../src/rdbms/query.txt:202
-#, fuzzy
 msgid "The ``ORDER BY`` clause specifies the sort order:"
 msgstr "Речення ``ORDER BY`` задає порядок сортування:"
 
 #: ../../src/rdbms/query.txt:208
-#, fuzzy
 msgid ""
 "The sort expression(s) can be any expression that would be valid in the "
 "query's select list."
@@ -429,7 +384,6 @@ msgstr ""
 "списку вибору запиту."
 
 #: ../../src/rdbms/query.txt:211
-#, fuzzy
 msgid ""
 "When more than one expression is specified, the later values are used to "
 "sort rows that are equal according to the earlier values. Each expression "
@@ -443,7 +397,6 @@ msgstr ""
 "використовується порядок ``ASC``."
 
 #: ../../src/rdbms/query.txt:216
-#, fuzzy
 msgid ""
 "The ``NULL FIRST`` and ``NULL LAST`` options can be used to determine "
 "whether null appear before or after non-null values in the sort ordering. By "
@@ -458,19 +411,16 @@ msgstr ""
 "для порядку ``DESC``, а ``NULL LAST`` в іншому випадку."
 
 #: ../../src/rdbms/query.txt:221
-#, fuzzy
 msgid ""
 "Note that the ordering options are considered independently for each sort "
 "column. For example ``ORDER BY x, y DESC`` means ``ORDER BY x ASC, y DESC``, "
 "which is not the same as ``ORDER BY x DESC, y DESC``."
 msgstr ""
 "Зверніть увагу, що варіанти впорядкування розглядаються незалежно для "
-"кожного стовпця сортування. Наприклад, ``Впорядкувати за x, y DESC`` означає "
-"``Впорядкувати за x ASC, y DESC``, що не те саме, що ``Впорядкувати за x "
-"DESC, y DESC``."
+"кожного стовпця сортування. Наприклад, ``ORDER BY x, y DESC`` означає "
+"``ORDER BY x ASC, y DESC``, що не те саме, що ``ORDER BY x DESC, y DESC``."
 
 #: ../../src/rdbms/query.txt:225
-#, fuzzy
 msgid ""
 "A sort expression can also be the column label or number of an output column."
 msgstr ""
@@ -478,7 +428,6 @@ msgstr ""
 "стовпця."
 
 #: ../../src/rdbms/query.txt:227
-#, fuzzy
 msgid ""
 "``ORDER BY`` can be applied to the result of a ``UNION``, ``INTERSECT``, or "
 "``EXCEPT`` combination, but in this case it is only permitted to sort by "
@@ -489,28 +438,24 @@ msgstr ""
 "лише за іменами або номерами вихідних стовпців, а не за виразами."
 
 #: ../../src/rdbms/query.txt:232
-#, fuzzy
 msgid "Limit and Offset"
 msgstr "Ліміт і зміщення"
 
 #: ../../src/rdbms/query.txt:234
-#, fuzzy
 msgid ""
 "``LIMIT`` and ``OFFSET`` allow you to retrieve just a portion of the rows "
 "that are generated by the rest of the query."
 msgstr ""
-"lIMIT і OFFSET дозволяють вам отримати лише частину рядків, згенерованих "
-"рештою запиту."
+"``LIMIT`` і ``OFFSET`` дозволяють вам отримати лише частину рядків, "
+"згенерованих рештою запиту."
 
 #: ../../src/rdbms/query.txt:241
-#, fuzzy
 msgid ""
 "The query above fetches only first 10 rows from the \"publisher\" table."
 msgstr ""
 "Наведений вище запит витягує лише перші 10 рядків з таблиці \"publisher\"."
 
 #: ../../src/rdbms/query.txt:243
-#, fuzzy
 msgid ""
 "If a limit count is given, no more than that many rows will be returned. But "
 "possibly fewer, if the query itself yields fewer rows. ``LIMIT ALL`` is the "
@@ -523,7 +468,6 @@ msgstr ""
 "``LIMIT`` з аргументом ``NULL``."
 
 #: ../../src/rdbms/query.txt:248
-#, fuzzy
 msgid ""
 "``OFFSET`` says to skip that many rows before beginning to return rows. "
 "``OFFSET 0`` is the same as omitting the ``OFFSET`` clause, as is ``OFFSET`` "
@@ -534,12 +478,10 @@ msgstr ""
 "і ``OFFSET`` з аргументом ``NULL``."
 
 #: ../../src/rdbms/query.txt:256
-#, fuzzy
 msgid "The query above fetches 10 publishers starting from the 11-th one."
 msgstr "Наведений вище запит показує 10 видавництв, починаючи з 11-го."
 
 #: ../../src/rdbms/query.txt:258
-#, fuzzy
 msgid ""
 "When using ``LIMIT`` and/or ``OFFSET``, it's important to use ``ORDER BY`` "
 "clause that constraints the result rows into a unique order. Otherwise you "
@@ -550,12 +492,10 @@ msgstr ""
 "отримаєте непередбачувану підмножину рядків запиту."
 
 #: ../../src/rdbms/query.txt:263
-#, fuzzy
 msgid "WITH queries"
-msgstr "З запитами"
+msgstr "WITH"
 
 #: ../../src/rdbms/query.txt:265
-#, fuzzy
 msgid ""
 "``WITH`` provides a way to write auxiliary statements for use in a larger "
 "query. These statements, which are often referred to as :abbr:`CTE (Common "
@@ -565,9 +505,9 @@ msgid ""
 "clause itself is attached to a primary statement that can be a ``SELECT``, "
 "``INSERT``, ``UPDATE``, ``DELETE`` or ``MERGE``."
 msgstr ""
-"команда ``WITH`` надає можливість писати допоміжні оператори для "
+"Команда ``WITH`` надає можливість писати допоміжні оператори для "
 "використання у великих запитах. Ці оператори, які часто називають :abbr:`CTE "
-"(Common Table Expression), можна розглядати як визначення тимчасових "
+"(Common Table Expression)`, можна розглядати як визначення тимчасових "
 "таблиць, які існують лише для одного запиту. Кожен допоміжний оператор у "
 "реченні ``WITH`` може бути оператором ``SELECT``, ``INSERT``, ``UPDATE`` або "
 "``DELETE``; а саме речення ``WITH`` приєднується до основного оператора, "
@@ -575,12 +515,10 @@ msgstr ""
 "``MERGE``."
 
 #: ../../src/rdbms/query.txt:274
-#, fuzzy
 msgid "Select in WITH"
-msgstr "``select_attack``"
+msgstr "Вибірка у WITH"
 
 #: ../../src/rdbms/query.txt:276
-#, fuzzy
 msgid ""
 "The basic value of ``SELECT`` in ``WITH`` is to break down complicated "
 "queries into simpler parts."
@@ -589,17 +527,14 @@ msgstr ""
 "запити на простіші частини."
 
 #: ../../src/rdbms/query.txt:279
-#, fuzzy
 msgid "Get most profitable months"
 msgstr "Отримайте найприбутковіші місяці"
 
 #: ../../src/rdbms/query.txt:295
-#, fuzzy
 msgid "Recursive queries"
 msgstr "Рекурсивні запити"
 
 #: ../../src/rdbms/query.txt:297
-#, fuzzy
 msgid ""
 "The optional ``RECURSIVE`` modifier changes WITH from a mere syntactic "
 "convenience into a feature that accomplishes things not otherwise possible "
@@ -612,12 +547,10 @@ msgstr ""
 "вивід."
 
 #: ../../src/rdbms/query.txt:302
-#, fuzzy
 msgid "Sum of first 10 numbers starting from 1"
 msgstr "Сума перших 10 чисел, починаючи з 1"
 
 #: ../../src/rdbms/query.txt:311
-#, fuzzy
 msgid ""
 "When working with recursive queries it is important to be sure that the "
 "recursive part of the query will eventually return no tuple, or else the "
@@ -628,12 +561,10 @@ msgstr ""
 "зациклиться на невизначений час."
 
 #: ../../src/rdbms/query.txt:316
-#, fuzzy
 msgid "Data modifying statements in WITH"
 msgstr "Оператори, що модифікують дані в операторі WITH"
 
 #: ../../src/rdbms/query.txt:318
-#, fuzzy
 msgid ""
 "You can use most data-modifying statements (``INSERT``, ``UPDATE``, "
 "``DELETE``) in ``WITH``. This allows you to perform several different "
@@ -644,17 +575,14 @@ msgstr ""
 "кілька різних операцій одночасно в одному запиті."
 
 #: ../../src/rdbms/query.txt:322
-#, fuzzy
 msgid "Remove old revenue records and store them into history table"
 msgstr "Видаліть старі записи про доходи та збережіть їх у таблиці історії"
 
 #: ../../src/rdbms/query.txt:335
-#, fuzzy
 msgid "Combining queries"
 msgstr "Об'єднання запитів"
 
 #: ../../src/rdbms/query.txt:337
-#, fuzzy
 msgid ""
 "The results of two queries can be combined using the set operations union, "
 "intersection, and difference."
@@ -663,7 +591,6 @@ msgstr ""
 "перетину та різниці."
 
 #: ../../src/rdbms/query.txt:346
-#, fuzzy
 msgid ""
 "``UNION`` effectively appends the result of ``query2`` to the result of "
 "``query1`` (although there is no guarantee that this is the order in which "
@@ -671,7 +598,7 @@ msgid ""
 "from its result, in the same way as ``DISTINCT``, unless ``UNION ALL`` is "
 "used."
 msgstr ""
-"``UNION`` ефективно додає результат ``запиту2`` до результату ``запиту1`` "
+"``UNION`` ефективно додає результат ``query2`` до результату ``query1`` "
 "(хоча немає жодних гарантій, що це саме той порядок, в якому повертаються "
 "рядки). Крім того, вона вилучає з результату повторювані рядки так само, як "
 "і ``DISTINCT``, якщо не використовується ``UNION ALL``."
@@ -681,40 +608,34 @@ msgstr ""
 #: ../../src/rdbms/query.txt:545 ../../src/rdbms/query.txt:587
 #: ../../src/rdbms/query.txt:630 ../../src/rdbms/query.txt:668
 #: ../../src/rdbms/query.txt:693 ../../src/rdbms/query.txt:714
-#, fuzzy
 msgid "id"
 msgstr "id"
 
 #: ../../src/rdbms/query.txt:378 ../../src/rdbms/query.txt:432
 #: ../../src/rdbms/query.txt:470
-#, fuzzy
 msgid "first_name"
-msgstr "Ім'я"
+msgstr "first_name"
 
 #: ../../src/rdbms/query.txt:378 ../../src/rdbms/query.txt:432
 #: ../../src/rdbms/query.txt:470
-#, fuzzy
 msgid "last_name"
-msgstr "Прізвище"
+msgstr "last_name"
 
 #: ../../src/rdbms/query.txt:380 ../../src/rdbms/query.txt:472
 #: ../../src/rdbms/query.txt:529 ../../src/rdbms/query.txt:589
 #: ../../src/rdbms/query.txt:595 ../../src/rdbms/query.txt:601
 #: ../../src/rdbms/query.txt:607 ../../src/rdbms/query.txt:613
 #: ../../src/rdbms/query.txt:701 ../../src/rdbms/query.txt:728
-#, fuzzy
 msgid "1"
 msgstr "1"
 
 #: ../../src/rdbms/query.txt:380 ../../src/rdbms/query.txt:472
-#, fuzzy
 msgid "Mariska"
-msgstr "Марисько"
+msgstr "Mariska"
 
 #: ../../src/rdbms/query.txt:380 ../../src/rdbms/query.txt:472
-#, fuzzy
 msgid "Syson"
-msgstr "Сайсоне"
+msgstr "Syson"
 
 #: ../../src/rdbms/query.txt:382 ../../src/rdbms/query.txt:474
 #: ../../src/rdbms/query.txt:547 ../../src/rdbms/query.txt:553
@@ -726,19 +647,16 @@ msgstr "Сайсоне"
 #: ../../src/rdbms/query.txt:670 ../../src/rdbms/query.txt:676
 #: ../../src/rdbms/query.txt:678 ../../src/rdbms/query.txt:716
 #: ../../src/rdbms/query.txt:722 ../../src/rdbms/query.txt:724
-#, fuzzy
 msgid "2"
 msgstr "2"
 
 #: ../../src/rdbms/query.txt:382 ../../src/rdbms/query.txt:474
-#, fuzzy
 msgid "Robenia"
-msgstr "Робена"
+msgstr "Robenia"
 
 #: ../../src/rdbms/query.txt:382 ../../src/rdbms/query.txt:474
-#, fuzzy
 msgid "Dimitriades"
-msgstr "Дімітріадіс"
+msgstr "Dimitriades"
 
 #: ../../src/rdbms/query.txt:384 ../../src/rdbms/query.txt:476
 #: ../../src/rdbms/query.txt:531 ../../src/rdbms/query.txt:549
@@ -751,158 +669,130 @@ msgstr "Дімітріадіс"
 #: ../../src/rdbms/query.txt:672 ../../src/rdbms/query.txt:674
 #: ../../src/rdbms/query.txt:695 ../../src/rdbms/query.txt:697
 #: ../../src/rdbms/query.txt:718 ../../src/rdbms/query.txt:720
-#, fuzzy
 msgid "3"
 msgstr "3"
 
 #: ../../src/rdbms/query.txt:384 ../../src/rdbms/query.txt:476
-#, fuzzy
 msgid "Loren"
-msgstr "Лорен"
+msgstr "Loren"
 
 #: ../../src/rdbms/query.txt:384 ../../src/rdbms/query.txt:476
-#, fuzzy
 msgid "Goretti"
-msgstr "Ґоретті"
+msgstr "Goretti"
 
 #: ../../src/rdbms/query.txt:386 ../../src/rdbms/query.txt:478
 #: ../../src/rdbms/query.txt:593 ../../src/rdbms/query.txt:599
 #: ../../src/rdbms/query.txt:605 ../../src/rdbms/query.txt:611
 #: ../../src/rdbms/query.txt:617 ../../src/rdbms/query.txt:699
 #: ../../src/rdbms/query.txt:726
-#, fuzzy
 msgid "4"
 msgstr "4"
 
 #: ../../src/rdbms/query.txt:386 ../../src/rdbms/query.txt:478
-#, fuzzy
 msgid "Dianna"
-msgstr "Діана"
+msgstr "Dianna"
 
 #: ../../src/rdbms/query.txt:386 ../../src/rdbms/query.txt:478
-#, fuzzy
 msgid "Giacomuzzo"
-msgstr "Джакомуццо"
+msgstr "Giacomuzzo"
 
 #: ../../src/rdbms/query.txt:388 ../../src/rdbms/query.txt:434
-#, fuzzy
 msgid "5"
 msgstr "5"
 
 #: ../../src/rdbms/query.txt:388 ../../src/rdbms/query.txt:434
-#, fuzzy
 msgid "Anett"
-msgstr "Анетт"
+msgstr "Anett"
 
 #: ../../src/rdbms/query.txt:388 ../../src/rdbms/query.txt:434
-#, fuzzy
 msgid "Hayland"
-msgstr "Хейленд"
+msgstr "Hayland"
 
 #: ../../src/rdbms/query.txt:390 ../../src/rdbms/query.txt:436
-#, fuzzy
 msgid "6"
 msgstr "6"
 
 #: ../../src/rdbms/query.txt:390 ../../src/rdbms/query.txt:436
-#, fuzzy
 msgid "Keeley"
-msgstr "Кілі"
+msgstr "Keeley"
 
 #: ../../src/rdbms/query.txt:390 ../../src/rdbms/query.txt:436
-#, fuzzy
 msgid "Grishelyov"
-msgstr "Гришелов"
+msgstr "Grishelyov"
 
 #: ../../src/rdbms/query.txt:392
-#, fuzzy
 msgid "7"
 msgstr "7"
 
 #: ../../src/rdbms/query.txt:392
-#, fuzzy
 msgid "Say"
-msgstr "Сказати"
+msgstr "Say"
 
 #: ../../src/rdbms/query.txt:392
-#, fuzzy
 msgid "Kliner"
-msgstr "Клайнер"
+msgstr "Kliner"
 
 #: ../../src/rdbms/query.txt:394
-#, fuzzy
 msgid "8"
 msgstr "8"
 
 #: ../../src/rdbms/query.txt:394
-#, fuzzy
 msgid "Charles"
-msgstr "Чарльзе"
+msgstr "Charles"
 
 #: ../../src/rdbms/query.txt:394
-#, fuzzy
 msgid "Ede"
-msgstr "Еде"
+msgstr "Ede"
 
 #: ../../src/rdbms/query.txt:396
-#, fuzzy
 msgid "9"
 msgstr "9"
 
 #: ../../src/rdbms/query.txt:396
-#, fuzzy
 msgid "Florentia"
-msgstr "Флоренція"
+msgstr "Florentia"
 
 #: ../../src/rdbms/query.txt:396
-#, fuzzy
 msgid "Core"
-msgstr "Ядро"
+msgstr "Core"
 
 #: ../../src/rdbms/query.txt:398
-#, fuzzy
 msgid "10"
 msgstr "10"
 
 #: ../../src/rdbms/query.txt:398
-#, fuzzy
 msgid "Tiffany"
-msgstr "Тіффані"
+msgstr "Tiffany"
 
 #: ../../src/rdbms/query.txt:398
-#, fuzzy
 msgid "Tingly"
-msgstr "Пощипування"
+msgstr "Tingly"
 
 #: ../../src/rdbms/query.txt:401
-#, fuzzy
 msgid ""
 "``INTERSECT`` returns all rows that are both in the result of ``query1`` and "
 "in the result of ``query2``. Duplicate rows are eliminated unless "
 "``INTERSECT ALL`` is used."
 msgstr ""
-"``INTERSECT`` повертає всі рядки, які є і в результаті ``запиту1``, і в "
-"результаті ``запиту2``. Повторювані рядки вилучаються, якщо не "
+"``INTERSECT`` повертає всі рядки, які є і в результаті ``query1``, і в "
+"результаті ``query2``. Повторювані рядки вилучаються, якщо не "
 "використовується ``INTERSECT ALL``."
 
 #: ../../src/rdbms/query.txt:439
-#, fuzzy
 msgid ""
 "``EXCEPT`` returns all rows that are in the result of ``query1`` but not in "
 "the result of ``query2``. (This is sometimes called the difference between "
 "two queries.) Again, duplicates are eliminated unless ``EXCEPT ALL`` is used."
 msgstr ""
-"``EXCEPT`` повертає всі рядки, які є в результаті ``запиту1``, але не є в "
-"результаті ``запиту2``. (Це іноді називають різницею між двома запитами.) "
+"``EXCEPT`` повертає всі рядки, які є в результаті ``query1``, але не є в "
+"результаті ``query2``. (Це іноді називають різницею між двома запитами.) "
 "Знову ж таки, дублікати вилучаються, якщо не використовується ``EXCEPT ALL``."
 
 #: ../../src/rdbms/query.txt:482
-#, fuzzy
 msgid "Join data from different tables"
 msgstr "Об'єднання даних з різних таблиць"
 
 #: ../../src/rdbms/query.txt:484
-#, fuzzy
 msgid ""
 "A ``JOIN`` clause combines two ``FROM`` items, which for convenience we will "
 "refer as \"tables\", though in reality they can be any type of ``FROM`` "
@@ -910,55 +800,46 @@ msgid ""
 msgstr ""
 "Речення ``JOIN`` об'єднує два елементи ``FROM``, які для зручності будемо "
 "називати \"таблицями\", хоча насправді це може бути будь-який тип елементів "
-"``FROM``. Доступні типи з'єднання"
+"``FROM``. Доступні типи з'єднання:"
 
 #: ../../src/rdbms/query.txt:488
-#, fuzzy
 msgid "``[INNER] JOIN``"
-msgstr "``[ВНУТРІШНЄ] ПРИЄДНАННЯ``"
+msgstr "``[INNER] JOIN``"
 
 #: ../../src/rdbms/query.txt:489
-#, fuzzy
 msgid "``LEFT [OUTER] JOIN``"
-msgstr "\"ЛІВИЙ [ЗОВНІШНІЙ] СТИК"
+msgstr "``LEFT [OUTER] JOIN``"
 
 #: ../../src/rdbms/query.txt:490
-#, fuzzy
 msgid "``RIGHT [OUTER] JOIN``"
-msgstr "\"ПРАВЕ [ЗОВНІШНЄ] З'ЄДНАННЯ"
+msgstr "``RIGHT [OUTER] JOIN``"
 
 #: ../../src/rdbms/query.txt:491
-#, fuzzy
 msgid "``FULL [OUTER] JOIN``"
-msgstr "``ПОВНЕ [ЗОВНІШНЄ] З'ЄДНАННЯ``"
+msgstr "``FULL [OUTER] JOIN``"
 
 #: ../../src/rdbms/query.txt:495
-#, fuzzy
 msgid "Key words in bracket parentheses above are optional."
 msgstr "Ключові слова в дужках вище є необов'язковими."
 
 #: ../../src/rdbms/query.txt:498
-#, fuzzy
 msgid "Joins between tables"
 msgstr "З'єднання між столами"
 
 #: ../../src/rdbms/query.txt:500
-#, fuzzy
 msgid "Publishers and books tables definitions"
 msgstr "Визначення таблиць видавництв та книг"
 
 #: ../../src/rdbms/query.txt:505
-#, fuzzy
 msgid ""
 "Following tables are related via ``FOREIGN KEY`` constraint. Each record in "
 "the ``book`` table references some record in the ``publisher`` table."
 msgstr ""
-"Наступні таблиці пов'язані між собою за допомогою обмеження ``зовнішній "
-"ключ``. Кожен запис у таблиці ``book`` посилається на деякий запис у таблиці "
+"Наступні таблиці пов'язані між собою за допомогою обмеження ``FOREIGN KEY``. "
+"Кожен запис у таблиці ``book`` посилається на деякий запис у таблиці "
 "``publisher``."
 
 #: ../../src/rdbms/query.txt:510
-#, fuzzy
 msgid ""
 "Since original tables contain lots of data, temporary tables will be created "
 "instead before join query. Full tables content may be downloaded via links: :"
@@ -971,22 +852,19 @@ msgstr ""
 "download:`book </../libms-db/assets/csv/book.csv>`."
 
 #: ../../src/rdbms/query.txt:516
-#, fuzzy
 msgid "The subsets from original queries defined as:"
 msgstr "Підмножини з вихідних запитів визначаються як:"
 
 #: ../../src/rdbms/query.txt:527 ../../src/rdbms/query.txt:587
 #: ../../src/rdbms/query.txt:630 ../../src/rdbms/query.txt:668
 #: ../../src/rdbms/query.txt:693 ../../src/rdbms/query.txt:714
-#, fuzzy
 msgid "name"
-msgstr "ім’ я"
+msgstr "name"
 
 #: ../../src/rdbms/query.txt:529 ../../src/rdbms/query.txt:589
 #: ../../src/rdbms/query.txt:595 ../../src/rdbms/query.txt:601
 #: ../../src/rdbms/query.txt:607 ../../src/rdbms/query.txt:613
 #: ../../src/rdbms/query.txt:701 ../../src/rdbms/query.txt:728
-#, fuzzy
 msgid "Zoonoodle"
 msgstr "Zoonoodle"
 
@@ -997,35 +875,30 @@ msgstr "Zoonoodle"
 #: ../../src/rdbms/query.txt:672 ../../src/rdbms/query.txt:674
 #: ../../src/rdbms/query.txt:695 ../../src/rdbms/query.txt:697
 #: ../../src/rdbms/query.txt:718 ../../src/rdbms/query.txt:720
-#, fuzzy
 msgid "Tanoodle"
-msgstr "Бувай"
+msgstr "Tanoodle"
 
 #: ../../src/rdbms/query.txt:545 ../../src/rdbms/query.txt:587
 #: ../../src/rdbms/query.txt:630 ../../src/rdbms/query.txt:668
 #: ../../src/rdbms/query.txt:693 ../../src/rdbms/query.txt:714
-#, fuzzy
 msgid "title"
-msgstr "назва"
+msgstr "title"
 
 #: ../../src/rdbms/query.txt:545 ../../src/rdbms/query.txt:587
 #: ../../src/rdbms/query.txt:630 ../../src/rdbms/query.txt:668
 #: ../../src/rdbms/query.txt:693 ../../src/rdbms/query.txt:714
-#, fuzzy
 msgid "publisher_id"
 msgstr "publisher_id"
 
 #: ../../src/rdbms/query.txt:547 ../../src/rdbms/query.txt:589
 #: ../../src/rdbms/query.txt:591 ../../src/rdbms/query.txt:593
 #: ../../src/rdbms/query.txt:670 ../../src/rdbms/query.txt:716
-#, fuzzy
 msgid "22"
 msgstr "22"
 
 #: ../../src/rdbms/query.txt:547 ../../src/rdbms/query.txt:589
 #: ../../src/rdbms/query.txt:591 ../../src/rdbms/query.txt:593
 #: ../../src/rdbms/query.txt:670 ../../src/rdbms/query.txt:716
-#, fuzzy
 msgid "pretium nisl"
 msgstr "pretium nisl"
 
@@ -1033,7 +906,6 @@ msgstr "pretium nisl"
 #: ../../src/rdbms/query.txt:597 ../../src/rdbms/query.txt:599
 #: ../../src/rdbms/query.txt:632 ../../src/rdbms/query.txt:672
 #: ../../src/rdbms/query.txt:695 ../../src/rdbms/query.txt:718
-#, fuzzy
 msgid "38"
 msgstr "38"
 
@@ -1041,7 +913,6 @@ msgstr "38"
 #: ../../src/rdbms/query.txt:597 ../../src/rdbms/query.txt:599
 #: ../../src/rdbms/query.txt:632 ../../src/rdbms/query.txt:672
 #: ../../src/rdbms/query.txt:695 ../../src/rdbms/query.txt:718
-#, fuzzy
 msgid "ac est lacinia nisi venenatis"
 msgstr "ac est lacinia nisi venenatis"
 
@@ -1049,7 +920,6 @@ msgstr "ac est lacinia nisi venenatis"
 #: ../../src/rdbms/query.txt:603 ../../src/rdbms/query.txt:605
 #: ../../src/rdbms/query.txt:634 ../../src/rdbms/query.txt:674
 #: ../../src/rdbms/query.txt:697 ../../src/rdbms/query.txt:720
-#, fuzzy
 msgid "69"
 msgstr "69"
 
@@ -1057,40 +927,34 @@ msgstr "69"
 #: ../../src/rdbms/query.txt:603 ../../src/rdbms/query.txt:605
 #: ../../src/rdbms/query.txt:634 ../../src/rdbms/query.txt:674
 #: ../../src/rdbms/query.txt:697 ../../src/rdbms/query.txt:720
-#, fuzzy
 msgid "vel accumsan tellus nisi"
 msgstr "vel accumsan tellus nisi"
 
 #: ../../src/rdbms/query.txt:553 ../../src/rdbms/query.txt:607
 #: ../../src/rdbms/query.txt:609 ../../src/rdbms/query.txt:611
 #: ../../src/rdbms/query.txt:676 ../../src/rdbms/query.txt:722
-#, fuzzy
 msgid "72"
 msgstr "72"
 
 #: ../../src/rdbms/query.txt:553 ../../src/rdbms/query.txt:607
 #: ../../src/rdbms/query.txt:609 ../../src/rdbms/query.txt:611
 #: ../../src/rdbms/query.txt:676 ../../src/rdbms/query.txt:722
-#, fuzzy
 msgid "nam dui proin"
 msgstr "nam dui proin"
 
 #: ../../src/rdbms/query.txt:555 ../../src/rdbms/query.txt:613
 #: ../../src/rdbms/query.txt:615 ../../src/rdbms/query.txt:617
 #: ../../src/rdbms/query.txt:678 ../../src/rdbms/query.txt:724
-#, fuzzy
 msgid "85"
 msgstr "85"
 
 #: ../../src/rdbms/query.txt:555 ../../src/rdbms/query.txt:613
 #: ../../src/rdbms/query.txt:615 ../../src/rdbms/query.txt:617
 #: ../../src/rdbms/query.txt:678 ../../src/rdbms/query.txt:724
-#, fuzzy
 msgid "nam tristique"
 msgstr "nam tristique"
 
 #: ../../src/rdbms/query.txt:558
-#, fuzzy
 msgid ""
 "By passing multiple tables to the ``FROM`` clause a ``CROSS JOIN`` query is "
 "executed. This means the resulting table is the Cartesian product of two "
@@ -1101,12 +965,10 @@ msgstr ""
 "декартовим добутком двох вихідних таблиць."
 
 #: ../../src/rdbms/query.txt:562
-#, fuzzy
 msgid "Cross join (Cartesian product)"
 msgstr "Поперечне з'єднання (декартовий добуток)"
 
 #: ../../src/rdbms/query.txt:584
-#, fuzzy
 msgid "Query result"
 msgstr "Результат запиту"
 
@@ -1114,12 +976,10 @@ msgstr "Результат запиту"
 #: ../../src/rdbms/query.txt:605 ../../src/rdbms/query.txt:611
 #: ../../src/rdbms/query.txt:617 ../../src/rdbms/query.txt:699
 #: ../../src/rdbms/query.txt:726
-#, fuzzy
 msgid "Skivee"
-msgstr "Скайві"
+msgstr "Skivee"
 
 #: ../../src/rdbms/query.txt:620
-#, fuzzy
 msgid ""
 "By defining the ``WHERE`` clause rows that do not match the condition may be "
 "eliminated from the result."
@@ -1128,18 +988,16 @@ msgstr ""
 "вилучені з результату."
 
 #: ../../src/rdbms/query.txt:637
-#, fuzzy
 msgid ""
 "This is called ``INNER JOIN``, which means that the result table will "
 "contain only whose rows from left-hard and right-hand tables, that have "
 "corresponding records to each other."
 msgstr ""
-"Це називається ``ВНУТРІШНЄ ОБ'ЄДНАННЯ``, що означає, що результуюча таблиця "
-"буде містити тільки ті рядки з лівої та правої таблиць, які мають відповідні "
+"Це називається ``INNER JOIN``, що означає, що результуюча таблиця буде "
+"містити тільки ті рядки з лівої та правої таблиць, які мають відповідні "
 "записи один одному."
 
 #: ../../src/rdbms/query.txt:641
-#, fuzzy
 msgid ""
 "The same result may be obtained using ``JOIN`` clause. All ``JOIN`` options "
 "are just a notation convenience, since they do nothing you couldn't do with "
@@ -1151,19 +1009,16 @@ msgstr ""
 "``WHERE``."
 
 #: ../../src/rdbms/query.txt:651
-#, fuzzy
 msgid "``INNER JOIN`` is the default while joining two tables with each other."
 msgstr ""
 "``INNER JOIN`` використовується за замовчуванням при з'єднанні двох таблиць "
 "одна з одною."
 
 #: ../../src/rdbms/query.txt:654
-#, fuzzy
 msgid "Right and left joins"
 msgstr "Праве та ліве з'єднання"
 
 #: ../../src/rdbms/query.txt:656
-#, fuzzy
 msgid ""
 "``LEFT OUTER JOIN`` returns all rows in the qualified Cartesian product (i."
 "e., all combined rows that pass its condition), plus one copy of each row in "
@@ -1180,12 +1035,10 @@ msgstr ""
 #: ../../src/rdbms/query.txt:701 ../../src/rdbms/query.txt:716
 #: ../../src/rdbms/query.txt:722 ../../src/rdbms/query.txt:724
 #: ../../src/rdbms/query.txt:726 ../../src/rdbms/query.txt:728
-#, fuzzy
 msgid "null"
-msgstr "нуль"
+msgstr "null"
 
 #: ../../src/rdbms/query.txt:681
-#, fuzzy
 msgid ""
 "Conversely, ``RIGHT OUTER JOIN`` returns all the joined rows, plus one row "
 "for each unmatched right-hand row. This is just a notation convenience, "
@@ -1198,6 +1051,5 @@ msgstr ""
 "помінявши місцями ліву та праву таблиці."
 
 #: ../../src/rdbms/query.txt:705
-#, fuzzy
 msgid "Full outer join"
-msgstr "``ПОВНЕ [ЗОВНІШНЄ] З'ЄДНАННЯ``"
+msgstr "Full outer join"

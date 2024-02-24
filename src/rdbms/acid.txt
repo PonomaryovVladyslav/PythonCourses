@@ -1,0 +1,97 @@
+.. meta::
+    :description: Database normalization
+    :author: Serhii Horodilov
+    :keywords: sql, db, database, acid, atomic, consistent, isolated, durable
+
+*******************************************************************************
+                                     ACID
+*******************************************************************************
+
+:abbr:`ACID (Atomicity, Consistency, Isolation, Durability)` is a set of
+properties of database transactions intended to guarantee data validity despite
+errors, power failures, and other mishaps. In the context of databases,
+a sequence of database operations that satisfies the ACID properties is called
+a transaction.
+
+Atomicity
+=========
+
+Transactions are often composed of multiple statements. Atomicity guarantees
+that each transaction is treated as a single "unit", which either succeeds
+completely, or fails completely: if any of the statements constituting
+a transaction fails to complete, the entire transaction fails and the database
+left unchanged. A guarantee of atomicity prevents updates to the database from
+occurring only partially, which can cause greater problems, than rejecting the
+whole series outright.
+
+As an example, there are few rows in an accounting table:
+
+.. table:: accounting
+
+    +-----------+-----------------+---------+
+    | person_id | name            | balance |
+    +===========+=================+=========+
+    |       ... | ...             | ...     |
+    +-----------+-----------------+---------+
+    |       529 | Dora Headstrong | $1,000  |
+    +-----------+-----------------+---------+
+    |       402 | Toby Mugwort    | $100    |
+    +-----------+-----------------+---------+
+    |       ... | ...             | ...     |
+    +-----------+-----------------+---------+
+
+In case, Dora wants to transfer $100 to Toby, this can be split into
+3 statements:
+
+-   Check if $100 is available
+-   Deduct $100 from Dora's balance
+-   Add $100 to Toby's balance
+
+In case the 3rd statement fails, the data may stay as:
+
++-----------+-----------------+---------+
+|       529 | Dora Headstrong | $900    |
++-----------+-----------------+---------+
+|       402 | Toby Mugwort    | $100    |
++-----------+-----------------+---------+
+
+Atomicity guarantee reverting database to an old state, in case any statement
+fails.
+
+Consistency
+===========
+
+You can think "consistency" as "correctness". It ensures that a transaction
+can only bring the database from one consistent state to another, preserving
+database invariants: any data written to the database must be valid according
+to all defined rules, including constraints, cascades, triggers, and any
+combination of thereof. This prevents database corruption by an illegal
+transaction. As example, referential integrity guarantees the primary key --
+foreign key relationship.
+
+Isolation
+=========
+
+Transactions are often executed concurrently (e.g. multiple transactions
+reading and writing to a table at the same time). Isolation ensures that
+concurrent execution of transactions leaves the database in the state that
+would have been obtained if the transactions were executed sequentially.
+Isolation is the main goal of concurrency control; depending on the isolation
+level used, the effects of an incomplete transaction might not be visible to
+other transaction.
+
+For example, two persons have access to the same account having $1,000 on it,
+and both persons tries to get the money out of this account. Dora tries to
+get $1,000, and Toby tries to get $100.
+
+The sum of the money to get out of the account is $1,100, which cause an issue
+of leaving negative amount of money. So, one of these transactions fails.
+
+Isolation ensures the concurrent executions are safe.
+
+Durability
+==========
+
+The durability means once the transaction has been committed, the data must
+be writen to non-volatile memory. So, even if a crash happens, or something
+wrong with the database, the data must be where, and must not be corrupted.
