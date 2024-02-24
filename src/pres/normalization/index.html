@@ -207,28 +207,61 @@
       </section>
     </div>
 
-    <div class="step slide" id="1nf"
+    <div class="step slide" id="1nf" aria-labelledby="1NFHeader"
          data-x="1310"
          data-y="105"
          data-rotate-z="-75">
-      <h2>First normal form</h2>
+      <h2 id="1NFHeader">First normal form</h2>
+      <section aria-labelledby="1NFRequirements">
+        <h3 id="1NFRequirements">Requirements</h3>
+        <hr>
+        <ul>
+          <li>
+            Row order should not be used to convey information
+          </li>
+          <li>
+            Data types should not be mixed within the same column
+            <small>(And the RDBMS won't let you do it anyway)</small>
+          </li>
+          <li>
+            Tables should have their primary keys
+          </li>
+          <li>
+            Repeating groups should be eliminated
+          </li>
+        </ul>
+      </section>
     </div>
 
-    <div class="step slide" id="2nf"
-         data-rel-x="-310"
-         data-rel-y="540"
+    <div class="step slide" id="2nf" aria-labelledby="2NFHeader"
+         data-x="1000"
+         data-y="640"
          data-rotate-z="-45">
-      <h2>Second normal form</h2>
+      <h2 id="2NFHeader">Second normal form</h2>
+      <section aria-labelledby="2NFRequirements">
+        <h2 id="2NFRequirements">Requirements</h2>
+        <ul>
+          <li>Each non-key attribute must depend on the entire primary key</li>
+        </ul>
+      </section>
     </div>
 
-    <div class="step slide" id="3nf"
-         data-rel-x="-535"
-         data-rel-y="310"
+    <div class="step slide" id="3nf" aria-labelledby="3NFHeader"
+         data-x="500"
+         data-y="1000"
          data-rotate-z="-15">
-      <h2>Third normal form</h2>
+      <h2 id="3NFHeader">Third normal form</h2>
+      <section aria-labelledby="3NFRequirements">
+        <h3 id="3NFRequirements">Requirements</h3>
+        <ul>
+          <li>
+            Every non-key attribute in a table should depend on the key, the whole key, and nothing but the key
+          </li>
+        </ul>
+      </section>
     </div>
 
-    <div class="step" id="overview" data-scale="5"></div>
+    <div class="step" id="overview" data-x="0" data-y="0" data-scale="3"></div>
 
   </div>
 </main>
