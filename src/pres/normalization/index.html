@@ -112,6 +112,11 @@
         </table>
       </section>
     </div>
+    <div class="notes">
+      When a new player <code>acen1999</code> join the game, they have nothing in their <code>inventory</code>.
+      Therefore, the details of any player who have at least one item can be recorded, but a newly game member
+      who has no items cannot be recorded, except by setting the <code>inventory</code> to <code>null</code>.
+    </div>
 
     <div class="step slide" id="updateAnomalies"
          data-rel-x="440"
@@ -162,6 +167,13 @@
         </table>
       </section>
     </div>
+    <div class="notes">
+      The same information can be expressed on multiple rows, therefore updates to the relation may result in
+      logical inconsistencies. If the <code>wheed1997</code> increase their <code>level</code>, when the
+      <code>rank</code> should be updated as well. But if the update is only partial successful, then the
+      relation is left in an inconsistent state. Specifically. the relation provides conflicting information
+      on "level -- rank" for "wheed1997" player, and on "inventory" and "level" for "acen1999".
+    </div>
 
     <div class="step slide" id="deletionAnomalies"
          data-rel-x="600"
@@ -206,6 +218,10 @@
         </table>
       </section>
     </div>
+    <div class="notes">
+      If a player looses their items completely, the record must be deleted, unless the <code>inventory</code>
+      field is set to <code>null</code>. This leads to the loosing all other information about a player.
+    </div>
 
     <div class="step slide" id="1nf" aria-labelledby="1NFHeader"
          data-x="1310"
@@ -214,7 +230,6 @@
       <h2 id="1NFHeader">First normal form</h2>
       <section aria-labelledby="1NFRequirements">
         <h3 id="1NFRequirements">Requirements</h3>
-        <hr>
         <ul>
           <li>
             Row order should not be used to convey information
