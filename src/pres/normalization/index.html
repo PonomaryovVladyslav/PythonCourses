@@ -42,8 +42,8 @@
     <div class="step slide" id="sample"
          data-x="-95"
          data-y="-595">
-      <section class="sample-data" aria-label="sample data">
-        <table aria-label="data">
+      <section aria-label="sample data">
+        <table class="db-table" aria-label="data">
           <thead>
           <tr>
             <th>username</th>
@@ -63,7 +63,7 @@
             <td>wheed1997</td>
             <td>Almost 7</td>
             <td>Intermediate</td>
-            <td>1 spell book</td>
+            <td>18 copper coins</td>
           </tr>
           </tbody>
         </table>
@@ -79,8 +79,8 @@
         There are circumstances in which certain facts cannot be recorded at all.
       </p>
       <hr>
-      <section class="sample-data" aria-label="sample data">
-        <table aria-label="data">
+      <section aria-label="sample data">
+        <table class="db-table" aria-label="data">
           <thead>
           <tr>
             <th>username</th>
@@ -100,7 +100,7 @@
             <td>wheed1997</td>
             <td>Almost 7</td>
             <td>Intermediate</td>
-            <td>1 spell book</td>
+            <td>18 copper coins</td>
           </tr>
           <tr class="fly-in">
             <td class="lost-data">acen1999</td>
@@ -128,8 +128,8 @@
         the relation may result in logical inconsistencies.
       </p>
       <hr>
-      <section class="sample-data" aria-label="sample data">
-        <table aria-label="data">
+      <section aria-label="sample data">
+        <table class="db-table" aria-label="data">
           <thead>
           <tr>
             <th>username</th>
@@ -155,7 +155,7 @@
             <td>wheed1997</td>
             <td class="invalid inconsistent-data">Greater than 7</td>
             <td class="invalid inconsistent-data">Intermediate</td>
-            <td>1 spell book</td>
+            <td>18 copper coins</td>
           </tr>
           <tr>
             <td>acen1999</td>
@@ -185,8 +185,8 @@
         necessitates the deletion of data representing completely different facts.
       </p>
       <hr>
-      <section class="sample-data" aria-label="sample data">
-        <table aria-label="data">
+      <section aria-label="sample data">
+        <table class="db-table" aria-label="data">
           <thead>
           <tr>
             <th>username</th>
@@ -206,7 +206,7 @@
             <td class="rotating lost-data">wheed1997</td>
             <td class="rotating lost-data">Almost 7</td>
             <td class="rotating lost-data">Intermediate</td>
-            <td class="fade-out">1 spell book</td>
+            <td class="fade-out">18 copper coins</td>
           </tr>
           <tr>
             <td>acen1999</td>
@@ -252,46 +252,48 @@
          data-rel-x="250"
          data-rel-y="250"
          data-rel-rotate-z="-75">
-      <section>
-        <table aria-label="data">
+      <section class="container table-container">
+        <table class="db-table" aria-label="data">
+          <caption>Player Level</caption>
           <thead>
-          <tr>
+          <tr id="1nf--mixed-data-type--username-level">
             <th>username</th>
             <th>level</th>
           </tr>
           </thead>
           <tbody>
-          <tr>
+          <tr id="1nf--mixed-data-type--prombery87-775">
             <td>prombery87</td>
             <td class="invalid">7.75</td>
           </tr>
-          <tr>
+          <tr id="1nf--mixed-data-type--wheed1997-almost-7">
             <td>wheed1997</td>
             <td class="invalid">Almost 7</td>
           </tr>
-          <tr>
+          <tr id="1nf--mixed-data-type--acen1999-1">
             <td>acen1999</td>
             <td class="invalid">1</td>
           </tr>
           </tbody>
         </table>
-        <table aria-label="data">
+        <table class="db-table" aria-label="data">
+          <caption>Player Level</caption>
           <thead>
-          <tr>
+          <tr id="1nf--mixed-data-type--username">
             <th>username</th>
             <th>level</th>
           </tr>
           </thead>
           <tbody>
-          <tr>
+          <tr id="1nf--mixed-data-type--prombery87">
             <td>prombery87</td>
             <td class="valid">7</td>
           </tr>
-          <tr>
+          <tr id="1nf--mixed-data-type--wheed1997">
             <td>wheed1997</td>
             <td class="valid">6</td>
           </tr>
-          <tr>
+          <tr id="1nf--mixed-data-type--acen1999">
             <td>acen1999</td>
             <td class="valid">1</td>
           </tr>
@@ -309,58 +311,60 @@
          data-rel-y="250"
          data-rel-rotate-z="-75">
       <section>
-        <table aria-label="data">
+        <table class="db-table" aria-label="data">
+          <caption>Player Inventory</caption>
           <thead>
-          <tr>
+          <tr id="1nf--repeating-groups--username">
             <th>username</th>
             <th>inventory</th>
           </tr>
           </thead>
           <tbody>
-          <tr>
+          <tr id="1nf--repeating-groups--prombery87">
             <td>prombery87</td>
             <td class="invalid">1 sword, 4 rings</td>
           </tr>
-          <tr>
+          <tr id="1nf--repeating-groups--wheed1997">
             <td>wheed1997</td>
-            <td class="invalid">1 spell book</td>
+            <td class="invalid">18 copper coins</td>
           </tr>
-          <tr>
+          <tr id="1nf--repeating-groups--acen1999">
             <td>acen1999</td>
             <td class="invalid">1 wizard hat, 1 robe</td>
           </tr>
           </tbody>
         </table>
-        <table aria-label="data">
+        <table class="db-table" aria-label="data">
+          <caption>Player Inventory</caption>
           <thead>
-          <tr>
+          <tr id="1nf--repeating-groups--username-item_type">
             <th>username</th>
             <th>item_type</th>
             <th>item_quantity</th>
           </tr>
           </thead>
           <tbody>
-          <tr>
+          <tr id="1nf--repeating-groups--prombery87-sword">
             <td>prombery87</td>
             <td>sword</td>
             <td>1</td>
           </tr>
-          <tr>
+          <tr id="1nf--repeating-groups--prombery87-ring">
             <td>prombery87</td>
             <td>ring</td>
             <td>4</td>
           </tr>
-          <tr>
+          <tr id="1nf--repeating-groups--wheed1997-copper-coin">
             <td>wheed1997</td>
-            <td>spell book</td>
-            <td>1</td>
+            <td>copper coin</td>
+            <td>18</td>
           </tr>
-          <tr>
+          <tr id="1nf--repeating-groups--acen1999-hat">
             <td>acen1999</td>
             <td>wizard hat</td>
             <td>1</td>
           </tr>
-          <tr>
+          <tr id="1nf--repeating-groups--acen1999-robe">
             <td>acen1999</td>
             <td>robe</td>
             <td>1</td>
@@ -379,7 +383,8 @@
          data-rel-y="250"
          data-rel-rotate-z="-75">
       <section>
-        <table aria-label="data">
+        <table class="db-table" aria-label="data">
+          <caption>Player Inventory</caption>
           <thead>
           <tr>
             <th>username</th>
@@ -398,10 +403,10 @@
             <td class="primary-key">ring</td>
             <td>4</td>
           </tr>
-          <tr id="1nf--wheed1997-spell-book">
+          <tr id="1nf--wheed1997-copper-coin">
             <td class="primary-key">wheed1997</td>
-            <td class="primary-key">spell book</td>
-            <td>1</td>
+            <td class="primary-key">copper coin</td>
+            <td>18</td>
           </tr>
           <tr id="1nf--acen1999-wizard-hat">
             <td class="primary-key">acen1999</td>
@@ -440,7 +445,7 @@
          data-rel-y="1v"
          data-rel-rotate-z="0">
       <section>
-        <table aria-label="data">
+        <table class="db-table" aria-label="data">
           <thead>
           <tr>
             <th class="primary-key">username</th>
@@ -467,8 +472,8 @@
           </tr>
           <tr>
             <td class="primary-key">wheed1997</td>
-            <td class="primary-key">spell book</td>
-            <td>1</td>
+            <td class="primary-key">copper coin</td>
+            <td>18</td>
             <td>6</td>
             <td>Intermediate</td>
           </tr>
@@ -508,7 +513,7 @@
          data-rel-y="1v"
          data-rel-rotate-z="0">
       <section>
-        <table aria-label="data">
+        <table class="db-table" aria-label="data">
           <caption>Player Inventory</caption>
           <thead>
           <tr id="2nf--username-item_type">
@@ -528,9 +533,9 @@
             <td class="primary-key">ring</td>
             <td>4</td>
           </tr>
-          <tr id="2nf--wheed1997-spell-book">
+          <tr id="2nf--wheed1997-copper-coin">
             <td class="primary-key">wheed1997</td>
-            <td class="primary-key">spell book</td>
+            <td class="primary-key">copper coin</td>
             <td>1</td>
           </tr>
           <tr id="2nf--acen1999-wizard-hat">
@@ -545,7 +550,7 @@
           </tr>
           </tbody>
         </table>
-        <table aria-label="data">
+        <table class="db-table" aria-label="data">
           <caption>Player Level</caption>
           <thead>
           <tr id="2nf--username">
@@ -595,7 +600,8 @@
          data-rel-y="1v"
          data-rel-rotate-z="0">
       <section>
-        <table aria-label="data">
+        <table class="db-table" aria-label="data">
+          <caption>Player Level</caption>
           <thead>
           <tr id="3nf--username--rank">
             <th class="primary-key">username</th>
@@ -637,7 +643,8 @@
          data-rel-y="1v"
          data-rel-rotate-z="0">
       <section>
-        <table aria-label="data">
+        <table class="db-table" aria-label="data">
+          <caption>Player Level</caption>
           <thead>
           <tr id="3nf--username">
             <th class="primary-key">username</th>
@@ -659,7 +666,8 @@
           </tr>
           </tbody>
         </table>
-        <table aria-label="data">
+        <table class="db-table" aria-label="data">
+          <caption>Level Ranking</caption>
           <thead>
           <tr>
             <th class="primary-key">level</th>
