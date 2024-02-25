@@ -481,10 +481,9 @@
     </div>
 
     <div class="step" id="non-key-attrs--2nf"
-         style="display: none"
-         data-rel-x="1w"
-         data-rel-y="1v"
-         data-rel-rotate-z="0">
+         data-rel-position="relative"
+         data-rel-x="0"
+         data-rel-y="2000">
       <section>
         <table class="db-table" aria-label="data">
           <thead>
@@ -550,10 +549,9 @@
     </div>
 
     <div class="step" id="table--2nf"
-         style="display: none"
-         data-rel-x="1w"
-         data-rel-y="1v"
-         data-rel-rotate-z="0">
+         data-rel-position="relative"
+         data-rel-x="0"
+         data-rel-y="-1000">
       <section>
         <table class="db-table" aria-label="data">
           <caption>Player Inventory</caption>
@@ -622,6 +620,13 @@
       </section>
     </div>
 
+    <div class="step overview" id="overview--2nf"
+         data-rel-position="relative"
+         data-rel-x="0"
+         data-rel-y="200"
+         data-scale="3">
+    </div>
+
     <!-- 3NF -->
     <div class="step requirements" id="requirements--3nf"
          data-rel-position="absolute"
@@ -640,10 +645,9 @@
     </div>
 
     <div class="step" id="transitive-deps--3nf"
-         style="display: none"
-         data-rel-x="1w"
-         data-rel-y="1v"
-         data-rel-rotate-z="0">
+         data-rel-position="relative"
+         data-rel-x="0"
+         data-rel-y="2000">
       <section>
         <table class="db-table" aria-label="data">
           <caption>Player Level</caption>
@@ -673,22 +677,16 @@
           </tbody>
         </table>
       </section>
-      <section class="fly-in">
-        <ul>
-          <li class="fail">
-            <i class="icon-fail"></i>
-            <code>{ name } <-- { level } <-- { rank }</code>
-          </li>
-        </ul>
-      </section>
     </div>
 
     <div class="step" id="table--3nf"
-         style="display: none"
-         data-rel-x="1w"
-         data-rel-y="1v"
-         data-rel-rotate-z="0">
-      <section>
+         data-rel-position="relative"
+         data-rel-x="0"
+         data-rel-y="-1000">
+      <div>
+        <div class="text-center fly-in">
+          <i class="i-fail"></i><code>{ username } <-- { level }</code>
+        </div>
         <table class="db-table" aria-label="data">
           <caption>Player Level</caption>
           <thead>
@@ -712,6 +710,8 @@
           </tr>
           </tbody>
         </table>
+      </div>
+      <div>
         <table class="db-table" aria-label="data">
           <caption>Level Ranking</caption>
           <thead>
@@ -755,28 +755,24 @@
           </tr>
           <tr id="table--3nf__level-9">
             <td>9</td>
-            <td>Advanced
-            </td>
+            <td>Advanced</td>
           </tr>
           </tbody>
         </table>
-      </section>
-      <section class="fly-in">
-        <ul>
-          <li class="pass">
-            <i class="icon-pass"></i>
-            <code>{ name } <-- { level }</code>
-          </li>
-          <li class="pass">
-            <i class="icon-pass"></i>
-            <code>{ level } <-- { rank }</code>
-          </li>
-        </ul>
-      </section>
+        <div class="text-center fly-in">
+          <i class="i-pass"></i><code>{ level } <-- { rank }</code>
+        </div>
+      </div>
     </div>
 
+    <div class="step overview" id="overview--3nf"
+         data-rel-position="relative"
+         data-rel-x="0"
+         data-rel-y="450"
+         data-scale="3">
+    </div>
     <!-- overview -->
-    <div class="step overview" id="overview" data-x="0" data-y="500" data-scale="7"></div>
+    <div class="step overview" id="overview" data-rel-position="absolute" data-x="0" data-y="0" data-scale="7"></div>
 
   </div>
 </main>

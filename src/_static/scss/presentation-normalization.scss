@@ -28,4 +28,11 @@
       width: 50%;
     }
   }
+
+  #table--3nf {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-column-gap: 20px;
+    align-items: start;
+  }
 }
