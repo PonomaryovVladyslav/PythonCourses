@@ -248,6 +248,180 @@
       </section>
     </div>
 
+    <div class="step slide" id="mixedDataTypes" aria-label="Eliminate mixed data types"
+         data-rel-x="250"
+         data-rel-y="250"
+         data-rel-rotate-z="-75">
+      <section>
+        <table aria-label="data">
+          <thead>
+          <tr>
+            <th>username</th>
+            <th>level</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <td>prombery87</td>
+            <td class="invalid">7.75</td>
+          </tr>
+          <tr>
+            <td>wheed1997</td>
+            <td class="invalid">Almost 7</td>
+          </tr>
+          <tr>
+            <td>acen1999</td>
+            <td class="invalid">1</td>
+          </tr>
+          </tbody>
+        </table>
+        <table aria-label="data">
+          <thead>
+          <tr>
+            <th>username</th>
+            <th>level</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <td>prombery87</td>
+            <td class="valid">7</td>
+          </tr>
+          <tr>
+            <td>wheed1997</td>
+            <td class="valid">6</td>
+          </tr>
+          <tr>
+            <td>acen1999</td>
+            <td class="valid">1</td>
+          </tr>
+          </tbody>
+        </table>
+      </section>
+      <section>
+        <i class="check-mark fade-in"></i>
+        <span>Data types should not be mixed within the same column</span>
+      </section>
+    </div>
+
+    <div class="step slide" id="repeatingGroups" aria-label="Eliminate repeating groups"
+         data-rel-x="250"
+         data-rel-y="250"
+         data-rel-rotate-z="-75">
+      <section>
+        <table aria-label="data">
+          <thead>
+          <tr>
+            <th>username</th>
+            <th>inventory</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <td>prombery87</td>
+            <td class="invalid">1 sword, 4 rings</td>
+          </tr>
+          <tr>
+            <td>wheed1997</td>
+            <td class="invalid">1 spell book</td>
+          </tr>
+          <tr>
+            <td>acen1999</td>
+            <td class="invalid">1 wizard hat, 1 robe</td>
+          </tr>
+          </tbody>
+        </table>
+        <table aria-label="data">
+          <thead>
+          <tr>
+            <th>username</th>
+            <th>item_type</th>
+            <th>item_quantity</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <td>prombery87</td>
+            <td>sword</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td>prombery87</td>
+            <td>ring</td>
+            <td>4</td>
+          </tr>
+          <tr>
+            <td>wheed1997</td>
+            <td>spell book</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td>acen1999</td>
+            <td>wizard hat</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td>acen1999</td>
+            <td>robe</td>
+            <td>1</td>
+          </tr>
+          </tbody>
+        </table>
+      </section>
+      <section>
+        <i class="check-mark fade-in"></i>
+        <span>Repeating groups should be eliminated</span>
+      </section>
+    </div>
+
+    <div class="step slide" id="applyPrimaryKey" aria-label="Applying primary key"
+         data-rel-x="250"
+         data-rel-y="250"
+         data-rel-rotate-z="-75">
+      <section>
+        <table aria-label="data">
+          <thead>
+          <tr>
+            <th>username</th>
+            <th>item_type</th>
+            <th>item_quantity</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <td class="primary-key">prombery87</td>
+            <td class="primary-key">sword</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td class="primary-key">prombery87</td>
+            <td class="primary-key">ring</td>
+            <td>4</td>
+          </tr>
+          <tr>
+            <td class="primary-key">wheed1997</td>
+            <td class="primary-key">spell book</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td class="primary-key">acen1999</td>
+            <td class="primary-key">wizard hat</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td class="primary-key">acen1999</td>
+            <td class="primary-key">robe</td>
+            <td>1</td>
+          </tr>
+          </tbody>
+        </table>
+      </section>
+      <section>
+        <i class="check-mark"></i>
+        <span>Tables should have their primary keys</span>
+      </section>
+    </div>
+
     <div class="step slide" id="2nf" aria-labelledby="2NFHeader"
          data-x="1000"
          data-y="640"
