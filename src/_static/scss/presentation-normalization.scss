@@ -1,0 +1,31 @@
+@import "./presentation-common";
+
+#normalization[aria-roledescription=presentation] {
+  #definition {
+    width: $step-width * 0.66;
+    padding: 0 0 120px 120px;
+  }
+
+  .requirements {
+    h3 {
+      @extend .text-start;
+    }
+  }
+
+  #mixed-data-types--1nf,
+  #no-mixed-data-types--1nf {
+    table {
+      margin-right: auto;
+      margin-left: auto;
+      width: 50%;
+    }
+  }
+
+  #repeating-groups--1nf {
+    table {
+      margin-right: auto;
+      margin-left: auto;
+      width: 50%;
+    }
+  }
+}

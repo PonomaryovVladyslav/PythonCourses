@@ -36,26 +36,28 @@
        data-min-scale="0"
        data-perspective="1000">
 
-    <div class="step slide title" id="title">
+    <div class="step title" id="title">
       <h1>Database normalization</h1>
     </div>
 
-    <div class="step slide" id="definition"
-         data-rel-x="440"
-         data-rel-y="-440"
+    <div class="step" id="definition"
+         data-rel-x="1800"
+         data-rel-y="-500"
          data-rotate-x="30"
          data-rotate-z="45">
-      <p>
-        Normalization is a process of organizing data in a database so that it is free from redundancy and dependency.
-        It helps to eliminate data inconsistencies and anomalies, thereby improving data integrity. Normalization is a
-        set of rules or guidelines to design a database schema in such a way that it avoids data duplication, data
-        redundancy, and data inconsistency.
+      <p class="text-end">
+        <em>
+          Normalization is a process of organizing data in a database so that it is free from redundancy and dependency.
+          It helps to eliminate data inconsistencies and anomalies, thereby improving data integrity. Normalization is a
+          set of rules or guidelines to design a database schema in such a way that it avoids data duplication, data
+          redundancy, and data inconsistency.
+        </em>
       </p>
     </div>
 
-    <div class="step slide" id="sample"
-         data-x="-95"
-         data-y="-595">
+    <div class="step" id="example-data"
+         data-x="0"
+         data-y="-1000">
       <section aria-label="sample data">
         <table class="db-table" aria-label="data">
           <thead>
@@ -69,28 +71,29 @@
           <tbody>
           <tr>
             <td>prombery87</td>
-            <td>7.75</td>
-            <td>Advanced</td>
-            <td>1 sword, 4 rings</td>
+            <td class="text-center">7.75</td>
+            <td class="text-end">Advanced</td>
+            <td>1&nbsp;sword, 4&nbsp;rings</td>
           </tr>
           <tr>
             <td>wheed1997</td>
-            <td>Almost 7</td>
-            <td>Intermediate</td>
-            <td>18 copper coins</td>
+            <td class="text-center">Almost 7</td>
+            <td class="text-end">Intermediate</td>
+            <td>18&nbsp;copper&nbsp;coins</td>
           </tr>
           </tbody>
         </table>
       </section>
     </div>
 
-    <div class="step slide" id="insertion-anomalies"
-         data-x="-900"
-         data-y="-800"
-         data-rotate-z="-60">
+    <div class="step" id="insertion-anomalies"
+         data-rel-position="relative"
+         data-y="-2000">
       <h2>Insertion anomalies</h2>
-      <p class="description">
-        There are circumstances in which certain facts cannot be recorded at all.
+      <p class="description text-start">
+        <em>
+          There are circumstances in which certain facts cannot be recorded at all.
+        </em>
       </p>
       <hr>
       <section aria-label="sample data">
@@ -106,40 +109,42 @@
           <tbody>
           <tr>
             <td>prombery87</td>
-            <td>7.75</td>
-            <td>Advanced</td>
-            <td>1 sword, 4 rings</td>
+            <td class="text-center">7.75</td>
+            <td class="text-end">Advanced</td>
+            <td>1&nbsp;sword, 4&nbsp;rings</td>
           </tr>
           <tr>
             <td>wheed1997</td>
-            <td>Almost 7</td>
-            <td>Intermediate</td>
-            <td>18 copper coins</td>
+            <td class="text-center">Almost 7</td>
+            <td class="text-end">Intermediate</td>
+            <td>18&nbsp;copper&nbsp;coins</td>
           </tr>
           <tr class="fly-in">
             <td class="lost-data">acen1999</td>
-            <td class="lost-data">1</td>
-            <td class="lost-data">Beginner</td>
-            <td class="invalid"></td>
+            <td class="text-center lost-data">1</td>
+            <td class="text-end lost-data">Beginner</td>
+            <td class="invalid-data"></td>
           </tr>
           </tbody>
         </table>
       </section>
-    </div>
-    <div class="notes">
-      When a new player <code>acen1999</code> join the game, they have nothing in their <code>inventory</code>.
-      Therefore, the details of any player who have at least one item can be recorded, but a newly game member
-      who has no items cannot be recorded, except by setting the <code>inventory</code> to <code>null</code>.
+      <div class="notes">
+        When a new player <code>acen1999</code> join the game, they have nothing in their <code>inventory</code>.
+        Therefore, the details of any player who have at least one item can be recorded, but a newly game member
+        who has no items cannot be recorded, except by setting the <code>inventory</code> to <code>null</code>.
+      </div>
     </div>
 
-    <div class="step slide" id="update-anomalies"
-         data-rel-x="440"
-         data-rel-y="-435"
+    <div class="step" id="update-anomalies"
+         data-x="-2500"
+         data-rel-y="600"
          data-rotate-z="-30">
       <h2>Update anomalies</h2>
       <p class="description">
-        The same information can be expressed on multiple rows; therefore updates to
-        the relation may result in logical inconsistencies.
+        <em>
+          The same information can be expressed on multiple rows; therefore updates to
+          the relation may result in logical inconsistencies.
+        </em>
       </p>
       <hr>
       <section aria-label="sample data">
@@ -157,46 +162,48 @@
             <td>prombery87</td>
             <td>7.75</td>
             <td>Advanced</td>
-            <td>1 sword, 4 rings</td>
+            <td>1&nbsp;sword, 4&nbsp;rings</td>
           </tr>
           <tr>
             <td>acen1999</td>
-            <td class="invalid inconsistent-data">1</td>
+            <td class="invalid-data">1</td>
             <td>Beginner</td>
-            <td class="invalid inconsistent-data">1 wizard hat</td>
+            <td class="invalid-data">1&nbsp;wizard&nbsp;hat</td>
           </tr>
           <tr>
             <td>wheed1997</td>
-            <td class="invalid inconsistent-data">Greater than 7</td>
-            <td class="invalid inconsistent-data">Intermediate</td>
-            <td>18 copper coins</td>
+            <td class="invalid-data">Greater than 7</td>
+            <td class="invalid-data">Intermediate</td>
+            <td>18&nbsp;copper&nbsp;coins</td>
           </tr>
           <tr>
             <td>acen1999</td>
-            <td class="invalid inconsistent-data">2</td>
+            <td class="invalid-data">2</td>
             <td>Beginner</td>
-            <td class="invalid inconsistent-data">1 wizard hat, 1 robe</td>
+            <td class="invalid-data">1&nbsp;wizard hat, 1&nbsp;robe</td>
           </tr>
           </tbody>
         </table>
       </section>
-    </div>
-    <div class="notes">
-      The same information can be expressed on multiple rows, therefore updates to the relation may result in
-      logical inconsistencies. If the <code>wheed1997</code> increase their <code>level</code>, when the
-      <code>rank</code> should be updated as well. But if the update is only partial successful, then the
-      relation is left in an inconsistent state. Specifically. the relation provides conflicting information
-      on "level -- rank" for "wheed1997" player, and on "inventory" and "level" for "acen1999".
+      <div class="notes">
+        The same information can be expressed on multiple rows, therefore updates to the relation may result in
+        logical inconsistencies. If the <code>wheed1997</code> increase their <code>level</code>, when the
+        <code>rank</code> should be updated as well. But if the update is only partial successful, then the
+        relation is left in an inconsistent state. Specifically. the relation provides conflicting information
+        on "level -- rank" for "wheed1997" player, and on "inventory" and "level" for "acen1999".
+      </div>
     </div>
 
-    <div class="step slide" id="deletion-anomalies"
-         data-rel-x="600"
-         data-rel-y="-160"
-         data-rotate-z="0">
+    <div class="step" id="deletion-anomalies"
+         data-x="2500"
+         data-rel-y="0"
+         data-rotate-z="30">
       <h2>Deletion anomalies</h2>
       <p class="description">
-        Under certain circumstances, the deletion of data representing certain facts
-        necessitates the deletion of data representing completely different facts.
+        <em>
+          Under certain circumstances, the deletion of data representing certain facts
+          necessitates the deletion of data representing completely different facts.
+        </em>
       </p>
       <hr>
       <section aria-label="sample data">
@@ -231,17 +238,18 @@
           </tbody>
         </table>
       </section>
-    </div>
-    <div class="notes">
-      If a player looses their items completely, the record must be deleted, unless the <code>inventory</code>
-      field is set to <code>null</code>. This leads to the loosing all other information about a player.
+      <div class="notes">
+        If a player looses their items completely, the record must be deleted, unless the <code>inventory</code>
+        field is set to <code>null</code>. This leads to the loosing all other information about a player.
+      </div>
     </div>
 
-    <div class="step slide" id="1nf-requirements"
-         data-x="1310"
-         data-y="105"
-         data-rotate-z="-75">
-      <h2 id="1nf-header">First normal form</h2>
+    <div class="step requirements" id="requirements--1nf"
+         data-rel-position="absolute"
+         data-x="0"
+         data-y="1000"
+         data-rotate-z="0">
+      <h2>First normal form</h2>
       <section>
         <h3>Requirements</h3>
         <ul>
@@ -249,8 +257,8 @@
             Row order should not be used to convey information
           </li>
           <li>
-            Data types should not be mixed within the same column
-            <small>(And the RDBMS won't let you do it anyway)</small>
+            Data types should not be mixed within the same column<br>
+            <small class="fly-in">(and the RDBMS won't let you do it anyway)</small>
           </li>
           <li>
             Tables should have their primary keys
@@ -262,189 +270,203 @@
       </section>
     </div>
 
-    <div class="step slide" id="eliminate-mixed-data-types"
-         data-rel-x="250"
-         data-rel-y="250"
-         data-rel-rotate-z="-75">
-      <section class="container table-container">
-        <table class="db-table" aria-label="data">
-          <caption>Player Level</caption>
-          <thead>
-          <tr id="1nf--mixed-data-type--username-level">
-            <th>username</th>
-            <th>level</th>
-          </tr>
-          </thead>
-          <tbody>
-          <tr id="1nf--mixed-data-type--prombery87-775">
-            <td>prombery87</td>
-            <td class="invalid">7.75</td>
-          </tr>
-          <tr id="1nf--mixed-data-type--wheed1997-almost-7">
-            <td>wheed1997</td>
-            <td class="invalid">Almost 7</td>
-          </tr>
-          <tr id="1nf--mixed-data-type--acen1999-1">
-            <td>acen1999</td>
-            <td class="invalid">1</td>
-          </tr>
-          </tbody>
-        </table>
-        <table class="db-table" aria-label="data">
-          <caption>Player Level</caption>
-          <thead>
-          <tr id="1nf--mixed-data-type--username">
-            <th>username</th>
-            <th>level</th>
-          </tr>
-          </thead>
-          <tbody>
-          <tr id="1nf--mixed-data-type--prombery87">
-            <td>prombery87</td>
-            <td class="valid">7</td>
-          </tr>
-          <tr id="1nf--mixed-data-type--wheed1997">
-            <td>wheed1997</td>
-            <td class="valid">6</td>
-          </tr>
-          <tr id="1nf--mixed-data-type--acen1999">
-            <td>acen1999</td>
-            <td class="valid">1</td>
-          </tr>
-          </tbody>
-        </table>
-      </section>
+    <div class="step" id="mixed-data-types--1nf"
+         data-rel-position="relative"
+         data-rel-x="-1000"
+         data-rel-y="1500">
       <section>
-        <i class="icon-pass fade-in"></i>
-        <span>Data types should not be mixed within the same column</span>
+        <table class="db-table" aria-label="data">
+          <caption>Player Level</caption>
+          <thead>
+          <tr id="mixed-data-types--1nf__username-level">
+            <th>username</th>
+            <th>level</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr id="mixed-data-types--1nf__prombery87-775">
+            <td class="text-center">prombery87</td>
+            <td class="text-center invalid-data">7.75</td>
+          </tr>
+          <tr id="mixed-data-types--1nf__wheed1997-almost-7">
+            <td class="text-center">wheed1997</td>
+            <td class="text-center invalid-data">Almost&nbsp;7</td>
+          </tr>
+          <tr id="mixed-data-types--1nf__acen1999-1">
+            <td class="text-center">acen1999</td>
+            <td class="text-center invalid-data">1</td>
+          </tr>
+          </tbody>
+        </table>
+        <div class="text-center"><i class="i-fail"></i><em>Mixed types are not allowed</em></div>
+      </section>
+    </div>
+    <div class="step" id="no-mixed-data-types--1nf"
+         data-rel-position="relative"
+         data-rel-x="0"
+         data-rel-y="850">
+      <section>
+        <table class="db-table" aria-label="data">
+          <caption>Player Level</caption>
+          <thead>
+          <tr id="no-mixed-data-types--1nf__username">
+            <th>username</th>
+            <th>level</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr id="no-mixed-data-types--1nf__prombery87">
+            <td class="text-center">prombery87</td>
+            <td class="text-center valid">7</td>
+          </tr>
+          <tr id="no-mixed-data-types--1nf__wheed1997">
+            <td class="text-center">wheed1997</td>
+            <td class="text-center valid">6</td>
+          </tr>
+          <tr id="no-mixed-data-types--1nf__acen1999">
+            <td class="text-center">acen1999</td>
+            <td class="text-center valid">1</td>
+          </tr>
+          </tbody>
+        </table>
+        <div class="text-center"><i class="i-fail"></i><em>Mixed types are not allowed</em></div>
       </section>
     </div>
 
-    <div class="step slide" id="eliminate-repeating-groups"
-         data-rel-x="250"
-         data-rel-y="250"
-         data-rel-rotate-z="-75">
+    <div class="step" id="repeating-groups--1nf"
+         data-rel-position="relative"
+         data-rel-x="2000"
+         data-rel-y="-850">
       <section>
         <table class="db-table" aria-label="data">
           <caption>Player Inventory</caption>
           <thead>
-          <tr id="1nf--repeating-groups--username">
+          <tr id="repeating-groups--1nf__username">
             <th>username</th>
             <th>inventory</th>
           </tr>
           </thead>
           <tbody>
-          <tr id="1nf--repeating-groups--prombery87">
+          <tr id="repeating-groups--1nf__prombery87">
             <td>prombery87</td>
-            <td class="invalid">1 sword, 4 rings</td>
+            <td class="invalid">1&nbsp;sword, 4&nbsp;rings</td>
           </tr>
-          <tr id="1nf--repeating-groups--wheed1997">
+          <tr id="repeating-groups--1nf__wheed1997">
             <td>wheed1997</td>
-            <td class="invalid">18 copper coins</td>
+            <td class="invalid">18&nbsp;copper&nbsp;coins</td>
           </tr>
-          <tr id="1nf--repeating-groups--acen1999">
+          <tr id="repeating-groups--1nf__acen1999">
             <td>acen1999</td>
-            <td class="invalid">1 wizard hat, 1 robe</td>
+            <td class="invalid">1&nbsp;wizard&nbsp;hat, 1&nbsp;robe</td>
           </tr>
           </tbody>
         </table>
+        <div class="text-center"><i class="i-fail"></i><em>Repeating groups are eliminated</em></div>
+      </section>
+    </div>
+    <div class="step" id="no-repeating-groups--1nf"
+         data-rel-position="relative"
+         data-rel-x="0"
+         data-rel-y="850">
+      <section>
         <table class="db-table" aria-label="data">
           <caption>Player Inventory</caption>
           <thead>
-          <tr id="1nf--repeating-groups--username-item_type">
+          <tr id="no-repeating-groups--1nf__username-item_type">
             <th>username</th>
             <th>item_type</th>
             <th>item_quantity</th>
           </tr>
           </thead>
           <tbody>
-          <tr id="1nf--repeating-groups--prombery87-sword">
+          <tr id="no-repeating-groups--1nf__prombery87-sword">
             <td>prombery87</td>
             <td>sword</td>
             <td>1</td>
           </tr>
-          <tr id="1nf--repeating-groups--prombery87-ring">
+          <tr id="no-repeating-groups--1nf__prombery87-ring">
             <td>prombery87</td>
             <td>ring</td>
             <td>4</td>
           </tr>
-          <tr id="1nf--repeating-groups--wheed1997-copper-coin">
+          <tr id="no-repeating-groups--1nf__wheed1997-copper-coin">
             <td>wheed1997</td>
             <td>copper coin</td>
             <td>18</td>
           </tr>
-          <tr id="1nf--repeating-groups--acen1999-hat">
+          <tr id="no-repeating-groups--1nf__acen1999-hat">
             <td>acen1999</td>
             <td>wizard hat</td>
             <td>1</td>
           </tr>
-          <tr id="1nf--repeating-groups--acen1999-robe">
+          <tr id="no-repeating-groups--1nf__acen1999-robe">
             <td>acen1999</td>
             <td>robe</td>
             <td>1</td>
           </tr>
           </tbody>
         </table>
-      </section>
-      <section>
-        <i class="icon-pass fade-in"></i>
-        <span>Repeating groups should be eliminated</span>
+        <div class="text-center"><i class="i-pass"></i><em>Repeating groups are eliminated</em></div>
       </section>
     </div>
 
-    <div class="step slide" id="add-primary-key"
-         data-rel-x="250"
-         data-rel-y="250"
-         data-rel-rotate-z="-75">
+    <div class="step" id="table--1nf"
+         data-rel-position="relative"
+         data-rel-x="-1000"
+         data-rel-y="-1600">
       <section>
         <table class="db-table" aria-label="data">
           <caption>Player Inventory</caption>
           <thead>
-          <tr>
+          <tr id="table--1nf__username-item_type">
             <th>username</th>
             <th>item_type</th>
             <th>item_quantity</th>
           </tr>
           </thead>
           <tbody>
-          <tr id="1nf--prombery87-sword">
+          <tr id="table--1nf__prombery87-sword">
             <td class="primary-key">prombery87</td>
             <td class="primary-key">sword</td>
-            <td>1</td>
+            <td class="text-end">1</td>
           </tr>
-          <tr id="1nf--prombery87-ring">
+          <tr id="table--1nf__prombery87-ring">
             <td class="primary-key">prombery87</td>
             <td class="primary-key">ring</td>
-            <td>4</td>
+            <td class="text-end">4</td>
           </tr>
-          <tr id="1nf--wheed1997-copper-coin">
+          <tr id="table--1nf__wheed1997-copper-coin">
             <td class="primary-key">wheed1997</td>
             <td class="primary-key">copper coin</td>
-            <td>18</td>
+            <td class="text-end">18</td>
           </tr>
-          <tr id="1nf--acen1999-wizard-hat">
+          <tr id="table--1nf__acen1999-wizard-hat">
             <td class="primary-key">acen1999</td>
             <td class="primary-key">wizard hat</td>
-            <td>1</td>
+            <td class="text-end">1</td>
           </tr>
-          <tr id="1nf--acen1999-robe">
+          <tr id="table--1nf__acen1999-robe">
             <td class="primary-key">acen1999</td>
             <td class="primary-key">robe</td>
-            <td>1</td>
+            <td class="text-end">1</td>
           </tr>
           </tbody>
         </table>
       </section>
-      <section>
-        <i class="icon-pass"></i>
-        <span>Tables should have their primary keys</span>
-      </section>
     </div>
 
-    <div class="step slide" id="2nf-requirements"
-         data-x="1000"
-         data-y="640"
-         data-rotate-z="-45">
+    <div class="step overview" id="overview--1nf"
+         data-rel-position="relative"
+         data-rel-x="0"
+         data-rel-y="450"
+         data-scale="3">
+    </div>
+
+    <div class="step requirements" id="2nf--requirements"
+         data-rel-position="absolute"
+         data-x="3000"
+         data-y="750"
+         data-rotate-z="-15">
       <h2>Second normal form</h2>
       <section>
         <h2>Requirements</h2>
@@ -454,14 +476,15 @@
       </section>
     </div>
 
-    <div class="step slide" id="non-key-attrs-deps"
+    <div class="step" id="non-key-attrs--2nf"
+         style="display: none"
          data-rel-x="1w"
          data-rel-y="1v"
          data-rel-rotate-z="0">
       <section>
         <table class="db-table" aria-label="data">
           <thead>
-          <tr>
+          <tr id="non-key-attrs--2nf__username-item_type">
             <th class="primary-key">username</th>
             <th class="primary-key">item_type</th>
             <th>item_quantity</th>
@@ -470,35 +493,35 @@
           </tr>
           </thead>
           <tbody>
-          <tr>
+          <tr id="non-key-attrs--2nf__prombery87-sword">
             <td class="primary-key">prombery87</td>
             <td class="primary-key">sword</td>
             <td>1</td>
             <td>7</td>
             <td>Advanced</td>
           </tr>
-          <tr>
+          <tr id="non-key-attrs--2nf__prombery87-ring">
             <td class="primary-key">prombery87</td>
             <td class="primary-key">ring</td>
             <td>4</td>
             <td>7</td>
             <td>Advanced</td>
           </tr>
-          <tr>
+          <tr id="non-key-attrs--2nf__wheed1997-copper-coin">
             <td class="primary-key">wheed1997</td>
             <td class="primary-key">copper coin</td>
             <td>18</td>
             <td>6</td>
             <td>Intermediate</td>
           </tr>
-          <tr>
+          <tr id="non-key-attrs--2nf__acen1999-wizard-hat">
             <td class="primary-key">acen1999</td>
             <td class="primary-key">wizard hat</td>
             <td>1</td>
             <td>1</td>
             <td>Beginner</td>
           </tr>
-          <tr>
+          <tr id="non-key-attrs--2nf__acen1999-robe">
             <td class="primary-key">acen1999</td>
             <td class="primary-key">robe</td>
             <td>1</td>
@@ -522,7 +545,8 @@
       </section>
     </div>
 
-    <div class="step slide" id="apply-2nf"
+    <div class="step" id="table--2nf"
+         style="display: none"
          data-rel-x="1w"
          data-rel-y="1v"
          data-rel-rotate-z="0">
@@ -530,34 +554,34 @@
         <table class="db-table" aria-label="data">
           <caption>Player Inventory</caption>
           <thead>
-          <tr id="2nf--username-item_type">
+          <tr id="table--2nf__username-item_type">
             <th class="primary-key">username</th>
             <th class="primary-key">item_type</th>
             <th>item_quantity</th>
           </tr>
           </thead>
           <tbody>
-          <tr id="2nf--prombery87-sword">
+          <tr id="table--2nf__prombery87-sword">
             <td class="primary-key">prombery87</td>
             <td class="primary-key">sword</td>
             <td>1</td>
           </tr>
-          <tr id="2nf--prombery87-ring">
+          <tr id="table--2nf__prombery87-ring">
             <td class="primary-key">prombery87</td>
             <td class="primary-key">ring</td>
             <td>4</td>
           </tr>
-          <tr id="2nf--wheed1997-copper-coin">
+          <tr id="table--2nf__wheed1997-copper-coin">
             <td class="primary-key">wheed1997</td>
             <td class="primary-key">copper coin</td>
             <td>1</td>
           </tr>
-          <tr id="2nf--acen1999-wizard-hat">
+          <tr id="table--2nf__acen1999-wizard-hat">
             <td class="primary-key">acen1999</td>
             <td class="primary-key">wizard hat</td>
             <td>1</td>
           </tr>
-          <tr id="2nf--acen1999-robe">
+          <tr id="table--2nf__acen1999-robe">
             <td class="primary-key">acen1999</td>
             <td class="primary-key">robe</td>
             <td>1</td>
@@ -567,24 +591,24 @@
         <table class="db-table" aria-label="data">
           <caption>Player Level</caption>
           <thead>
-          <tr id="2nf--username">
+          <tr id="table--2nf__username">
             <th class="primary-key">username</th>
             <th>level</th>
             <th>rank</th>
           </tr>
           </thead>
           <tbody>
-          <tr id="2nf--prombery87">
+          <tr id="table--2nf__prombery87">
             <td class="primary-key">prombery87</td>
             <td>7</td>
             <td>Advanced</td>
           </tr>
-          <tr id="2nf--wheed1997">
+          <tr id="table--2nf__wheed1997">
             <td class="primary-key">wheed1997</td>
             <td>6</td>
             <td>Intermediate</td>
           </tr>
-          <tr id="2nf--acen1999">
+          <tr id="table--2nf__acen1999">
             <td class="primary-key">acen1999</td>
             <td>1</td>
             <td>Beginner</td>
@@ -594,10 +618,11 @@
       </section>
     </div>
 
-    <div class="step slide" id="3nf-requirements"
-         data-x="500"
-         data-y="1000"
-         data-rotate-z="-15">
+    <div class="step requirements" id="requirements--3nf"
+         data-rel-position="absolute"
+         data-x="-3000"
+         data-y="750"
+         data-rotate-z="15">
       <h2>Third normal form</h2>
       <section>
         <h3>Requirements</h3>
@@ -609,7 +634,8 @@
       </section>
     </div>
 
-    <div class="step slide" id="transitive-deps"
+    <div class="step" id="transitive-deps--3nf"
+         style="display: none"
          data-rel-x="1w"
          data-rel-y="1v"
          data-rel-rotate-z="0">
@@ -617,24 +643,24 @@
         <table class="db-table" aria-label="data">
           <caption>Player Level</caption>
           <thead>
-          <tr id="3nf--username--rank">
+          <tr id="transitive-deps--3nf__username">
             <th class="primary-key">username</th>
             <th>level</th>
             <th class="invalid">rank</th>
           </tr>
           </thead>
           <tbody>
-          <tr id="3nf--prombery87--rank">
+          <tr id="transitive-deps--3nf__prombery87">
             <td class="primary-key">prombery87</td>
             <td>7</td>
             <td class="invalid">Advanced</td>
           </tr>
-          <tr id="3nf--wheed1997--rank">
+          <tr id="transitive-deps--3nf__wheed1997">
             <td class="primary-key">wheed1997</td>
             <td>6</td>
             <td class="invalid">Intermediate</td>
           </tr>
-          <tr id="3nf--acen1999--rank">
+          <tr id="transitive-deps--3nf__acen1999">
             <td class="primary-key">acen1999</td>
             <td>1</td>
             <td class="invalid">Beginner</td>
@@ -652,7 +678,8 @@
       </section>
     </div>
 
-    <div class="step slide" id="apply-3nf"
+    <div class="step" id="table--3nf"
+         style="display: none"
          data-rel-x="1w"
          data-rel-y="1v"
          data-rel-rotate-z="0">
@@ -660,21 +687,21 @@
         <table class="db-table" aria-label="data">
           <caption>Player Level</caption>
           <thead>
-          <tr id="3nf--username">
+          <tr id="table--3nf__username">
             <th class="primary-key">username</th>
             <th>level</th>
           </tr>
           </thead>
           <tbody>
-          <tr id="3nf--prombery87">
+          <tr id="table--3nf__prombery87">
             <td class="primary-key">prombery87</td>
             <td>7</td>
           </tr>
-          <tr id="3nf--wheed1997">
+          <tr id="table--3nf__wheed1997">
             <td class="primary-key">wheed1997</td>
             <td>6</td>
           </tr>
-          <tr id="3nf--acen1999">
+          <tr id="table--3nf__acen1999">
             <td class="primary-key">acen1999</td>
             <td>1</td>
           </tr>
@@ -689,39 +716,39 @@
           </tr>
           </thead>
           <tbody>
-          <tr id="3nf--level-1">
+          <tr id="table--3nf__level-1">
             <td>1</td>
             <td>Beginner</td>
           </tr>
-          <tr id="3nf--level-2">
+          <tr id="table--3nf__level-2">
             <td>2</td>
             <td>Beginner</td>
           </tr>
-          <tr id="3nf--level-3">
+          <tr id="table--3nf__level-3">
             <td>3</td>
             <td>Beginner</td>
           </tr>
-          <tr id="3nf--level-4">
+          <tr id="table--3nf__level-4">
             <td>4</td>
             <td>Intermediate</td>
           </tr>
-          <tr id="3nf--level-5">
+          <tr id="table--3nf__level-5">
             <td>5</td>
             <td>Intermediate</td>
           </tr>
-          <tr id="3nf--level-6">
+          <tr id="table--3nf__level-6">
             <td>6</td>
             <td>Intermediate</td>
           </tr>
-          <tr id="3nf--level-7">
+          <tr id="table--3nf__level-7">
             <td>7</td>
             <td>Advanced</td>
           </tr>
-          <tr id="3nf--level-8">
+          <tr id="table--3nf__level-8">
             <td>8</td>
             <td>Advanced</td>
           </tr>
-          <tr id="3nf--level-9">
+          <tr id="table--3nf__level-9">
             <td>9</td>
             <td>Advanced
             </td>
@@ -743,7 +770,7 @@
       </section>
     </div>
 
-    <div class="step" id="overview" data-x="0" data-y="0" data-scale="3"></div>
+    <div class="step overview" id="overview" data-x="0" data-y="500" data-scale="7"></div>
 
   </div>
 </main>

@@ -40,3 +40,124 @@
     display: none;
   }
 }
+
+/* colors */
+// todo: adjust colors
+$background: #212121;
+$on-background: white;
+$surface: #212121;
+$on-surface: white;
+$primary: #212121;
+$on-primary: white;
+$secondary: #212121;
+$on-secondary: white;
+
+body {
+  background: $background;
+}
+
+/* fonts */
+$base-font-size: 3.75rem;
+$title: $base-font-size * 2.5;
+$subtitle: $base-font-size *2;
+$section: $base-font-size * 1.5;
+
+body {
+  font-size: $base-font-size;
+
+  h1 {
+    font-size: $title
+  }
+
+  h2 {
+    font-size: $subtitle
+  }
+
+  h3 {
+    font-size: $section
+  }
+
+  small {
+    font-size: $base-font-size * 0.5;
+  }
+}
+
+/* content align */
+.text-start {
+  text-align: start
+}
+
+.text-center {
+  text-align: center
+}
+
+.text-end {
+  text-align: end
+}
+
+h1, h2, h3, caption {
+  @extend .text-center;
+  margin: 0 auto;
+}
+
+/* impress presentation */
+$step-width: 1800px;
+
+#impress {
+  pointer-events: none;
+
+  .step {
+    display: block;
+    position: relative;
+    width: $step-width;
+    padding: 60px;
+
+    background-color: $surface;
+    color: $on-surface;
+  }
+
+  .title,
+  #title {
+    h1 {
+      font-size: $title * 2;
+    }
+
+    h2 {
+      font-size: $subtitle * 2;
+    }
+  }
+
+  .overview,
+  #overview {
+    position: fixed;
+    background: none;
+    display: none;
+  }
+
+  .db-table {
+    width: 75%;
+
+    margin: auto auto 20px;
+
+    font-family: Monospaced, monospace;
+    font-size: $base-font-size * 0.75;
+
+    th, td {
+      padding: 1svh 3svw;
+    }
+
+    th {
+      @extend .text-center;
+
+      font-weight: bold;
+      font-size: $base-font-size * 0.8;
+
+      background-color: $secondary;
+      color: $on-secondary;
+    }
+  }
+
+  .description {
+    padding: 0 20px;
+  }
+}
