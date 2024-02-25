@@ -1,0 +1,42 @@
+/**
+  Common presentation stylesheet
+
+ */
+
+/**
+  Fallback message is only visible when there is `impress-not-supported` class
+  on body. This class means, that browser doesn't support features required by
+  impress.js framework.
+
+  If the script detects that browser supports all required features, this class
+  will be removed.
+ */
+.fallback-message {
+  font-family: sans-serif;
+  line-height: 1.3;
+
+  width: 780px;
+  padding: 10px 10px 0;
+  margin: 20px auto;
+
+  border: 1px solid #E4C652;
+  border-radius: 10px;
+  background: #EEDC94;
+
+  p {
+    margin-bottom: 10px;
+  }
+}
+
+.impress-supported {
+  .fallback-message {
+    display: none;
+  }
+}
+
+// hide all presentation steps if impress.js is not supported
+.impress-not-supported {
+  .step {
+    display: none;
+  }
+}
