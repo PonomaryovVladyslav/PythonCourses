@@ -299,7 +299,7 @@
         </table>
       </section>
       <section>
-        <i class="check-mark fade-in"></i>
+        <i class="icon-pass fade-in"></i>
         <span>Data types should not be mixed within the same column</span>
       </section>
     </div>
@@ -369,7 +369,7 @@
         </table>
       </section>
       <section>
-        <i class="check-mark fade-in"></i>
+        <i class="icon-pass fade-in"></i>
         <span>Repeating groups should be eliminated</span>
       </section>
     </div>
@@ -417,7 +417,7 @@
         </table>
       </section>
       <section>
-        <i class="check-mark"></i>
+        <i class="icon-pass"></i>
         <span>Tables should have their primary keys</span>
       </section>
     </div>
@@ -492,11 +492,11 @@
       <section class="fly-in">
         <ul>
           <li>
-            <i class="check-mark"></i>
+            <i class="icon-pass"></i>
             <code>{ name, item_type } <-- { item_quantity }</code>
           </li>
           <li>
-            <i class="fail-mark"></i>
+            <i class="icon-fail"></i>
             <code>{ name } <-- { level }</code>
           </li>
         </ul>
@@ -585,6 +585,137 @@
         <ul>
           <li>
             Every non-key attribute in a table should depend on the key, the whole key, and nothing but the key
+          </li>
+        </ul>
+      </section>
+    </div>
+
+    <div class="step slide" id="transitive-deps"
+         data-rel-x="1w"
+         data-rel-y="1v"
+         data-rel-rotate-z="0">
+      <section>
+        <table aria-label="data">
+          <thead>
+          <tr id="3nf--username--rank">
+            <th class="primary-key">username</th>
+            <th>level</th>
+            <th class="invalid">rank</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr id="3nf--prombery87--rank">
+            <td class="primary-key">prombery87</td>
+            <td>7</td>
+            <td class="invalid">Advanced</td>
+          </tr>
+          <tr id="3nf--wheed1997--rank">
+            <td class="primary-key">wheed1997</td>
+            <td>6</td>
+            <td class="invalid">Intermediate</td>
+          </tr>
+          <tr id="3nf--acen1999--rank">
+            <td class="primary-key">acen1999</td>
+            <td>1</td>
+            <td class="invalid">Beginner</td>
+          </tr>
+          </tbody>
+        </table>
+      </section>
+      <section class="fly-in">
+        <ul>
+          <li class="fail">
+            <i class="icon-fail"></i>
+            <code>{ name } <-- { level } <-- { rank }</code>
+          </li>
+        </ul>
+      </section>
+    </div>
+
+    <div class="step slide" id="apply-3nf"
+         data-rel-x="1w"
+         data-rel-y="1v"
+         data-rel-rotate-z="0">
+      <section>
+        <table aria-label="data">
+          <thead>
+          <tr id="3nf--username">
+            <th class="primary-key">username</th>
+            <th>level</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr id="3nf--prombery87">
+            <td class="primary-key">prombery87</td>
+            <td>7</td>
+          </tr>
+          <tr id="3nf--wheed1997">
+            <td class="primary-key">wheed1997</td>
+            <td>6</td>
+          </tr>
+          <tr id="3nf--acen1999">
+            <td class="primary-key">acen1999</td>
+            <td>1</td>
+          </tr>
+          </tbody>
+        </table>
+        <table aria-label="data">
+          <thead>
+          <tr>
+            <th class="primary-key">level</th>
+            <th>rank</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr id="3nf--level-1">
+            <td>1</td>
+            <td>Beginner</td>
+          </tr>
+          <tr id="3nf--level-2">
+            <td>2</td>
+            <td>Beginner</td>
+          </tr>
+          <tr id="3nf--level-3">
+            <td>3</td>
+            <td>Beginner</td>
+          </tr>
+          <tr id="3nf--level-4">
+            <td>4</td>
+            <td>Intermediate</td>
+          </tr>
+          <tr id="3nf--level-5">
+            <td>5</td>
+            <td>Intermediate</td>
+          </tr>
+          <tr id="3nf--level-6">
+            <td>6</td>
+            <td>Intermediate</td>
+          </tr>
+          <tr id="3nf--level-7">
+            <td>7</td>
+            <td>Advanced</td>
+          </tr>
+          <tr id="3nf--level-8">
+            <td>8</td>
+            <td>Advanced</td>
+          </tr>
+          <tr id="3nf--level-9">
+            <td>9</td>
+            <td>Advanced
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </section>
+      <section class="fly-in">
+        <ul>
+          <li class="pass">
+            <i class="icon-pass"></i>
+            <code>{ name } <-- { level }</code>
+          </li>
+          <li class="pass">
+            <i class="icon-pass"></i>
+            <code>{ level } <-- { rank }</code>
           </li>
         </ul>
       </section>
