@@ -435,6 +435,146 @@
       </section>
     </div>
 
+    <div class="step slide" id="non-key-attrs-deps"
+         data-rel-x="1w"
+         data-rel-y="1v"
+         data-rel-rotate-z="0">
+      <section>
+        <table aria-label="data">
+          <thead>
+          <tr>
+            <th class="primary-key">username</th>
+            <th class="primary-key">item_type</th>
+            <th>item_quantity</th>
+            <th>level</th>
+            <th>rank</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <td class="primary-key">prombery87</td>
+            <td class="primary-key">sword</td>
+            <td>1</td>
+            <td>7</td>
+            <td>Advanced</td>
+          </tr>
+          <tr>
+            <td class="primary-key">prombery87</td>
+            <td class="primary-key">ring</td>
+            <td>4</td>
+            <td>7</td>
+            <td>Advanced</td>
+          </tr>
+          <tr>
+            <td class="primary-key">wheed1997</td>
+            <td class="primary-key">spell book</td>
+            <td>1</td>
+            <td>6</td>
+            <td>Intermediate</td>
+          </tr>
+          <tr>
+            <td class="primary-key">acen1999</td>
+            <td class="primary-key">wizard hat</td>
+            <td>1</td>
+            <td>1</td>
+            <td>Beginner</td>
+          </tr>
+          <tr>
+            <td class="primary-key">acen1999</td>
+            <td class="primary-key">robe</td>
+            <td>1</td>
+            <td>1</td>
+            <td>Beginner</td>
+          </tr>
+          </tbody>
+        </table>
+      </section>
+      <section class="fly-in">
+        <ul>
+          <li>
+            <i class="check-mark"></i>
+            <code>{ name, item_type } <-- { item_quantity }</code>
+          </li>
+          <li>
+            <i class="fail-mark"></i>
+            <code>{ name } <-- { level }</code>
+          </li>
+        </ul>
+      </section>
+    </div>
+
+    <div class="step slide" id="apply-2nf"
+         data-rel-x="1w"
+         data-rel-y="1v"
+         data-rel-rotate-z="0">
+      <section>
+        <table aria-label="data">
+          <caption>Player Inventory</caption>
+          <thead>
+          <tr id="2nf--username-item_type">
+            <th class="primary-key">username</th>
+            <th class="primary-key">item_type</th>
+            <th>item_quantity</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr id="2nf--prombery87-sword">
+            <td class="primary-key">prombery87</td>
+            <td class="primary-key">sword</td>
+            <td>1</td>
+          </tr>
+          <tr id="2nf--prombery87-ring">
+            <td class="primary-key">prombery87</td>
+            <td class="primary-key">ring</td>
+            <td>4</td>
+          </tr>
+          <tr id="2nf--wheed1997-spell-book">
+            <td class="primary-key">wheed1997</td>
+            <td class="primary-key">spell book</td>
+            <td>1</td>
+          </tr>
+          <tr id="2nf--acen1999-wizard-hat">
+            <td class="primary-key">acen1999</td>
+            <td class="primary-key">wizard hat</td>
+            <td>1</td>
+          </tr>
+          <tr id="2nf--acen1999-robe">
+            <td class="primary-key">acen1999</td>
+            <td class="primary-key">robe</td>
+            <td>1</td>
+          </tr>
+          </tbody>
+        </table>
+        <table aria-label="data">
+          <caption>Player Level</caption>
+          <thead>
+          <tr id="2nf--username">
+            <th class="primary-key">username</th>
+            <th>level</th>
+            <th>rank</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr id="2nf--prombery87">
+            <td class="primary-key">prombery87</td>
+            <td>7</td>
+            <td>Advanced</td>
+          </tr>
+          <tr id="2nf--wheed1997">
+            <td class="primary-key">wheed1997</td>
+            <td>6</td>
+            <td>Intermediate</td>
+          </tr>
+          <tr id="2nf--acen1999">
+            <td class="primary-key">acen1999</td>
+            <td>1</td>
+            <td>Beginner</td>
+          </tr>
+          </tbody>
+        </table>
+      </section>
+    </div>
+
     <div class="step slide" id="3nf-requirements"
          data-x="500"
          data-y="1000"
