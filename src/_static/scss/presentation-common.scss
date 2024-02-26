@@ -63,11 +63,33 @@ body {
   background: $background;
 }
 
-/* fonts */
+/* fonts and icons */
 $base-font-size: 3.75rem;
 $title: $base-font-size * 2.5;
 $subtitle: $base-font-size *2;
 $section: $base-font-size * 1.5;
+
+$checkMarkIcon: url("../../../assets/icons/check-mark-svgrepo-com.svg");
+$crossMarkIcon: url("../../../assets/icons/cross-mark-svgrepo-com.svg");
+
+.i {
+  display: inline-block;
+  height: 1em;
+  width: 1em;
+  margin: auto 0.5em;
+}
+
+.i-pass {
+  @extend .i;
+  background-image: $checkMarkIcon;
+  background-size: contain;
+}
+
+.i-fail {
+  @extend .i;
+  background-image: $crossMarkIcon;
+  background-size: contain;
+}
 
 body {
   font-size: $base-font-size;
@@ -179,6 +201,7 @@ $step-width: 1800px;
     .fade-in {
       opacity: 0.0;
     }
+
     .fly-in {
       opacity: 0.0;
       transform: translateY(2200px);
@@ -190,6 +213,7 @@ $step-width: 1800px;
       opacity: 1.0;
       transition: $transition;
     }
+
     .fly-in {
       opacity: 1.0;
       transform: translateY(0px);
