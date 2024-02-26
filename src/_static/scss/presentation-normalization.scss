@@ -102,12 +102,17 @@
 
   #deletion-anomalies.present {
     td.fade-out {
+      color: red;
       opacity: 0.0;
       transition: $transition;
       transition-delay: $transition-delay;
     }
 
     td.lost-data {
+      color: $lost-data;
+      transition: $transition;
+      transition-delay: $transition + $transition-delay;
+
       &:nth-child(odd) {
         transform: rotate(-7deg);
       }
@@ -115,17 +120,20 @@
       &:nth-child(even) {
         transform: rotate(7deg);
       }
-
-      color: $lost-data;
-      transition: $transition;
-      transition-delay: $transition + $transition-delay;
     }
   }
 
   #deletion-anomalies.past {
     td.lost-data {
       color: $lost-data;
-      transform: rotate(7deg);
+
+      &:nth-child(odd) {
+        transform: rotate(-7deg);
+      }
+
+      &:nth-child(even) {
+        transform: rotate(7deg);
+      }
     }
   }
 
