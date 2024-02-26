@@ -39,6 +39,37 @@
     }
   }
 
+  #insertion-anomalies.future {
+    .invalid-data {
+      opacity: 0.0;
+    }
+  }
+
+  #insertion-anomalies.present {
+    .invalid-data {
+      border: 1px solid $invalid-data;
+      opacity: 1.0;
+      transition: $transition;
+      transition-delay: $transition-delay + $transition;
+    }
+
+    .lost-data {
+      color: $lost-data;
+      transition: $transition;
+      transition-delay: $transition-delay + $transition;
+    }
+  }
+
+  #insertion-anomalies.past {
+    .invalid-data {
+      border: 1px solid $invalid-data;
+    }
+
+    .lost-data {
+      color: $lost-data;
+    }
+  }
+
   #update-anomalies.present {
     span.fade-out {
       opacity: 0.0;
