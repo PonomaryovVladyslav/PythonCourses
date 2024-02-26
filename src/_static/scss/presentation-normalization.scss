@@ -13,6 +13,41 @@
     }
   }
 
+  #deletion-anomalies.future {
+    td.fade-out {
+      opacity: 1.0;
+    }
+  }
+
+  #deletion-anomalies.present {
+    td.fade-out {
+      opacity: 0.0;
+      transition: $transition;
+      transition-delay: $transition-delay;
+    }
+
+    td.lost-data {
+      &:nth-child(odd) {
+        transform: rotate(-7deg);
+      }
+
+      &:nth-child(even) {
+        transform: rotate(7deg);
+      }
+
+      color: $lost-data;
+      transition: $transition;
+      transition-delay: $transition + $transition-delay;
+    }
+  }
+
+  #deletion-anomalies.past {
+    td.lost-data {
+      color: $lost-data;
+      transform: rotate(7deg);
+    }
+  }
+
   #mixed-data-types--1nf,
   #no-mixed-data-types--1nf {
     table {
@@ -66,7 +101,7 @@
       .fly-in {
         transform: translateY(0px);
         opacity: 1.0;
-        transition: $transition-default;
+        transition: $transition;
         transition-delay: 1000ms;
       }
     }

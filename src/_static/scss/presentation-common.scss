@@ -42,7 +42,8 @@
 }
 
 /* transitions */
-$transition-default: 2000ms;
+$transition: 2000ms;
+$transition-delay: 1000ms;
 
 /* colors */
 // todo: adjust colors
@@ -54,6 +55,8 @@ $primary: #212121;
 $on-primary: white;
 $secondary: #212121;
 $on-secondary: white;
+
+$lost-data: orange;
 
 body {
   background: $background;
@@ -184,19 +187,19 @@ $step-width: 1800px;
   .present {
     .fade-in {
       opacity: 1.0;
-      transition: $transition-default;
+      transition: $transition;
     }
     .fly-in {
       opacity: 1.0;
       transform: translateY(0px);
-      transition: $transition-default;
+      transition: $transition;
     }
   }
 
   .past {
     .fade-out {
       opacity: 0.0;
-      transition: $transition-default;
+      transition: $transition;
     }
   }
 
