@@ -471,11 +471,13 @@
          data-x="3000"
          data-y="750"
          data-rotate-z="-15">
-      <h2>Second normal form</h2>
-      <section>
-        <h2>Requirements</h2>
+      <h2 class="fade-in">Second normal form</h2>
+      <section class="fly-in">
+        <h3>Requirements</h3>
         <ul>
-          <li>Each non-key attribute must depend on the entire primary key</li>
+          <li>
+            Each non-key attribute must depend on the entire primary key.
+          </li>
         </ul>
       </section>
     </div>
@@ -484,7 +486,7 @@
          data-rel-position="relative"
          data-rel-x="0"
          data-rel-y="2000">
-      <section>
+      <section class="fade-in fade-out">
         <table class="db-table" aria-label="data">
           <thead>
           <tr id="non-key-attrs--2nf__username-item_type">
@@ -534,15 +536,13 @@
           </tbody>
         </table>
       </section>
-      <section class="fly-in">
+      <section class="fly-in fade-out">
         <ul>
           <li>
-            <i class="icon-pass"></i>
-            <code>{ name, item_type } <-- { item_quantity }</code>
+            <i class="icon-pass"></i><code>{ name, item_type } <-- { item_quantity }</code>
           </li>
           <li>
-            <i class="icon-fail"></i>
-            <code>{ name } <-- { level }</code>
+            <i class="icon-fail"></i><code>{ name } <-- { level }</code>
           </li>
         </ul>
       </section>
@@ -552,7 +552,7 @@
          data-rel-position="relative"
          data-rel-x="0"
          data-rel-y="-1000">
-      <section>
+      <section class="fade-in">
         <table class="db-table" aria-label="data">
           <caption>Player Inventory</caption>
           <thead>
@@ -566,27 +566,27 @@
           <tr id="table--2nf__prombery87-sword">
             <td class="primary-key">prombery87</td>
             <td class="primary-key">sword</td>
-            <td>1</td>
+            <td class="text-end">1</td>
           </tr>
           <tr id="table--2nf__prombery87-ring">
             <td class="primary-key">prombery87</td>
             <td class="primary-key">ring</td>
-            <td>4</td>
+            <td class="text-end">4</td>
           </tr>
           <tr id="table--2nf__wheed1997-copper-coin">
             <td class="primary-key">wheed1997</td>
             <td class="primary-key">copper coin</td>
-            <td>1</td>
+            <td class="text-end">1</td>
           </tr>
           <tr id="table--2nf__acen1999-wizard-hat">
             <td class="primary-key">acen1999</td>
             <td class="primary-key">wizard hat</td>
-            <td>1</td>
+            <td class="text-end">1</td>
           </tr>
           <tr id="table--2nf__acen1999-robe">
             <td class="primary-key">acen1999</td>
             <td class="primary-key">robe</td>
-            <td>1</td>
+            <td class="text-end">1</td>
           </tr>
           </tbody>
         </table>
@@ -602,17 +602,17 @@
           <tbody>
           <tr id="table--2nf__prombery87">
             <td class="primary-key">prombery87</td>
-            <td>7</td>
+            <td class="text-center">7</td>
             <td>Advanced</td>
           </tr>
           <tr id="table--2nf__wheed1997">
             <td class="primary-key">wheed1997</td>
-            <td>6</td>
+            <td class="text-center">6</td>
             <td>Intermediate</td>
           </tr>
           <tr id="table--2nf__acen1999">
             <td class="primary-key">acen1999</td>
-            <td>1</td>
+            <td class="text-center">1</td>
             <td>Beginner</td>
           </tr>
           </tbody>
@@ -623,8 +623,8 @@
     <div class="step overview" id="overview--2nf"
          data-rel-position="relative"
          data-rel-x="0"
-         data-rel-y="200"
-         data-scale="3">
+         data-rel-y="-300"
+         data-scale="2">
     </div>
 
     <!-- 3NF -->
