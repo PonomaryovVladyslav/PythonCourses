@@ -24,14 +24,27 @@ jobs:
         uses: actions/checkout@v3
         with:
           submodules: true
-      - name: Setup Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v2
+
+      - name: Se tup Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v4
         with:
           python-version: ${{ matrix.python-version }}
+
+      - name: Set up NodeJS
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+
       - name: Install dependencies
         run: |
           pip install -r requirements.txt
+          npm install
+
       - name: Build documents
         run: |
           LANGUAGE=en make html
           LANGUAGE=uk make html
+
+      - name: Build presentations
+        run: |
+          npm run build
