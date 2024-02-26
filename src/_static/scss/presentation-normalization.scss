@@ -13,6 +13,56 @@
     }
   }
 
+  #update-anomalies {
+    .invalid-data {
+      position: relative;
+
+      .updated-data {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+    }
+  }
+
+  #update-anomalies.future {
+    span.fade-out {
+      opacity: 1.0;
+    }
+
+    span.fade-in {
+      opacity: 0.0;
+    }
+  }
+
+  #update-anomalies.present {
+    span.fade-out {
+      opacity: 0.0;
+      transition: $transition;
+      transition-delay: $transition-delay;
+    }
+
+    span.fade-in {
+      opacity: 1.0;
+      transition: $transition;
+      transition-delay: $transition + $transition-delay;
+    }
+
+    .invalid-data {
+      color: $invalid-data;
+    }
+  }
+
+  #update-anomalies.past {
+    .invalid-data {
+      color: $invalid-data;
+    }
+  }
+
   #deletion-anomalies.future {
     td.fade-out {
       opacity: 1.0;
