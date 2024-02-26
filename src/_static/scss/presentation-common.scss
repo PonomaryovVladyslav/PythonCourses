@@ -41,6 +41,9 @@
   }
 }
 
+/* transitions */
+$transition-default: 2000ms;
+
 /* colors */
 // todo: adjust colors
 $background: #212121;
@@ -137,10 +140,14 @@ $step-width: 1800px;
   .db-table {
     width: 75%;
 
-    margin: auto auto 20px;
+    margin-bottom: 20px;
 
     font-family: Monospaced, monospace;
     font-size: $base-font-size * 0.75;
+
+    .primary-key {
+      background-color: rgba(125, 125, 125, 0.1);
+    }
 
     th, td {
       padding: 1svh 3svw;
@@ -160,4 +167,37 @@ $step-width: 1800px;
   .description {
     padding: 0 20px;
   }
+}
+
+/* 4th dimension */
+#impress {
+  .future {
+    .fade-in {
+      opacity: 0.0;
+    }
+    .fly-in {
+      opacity: 0.0;
+      transform: translateY(2200px);
+    }
+  }
+
+  .present {
+    .fade-in {
+      opacity: 1.0;
+      transition: $transition-default;
+    }
+    .fly-in {
+      opacity: 1.0;
+      transform: translateY(0px);
+      transition: $transition-default;
+    }
+  }
+
+  .past {
+    .fade-out {
+      opacity: 0.0;
+      transition: $transition-default;
+    }
+  }
+
 }

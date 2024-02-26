@@ -9,6 +9,7 @@
   .requirements {
     h3 {
       @extend .text-start;
+      text-decoration: underline;
     }
   }
 
@@ -34,5 +35,40 @@
     grid-template-columns: repeat(2, 1fr);
     grid-column-gap: 20px;
     align-items: start;
+
+    table {
+      margin: 30px auto;
+    }
+  }
+
+  #table--3nf.future {
+    section:first-of-type {
+      .fly-in {
+        transform: translateY(-2200px);
+      }
+    }
+
+    section:last-of-type {
+      .fly-in {
+        transform: translateY(2200px);
+      }
+    }
+
+    section {
+      .fly-in {
+        opacity: 0.0;
+      }
+    }
+  }
+
+  #table--3nf.present {
+    section {
+      .fly-in {
+        transform: translateY(0px);
+        opacity: 1.0;
+        transition: $transition-default;
+        transition-delay: 1000ms;
+      }
+    }
   }
 }
