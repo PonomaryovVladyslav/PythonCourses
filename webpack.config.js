@@ -21,7 +21,7 @@ const config = {
     plugins: [
         new MiniCSSExtractPlugin({filename: "css/main.min.css"}),
         new HTMLWebpackPlugin({
-            template: path.resolve(BASE_DIR, "pres", "normalization", "index.html"),
+            template: path.resolve(BASE_DIR, "rdbms", "_presentations", "normalization.html"),
             filename: path.resolve(BUILD_DIR, "normalization", "index.html")
         }),
     ],
