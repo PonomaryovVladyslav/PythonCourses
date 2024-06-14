@@ -189,19 +189,13 @@ greeting = "Hello, World!"
 
 Строки поддерживают множество операций, таких как конкатенация (сложение), извлечение подстрок и методы для работы с текстом:
 
-Пока что нас будет интересовать всего две вещи, сложение строк и одно исключение из строгой типизации
+Пока что нас будет интересовать всего одна вещь, конкатенация строк
 
 ```python
+greeting = "Hello, World!"
 name = "Alice"
 full_greeting = greeting + " " + name
 print(full_greeting)  # Вывод: Hello, World! Alice
-```
-
-Также строки можно умножать на число, что приводит к повторению строки указанное количество раз:
-
-```python
-repeated_greeting = greeting * 3
-print(repeated_greeting)  # Вывод: Hello, World!Hello, World!Hello, World!
 ```
 
 ### Число (Number)
