@@ -1,4 +1,4 @@
-# Лекция 4: Некоторые build-in методы. List comprehension Работа с файлами
+# Лекция 5: Некоторые build-in методы. List comprehension. Range. Enumerate. Работа с файлами
 
 # Встроенные Методы в Python: Работа с Данными и Коллекциями
 
