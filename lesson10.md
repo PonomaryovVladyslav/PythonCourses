@@ -463,4 +463,4 @@ git pull origin main
 
 Для этого есть вот [эта](https://github.com/PonomaryovVladyslav/PythonCources/blob/master/pr_explanation.md) инструкция!
 
-Жду код первого модуля в виде пулл реквеста! Всем удачи!
+Жду код первого модуля в виде пулл реквеста! Всем удачи!!!
