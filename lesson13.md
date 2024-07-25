@@ -1,4 +1,4 @@
-# Урок 13. Imports. Standard library. PEP8
+# Лекция 13. Imports. Standard library. PEP8
 
 ![](https://qph.cf2.quoracdn.net/main-qimg-d6a560c198bada465b104a5ad25bbc77-pjlq)
 

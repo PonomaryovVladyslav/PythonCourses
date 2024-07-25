@@ -1,4 +1,4 @@
-# Урок 31. Django ORM. Объекты моделей и queryset, Meta моделей, прокси модели.
+# Лекция 31. Django ORM. Объекты моделей и queryset, Meta моделей, прокси модели.
 
 ![](https://cs8.pikabu.ru/post_img/2016/09/12/5/og_og_1473660997242355939.jpg)
 

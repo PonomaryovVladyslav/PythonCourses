@@ -1,4 +1,4 @@
-# Урок 42. Multithreading. Multiprocessing. GIL.
+# Лекция 42. Multithreading. Multiprocessing. GIL.
 
 ## О потоках и их истоках
 

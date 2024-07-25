@@ -1,4 +1,4 @@
-# Урок 48. Amazon RDS. S3 bucket. IAM. Route 53. HTTPS.
+# Лекция 48. Amazon RDS. S3 bucket. IAM. Route 53. HTTPS.
 
 ![](https://lumecloud.com/wp-content/uploads/2017/10/Lume_BraceYourselves-AWS-meme.jpg)
 

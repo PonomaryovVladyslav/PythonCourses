@@ -1,4 +1,4 @@
-# Урок 37. Что такое API. REST и RESTful. Django REST Framework.
+# Лекция 37. Что такое API. REST и RESTful. Django REST Framework.
 
 [/не отображается/]: #(![]&#40;https://www.meme-arsenal.com/memes/6200d14d795eab11d26a3afabed68439.jpg&#41;)
 

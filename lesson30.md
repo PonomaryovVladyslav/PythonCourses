@@ -1,4 +1,4 @@
-# Урок 30. Модели
+# Лекция 30. Модели
 
 ![](https://www.meme-arsenal.com/memes/ec0eba9bc1a90ba417d786f9096cce72.jpg)
 

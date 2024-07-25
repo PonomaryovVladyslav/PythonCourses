@@ -1,4 +1,4 @@
-# Урок 38. @api_view, APIView, ViewSets, Pagination, Routers
+# Лекция 38. @api_view, APIView, ViewSets, Pagination, Routers
 
 Все мы помним, что веб в первую очередь - это Request-Response система.
 

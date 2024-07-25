@@ -1,4 +1,4 @@
-# Урок 35. Middleware. Signals. Messages
+# Лекция 35. Middleware. Signals. Messages
 
 ## Middleware
 

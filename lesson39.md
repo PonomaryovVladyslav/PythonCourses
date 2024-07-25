@@ -1,4 +1,4 @@
-# Урок 39. REST аутентификация. Авторизация. Permissions. Фильтрация.
+# Лекция 39. REST аутентификация. Авторизация. Permissions. Фильтрация.
 
 ![](https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQ_cLOesie903fmPPbl2YbqawKsycva_owf6Q&usqp=CAU)
 

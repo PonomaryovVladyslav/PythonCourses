@@ -1,4 +1,4 @@
-# Урок 46. Linux. SSH. Symlinks. curl. CRON. Nginx/Apache. Daemons.
+# Лекция 46. Linux. SSH. Symlinks. curl. CRON. Nginx/Apache. Daemons.
 
 ## SSH
 

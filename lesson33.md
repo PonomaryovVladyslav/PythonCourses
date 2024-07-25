@@ -1,4 +1,4 @@
-# Урок 33. ModelForm, ClassBaseView
+# Лекция 33. ModelForm, ClassBaseView
 
 ![](http://memesmix.net/media/created/lm6uyu.jpg)
 

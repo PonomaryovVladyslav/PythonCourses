@@ -1,4 +1,4 @@
-# Урок 20. Тестирование
+# Лекция 20. Тестирование
 
 [/не отображается/]: # (![]&#40;https://pics.me.me/your-code-cant-fail-unit-tests-openim-if-you-dont-14499557.png&#41;)
 

@@ -1,4 +1,4 @@
-# Урок 40. Тестирование. Python, Django, REST API.
+# Лекция 40. Тестирование. Python, Django, REST API.
 
 [/не отображается/]: # (![]&#40;https://pics.me.me/your-code-cant-fail-unit-tests-openim-if-you-dont-14499557.png&#41;)
 
