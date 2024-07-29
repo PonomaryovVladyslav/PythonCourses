@@ -1,4 +1,4 @@
-# Лекция 17. СУБД. PostgreSQL. SQL. DDL. DML. Пользователи. DCL.
+# Лекция 17. СУБД. PostgreSQL. SQL. DDL. Пользователи. DCL. DML.
 
 ![](https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRoFjs9TgjIxTmURMbn6ugAKStglKq3JjPQKQ&s)
 
@@ -635,10 +635,9 @@ ALTER TABLE book
 
 ```sql
 ALTER TABLE book
-    ALTER COLUMN language 
+    ALTER COLUMN language
         DROP DEFAULT;
 ```
-
 
 #### Удалить поле
 
@@ -659,6 +658,149 @@ DROP TABLE book;
 DROP DATABASE mydb;
 ```
 
-## DML
+## DML (Data manipulating language) (Язык манипулирования данными)
+
+`DML` - подмножество языка `SQL`, которое отвечает за добавление, изменение и удаление данных.
+
+Ключевые слова:
+
+- `INSERT` - используется для добавления данных.
+- `UPDATE` - используется для обновления данных.
+- `DELETE` - используется для удаления данных.
+
+### Создание новых записей
+
+Когда таблица создана, в ней нет каких записей (данных). Вставка (`INSERT`) данных заполнит таблицу. Записи можно
+добавлять как по одной, так и по несколько. Но нельзя добавить не целую запись.
+
+> Для добавления записи в таблицу используется `INSERT`
+
+Значения в записях перечисляются через запятую в том порядке, в котором они находятся в таблице. Если вы не знаете этого
+порядка, то вы можете указать какое значение соответствует какому полю явно. Если вы указываете не все значения, то база
+автоматически попытается заполнить значением по умолчанию.
+
+```sql
+CREATE TABLE publisher
+(
+    id      SERIAL,
+    name    VARCHAR(128) NOT NULL CHECK (LENGTH(name) > 0),
+    website VARCHAR(255) UNIQUE,
+    email   VARCHAR(255),
+    phone   VARCHAR(32) UNIQUE
+);
+```
+
+Пример вставки данных:
+
+- 1 способ с указанием полей как строк
+- 2 способ указание полей прямо
+- 3 способ без указания полей, но соблюдая порядок
+
+```sql
+INSERT INTO "publisher" ("id", "name", "website", "email", "phone")
+VALUES (1, 'Zoonoodle', 'https://sfgate.com', 'bhaile0@blogtalkradio.com', '+55 (465) 224-8652');
+INSERT INTO publisher (id, name, website, email, phone)
+VALUES (2, 'Brainlounge', 'http://php.net', 'bfindlow1@paginegialle.it', '+389 (482) 470-2463');
+INSERT INTO publisher
+VALUES (3, 'Tanoodle', 'http://dyndns.org', 'cfleisch2@scribd.com', '+23 (852) 867-5041');
+```
+
+#### Создание записей массово (bulk creation)
+
+Так же можно вставлять более одной записи за один запрос:
+
+```sql
+CREATE TABLE author
+(
+    id         SERIAL,
+    first_name VARCHAR(128) NOT NULL,
+    last_name  VARCHAR(128) NOT NULL,
+    country    VARCHAR(255),
+    dob        DATE CHECK (dob < NOW() - INTERVAL '10 years'),
+    CHECK (LENGTH(first_name) > 0),
+    CHECK (LENGTH(last_name) > 0)
+);
+-- вставка множества записей за одну команду 
+INSERT INTO author (first_name, last_name, country, dob)
+VALUES ('Letta', 'Casbolt', 'Poland', '1947-04-18'),
+       ('Robbyn', 'Attwoul', 'Poland', '1954-10-17'),
+       ('Hesther', 'Kisby', 'Ukraine', '1941-07-21'),
+       ('Gav', 'Jewett', 'Czech Republic', '1988-02-05'),
+       ('Jorrie', 'Klehyn', 'United States', '1941-08-07'),
+       ('Genevieve', 'Ollington', 'United States', '1921-08-27'),
+       ('Carrissa', 'Arrandale', 'United Kingdom', '1982-08-20'),
+       ('Josepha', 'Dominichelli', 'Poland', '1976-12-03'),
+       ('Montague', 'Duerden', 'Poland', '2003-11-09');
+```
+
+#### Создание записей из файла
+
+База данных умеет читать некоторые форматы файлов, для того что бы превратить строки файла в записи в базе данных:
+
+```sql
+-- require superuser access or `pg_read_server_files` role priveleges
+COPY book (id, title, synopsis, isbn, publisher_id, publication_date, genre, language, page_count,
+           keywords) FROM '/var/lib/postgresql/assets/book.csv' DELIMITER ',' CSV HEADER;
+-- update id sequence value
+SELECT SETVAL('book_id_seq', (SELECT MAX(id) FROM book));
+```
+
+### Изменение записей
+
+Для того что бы обновить данные нужно знать 3 вещи.
+
+1. Какая таблица и какое поле будет обновлено
+2. Какое будет новое значение
+3. Какую именно запись мы обновляем
+
+Синтаксис выглядит так:
+
+```sql
+UPDATE book 
+    SET language = 'uk' 
+        WHERE id = 3;
+```
+
+Где `book` - таблица, `language` - поле, `uk` - новое значение, `WHERE id = 3` - выбор объекта для обновления.
+
+> Внутри `SET` может быть указано больше одного поля
+
+> `WHERE` является не обязательным атрибутом. Но если вы не укажете его, то вы обновите поля для **ВСЕХ** записей в
+> таблице.
+
+### Удаление записей
+
+Все очень просто. Что бы удалить запись используется вот такой синтаксис:
+
+```sql
+DELETE 
+    FROM book 
+        WHERE id = 3;
+```
+
+Для удаления записи с `id` = 3 из таблицы `book`.
+
+> Если не указать `WHERE` то вы удалите все записи!!!
+
+```sql
+DELETE 
+    FROM book;
+```
+
+### Возврат значений после записи
+
+Если вам нужно сразу после создания записей получить какие-то данных от них это можно сделать через слово `RETURNING`:
+
+```sql
+INSERT INTO author (first_name, last_name, country, birthdate)
+VALUES ('Wendye', 'Rowbotham', 'Poland', '1932-12-16'),
+       ('Grannie', 'Kidner', 'United States', '1940-02-21'),
+       ('Godart', 'Van Driel', 'United Kingdom', '1980-01-02'),
+       ('Meara', 'Meenehan', 'United States', '1994-12-13')
+RETURNING id;
+```
+
+Такая запись вернет все `id` для созданных объектов.
+
 
 
