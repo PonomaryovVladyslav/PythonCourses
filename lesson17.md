@@ -1,4 +1,4 @@
-# Лекция 17. СУБД. PostgreSQL. SQL. DDL. Пользователи. DCL. DML.
+# Лекция 17. СУБД. PostgreSQL. SQL. DDL. Пользователи. DCL. DML. Связи.
 
 ![](https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRoFjs9TgjIxTmURMbn6ugAKStglKq3JjPQKQ&s)
 
@@ -756,9 +756,9 @@ SELECT SETVAL('book_id_seq', (SELECT MAX(id) FROM book));
 Синтаксис выглядит так:
 
 ```sql
-UPDATE book 
-    SET language = 'uk' 
-        WHERE id = 3;
+UPDATE book
+SET language = 'uk'
+WHERE id = 3;
 ```
 
 Где `book` - таблица, `language` - поле, `uk` - новое значение, `WHERE id = 3` - выбор объекта для обновления.
@@ -773,9 +773,9 @@ UPDATE book
 Все очень просто. Что бы удалить запись используется вот такой синтаксис:
 
 ```sql
-DELETE 
-    FROM book 
-        WHERE id = 3;
+DELETE
+FROM book
+WHERE id = 3;
 ```
 
 Для удаления записи с `id` = 3 из таблицы `book`.
@@ -783,8 +783,8 @@ DELETE
 > Если не указать `WHERE` то вы удалите все записи!!!
 
 ```sql
-DELETE 
-    FROM book;
+DELETE
+FROM book;
 ```
 
 ### Возврат значений после записи
@@ -802,5 +802,313 @@ RETURNING id;
 
 Такая запись вернет все `id` для созданных объектов.
 
+## Связи
 
+![](https://www.sqlshack.com/wp-content/uploads/2020/01/many-to-many-relation.png)
 
+Настало время поговорить о связях в базе данных. Не просто так они называются реляционные (relate - отношение)
+
+### Ключевые слова
+
+#### PRIMARY KEY
+
+Ключевое слово `PRIMARY KEY` используется для определения уникального идентификатора записи в таблице. Каждая таблица
+может иметь только один первичный ключ, и значения в этом ключе должны быть уникальными и не NULL.
+
+> Чаще всего PK (`PRIMARY KEY`) является `id`. Это не всегда так, но это очень частый случай.
+
+#### FOREIGN KEY
+
+Ключевое слово `FOREIGN KEY` используется для создания связи между таблицами. Внешний ключ — это столбец или набор
+столбцов в одной таблице, которые ссылаются на первичный ключ другой таблицы. Внешний ключ обеспечивает ссылочную
+целостность данных, гарантируя, что значения в этом столбце соответствуют значениям в связанном столбце другой таблицы.
+
+#### REFERENCES
+
+Ключевое слово `REFERENCES` используется в сочетании с `FOREIGN KEY` для указания таблицы и столбца, на которые
+ссылается внешний ключ. Это позволяет PostgreSQL следить за тем, чтобы значения внешнего ключа соответствовали значениям
+первичного ключа в другой таблице.
+
+### Основные концепции связей в реляционных базах данных
+
+Для базы данных существует только одна связь. Через `FOREIGN KEY`. Все остальное является абстракциями, но мы будем ими
+очень много пользоваться, поэтому нам надо познакомиться с 3(с половиной) видами связей.
+
+#### Типы связей
+
+1. **Связь "один к одному" (One-to-One)**
+2. **Связь "один ко многим" (One-to-Many)**
+3. **Связь "многие ко многим" (Many-to-Many)**
+4. **Самоссылочные связи (Self-Referenced Relationships)** (Технически это тоже 1 ко многим)
+
+#### Примеры использования
+
+1. **"Один к одному":** Каждый сотрудник имеет один уникальный паспорт.
+2. **"Один ко многим":** Один пользователь может сделать много заказов.
+3. **"Многие ко многим":** Студенты записываются на несколько курсов, и каждый курс имеет много студентов.
+4. **Самоссылочные связи:** Сотрудник может быть подчиненным другого сотрудника. (А комментарий ответом на другой
+   комментарий)
+
+### Реализация связей в PostgreSQL
+
+#### Связь "один к одному" (One-to-One)
+
+Для создания связи "один к одному" можно использовать уникальные ключи и внешние ключи.
+
+Пример:
+
+```sql
+CREATE TABLE employee
+(
+    id   SERIAL PRIMARY KEY,
+    name VARCHAR(100) NOT NULL
+);
+
+CREATE TABLE passport
+(
+    id              SERIAL PRIMARY KEY,
+    employee_id     INT UNIQUE  NOT NULL,
+    passport_number VARCHAR(20) NOT NULL,
+    FOREIGN KEY (employee_id) REFERENCES employee (id)
+);
+```
+
+Обратите внимание, поле `employee_id` содержит модификатор `UNIQUE` именно он обеспечивает нам связь `1-to-1`, без него
+это была бы `1-to-many` как в следующем примере.
+
+### Связь "один ко многим" (One-to-Many)
+
+Это самая распространенная связь, которая создается с помощью внешнего ключа.
+
+Пример:
+
+```sql
+CREATE TABLE user
+(
+    id   SERIAL PRIMARY KEY,
+    name VARCHAR(100) NOT NULL
+);
+
+CREATE TABLE order
+(
+    id         SERIAL PRIMARY KEY,
+    order_date DATE NOT NULL,
+    user_id    INT  NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES user (id)
+);
+```
+
+### Связь "многие ко многим" (Many-to-Many)
+
+![](https://upload.wikimedia.org/wikipedia/commons/thumb/0/02/Databases-ManyToManyWJunction.jpg/1200px-Databases-ManyToManyWJunction.jpg)
+
+Для реализации связи "многие ко многим" необходимо создать промежуточную таблицу.
+
+Пример:
+
+```sql
+CREATE TABLE student
+(
+    id   SERIAL PRIMARY KEY,
+    name VARCHAR(100) NOT NULL
+);
+
+CREATE TABLE course
+(
+    id          SERIAL PRIMARY KEY,
+    course_name VARCHAR(100) NOT NULL
+);
+
+CREATE TABLE student_course
+(
+    student_id INT NOT NULL,
+    course_id  INT NOT NULL,
+    PRIMARY KEY (student_id, course_id),
+    FOREIGN KEY (student_id) REFERENCES student (id),
+    FOREIGN KEY (course_id) REFERENCES course (id)
+);
+```
+
+### Самоссылочные связи (Self-Referenced Relationships)
+
+![](https://upload.wikimedia.org/wikipedia/commons/f/fa/Ouroboros.png)
+
+Самоссылочные связи используются, когда строки в таблице могут ссылаться на другие строки в той же таблице. Это полезно
+для создания иерархических структур, таких как отношения "начальник-подчиненный".
+
+> Технически это такой же `FOREIGN KEY` просто в качестве 2 таблиц используется одна и та же
+
+Пример:
+
+```sql
+CREATE TABLE employee
+(
+    id         SERIAL PRIMARY KEY,
+    name       VARCHAR(100) NOT NULL,
+    manager_id INT,
+    FOREIGN KEY (manager_id) REFERENCES employee (id)
+);
+```
+
+В данном примере `manager_id` ссылается на `id` в той же таблице, создавая иерархию сотрудников.
+
+Обратите внимание тут `manager_id` может быть `NULL` потому что иначе мы не сможем создать `директора`, того у кого
+начальника нет.
+
+### Важность соблюдения ссылочной целостности
+
+Ссылочная целостность обеспечивает корректность и непротиворечивость данных. В PostgreSQL для этого используются
+ограничения внешних ключей (FOREIGN KEY), которые позволяют следить за тем, чтобы ссылки между таблицами оставались
+корректными.
+
+Пример нарушения ссылочной целостности:
+
+```sql
+-- Попытка вставки записи в таблицу orders с несуществующим user_id
+INSERT INTO order (order_date, user_id)
+VALUES ('2024-07-30', 999);
+```
+
+> Этот запрос вызовет ошибку, так как user_id = 999 отсутствует в таблице users.
+
+### ON DELETE
+
+Когда мы создаем внешний ключ, мы можем указать различные параметры для `ON DELETE`, чтобы определить поведение системы
+при удалении записей в родительской таблице. Рассмотрим основные из них.
+
+#### CASCADE
+
+Параметр `ON DELETE CASCADE` означает, что при удалении записи в родительской таблице, автоматически будут удалены все
+связанные записи в дочерней таблице.
+
+**Пример:**
+
+```sql
+CREATE TABLE orders
+(
+    id         SERIAL PRIMARY KEY,
+    student_id INT,
+    order_date DATE,
+    FOREIGN KEY (student_id) REFERENCES students (id) ON DELETE CASCADE
+);
+```
+
+**Работа:**
+
+```sql
+-- Удаляем студента с id = 1
+DELETE
+FROM students
+WHERE id = 1;
+-- Автоматически удаляются все заказы, связанные с этим студентом
+```
+
+#### SET NULL
+
+Параметр `ON DELETE SET NULL` устанавливает значение внешнего ключа в `NULL` при удалении записи в родительской таблице.
+Это полезно, если нужно сохранить связанные записи, но удалить связь с родительской записью.
+
+**Пример:**
+
+```sql
+CREATE TABLE orders
+(
+    id         SERIAL PRIMARY KEY,
+    student_id INT,
+    order_date DATE,
+    FOREIGN KEY (student_id) REFERENCES students (id) ON DELETE SET NULL
+);
+```
+
+**Работа:**
+
+```sql
+-- Удаляем студента с id = 1
+DELETE
+FROM students
+WHERE id = 1;
+-- Поле student_id в таблице orders для всех связанных записей становится NULL
+```
+
+#### SET DEFAULT
+
+Параметр `ON DELETE SET DEFAULT` устанавливает значение внешнего ключа в значение по умолчанию при удалении записи в
+родительской таблице. Это значение должно быть указано при создании таблицы.
+
+**Пример:**
+
+```sql
+CREATE TABLE orders
+(
+    id         SERIAL PRIMARY KEY,
+    student_id INT DEFAULT 0,
+    order_date DATE,
+    FOREIGN KEY (student_id) REFERENCES students (id) ON DELETE SET DEFAULT
+);
+```
+
+**Работа:**
+
+```sql
+-- Удаляем студента с id = 1
+DELETE
+FROM students
+WHERE id = 1;
+-- Поле student_id в таблице orders для всех связанных записей устанавливается в 0
+```
+
+#### RESTRICT
+
+Параметр `ON DELETE RESTRICT` предотвращает удаление записи в родительской таблице, если существуют связанные записи в
+дочерней таблице. Это полезно для предотвращения удаления данных, которые еще используются.
+
+**Пример:**
+
+```sql
+CREATE TABLE orders
+(
+    id         SERIAL PRIMARY KEY,
+    student_id INT,
+    order_date DATE,
+    FOREIGN KEY (student_id) REFERENCES students (id) ON DELETE RESTRICT
+);
+```
+
+**Работа:**
+
+```sql
+-- Попытка удаления студента с id = 1, если есть связанные заказы
+DELETE
+FROM students
+WHERE id = 1;
+-- Возвращает ошибку и предотвращает удаление
+```
+
+#### NO ACTION
+
+Параметр `ON DELETE NO ACTION` является значением по умолчанию и ведет себя аналогично `RESTRICT`. Он также
+предотвращает удаление записи в родительской таблице, если существуют связанные записи в дочерней таблице. Однако
+проверка ограничения выполняется после попытки удаления, что позволяет выполнение других операций до проверки
+ограничения.
+
+**Пример:**
+
+```sql
+CREATE TABLE orders
+(
+    id         SERIAL PRIMARY KEY,
+    student_id INT,
+    order_date DATE,
+    FOREIGN KEY (student_id) REFERENCES students (id) ON DELETE NO ACTION
+);
+```
+
+**Работа:**
+
+```sql
+-- Попытка удаления студента с id = 1, если есть связанные заказы
+DELETE
+FROM students
+WHERE id = 1;
+-- Возвращает ошибку и предотвращает удаление
+```
