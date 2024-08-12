@@ -1,24 +1,15 @@
-# Лекция 40. Тестирование. Python, Django, REST API.
+# Лекция 32. Тестирование. Django, REST API.
 
-[/не отображается/]: # (![]&#40;https://pics.me.me/your-code-cant-fail-unit-tests-openim-if-you-dont-14499557.png&#41;)
+![](https://preview.redd.it/aom6ubb0b4e71.jpg?width=640&crop=smart&auto=webp&s=d9094222a89d1f8cb0f43285d4ff9c81f274cfee)
 
 ## Общая информация
 
 Тестирование - это огромная, нет **ОГРОМНАЯ** тема, настолько огромная, что порождает два отдельных класса сотрудников в
 IT индустрии.
 
-## Виды тестирования
-
-[/не отображается/]: # (![]&#40;https://qastart.by/images/speasyimagegallery/albums/2/images/-.png&#41;)
-
-Таблица достаточно понятна, не будем вдаваться в детали.
-
-Главное, что нужно извлечь из неё, — это то, что тестировщики делятся на мануальных (ручных) и автоматизированных.
-
-Мануальные занимаются тем, что вручную проверяют весь доступный функционал. Автоматизаторы пишут код для тестирования
-продукта.
-
 ## Уровни тестирования
+
+Напомним себе про пирамиду тестирования
 
 ![](https://habrastorage.org/storage2/ec3/825/c7f/ec3825c7f0710f9fed6814c89b794ded.jpg)
 
@@ -37,84 +28,6 @@ IT индустрии.
 ввод данных, нажатие кнопок, переход по ссылкам и т. д.
 
 **Ручные тесты (Manual Tests)** - вид тестов, когда мы полностью повторяем потенциальные действия пользователя.
-
-### Как это вообще работает?
-
-Теоретически можно написать рабочий проект вообще без единого теста (ваш модуль тому пример). Но чем больше и сложнее
-система, тем дороже стоимость ошибки или объем затраченного времени на поиск причины этой ошибки.
-
-В реальности даже не сильно большой проект не может существовать без тестирования.
-
-#### Кто пишет юнит тесты?
-
-Юнит тесты - это тесты конкретно написанной функции или метода. А значит, что знание о том, как это работает, есть 
-только у разработчика, а значит, их пишет разработчик.
-
-`Идеальный мир` - разработчик покрывает всё тестами.
-
-`Реальность` - разработчик покрывает основной функционал и тонкие места тестами.
-
-`Худший случай` - юнит тестов нет, что приводит к усложнению написания и модификации проекта в несколько раз.
-
-#### Кто пишет интеграционные тесты?
-
-`Идеальный мир` - автоматизированные тестировщики, причём вполне возможно, что на другом языке программирования,
-приложению неважно, кто отправляет HTTP запрос, с какой платформы и языка.
-
-`Реальность` - автоматизаторы, если они есть, разработчики, если автоматизаторов нет.
-
-`Худший случай` - нет интеграционных тестов. Что приводит к тому, что при внедрении новых фич можно не узнать о том,
-что сломалась старая. Это приводит к тому, что функционал будет отваливаться быстрее, чем разрабатываться.
-
-#### Кто пишет приёмочные тесты?
-
-`Идеальный мир` - всё те же автоматизаторы.
-
-`Реальность` - у кого есть время и желание, чаще всего этот вид тестирования либо игнорируется, либо выполняется, когда
-уже всё остальное написано. Также бывает, когда через такой вид тестирования мануальщиков обучают и привлекают к
-автоматизации.
-
-`Худший случай` - приёмочных тестов нет, и в случае отсутствия мануальной проверки можно не узнать, что функционал в 
-браузере больше не работает.
-
-#### Кто выполняет ручные тесты?
-
-`Идеальный мир` - мануальные тестировщики.
-
-`Реальность` - если есть мануальные тестировщики, то они, если нет, то автоматизаторы, если и их нет, то разработчики в
-процессе разработки.
-
-`Худший случай` - не проводятся, уверенность, что функционал работает, равна нулю.
-
-### Исследовательское тестирование и планирование
-
-Хорошая новость в том, что вы, вероятно, уже создавали тесты, не осознавая этого. Помните, когда вы запускали приложение
-и использовали его впервые? Вы проверяли функции и экспериментировали с ними? Это называется исследовательское
-тестирование и является формой ручного тестирования.
-
-**Исследовательское тестирование** — это форма тестирования, которая проводится без плана. В таком виде тестирования вы
-просто изучаете приложение.
-
-Чтобы получить полный набор ручных тестов, нужно составить список всех функций вашего приложения, список различных 
-типов входных данных, принимаемых вашим приложением, и все ожидаемые результаты. Теперь каждый раз, когда вы будете 
-вносить изменения в свой код, вам нужно просмотреть каждый элемент в этом списке и проверить его правильность.
-
-Это не особо прикольно?
-
-Вот где приходит на помощь **тест план**.
-
-**Тест план** - это разделение вашего приложения на минимальные части и описание ожидаемой работы функционала каждой 
-части, порядка их выполнения и ожидаемые результаты.
-
-Если есть тест план, вы можете каждый раз проходить по всем его пунктам и быть уверенным, что вы проверили всё. В
-случае обновления приложения необходимо обновить и план.
-
-## Test Case
-
-Чёткого определения у тест кейса нет. Но в общем случае тест кейс - это минимальная единица проверки чего-либо.
-
-На практике, это чаще всего набор методов в классе, проверяющий какой-либо функционал. Например, в одном вьюсете
-переписано 3 метода. Тесты, описывающие все проверки, будут в одном тест кейсе.
 
 ## Тестирование в Django
 
@@ -293,7 +206,7 @@ $./manage.py test animals.tests.unit.test_models.AnimalTestCase.test_animals_can
 
 ### Client
 
-Для проведения интеграционного тестирования Django приложения нам необходимо отправлять запросы с клиента (браузера),
+Для проведения `интеграционного` тестирования Django приложения нам необходимо отправлять запросы с клиента (браузера),
 функционал для этого нам предоставлен из коробки, и мы можем им воспользоваться:
 
 ```python
@@ -416,7 +329,7 @@ class ClosePollTest(TestCase):
 Тесты можно пропускать в зависимости от условий и деталей запуска.
 Дока [тут](https://docs.python.org/3/library/unittest.html#unittest.skipIf)
 
-## Фабрики
+## Фабрики и юнит тестирование
 
 ### Паттерн фабрика
 
@@ -886,279 +799,3 @@ fake.ipv4_private()
 fake.ipv4_private()
 '10.86.161.98'
 ```
-
-## Mock
-
-**Mock** - это фиктивные объекты. Очень часто мы попадаем в такие ситуации, когда в тесте мы не можем выполнить 
-какое-либо действие. Например, HTTP запрос к стороннему сервису. В этом случае мы можем имитировать выполнение этого 
-запроса, чтобы не прерывать суть теста, тут нам и поможет `Mock`.
-
-**Для версий питона 3.3 и старше, `Mock` является частью стандартной библиотеки, установка не требуется**
-
-Для использования с версией ниже чем 3.3 необходимо установить пакет Mock:
-
-```
-pip install mock
-```
-
-Можно создать Mock объект и заменить им всё, что угодно :)
-
-```
-from unittest.mock import Mock
-mock = Mock()
-mock
-< Mock id = '4561344720' >
-```
-
-Мы можем использовать фейковый объект в качестве аргумента или целиком заменяя сущность:
-
-```python
-# Pass mock as an argument to do_something()
-do_something(mock)
-
-# Patch the json library
-json = mock
-```
-
-у фейкового объекта могут быть как атрибуты, так и методы:
-
-```
-mock.some_attribute
-< Mock name = 'mock.some_attribute' id = '4394778696' >
-mock.do_something()
-< Mock name = 'mock.do_something()' id = '4394778920' >
-```
-
-Есть достаточно много способов использовать мок, очень хорошая статья [Тут](https://realpython.com/python-mock-library/)
-
-Рассмотрим основные.
-
-### Контроль возвращаемого результата
-
-Предположим, вам нужно убедиться, что ваш код в рабочие и в выходные дни ведёт себя по-разному, а код подразумевает
-использование встроенной библиотеки `datetime`.
-
-Для упрощения пока засунем все в один файл:
-
-```python
-from datetime import datetime
-
-
-def is_weekday():
-    today = datetime.today()
-    # Python's datetime library treats Monday as 0 and Sunday as 6
-    return 0 <= today.weekday() < 5
-
-
-# Test if today is a weekday
-assert is_weekday()
-```
-
-Если мы запустим этот тест в воскресенье, то мы получим exception, что же с этим делать? Замокать... Mock объект может
-возвращать по вызову любой функции необходимое нам значение посредством заполнения `return_value`:
-
-```python
-import datetime
-from unittest.mock import Mock
-
-# Save a couple of test days
-tuesday = datetime.datetime(year=2019, month=1, day=1)
-saturday = datetime.datetime(year=2019, month=1, day=5)
-
-# Mock datetime to control today's date
-datetime = Mock()
-
-
-def is_weekday():
-    today = datetime.datetime.today()
-    # Python's datetime library treats Monday as 0 and Sunday as 6
-    return 0 <= today.weekday() < 5
-
-
-# Mock .today() to return Tuesday
-datetime.datetime.today.return_value = tuesday
-# Test Tuesday is a weekday
-assert is_weekday()
-# Mock .today() to return Saturday
-datetime.datetime.today.return_value = saturday
-# Test Saturday is not a weekday
-assert not is_weekday()
-```
-
-Если нам необходимо, чтобы после повторного вызова мы получали другие результаты, то нам поможет `side_effect`, работает
-также, как и `return_value`, только принимает перебираемый объект и с каждым вызовом возвращает следующее значение.
-
-```
-mock_poll = Mock(side_effect=[None, 'data'])
-mock_poll()
-None
-mock_poll()
-'data'
-```
-
-Или как на прошлом примере:
-
-```python
-import datetime
-from unittest.mock import Mock
-
-# Save a couple of test days
-tuesday = datetime.datetime(year=2019, month=1, day=1)
-saturday = datetime.datetime(year=2019, month=1, day=5)
-
-# Mock datetime to control today's date
-datetime = Mock()
-
-
-def is_weekday():
-    today = datetime.datetime.today()
-    # Python's datetime library treats Monday as 0 and Sunday as 6
-    return 0 <= today.weekday() < 5
-
-
-# Mock .today() to return Tuesday first time and Saturday second time
-datetime.datetime.today.side_effect = [tuesday, saturday]
-assert is_weekday()
-assert not is_weekday()
-```
-
-### Декоратор patch
-
-Допустим, у нас есть класс, где мы имитируем какие-то длинные вычисления:
-
-```python
-import time
-
-
-class Calculator:
-    def sum(self, a, b):
-        time.sleep(10)  # long running process
-        return a + b
-```
-
-И тест к этой функции:
-
-```python
-from unittest import TestCase
-from main import Calculator
-
-
-class TestCalculator(TestCase):
-    def setUp(self):
-        self.calc = Calculator()
-
-    def test_sum(self):
-        answer = self.calc.sum(2, 4)
-        self.assertEqual(answer, 6)
-```
-
-Этот тест будет идти 10 секунд, имитируя длительный процесс, но мы можем имитировать выполнение этого метода.
-
-```python
-from unittest import TestCase
-from unittest.mock import patch
-
-
-class TestCalculator(TestCase):
-    @patch('main.Calculator.sum', return_value=9)
-    def test_sum(self, sum):
-        self.assertEqual(sum(2, 3), 9)
-```
-
-или
-
-```python
-from unittest import TestCase
-from unittest.mock import patch
-
-
-class TestCalculator(TestCase):
-    @patch('main.Calculator.sum')
-    def test_sum(self, sum):
-        sum.return_value = 9
-        self.assertEqual(sum(2, 3), 9)
-```
-
-Пропатченные методы попадают в аргументы метода теста.
-
-### Пример с использованием API
-
-Будем использовать классический пакет для Python для выполнения запросов.
-
-```
-pip install requests
-```
-
-Допустим, у нас есть такой код:
-
-```python
-import requests
-
-
-class Blog:
-    def __init__(self, name):
-        self.name = name
-
-    def posts(self):
-        response = requests.get("https://jsonplaceholder.typicode.com/posts")
-        return response.json()
-
-    def __repr__(self):
-        return f'<Blog: {self.name}>'
-```
-
-То можно описать тест так:
-
-```python
-from unittest import TestCase
-from unittest.mock import patch, Mock
-
-
-class TestBlog(TestCase):
-    @patch('main.Blog')
-    def test_blog_posts(self, MockBlog):
-        blog = MockBlog()
-
-        blog.posts.return_value = [
-            {
-                'userId': 1,
-                'id': 1,
-                'title': 'Test Title',
-                'body': 'Far out in the uncharted backwaters of the unfashionable end of the western spiral arm of the \
-                Galaxy\ lies a small unregarded yellow sun.'
-            }
-        ]
-
-        response = blog.posts()
-        self.assertIsNotNone(response)
-        self.assertIsInstance(response[0], dict)
-```
-
-## Целая замена методов через side_effect
-
-Если в `side_effect` засунуть метод, то вместо оригинального метода будет выполняться новый, например:
-
-```python
-from unittest import TestCase
-from unittest.mock import patch
-
-
-def mock_sum(a, b):
-    # mock sum function without the long running time.sleep
-    return a + b
-
-
-class TestCalculator(TestCase):
-    @patch('main.Calculator.sum', side_effect=mock_sum)
-    def test_sum(self, sum):
-        self.assertEqual(sum(2, 3), 5)
-        self.assertEqual(sum(7, 3), 10)
-```
-
-# К практике!
-
-1. Напишите юнит тесты для логина и для покупки товара.
-
-2. Напишите интеграционные тесты для логина и для покупки товара.
-
-3. (Задание до выдачи задания на диплом) Покройте тестами весь остальной код.
