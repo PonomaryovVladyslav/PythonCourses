@@ -1,4 +1,4 @@
-# Лекция 23. Модели
+# Лекция 23. Модели. Связи. Meta. Abstract, proxy.
 
 ![](https://www.meme-arsenal.com/memes/ec0eba9bc1a90ba417d786f9096cce72.jpg)
 
@@ -366,7 +366,9 @@ admin.site.register(Article, ArticleAdmin)
 > В базе данных у каждой таблицы есть параметр `sequence`, который и хранит в себе информацию о том, какое значение `id`
 > должно быть назначено следующим
 
-Так же все типы полей имеют встроенный атрибут `default`, который заполняется, если нужно указать значение по умолчанию
+Так же все типы полей имеют встроенный атрибут `default`, который заполняется, если нужно указать значение по умолчанию.
+
+Так же любое поле может быть индексировано, используя параметр `db_index=True`.
 
 ### BooleanField
 
@@ -529,7 +531,7 @@ from django.db import models
 
 class MyModel(models.Model):
     custom_id = models.CharField(max_length=50, primary_key=True)
-    name = models.CharField(max_length=100)
+    name = models.CharField(max_length=100, db_index=True)
 ```
 
 В этом примере поле `custom_id` будет использоваться в качестве первичного ключа вместо стандартного `id`.
@@ -674,3 +676,169 @@ class Membership(models.Model):
 Подробно мы не будем рассматривать этот функционал, но я бы очень рекомендовал ознакомиться.
 
 Работает, основываясь на приложении `django.conrib.contenttype`, добавленное в наш проект по умолчанию.
+
+## `class Meta` в моделях Django
+
+Когда мы работаем с моделями в Django, нам часто нужно определять дополнительные настройки, которые не относятся
+напрямую к полям модели, но оказывают влияние на её поведение в рамках ORM (Object-Relational Mapping). Для этого в
+Django используется внутренняя классическая конструкция — `class Meta`. Этот класс позволяет нам задавать различные
+метаданные для модели, такие как порядок сортировки, уникальные ограничения, имена таблиц, и многое другое.
+
+> Например когда нам надо создать ограничение на несколько полей, только этот синтаксис сможет нам помочь
+
+### Основные параметры `class Meta`
+
+`class Meta` предоставляет множество параметров, но мы сосредоточимся на двух самых часто используемых: `ordering`
+и `constraints`, `indexes`.
+
+#### Параметр `ordering`
+
+Параметр `ordering` позволяет задать порядок сортировки объектов модели по умолчанию, когда вы извлекаете данные из базы
+данных.
+
+**Пример:**
+
+```python
+from django.db import models
+
+
+class Book(models.Model):
+    title = models.CharField(max_length=100)
+    author = models.CharField(max_length=100)
+    published_date = models.DateField()
+
+    class Meta:
+        ordering = ['published_date']
+
+# Теперь при выборке объектов модели Book они будут сортироваться по дате публикации
+```
+
+В этом примере объекты модели `Book` будут по умолчанию отсортированы по полю `published_date`. Вы также можете
+использовать префикс `-`, чтобы указать обратный порядок:
+
+```python
+class Meta:
+    ordering = ['-published_date']  # Сортировка по дате публикации от новых к старым
+```
+
+##### Параметр `constraints`
+
+Параметр `constraints` позволяет задать составные уникальные ограничения на набор полей. Это означает, что
+комбинация значений этих полей должна быть уникальной для каждой записи в таблице.
+
+**Пример:**
+
+```python
+from django.db.models import UniqueConstraint
+
+
+class StoreItem(models.Model):
+    store = models.CharField(max_length=100)
+    item = models.CharField(max_length=100)
+
+    class Meta:
+        constraints = [
+            UniqueConstraint(fields=['store', 'item'], name='unique_store_item')
+        ]
+```
+
+### Параметр `indexes`
+
+Помимо параметров `ordering` и `constraints`, которые мы уже рассмотрели, в Django также существует параметр `indexes`,
+который позволяет создавать составные индексы для повышения производительности запросов, включающих несколько полей.
+
+`indexes` используется для создания составных индексов на уровне базы данных. Составные индексы полезны, когда вы часто
+делаете запросы, фильтруя данные сразу по нескольким полям. Наличие индекса на этих полях ускоряет выполнение таких
+запросов.
+
+**Пример:**
+
+**Пример с использованием `indexes`:**
+
+```python
+from django.db.models import Index
+
+
+class StoreItem(models.Model):
+    store = models.CharField(max_length=100)
+    item = models.CharField(max_length=100)
+    category = models.CharField(max_length=100)
+
+    class Meta:
+        indexes = [
+            Index(fields=['store', 'item']),
+            Index(fields=['item', 'category']),
+        ]
+```
+
+Этот способ позволяет не только задавать составные индексы, но и использовать дополнительные параметры, такие как `name`
+для указания имени индекса, и `condition` для создания частичных индексов.
+
+В этом примере создаются два составных индекса:
+
+1. Индекс по полям `store` и `item`.
+2. Индекс по полям `item` и `category`.
+
+Это может значительно улучшить производительность при выполнении запросов, которые фильтруют данные по этим комбинациям
+полей.
+
+> Точно таким же способом можно вносить и другие ограничения которые касаются двух и более полей сразу!
+
+### Абстрактные модели
+
+Абстрактные модели используются в Django для того, чтобы создать базовый класс с полями и методами, который не будет
+напрямую соответствовать таблице в базе данных, но может быть унаследован другими моделями. Это помогает избежать
+дублирования кода и сделать проект более модульным и управляемым.
+
+**Пример:**
+
+```python
+class TimeStampedModel(models.Model):
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        abstract = True
+
+
+class Post(TimeStampedModel):
+    title = models.CharField(max_length=100)
+
+
+class Comment(TimeStampedModel):
+    post = models.ForeignKey(Post, on_delete=models.CASCADE)
+    text = models.TextField()
+```
+
+Здесь `TimeStampedModel` является абстрактной моделью, поэтому Django не создаст для нее отдельную таблицу в базе
+данных. Модели `Post` и `Comment` унаследуют поля `created_at` и `updated_at` от абстрактной модели.
+
+### Прокси-модели
+
+Прокси-модели позволяют изменять поведение существующей модели без изменения ее базы данных. Прокси-модель использует ту
+же таблицу базы данных, что и исходная модель, но может переопределять методы или добавлять новые.
+
+**Пример:**
+
+```python
+class Person(models.Model):
+    name = models.CharField(max_length=100)
+    age = models.IntegerField()
+
+    def __str__(self):
+        return self.name
+
+
+class PersonProxy(Person):
+    class Meta:
+        proxy = True
+        ordering = ['name']
+
+    def full_name(self):
+        return f'Name: {self.name}, Age: {self.age}'
+```
+
+Здесь `PersonProxy` является прокси-моделью для модели `Person`. Она использует ту же таблицу в базе данных, но имеет
+дополнительный метод `full_name` и переопределяет порядок сортировки по умолчанию.
+
+> Абстрактные и прокси модели не существуют на уровне базы данных! Это уже надстройка на уровне Django
