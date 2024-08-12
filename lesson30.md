@@ -1,4 +1,4 @@
-# Лекция 38. @api_view, APIView, ViewSets, Pagination, Routers
+# Лекция 30. @api_view, APIView, ViewSets, Pagination, Routers
 
 Все мы помним, что веб в первую очередь - это Request-Response система.
 
@@ -14,7 +14,7 @@
 
 `.query_string` - данные, если запрос GET, аналог `request.GET`
 
-И параметры `.auth` и `.authenticateб`, которые мы рассмотрим на следующей лекции. Она целиком про авторизацию и
+И параметры `.auth` и `.authenticate`, которые мы рассмотрим на следующей лекции. Она целиком про авторизацию и
 `permissions` (доступы).
 
 ## Response
@@ -41,14 +41,16 @@
 
 ## Настройка для получения JSON
 
-В современной версии пакета DRF по умолчанию не указан параметр для получения ответа в формате JSON. Это нужно указать
-явно, для этого в `settings.py` необходимо добавить:
+Если нужно указать явно формат для получения или отправки, то можно указать его в `settings.py`:
 
 ```python
 REST_FRAMEWORK = {
-    'DEFAULT_RENDERER_CLASSES': (
+    'DEFAULT_RENDERER_CLASSES': [
         'rest_framework.renderers.JSONRenderer',
-    )
+    ],
+    'DEFAULT_PARSER_CLASSES': [
+        'rest_framework.parsers.JSONParser',
+    ]
 }
 ```
 
@@ -56,29 +58,30 @@ REST_FRAMEWORK = {
 
 Дока [тут](https://www.django-rest-framework.org/api-guide/views/#api_view)
 
-Для описания endpoint функционально нужно указать декоратор `api_view` и методы, которые он может принимать. Возвращает
-всё также объект ответа.
+Для описания `endpoint` функционально нужно указать декоратор `api_view` и методы, которые он может принимать.
+Возвращает всё также объект ответа. Для использования возьмем модель `Book` и сериалайзер `BookSerializer`, из
+последнего примера прошлой лекции
 
 ```python
 from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from snippets.models import Snippet
-from snippets.serializers import SnippetSerializer
+from myapp.models import Book
+from myapp.serializers import BookSerializer
 
 
 @api_view(['GET', 'POST'])
-def snippet_list(request):
+def book_list(request):
     """
-    List all code snippets, or create a new snippet.
+    List all books, or create a new book.
     """
     if request.method == 'GET':
-        snippets = Snippet.objects.all()
-        serializer = SnippetSerializer(snippets, many=True)
+        books = Book.objects.all()
+        serializer = BookSerializer(books, many=True)
         return Response(serializer.data)
 
     elif request.method == 'POST':
-        serializer = SnippetSerializer(data=request.data)
+        book = BookSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
@@ -93,39 +96,39 @@ def snippet_list(request):
 
 ```python
 @api_view(['GET', 'PUT', 'DELETE'])
-def snippet_detail(request, pk):
+def book_detail(request, pk):
     """
-    Retrieve, update or delete a code snippet.
+    Retrieve, update or delete a book.
     """
     try:
-        snippet = Snippet.objects.get(pk=pk)
-    except Snippet.DoesNotExist:
+        book = Book.objects.get(pk=pk)
+    except Book.DoesNotExist:
         return Response(status=status.HTTP_404_NOT_FOUND)
 
     if request.method == 'GET':
-        serializer = SnippetSerializer(snippet)
+        serializer = BookSerializer(book)
         return Response(serializer.data)
 
     elif request.method == 'PUT':
-        serializer = SnippetSerializer(snippet, data=request.data)
+        serializer = BookSerializer(book, data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     elif request.method == 'DELETE':
-        snippet.delete()
+        book.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 ```
 
 URLs для таких методов описываются точно так же как и для стандартной Django вью.
 
 ```python
-from snippets.view import snippet_list, snippet_detail
+from myapp.view import book_list, book_detail
 
 urlpatterns = [
-    path('snippets/', snippet_list),
-    path('snippets/<int:pk>/', snippet_detail),
+    path('books/', book_list),
+    path('books/<int:pk>/', book_detail),
 ]
 ```
 
@@ -134,21 +137,15 @@ urlpatterns = [
 ```json
 [
   {
-    "id": 1,
-    "title": "",
-    "code": "foo = \"bar\"\n",
-    "linenos": false,
-    "language": "python",
-    "style": "friendly"
-  },
-  {
-    "id": 2,
-    "title": "",
-    "code": "print(\"hello, world\")\n",
-    "linenos": false,
-    "language": "python",
-    "style": "friendly"
-  }
+      "title": "Harry Potter and the Philosopher's Stone",
+      "published_date": "1997-06-26",
+      "id": 1
+    },
+    {
+      "title": "Harry Potter and the Chamber of Secrets",
+      "published_date": "1998-07-02",
+      "id": 2
+    }
 ]
 ```
 
@@ -157,15 +154,10 @@ urlpatterns = [
 Ответ на POST запрос (создание объекта):
 
 ```json
-http --form POST http://127.0.0.1:8000/snippets/ code="print(123)"
-
 {
-"id": 3,
-"title": "",
-"code": "print(123)",
-"linenos": false,
-"language": "python",
-"style": "friendly"
+   "title": "test title",
+   "published_date": "1998-07-02",
+   "id": 3
 }
 ```
 
@@ -180,25 +172,25 @@ http --form POST http://127.0.0.1:8000/snippets/ code="print(123)"
 Также мы можем описать это же через Class-Based View, для этого нам нужно наследоваться от APIView:
 
 ```python
-from snippets.models import Snippet
-from snippets.serializers import SnippetSerializer
+from myapp.models import Book
+from myapp.serializers import BookSerializer
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 
 
-class SnippetList(APIView):
+class BookList(APIView):
     """
-    List all snippets, or create a new snippet.
+    List all books, or create a new book.
     """
 
     def get(self, request, format=None):
-        snippets = Snippet.objects.all()
-        serializer = SnippetSerializer(snippets, many=True)
+        books = Book.objects.all()
+        serializer = BookSerializer(books, many=True)
         return Response(serializer.data)
 
     def post(self, request, format=None):
-        serializer = SnippetSerializer(data=request.data)
+        serializer = BookSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
@@ -208,33 +200,33 @@ class SnippetList(APIView):
 Вынесем получение объекта в отдельный метод:
 
 ```python
-class SnippetDetail(APIView):
+class BookDetail(APIView):
     """
-    Retrieve, update or delete a snippet instance.
+    Retrieve, update or delete a book instance.
     """
 
     def get_object(self, pk):
         try:
-            return Snippet.objects.get(pk=pk)
-        except Snippet.DoesNotExist:
+            return Book.objects.get(pk=pk)
+        except Book.DoesNotExist:
             raise Http404
 
     def get(self, request, pk, format=None):
-        snippet = self.get_object(pk)
-        serializer = SnippetSerializer(snippet)
+        book = self.get_object(pk)
+        serializer = BookSerializer(book)
         return Response(serializer.data)
 
     def put(self, request, pk, format=None):
-        snippet = self.get_object(pk)
-        serializer = SnippetSerializer(snippet, data=request.data)
+        book = self.get_object(pk)
+        serializer = BookSerializer(book, data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def delete(self, request, pk, format=None):
-        snippet = self.get_object(pk)
-        snippet.delete()
+        book = self.get_object(pk)
+        book.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 ```
 
@@ -242,8 +234,8 @@ URLs описываются так же, как и для Django Class-Based Vie
 
 ```python
 urlpatterns = [
-    path('snippets/', SnippetList.as_view()),
-    path('snippets/<int:pk>/', SnippetDetail.as_view()),
+    path('books/', BookList.as_view()),
+    path('books/<int:pk>/', BookDetail.as_view()),
 ]
 ```
 
@@ -326,9 +318,9 @@ class CreateModelMixin(object):
 
 Вызываем метод `get_serializer()` из класса `GenericAPIView` для получения объекта сериалайзера, обратите внимание, что
 данные передаются через атрибут `data`, так как они получены от пользователя. Проверяем данные на валидность (обратите
-внимание на атрибут `raise_exception`, если данные будут не валидны, код сразу вылетит в traceback, а значит нам не 
-нужно отдельно прописывать действия при не валидном сериалайзере), вызываем метод `perform_create`, который просто 
-сохраняет сериалайзер (вызывает `create` или `update` в зависимости от данных), получает хедеры, и возвращает response 
+внимание на атрибут `raise_exception`, если данные будут не валидны, код сразу вылетит в traceback, а значит нам не
+нужно отдельно прописывать действия при не валидном сериалайзере), вызываем метод `perform_create`, который просто
+сохраняет сериалайзер (вызывает `create` или `update` в зависимости от данных), получает хедеры, и возвращает response
 с 201 кодом, создание успешно.
 
 По аналогии мы можем рассмотреть остальные миксины.
@@ -375,7 +367,7 @@ class UpdateModelMixin(object):
         return self.update(request, *args, **kwargs)
 ```
 
-Методы `update()`, `partial_update()`, `perform_update()` нужны для обновления объекта, обратите внимание на атрибут 
+Методы `update()`, `partial_update()`, `perform_update()` нужны для обновления объекта, обратите внимание на атрибут
 `partial`. Помните разницу между PUT и PATCH?
 
 ```python
@@ -413,7 +405,7 @@ class ListModelMixin(object):
         return Response(serializer.data)
 ```
 
-Метод `list()` получает кверисет, дальше пытается его пагинировать, если получается, возвращает страницу, если нет - 
+Метод `list()` получает кверисет, дальше пытается его пагинировать, если получается, возвращает страницу, если нет -
 целый ответ.
 
 *Важно!* Ни в одном из миксинов не было методов `get()`,`post()`,`patch()`,`put()` или `delete()`, почему?
@@ -578,7 +570,7 @@ class CommentListView(ListCreateAPIView):
 Классы, которые отвечают за поведение нескольких запросов, и отличаются друг от друга только методом, называются
 `ViewSet`.
 
-Они на самом деле описывают методы, для получения списка действий (list, retrieve, и т. д.), и преобразования их в URLs 
+Они на самом деле описывают методы, для получения списка действий (list, retrieve, и т. д.), и преобразования их в URLs
 (об этом дальше).
 
 Например:
@@ -794,7 +786,7 @@ urlpatterns = router.urls
 
 URLs будут сгенерированы автоматически, и им будут автоматически присвоены имена:
 
-```python
+```
 URL pattern: ^users/$ Name: 'user-list'
 URL pattern: ^users/{pk}/$ Name: 'user-detail'
 URL pattern: ^accounts/$ Name: 'account-list'
@@ -830,21 +822,3 @@ class UserViewSet(ModelViewSet):
 
 Класс `SimpleRouter` может принимать параметр `trailing_slash=False` True или False, по дефолту True, поэтому все API,
 должны принимать URLs заканчивающиеся на `/`, если указать явно, то будет принимать всё без `/`.
-
-## Практика/домашка
-
-Создать две модели. Книга и Автор, связанные через ForeignKey, у автора есть имя и возраст. У книги есть название.
-
-1) Полный CRUD для двух объектов, книга и автор, должны работать все виды запросов через `postman`.
-
-2) При создании книги добавлять в конце названия символ "!".
-
-3) Для метода `GET` книги, добавить опциональный параметр `author_age`, если он указан и там число, то отображать только
-   книги, если возраст автора больше или равен указанного.
-
-4) Для метода `GET` автора, добавить опциональный параметр `book_name`, для фильтрации авторов, у которых есть книги, у
-   которых название частично совпадают с указанным параметром. (Например, если у автора есть только одна книга "Азбука",
-   то по запросу "бук" этот автор должен быть в списке, по запросу "ква" - нет).
-
-5) Добавить отдельный экшен, чтобы получать объект автора с полем `books`, в котором будут лежать `id` всех книг этого
-   автора.

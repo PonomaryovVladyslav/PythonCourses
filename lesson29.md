@@ -840,7 +840,7 @@ from rest_framework import serializers
 class BookSerializer(serializers.ModelSerializer):
     class Meta:
         model = Book
-        fields = ['title', 'published_date']
+        fields = ['title', 'published_date', 'id']
 
 
 class AuthorSerializer(serializers.ModelSerializer):
@@ -864,11 +864,13 @@ class AuthorSerializer(serializers.ModelSerializer):
   "books": [
     {
       "title": "Harry Potter and the Philosopher's Stone",
-      "published_date": "1997-06-26"
+      "published_date": "1997-06-26",
+      "id": 1
     },
     {
       "title": "Harry Potter and the Chamber of Secrets",
-      "published_date": "1998-07-02"
+      "published_date": "1998-07-02",
+      "id": 2
     }
   ]
 }
