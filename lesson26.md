@@ -1,4 +1,4 @@
-# Лекция 33. ModelForm, ClassBaseView
+# Лекция 26. ClassBaseView
 
 ![cbv_meme.png](pictures/cbv_meme.png)
 
@@ -30,7 +30,8 @@
 `as_view()` - метод который всегда вызывается, чтобы использовать класс в `urls.py`, внутри вызывает методы `setup`
 и `dispatch`
 
-`setup()` - метод, который добавляет `request` в `self`, благодаря чему `request` будет доступен в абсолютно любом методе
+`setup()` - метод, который добавляет `request` в `self`, благодаря чему `request` будет доступен в абсолютно любом
+методе
 всех наших `view` классов
 
 `http_method_not_allowed()` - метод, который генерирует ошибку запроса (не могу обработать, например, POST запрос).
@@ -155,9 +156,9 @@ class HomePageView(TemplateView):
 Основные атрибуты:
 
 ```python 
-query_string = False # сохранить ли квери параметры (то, что в строке браузера после ?) при редиректе
-url = None # URL, на который надо перейти
-pattern_name = None # Имя URL, на который надо перейти
+query_string = False  # сохранить ли квери параметры (то, что в строке браузера после ?) при редиректе
+url = None  # URL, на который надо перейти
+pattern_name = None  # Имя URL, на который надо перейти
 ```
 
 Основные методы:
@@ -264,8 +265,8 @@ class CommentListView(ListView):
 
 [Дока](https://docs.djangoproject.com/en/4.2/topics/pagination/)
 
-Очень часто наше приложение хранит большое количество данных, и при отображении нам не нужно показывать прям всё 
-(допустим у нас блог на 1 000 000 000 статей). Логично отдавать данные порциями - это и называется пагинация, 
+Очень часто наше приложение хранит большое количество данных, и при отображении нам не нужно показывать прям всё
+(допустим у нас блог на 1 000 000 000 статей). Логично отдавать данные порциями - это и называется пагинация,
 или разбиение на страницы.
 
 При прокрутке ленты в соцсети вы подгружаете всё новые и новые страницы, просто при помощи JavaScript это сделано
@@ -294,7 +295,7 @@ context = {
 
 ```python
 allow_empty = True  # разрешить ли отображение пустого списка
-ordering = None     # явно указать порядок сортировки
+ordering = None  # явно указать порядок сортировки
 ```
 
 Всё еще описан только метод `get()`. Методы `post()`, `put()` и т. д. не разрешены.
@@ -372,9 +373,9 @@ class ContactView(FormView):
 Такие же, как у TemplateView, и еще свои
 
 ```python
-form_class = None   # сам класс формы
+form_class = None  # сам класс формы
 success_url = None  # на какую страницу перейти, если форма была валидна
-initial = {}        # словарь с базовыми значениями формы
+initial = {}  # словарь с базовыми значениями формы
 ```
 
 Важные методы:
@@ -439,7 +440,7 @@ class AuthorCreate(CreateView):
 </form>
 ```
 
-В класс нужно передать либо ModelForm, либо модель и поля, чтобы класс сам сгенерировал такую форму.
+> В класс нужно передать либо ModelForm, либо модель и поля, чтобы класс сам сгенерировал такую форму.
 
 Метод `get()` откроет страницу, на которой будет переменная `form`, как и другие view, к которым добавляется форма.
 
@@ -452,8 +453,8 @@ class AuthorCreate(CreateView):
 
 ```python
 form_class = None  # Должен принимать ModelForm
-model = None       # Можно указать модель вместо формы, чтобы сгенерировать её на ходу
-fields = None      # Поля модели, если не указана форма
+model = None  # Можно указать модель вместо формы, чтобы сгенерировать её на ходу
+fields = None  # Поля модели, если не указана форма
 ```
 
 Важные методы:
@@ -536,7 +537,7 @@ class AuthorDelete(DeleteView):
 
 Класс, реализующий логику логина.
 
-Основан на FormView, если форма не была заменена, то по умолчанию использует 
+Основан на FormView, если форма не была заменена, то по умолчанию использует
 `django.contrib.auth.forms.AuthenticationForm`. Эта форма содержит два поля, `username` и `password`, и
 проверяет, что данные валидны, и в случае, если данные валидны и пользователь активен, добавляет пользователя в объект
 формы.
@@ -606,28 +607,150 @@ class UserCreationForm(forms.ModelForm):
 Принимает `username` и два раза пароль, проверяет, чтобы пароли были одинаковые, и при сохранении записывает пароль в
 хешированном виде.
 
-## LoginRequiredMixin
+## Управление доступом
 
-Если необходимо закрыть доступ для незалогиненных юзеров от какого-либо из классов, то используют `LoginRequiredMixin`,
+Управление доступом — это важная часть разработки любого веб-приложения. В Django этот процесс включает контроль того,
+какие пользователи могут просматривать или изменять определенные ресурсы. Django предоставляет несколько встроенных
+инструментов для управления доступом, таких как декораторы, пермишены и миксины.
 
-При наследовании его необходимо указать перед основным классом. Например:
+> Пермишены и группы мы отдельно рассматривать не будем. Но вы можете сделать это самостоятельно по
+> вот [этой](https://docs.djangoproject.com/en/5.0/topics/auth/default/#permissions-and-authorization) ссылке
+
+### Управление доступом с использованием декораторов
+
+> Практически не используется
+
+В Django основным способом управления доступом при использовании функциональных представлений являются декораторы, такие
+как `@login_required` и `@user_passes_test`. Однако, при использовании CBV их нельзя применять напрямую. Вместо этого
+их можно использовать с помощью метода `@method_decorator`.
+
+#### Пример:
 
 ```python
-from .forms import MyForm
-from django.views.generic import FormView
+from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
+from django.views.generic import ListView
+from .models import Post
+
+
+@method_decorator(login_required, name='dispatch')
+class PostListView(ListView):
+    model = Post
+    template_name = 'post_list.html'
+```
+
+Здесь `@method_decorator` оборачивает метод `dispatch`, который вызывается при каждом запросе. Это гарантирует, что
+пользователь должен быть авторизован для доступа к представлению.
+
+### Использование миксинов для управления доступом
+
+Django предоставляет несколько миксинов для управления доступом, которые можно использовать с CBV.
+
+#### LoginRequiredMixin
+
+Один из самых часто используемых миксинов — `LoginRequiredMixin`. Этот миксин обеспечивает доступ к представлению только
+для авторизованных пользователей.
+
+#### Пример:
+
+```python
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.views.generic import DetailView
+from .models import Post
 
 
-class MyFormView(LoginRequiredMixin, FormView):
-    template_name = 'index.html'
-    http_method_names = ['get', 'post']
-    form_class = MyForm
-    success_url = '/'
+class PostDetailView(LoginRequiredMixin, DetailView):
+    model = Post
+    template_name = 'post_detail.html'
+```
+
+Если вам нужно указать куда именно должен происходить редикрект, вы можете указать это специальным атрибутом:
+
+```python
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.views.generic import DetailView
+from .models import Post
+
+
+class PostDetailView(LoginRequiredMixin, DetailView):
+    model = Post
+    template_name = 'post_detail.html'
     login_url = '/login/'
 ```
 
-Добавляет в класс атрибут `login_url`, который определяет, куда нужно перейти, если пользователь пытается получить
-доступ, но он не авторизирован.
+В данном примере `PostDetailView` будет доступен только для авторизованных пользователей. Если пользователь не
+авторизован, он будет перенаправлен на страницу входа.
+
+#### UserPassesTestMixin
+
+Иногда требуется создать более сложные условия для доступа. Для этого используется `UserPassesTestMixin`, который
+позволяет определить произвольное условие доступа с помощью метода `test_func`.
+
+#### Пример:
+
+```python
+from django.contrib.auth.mixins import UserPassesTestMixin
+from django.views.generic import DeleteView
+from .models import Post
+
+
+class PostDeleteView(UserPassesTestMixin, DeleteView):
+    model = Post
+    template_name = 'post_confirm_delete.html'
+    success_url = '/'
+
+    def test_func(self) -> bool:
+        post = self.get_object()
+        return self.request.user == post.author
+```
+
+Здесь пользователь сможет удалить пост только в том случае, если он является его автором.
+
+### Комбинирование миксинов
+
+Часто бывает необходимо комбинировать несколько миксинов для достижения нужного уровня контроля доступа. Важно помнить,
+что порядок следования миксинов может быть критичным.
+
+#### Пример:
+
+```python
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
+
+
+class PostManageView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
+    model = Post
+    template_name = 'post_manage.html'
+    fields = ['title', 'content']
+
+    def test_func(self) -> bool:
+        post = self.get_object()
+        return self.request.user == post.author
+```
+
+В этом примере `PostManageView` требует как авторизации, так и пользователь должен являться автором поста.
+
+### Обработка отказа в доступе
+
+Иногда может понадобиться изменить стандартное поведение при отказе в доступе, например, вместо перенаправления на
+страницу входа, вывести сообщение об ошибке.
+
+#### Пример:
+
+```python
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.core.exceptions import PermissionDenied
+
+
+class CustomLoginRequiredMixin(LoginRequiredMixin):
+
+    def handle_no_permission(self):
+        if self.raise_exception or self.request.user.is_authenticated:
+            raise PermissionDenied
+        return super().handle_no_permission()
+```
+
+Этот миксин изменяет поведение так, что при отсутствии авторизации пользователь получит исключение `PermissionDenied`, а
+не редирект.
 
 ## Живой пример
 
@@ -661,7 +784,8 @@ class Note(models.Model):
 
 Не забываем про миграции, и про добавление приложения в settings.py
 
-Создадим необходимые шаблоны: `base.html`, `index.html`, `login.html`, `register.html`. Пока пустые, заполним чуть позже.
+Создадим необходимые шаблоны: `base.html`, `index.html`, `login.html`, `register.html`. Пока пустые, заполним чуть
+позже.
 
 Создадим view. Для базовой страницы, на которой отображается список заметок, лучше всего подходит ListView, для логина,
 и логаута - существующие классы, для регистрации - CreateView.
