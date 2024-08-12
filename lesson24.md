@@ -588,30 +588,30 @@ class Store(models.Model):
 Мы можем совершить предвычисления каких-либо средних, минимальных, максимальных значений, вычислить сумму и т. д.
 
 ```python
->> > from django.db.models import Avg
->> > Book.objects.all().aggregate(Avg('price'))
+from django.db.models import Avg
+Book.objects.all().aggregate(Avg('price'))
 {'price__avg': 34.35}
 ```
 
 На самом деле, `all()` не несёт пользы в этом примере:
 
 ```python
->> > Book.objects.aggregate(Avg('price'))
+Book.objects.aggregate(Avg('price'))
 {'price__avg': 34.35}
 ```
 
 Значение можно именовать:
 
 ```python
->> > Book.objects.aggregate(average_price=Avg('price'))
+Book.objects.aggregate(average_price=Avg('price'))
 {'average_price': 34.35}
 ```
 
 Можно вносить больше одной агрегации за раз:
 
 ```python
->> > from django.db.models import Avg, Max, Min
->> > Book.objects.aggregate(Avg('price'), Max('price'), Min('price'))
+from django.db.models import Avg, Max, Min
+Book.objects.aggregate(Avg('price'), Max('price'), Min('price'))
 {'price__avg': 34.35, 'price__max': Decimal('81.20'), 'price__min': Decimal('12.99')}
 ```
 
@@ -624,18 +624,12 @@ from django.db.models import Count
 q = Book.objects.annotate(Count('authors'))
 # Interrogate the first object in the queryset
 q[0]
-< Book: The
-Definitive
-Guide
-to
-Django >
+"<Book: The Definitive Guide to Django>"
 q[0].authors__count
 2
 # Interrogate the second object in the queryset
 q[1]
-< Book: Practical
-Django
-Projects >
+"<Book: Practical Django Projects>"
 q[1].authors__count
 1
 ```
