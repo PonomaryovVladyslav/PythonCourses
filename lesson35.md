@@ -1,4 +1,4 @@
-# Лекция 44. Сокеты. Django channels.
+# Лекция 35. Сокеты. Django channels.
 
 ![](https://www.imaginarycloud.com/blog/content/images/2016/03/gifmachine-2.gif)
 
@@ -293,7 +293,7 @@ application = ProtocolTypeRouter({
 
 ```python
 INSTALLED_APPS = [
-    'channels',
+    'daphne',
     'chat',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -315,15 +315,16 @@ ASGI_APPLICATION = 'chatsite.asgi.application'
 Теперь при запуске приложения вы должны увидеть немного другую надпись.
 
 ```
+Watching for file changes with StatReloader
 Performing system checks...
 
 System check identified no issues (0 silenced).
 
 You have 18 unapplied migration(s). Your project may not work properly until you apply the migrations for app(s): admin, auth, contenttypes, sessions.
 Run 'python manage.py migrate' to apply them.
-October 21, 2020 - 19:08:48
-Django version 3.1.2, using settings 'mysite.settings'
-Starting ASGI/Channels version 3.0.0 development server at http://127.0.0.1:8000/
+August 19, 2022 - 10:20:28
+Django version 4.1, using settings 'mysite.settings'
+Starting ASGI/Daphne version 3.0.2 development server at http://127.0.0.1:8000/
 Quit the server with CONTROL-C.
 ```
 
@@ -543,19 +544,24 @@ import os
 
 from channels.auth import AuthMiddlewareStack
 from channels.routing import ProtocolTypeRouter, URLRouter
+from channels.security.websocket import AllowedHostsOriginValidator
 from django.core.asgi import get_asgi_application
-import chat.routing
 
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "chatsite.settings")
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "mysite.settings")
+# Initialize Django ASGI application early to ensure the AppRegistry
+# is populated before importing code that may import ORM models.
+django_asgi_app = get_asgi_application()
 
-application = ProtocolTypeRouter({
-    "http": get_asgi_application(),
-    "websocket": AuthMiddlewareStack(
-        URLRouter(
-            chat.routing.websocket_urlpatterns
-        )
-    ),
-})
+from chat.routing import websocket_urlpatterns
+
+application = ProtocolTypeRouter(
+    {
+        "http": django_asgi_app,
+        "websocket": AllowedHostsOriginValidator(
+            AuthMiddlewareStack(URLRouter(websocket_urlpatterns))
+        ),
+    }
+)
 ```
 
 Обратите внимание, мы добавили новый протокол для обработки.
@@ -566,7 +572,7 @@ application = ProtocolTypeRouter({
 
 Проверяем, это уже будет работать.
 
-**В данный момент работать будет только один чат!!!**
+**В данный момент работать будет только один чат, причем только сам с собой!!!**
 
 Мы не добавили возможность создавать разные сокеты, для разных страниц. Для этого необходимо разделить данные по слоям.
 
@@ -759,11 +765,161 @@ class ChatConsumer(AsyncWebsocketConsumer):
 
 ### Тестирование
 
-Для тестирования веб сокетов используются специфический ацептанс тесты. Разберите самостоятельно [тут](https://channels.readthedocs.io/en/stable/tutorial/part_4.html).
+Для тестирования веб сокетов используются специфический ацептанс тесты.
+
+> Для этих тестов, необходимо предварительно установить Google Chrome, chromedriver и селениум. И только последний
+> ставится через `pip`
+
+```
+pip install selenium
+```
+
+Создадим файл `chat/tests.py`
+
+Текущая структура файлов
+
+```
+chat/
+    __init__.py
+    consumers.py
+    routing.py
+    templates/
+        chat/
+            index.html
+            room.html
+    tests.py
+    urls.py
+    views.py
+```
+
+Содержимое файла:
+
+```python
+# chat/tests.py
+from channels.testing import ChannelsLiveServerTestCase
+from selenium import webdriver
+from selenium.webdriver.common.action_chains import ActionChains
+from selenium.webdriver.common.by import By
+from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.support.wait import WebDriverWait
 
 
-### Практика
+class ChatTests(ChannelsLiveServerTestCase):
+    serve_static = True  # emulate StaticLiveServerTestCase
 
-1. Повторите туториал из этого занятия.
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        try:
+            # NOTE: Requires "chromedriver" binary to be installed in $PATH
+            cls.driver = webdriver.Chrome()
+        except:
+            super().tearDownClass()
+            raise
 
-2. Давайте разбирать задания на диплом!
+    @classmethod
+    def tearDownClass(cls):
+        cls.driver.quit()
+        super().tearDownClass()
+
+    def test_when_chat_message_posted_then_seen_by_everyone_in_same_room(self):
+        try:
+            self._enter_chat_room("room_1")
+
+            self._open_new_window()
+            self._enter_chat_room("room_1")
+
+            self._switch_to_window(0)
+            self._post_message("hello")
+            WebDriverWait(self.driver, 2).until(
+                lambda _: "hello" in self._chat_log_value,
+                "Message was not received by window 1 from window 1",
+            )
+            self._switch_to_window(1)
+            WebDriverWait(self.driver, 2).until(
+                lambda _: "hello" in self._chat_log_value,
+                "Message was not received by window 2 from window 1",
+            )
+        finally:
+            self._close_all_new_windows()
+
+    def test_when_chat_message_posted_then_not_seen_by_anyone_in_different_room(self):
+        try:
+            self._enter_chat_room("room_1")
+
+            self._open_new_window()
+            self._enter_chat_room("room_2")
+
+            self._switch_to_window(0)
+            self._post_message("hello")
+            WebDriverWait(self.driver, 2).until(
+                lambda _: "hello" in self._chat_log_value,
+                "Message was not received by window 1 from window 1",
+            )
+
+            self._switch_to_window(1)
+            self._post_message("world")
+            WebDriverWait(self.driver, 2).until(
+                lambda _: "world" in self._chat_log_value,
+                "Message was not received by window 2 from window 2",
+            )
+            self.assertTrue(
+                "hello" not in self._chat_log_value,
+                "Message was improperly received by window 2 from window 1",
+            )
+        finally:
+            self._close_all_new_windows()
+
+    # === Utility ===
+
+    def _enter_chat_room(self, room_name):
+        self.driver.get(self.live_server_url + "/chat/")
+        ActionChains(self.driver).send_keys(room_name, Keys.ENTER).perform()
+        WebDriverWait(self.driver, 2).until(
+            lambda _: room_name in self.driver.current_url
+        )
+
+    def _open_new_window(self):
+        self.driver.execute_script('window.open("about:blank", "_blank");')
+        self._switch_to_window(-1)
+
+    def _close_all_new_windows(self):
+        while len(self.driver.window_handles) > 1:
+            self._switch_to_window(-1)
+            self.driver.execute_script("window.close();")
+        if len(self.driver.window_handles) == 1:
+            self._switch_to_window(0)
+
+    def _switch_to_window(self, window_index):
+        self.driver.switch_to.window(self.driver.window_handles[window_index])
+
+    def _post_message(self, message):
+        ActionChains(self.driver).send_keys(message, Keys.ENTER).perform()
+
+    @property
+    def _chat_log_value(self):
+        return self.driver.find_element(
+            by=By.CSS_SELECTOR, value="#chat-log"
+        ).get_property("value")
+```
+
+> Для тестов должна быть указана дополнительная настройка для базы данных!
+
+```python
+# mysite/settings.py
+DATABASES = {
+    "default": {
+        "ENGINE": "django.db.backends.sqlite3",
+        "NAME": BASE_DIR / "db.sqlite3",
+        "TEST": {
+            "NAME": BASE_DIR / "db.sqlite3",
+        },
+    }
+}
+```
+
+Запускаем и наслаждаемся
+
+```
+python3 manage.py test chat.tests
+```
