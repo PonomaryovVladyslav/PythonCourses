@@ -589,6 +589,7 @@ class Store(models.Model):
 
 ```python
 from django.db.models import Avg
+
 Book.objects.all().aggregate(Avg('price'))
 {'price__avg': 34.35}
 ```
@@ -611,6 +612,7 @@ Book.objects.aggregate(average_price=Avg('price'))
 
 ```python
 from django.db.models import Avg, Max, Min
+
 Book.objects.aggregate(Avg('price'), Max('price'), Min('price'))
 {'price__avg': 34.35, 'price__max': Decimal('81.20'), 'price__min': Decimal('12.99')}
 ```
@@ -833,3 +835,96 @@ for product in products:
 
 Этот пример сочетает оба подхода. Мы используем `select_related` для получения связанных магазинов с использованием JOIN
 и `prefetch_related` для получения поставщиков, выполняя несколько запросов.
+
+## Как управлять транзакциями?
+
+В Django ORM управление транзакциями можно осуществлять с помощью встроенных инструментов, таких
+как `atomic`, `transaction.on_commit`, а также с помощью ручного управления транзакциями через API транзакций.
+Рассмотрим примеры для каждого из этих подходов.
+
+### Управление транзакциями с использованием `atomic`
+
+`atomic` — это контекстный менеджер или декоратор, который гарантирует, что все операции внутри блока будут выполнены в
+одной транзакции. Если внутри блока возникает исключение, транзакция откатывается.
+
+#### Пример с использованием контекстного менеджера:
+
+```python
+from django.db import transaction
+from myapp.models import MyModel
+
+
+def create_records():
+    try:
+        with transaction.atomic():
+            obj1 = MyModel.objects.create(name="Object 1")
+            obj2 = MyModel.objects.create(name="Object 2")
+            # Если здесь возникнет исключение, то обе записи не будут добавлены
+    except Exception as e:
+        print(f"Transaction failed: {e}")
+```
+
+#### Пример с использованием декоратора:
+
+```python
+from django.db import transaction
+from myapp.models import MyModel
+
+
+@transaction.atomic
+def create_records():
+    obj1 = MyModel.objects.create(name="Object 1")
+    obj2 = MyModel.objects.create(name="Object 2")
+    # Если здесь возникнет исключение, то обе записи не будут добавлены
+```
+
+### Управление транзакциями с использованием `transaction.on_commit`
+
+`on_commit` позволяет зарегистрировать функцию, которая будет выполнена только в случае успешного завершения транзакции.
+
+#### Пример:
+
+```python
+from django.db import transaction
+from myapp.models import MyModel
+
+
+def notify_user():
+    print("Transaction committed successfully!")
+
+
+def create_record():
+    with transaction.atomic():
+        obj = MyModel.objects.create(name="Object 1")
+        transaction.on_commit(notify_user)
+        # notify_user будет вызвана только если транзакция завершится успешно
+```
+
+### Ручное управление транзакциями
+
+Можно управлять транзакциями вручную, открывая и закрывая транзакции с помощью методов `transaction.commit()`
+и `transaction.rollback()`.
+
+#### Пример:
+
+```python
+from django.db import transaction
+from myapp.models import MyModel
+
+
+def create_records():
+    try:
+        transaction.set_autocommit(False)  # Отключаем автокоммит
+        obj1 = MyModel.objects.create(name="Object 1")
+        obj2 = MyModel.objects.create(name="Object 2")
+        transaction.commit()  # Явно фиксируем транзакцию
+    except Exception as e:
+        transaction.rollback()  # Откатываем транзакцию в случае ошибки
+        print(f"Transaction failed: {e}")
+    finally:
+        transaction.set_autocommit(True)  # Включаем автокоммит обратно
+```
+
+> Использование транзакций в Django ORM позволяет вам контролировать целостность данных, обеспечивая атомарность операций.
+> Вы можете использовать контекстный менеджер или декоратор `atomic` для автоматического управления транзакциями, либо
+> вручную управлять транзакциями для более точного контроля над процессом.
