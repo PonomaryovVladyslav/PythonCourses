@@ -600,6 +600,28 @@ class MyForm(forms.Form):
 И многие другие атрибуты и методы, подробно можно
 прочитать [тут](https://docs.djangoproject.com/en/4.2/topics/forms/#working-with-form-templates)
 
+### Про отправку файлов
+
+Нужно в шаблоне добавить атрибут `enctype="multipart/form-data"` к тегу `<form>`, чтобы форма могла отправлять файлы:
+
+```html
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Save</button>
+</form>
+```
+
+### Про отображение медиа файлов
+
+Если вы хотите в последствии отображать медиа файлы (например аватарку пользователя) необходимо использовать следующий синтаксис
+
+```html
+<img src="{{ user.profile.avatar.url }}" alt="Avatar">
+```
+
+Здесь `avatar.url` возвращает полный путь к файлу, который был загружен.
+
 ## ModelForm
 
 Дока [Тут](https://docs.djangoproject.com/en/4.2/topics/forms/modelforms/)
