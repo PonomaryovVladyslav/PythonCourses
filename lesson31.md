@@ -1,4 +1,4 @@
-# Лекция 39. REST аутентификация. Авторизация. Permissions. Фильтрация.
+# Лекция 31. REST аутентификация. Авторизация. Permissions. Фильтрация.
 
 ![](https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQ_cLOesie903fmPPbl2YbqawKsycva_owf6Q&usqp=CAU)
 
@@ -14,7 +14,7 @@
 
 В чём недостатки такого подхода для REST API?
 
-Во-первых, для того чтобы выполнять любые небезопасные методы `POST`, `PUT`, `PATCH`, `DELETE` необходимо использовать 
+Во-первых, для того чтобы выполнять любые небезопасные методы `POST`, `PUT`, `PATCH`, `DELETE` необходимо использовать
 CSRF Token, а это значит, что для выполнения таких запросов необходимо каждый раз делать дополнительный запрос для
 получения токена.
 
@@ -44,8 +44,8 @@ CSRF Token, а это значит, что для выполнения таки�
 Токен может быть как постоянным (практически никогда не используется), так и временным, может перегенерироваться по
 времени, так и по запросу.
 
-Алгоритм генерации самого токена тоже может быть практически любым (Чаще всего просто генерация большой случайной hex 
-(шестнадцатеричной) строки), как и данные, на которых он основан (при случайном токен входных данных нет, но может быть 
+Алгоритм генерации самого токена тоже может быть практически любым (Чаще всего просто генерация большой случайной hex
+(шестнадцатеричной) строки), как и данные, на которых он основан (при случайном токен входных данных нет, но может быть
 основан на каких-либо личных данных, на метках времени и т. д.)
 
 ### Внешняя аутентификация
@@ -56,7 +56,7 @@ CSRF Token, а это значит, что для выполнения таки�
 можно убедится в его правильности, обратившись к API соцсети.
 
 По такому же принципу сервером авторизации может быть практически любой внешний сервер, с которым есть предварительная
-договорённость. Допустим, вы работаете с командой, которая его разрабатывает, и можете узнать, как этим пользоваться. 
+договорённость. Допустим, вы работаете с командой, которая его разрабатывает, и можете узнать, как этим пользоваться.
 Для открытых соцсетей обычно есть документация по использованию их API, где подробно написано, как пользоваться их
 авторизацией. Также для таких механизмов существует большое количество уже написанных packages.
 
@@ -95,7 +95,6 @@ Class-Based View и такой же декоратор для функциона
 
 ```python
 from rest_framework.authentication import SessionAuthentication, BasicAuthentication
-from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
@@ -114,7 +113,6 @@ class ExampleView(APIView):
 ```python
 @api_view(['GET'])
 @authentication_classes([SessionAuthentication, BasicAuthentication])
-@permission_classes([IsAuthenticated])
 def example_view(request, format=None):
     content = {
         'user': unicode(request.user),  # `django.contrib.auth.User` instance.
@@ -317,7 +315,7 @@ IsAuthenticatedOrReadOnly - залогиненым или только на чт
 
 Все они изначально наследуются от `rest_framework.permissons.BasePermission`.
 
-Но если нам нужны кастомные, то мы можем создать их, отнаследовавшись от `permissions.BasePermission` и переписав один 
+Но если нам нужны кастомные, то мы можем создать их, отнаследовавшись от `permissions.BasePermission` и переписав один
 или оба метода `has_permisson()` и `has_object_permission()`
 
 Например, владельцу можно выполнять любые действия, а остальным только чтение объекта:
@@ -461,7 +459,7 @@ class GroupViewSet(ModelViewSet):
 
 Этот параметр также принимает коллекцию, состоящую из списка полей, по которым необходимо производить поиск.
 
-Теперь у нас есть возможность добавить query параметр `search=` (ключевое слово можно поменять через `settings.py`, 
+Теперь у нас есть возможность добавить query параметр `search=` (ключевое слово можно поменять через `settings.py`,
 чтобы искать по указанным полям).
 
 Например:
@@ -491,7 +489,7 @@ class GroupViewSet(ModelViewSet):
 
 ### OrderingFilter
 
-Точно также можно добавить ordering фильтр для того, чтобы указывать ordering в момент запроса через query параметр 
+Точно также можно добавить ordering фильтр для того, чтобы указывать ordering в момент запроса через query параметр
 `ordering=` (также можно заменить через `settings.py`)
 
 Необходимо указать параметр `ordering_fields`, также принимает коллекцию из полей. Также может принимать специальное
@@ -518,7 +516,7 @@ http://example.com/api/users?ordering=account,username
 
 ### Свой собственный фильтр
 
-Как и со всем остальным, можно написать свой собственный фильтр, для этого необходимо наследоваться от 
+Как и со всем остальным, можно написать свой собственный фильтр, для этого необходимо наследоваться от
 `rest_framework.filters.BaseFilterBackend` и описать один метод `filter_queryset`, в котором можно описать любую логику.
 
 Например, этот фильтр будет отображать только те объекты, которые принадлежат юзеру.
@@ -528,6 +526,7 @@ class IsOwnerFilterBackend(filters.BaseFilterBackend):
     """
     Filter that only allows users to see their own objects.
     """
+
     def filter_queryset(self, request, queryset, view):
         return queryset.filter(owner=request.user)
 ```
@@ -546,15 +545,264 @@ pip install djangorestframework-word-filter
 
 Все они легко настраиваются и значительно расширяют возможность использования фильтров. Изучите их самостоятельно.
 
+## Живой пример с заметками на DRF
 
-## Практика
+Напоминаю условия.
 
-1. Пишем Basic Authentication.
+Допустим, нам нужен сайт, на котором можно зарегистрироваться, залогиниться, разлогиниться и написать заметку, если ты
+залогинен. Заметки должны отображаться списком, последняя созданная отображается первой. Все пользователи видят все
+заметки. Возле тех, которые создал текущий пользователь, должна быть кнопка удалить.
 
-2. Пишем Token Authentication.
+В случае с REST, кнопку заменяем просто на возможность это сделать для владельца заметки.
 
-3. Пишем viewsets для моделей из модуля и создаём 2 покупки и 1 возврат через postman.
+Дополнительно реализуем токен время жизни которого 10 минут, после чего необходимо получать новый.
 
-4. Пишем собственный токен, который перестаёт действовать через 10 минут.
+### Модель сохраняется
 
-5. Добавляем фильтр, для поиска только своих покупок, если запрос от обычного пользователя, и всех, если администратор.
+`models.py`
+
+```python
+from django.contrib.auth.models import User
+from django.db import models
+
+
+class Note(models.Model):
+    text = models.CharField(max_length=100)
+    created_at = models.DateTimeField(auto_now=True)
+    author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='notes')
+
+    class Meta:
+        ordering = ['-created_at', ]
+```
+
+И так же не забываем перед тем как сделать миграции, добавить в настройки,
+приложение, `rest_framework`, `rest_framework.authtoken`, для авторизации.
+
+### Регистрация
+
+Для регистрации, нам необходим сериалайзер и эндпоинт.
+
+`api/serializers.py`
+
+```python
+from django.contrib.auth.models import User
+from rest_framework import serializers
+
+
+class UserSerializer(serializers.ModelSerializer):
+    password = serializers.CharField(write_only=True)
+
+    class Meta:
+        model = User
+        fields = ('username', 'password', 'id')
+
+    def create(self, validated_data):
+        user = User.objects.create_user(
+            username=validated_data['username'],
+            password=validated_data['password']
+        )
+        return user
+```
+
+`resources.py`
+
+```python
+from django.contrib.auth.models import User
+from rest_framework.generics import CreateAPIView
+from rest_framework.permissions import AllowAny
+
+from notes.api.serializers import UserSerializer
+
+
+class RegisterAPIView(CreateAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+    permission_classes = [AllowAny, ]
+```
+
+`api` - папка в которой находятся все файлы связанные с API
+
+`notes` - название приложения
+
+Добавляем url:
+
+`urls.py`
+
+```python
+from django.urls import path
+
+from notes.api.resources import RegisterAPIView
+
+urlpatterns = [
+    path('api/register/', RegisterAPIView.as_view()),
+]
+
+```
+
+### Авторизация
+
+Для авторизации мы будем использовать стандартную авторизацию по токену. Так что все что нам надо сделать, это добавить
+урл для получения токена.
+
+`urls.py`
+
+```python
+from django.urls import path
+from rest_framework.authtoken.views import obtain_auth_token
+
+from notes.api.resources import RegisterAPIView
+
+urlpatterns = [
+    path('api/register/', RegisterAPIView.as_view()),
+    path('api/token/', obtain_auth_token)
+]
+```
+
+Но мы же хотели сделать так, что бы токен "умирал" через 10 минут?
+
+Для этого много способов, но самый простой, это написать собственную аутентификацию, основанную на базовой
+
+`settings.py`
+
+```python
+...
+
+TOKEN_EXPIRE_SECONDS = 600
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': ("notes.api.authentication.TokenExpireAuthentication",),
+}
+
+```
+
+`notes/api/authentication.py`
+
+```python
+from django.conf import settings
+from django.utils import timezone
+from rest_framework import exceptions
+from rest_framework.authentication import TokenAuthentication
+
+
+class TokenExpireAuthentication(TokenAuthentication):
+    def authenticate(self, request):
+        try:
+            user, token = super().authenticate(request=request)
+        except exceptions.AuthenticationFailed as e:
+            raise exceptions.AuthenticationFailed(e)
+        except TypeError:
+            return None
+        else:
+            if (timezone.now() - token.created).seconds > settings.TOKEN_EXPIRE_SECONDS:
+                token.delete()
+                raise exceptions.AuthenticationFailed("Token expired")
+            return user, token
+
+```
+
+### Заметки. Чтение, создание, удаление
+
+Отличный пример когда мы можем либо создать свой класс и наследоваться от нужных миксинов, либо,
+ограничить `ModelViewSet`, давайте ограничим второй.
+
+Я хочу что бы при чтении я видел имя пользователя.
+
+Также мне нужно ограничить удаление чужих объектов. Возможность создания, только зарегистрированным пользователем. И
+добавление этого пользователя, напрямую из реквеста.
+
+`api/permissions.py`
+
+```python
+from rest_framework.permissions import BasePermission
+
+
+class DeleteOnlyOwner(BasePermission):
+
+    def has_object_permission(self, request, view, obj):
+        if request.method == "DELETE":
+            return obj.author == request.user
+        else:
+            return True
+```
+
+`api/serializers.py`
+
+```python
+from django.contrib.auth.models import User
+from rest_framework import serializers
+
+from notes.models import Note
+
+
+class UserSerializer(serializers.ModelSerializer):
+    password = serializers.CharField(write_only=True)
+
+    class Meta:
+        model = User
+        fields = ('username', 'password', 'id')
+
+    def create(self, validated_data):
+        user = User.objects.create_user(
+            username=validated_data['username'],
+            password=validated_data['password']
+        )
+        return user
+
+
+class NoteSerializer(serializers.ModelSerializer):
+    author = serializers.ReadOnlyField(source='author.username')
+
+    class Meta:
+        model = Note
+        fields = ['id', 'text', 'created_at', 'author']
+
+
+```
+
+`api/resources.py`
+
+```python
+from django.contrib.auth.models import User
+from rest_framework import viewsets
+from rest_framework.generics import CreateAPIView
+from rest_framework.permissions import AllowAny, IsAuthenticatedOrReadOnly
+
+from notes.api.permissions import DeleteOnlyOwner
+from notes.api.serializers import UserSerializer, NoteSerializer
+from notes.models import Note
+
+
+class RegisterAPIView(CreateAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+    permission_classes = [AllowAny,]
+
+
+class NotesViewSet(viewsets.ModelViewSet):
+    queryset = Note.objects.all()
+    http_method_names = ['get', 'post', 'delete']
+    serializer_class = NoteSerializer
+    permission_classes = [IsAuthenticatedOrReadOnly, DeleteOnlyOwner]
+
+    def perform_create(self, serializer):
+        serializer.save(author=self.request.user)
+```
+
+`urls.py`
+
+```python
+from django.urls import path, include
+from rest_framework.authtoken.views import obtain_auth_token
+
+from notes.api.resources import RegisterAPIView, NotesViewSet
+from rest_framework import routers
+router = routers.DefaultRouter()
+router.register(r'notes', NotesViewSet)
+urlpatterns = [
+    path('api/register/', RegisterAPIView.as_view()),
+    path('api/token/', obtain_auth_token),
+    path('api/', include(router.urls)),
+]
+```
+
+Все, можно проверять, весь функционал готов!
