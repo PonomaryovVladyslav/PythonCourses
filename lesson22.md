@@ -1,8 +1,12 @@
 # Лекция 22. Templates. Static
 
-## Шаблоны
-
 ![](https://imgflip.com/s/meme/Boardroom-Meeting-Suggestion.jpg)
+
+## Что сегодня учим?
+
+![mvc_templates.png](pictures/mvc_templates.png)
+
+## Шаблоны
 
 Что же такое шаблон? В бытовом понимании - это заготовка под что-то, что потом будет использоваться, в Django это почти
 также.

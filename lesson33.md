@@ -1,6 +1,10 @@
 # Лекция 33. ModelForm, ClassBaseView
 
-![](http://memesmix.net/media/created/lm6uyu.jpg)
+![cbv_meme.png](pictures/cbv_meme.png)
+
+## Что сегодня учим?
+
+![mvc_cbv.png](pictures/mvc_cbv.png)
 
 ## ModelForm
 

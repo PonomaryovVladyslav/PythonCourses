@@ -1,6 +1,10 @@
 # Лекция 32. Формы, реквест, юзер, авторизация.
 
-![](http://memesmix.net/media/created/uuyoh3.jpg)
+![](https://img-9gag-fun.9cache.com/photo/aV3wWMd_460s.jpg)
+
+## Что сегодня учим?
+
+![mvc_forms.png](pictures/mvc_forms.png)
 
 ## HTML формы
 
