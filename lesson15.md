@@ -1,4 +1,4 @@
-# Лекция 20. Тестирование
+# Лекция 15. Тестирование
 
 ![](https://memchik.ru//images/memes/5f9a99ffb1c7e326eb75f4ef.jpg)
 
