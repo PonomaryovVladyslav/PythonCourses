@@ -317,18 +317,118 @@ Comment.objects.filter(article__created_at__gte=date.today() - timedelta(days=1)
 Comment.objects.filter(article__created_at__gte=date.today() - timedelta(days=1)).order_by('-article__created_at').all()
 ```
 
+#### `distinct()`
+
+Метод `distinct()` используется для исключения дублирующихся записей из результата запроса. Он полезен, когда вам нужно
+получить уникальные записи по одному или нескольким полям.
+
+#### Пример использования:
+
+Предположим, у нас есть модель `Book` с полями `title`, `author`, и `published_date`.
+
+```python
+from myapp.models import Book
+
+# Получение уникальных авторов
+unique_authors = Book.objects.distinct('author')
+```
+
+В этом примере запрос вернет уникальные записи на основе поля `author`. Если не указать поле, то метод `distinct()`
+уберет дубликаты всех записей.
+
+#### `values()`
+
+Метод `values()` используется для создания набора запросов, который возвращает словари, где ключами являются имена
+полей, а значениями — их значения. Это удобно, когда вам нужно получить определенные поля из базы данных, а не все поля
+модели.
+
+#### Пример использования:
+
+```python
+# Получение всех названий книг
+book_titles = Book.objects.values('title')
+```
+
+Этот запрос вернет список словарей, где каждый словарь будет содержать ключ `title` и соответствующее ему значение.
+
+#### `union()`
+
+Метод `union()` позволяет объединять два или более QuerySets. Результат будет содержать уникальные записи, которые
+присутствуют в любом из QuerySets.
+
+#### Пример использования:
+
+```python
+from myapp.models import Book
+
+# QuerySet с книгами, опубликованными до 2000 года
+old_books = Book.objects.filter(published_date__lt="2000-01-01")
+
+# QuerySet с книгами, опубликованными после 2020 года
+new_books = Book.objects.filter(published_date__gt="2020-01-01")
+
+# Объединение двух QuerySets
+books_union = old_books.union(new_books)
+```
+
+В результате `books_union` будут содержаться книги, опубликованные либо до 2000 года, либо после 2020 года.
+
+#### `intersection()`
+
+Метод `intersection()` используется для получения пересечения двух или более QuerySets. В результате запроса будут
+только те записи, которые присутствуют во всех QuerySets.
+
+#### Пример использования:
+
+```python
+from myapp.models import Book
+
+# QuerySet с книгами определенного автора
+author_books = Book.objects.filter(author="J.K. Rowling")
+
+# QuerySet с книгами, опубликованными до 2000 года
+old_books = Book.objects.filter(published_date__lt="2000-01-01")
+
+# Пересечение двух QuerySets
+books_intersection = author_books.intersection(old_books)
+```
+
+В этом примере `books_intersection` вернет только те книги Дж. К. Роулинг, которые были опубликованы до 2000 года.
+
+#### `difference()`
+
+Метод `difference()` используется для получения разности между двумя QuerySets, то есть он возвращает записи, которые
+присутствуют в одном QuerySet, но отсутствуют в другом.
+
+#### Пример использования:
+
+```python
+from myapp.models import Book
+
+# QuerySet со всеми книгами
+all_books = Book.objects.all()
+
+# QuerySet с книгами, опубликованными до 2000 года
+old_books = Book.objects.filter(published_date__lt="2000-01-01")
+
+# Разность между всеми книгами и старыми книгами
+books_difference = all_books.difference(old_books)
+```
+
+В этом примере `books_difference` будет содержать все книги, которые были опубликованы после 2000 года.
+
 Это далеко не всё, что можно сделать с queryset.
 
 Все методы кверисетов
 читаем [Тут](https://docs.djangoproject.com/en/4.2/ref/models/querysets/#methods-that-return-new-querysets)
 
-Особое внимание следует обратить на методы `distinct`, `reverse`,  `values`, `difference`
+### Вставка объектов в методы
 
-Помимо прочего во все фильтры можно вставлять целые объекты, например:
+Помимо прочего во все фильтры(и не только) можно вставлять целые объекты, например:
 
 ```python
 art = Article.objects.get(id=2)
-comments = Comment.object.exclude(article=art)
+comments = Comment.object.filter(article=art)
 ```
 
 ### Объектные методы
@@ -458,6 +558,8 @@ Comment.objects.filter(user__id=2).delete()
 
 ## Подробнее о методе save()
 
+> `SQL` запрос выполняется именно при вызове метода `save`, метода `delete` или изменении M2M о чем ниже.
+
 Метод `save()` применяется при любых изменениях или создании данных, но очень часто нужно, чтобы при сохранении данных
 выполнялись еще какие-либо действия, переписывание данных или запись логов и т. д. Для этого используется переписывание
 метода `save()`. По сути является способом написать аналог триггера в базе данных.
@@ -509,6 +611,201 @@ class MyAwesomModel(models.Model):
         send_email(id=self.id)
         super().delete(**kwargs)
 ```
+
+## Использование в M2M
+
+Допустим у нас есть вот такие модели:
+
+```python
+from django.db import models
+
+
+class Publication(models.Model):
+    title = models.CharField(max_length=30)
+
+    class Meta:
+        ordering = ["title"]
+
+    def __str__(self):
+        return self.title
+
+
+class Article(models.Model):
+    headline = models.CharField(max_length=100)
+    publications = models.ManyToManyField(Publication)
+
+    class Meta:
+        ordering = ["headline"]
+
+    def __str__(self):
+        return self.headline
+```
+
+Для работы с М2М связями используются методы менеджера `add` и `remove`
+
+Создадим несколько объектов:
+
+```python
+p1 = Publication(title="The Python Journal")
+p1.save()
+p2 = Publication(title="Science News")
+p2.save()
+p3 = Publication(title="Science Weekly")
+p3.save()
+```
+
+> Мы могли сделать то же самое через `Publication.objects.create()`, но тут нам будет важно отследить `SQL` запросы
+
+```python
+a1 = Article(headline="Django lets you build web apps easily")
+```
+
+### Добавление объекта
+
+Если не сохранить статью и попытаться вызвать изменения в M2M, то вы увидите вот такую ошибку:
+
+```python
+a1.publications.add(p1)
+# Traceback (most recent call last):
+# ValueError: "<Article: Django lets you build web apps easily>" needs to have a value for field "id" before this many-to-many relationship can be used.
+```
+
+Потому что объект `a1` пока что сущетствует только на уровне питона, но его нет на уровне базы данных.
+
+Давайте сохраним объект и попробуем еще раз изменить M2M
+
+```python
+a1.save()
+a1.publications.add(p1)  # Тут вызовется еще один `SQL` запрос
+```
+
+И еще пример:
+
+```python
+a2 = Article(headline="NASA uses Python")
+a2.save()
+a2.publications.add(p1, p2)
+a2.publications.add(p3)
+```
+
+Как видите можно добавлять более чем один объект за раз
+
+А что если добавить объект не того типа который ожидается?
+
+```python
+a2.publications.add(a1)
+# TypeError: 'Publication' instance expected
+```
+
+Будет ошибка о неправильном типе!
+
+> Можно создать и сразу добавить объект вот так
+
+```python
+new_publication = a2.publications.create(title="Highlights for Children")
+```
+
+Метод создаст объект, добавит его к М2М и вернет в новую переменную
+
+### Получение объекта
+
+В нашем случае `publications` является менеджером, а значит, что к нему применимы все действия как и к обычному
+`objects`
+
+```python
+a1.publications.all()
+# <QuerySet [<Publication: The Python Journal>]>
+a2.publications.all()
+# <QuerySet [<Publication: Highlights for Children>, <Publication: Science News>, <Publication: Science Weekly>, <Publication: The Python Journal>]>
+```
+
+> Естественно `all` в этом случае будет возвращать только те объекты которые связаны с запрашиваемым
+
+И так же как и при связи через `FK`, мы можем использовать `related_name` для получения объектов в другом порядке (из
+той модели, где менеджер не прописан)
+
+```python
+p2.article_set.all()
+# <QuerySet [<Article: NASA uses Python>]>
+p1.article_set.all()
+# <QuerySet [<Article: Django lets you build web apps easily>, <Article: NASA uses Python>]>
+Publication.objects.get(id=4).article_set.all()
+# <QuerySet [<Article: NASA uses Python>]>
+```
+
+> `related_name` не прописан явно, поэтому мы используем стандартно сгенерированный
+
+### `filter`, `distinct`, `count`
+
+Так как ссылка является менеджером, это значит, что к ней применим весь спектр процессов доступных менеджеру. Например
+`filter`, `distinct`  или `count`
+
+```python
+Article.objects.filter(publications__id=1)
+# <QuerySet [<Article: Django lets you build web apps easily>, <Article: NASA uses Python>]>
+Article.objects.filter(publications__pk=1)
+# <QuerySet [<Article: Django lets you build web apps easily>, <Article: NASA uses Python>]>
+Article.objects.filter(publications=1)
+# <QuerySet [<Article: Django lets you build web apps easily>, <Article: NASA uses Python>]>
+Article.objects.filter(publications=p1)
+# <QuerySet [<Article: Django lets you build web apps easily>, <Article: NASA uses Python>]>
+Article.objects.filter(publications__title__startswith="Science")
+# <QuerySet [<Article: NASA uses Python>, <Article: NASA uses Python>]>
+Article.objects.filter(publications__title__startswith="Science").distinct()
+# <QuerySet [<Article: NASA uses Python>]>
+Article.objects.filter(publications__title__startswith="Science").count()
+# 2
+Article.objects.filter(publications__title__startswith="Science").distinct().count()
+# 1
+Article.objects.filter(publications__in=[1, 2]).distinct()
+# <QuerySet [<Article: Django lets you build web apps easily>, <Article: NASA uses Python>]>
+Article.objects.filter(publications__in=[p1, p2]).distinct()
+# <QuerySet [<Article: Django lets you build web apps easily>, <Article: NASA uses Python>]>
+```
+
+> Любые действия с менеджером доступны как напрямую, так и через `related_name`
+
+### Удаление объектов
+
+```python
+a4.publications.remove(p2)
+p2.article_set.all()
+# <QuerySet [<Article: Oxygen-free diet works wonders>]>
+a4.publications.all()
+# <QuerySet []>
+```
+
+И с другой стороны
+
+```python
+p2.article_set.remove(a5)
+p2.article_set.all()
+# <QuerySet []>
+a5.publications.all()
+# <QuerySet []>
+```
+
+### Назначение списком или очистка
+
+Можно назначить список который будет отображать связь:
+
+```python
+a4.publications.all()
+# <QuerySet [<Publication: Science News>]>
+a4.publications.set([p3])
+a4.publications.all()
+# <QuerySet [<Publication: Science Weekly>]>
+```
+
+Или очистить всю связь:
+
+```python
+p2.article_set.clear()
+p2.article_set.all()
+# <QuerySet []>
+```
+
+> Назаначение как и очистка так же работает с обоих концов, как и любое другое действие с менеджерами.
 
 ## Сложные SQL конструкции
 
@@ -591,21 +888,21 @@ class Store(models.Model):
 from django.db.models import Avg
 
 Book.objects.all().aggregate(Avg('price'))
-{'price__avg': 34.35}
+# {'price__avg': 34.35}
 ```
 
 На самом деле, `all()` не несёт пользы в этом примере:
 
 ```python
 Book.objects.aggregate(Avg('price'))
-{'price__avg': 34.35}
+# {'price__avg': 34.35}
 ```
 
 Значение можно именовать:
 
 ```python
 Book.objects.aggregate(average_price=Avg('price'))
-{'average_price': 34.35}
+# {'average_price': 34.35}
 ```
 
 Можно вносить больше одной агрегации за раз:
@@ -614,7 +911,7 @@ Book.objects.aggregate(average_price=Avg('price'))
 from django.db.models import Avg, Max, Min
 
 Book.objects.aggregate(Avg('price'), Max('price'), Min('price'))
-{'price__avg': 34.35, 'price__max': Decimal('81.20'), 'price__min': Decimal('12.99')}
+# {'price__avg': 34.35, 'price__max': Decimal('81.20'), 'price__min': Decimal('12.99')}
 ```
 
 Если нам нужно, чтобы подсчитанное значение было у каждого объекта модели, мы используем метод `annotate()`
@@ -626,14 +923,14 @@ from django.db.models import Count
 q = Book.objects.annotate(Count('authors'))
 # Interrogate the first object in the queryset
 q[0]
-"<Book: The Definitive Guide to Django>"
+# "<Book: The Definitive Guide to Django>"
 q[0].authors__count
-2
+# 2
 # Interrogate the second object in the queryset
 q[1]
-"<Book: Practical Django Projects>"
+# "<Book: Practical Django Projects>"
 q[1].authors__count
-1
+# 1
 ```
 
 Их тоже может быть больше одного:
@@ -641,14 +938,14 @@ q[1].authors__count
 ```python
 book = Book.objects.first()
 book.authors.count()
-2
+# 2
 book.store_set.count()
-3
+# 3
 q = Book.objects.annotate(Count('authors'), Count('store'))
 q[0].authors__count
-6
+# 6
 q[0].store__count
-6
+# 6
 ```
 
 Все эти вещи можно комбинировать:
@@ -666,37 +963,88 @@ Book.objects.annotate(num_authors=Count('authors')).order_by('num_authors')
 
 ## F() выражения
 
-F-выражения нужны для получения значения поля и оптимизации записи.
-[Дока](https://docs.djangoproject.com/en/4.2/ref/models/expressions/#f-expressions)
+В Django ORM (Object-Relational Mapping) для работы с базой данных часто возникает необходимость обновления полей
+модели, сравнения значений полей между собой или выполнения арифметических операций на уровне базы данных. Для этих
+целей в Django используется класс `F`.
 
-Допустим, нам нужно увеличить определенному объекту в базе значение какого-либо поля на 1
+### Что такое F объекты?
 
-```python
-reporter = Reporters.objects.get(name='Tintin')
-reporter.stories_filed += 1
-reporter.save()
-```
+`F` объекты представляют собой способ обращения к полям модели без необходимости загружать их в память приложения.
+Вместо этого операции с `F` объектами выполняются непосредственно на уровне базы данных, что может значительно повысить
+производительность при выполнении запросов.
 
-На самом деле, в этот момент мы получаем значение из базы в память, обрабатываем и записываем в базу.
+### Примеры использования F объектов
 
-Есть другой путь:
+#### Обновление поля на основе его текущего значения
+
+Рассмотрим простой пример: допустим, у нас есть модель `Product`, которая имеет поле `price`. Предположим, что нам нужно
+увеличить цену каждого товара на 10%.
 
 ```python
 from django.db.models import F
 
-reporter = Reporters.objects.get(name='Tintin')
-reporter.stories_filed = F('stories_filed') + 1
-reporter.save()
+Product.objects.update(price=F('price') * 1.10)
 ```
 
-Преимущества под капотом, но давайте предположим, что нам нужно сделать эту же операцию массово:
+Этот запрос обновит поле `price` для всех записей, увеличив его значение на 10%. При этом Django выполнит операцию
+умножения на уровне базы данных, что исключит необходимость загружать все объекты в память.
+
+#### Сравнение полей внутри одной записи
+
+Предположим, у нас есть модель `Order` с полями `quantity` и `shipped_quantity`. Нам нужно найти все заказы, для которых
+количество отгруженного товара меньше заказанного.
 
 ```python
-reporter = Reporters.objects.filter(name='Tintin')
-reporter.update(stories_filed=F('stories_filed') + 1)
+from myapp.models import Order
+from django.db.models import F
+
+orders = Order.objects.filter(shipped_quantity__lt=F('quantity'))
 ```
 
-Такие объекты можно использовать и в `annotate()`, и в `filter()`, и во многих других местах.
+Этот запрос вернет все заказы, где количество отгруженного товара (`shipped_quantity`) меньше заказанного (`quantity`).
+
+#### Условное обновление поля
+
+Рассмотрим пример, когда у нас есть модель `Employee` с полем `bonus`. Мы хотим увеличить бонус на 500 для всех
+сотрудников, у которых текущий бонус менее 1000.
+
+```python
+from django.db.models import F, Q
+
+Employee.objects.filter(bonus__lt=1000).update(bonus=F('bonus') + 500)
+```
+
+Этот запрос обновит поле `bonus`, прибавив к текущему значению 500 для всех сотрудников, у которых бонус меньше 1000.
+
+#### Агрегатные функции с F объектами
+
+Предположим, у нас есть модель `Sale` с полями `quantity` и `unit_price`, и мы хотим узнать общую стоимость каждого
+товара, умножив количество на цену за единицу.
+
+```python
+from django.db.models import F, Sum
+
+total_sales = Sale.objects.annotate(total_price=F('quantity') * F('unit_price'))
+```
+
+Этот запрос добавит к каждому объекту `Sale` дополнительное поле `total_price`, содержащее общую стоимость товара.
+
+#### Использование F объектов в аннотациях
+
+В некоторых случаях удобно использовать `F` объекты в аннотациях для создания вычисляемых полей. Например, предположим,
+что у нас есть модель `Invoice` с полями `subtotal` и `discount`. Мы хотим добавить аннотацию с окончательной суммой
+счета, учитывая скидку.
+
+```python
+from django.db.models import F, ExpressionWrapper, FloatField
+
+invoices = Invoice.objects.annotate(
+    total=ExpressionWrapper(F('subtotal') - F('discount'), output_field=FloatField())
+)
+```
+
+Здесь мы используем `ExpressionWrapper`, чтобы указать Django тип возвращаемого значения, поскольку операции с `F`
+объектами могут привести к неоднозначности типов данных.
 
 ## Select related и Prefetch related
 
@@ -925,6 +1273,7 @@ def create_records():
         transaction.set_autocommit(True)  # Включаем автокоммит обратно
 ```
 
-> Использование транзакций в Django ORM позволяет вам контролировать целостность данных, обеспечивая атомарность операций.
+> Использование транзакций в Django ORM позволяет вам контролировать целостность данных, обеспечивая атомарность
+> операций.
 > Вы можете использовать контекстный менеджер или декоратор `atomic` для автоматического управления транзакциями, либо
 > вручную управлять транзакциями для более точного контроля над процессом.
