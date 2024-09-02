@@ -1,4 +1,4 @@
-# Лекция 34. NoSQL. Куки, сессии, кеш
+# Лекция 27. NoSQL. Куки, сессии, кеш
 
 ![](https://imgb.ifunny.co/images/25d44f01a8e316a90fe39d4d7239a560e7f0c2fe1ae987596cd6788bd8eb1435_1.jpg)
 
