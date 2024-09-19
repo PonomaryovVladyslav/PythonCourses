@@ -41,102 +41,104 @@
 
 Две сложные задачки:
 
-1. На вход приходит список словарей, с одинаковыми ключами, и список строк, который содержит ключи из этих же словарей.
-   Нужно получить список словарей, для которых значени указанных ключей будут уникальными.
-   
-    Если:
-    list_of_dicts = [
-        {
-        "name": "Vlad",
-        "age": 30,
-        "city": "Prague"
-        },
-        {
-        "name": "Stas",
-        "age": 30,
-        "city": "Prague"
-        },
-        {
-        "name": "Vlad",
-        "age": 25,
-        "city": "Prague"
-        }, {
-        "name": "Vlad",
-        "age": 30,
-        "city": "Berlin"
-        }
-   ]
 
-   И:
-
-   list_of_keys = ["name", "age"]
-
-   То:    
-
-    result = [
-        {
-        "name": "Vlad",
-        "age": 30,
-        "city": "Prague"
-        },
-        {
-        "name": "Stas",
-        "age": 30,
-        "city": "Prague"
-        },
-        {
-        "name": "Vlad",
-        "age": 25,
-        "city": "Prague"
-        }
-   ]
+На вход приходит список словарей, с одинаковыми ключами, и список строк, который содержит ключи из этих же словарей. Нужно получить список словарей, для которых значени указанных ключей будут уникальными.
     
-   Если ключи:
+        Если:
+       list_of_dicts = [
+           {
+           "name": "Vlad",
+           "age": 30,
+           "city": "Prague"
+           },
+           {
+           "name": "Stas",
+           "age": 30,
+           "city": "Prague"
+           },
+           {
+           "name": "Vlad",
+           "age": 25,
+           "city": "Prague"
+           }, {
+           "name": "Vlad",
+           "age": 30,
+           "city": "Berlin"
+           }
+      ]
 
-   list_of_keys = ["age", "city"]
+      И:
 
-   То:
+      list_of_keys = ["name", "age"]
 
-   result = [
-        {
-        "name": "Vlad",
-        "age": 30,
-        "city": "Prague"
-        },
-        {
-        "name": "Vlad",
-        "age": 25,
-        "city": "Prague"
-        }, {
-        "name": "Vlad",
-        "age": 30,
-        "city": "Berlin"
-        }
-   ]
+      То:    
+
+       result = [
+           {
+           "name": "Vlad",
+           "age": 30,
+           "city": "Prague"
+           },
+           {
+           "name": "Stas",
+           "age": 30,
+           "city": "Prague"
+           },
+           {
+           "name": "Vlad",
+           "age": 25,
+           "city": "Prague"
+           }
+      ]
     
-   Если ключи:
+      Если ключи:
 
-   list_of_keys = ["name", "city"]
+      list_of_keys = ["age", "city"]
 
-   то:
+      То:
 
-   result = [
-       {
-       "name": "Vlad",
-       "age": 30,
-       "city": "Prague"
-       },
-       {
-       "name": "Stas",
-       "age": 30,
-       "city": "Prague"
-       },
-       {
-       "name": "Vlad",
-       "age": 30,
-       "city": "Berlin"
-       }
-   ]
+      result = [
+           {
+           "name": "Vlad",
+           "age": 30,
+           "city": "Prague"
+           },
+           {
+           "name": "Vlad",
+           "age": 25,
+           "city": "Prague"
+           }, {
+           "name": "Vlad",
+           "age": 30,
+           "city": "Berlin"
+           }
+      ]
+    
+      Если ключи:
+
+      list_of_keys = ["name", "city"]
+
+      то:
+
+      result = [
+          {
+          "name": "Vlad",
+          "age": 30,
+          "city": "Prague"
+          },
+          {
+          "name": "Stas",
+          "age": 30,
+          "city": "Prague"
+          },
+          {
+          "name": "Vlad",
+          "age": 30,
+          "city": "Berlin"
+          }
+      ]
+
+
 
 Банкомат. Нужно вычислить какими купюрами будет выдана сумма в банкомате, если есть условие, сумма должна быть выдана минимальными купюрами, но не более чем 10 купюр одного номинала.
    
