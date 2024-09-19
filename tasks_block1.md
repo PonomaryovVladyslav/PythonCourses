@@ -138,27 +138,31 @@
        }
    ]
 
-2. Банкомат. Нужно вычислить какими купюрами будет выдана сумма в банкомате, если есть условие, сумма должна быть выдана
-   минимальными купюрами, но не более чем 10 купюр одного номинала.
+Банкомат. Нужно вычислить какими купюрами будет выдана сумма в банкомате, если есть условие, сумма должна быть выдана минимальными купюрами, но не более чем 10 купюр одного номинала.
    
-   Допустим существуют купюры [1, 2, 5, 10, 20, 50, 100, 200, 500]
+    Допустим существуют купюры [1, 2, 5, 10, 20, 50, 100, 200, 500]
+    
+    Пользователь вводит 16
 
-   Пользователь вводит 16  
-         You need: 
-         banknote 1, 10 times
-         banknote 2, 3 times
-   Пользователь вводит 123 
-         You need: 
-         banknote 1, 10 times
-         banknote 2, 9 times
-         banknote 5, 9 times
-         banknote 10, 5 times
-   Пользователь вводит 1234 
-         You need: 
-         banknote 1, 9 times
-         banknote 2, 10 times
-         banknote 5, 9 times
-         banknote 10, 10 times
-         banknote 20, 8 times
-         banknote 50, 10 times
-         banknote 100, 4 times
+        You need: 
+        banknote 1, 10 times
+        banknote 2, 3 times
+
+    Пользователь вводит 123 
+      
+        You need: 
+        banknote 1, 10 times
+        banknote 2, 9 times
+        banknote 5, 9 times
+        banknote 10, 5 times
+
+    Пользователь вводит 1234 
+
+        You need: 
+        banknote 1, 9 times
+        banknote 2, 10 times
+        banknote 5, 9 times
+        banknote 10, 10 times
+        banknote 20, 8 times
+        banknote 50, 10 times
+        banknote 100, 4 times
