@@ -1,801 +1,1055 @@
-# Лекция 32. Тестирование. Django, REST API.
+# Лекция 32. Асинхронное программирование в Python. Корутины. Asyncio.
 
-![](https://preview.redd.it/aom6ubb0b4e71.jpg?width=640&crop=smart&auto=webp&s=d9094222a89d1f8cb0f43285d4ff9c81f274cfee)
+## Итераторы
 
-## Общая информация
+Во многих современных языках программирования используют такие сущности как итераторы. Основное их назначение – это
+упрощение навигации по элементам объекта, который, как правило, представляет собой некоторую коллекцию (список, словарь
+и т.п.). Язык Python в этом случае не исключение и в нем тоже есть поддержка итераторов. Итератор представляет собой
+объект перечислитель, который для данного объекта выдает следующий элемент либо бросает исключение, если элементов
+больше нет.
 
-Тестирование - это огромная, нет **ОГРОМНАЯ** тема, настолько огромная, что порождает два отдельных класса сотрудников в
-IT индустрии.
+Основное место использования итераторов – это цикл `for`. Если вы перебираете элементы в некотором списке или символы в
+строке с помощью цикла `for`, то фактически это означает, что при каждой итерации цикла происходит обращение к
+итератору, содержащемуся в строке/списке с требованием выдать следующий элемент, если элементов в объекте больше нет,
+то итератор генерирует исключение, обрабатываемое в рамках цикла `for` незаметно для пользователя.
 
-## Уровни тестирования
-
-Напомним себе про пирамиду тестирования
-
-![](https://habrastorage.org/storage2/ec3/825/c7f/ec3825c7f0710f9fed6814c89b794ded.jpg)
-
-Существует 4 основных уровня тестирования функционала.
-
-**Модульные тесты (Unit Tests)** - это тесты, проверяющие функционал конкретного модуля минимального размера. 
-Если вы переписали метод `get_context_data()`, то юнит тестом будет попытка вызвать этот метод с разными входными 
-данными, и посмотреть на то, что вернёт результат.
-
-**Интеграционные тесты (Integration Tests)** - это вид тестирования, когда проверяется целостность работы системы, без 
-сторонних средств. Например, вы переписали метод `get_context_data()`, выполняем запрос при помощи кода, и смотрим,
-изменилась ли переменная `context` в ответе на наш запрос.
-
-**Приёмочные тесты (Acceptance Tests)** - вид тестов с полной имитацией действий пользователя. При помощи специальных
-средств (например, Selenium) мы прописываем код открытия браузера, поиска необходимых элементов на странице, имитируем
-ввод данных, нажатие кнопок, переход по ссылкам и т. д.
-
-**Ручные тесты (Manual Tests)** - вид тестов, когда мы полностью повторяем потенциальные действия пользователя.
-
-## Тестирование в Django
-
-Вы знаете о существовании `unittest.TestCase`, от которого нужно наследоваться, чтобы создать обычный тест.
-
-У него могут быть метод `setUp()` и `tearDown()` для описания данных, которые нужно выполнить до каждого теста и после
-соответственно.
-
-И методы, начинающиеся со слова `test_`, которые описывают сами тесты, для чего используется ключевое слово `assert` или
-основанные на нём встроенные методы.
-
-В рамках Django есть свой собственный тест кейс, наследованный от базового `unittest.TestCase`.
-
-![](https://docs.djangoproject.com/en/2.2/_images/django_unittest_classes_hierarchy.svg)
-
-### SimpleTestCase
-
-`SimpleTestCase` наследуется от базового.
-
-#### Что добавляет?
-
-Добавляет `settings.py` в структуру теста и возможность переписать или изменить `settings.py` для теста.
-
-Добавляет `Client`, который используется для написания интеграционных тестов (через него мы будем отправлять запросы).
-
-Добавляет новые методы `assert`:
-
-`assertRedirects` - проверка на то, что URL, на который мы попали, совпадёт с ожидаемым.
-
-`assertContains` - проверка на то, что страница содержит ожидаемую переменную.
-
-`assertNotContains` - проверка на то, что страница не содержит ожидаемую переменную.
-
-`assertFormError` - проверка на то, что форма содержит нужную ошибку.
-
-`assertFormsetError` - проверка на то, что formset содержит нужную ошибку.
-
-`assertTemplateUsed` - проверка на то, что был использован ожидаемый шаблон.
-
-`assertTemplateNotUsed` - проверка на то, что не был использован ожидаемый шаблон.
-
-`assertRaisesMessage` - проверка на то, что на странице присутствует определённое сообщение.
-
-`assertFieldOutput` - проверка на то, что определённое поле содержит ожидаемое значение.
-
-`assertHTMLEqual` - проверка на то, что полученный HTML соответствует ожидаемому.
-
-`assertHTMLNotEqual` - проверка на то, что полученный HTML не соответствует ожидаемому.
-
-`assertJSONEqual` - проверка на то, что полученный JSON соответствует ожидаемому.
-
-`assertJSONNotEqual` - проверка на то, что полученный JSON не соответствует ожидаемому.
-
-`assertXMLEqual` - проверка на то, что полученный XML соответствует ожидаемому.
-
-`assertXMLNotEqual` - проверка на то, что полученный XML не соответствует ожидаемому.
-
-### TransactionTestCase
-
-`TransactionTestCase` наследуется от `SimpleTestCase`.
-
-#### Что добавляет?
-
-Добавляет возможность выполнять транзакции в базу данных в рамках теста.
-
-Добавляет атрибут `fixtures` для возможности загружать базовые условия теста из фикстур.
-
-Добавляет атрибут `reset_sequences`, который позволяет сбрасывать последовательности для каждого теста (каждый созданный
-объект всегда будет начинаться с id=1)
-
-Добавляет новые методы `assert`:
-
-`assertQuerysetEqual` - проверка на то, что полученный кверисет совпадает с ожидаемым.
-
-`assertNumQueries` - проверка на то, что выполнение функции делает определённое количество запросов в базу.
-
-### TestCase из модуля Django
-
-`TestCase` наследуется от `TransactionTestCase`.
-
-#### Что добавляет?
-
-По сути ничего. :) Немного по другому выполняет запросы в базу (с использованием атомарности), из-за чего
-предпочтительнее.
-
-Дополнительный метод `setUpTestData()` для описания данных для теста. Не обязательный.
-
-Это самый часто используемый вид тестов.
-
-### LiveServerTestCase
-
-`LiveServerTestCase` наследуется от `TransactionTestCase`.
-
-#### Что добавляет?
-
-Запускает реальный сервер для возможности открыть проект в браузере. Необходим для написания Acceptance Tests.
-
-Чаще всего в таких тестах запускается сервер и имитация браузера (например, Selenium).
-
-### База данных для тестирования
-
-Для тестов используется отдельная база данных, которая будет указана в переменной `TEST` в переменной `DATABASES` в
-файле `settings.py`:
+Приведем несколько примеров, которые помогут лучше понять эту концепцию. Для начала выведем элементы произвольного
+списка на экран.
 
 ```python
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'USER': 'mydatabaseuser',
-        'NAME': 'mydatabase',
-        'TEST': {
-            'NAME': 'mytestdatabase',
-        },
-    },
-}
+num_list = [1, 2, 3, 4, 5]
+for i in num_list:
+    print(i)
+1
+2
+3
+4
+5
 ```
 
-Эта база будет изначально пустая и будет очищаться после каждого выполненного тест кейса.
-
-**Ваш юзер должен иметь права на создание и очистку базы данных**
-
-### Расположение тестов
-
-Несмотря на то, что Django создаёт для нас в приложении файл `tests.py`, им практически никогда не пользуются.
-
-Существует два самых распространённых способа хранения тестов. Если вам повезло и на вашем проекте есть специальные
-тестировщики, то ваша задача - это только юнит тесты.
-
-И тогда в папке приложения создаётся еще одна папка `tests`, в которой уже создаются файлы для тестов различных частей,
-например, `test_models.py`, `test_forms.py` и т. д.
-
-![](https://drive.google.com/uc?export=view&id=1E_Tf8H2spWJbSOaaxvWOMiLk4c0bgvUT)
-
-Если вам не повезло, и на проекте вы за автоматических тестеров, то тогда в этой же папке (`tests`) создаётся еще 3 
-папки `unit`, `integration` и `acceptance`, и уже в них описываются различные тесты.
-
-### Запуск тестов
-
-Предположим, что у нас в приложении `animals` есть папка `tests`, в ней папка `unit` и в ней файл `test_models`.
+Как уже было сказано, объекты, элементы которых можно перебирать в цикле `for`, содержат в себе объект итератор, для
+того, чтобы его получить, необходимо использовать функцию `iter()`, а для извлечения следующего элемента из итератора –
+функцию `next()`.
 
 ```python
-from django.test import TestCase
-from myapp.models import Animal
-
-
-class AnimalTestCase(TestCase):
-    def setUp(self):
-        Animal.objects.create(name="lion", sound="roar")
-        Animal.objects.create(name="cat", sound="meow")
-
-    def test_animals_can_speak(self):
-        """Animals that can speak are correctly identified"""
-        lion = Animal.objects.get(name="lion")
-        cat = Animal.objects.get(name="cat")
-        self.assertEqual(lion.speak(), 'The lion says "roar"')
-        self.assertEqual(cat.speak(), 'The cat says "meow"')
+itr = iter(num_list)
+print(next(itr))
+1
+print(next(itr))
+2
+print(next(itr))
+3
+print(next(itr))
+4
+print(next(itr))
+5
+print(next(itr))
+# Traceback(most recent call last):
+# File "<pyshell#12>", line1, in < module > print(next(itr))
+# StopIteration
 ```
 
-То для запуска тестов используется manage-команда `test`
+Как видно из приведенного выше примера, вызов функции `next(itr)` каждый раз возвращает следующий элемент из списка, а
+когда эти элементы заканчиваются, генерируется исключение `StopIteration`.
 
-```
-# Запустить все тесты в приложении в папке тестов
-$./manage.py test animals.tests
+### Последовательности и итерируемые объекты
 
-# Запустить все тесты в приложении
-$./manage.py test animals
+По сути, вся разница между последовательностями и итерируемыми объектами (**Не итераторами**), заключается в том, что в
+последовательностях элементы упорядочены.
 
-# Запустить один тест кейс
-$./manage.py test animals.tests.unit.test_models.AnimalTestCase
-
-# Запустить один тест из тест кейса
-$./manage.py test animals.tests.unit.test_models.AnimalTestCase.test_animals_can_speak
-```
-
-## Специальные инструменты тестирования
-
-### Client
-
-Для проведения `интеграционного` тестирования Django приложения нам необходимо отправлять запросы с клиента (браузера),
-функционал для этого нам предоставлен из коробки, и мы можем им воспользоваться:
+Таким образом, последовательностями являются списки, кортежи и даже строки.
 
 ```python
-from django.test import Client
-
-c = Client()
-response = c.post('/login/', {'username': 'john', 'password': 'smith'})
-response.status_code
-200
-response = c.get('/customer/details/')
-response.content
+numbers = [1, 2, 3, 4, 5]
+letters = ('a', 'b', 'c')
+characters = 'habristhebestsiteever'
+numbers[1]
+2
+letters[2]
+'c'
+characters[11]
+'s'
+characters[0:4]
+'habr'
 ```
 
-Такой запрос не будет требовать CSRF токен (хотя это тоже можно изменить, если необходимо).
-
-Поддерживает метод `login()`
+Итерируемые объекты же, напротив, не упорядочены, но, тем не менее, могут быть использованы там, где требуется итерация:
+цикл `for`, выражения-генераторы, списковые включения (list comprehensions) — как примеры.
 
 ```python
-c = Client()
-c.login(username='fred', password='secret')
+# Can't be indexed
+unordered_numbers = {1, 2, 3}
+unordered_numbers[1]
+# Traceback(most recent call last):
+# File "<stdin>", line 1, in < module >
+# TypeError: 'set' object is not subscriptable
+
+users = {'males': 23, 'females': 32}
+users[1]
+# Traceback(most recent call last):
+# File "<stdin>", line 1, in < module >
+# KeyError: 1
+
+# Can be used as sequence
+[number ** 2 for number in unordered_numbers]
+[1, 4, 9]
+
+for user in users:
+    print(user)
+
+males
+females
 ```
 
-После чего запросы будут от авторизированного пользователя.
+**Последовательность - всегда итерируемый объект, итерируемый объект не всегда последовательность.**
 
-Метод `force_login()`, принимающий объект юзера, а не логин и пароль.
+### Итераторы
 
-Метод `logout()`, что делает, догадайтесь сами)
+Как мы могли убедиться, цикл `for` не использует индексы. Вместо этого он использует так называемые `итераторы`.
 
-Естественно клиент при желании можно переписать под свои нужды.
+Итераторы — это такие штуки, которые, очевидно, можно итерировать :)
+Получить итератор мы можем из любого итерируемого объекта.
 
-Клиент сразу есть в тест кейсе, его нет необходимости создавать, к нему можно обратиться через `self.client`.
+Чтобы сделать это явно, нужно вызвать метод `iter()`:
 
 ```python
-class SimpleTest(TestCase):
-    def test_details(self):
-        response = self.client.get('/customer/details/')
-        self.assertEqual(response.status_code, 200)
-
-    def test_index(self):
-        response = self.client.get('/customer/index/')
-        self.assertEqual(response.status_code, 200)
+set_of_numbers = {1, 2, 3}
+list_of_numbers = [1, 2, 3]
+string_of_numbers = '123'
+iter(set_of_numbers)
+# < set_iterator object at 0x7fb192fa0480 >
+iter(list_of_numbers)
+# < list_iterator object at 0x7fb193030780 >
+iter(string_of_numbers)
+# < str_iterator object at 0x7fb19303d320 >
 ```
 
-### Загрузка фикстур
-
-Всё очень просто, если у вас лежит файл с фикстурами, то достаточно его просто указать в атрибутах.
+Чтобы получить следующий объект из итератора, нужно вызвать метод `next()`:
 
 ```python
-from myapp.models import Animal
-
-
-class AnimalTestCase(TestCase):
-    fixtures = ['mammals.json', 'birds']
-
-    def setUp(self):
-        # Test definitions as before.
-        call_setup_methods()
-
-    def test_fluffy_animals(self):
-        # A test that uses the fixtures.
-        call_some_test_code()
+iterator = iter('123')
+next(iterator)
+'1'
+next(iterator)
+'2'
+next(iterator)
+'3'
+next(iterator)
+# Traceback(most recent call last):
+# File "<pyshell#12>", line1, in < module > print(next(itr))
+# StopIteration
 ```
 
-Загрузится файл `mammals.json`, и из него фикстура `birds`.
+### Как работает `for`
 
-### Теги для тестов
+Цикл `for` вызывает метод `iter()` и к полученному объекту применяет метод `next()`, пока не встретит
+исключение `StopIteration`.
 
-Существует возможность поставить "тег" на каждый тест, а после запускать только те, что с определённым тегом.
+Это называется *протокол итерации*. На самом деле он применяется не только в цикле `for`, но и в генераторном выражении
+и даже при распаковке и "звёздочке":
 
 ```python
+coordinates = [1, 2, 3]
+x, y, z = coordinates
 
-class SampleTestCase(TestCase):
+numbers = [1, 2, 3, 4, 5]
+a, b, *rest = numbers
 
-    @tag('fast')
-    def test_fast(self):
-        ...
-
-    @tag('slow')
-    def test_slow(self):
-        ...
-
-    @tag('slow', 'core')
-    def test_slow_but_core(self):
-        ...
+print(rest)
+[3, 4, 5]
 ```
 
-Или даже целый тесткейс:
+В случае, если мы передаём в `iter()` итератор, то получаем тот же самый итератор:
 
 ```python
-@tag('slow', 'core')
-class SampleTestCase(TestCase):
-    ...
+numbers = [1,2,3,4,5]
+iter1 = iter(numbers)
+iter2 = iter(iter1)
+next(iter1)
+# 1
+next(iter2)
+# 2
+iter1 is iter2
+# True
 ```
 
-После чего запускать с указанием тега.
+Подытожим.
 
-```
-./manage.py test --tag=fast
-```
+`Итерируемый объект` — это что-то, что можно итерировать.
 
-### Тестирование manage-команд
+`Итератор` — это сущность, порождаемая функцией `iter`, с помощью которой происходит итерирование итерируемого объекта.
 
-Для этого используется специальный метод `call_command()`:
+`Итератор` не имеет индексов и может быть использован только один раз.
+
+### Итераторы повсюду
+
+Мы уже видели много итераторов в Python. Я уже упоминал о том, что генераторы — это тоже итераторы. Многие встроенные
+функции являются итераторами.
+
+Так, например, `enumerate()`:
 
 ```python
-from io import StringIO
-from django.core.management import call_command
-from django.test import TestCase
-
-
-class ClosePollTest(TestCase):
-    def test_command_output(self):
-        out = StringIO()
-        call_command('closepoll', stdout=out)
-        self.assertIn('Expected output', out.getvalue())
+numbers = [1,2,3]
+enumerate_var = enumerate(numbers)
+enumerate_var
+# <enumerate object at 0x7ff975dfdd80>
+next(enumerate_var)
+# (0, 1)
 ```
 
-### Пропуск тестов
-
-Тесты можно пропускать в зависимости от условий и деталей запуска.
-Дока [тут](https://docs.python.org/3/library/unittest.html#unittest.skipIf)
-
-## Фабрики и юнит тестирование
-
-### Паттерн фабрика
-
-Фабричный метод — если умным текстом, то это порождающий паттерн проектирования, который определяет общий интерфейс для
-создания объектов в суперклассе, позволяя подклассам изменять тип создаваемых объектов.
-
-Если по смыслу, то это возможность создать необходимую нам сущность внутри вызова метода.
-
-В Django есть встроенная фабрика для реквеста, зачем это нужно? Нам не для всех проверок нужно делать запрос, часто нам
-нужно его только имитировать. Для написания юнит тестов - это самый главный инструмент.
+А так же `zip()`:
 
 ```python
-from django.contrib.auth.models import AnonymousUser, User
-from django.test import RequestFactory, TestCase
-
-from .views import MyView, my_view
-
-
-class SimpleTest(TestCase):
-    def setUp(self):
-        # Every test needs access to the request factory.
-        self.factory = RequestFactory()
-        self.user = User.objects.create_user(
-            username='jacob', email='jacob@…', password='top_secret')
-
-    def test_details(self):
-        # Create an instance of a GET request.
-        request = self.factory.get('/customer/details')
-
-        # Recall that middleware are not supported. You can simulate a
-        # logged-in user by setting request.user manually.
-        request.user = self.user
-
-        # Or you can simulate an anonymous user by setting request.user to
-        # an AnonymousUser instance.
-        request.user = AnonymousUser()
-
-        # Test my_view() as if it were deployed at /customer/details
-        response = my_view(request)
-        # Use this syntax for class-based views.
-        response = MyView.as_view()(request)
-        self.assertEqual(response.status_code, 200)
+letters = ['a','b','c']
+z = zip(letters, numbers)
+z
+# <zip object at 0x7ff975e00588>
+next(z)
+# ('a', 1)
 ```
 
-### Тестирование отдельных методов CBV
-
-Для тестирования отдельных методов мы можем использовать метод `setup()`.
-
-Например, если мы заменили `get_context_data()`, то можно сделать так:
+И даже `open()`:
 
 ```python
-from django.views.generic import TemplateView
-
-
-class HomeView(TemplateView):
-    template_name = 'myapp/home.html'
-
-    def get_context_data(self, **kwargs):
-        kwargs['environment'] = 'Production'
-        return super().get_context_data(**kwargs)
+f = open('foo.txt')
+next(f)
+# 'bar\n'
+next(f)
+# 'baz\n'
 ```
+
+В Python очень много итераторов, и, как уже упоминалось выше, они откладывают выполнение работы до того момента, как мы
+запрашиваем следующий элемент с помощью `next()`. Так называемое "ленивое" выполнение.
+
+### Создание своих итераторов
+
+Если нужно обойти элементы внутри объекта вашего собственного класса, необходимо построить свой итератор. Создадим
+класс, объект которого будет итератором, выдающим определенное количество единиц, которое пользователь задает при
+создании объекта. Такой класс будет содержать конструктор, принимающий на вход количество единиц и метод `__next__()`,
+без него экземпляры данного класса не будут итераторами.
 
 ```python
-from django.test import RequestFactory, TestCase
-from .views import HomeView
+class SimpleIterator:
+    def __init__(self, limit):
+        self.limit = limit
+        self.counter = 0
+
+    def __next__(self):
+        if self.counter < self.limit:
+            self.counter += 1
+            return 1
+        raise StopIteration
 
 
-class HomePageTest(TestCase):
-    def test_environment_set_in_context(self):
-        request = RequestFactory().get('/')
-        view = HomeView()
-        view.setup(request)
-        context = view.get_context_data()
-        self.assertIn('environment', context)
+s_iter1 = SimpleIterator(3)
+print(next(s_iter1))
+print(next(s_iter1))
+print(next(s_iter1))
+print(next(s_iter1))
 ```
 
-## Тестирование REST API
-
-В Django REST Framework есть достаточно много внутренних похожих процедур и классов, например, своя фабрика реквестов:
+В нашем примере при четвертом вызове функции `next()` будет выброшено исключение `StopIteration`. Если мы хотим, чтобы с
+данным объектом можно было работать в цикле `for`, то в класс `SimpleIterator` нужно добавить метод `__iter__()`,
+который возвращает итератор, в данном случае этот метод должен возвращать `self`.
 
 ```python
-from rest_framework.test import APIRequestFactory
+class SimpleIterator:
+    def __iter__(self):
+        return self
 
-# Using the standard RequestFactory API to create a form POST request
-factory = APIRequestFactory()
-request = factory.post('/notes/', {'title': 'new idea'})
+    def __init__(self, limit):
+        self.limit = limit
+        self.counter = 0
+
+    def __next__(self):
+        if self.counter < self.limit:
+            self.counter += 1
+            return 1
+        raise StopIteration
+
+
+s_iter2 = SimpleIterator(5)
+for i in s_iter2:
+    print(i)
 ```
 
-По дефолту формат JSON, но это можно изменить:
+### Выражение итератора
+
+Объект созданный при помощи list comprehension тоже является итератором.
 
 ```python
-# Create a JSON POST request
-factory = APIRequestFactory()
-request = factory.post('/notes/', {'title': 'new idea'}, format='json')
+iterator = [i for i in range(10)]
 ```
 
-А можно вообще указать content type:
+## Генераторы
+
+Генераторы — это тоже итераторы.
+
+### Return VS Yield
+
+Ключевое слово `return` — это финальная инструкция в функции. Она предоставляет способ для возвращения значения. При
+возвращении весь локальный стек очищается. И новый вызов начнется с первой инструкции.
+
+Ключевое слово `yield` же сохраняет состояние между вызовами. Выполнение продолжается с момента, где управление было
+передано в вызывающую область, то есть, сразу после последней инструкции `yield`.
+
+### Генератор vs. Функция
+
+Дальше перечислены основные отличия между генератором и обычной функцией.
+
+Генератор использует `yield` для отправления значения пользователю, а у функции для этого есть `return`;
+
+- При использовании генератора может быть больше одного вызова `yield`;
+
+- Вызов `yield` останавливает исполнение и возвращает итератор, а `return` всегда выполняется последним;
+
+- Вызов метода `next()` приводит к выполнению функции генератора;
+
+- Локальные переменные и состояния сохраняются между последовательными вызовами метода `next()`;
+
+- Каждый дополнительный вызов `next()` вызывает исключение `StopIteration`, если нет следующих элементов для обработки.
+
+Дальше пример функции генератора с несколькими `yield`.
 
 ```python
-request = factory.post('/notes/', json.dumps({'title': 'new idea'}), content_type='application/json')
+def testGen():
+    x = 2
+    print('Первый yield')
+    yield x
+
+    x *= 1
+    print('Второй yield')
+    yield x
+
+    x *= 1
+    print('Последний yield')
+    yield x
+
+
+# Вызов генератора
+iter = testGen()
+
+# Вызов первого yield
+next(iter)
+
+# Вызов второго yield
+next(iter)
+
+# Вызов последнего yield
+next(iter)
 ```
 
-### force_authenticate()
+Вывод:
 
-Часто нам необходимо проверять запросы из-под необходимого типа пользователя, но сам по себе логин уже покрыт тестами,
-а это значит, что второй раз его проверять нет необходимости, можем просто логиниться.
+```
+Первый yield
+Второй yield
+Последний yield
+```
+
+Генераторы тоже реализуют протокол итератора:
+
+Если генератор встречает `return`, то в этот момент генерируется исключение `StopIteration`
+
+Если функция завершается без `return`, то после последней строки вызывается `return` без параметров, что и
+вызовет `StopIteration` в следующем примере:
 
 ```python
-from rest_framework.test import force_authenticate
-
-factory = APIRequestFactory()
-user = User.objects.get(username='olivia')
-view = AccountDetail.as_view()
-
-# Make an authenticated request to the view...
-request = factory.get('/accounts/django-superstars/')
-force_authenticate(request, user=user)
-response = view(request)
+>>> def custom_range(number):
+...     index = 0 
+...     while index < number:
+...         yield index
+...         index += 1
+... 
+>>> range_of_four = custom_range(4)
+>>> next(range_of_four)
+0
+>>> next(range_of_four)
+1
+>>> next(range_of_four)
+2
+>>> next(range_of_four)
+3
+>>> next(range_of_four)
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+StopIteration
 ```
 
-### APIClient
+### Когда использовать генератор?
 
-В DRF есть свой клиент для запросов, в котором уже прописаны все необходимые методы запросов (`get()`, `post()`, 
-и т. д.)
+Есть много ситуаций, когда генератор оказывается полезным. Вот некоторые из них:
+
+- Генераторы помогают обрабатывать большие объемы данных. Они позволяют производить так называемые ленивые вычисления.
+
+- Подобным образом происходит потоковая обработка. Генераторы можно устанавливать друг за другом и использовать их как
+  Unix-каналы.
+
+- Генераторы позволяют настроить одновременное исполнение.
+
+- Они часто используются для чтения крупных файлов. Это делает код чище и компактнее, разделяя процесс на более мелкие
+  сущности.
+
+- Генераторы особенно полезны для веб-скрапинга и увеличения эффективности поиска. Они позволяют получить одну страницу,
+  выполнить какую-то операцию и двигаться к следующей. Этот подход куда эффективнее, чем получение всех страниц сразу и
+  использование отдельного цикла для их обработки.
+
+### Зачем использовать генераторы?
+
+Генераторы предоставляют разные преимущества для программистов и расширяют особенности, которые проявляются во время
+выполнения.
+
+#### Удобные для программистов
+
+Генератор кажется сложной концепцией, но его легко использовать в программах. Это хорошая альтернатива итераторам.
+
+Рассмотрим следующий пример реализации арифметической прогрессии с помощью класса итератора.
+
+Создание арифметической прогрессии с помощью класса итератора:
 
 ```python
-from rest_framework.test import APIClient
+class AP:
+    def __init__(self, a1, d, size):
+        self.ele = a1
+        self.diff = d
+        self.len = size
+        self.count = 0
 
-client = APIClient()
-client.post('/notes/', {'title': 'new idea'}, format='json')
+    def __iter__(self):
+        return self
+
+    def __next__(self):
+        if self.count >= self.len:
+            raise StopIteration
+        elif self.count == 0:
+            self.count += 1
+            return self.ele
+        else:
+            self.count += 1
+            self.ele += self.diff
+            return self.ele
+
+
+for ele in AP(1, 2, 10):
+    print(ele)
 ```
 
-#### Авторизация через клиента
+Ту же логику куда проще написать с помощью генератора.
 
-Поддерживает метод `login()`, `logout()`и `credentials()`. Метод `login()` принимает логин и пароль, метод 
-`credentials()` принимает хедеры.
-
-Примеры:
+Генерация арифметической прогрессии с помощью функции генератора:
 
 ```python
-# Make all requests in the context of a logged in session.
-client = APIClient()
-client.login(username='lauren', password='secret')
+def ap(a1, d, size):
+    count = 1
+    while count <= size:
+        yield a1
+        a1 += d
+        count += 1
+
+
+for ele in ap(1, 2, 10):
+    print(ele)
 ```
+
+#### Экономия памяти
+
+Есть использовать обычную функцию для возвращения списка, то она сформирует целую последовательность в памяти перед
+отправлением. Это приведет к использованию большого количества памяти, что неэффективно.
+
+Генератор же использует намного меньше памяти за счет обработки одного элемента за раз.
+
+#### Обработка больших данных
+
+Генераторы полезны при обработке особенно больших объемов данных, например, Big Data. Они работают как бесконечный поток
+данных.
+
+Такие объемы нельзя хранить в памяти. Но генератор, выдающий по одному элементы за раз, представляет собой этот
+бесконечный поток.
+
+Следующий код теоретически может выдать все простые числа.
+
+Найдем все простые числа с помощью генератора:
 
 ```python
-# Log out
-client.logout()
+def find_prime():
+    num = 1
+    while True:
+        if num > 1:
+            for i in range(2, num):
+                if not num % i:
+                    break
+            else:
+                yield num
+        num += 1
+
+
+for ele in find_prime():
+    print(ele)
 ```
+
+#### Последовательность генераторов
+
+С помощью генераторов можно создать последовательность разных операций. Это более чистый способ разделения обязанностей
+между всеми компонентами и последующей интеграции их для получения нужного результата.
+
+Цепочка нескольких операций с использованием pipeline генератора:
 
 ```python
-from rest_framework.authtoken.models import Token
-from rest_framework.test import APIClient
+def find_prime():
+    num = 1
+    while num < 100:
+        if num > 1:
+            for i in range(2, num):
+                if not num % i:
+                    break
+            else:
+                yield num
+        num += 1
 
-# Include an appropriate `Authorization:` header on all requests.
-token = Token.objects.get(user__username='lauren')
-client = APIClient()
-client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
+
+def find_even_prime(seq):
+    for num in seq:
+        if not num % 2:
+            yield num
+
+
+a_pipeline = find_even_prime(find_prime())
+
+for a_ele in a_pipeline:
+    print(a_ele)
 ```
 
-Так же поддерживает форсированную аутентификацию:
+В примере выше связаны две функции. Первая находит все простые числа от 1 до 100, а вторая — выбирает четные.
+
+#### yield from
+
+Есть специальная конструкция `yield from`, она нужна для:
 
 ```python
-user = User.objects.get(username='lauren')
-client = APIClient()
-client.force_authenticate(user=user)
+# Обычный yield
+def numbers_range(n):
+    for i in range(n):
+        yield i
+
+
+# yield from
+def numbers_range(n):
+    yield from range(n)
 ```
 
-Также можно включить CSRF на этапе создания клиента:
+`yield from` принимает в качестве параметра итератор.
+
+Напоминаю, генератор - это тоже итератор.
+
+А значит `yield from` может принимать другой генератор:
 
 ```python
-client = APIClient(enforce_csrf_checks=True)
+def subgenerator():
+    yield 'World'
+
+
+def generator():
+    yield 'Hello,'
+    yield from subgenerator()  # Запрашиваем значение из функции subgenerator()
+    yield '!'
+
+
+for i in generator():
+    print(i, end=' ')
 ```
 
-Для изменения хедеров можно использовать или стандартные классы, или просто обновлять как словарь:
+```
+# Вывод
+Hello, World !
+```
+
+Это важнейшее свойство мы и будем использовать далее.
+
+### Генераторные выражения и особенности генераторов
+
+В случае использования выражения-генератора мы не храним значения, а значит, что мы можем использовать его только 1 раз:
 
 ```python
-from requests.auth import HTTPBasicAuth
-
-client.auth = HTTPBasicAuth('user', 'pass')
-client.headers.update({'x-test': 'true'})
+gen = (x for x in range(0, 100 * 10000))
+100 in gen
+True
+100 in gen
+False
 ```
 
-Если вы включили CSRF и хотите им пользоваться при проверках, это можно сделать так:
+## Корутины
+
+![](https://habrastorage.org/webt/zy/vb/px/zyvbpxrx43dnun4q8wcegtqwnn0.png)
+
+А теперь о том, ради чего это, собственно, затевалось. Оказывается, генератор может не только возвращать значения, но и
+принимать их на вход.
+
+О стандарте можно почитать тут [PEP 342](https://www.python.org/dev/peps/pep-0342/).
+
+Предлагаю сразу начать с примера. Напишем простую реализацию генератора, который может складывать два аргумента, хранить
+историю результатов и выводить историю.
 
 ```python
-client = RequestsClient()
+def calc():
+    history = []
+    while True:
+        x = yield
+        if x == 'h':
+            print(history)
+            continue
+        print(x)
+        history.append(x)
 
-# Obtain a CSRF token.
-response = client.get('http://testserver/homepage/')
-assert response.status_code == 200
-csrftoken = response.cookies['csrftoken']
 
-# Interact with the API.
-response = client.post('http://testserver/organisations/', json={
-    'name': 'MegaCorp',
-    'status': 'active'
-}, headers={'X-CSRFToken': csrftoken})
-assert response.status_code == 200
+c = calc()
+
+next(c)  # Необходимая инициация. Можно написать c.send(None)
+c.send(1)  # Выведет 1
+c.send(100)  # Выведет 100
+c.send(666)  # Выведет 666
+c.send('h')  # Выведет [1, 100, 666]
+c.close()  # Закрываем генератор, данные сотрутся, генератор необходимо будет создавать заново.
 ```
 
-Можно настроить форматы и обработчики для таких тестов.
+Пример с передачей более чем одного параметра
 
 ```python
-REST_FRAMEWORK = {
-    ...
-'TEST_REQUEST_DEFAULT_FORMAT': 'json'
-}
+def calc():
+    history = []
+    while True:
+        x, y = (yield)
+        if x == 'h':
+            print(history)
+            continue
+        result = x + y
+        print(result)
+        history.append(result)
+
+
+c = calc()
+
+next(c)  # Необходимая инициация. Можно написать c.send(None)
+c.send((1, 2))  # Выведет 3
+c.send((100, 30))  # Выведет 130
+c.send((666, 0))  # Выведет 666
+c.send(('h', 0))  # Выведет [3, 130, 666]
+c.close()  # Закрываем генератор, данные сотрутся, генератор необходимо будет создавать заново.
 ```
+
+### send, throw, close
+
+В Python 2.5 добавили в генераторы возможность отправлять данные и `exception`.
+
+- `send` - передача данных в корутину. `send(None)` - равносильно `next`.
+
+- `throw` - передача исключения в корутину. Например, `GeneratorExit` для выхода из корутины.
+
+- `close` - для "закрытия" корутины и очистки локальной памяти корутины.
+
+### Корутина как декоратор
+
+Т.е. мы создали генератор, проинициализировали его и подаём ему входные данные. В свою очередь он эти данные
+обрабатывает и сохраняет своё состояние между вызовами до тех пор, пока мы его не закрыли. После каждого вызова
+генератор возвращает управление туда, откуда его вызвали. Это важнейшее свойство генераторов мы и будем использовать.
+
+Теперь, когда мы разобрались с общим принципом работы, давайте теперь избавим себя от необходимости каждый раз руками
+инициализировать генератор. Решим это типичным для Python образом, с помощью декоратора.
 
 ```python
-REST_FRAMEWORK = {
-    ...
-'TEST_REQUEST_RENDERER_CLASSES': [
-    'rest_framework.renderers.MultiPartRenderer',
-    'rest_framework.renderers.JSONRenderer',
-    'rest_framework.renderers.TemplateHTMLRenderer'
-]
-}
+def coroutine(f):
+    def wrap(*args, **kwargs):
+        gen = f(*args, **kwargs)
+        gen.send(None)
+        return gen
+
+    return wrap
+
+
+@coroutine
+def calc():
+    history = []
+    while True:
+        x, y = (yield)
+        if x == 'h':
+            print(history)
+            continue
+        result = x + y
+        print(result)
+        history.append(result)
 ```
 
-## Фабрики для генерации данных
+## Asyncio
 
-### FactoryBoy
+![](http://risovach.ru/upload/2020/10/mem/internet_253267592_orig_.jpg)
 
-```
-pip install factory_boy
-```
-
-Прописывание в `setUp()` создание новых объектов может занимать очень много времени. Чтобы это ускорить, упростить и
-автоматизировать, можно написать свою фабрику:
+Начиная с Python 3.4, существует новый модуль `asyncio`, который вводит `API` для обобщенного асинхронного 
+программирования. Мы можем использовать корутины с этим модулем для простого и понятного выполнения асинхронного кода. 
+Мы можем использовать корутины вместе с модулем `asyncio` для простого выполнения асинхронных операций. Пример из 
+официальной документации:
 
 ```python
-import factory
-from app.models import User
+import asyncio
+import datetime
+import random
 
 
-class UserFactory(factory.Factory):
-    firstname = "John"
-    lastname = "Doe"
+@asyncio.coroutine
+def display_date(num, loop):
+    end_time = loop.time() + 50.0
+    while True:
+        print(f"Loop: {num} Time: {datetime.datetime.now()}")
+        if (loop.time() + 1.0) >= end_time:
+            break
+        yield from asyncio.sleep(random.randint(0, 5))
 
-    class Meta:
-        model = User
+
+loop = asyncio.get_event_loop()
+
+asyncio.ensure_future(display_date(1, loop))
+asyncio.ensure_future(display_date(2, loop))
+
+loop.run_forever()
 ```
 
-На один класс можно создавать несколько объектов фабрик
+Мы создали функцию `display_date(num, loop)`, которая принимает два аргумента, первый - номер, а второй - цикл событий, 
+после чего наша корутина печатает текущее время. После чего используется ключевое слово `yield from` для ожидания 
+результата выполнения `asyncio.sleep`, которая является корутиной, выполняющейся через указанное количество 
+секунд (пауза выполнения), мы в своем коде передаем в эту функцию случайное количество секунд. После чего мы используем
+`asyncio.ensure_future` для планирования выполнения корутины в цикле событий. После чего мы указываем, что цикл событий
+должен работать бесконечно долго.
 
-```
->>>john = UserFactory()
-<User: John Doe>
->>>jack = UserFactory(firstname="Jack")
-<User: Jack Doe>
-```
+Если мы посмотрим на вывод программы, то увидим, что две функции выполняются одновременно. Когда мы используем 
+`yield from`, цикл обработки событий знает, что он будет какое-то время занят, поэтому он приостанавливает
+выполнение функции и запускает другую. Таким образом, две функции работают одновременно (но не параллельно, поскольку
+цикл обработки событий является однопоточным).
 
-Также можно использовать разные фабрики в разных местах
+Стоит отметить, что `yield from` – это синтаксический сахар для `for x in asyncio.sleep(random.randint(0, 5)): yield x` 
+– который делает код чище и проще.
+
+**Этот декоратор был удалён в Python 3.8**
+
+### Встроенные корутины
+
+![](https://raw.githubusercontent.com/kblok/kblok.github.io/master/img/deeper-async/bob-loves-async.jpg)
+
+Помните, мы все еще используем функции на основе генератора? В Python 3.5 мы получили новые встроенные корутины, которые
+используют синтаксис `async / await`. Предыдущая функция может быть написана так:
 
 ```python
-class EnglishUserFactory(factory.Factory):
-    class Meta:
-        model = User
-
-    firstname = "John"
-    lastname = "Doe"
-    lang = 'en'
+import asyncio
+import datetime
+import random
 
 
-class FrenchUserFactory(factory.Factory):
-    class Meta:
-        model = User
+async def display_date(num, loop):
+    end_time = loop.time() + 10.0
+    while True:
+        print(f"Loop: {num} Time: {datetime.datetime.now()}")
+        if (loop.time() + 1.0) >= end_time:
+            break
+        await asyncio.sleep(random.randint(0, 5))
 
-    firstname = "Jean"
-    lastname = "Dupont"
-    lang = 'fr'
+
+loop = asyncio.get_event_loop()
+
+asyncio.ensure_future(display_date(1, loop))
+asyncio.ensure_future(display_date(2, loop))
+
+loop.run_forever()
 ```
 
-```
-EnglishUserFactory()
-<User: John Doe (en)>
->>> FrenchUserFactory()
-<User: Jean Dupont (fr)>
-```
+Фактически изменены были только строки 6 и 12, для определения встроенной корутины определение функции помечается
+ключевым словом `async`, а вместо `yield from` используется `await`.
 
-Атрибутом может быть другая фабрика. Например, при создании фабрики покупки мы можем указать в качестве покупателя
-фабрику юзера
+### Корутины на генераторах и встроенные корутины
+
+Функционально нет никакой разницы между корутинами на генераторах и встроенными корутинами кроме различия в синтаксисе.
+Кроме того, не допускается смешивания их синтаксисов. То есть нельзя использовать `await` внутри корутин на генераторах 
+или `yield` / `yeild from` внутри встроенных корутин.
+
+Несмотря на различия, мы можем организовывать взаимодействия между ними. Нам просто нужно добавить декоратор
+`@types.coroutine` к старым генераторам. Тогда мы можем использовать старый генератор из встроенных корутин и наоборот.
+
+Пример для Python 3.6:
 
 ```python
-class PurchaseFactory(factory.Factory):
-    class Meta:
-        model = Purchase
+import asyncio
+import datetime
+import random
+import types
 
-    owner = EnglishUserFactory()
+
+@types.coroutine
+def my_sleep_func():
+    yield from asyncio.sleep(random.randint(0, 5))
+
+
+async def display_date(num, loop):
+    end_time = loop.time() + 50.0
+    while True:
+        print(f"Loop: {num} Time: {datetime.datetime.now()}")
+        if (loop.time() + 1.0) >= end_time:
+            break
+        await my_sleep_func()
+
+
+loop = asyncio.get_event_loop()
+
+asyncio.ensure_future(display_date(1, loop))
+asyncio.ensure_future(display_date(2, loop))
+
+loop.run_forever()
+
+# Output:
+# Loop: 1 Time: 2023-08-14 16:26:35.231695
+# Loop: 2 Time: 2023-08-14 16:26:35.231792
+# Loop: 2 Time: 2023-08-14 16:26:37.233039
+# Loop: 2 Time: 2023-08-14 16:26:38.234310
+# Loop: 1 Time: 2023-08-14 16:26:40.232999
+# Loop: 1 Time: 2023-08-14 16:26:40.233097
+# ...
 ```
 
-```
-PurchaseFactory()
-<Purchase: 1 John Doe>
-```
+## Asyncio. Loop, run, create_task, gather, etc.
 
-Можно передавать специальный объект последовательности, при создании каждого нового объекта будет добавляться единица.
-Для текущего примера юзернеймы всех созданных юзеров будут `user1`, `user2`, `user3` и т. д.
+### loop
 
-Sequences
+`loop` - один набор событий, до версии Python 3.7 любые корутины запускались исключительно внутри `loop`
+
+Давайте рассмотрим пример, где отдельная корутина вычисляет факториал последовательно (сначала 2, потом 3, потом 4 и т.
+д.) и делает паузу на одну секунду перед следующим вычислением:
 
 ```python
-class UserFactory(factory.Factory):
-    class Meta:
-        model = models.User
+import asyncio
 
-    username = factory.Sequence(lambda n: 'user%d' % n)
+
+async def factorial(name, number):
+    f = 1
+    for i in range(2, number + 1):
+        print(f"Task {name}: Compute factorial({i})...")
+        await asyncio.sleep(1)
+        f *= i
+    print(f"Task {name}: factorial({number}) = {f}")
+
+
+loop = asyncio.get_event_loop()
+loop.run_until_complete(factorial('A', 4))
 ```
 
-Можно передать специальный объект, который будет вызывать функцию при создании объекта, например, текущее время.
+Обратите внимание, этот код будет работать на Python 3.6+
 
-`LazyFunction()`
+### run
+
+То же самое для Python 3.7+ будет выглядеть так:
 
 ```python
-class LogFactory(factory.Factory):
-    class Meta:
-        model = models.Log
+import asyncio
 
-    timestamp = factory.LazyFunction(datetime.now)
+
+async def factorial(name, number):
+    f = 1
+    for i in range(2, number + 1):
+        print(f"Task {name}: Compute factorial({i})...")
+        await asyncio.sleep(1)
+        f *= i
+    print(f"Task {name}: factorial({number}) = {f}")
+
+
+asyncio.run(factorial('A', 4))  # Добавлено в 3.7
+
+# Output:
+# Task A: Compute factorial(2)...
+# Task A: Compute factorial(3)...
+# Task A: Compute factorial(4)...
+# Task A: factorial(4) = 24
 ```
 
-```
-LogFactory()
-<Log: log at 2016-02-12 17:02:34>
+### create_tasks
 
-# при вызове можно переписать
-LogFactory(timestamp=now - timedelta(days=1))
-<Log: log at 2016-02-11 17:02:34>
-```
-
-Иногда нужно заполнять одни поля на основании других, для этого тоже есть специальный объект.
-
-`LazyAttribute` 
-Некоторые поля могут быть заполнены при помощи других, например, электронная почта на основе имени пользователя. 
-`LazyAttribute` обрабатывает такие случаи: он должен получить функцию, принимающую создаваемый объект и
-возвращающую значение для поля:
+Рассмотрим код, в котором основная корутина запускает две других.
 
 ```python
-class UserFactory(factory.Factory):
-    class Meta:
-        model = models.User
+import asyncio
+import time
 
-    username = factory.Sequence(lambda n: 'user%d' % n)
-    email = factory.LazyAttribute(lambda obj: '%s@example.com' % obj.username)
+
+async def say_after(delay, what):
+    await asyncio.sleep(delay)
+    print(what)
+
+
+async def main():
+    print(f"Started at {time.strftime('%X')}")
+
+    await say_after(1, 'hello,')
+    await say_after(2, 'world')
+
+    print(f"finished at {time.strftime('%X')}")
+
+
+asyncio.run(main())
+
+# Output:
+# Started at 16:28:52
+# hello,
+# world
+# finished at 16:28:55
 ```
 
-```
-UserFactory()
-<User: user1 (user1@example.com)>
-
-# можно переписать источник
-UserFactory(username='john')
-<User: john (john@example.com)>
-
-# а можно и само поле
->>> UserFactory(email='doe@example.com')
-<User: user3 (doe@example.com)>
-```
-
-Наследование фабрик
+Обязаны ли мы задавать параметры там же, где и запускаем корутину? Нет, мы можем сделать это через `create_task`
 
 ```python
-class UserFactory(factory.Factory):
-    class Meta:
-        model = User
+async def main():
+    task1 = asyncio.create_task(
+        say_after(1, 'hello,'))
 
-    firstname = "John"
-    lastname = "Doe"
+    task2 = asyncio.create_task(
+        say_after(2, 'world'))
 
+    print(f"started at {time.strftime('%X')}")
 
-class AdminFactory(UserFactory):
-    admin = True 
+    # Подождите, пока обе задачи не будут выполнены (должно пройти около 2 секунд.)
+    await task1
+    await task2
 ```
 
-### Генерация фейковых данных
-
-#### Fuzzy attributes
-
-Fuzzy позволяет генерировать фейковые данные:
+Попытка запустить асинхронный метод синхронно не приведёт ни к чему, это просто не будет работать.
 
 ```python
-from factory import fuzzy
-
-...
+import asyncio
 
 
-def setUp(self):
-    self.username = fuzzy.FuzzyText().fuzz()
-    self.password = fuzzy.FuzzyText().fuzz()
-    self.user_id = fuzzy.FuzzyInteger(1).fuzz()
+async def nested():
+    return 42
+
+
+async def main():
+    # Ничего не произойдет, если мы просто вызовем "nested()".
+    # Объект корутины создан, но не await,
+    # так что *не будет работать вообще*.
+    nested()
+
+    # Let's do it differently now and await it:
+    print(await nested())  # will print "42".
+
+
+asyncio.run(main())
 ```
 
-#### Faker
+### gather
 
-Faker пришел на замену Fuzzy и в нём гораздо больше всего, его нужно устанавливать.
+Что если нам необходимо запустить асинхронно несколько одинаковых задач с разными параметрами? Нам поможет `gather`.
 
-```
-pip install Faker
-```
+Вернёмся к коду с факториалами:
 
 ```python
-from faker import Faker
+import asyncio
 
-fake = Faker()
 
-fake.name()
+async def factorial(name, number):
+    f = 1
+    for i in range(2, number + 1):
+        print(f"Task {name}: Compute factorial({i})...")
+        await asyncio.sleep(1)
+        f *= i
+    print(f"Task {name}: factorial({number}) = {f}")
 
-# 'Lucy Cechtelar'
 
-fake.address()
+async def main():
+    # Запланировать дерево вызовов *конкурентно*:
+    await asyncio.gather(
+        factorial("A", 2),
+        factorial("B", 3),
+        factorial("C", 4),
+    )
 
-# '426 Jordy Lodge
 
-# Cartwrightshire, SC 88120-6700'
+asyncio.run(main())
 
-fake.text()
+# Ожидаемый вывод:
+#
+#     Task A: Compute factorial(2)...
+#     Task B: Compute factorial(2)...
+#     Task C: Compute factorial(2)...
+#     Task A: factorial(2) = 2
+#     Task B: Compute factorial(3)...
+#     Task C: Compute factorial(3)...
+#     Task B: factorial(3) = 6
+#     Task C: Compute factorial(4)...
+#     Task C: factorial(4) = 24
+```
 
-# 'Sint velit eveniet. Rerum atque repellat voluptatem quia rerum. Numquam excepturi
+Обратите внимание, если вам необходимо вернуть значения, вы свободно можете использовать `return`, где это необходимо.
 
-# beatae sint laudantium consequatur. Magni occaecati itaque sint et sit tempore. Nesciunt
+```python
+import asyncio
 
-# amet quidem. Iusto deleniti cum autem ad quia aperiam.
 
-# A consectetur quos aliquam. In iste aliquid et aut similique suscipit. Consequatur qui
+async def factorial(name, number):
+    f = 1
+    for i in range(2, number + 1):
+        print(f"Task {name}: Compute factorial({i})...")
+        await asyncio.sleep(1)
+        f *= i
+    print(f"Task {name}: factorial({number}) = {f}")
+    return f
 
-# quaerat iste minus hic expedita. Consequuntur error magni et laboriosam. Aut aspernatur
 
-# voluptatem sit aliquam. Dolores voluptatum est.
+async def main():
+    # Запланировать дерево вызовов *конкурентно*:
+    res = await asyncio.gather(
+        factorial("A", 4),
+        factorial("B", 3),
+        factorial("C", 2),
+    )
+    print(res)
 
-# Aut molestias et maxime. Fugit autem facilis quos vero. Eius quibusdam possimus est.
 
-# Ea quaerat et quisquam. Deleniti sunt quam. Adipisci consequatur id in occaecati.
-
-# Et sint et. Ut ducimus quod nemo ab voluptatum.'
+asyncio.run(main())
 
 ```
 
-### Использование с Factory Boy
+Вы можете быть уверены в том, что в переменную `res` результаты придут именно в том порядке, в котором вы их запросили, 
+в примере результат всегда будет [24, 6, 2], никакой неожиданности.
+
+Это далеко не все методы и подробности корутин, за всеми деталями
+в [доку](https://docs.python.org/3/library/asyncio.html)
+
+## Aiohttp.
+
+Как мы помним, одно из основных преимуществ использования асинхронности - это возможность отправки параллельных HTTP
+запросов, не дожидаясь результатов других. К сожалению, при использовании корутин вместе с классическим `requests`
+запросы будут выполнены синхронно, т. к. сами запросы не являются `awaitable` объектами, и результат будет таким же, как
+если бы вы использовали обычный `sleep`, а не асинхронными, соседние корутины будут ждать остальные. Чтобы такого не 
+было, существует специальный пакет `aiohttp`, его необходимо устанавливать через `pip`:
+
+```pip install aiohttp```
+
+После чего необходимо создать асинхронный клиент, и можно выполнять запросы.
 
 ```python
-import factory
-from myapp.models import Book
+import aiohttp
+import asyncio
 
 
-class BookFactory(factory.Factory):
-    class Meta:
-        model = Book
+async def main():
+    async with aiohttp.ClientSession() as session:
+        async with session.get('https://httpbin.org/#/HTTP_Methods/get_get') as resp:
+            print(resp.status)
+            print(await resp.text())
 
-    title = factory.Faker('sentence', nb_words=4)
-    author_name = factory.Faker('name')
-```
 
-#### Providers
+asyncio.run(main())
 
-У Faker есть большое количество шаблонов, которые расположены в так называемых провайдерах:
-
-```python
-from faker import Faker
-from faker.providers import internet
-
-fake = Faker()
-fake.add_provider(internet)
-fake.ipv4_private()
-'10.10.11.69'
-fake.ipv4_private()
-'10.86.161.98'
+# Output:
+# 200
+# <!DOCTYPE html>
+# <html lang="en">
+# 
+# <head>
+#     <meta charset="UTF-8">
+#     <title>httpbin.org</title>
+#     <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700|Source+Code+Pro:300,600|Titillium+Web:400,600,700"
+#         rel="stylesheet">
+# ...
 ```

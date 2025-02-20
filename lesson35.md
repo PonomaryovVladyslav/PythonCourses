@@ -1,925 +1,878 @@
-# Лекция 35. Сокеты. Django channels.
+# Лекция 35. Deployment
 
-![](https://www.imaginarycloud.com/blog/content/images/2016/03/gifmachine-2.gif)
+![](https://res.cloudinary.com/practicaldev/image/fetch/s--q_bdVQkA--/c_limit%2Cf_auto%2Cfl_progressive%2Cq_auto%2Cw_880/https://dev-to-uploads.s3.amazonaws.com/i/9am30hkx4lfoxubt48sv.png)
 
-## Протокол
+## Static и Media файлы
 
-### Реализация чата
+**Static файлы** - файлы, которые не являются частью обязательных файлов для работы системы ( `*.py`, `*.html`), но
+необходимы для изменения отображения (`*.css`, `*.js`, `*.jpg`). К таким файлам есть доступ из кода, и обычно они не
+могут быть изменены с пользовательской стороны (шрифты на сайте, css стили, картинка на фоне и т.д.)
 
-Допустим вы хотите реализовать на своём сайте чат. Вы знаете протокол HTTP, который подразумевает систему запрос-ответ.
+**Media файлы** - файлы, загруженные пользователями (вне зависимости от привилегий), например, аватарки, картинки 
+товаров, голосовые сообщения :) К таким файлам в репозитории нет и не должно быть доступа.
 
-Но что делать если вам необходимо обновить информацию у клиента, хотя он её не запрашивал (Вам пишут сообщение, но вы не
-знаете когда именно оно будет написано)
+### Где их хранить?
 
-Какие существуют варианты решения этой проблемы?
+Static файлы практически всегда разбросаны по приложениям проекта, что очень удобно при разработке, но при 
+использовании их гораздо проще хранить в одном месте, и тоже вне проекта.
 
-#### Множество запросов
+Media файлы нужно хранить отдельно от статики, иначе можно получить большое количество проблем.
 
-Мы можем делать большое кол-во запросов в надежде, что уже кто-то прислал нам сообщение
+Проще всего создать две отдельные папки `static` и `media` или одну папку `files`, а в ней уже вложенные папки `static`
+и `media`.
 
-![](https://djangoalevel.s3.eu-central-1.amazonaws.com/lesson44/lots_requests.png)
+### Как это настраивается в Django?
 
-Чем плох такой подход?
+В рамках Django при создании проекта в начальной версии `setting.py` в `INSTALLED_APPS` автоматически
+добавляется `django.contrib.staticfiles`, именно это приложение отвечает за то, как будут обрабатываться статические
+файлы.
 
-Мы отправляем огромное кол-во запросов в "пустоту", расходуя ресурсы и выполняя не нужные запросы.
-
-#### Длинное соединение (long polling)
-
-Мы можем отдавать ответ только когда сообщение пришло.
-
-![](https://djangoalevel.s3.eu-central-1.amazonaws.com/lesson44/long_polling.png)
-
-Как это реализовать? Например, в коде можно использовать вечный цикл, и опрос какого либо хранилища, например `redis`.
-Если данные появились, отдавать ответ.
-
-Чем плох такой подход?
-
-"Пустые" HTTP запросы заменяются на "пустые" запросы к хранилищу данных, что ничем особо не лучше, мы всё еще тратим
-большое кол-во ресурсов. Большинство серверов и браузеров имеют ограничение на время запроса, что тоже является
-проблемой для такого подхода.
-
-#### Сокеты
-
-Сокет это специальный вид соединения поверх HTTP, для создания постоянного соединения.
-
-Как это работает?
-
-![](https://www.pubnub.com/wp-content/uploads/2013/09/WebSockets2.png)
-
-Клиент отправляет запрос на соединение с сокетом сервера.
-
-Сервер принимает это соединение.
-
-Клиент шлёт сообщение серверу.
-
-Сервер рассылает это сообщение другим клиентам.
-
-В любой момент обе стороны могут разорвать соединение если это необходимо.
-
-Запросы для сокетов проходят по протоколу WebSocket и выполняются на адреса, которые начинаются с `ws://`, а
-не `http://`
-
-![](https://djangoalevel.s3.eu-central-1.amazonaws.com/lesson44/socket.png)
-
-### Сфера применения
-
-Где стоит применять веб сокеты? Основные сферы применения:
-
-- Чаты
-
-- Приложения реального времени (Например отображение курса валют, стоимости криптовалют итд.)
-
-- IoT приложения (IoT - Internet of Things, интернет вещей, любые смарт предметы. Смарт-чайники, телевизоры, датчики
-  дыма, кофе машины итд.)
-
-- Онлайн игры
-
-Но если необходимо, то можно применять где угодно.
-
-## Django channels
-
-Естественно для Python существует готовый пакет для поддержки этого протокола с поддержкой Django
-
-[Дока](https://channels.readthedocs.io/en/stable/)
-
-Устанавливается через `pip`
-
-```pip install channels```
-
-### Туториал
-
-Давайте напишем простой чат при помощи Django
-
-Создаём виртуальное окружение, устанавливаем django и channels, создаём джанго проект
-
-```django-admin startproject chatsite```
-
-Получим такую структуру:
-
-```
-chatsite/
-    manage.py
-    chatsite/
-        __init__.py
-        asgi.py
-        settings.py
-        urls.py
-        wsgi.py
+```python
+# settings.py
+STATIC_URL = '/static/'
 ```
 
-Если вы используете версию django 2.2, то у вас не будет файла `asgi.py`, а он нам будет нужен. Не переживайте, мы его
-создадим.
+Указанный параметр `STATIC_URL` будет преобразован в URL, по которому можно получить статические файлы.
 
-Файлы `wsgi.py` и `asgi.py` необходимы для запуска серверов, `wsgi` - синхронных, `asgi` - асинхронных. Веб сокет это
-асинхронная технология.
+Например, `"/static/"` или `"http://static.example.com/"`
 
-Создадим приложение для чата
+В первом случае при запросе к статике будет выполнен запрос на текущий URL с приставкой `http://127.0.0.1:8000/static/`
 
-```python3 manage.py startapp chat```
+Во втором запросы будут произведены на отдельный URL.
 
-Получим примерно такую структуру файлов:
+### Где такой урл будет сгенерирован?
 
-```
-chat/
-    __init__.py
-    admin.py
-    apps.py
-    migrations/
-        __init__.py
-    models.py
-    tests.py
-    views.py
-```
-
-Для простоты, предлагаю удалить всё кроме `views.py` и `__init__.py`
-
-Полученная структура:
-
-```
-chat/
-    __init__.py
-    views.py
-```
-
-Добавляем наше приложение в `INSTALLED_APPS` в `settings.py`
-
-```
-# chatsite/settings.py
-INSTALLED_APPS = [
-    'chat',
-    'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
-]
-```
-
-Создадим папку `templates`, добавим её в `settigns.py`
-
-Создадим файл `index.html` в папке `templates`:
+В шаблоне, где мы можем использовать template tag `static`:
 
 ```html
-<!-- templates/index.html -->
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8"/>
-    <title>Chat Rooms</title>
-</head>
-<body>
-What chat room would you like to enter?<br>
-<input id="room-name-input" type="text" size="100"><br>
-<input id="room-name-submit" type="button" value="Enter">
-
-<script>
-    document.querySelector('#room-name-input').focus();
-    document.querySelector('#room-name-input').onkeyup = function (e) {
-        if (e.keyCode === 13) {  // enter, return
-            document.querySelector('#room-name-submit').click();
-        }
-    };
-
-    document.querySelector('#room-name-submit').onclick = function (e) {
-        var roomName = document.querySelector('#room-name-input').value;
-        window.location.pathname = '/chat/' + roomName + '/';
-    };
-</script>
-</body>
-</html>
+{% load static %}
+<img src="{% static 'my_app/example.jpg' %}" alt="My image">
 ```
 
-Что будет на этой странице?
+### Переменная DEBUG
 
-Поле для ввода и кнопка войти. Это будет возможность зайти в конкретный чат, по его названию.
+В `settings.py` есть переменная `DEBUG`, по дефолту она равна `True`, но за что она отвечает?
 
-Что делает JS?
+В основном она отвечает за то, как вести себя при ошибках (чаще всего 500-х). Если вы делаете неправильный запрос (не
+туда, не те данные и т.д.), то вы видите подробное описание того, почему ваш запрос не удался, на какой строчке кода 
+упал, или нет такого URL, но вот такие есть. Всё это отображается только потому, что переменная ```DEBUG=True```. 
+Запущенный сайт никогда не покажет вам эту информацию.
 
-При заходе на страницу сразу выделяет поле для ввода имени чата.
+### Переменная DEBUG и runserver
 
-Если на инпуте нажимается энтер на клавиатуре, то имитируем нажатие на кнопку входа.
+На самом деле, если у вас ```DEBUG=True``` и вы запускаете команду `runserver`, то запускается еще
+и `django.contrib.staticfiles.views.serve()`, который позволяет отображать статические файлы в процессе разработки. При 
+загрузке проекта в реальное использование переменную `DEBUG` нужно установить в `False` и обрабатывать статические 
+файлы внешними средствами, поговорим о них ниже.
 
-При нажатии на кнопку входа, берем значение из инпута и переходим на страницу `/chat/<значение импута>/` - этой страницы
-пока не существует.
+### STATICFILES_DIRS
 
-Создадим view для этой страницы.
+Список папок, в которых хранится ваша статика для разработки, чаще всего это папки `static` в разных приложениях,
+например, `authenticate/static`, `billing/static` и т.д.
+
+**НЕ ДОЛЖЕН СОДЕРЖАТЬ ЗНАЧЕНИЕ ИЗ ПЕРЕМЕННОЙ `STATIC_ROOT`!!!!**
+
+### STATIC_ROOT
+
+Переменная, содержащая путь к папке, в которую всю найденную статику из папок в переменной `STATICFILES_DIRS`
+соберёт команда `python manage.py collectstatic`.
+
+Как это работает на практике? При разработке используются статические файлы из папок разных приложений, а для
+продакшена настраивается скрипт, который при любом изменении будет запускать команду `collectstatic`, которая будет
+собирать всю статику в то место, которое уже обрабатывается сторонними сервисами, о которых ниже.
+
+### MEDIA_URL
+
+По аналогии со статикой такая же настройка для медиа.
+
+### MEDIA_ROOT
+
+Абсолютный путь к папке, в которой мы будем хранить пользовательские файлы.
+
+Медиа собирать не нужно, так как мы не можем её менять, это только пользовательская привилегия.
+
+## Deployment
+
+Что такое деплой? Это развертывание вашего проекта для использования его из интернета, а не локально.
+
+[/не отображается/]: # (![]&#40;https://pics.me.me/when-people-ask-how-the-deployment-is-going-im-fine-52721062.png&#41;)
+
+Что для этого необходимо? Нужен сервер (на самом деле, им может быть любое устройство: комп, телефон и т.д.), но у 
+сервера есть одна особенность, ему нужно работать всегда, мы же не хотим, чтобы наш сайт или приложение переставало 
+работать.
+
+Чтобы организовать 100% uptime, чаще всего используются облачные сервера, многие компании готовы предоставить такие
+сервера на платной основе. Мой личный опыт говорит о том, что самые надёжные и самые часто используемые - это
+сервера компании Amazon, также у Amazon очень большая инфраструктура и экосистема для обслуживания сервером, но об
+этом в следующий раз.
+
+## Amazon EC2
+
+Сервис, который предоставляет нам выделенные мощности, называется **EC2**.
+
+Для начала нам необходим аккаунт на платформе AWS (Amazon Web Services).
+
+[Ссылка на AWS](https://aws.amazon.com/)
+
+![](https://djangoalevel.s3.eu-central-1.amazonaws.com/lesson47/aws.png)
+
+У Amazon существуют сотни различных сервисов для различных задач, но на данном этапе нас интересует только EC2.
+
+**EC2** - это сервис, который позволяет запускать виртуальные сервера с различной мощностью на различных операционных
+системах.
+
+Для нашего случая мы будем рассматривать самый слабый по характеристикам сервер (t2.nano) на базе Linux (Ubuntu Server
+18.04 LTS).
+
+![](https://djangoalevel.s3.eu-central-1.amazonaws.com/lesson47/ec2-ubuntu.png)
+
+На следующей вкладке выбираем мощность сервера и пару ключей для подключения по SSH.
+
+## Общая теория по деплою Django
+
+Для деплоя Django приложения используется два различных сервера, первый - для запуска приложения локально на сервере,
+второй - как прокси, чтобы выход в интернет связать с этим локально запущенным сервером и предоставить доступ
+к статике и медиа. За обработку данных будет отвечать первый сервер, за безопасность и распределение нагрузок - второй.
+
+Первый сервер - это WSGI (*Web-Server Gateway Interface*), работает примерно так:
+
+![](http://lectures.uralbash.ru/_images/server-app.png)
+
+В качестве WSGI сервера может быть использовано достаточно большое количество разных серверов:
+
+- uWSGI
+- Bjoern
+- uWSGI
+- mod_wsgi
+- Meinheld
+- Gunicorn
+
+И так далее, это далеко не полный список. В качестве примера мы будем использовать Gunicorn (на моей практике самый
+используемый сервер).
+
+Также существует технология ASGI (*Asynchronous Standard Gateway Interface*) - это улучшение технологии WSGI, основные 
+серверы для ASGI:
+
+- Daphne
+- Hypercorn
+- Uvicorn
+
+Тоже часто используемые технологии, и скорее всего дальше будут использоваться всё чаще.
+
+В качестве прокси сервера могут быть использованы:
+
+- Nginx
+- Apache
+
+### runserver
+
+Может возникнуть идея, а почему бы не использовать команду `runserver`? Зачем нам вообще какие-то дополнительные 
+сервера? Команда `runserver` не предполагает даже относительно серьезных нагрузок, даже при условных 100 пользователях 
+базовая команда будет захлёбываться.
+
+## Пример развёртывания
+
+Рассмотрим, как развернуть наш проект на примере EC2 (Ubuntu 18.04) + Gunicorn + Nginx
+
+Для начала необходимо зайти на наш EC2 сервер при помощи SSH.
+
+Если вы используете Windows, то самый простой способ использовать SSH - это либо клиент putty, либо установить Git CLI,
+git интерфейс поддерживает команду `ssh`.
+
+Свежесозданный инстанс не содержит вообще ничего, даже интерпретатора Python, а значит, нам необходимо его установить, 
+но вместе с ним установим и другие нужные пакеты (БД, сервера и т.д.).
+
+```
+sudo apt update
+sudo apt install python3-pip python3-dev python3-venv libpq-dev postgresql postgresql-contrib nginx curl
+```
+
+### База данных
+
+Как создать базу данных и пользователя с доступом к ней, вы уже знаете, заходим в консоль postgresql и делаем это:
+
+```sudo -u postgres psql```
+```
+User: myuser
+DB: mydb
+password: mypass
+```
+
+## Переменные операционной системы
+
+Чтобы вносить некоторые параметры в код, используются переменные операционной системы, допустим, в файле `settings.py` 
+мы можем хранить пароль от базы данных, ключи от сервисов и много другой информации, которую нельзя разглашать, но в 
+случае, если вы оставите эти данные в коде, они попадут на git, этого допускать нельзя.
+
+Для использования переменных в ОС Linux используется команда `export var_name="value"`
+
+Если просто в консоль внести команду экспорта, она обнулится после перезагрузки инстанса, нас это не устраивает, 
+поэтому экспорт переменных нужно вносить в файл, загружаемый при каждом запуске, например, `~/.bashrc`, открываем 
+`sudo nano ~/.bashrc` и в самом конце дописываем:
+
+```
+export PROD='True';
+export DBNAME='mydb';
+export DBUSER='myuser';
+export DBPASS='mypass';
+```
+
+Не забываем выполнить source, чтобы применить эти изменения.
+
+Для gunicorn проще занести все переменные в отдельный файл, и мы будем использовать его в дальнейшем, создадим еще один 
+файл с этими же переменными.
+
+```sudo nano /home/ubuntu/.env```
+
+```
+PROD='True'
+DBNAME='mydb'
+DBUSER='myuser'
+DBPASS='mypass'
+```
+
+### Правки в `settings.py`
+
+Один из удобных способов разделить настройки на локальные и продакшен - это всё те же переменные операционной системы,
+например, добавить в проект на уровне файла `settings.py` еще два файла `settings_prod.py` и `settings_local.py`, в
+основной файл нужно импортировать модуль `os` и в конце дописать:
 
 ```python
-from django.views.generic import TemplateView
-
-
-class Index(TemplateView):
-    template_name = 'index.html'
-```
-
-Создадим файл с урлами внутри приложения:
-
-```
-chat/
-    __init__.py
-    urls.py
-    views.py
-```
-
-```python
-# chat/urls.py
-from django.urls import path
-
-from chat.views import Index
-
-urlpatterns = [
-    path('', Index.as_view(), name='index'),
-]
-```
-
-А в основных урлах
-
-```
-# chatsite/urls.py
-from django.conf.urls import include
-from django.urls import path
-from django.contrib import admin
-
-urlpatterns = [
-    path('chat/', include('chat.urls')),
-]
-```
-
-Теперь если мы запустим сервер, то увидим в консоли, что-то такое:
-
-```
-Performing system checks...
-
-System check identified no issues (0 silenced).
-
-You have 18 unapplied migration(s). Your project may not work properly until you apply the migrations for app(s): admin, auth, contenttypes, sessions.
-Run 'python manage.py migrate' to apply them.
-October 21, 2020 - 18:49:39
-Django version 3.1.2, using settings 'mysite.settings'
-Starting development server at http://127.0.0.1:8000/
-Quit the server with CONTROL-C.
-```
-
-А если зайти на страницу http://127.0.0.1:8000/chat/ то будет вот так:
-
-![](https://djangoalevel.s3.eu-central-1.amazonaws.com/lesson44/chat_enter.png)
-
-Попытка перейти на любую страницу ни к чему не приведёт, страницы комнаты пока просто нет :)
-
-### Настройка Channels
-
-Для настройки, необходимо изменить файл `asgi.py`, если его нет, то создать его.
-
-```python
-# chatsite/asgi.py
-import os
-
-from channels.routing import ProtocolTypeRouter
-from django.core.asgi import get_asgi_application
-
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'chatsite.settings')
-
-application = ProtocolTypeRouter({
-    "http": get_asgi_application(),
-    # Just HTTP for now. (We can add other protocols later.)
-})
-```
-
-Что мы сделали? Мы сказали нашему приложению, что мы планируем разные протоколы, обрабатывать по разному, в данный
-момент, мы указали только протокол `http`, а значит что фактически, пока что, ничего не изменится
-
-Добавляем приложение в `INSTALLED_APPS`:
-
-```python
-INSTALLED_APPS = [
-    'daphne',
-    'chat',
-    'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
-]
-```
-
-И добавляем настройку, что бы указать, что основной сервер был `asgi.py`
-
-```python
-# mysite/settings.py
-# Channels
-ASGI_APPLICATION = 'chatsite.asgi.application'
-```
-
-Теперь при запуске приложения вы должны увидеть немного другую надпись.
-
-```
-Watching for file changes with StatReloader
-Performing system checks...
-
-System check identified no issues (0 silenced).
-
-You have 18 unapplied migration(s). Your project may not work properly until you apply the migrations for app(s): admin, auth, contenttypes, sessions.
-Run 'python manage.py migrate' to apply them.
-August 19, 2022 - 10:20:28
-Django version 4.1, using settings 'mysite.settings'
-Starting ASGI/Daphne version 3.0.2 development server at http://127.0.0.1:8000/
-Quit the server with CONTROL-C.
-```
-
-Обратите внимание, предпоследняя строка, теперь сервер запущен с поддержкой веб сокетов.
-
-### Создаём страницу с конкретным чатом
-
-Создадим html, `room.html`
-
-```html
-<!-- chat/templates/chat/room.html -->
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8"/>
-    <title>Chat Room</title>
-</head>
-<body>
-<textarea id="chat-log" cols="100" rows="20"></textarea><br>
-<input id="chat-message-input" type="text" size="100"><br>
-<input id="chat-message-submit" type="button" value="Send">
-{{ room_name|json_script:"room-name" }}
-<script>
-    const roomName = JSON.parse(document.getElementById('room-name').textContent);
-
-    const chatSocket = new WebSocket(
-            'ws://'
-            + window.location.host
-            + '/ws/chat/'
-            + roomName
-            + '/'
-    );
-
-    chatSocket.onmessage = function (e) {
-        const data = JSON.parse(e.data);
-        document.querySelector('#chat-log').value += (data.message + '\n');
-    };
-
-    chatSocket.onclose = function (e) {
-        console.error('Chat socket closed unexpectedly');
-    };
-
-    document.querySelector('#chat-message-input').focus();
-    document.querySelector('#chat-message-input').onkeyup = function (e) {
-        if (e.keyCode === 13) {  // enter, return
-            document.querySelector('#chat-message-submit').click();
-        }
-    };
-
-    document.querySelector('#chat-message-submit').onclick = function (e) {
-        const messageInputDom = document.querySelector('#chat-message-input');
-        const message = messageInputDom.value;
-        chatSocket.send(JSON.stringify({
-            'message': message
-        }));
-        messageInputDom.value = '';
-    };
-</script>
-</body>
-</html>
-```
-
-Что происходит на этой странице?
-
-Текстовое поле для отображения записей в чате. Поле для ввода нового сообщения. Кнопка для отправки.
-
-```{{ room_name|json_script:"room-name" }}```
-
-Фильтр json_script Добавит на страницу тег скрипт с данными из переменной, если открыть комнату с названием `test` то
-отрендереная страница будет выглядеть так:
-
-![](https://djangoalevel.s3.eu-central-1.amazonaws.com/lesson44/room_script.png)
-
-Нужно для того, что бы считать переменную через JS.
-
-Что происходит в JS?
-
-В первой строке мы считываем из переменной имя комнаты.
-
-И создаём соединение с веб сокетом по адресу (`ws://127.0.0.1:8000/ws/chat/<имя чата>/`), мы создадим серверную часть
-дальше. Обратите внимание, используется другой протокол не `http`. При создании такого объекта, запрос на соединение
-отправляется автоматически.
-
-Если по этому сокету приходит сообщение, то мы добавляем его к нашему месту для текста
-
-```js
-chatSocket.onmessage = function (e) {
-    const data = JSON.parse(e.data);
-    document.querySelector('#chat-log').value += (data.message + '\n');
-};
-```
-
-Если соединение было разорвано, отписать в консоль ошибку
-
-```js
-chatSocket.onclose = function (e) {
-    console.error('Chat socket closed unexpectedly');
-};
-```
-
-В случае отправки сообщения, отправить его по сокету.
-
-```js
-document.querySelector('#chat-message-submit').onclick = function (e) {
-    const messageInputDom = document.querySelector('#chat-message-input');
-    const message = messageInputDom.value;
-    chatSocket.send(JSON.stringify({
-        'message': message
-    }));
-    messageInputDom.value = '';
-};
-```
-
-И создать view.
-
-```python
-from django.views.generic import TemplateView
-
-
-class Room(TemplateView):
-    template_name = 'room.html'
-```
-
-`urls.py`:
-
-```python
-# chat/urls.py
-from django.urls import path
-
-from chat.views import Index, Room
-
-urlpatterns = [
-    path('', Index.as_view(), name='index'),
-    path('<str:room_name>/', Room.as_view(), name='room'),
-]
-```
-
-Запускаем сервер, заходим в любую комнату, пишем любое сообщение и видим ошибку.
-
-```WebSocket connection to 'ws://127.0.0.1:8000/ws/chat/lobby/' failed: Unexpected response code: 500```
-
-Мы не создали бекэнд для сокета. Давайте сделаем это.
-
-### Бекэнд сокета
-
-Создадим новый файл `chat/consumers.py`
-
-```
-    __init__.py
-    consumers.py
-    urls.py
-    views.py
-```
-
-```python
-# chat/consumers.py
-import json
-from channels.generic.websocket import WebsocketConsumer
-
-
-class ChatConsumer(WebsocketConsumer):
-    def connect(self):
-        self.accept()
-
-    def disconnect(self, close_code):
+if os.environ.get('PROD'):
+    try:
+        from .settings_prod import *
+    except ImportError:
         pass
-
-    def receive(self, text_data):
-        text_data_json = json.loads(text_data)
-        message = text_data_json['message']
-
-        self.send(text_data=json.dumps({
-            'message': message
-        }))
+else:
+    try:
+        from .settings_local import *
+    except ImportError:
+        pass
 ```
 
-Что это такое? Это класс для работы с веб сокетом.
+Таким образом мы сможем разделить настройки в зависимости от того, есть ли в операционной системе переменная `PROD`.
 
-Методы:
-
-- connect - Что делать при запросе на соединение.
-
-- disconnect - Что делать при разрыве соединения.
-
-- receive - Что делать при приходе сообщения.
-
-- send - Отправить сообщение всем кто подключён (включая отправителя, вообще всем).
-
-Создаём новый файл для урлов веб сокета `routing.py`.
-
-```
-chat/
-    __init__.py
-    consumers.py
-    routing.py
-    urls.py
-    views.py
-```
+В `settings_prod.py` укажем:
 
 ```python
-# chat/routing.py
-from django.urls import path
-from .comsumer import ChatConsumer
-
-websocket_urlpatterns = [
-    path('ws/chat/<str:room_name>/', ChatConsumer.as_asgi(), name='room'),
-]
-```
-
-Обратите внимание к классу был применён метод `as_asgi`, это аналогия `as_view` для обычных классов.
-
-Укажем эту переменную в нашем `asgi.py`:
-
-```python
-# chatsite/asgi.py
 import os
 
-from channels.auth import AuthMiddlewareStack
-from channels.routing import ProtocolTypeRouter, URLRouter
-from channels.security.websocket import AllowedHostsOriginValidator
-from django.core.asgi import get_asgi_application
+DEBUG = False
+ALLOWED_HOSTS = ['54.186.155.252']
 
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "mysite.settings")
-# Initialize Django ASGI application early to ensure the AppRegistry
-# is populated before importing code that may import ORM models.
-django_asgi_app = get_asgi_application()
-
-from chat.routing import websocket_urlpatterns
-
-application = ProtocolTypeRouter(
-    {
-        "http": django_asgi_app,
-        "websocket": AllowedHostsOriginValidator(
-            AuthMiddlewareStack(URLRouter(websocket_urlpatterns))
-        ),
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': os.environ.get('DBNAME'),
+        'USER': os.environ.get('DBUSER'),
+        'PASSWORD': os.environ.get('DBPASS'),
+        'HOST': os.environ.get('DBHOST', '127.0.0.1'),
+        'PORT': os.environ.get('DBPORT', '5432'),
     }
-)
+}
 ```
 
-Обратите внимание, мы добавили новый протокол для обработки.
+Параметр `DEBUG = False` , так как нам не нужно отображать подробности ошибок.
 
-Для того, что бы сокет работал необходимы сессии, а для этого необходимо провести миграции.
+В `ALLOWED_HOSTS` нужно указывать URL и/или IP, по которому будет доступно приложение. Как указать там URL, мы поговорим
+на следующем занятии, а пока можно указать там IP, который мы получили у Amazon после создания инстанса:
+
+![](https://djangoalevel.s3.eu-central-1.amazonaws.com/lesson47/ec2-ip.png)
+
+## git clone и виртуальное окружение
+
+Клонируем код нашего проекта:
+
+```git clone https://github.com/your-git/your-repo.git```
+
+Создаём виртуальное окружение, я обычно создаю отдельную папку в рабочей папке:
+
+```
+cd ~/
+mkdir venv
+python3 -m venv venv/
+```
+
+И активируем его:
+
+```source ~/venv/bin/activate```
+
+Переходим в раздел с проектом и устанавливаем всё, что есть в `requirements.txt`:
+
+```
+cd ~/proj_name
+pip install -r requirements.txt
+```
+
+Если локально вы не работали с базой postgresql, то необходимо доставить модуль для работы с ним:
+
+```pip install psycopg2-binary```
+
+После чего вы должны успешно применить миграции:
 
 ```python manage.py migrate```
 
-Проверяем, это уже будет работать.
+## Проверяем работоспособность сервера
 
-**В данный момент работать будет только один чат, причем только сам с собой!!!**
+Для проверки того, что ваше приложение можно разворачивать, запустим его через стандартную команду:
 
-Мы не добавили возможность создавать разные сокеты, для разных страниц. Для этого необходимо разделить данные по слоям.
+```python manage.py runserver```
 
-### Подключаем channels
+Чтобы это сработало, необходимо разрешить использовать порт, который мы будем использовать для теста, по стандарту это 
+порт номер 8000:
 
-Для того что бы использовать различные не пересекающиеся чаты, мы будем использовать `group`, `group` это
-набор `channel`.
+```sudo ufw allow 8000```
 
-Для использования необходимо какое-либо внешнее хранилище. Мы будем использовать Redis.
+Мы открыли порт со стороны сервера, но пока что он закрыт со стороны Amazon, давайте временно откроем его тоже. Для
+этого идём на страницу Amazon с описанием инстанса, открываем вкладку `Security` и кликаем на название секьюрити группы:
 
-Для этого необходимо установить еще один внешний модуль, для взаимодействия между нашими слоями и редисом.
+![](https://djangoalevel.s3.eu-central-1.amazonaws.com/lesson47/Security-group.png)
 
-```pip install channels_redis```
+Кликаем на `Edit inbound rules`.
 
-### Для пользователей Windows
+Добавляем правило `Custom TCP` для порта 8000:
 
-На windows обычный редис не будет работать с последними версиями django-channels.
+![](https://djangoalevel.s3.eu-central-1.amazonaws.com/lesson47/edit-rules.png)
 
-Необходимо установить [это](https://www.memurai.com/get-memurai) и запустить в консоли после:
+После этого можно запустить команду `runserver` с такими правилами:
 
-```memurai```
+```python manage.py runserver 0.0.0.0:8000```
 
-Это аналог Redis, который будет работать
+Если вы всё сделали правильно, то теперь вы можете открыть в браузере IP адрес, который вам выдал Amazon, с портом 8000:
 
-### Обновление settings
+```
+# Например
+http://54.186.155.252:8000/
+```
 
-Необходимо обновить настройки и указать, что мы будем использовать redis:
+Обратите внимание, сайт откроется БЕЗ СТАТИКИ, потому что `runserver` при `DEBUG = False` не должен обрабатывать 
+статику.
 
-```python
-# chatsite/settings.py
-# Channels
-ASGI_APPLICATION = 'mysite.asgi.application'
-CHANNEL_LAYERS = {
-    'default': {
-        'BACKEND': 'channels_redis.core.RedisChannelLayer',
-        'CONFIG': {
-            "hosts": [('127.0.0.1', 6379)],
-        },
-    },
+## Проверяем gunicorn
+
+Устанавливаем gunicorn
+
+```pip install gunicorn```
+
+Как вы помните, **gunicorn** - это WSGI сервер. Если вы откроете папку с `settings.py`, то вы увидите там еще два
+файла `wsgi.py` и `asgi.py`.
+
+Они нужны для того, чтобы запускать сервера в "боевом" режиме.
+
+Для проверки работы gunicorn запустим сервер через него:
+
+```gunicorn --bind 0.0.0.0: 8000 Proj.wsgi```
+
+Где `Proj` - это название папки, в котором лежит файл `wsgi.py`.
+
+Опять же, если вы всё сделали правильно, то тот же самый URL всё ещё будет работать.
+
+```
+# Например
+http://54.186.155.252:8000/
+```
+
+## Понятие сокет-файла
+
+В Linux абсолютно всё - это файл. Развёрнутый сервер - это тоже файл. Так вот, если мы используем два сервера, и один
+слушает второй, то давайте разворачивать первый тоже как файл. Такой файл будет называться сокет-файлом.
+
+## Демонизация gunicorn
+
+Запускать сервер руками очень увлекательно, но не очень эффективно, давайте демонизируем gunicorn для запуска
+сервера в сокет-файл, и сделаем так, чтобы этот сервер запускался сразу при запуске системы, чтобы даже если мы
+перезагрузим инстанс, сервер всё равно работал.
+
+Воспользуемся встроенной в Linux системой `systemd` (системная демонизация).
+
+Создадим системный файл для описания сокета:
+
+```sudo nano /etc/systemd/system/gunicorn.socket```
+
+```
+#/etc/systemd/system/gunicorn.socket
+
+[Unit]
+Description=gunicorn socket
+
+[Socket]
+ListenStream=/home/ubuntu/proj/run/gunicorn.sock
+
+[Install]
+WantedBy=sockets.target
+```
+
+Блок `Unit` отвечает за описание демона.
+
+Блок `Socket` отвечает за то, где будет находиться файл сокета, `proj` в данном случае - название папки с проектом, 
+`run` - название папки с файлом сокета (так почему-то принято называть).
+
+Блок `Install` отвечает за автоматический запуск при запуске системы.
+
+Сохраните файл и закройте его.
+
+Теперь нужно создать файл сервиса, который и будет выполнять запуск:
+
+```sudo nano /etc/systemd/system/gunicorn.service```
+
+Названия сервиса и сокета должны совпадать:
+
+```
+[Unit]
+Description=gunicorn daemon
+Requires=gunicorn.socket
+After=network.target
+
+[Service]
+User=ubuntu
+Group=www-data
+WorkingDirectory=/home/ubuntu/myprojectdir
+EnvironmentFile=/home/ubuntu/.env
+ExecStart=/home/ubuntu/venv/bin/gunicorn \
+          --access-logfile - \
+          --workers 3 \
+          --bind unix:/home/ubuntu/myprojectdir/run/gunicorn.sock \
+          myproject.wsgi:application
+
+[Install]
+WantedBy=multi-user.target
+```
+
+Блок `Unit`:
+
+- `Description` - описание.
+- `Requires` - связывает сервис с сокетом.
+- `After` - отвечает за то, чтобы запускать модуль только после того, как будет доступ в интернет.
+
+Блок `Service`:
+
+- `User` - пользователь, который должен запускать скрипт, если мы используем стандартного юзера, то это будет `ubuntu`.
+
+- `Group` - группа безопасности, по дефолту - это `www-data`.
+
+- `WorkingDirectory` - папка, из которой будет запускаться скрипт, в нашем случае это папка с проектом, где лежит
+   `manage.py`.
+
+- `EnvironmentFile` - файл с переменными.
+  
+- `ExecStart` - сам скрипт, нам нужно запустить gunicorn из виртуального окружения, но мы не можем запустить
+  сначала `source`, но при создании виртуального окружения, мы всего-то складываем все скрипты в другую папку.
+
+  `/home/ubuntu/venv/bin/gunicorn` - это физическое расположение скрипта
+  `--access-logfile - --workers 3 --bind unix:/home/ubuntu/myprojectdir/run/gunicorn.sock myproject.wsgi:application`
+  Это настройки самого скрипта, `log level` - это место для записи логов, `worker` - их количество, `bind` - место, куда
+  сложить файл (`unix`: значит, что будет файл), `myproject` - название папки, где лежит `wsgi.py`
+
+Блок `Install` отвечает за автоматический запуск при запуске системы для любого пользователя.
+
+Сохраняем файл и закрываем.
+
+Для запуска сокета нужно запустить его из системы:
+
+```
+sudo systemctl start gunicorn.socket
+sudo systemctl enable gunicorn.socket
+```
+
+В следующий раз этого делать не нужно, всё запустится автоматически.
+
+### Проверим запуск сокета
+
+```sudo systemctl status gunicorn.socket```
+
+Если тут мы не видим никаких ошибок, то нужно проверить наличие файла сокета. Если всё есть, то создание сокета
+работает.
+
+Проверим его активацию:
+
+```sudo systemctl status gunicorn```
+
+Должны увидеть примерно такой статус:
+
+```
+gunicorn.service - gunicorn daemon
+   Loaded: loaded (/etc/systemd/system/gunicorn.service; disabled; vendor preset: enabled)
+   Active: inactive (dead)
+```
+
+Попробуем выполнить запрос к нашему сокету:
+
+```curl --unix-socket /home/ubuntu/proj/run/gunicorn.sock localhost```
+
+И проверим статус еще раз, теперь он будет `active`
+
+### Рестарт gunicorn
+
+Теперь мы можем перезапускать наш сокет за 1 команду:
+
+```sudo systemctl restart gunicorn```
+
+## Nginx
+
+**Nginx** - это веб сервер, гибкий и мощный веб-сервер.
+
+Для проверки работы Nginx давайте настроим базовый доступ к Nginx для нашего IP адреса, и не забываем добавить 80 порт
+в секьюрити группы Amazon.
+
+Настроим Nginx, если вы установили Nginx (мы сделали это первым действием на этом инстансе), то у вас будет
+существовать папка с базовыми настройками Nginx, давайте создадим новую настройку:
+
+```sudo nano /etc/nginx/sites-available/myproject```
+
+Где `myproject` - это название вашего проекта.
+
+```
+server {
+    listen 80;
+    server_name 54.186.155.252;
 }
 ```
 
-Для проверки работы редиса необходимо открыть `shell`:
+Сохранить и закрыть, пробросить симлинк в соседнюю папку, которую по дефолту обслуживает Nginx:
 
-```python manage.py shell```
+```sudo ln -s /etc/nginx/sites-available/myproject /etc/nginx/sites-enabled/```
+
+**ОБЯЗАТЕЛЬНО! Добавить 80 порт в security groups, разрешенные на Amazon!!!**
+
+Если вы всё сделали правильно, то по вашему IP адресу без указания порта будет открыта базовая страница Nginx:
+
+![](https://djangoalevel.s3.eu-central-1.amazonaws.com/lesson47/nginx_welcome.png)
+
+Чтобы Nginx начал проксировать наш проект, нужно его указать:
+
+```sudo nano /etc/nginx/sites-available/myproject```
+
+```
+server {
+    listen 80;
+    server_name some_IP_or_url;
+    location / {
+        include proxy_params;
+        proxy_pass http://unix:/home/ubuntu/path/to/my/socket/gunicorn.sock;
+    }
+}
+
+
+```
+
+Перезапускаем Nginx и проверяем:
+
+```sudo systemctl restart nginx```
+
+Всё должно работать, но без статики.
+
+Вспомним самое начало лекции, что мы можем придумать куда команда `collectstatic` должна сложить статику. Запускаем 
+команду и указываем Nginx, что нужно обрабатывать статику и медиа.
+
+```
+server {
+    listen 80;
+    server_name 34.221.249.152;
+
+    location /static/ {
+        root /home/ubuntu/deployment;
+    }
+    location /media/ {
+        root /home/ubuntu/deployment;
+    }
+    location / {
+        include proxy_params;
+        proxy_pass http://unix:/home/ubuntu/path/to/my/socket/gunicorn.sock;
+    }
+}
+
+```
+
+Перезапускаем Nginx и наслаждаемся результатом!
+
+**Не забываем закрыть 8000 порт и на инстансе, и на Amazon в секьюрити группе!!**
+
+```sudo ufw delete allow 8000```
+
+## Сервисы Amazon
+
+Amazon - это не только инстансы, это огромная, нет **ОГРОМНАЯ** экосистема из очень большого количества различных 
+сервисов, которые мы можем использовать для своих нужд, там есть почти всё :) даже генераторы нейросетей.
+
+Нас на данном этапе интересует несколько сервисов:
+
+- **RDS** (*Relational Database Service*) - сервис по использованию SQL баз данных, которые будут находиться на Amazon. 
+  Зачем это нужно? Во-первых, это надёжно. Мы уверены, что БД находится в облаке, мы за неё платим и Amazon гарантирует
+  её сохранность. В случае хранения БД на инстансе, БД в случае чего удалится вместе с инстансом. Во-вторых, в случае
+  микросервисной архитектуры микросервисы физически могут находиться на совершенно разных машинах, а требуется
+  использовать одну и ту же БД. Облачная БД - лучший для этого выбор. В-третьих, при использовании Amazon RDS не
+  требуется настраивать систему резервных копий, она уже предоставлена экосистемой Amazon в несколько кликов.
+
+- **S3 Bucket** - это просто хранилище для файлов. Используется для адекватного хранения статики и медиа. Преимущества 
+  очень похожи на RDS. Во-первых, мы не потеряем данные статики и медиа в случае "переезда" на новый сервер. Во-вторых,
+  пользовательские медиа могут занимать огромные объемы данных (например, видеофайлы). В случае хранения их на 
+  выделенном сервере мы упираемся в размер сервера (чем больше, тем дороже), а расширять сервер только для "картинок и 
+  видео" не очень разумно. Стоимость S3 Bucket гораздо меньше и удобнее для этих целей. В-третьих, безопасность, когда 
+  вы складываете статику и медиа у себя, доступ к ним есть у всех пользователей. Кто угодно может открыть наш JS 
+  почитать, это не очень безопасно, вдруг у нас там дыры. :) С медиа всё еще хуже, это пользовательские данные, а мы
+  выставляем их на всеобщее обозрение. Это не очень правильно. При использовании S3 Bucket мы можем настроить
+  безопасность, создать пользователя в сервисе IAM (о неё дальше). Django из коробки умеет добавлять безопасный токен
+  при использовании Amazon.
+
+- **IAM** - сервис для настроек безопасности. Всё на самом деле просто, там можно создать юзеров и группы юзеров, и 
+  раздать им права на любые сервисы Amazon. Допустим, одна группа может только настраивать RDS и смотреть на EC2, а 
+  другая обладает полными правами. В нашем случае мы будем создавать пользователя с правами на чтение S3 Bucket и 
+  использовать его credentials для статики и медиа.
+
+- **Route 53** - сервис для настройки DNS и регистрации доменов, будем использовать его для того, чтобы купить домен и
+  преобразовать наш IP в нормальный URL.
+
+## RDS
+
+Мы будем использовать PostgreSQL.
+
+При создании БД вам будет предложено создать мастер пароль для пользователя `postgres`, его надо запомнить :)
+
+После создания базы данных нужно открыть подробности и раздел `Connectivity & security`:
+
+![](https://djangoalevel.s3.eu-central-1.amazonaws.com/lesson48/rds-settings.png)
+
+После чего мы можем открыть PostgreSQL консоль из консоли нашего инстанса:
+
+```psql --host=<DB instance endpoint> --port=<port> --username=<master username> --password```
+
+Создаём пользователя и базу, мы это уже умеем делать.
+
+Допустим, у нас опять user - `myuser`, password - `mypass`, db - `mydb`;
+
+Как подключить RDS к приложению? Добавляем URL в переменные окружения, и база будет подключена.
+
+Не забываем провести миграции, мы подключили новую базу!
+
+## IAM
+
+Для использования S3 Bucket нам необходим специальный юзер, которого мы можем создать в IAM
+
+![](https://djangoalevel.s3.eu-central-1.amazonaws.com/lesson48/IAM-accesslevel.png)
+
+Выбираем `Programmatic access` наш пользователь не будет заходить в настройки, только генерировать токен.
+
+![](https://djangoalevel.s3.eu-central-1.amazonaws.com/lesson48/IAM-permissions.png)
+
+Добавляем пользователю полные права на S3 Bucket.
+
+Обязательно сохраняем ключи от пользователя.
+
+![](https://djangoalevel.s3.eu-central-1.amazonaws.com/lesson48/IAM-creeds.png)
+
+Никогда, нет, **НИКОГДА** не выкладываем эти ключи на git (в `settings.py` или где-либо еще). Amazon мониторит 
+абсолютно весь интернет. :) И если ваши ключи окажутся в открытом репозитории, пользователь будет мгновенно 
+заблокирован, а владельцу аккаунта напишут об этом письмо и позвонят, чтобы предупредить.
+
+## S3 Bucket
+
+Создадим новый S3 Bucket в регионе `us-east-1`, с ним самая простая настройка.
+
+С полностью закрытым доступом к файлам.
+
+Для использования S3 в нашем проекте нужно доставить Python модули:
+
+```pip install django-storages boto3```
+
+Если вы будете использовать S3 и локально, то можно установить пакеты и локально, но чаще всего для локальных тестов
+внешние сервисы не используются.
+
+Для использования нужно добавить `storages` в `INSTALLED_APPS`:
 
 ```python
-import channels.layers
-
-channel_layer = channels.layers.get_channel_layer()
-from asgiref.sync import async_to_sync
-
-async_to_sync(channel_layer.send)('test_channel', {'type': 'hello'})
-async_to_sync(channel_layer.receive)('test_channel')
-{'type': 'hello'}
+INSTALLED_APPS = [
+    ...,
+    'storages',
+]
 ```
 
-Напоминаю, изначально вебсокеты это асинхронная технология. Для использования её синхронно, мы будем использовать
-встроенный метод `async_to_sync`.
-
-В тесте мы отправили сообщение и получили его.
-
-Теперь можно обновить `consumers.py`:
+после чего достаточно добавить настройки:
 
 ```python
-# chat/consumers.py
-import json
-from asgiref.sync import async_to_sync
-from channels.generic.websocket import WebsocketConsumer
+# Optional
+AWS_S3_OBJECT_PARAMETERS = {
+    'Expires': 'Thu, 31 Dec 2099 20:00:00 GMT',
+    'CacheControl': 'max-age=94608000',
+}
+# Required
+AWS_STORAGE_BUCKET_NAME = 'BUCKET_NAME'
+AWS_S3_REGION_NAME = 'REGION_NAME'  # e.g. us-east-2
+AWS_ACCESS_KEY_ID = 'xxxxxxxxxxxxxxxxxxxx'
+AWS_SECRET_ACCESS_KEY = 'yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy'
+# НЕ ВПИСЫВАЙТЕ САМИ КЛЮЧИ, ТОЛЬКО os.environ.get('SOME_KEY')
 
-
-class ChatConsumer(WebsocketConsumer):
-    def connect(self):
-        self.room_name = self.scope['url_route']['kwargs']['room_name']
-        self.room_group_name = 'chat_%s' % self.room_name
-
-        # Join room group
-        async_to_sync(self.channel_layer.group_add)(
-            self.room_group_name,
-            self.channel_name
-        )
-
-        self.accept()
-
-    def disconnect(self, close_code):
-        # Leave room group
-        async_to_sync(self.channel_layer.group_discard)(
-            self.room_group_name,
-            self.channel_name
-        )
-
-    # Receive message from WebSocket
-    def receive(self, text_data):
-        text_data_json = json.loads(text_data)
-        message = text_data_json['message']
-
-        # Send message to room group
-        async_to_sync(self.channel_layer.group_send)(
-            self.room_group_name,
-            {
-                'type': 'chat_message',
-                'message': message
-            }
-        )
-
-    # Receive message from room group
-    def chat_message(self, event):
-        message = event['message']
-
-        # Send message to WebSocket
-        self.send(text_data=json.dumps({
-            'message': message
-        }))
+# Tell the staticfiles app to use S3Boto3 storage when writing the collected static files (when
+# you run `collectstatic`).
+STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 ```
 
-Методы:
+Этого достаточно, чтобы команда `collectstatic` собирала всю статику в S3 Bucket от Amazon, а template tag `static`
+генерировал URL с параметрами безопасности, получить такую статику просто так нельзя.
 
-`connect` - добавили создание группы, исходя из названия чата, и так же вызвали метод `accept`
+`AWS_S3_OBJECT_PARAMETERS` - необязательный параметр, чтобы указать настройки объектов, параметров довольно много.
 
-`disconnect` - удаляем группу при разрыве соединения
+Но при такой настройке вся статика будет просто сложена в S3 Bucket, как на свалке, куда же мы поместим медиа?
 
-`receive` - При получении сообщения мы выполняем для всей группы, метода `chat_message` могли назвать абсолютно как
-угодно.
+Чтобы сложить статику и медиа в один S3 Bucket, нужно создать новые классы для storages, где указать папки для хранения
+разных типов данных.
 
-`chat_message` - отправка сообщения
-
-Можем проверять. Открываем одинаковые названия чата в разных браузерах и пишем по сообщению с каждого
-
-## Запускаем всё асинхронно
-
-Допустим мы хотим отправить другу большой файл, но мы хотим писать сообщения пока файл загружается. В случае
-использования синхронного подхода, это невозможно, при асинхронном, это будет работать.
-
-Перепишем `consumers.py`
+Создадим файл `custom_storages.py` на одном уровне с `settings.py`.
 
 ```python
-# chat/consumers.py
-import json
-from channels.generic.websocket import AsyncWebsocketConsumer
+# custom_storages.py
+from django.conf import settings
+from storages.backends.s3boto3 import S3Boto3Storage
 
 
-class ChatConsumer(AsyncWebsocketConsumer):
-    async def connect(self):
-        self.room_name = self.scope['url_route']['kwargs']['room_name']
-        self.room_group_name = 'chat_%s' % self.room_name
+class StaticStorage(S3Boto3Storage):
+    location = settings.STATICFILES_LOCATION
 
-        # Join room group
-        await self.channel_layer.group_add(
-            self.room_group_name,
-            self.channel_name
-        )
 
-        await self.accept()
-
-    async def disconnect(self, close_code):
-        # Leave room group
-        await self.channel_layer.group_discard(
-            self.room_group_name,
-            self.channel_name
-        )
-
-    # Receive message from WebSocket
-    async def receive(self, text_data):
-        text_data_json = json.loads(text_data)
-        message = text_data_json['message']
-
-        # Send message to room group
-        await self.channel_layer.group_send(
-            self.room_group_name,
-            {
-                'type': 'chat_message',
-                'message': message
-            }
-        )
-
-    # Receive message from room group
-    async def chat_message(self, event):
-        message = event['message']
-
-        # Send message to WebSocket
-        await self.send(text_data=json.dumps({
-            'message': message
-        }))
+class MediaStorage(S3Boto3Storage):
+    location = settings.MEDIAFILES_LOCATION
 ```
 
-Что мы изменили? Мы наследовались не от `WebsocketConsumer`, а от `AsyncWebsocketConsumer`, заменили все функции с
-обычных на асинхронные, и вызов функций с обычного на асинхронные.
-
-Всё, ваш чат полностью асинхронен.
-
-### Тестирование
-
-Для тестирования веб сокетов используются специфический ацептанс тесты.
-
-> Для этих тестов, необходимо предварительно установить Google Chrome, chromedriver и селениум. И только последний
-> ставится через `pip`
-
-```
-pip install selenium
-```
-
-Создадим файл `chat/tests.py`
-
-Текущая структура файлов
-
-```
-chat/
-    __init__.py
-    consumers.py
-    routing.py
-    templates/
-        chat/
-            index.html
-            room.html
-    tests.py
-    urls.py
-    views.py
-```
-
-Содержимое файла:
+А в `settings.py` укажем:
 
 ```python
-# chat/tests.py
-from channels.testing import ChannelsLiveServerTestCase
-from selenium import webdriver
-from selenium.webdriver.common.action_chains import ActionChains
-from selenium.webdriver.common.by import By
-from selenium.webdriver.common.keys import Keys
-from selenium.webdriver.support.wait import WebDriverWait
+# settings.py
+STATICFILES_LOCATION = 'static'
+STATICFILES_STORAGE = 'custom_storages.StaticStorage'
 
-
-class ChatTests(ChannelsLiveServerTestCase):
-    serve_static = True  # emulate StaticLiveServerTestCase
-
-    @classmethod
-    def setUpClass(cls):
-        super().setUpClass()
-        try:
-            # NOTE: Requires "chromedriver" binary to be installed in $PATH
-            cls.driver = webdriver.Chrome()
-        except:
-            super().tearDownClass()
-            raise
-
-    @classmethod
-    def tearDownClass(cls):
-        cls.driver.quit()
-        super().tearDownClass()
-
-    def test_when_chat_message_posted_then_seen_by_everyone_in_same_room(self):
-        try:
-            self._enter_chat_room("room_1")
-
-            self._open_new_window()
-            self._enter_chat_room("room_1")
-
-            self._switch_to_window(0)
-            self._post_message("hello")
-            WebDriverWait(self.driver, 2).until(
-                lambda _: "hello" in self._chat_log_value,
-                "Message was not received by window 1 from window 1",
-            )
-            self._switch_to_window(1)
-            WebDriverWait(self.driver, 2).until(
-                lambda _: "hello" in self._chat_log_value,
-                "Message was not received by window 2 from window 1",
-            )
-        finally:
-            self._close_all_new_windows()
-
-    def test_when_chat_message_posted_then_not_seen_by_anyone_in_different_room(self):
-        try:
-            self._enter_chat_room("room_1")
-
-            self._open_new_window()
-            self._enter_chat_room("room_2")
-
-            self._switch_to_window(0)
-            self._post_message("hello")
-            WebDriverWait(self.driver, 2).until(
-                lambda _: "hello" in self._chat_log_value,
-                "Message was not received by window 1 from window 1",
-            )
-
-            self._switch_to_window(1)
-            self._post_message("world")
-            WebDriverWait(self.driver, 2).until(
-                lambda _: "world" in self._chat_log_value,
-                "Message was not received by window 2 from window 2",
-            )
-            self.assertTrue(
-                "hello" not in self._chat_log_value,
-                "Message was improperly received by window 2 from window 1",
-            )
-        finally:
-            self._close_all_new_windows()
-
-    # === Utility ===
-
-    def _enter_chat_room(self, room_name):
-        self.driver.get(self.live_server_url + "/chat/")
-        ActionChains(self.driver).send_keys(room_name, Keys.ENTER).perform()
-        WebDriverWait(self.driver, 2).until(
-            lambda _: room_name in self.driver.current_url
-        )
-
-    def _open_new_window(self):
-        self.driver.execute_script('window.open("about:blank", "_blank");')
-        self._switch_to_window(-1)
-
-    def _close_all_new_windows(self):
-        while len(self.driver.window_handles) > 1:
-            self._switch_to_window(-1)
-            self.driver.execute_script("window.close();")
-        if len(self.driver.window_handles) == 1:
-            self._switch_to_window(0)
-
-    def _switch_to_window(self, window_index):
-        self.driver.switch_to.window(self.driver.window_handles[window_index])
-
-    def _post_message(self, message):
-        ActionChains(self.driver).send_keys(message, Keys.ENTER).perform()
-
-    @property
-    def _chat_log_value(self):
-        return self.driver.find_element(
-            by=By.CSS_SELECTOR, value="#chat-log"
-        ).get_property("value")
+MEDIAFILES_LOCATION = 'media'
+DEFAULT_FILE_STORAGE = 'custom_storages.MediaStorage'
 ```
 
-> Для тестов должна быть указана дополнительная настройка для базы данных!
+Этого полностью достаточно, чтобы команда `collectstatic` собрала всё статику в папку `static` на S3 Bucket, а любые
+загруженные пользователями файлы - в папку `media`.
+
+Добавляем все необходимые переменные окружения, запускаем `collectstatic`, убеждаемся, что всё собрано правильно, и
+статика работает, так же можем попробовать загрузить что-либо и убедиться, что медиа грузится правильно (если такой
+функционал заложен в проект).
+
+При таком подходе Nginx не обрабатывает статику и медиа, а значит, что эти строки можно не вносить (или удалить из
+конфига).
+
+## Route 53
+
+Route 53 - это сервис, где вы можете зарегистрировать домен, и привязать его к вашему IP адресу, чтобы использовать URL,
+а не IP.
+
+Я заранее купил домен `a-level-test.com` :) Поэтому, если я открою вкладку `Hosted zones`, то увижу:
+
+![](https://djangoalevel.s3.eu-central-1.amazonaws.com/lesson48/hosted-zones.png)
+
+Создам новую запись в `hosted zone`:
+
+![](https://djangoalevel.s3.eu-central-1.amazonaws.com/lesson48/route53-record.png)
+
+В поле `value` я указал IP, который выдал мне Amazon к моему инстансу.
+
+В `settings.py` в `ALLOWED_HOSTS` нужно добавить новый URL.
 
 ```python
-# mysite/settings.py
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
-        "TEST": {
-            "NAME": BASE_DIR / "db.sqlite3",
-        },
+...
+DEBUG = False
+ALLOWED_HOSTS = ['a-level-test.com']
+...
+```
+
+Пулим новый код, перезапускаем gunicorn:
+
+```sudo systemctl restart gunicorn```
+
+После этого мне нужно обновить Nginx и поменять там `server_name`;
+
+```
+server {
+    listen 80;
+    server_name a-level-test.com;
+
+    location / {
+        include proxy_params;
+        proxy_pass http://unix:/home/ubuntu/deployment/r/gunicorn.sock;
     }
 }
 ```
 
-Запускаем и наслаждаемся
+Перезапускаем Nginx:
+
+```sudo service nginx restart```
+
+Открываем URL, убеждаемся, что всё работает и статика не потерялась.
+
+## HTTPS. Certbot
+
+Наше соединение работает, но при этом абсолютно не защищено. Почему мы не сделали его безопасным раньше? Всё просто,
+сертификат для включения `https` привязывается к URL, а не к IP адресу.
+
+Сделать это можно очень просто и в практически автоматическом режиме.
+
+Для начала необходимо доставить на сервер некоторые модули:
+
+```sudo apt install certbot python3-certbot-nginx```
+
+И выполнить команду:
+
+```sudo certbot --nginx -d a-level-test.com```
+
+После параметра `-d` указывается `server_name` из Nginx;
+
+Certbot спросит у вас почту, если это первый запуск, попросит принять условия и указать, редиректить небезопасное
+соединение в безопасное или нет, всё зависит от ваших условий.
+
+Он автоматически заменит и перезапустит конфигурацию Nginx:
 
 ```
-python3 manage.py test chat.tests
+server {
+    server_name a-level-test.com;
+
+    location / {
+        include proxy_params;
+        proxy_pass http://unix:/home/ubuntu/deployment/r/gunicorn.sock;
+    }
+
+    listen 443 ssl; # managed by Certbot
+    ssl_certificate /etc/letsencrypt/live/a-level-test.com/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/a-level-test.com/privkey.pem; # managed by Certbot
+    include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
+
+}
+server {
+    if ($host = a-level-test.com) {
+        return 301 https://$host$request_uri;
+    } # managed by Certbot
+
+
+    listen 80;
+    server_name a-level-test.com;
+    return 404; # managed by Certbot
+
+
+}
 ```
+
+### Открыть на Amazon 443 порт
+
+Не забываем открыть порт номер 443 для нашего инстанса.
+
+![](https://djangoalevel.s3.eu-central-1.amazonaws.com/lesson48/https-setting.png)
+
+Всё, пробуем открыть сайт и видим, что он теперь безопасен.
+
+### Автообновление сертификата
+
+Сертификаты *Let’s Encrypt* действительны только в течение 90 дней. Это сделано для стимулирования пользователей к
+автоматизации процесса обновления сертификатов. Установленный нами пакет `certbot` выполняет это автоматически, добавляя
+таймер `systemd`, который будет запускаться два раза в день и автоматически продлевать все сертификаты, истекающие
+менее, чем через 30 дней.
+
+Чтобы протестировать процесс обновления, можно сделать запуск «вхолостую» с помощью `certbot`:
+
+```sudo certbot renew --dry-run```
+
+Если ошибок нет, все нормально. Certbot будет продлевать ваши сертификаты, когда это потребуется, и перезагружать Nginx
+для активации изменений. Если процесс автоматического обновления когда-нибудь не выполнится, то *Let’s Encrypt*
+отправит сообщение на указанный вами адрес электронной почты с предупреждением о том, что срок действия сертификата 
+подходит к концу.
