@@ -1,944 +1,808 @@
-# Лекция 29. Что такое API. REST и RESTful. Django REST Framework.
+# Лекция 29. REST аутентификация. Авторизация. Permissions. Фильтрация.
 
-![](https://project-static-assets.s3.amazonaws.com/APISpreadsheets/APIMemes/ServersCooksExample.jpeg)
+![](https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQ_cLOesie903fmPPbl2YbqawKsycva_owf6Q&usqp=CAU)
 
-## Что же такое API?
+## Аутентификация и её виды
 
-Итак, начнём с определения. API (Application Programming Interface) — это интерфейс программирования, интерфейс создания
-приложений.
+Мы с вами разобрали аутентификацию для работы классического веб-приложения, на самом деле, это был лишь один из видов
+существующих аутентификаций, давайте рассмотрим разные.
 
-В нашем конкретном случае под API практически всегда будет подразумеваться REST API, о котором мы поговорим дальше.  
-Сейчас для нас - это endpoint (url, на который можно отправить запрос), который выполняет какие-либо действия или
-возвращает нам информацию.
+### Аутентификация сессией
 
-## Что такое REST?
+Основана на данных сессии, которые мы уже рассматривали. Авторизация происходит один раз, после чего информация о
+пользователе хранится в "куках" и передаётся при каждом запросе.
 
-![](https://images.ctfassets.net/vwq10xzbe6iz/5sBH4Agl614xM7exeLsTo7/9e84dce01735f155911e611c42c9793f/rest-api.png)
+В чём недостатки такого подхода для REST API?
 
-REST (Representational State Transfer — «передача состояния представления») - это архитектурный стиль
-(рекомендации к разработке), но это в теории, практику рассмотрим дальше.
+Во-первых, для того чтобы выполнять любые небезопасные методы `POST`, `PUT`, `PATCH`, `DELETE` необходимо использовать
+CSRF Token, а это значит, что для выполнения таких запросов необходимо каждый раз делать дополнительный запрос для
+получения токена.
 
-![](https://automated-testing.info/uploads/default/original/2X/e/eaf77634076d45e18c501abf936a9a8ad1913bb4.png)
+Во вторых такой подход подразумевает, что сервер хранит информацию о сессиях, такой подход не будет RESTful.
 
-### Свойства REST архитектуры.
+### Базовая аутентификация
 
-Свойства архитектуры, которые зависят от ограничений, наложенных на REST-системы:
+Аутентификация основанная на том, что в каждом запросе в хедере запроса будет передаваться логин и пароль необходимого
+пользователя. Чаще всего для использования такого вида аутентификации в запрос добавляется хедер `Authorization` со
+значением, состоящим из слова `Basic` и кодированного при помощи base64 сообщения вида `username:password` например:
 
-1. **Client-Server**. Система должна быть разделена на клиентов и на сервер(ы). Разделение интерфейсов означает, что
-   клиенты не связаны с хранением данных, которое остается внутри каждого сервера, так что мобильность кода
-   клиента улучшается. Серверы не связаны с интерфейсом пользователя или состоянием, так что серверы могут быть проще и
-   масштабируемы. Серверы и клиенты могут быть заменяемы и разрабатываться независимо, пока интерфейс не изменяется.
+`Authorization`: `Basic bXl1c2VyOm15cGFzc3dvcmQ=` для `username` - `myuser`, `password` - `mypassword`
 
-2. **Stateless**. Сервер не должен хранить какой-либо информации о клиентах. В запросе должна храниться вся необходимая
-   информация для обработки запроса и, если необходимо, идентификации клиента.
+Такая авторизация требует подключения по `https`, так как при обычном `http` запрос легко будет перехватить и
+посмотреть данные авторизации.
 
-3. **Cache**․ Каждый ответ должен быть отмечен, является ли он кэшируемым или нет, для предотвращения повторного
-   использования клиентами устаревших или некорректных данных в ответ на дальнейшие запросы.
+### Аутентификация по токену
 
-4. **Uniform Interface**. Единый интерфейс определяет интерфейс между клиентами и серверами. Это упрощает и отделяет
-   архитектуру, которая позволяет каждой части развиваться самостоятельно.
+Базовая аутентификация имеет большое количество плюсов перед сессионной, как минимум отсутствие необходимости делать
+дополнительные запросы, но каждый раз передавать логин и пароль это не самый удобный с точки зрения безопасности способ
+передачи данных.
 
-   Четыре принципа единого интерфейса:
+Поэтому самым частым видом авторизации является авторизация по токену. Что это значит?
 
-   4.1) **Identification of resources (основан на ресурсах)**. В REST ресурсом является все то, чему можно дать имя.
-   Например, пользователь, изображение, предмет (майка, голодная собака, текущая погода) и т. д. Каждый ресурс в REST
-   должен быть идентифицирован посредством стабильного идентификатора, который не меняется при изменении состояния
-   ресурса. Идентификатором в REST является URI.
+**Токен** - это специальный вычисляемый набор символов, уникальный для каждого пользователя.
 
-   4.2) **Manipulation of resources through representations. (Манипуляции над ресурсами через представления)**.
-   Представление в REST используется для выполнения действий над ресурсами. Представление ресурса представляет собой
-   текущее или желаемое состояние ресурса. Например, если ресурсом является пользователь, то представлением может
-   являться XML или HTML описание этого пользователя.
+Токен может быть как постоянным (практически никогда не используется), так и временным, может перегенерироваться по
+времени, так и по запросу.
 
-   4.3) **Self-descriptive messages (само-документируемые сообщения)**. Под само-описательностью имеется в виду, что
-   запрос и ответ должны хранить в себе всю необходимую информацию для их обработки. Не должны быть дополнительные
-   сообщения или кэши для обработки одного запроса. Другими словами, отсутствие состояния, сохраняемого между запросами
-   к
-   ресурсам. Это очень важно для масштабирования системы.
+Алгоритм генерации самого токена тоже может быть практически любым (Чаще всего просто генерация большой случайной hex
+(шестнадцатеричной) строки), как и данные, на которых он основан (при случайном токен входных данных нет, но может быть
+основан на каких-либо личных данных, на метках времени и т. д.)
 
-   4.4) **HATEOAS (hypermedia as the engine of application state)**. Статус ресурса передается через содержимое body,
-   параметры строки запроса, заголовки запросов и запрашиваемый URI (имя ресурса). Это называется гипермедиа (или
-   гиперссылки с гипертекстом). HATEOAS также означает, что в случае необходимости ссылки могут содержаться в теле
-   ответа (или заголовках) для поддержки URI, извлечения самого объекта или запрошенных объектов.
+### Внешняя аутентификация
 
-5. Layered System. В REST допускается разделить систему на иерархию слоев, но с условием, что каждый компонент может
-   видеть компоненты только непосредственно следующего слоя. Например, если вы вызываете службу PayPal, а она в свою
-   очередь вызывает службу Visa, вы о вызове службы Visa ничего не должны знать.
+Благодаря механизму токенов, за авторизацию может отвечать вообще не ваш сервер. Допустим, если взять классическую
+авторизацию через соцсети, то генератором токена является сама соцсеть, мы лишь предоставляем данные для авторизации
+соцсети. В ответ получаем токен, при этом мы понятия не имеем, как именно его генерирует условный фейсбук, но всегда
+можно убедится в его правильности, обратившись к API соцсети.
 
-6. Code-On-Demand (опционально). В REST позволяется загрузка и выполнение кода или программы на стороне клиента.
+По такому же принципу сервером авторизации может быть практически любой внешний сервер, с которым есть предварительная
+договорённость. Допустим, вы работаете с командой, которая его разрабатывает, и можете узнать, как этим пользоваться.
+Для открытых соцсетей обычно есть документация по использованию их API, где подробно написано, как пользоваться их
+авторизацией. Также для таких механизмов существует большое количество уже написанных packages.
 
-Если выполнены первые 4 пункта и не нарушены 5 и 6, такое приложение называется **RESTful**
+## Реализация и использование в Django REST Framework
 
-**Важно!** Сама архитектура REST не привязана к конкретным технологиям и протоколам, но в реалиях современного WEB,
-построение RESTful API почти всегда подразумевает использование HTTP и каких-либо распространенных форматов
-представления ресурсов, например, JSON, или менее популярного сегодня XML.
+Из-за CSRF токенов авторизация через сессию практически не используется, поэтому мы не будем подробно её рассматривать
 
-### Идемпотентность
+### Basic Аутентификация
 
-![](http://risovach.ru/upload/2015/12/mem/kot-bezyshodnost_100253424_orig_.jpg)
-
-С точки зрения RESTful-сервиса операция (или вызов сервиса) идемпотентна тогда, когда клиенты могут делать один и тот
-же вызов неоднократно при одном и том же результате на сервере. Другими словами, создание большого количества идентичных
-запросов имеет такой же эффект, как и один запрос. Заметьте, что в то время, как идемпотентные операции производят один
-и тот же результат на сервере, ответ сам по себе может не быть тем же самым (например, состояние ресурса может
-измениться между запросами).
-
-Методы PUT и DELETE по определению идемпотентны. Тем не менее есть один нюанс с методом DELETE. Проблема в том, что
-успешный DELETE-запрос возвращает статус 200 (OK) или 204 (No Content), но для последующих запросов будет все время
-возвращать 404 (Not Found). Состояние на сервере после каждого вызова DELETE то же самое, но ответы разные.
-
-Методы GET, HEAD, OPTIONS и TRACE определены как безопасные. Это означает, что они предназначены только для получения
-информации и не должны изменять состояние сервера. Они не должны иметь побочных эффектов, за исключением безобидных
-эффектов таких как: логирование, кеширование, показ баннерной рекламы или увеличение веб-счетчика.
-
-По определению, безопасные операции идемпотентны, так как они приводят к одному и тому же результату на сервере.
-Безопасные методы реализованы как операции только для чтения. Однако безопасность не означает, что сервер должен
-возвращать тот же самый результат каждый раз.
-
-### Коды состояний HTTP (основные)
-
-![](http://img1.reactor.cc/pics/post/http-status-code-it-http-%D0%BA%D0%BE%D1%82%D1%8D-4397611.jpeg)
-
-Полный список кодов состояний [тут](https://www.iana.org/assignments/http-status-codes/http-status-codes.xhtml).
-
-#### 1xx: Information
-
-100: Continue
-
-#### 2xx: Success
-
-200: OK
-
-201: Created
-
-202: Accepted
-
-204: No Content
-
-#### 3xx: Redirect
-
-301: Moved Permanently
-
-307: Temporary Redirect
-
-#### 4xx: Client Error
-
-400: Bad Request
-
-401: Unauthorized
-
-403: Forbidden
-
-404: Not Found
-
-#### 5xx: Server Error
-
-500: Internal Server Error
-
-501: Not Implemented
-
-502: Bad Gateway
-
-503: Service Unavailable
-
-504: Gateway Timeout
-
-![](https://project-static-assets.s3.amazonaws.com/APISpreadsheets/APIMemes/StatusCodeBad.jpeg)
-
-### Postman
-
-На практике обычно backend-разработчики вообще не имеют отношения к тому, что происходит на фронте (если ты не
-fullstack`:)`). А только подготавливают для фронта API для различных действий, чаще всего CRUD.
-
-Для проверки работоспособности API чаще всего используется **postman** скачать можно [ТУТ](https://www.getpostman.com/)
-
-> Это программа, которая позволяет создавать запросы любой сложности к серверу. Рекомендую тщательно разобраться, как
-> этим
-> пользоваться.
-
-
-> Хоть REST и не является протоколом, но в современном вебе это почти всегда HTTP и JSON.
-
-> JSON (JavaScript Object Notation) - текстовый формат обмена данными, легко читается, очень похож на словарь в Python.
-
-## Как это работает на практике и при чём тут Django?
-
-Для Django существует несколько различных пакетов для применения REST архитектуры, но основным является **Django REST
-Framework** дока [тут](https://www.django-rest-framework.org/).
-
-### Установка
-
-```pip install djangorestframework```
-
-Не забываем добавить в INSTALLED_APPS **'rest_framework'**
-
-## Сериализация
-
-![](https://miro.medium.com/v2/resize:fit:1200/1*-vfzWQ94BCBPJ1T4s2YbVA.png)
-
-Что такое сериализация?
-
-**Сериализация** и **десериализация** — это процессы, связанные с преобразованием данных, которые часто используются в
-веб-разработке для обмена информацией между сервером и клиентом или между различными системами.
-
-Сериализация — это процесс преобразования сложных объектов (например, объектов в языке программирования, таких как
-словари, списки, классы) в формат, который можно передать или сохранить, например, в строку. Этот формат может быть
-отправлен через сеть, записан в файл или сохранен в базе данных.
-
-В вебе наиболее часто используются следующие форматы сериализации:
-
-- **JSON (JavaScript Object Notation)**: Чаще всего используется в веб-разработке. Пример:
-  объект `{"name": "John", "age": 30}` преобразуется в строку `'{ "name": "John", "age": 30 }'`.
-- **XML (eXtensible Markup Language)**: Менее популярен в современном вебе, но все еще используется в некоторых
-  системах.
-
-### Десериализация
-
-Десериализация — это обратный процесс, при котором строка или другой формат данных преобразуется обратно в объект или
-структуру данных, которую может использовать программа. Например, строка JSON может быть десериализована в объект
-JavaScript или Python, который затем можно использовать в коде.
-
-### Пример использования в вебе
-
-1. **Сериализация**: Допустим, у вас есть объект на сервере, который вы хотите отправить клиенту через HTTP. Этот объект
-   нужно сначала сериализовать в JSON:
-   ```python
-   user = {"name": "John", "age": 30}
-   user_json = json.dumps(user)
-   # user_json = '{"name": "John", "age": 30}'
-   ```
-
-2. **Десериализация**: Когда клиент получает этот JSON, он может десериализовать его обратно в объект:
-   ```javascript
-   let user = JSON.parse('{"name": "John", "age": 30}');
-   // user = {name: "John", age: 30}
-   ```
-
-Эти процессы важны для взаимодействия между разными частями системы или даже между разными системами, так как они
-позволяют передавать сложные структуры данных в стандартных форматах, которые понимают и сервер, и клиент.
-
-### Сериалайзер в DRF
-
-Сериалайзер в DRF - это класс для преобразования данных из того который пришел от пользователя в реквесте в понятный для
-python-а и наоборот.
-
-Допустим у нас есть такая модель:
+Чтобы использовать Basic аутентификацию, достаточно добавить в настройку `REST_FRAMEWORK`, в `settings.py`:
 
 ```python
-from django.db import models
-
-
-class Book(models.Model):
-    title = models.CharField(max_length=255)
-    author = models.CharField(max_length=255)
-    published_date = models.DateField()
-    isbn = models.CharField(max_length=13, unique=True)
-    price = models.DecimalField(max_digits=6, decimal_places=2)
-
-    def __str__(self):
-        return self.title
-```
-
-#### Сериалайзер на основе `Serializer`
-
-Обычный `Serializer` требует явного указания всех полей. И описания того как мы собираемся создавать или обновлять
-объекты.
-
-```python
-from rest_framework import serializers
-
-
-class BookSerializer(serializers.Serializer):
-    title = serializers.CharField(max_length=255)
-    author = serializers.CharField(max_length=255)
-    published_date = serializers.DateField()
-    isbn = serializers.CharField(max_length=13)
-    price = serializers.DecimalField(max_digits=6, decimal_places=2)
-
-    def create(self, validated_data):
-        return Book.objects.create(**validated_data)
-
-    def update(self, instance, validated_data):
-        instance.title = validated_data.get('title', instance.title)
-        instance.author = validated_data.get('author', instance.author)
-        instance.published_date = validated_data.get('published_date', instance.published_date)
-        instance.isbn = validated_data.get('isbn', instance.isbn)
-        instance.price = validated_data.get('price', instance.price)
-        instance.save()
-        return instance
-```
-
-#### Сериализация данных
-
-```python
-book = Book.objects.get(id=1)
-serializer = BookSerializer(book)
-print(serializer.data)
-```
-
-Я могу передать в сериалайзер объект модели и он автоматически преобразует его в `JSON` (Если я не поменял стандартные
-настройки, могут быть и другие форматы)
-
-Код выше вернет нам такую структуру данных
-
-```python
-{
-    "title": "Example Book",
-    "author": "John Doe",
-    "published_date": "2023-08-10",
-    "isbn": "1234567890123",
-    "price": "19.99"
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.BasicAuthentication',
+    ]
 }
 ```
 
-#### Десериализация данных
+Если нам необходимо использовать несколько аутентификаций, мы можем указать их в списке, например:
 
 ```python
-data = {
-    "title": "New Book",
-    "author": "Jane Smith",
-    "published_date": "2024-08-12",
-    "isbn": "9876543210123",
-    "price": "25.50"
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.BasicAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+    ]
 }
-
-serializer = BookSerializer(data=data)
-if serializer.is_valid():
-    book = serializer.save()
-    print(book)  # Book object
-else:
-    print(serializer.errors)
 ```
 
-Обратите внимание мы использовали тот же самый сериалайзер!
+Этого достаточно, чтобы при любом запросе сначала проверялся хедер авторизации, и в случае правильных логина и пароля
+пользователь добавлялся в реквест.
 
-Что изменилось?
-
-- Мы использовали `data=`, именованый аргумент дает сериалайзеру понять, что мы десериализуем данные!
-- Нам необходимо валидировать данные. Данные полученные от пользователя обязательно нужно валидировать! (об этом дальше)
-- У сериалайзера есть метод `.save()`, который вызовет `.create()` или `.update()`, в зависимости от переданных в него
-  параметров.
-
-### Сериалайзер на основе `ModelSerializer`
-
-`ModelSerializer` упрощает работу, автоматически генерируя поля на основе модели.
+Если необходимо добавить классы авторизация прям во вью, можно указать их через аттрибут `authentication_classes` для
+Class-Based View и такой же декоратор для функциональной вью.
 
 ```python
-from rest_framework import serializers
+from rest_framework.authentication import SessionAuthentication, BasicAuthentication
+from rest_framework.response import Response
+from rest_framework.views import APIView
 
 
-class BookModelSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Book
-        fields = ['title', 'author', 'published_date', 'isbn', 'price']
+class ExampleView(APIView):
+    authentication_classes = [SessionAuthentication, BasicAuthentication]
+
+    def get(self, request, format=None):
+        content = {
+            'user': unicode(request.user),  # `django.contrib.auth.User` instance.
+            'auth': unicode(request.auth),  # None
+        }
+        return Response(content)
 ```
-
-> И в нем уже прописаны `create` и `update`
-
-Пользоваться точно так же как и обычным
-
-`ModelSerializer` значительно упрощает создание сериалайзеров, автоматически генерируя поля на основе модели.
-Обычный `Serializer` предоставляет больше контроля, но требует явного описания каждого поля и методов `create`
-и `update`. Оба подхода позволяют эффективно работать с сериализацией и десериализацией данных в Django.
-
-## Поля и их особенности
-
-Дока [тут](https://www.django-rest-framework.org/api-guide/fields/)
-
-Любое из полей может иметь такие аргументы:
-
-`read_only` - поле только для чтения. Используется для полей, которые не планируются к заполнению (например, время
-создания комментария), но планируются к чтению (например, отобразить, когда был написан комментарий). Такие поля не
-принимаются при создании или изменении. По дефолту False.
-
-`write_only` - ровно наоборот. Поля, не планируемые для отображения, но необходимые для записи (пароль, номер карточки,
-и т. д.). По дефолту False.
-
-`required` - обязательность поля. Поле, которое можно не указывать при создании/изменении, но его же может не быть при
-чтении, допустим, отчества. По дефолту True.
-
-`default` - значение по умолчанию, если не указано ничего другого. Не поддерживается при частичном обновлении.
-
-`allow_null` - позволить значению поля быть None. По дефолту False.
-
-`validators` - список валидаторов, о нём поговорим ниже.
-
-`error_messages` - словарь с кодом ошибок.
-
-### source - о нем детальнее
-
-1. **Переименование поля**: Если поле в модели имеет одно имя, но вы хотите, чтобы в API оно отображалось под другим
-   именем.
-
-2. **Доступ к вложенным объектам**: Можно обращаться к полям, которые находятся глубже в иерархии связанных объектов.
-
-3. **Вызов метода**: Позволяет использовать метод объекта вместо простого поля.
-
-4. **Использование аннотированных полей**: Можно передать имя аннотированного поля, которое было добавлено в queryset с
-   помощью `annotate()`.
-
-###№ Примеры использования
-
-1. **Переименование поля**
-
-   Допустим, у нас есть модель `Book`, у которой есть поле `title`, но в API мы хотим, чтобы это поле отображалось
-   как `book_title`:
-
-   ```python
-   from rest_framework import serializers
-
-   class BookSerializer(serializers.ModelSerializer):
-       book_title = serializers.CharField(source='title')
-
-       class Meta:
-           model = Book
-           fields = ['book_title', 'author', 'published_date']
-   ```
-
-   В этом случае, поле `title` в модели будет переименовано в `book_title` в ответе API.
-
-2. **Доступ к вложенному объекту**
-
-   Пусть есть связанные модели `Author` и `Book`, где каждая книга связана с автором через ForeignKey:
-
-   ```python
-   class Author(models.Model):
-       name = models.CharField(max_length=100)
-
-   class Book(models.Model):
-       title = models.CharField(max_length=200)
-       author = models.ForeignKey(Author, on_delete=models.CASCADE)
-   ```
-
-   Если вы хотите показать имя автора вместе с данными книги, используя поле `author_name` в сериалайзере:
-
-   ```python
-   class BookSerializer(serializers.ModelSerializer):
-       author_name = serializers.CharField(source='author.name')
-
-       class Meta:
-           model = Book
-           fields = ['title', 'author_name']
-   ```
-
-   Здесь `source='author.name'` позволяет получить значение поля `name` модели `Author`, связанной с `Book`.
-
-3. **Вызов метода**
-
-   Иногда вам нужно использовать метод модели, чтобы вычислить значение для поля сериалайзера:
-
-   ```python
-   class Book(models.Model):
-       title = models.CharField(max_length=200)
-       publication_date = models.DateField()
-
-       def is_recently_published(self):
-           return self.publication_date >= timezone.now() - timedelta(days=30)
-
-   class BookSerializer(serializers.ModelSerializer):
-       recently_published = serializers.BooleanField(source='is_recently_published')
-
-       class Meta:
-           model = Book
-           fields = ['title', 'recently_published']
-   ```
-
-   В этом примере `source='is_recently_published'` позволяет использовать метод `is_recently_published` для определения
-   значения поля `recently_published`.
-
-Есть и другие, но эти наиболее используемые.
-
-У разных полей могут быть свои атрибуты, такие как максимальная длина, или количество знаков после запятой.
-
-Виды полей по аналогии с моделями и формами могут быть практически какими угодно, за деталями в доку.
-
-### Специфичные поля
-
-`ListField` - поле для передачи списка.
-Сигнатура `ListField(child=<A_FIELD_INSTANCE>, allow_empty=True, min_length=None, max_length=None)`
 
 ```python
-scores = serializers.ListField(
-    child=serializers.IntegerField(min_value=0, max_value=100)
-)
+@api_view(['GET'])
+@authentication_classes([SessionAuthentication, BasicAuthentication])
+def example_view(request, format=None):
+    content = {
+        'user': unicode(request.user),  # `django.contrib.auth.User` instance.
+        'auth': unicode(request.auth),  # None
+    }
+    return Response(content)
 ```
 
-DictField - поле для передачи словаря. Сигнатура `DictField(child=<A_FIELD_INSTANCE>, allow_empty=True)`
+### Авторизация по токену
+
+Если необходимо использовать токен авторизацию, то DRF предоставляет нам такой функционал "из коробки", для этого нужно
+добавить `rest_framework.authtoken` в `INSTALLED_APPS`
 
 ```python
-document = DictField(child=CharField())
+INSTALLED_APPS = [
+    ...
+    'rest_framework.authtoken'
+]
 ```
 
-HiddenField - скрытое поле, может быть нужно для валидаций.
+И указать необходимую авторизацию в `settings.py`:
 
 ```python
-modified = serializers.HiddenField(default=timezone.now)
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        ...
+        'rest_framework.authentication.TokenAuthentication',
+    ]
+}
 ```
 
-`SerializerMethodField` - поле, основанное на методе.
+После этого обязательно нужно провести миграции этого приложения `python manage.py migrate`
 
-Сигнатура: `SerializerMethodField(method_name=None)`, `method_name` - название метода, по дефолту `get_<field_name>`
+Чтобы создать токены для уже существующих юзеров, нужно сделать это вручную (или написать дата миграцию).
+
+```python
+from rest_framework.authtoken.models import Token
+
+token = Token.objects.create(user=...)
+print(token.key)
+```
+
+После этого можно использовать авторизацию токеном:
+
+```Authorization: Token 9944b09199c62bcf9418ad846dd0e4bbdfc6ee4b```
+
+#### Генерация токенов
+
+Чаще всего генерацию токенов "вешают" на сигналы:
+
+```python
+from django.conf import settings
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+from rest_framework.authtoken.models import Token
+
+
+@receiver(post_save, sender=settings.AUTH_USER_MODEL)
+def create_auth_token(sender, instance=None, created=False, **kwargs):
+    if created:
+        Token.objects.create(user=instance)
+```
+
+#### Получение токена
+
+Для получения токена можно использовать стандартную вью, для этого нужно добавить в URLs `obtain_auth_token`:
+
+```python
+from rest_framework.authtoken import views
+
+urlpatterns += [
+    path('api-token-auth/', views.obtain_auth_token)
+]
+```
+
+Если необходимо изменить логику получения токена, то это можно сделать, отнаследовавшись
+от `from rest_framework.authtoken.views import ObtainAuthToken`:
+
+```python
+from rest_framework.authtoken.views import ObtainAuthToken
+from rest_framework.authtoken.models import Token
+from rest_framework.response import Response
+
+
+class CustomAuthToken(ObtainAuthToken):
+
+    def post(self, request, *args, **kwargs):
+        serializer = self.serializer_class(data=request.data,
+                                           context={'request': request})
+        serializer.is_valid(raise_exception=True)
+        user = serializer.validated_data['user']
+        token, created = Token.objects.get_or_create(user=user)
+        return Response({
+            'token': token.key,
+            'user_id': user.pk,
+            'email': user.email
+        })
+```
+
+Не забыв заменить URLs:
+
+```python
+urlpatterns += [
+    path('api-token-auth/', CustomAuthToken.as_view())
+]
+```
+
+### Кастомная авторизация
+
+Кроме своего токена и своего способа его получения, можно также расписать и свою собственную авторизацию, для этого
+нужно отнаследоваться от базовой и описать нужные методы:
 
 ```python
 from django.contrib.auth.models import User
-from django.utils.timezone import now
+from rest_framework import authentication
+from rest_framework import exceptions
+
+
+class ExampleAuthentication(authentication.BaseAuthentication):
+    def authenticate(self, request):
+        username = request.META.get('HTTP_X_USERNAME')
+        if not username:
+            return None
+
+        try:
+            user = User.objects.get(username=username)
+        except User.DoesNotExist:
+            raise exceptions.AuthenticationFailed('No such user')
+
+        return (user, None)
+```
+
+### Manage-команда drf_create_token
+
+```python manage.py drf_create_token <username>```
+
+Принимает параметр `username` и генерирует токен для такого юзера, если необходимо, то можно перегенерировать при помощи
+флага `-r`
+
+```
+python manage.py drf_create_token -r <username>
+```
+
+### Немного о реальности
+
+На практике практически всегда необходимо переписать токен под свои задачи, как минимум ограничить его время для жизни и
+сделать перегенерацию по истечении времени жизни, сделаем это как практику на этом занятии.
+
+### Внешние сервисы
+
+По сути, каждый отдельный сервис имеет свою логику, чаще всего у нас будут специальные пакеты для использования таких
+аутентификаций, а если нет, то их всегда можно написать. :)
+
+### Авторизация для тестирования через браузер
+
+В REST фреймворк встроена возможность тестировать API через браузер, используя сессионную авторизацию. Для этого
+достаточно добавить встроенные URLs и перейти по этому адресу, после этого по вашим API URLs вы будете переходить как
+уже авторизированный пользователь:
+
+```python
+urlpatterns += [
+    path('api-auth/', include('rest_framework.urls')),
+]
+```
+
+## Permissions
+
+Они же права доступа.
+
+Задать разрешения можно на уровне проекта и на уровне ресурса.
+
+Чтобы задать на уровне проекта, в `settings.py` необходимо добавить:
+
+```python
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated',
+    ]
+}
+```
+
+Для описания на уровне объектов используется аргумент `permission_classes`:
+
+```python
+from rest_framework import permissions
+
+
+class ExampleModelViewSet(ModelViewSet):
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+```
+
+Существует достаточно много заготовленных пермишенов.
+
+```
+AllowAny - можно всем
+IsAuthenticated - только авторизированным пользователям
+IsAdminUser - только администраторам
+IsAuthenticatedOrReadOnly - залогиненым или только на чтение
+```
+
+Все они изначально наследуются от `rest_framework.permissons.BasePermission`.
+
+Но если нам нужны кастомные, то мы можем создать их, отнаследовавшись от `permissions.BasePermission` и переписав один
+или оба метода `has_permisson()` и `has_object_permission()`
+
+Например, владельцу можно выполнять любые действия, а остальным только чтение объекта:
+
+```python
+from rest_framework import permissions
+
+
+class IsOwnerOrReadOnly(permissions.BasePermission):
+    """
+    Custom permission to allow only owners of an object to edit it.
+    """
+
+    def has_object_permission(self, request, view, obj):
+        # Read permissions are allowed to any request,
+        # so we'll always allow GET, HEAD or OPTIONS requests.
+        if request.method in permissions.SAFE_METHODS:
+            return True
+
+        # Write permissions are only allowed to the owner of the snippet.
+        return obj.owner == request.user
+
+    def has_permission(self, request, view):
+        return True
+```
+
+`has_permission()` - отвечает за доступ к спискам объектов
+`has_object_permission()` - отвечает за доступ к конкретному объекту
+
+Пермишены можно указывать через запятую, если их несколько:
+
+```python
+permission_classes = [permissions.IsAuthenticatedOrReadOnly,
+                      IsOwnerOrReadOnly]
+```
+
+Если у вас нет доступов, вы получите вот такой ответ:
+
+```
+{
+    "detail": "Authentication credentials were not provided."
+}
+```
+
+### Кеширование
+
+Используется декоратор `method_decorator` и методы `cache_page()` и `vary_on_cookie()`:
+
+```python
+from django.utils.decorators import method_decorator
+from django.views.decorators.cache import cache_page
+from django.views.decorators.vary import vary_on_cookie
+
+from rest_framework.response import Response
+from rest_framework.views import APIView
+from rest_framework import viewsets
+
+
+class UserViewSet(viewsets.ViewSet):
+
+    # Cache requested url for each user for 2 hours
+    @method_decorator(cache_page(60 * 60 * 2))
+    @method_decorator(vary_on_cookie)
+    def list(self, request, format=None):
+        content = {
+            'user_feed': request.user.get_user_feed()
+        }
+        return Response(content)
+
+
+class PostView(APIView):
+
+    # Cache page for the requested url
+    @method_decorator(cache_page(60 * 60 * 2))
+    def get(self, request, format=None):
+        content = {
+            'title': 'Post title',
+            'body': 'Post content'
+        }
+        return Response(content)
+```
+
+`cache_page` декоратор кеширует только `GET` и `HEAD` запросы со статусом 200.
+
+### Пример использования авторизации в ресурсах
+
+```python
+class SomeModelViewSet(ModelViewSet):
+    serializer_class = SomeSerializer
+    queryset = SomeModel.objects.all()
+
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
+```
+
+Таким образом, мы можем добавлять объект юзера при сохранении нашего сериалайзера.
+
+## Фильтрация
+
+DRF предоставляет нам огромные возможности для фильтрации, практически не дописывая для этого специальный код.
+
+### SearchFilter
+
+Как и с другими параметрами, у нас есть два варианта указания фильтрации, общая для всего проекта или конкретная для
+определённого класса или функции.
+
+Для указания общего фильтра на весь проект необходимо добавить в `settings.py` в переменную `REST_FRAMEWORK`:
+
+```python
+REST_FRAMEWORK = {
+    ...
+'DEFAULT_FILTER_BACKENDS': ['rest_framework.filters.SearchFilter']
+}
+```
+
+Для указания в конкретном классе необходимо использовать аргумент `filter_backends`. Принимает коллекцию из фильтров,
+например:
+
+```python
+from rest_framework.filters import SearchFilter, OrderingFilter
+
+
+class GroupViewSet(ModelViewSet):
+    queryset = Group.objects.all()
+    filter_backends = [SearchFilter, OrderingFilter]
+
+```
+
+Или же соответсвующий декоратор для использования в функциях.
+
+#### Как пользоваться?
+
+Для использования необходимо добавить в класс параметр `search_fields`
+
+```python
+class GroupViewSet(ModelViewSet):
+    queryset = Group.objects.all()
+    filter_backends = [SearchFilter, OrderingFilter]
+    search_fields = ['name', 'label']
+```
+
+Этот параметр также принимает коллекцию, состоящую из списка полей, по которым необходимо производить поиск.
+
+Теперь у нас есть возможность добавить query параметр `search=` (ключевое слово можно поменять через `settings.py`,
+чтобы искать по указанным полям).
+
+Например:
+
+```
+http://127.0.0.1:9000/api/group/?search=Pyt
+```
+
+Результат будет отфильтрован так, чтобы отобразить только те данные, у которых хотя бы в одном из указанных полей будет
+найдено частичное совпадение без учёта регистра (`lookup icontains`).
+
+Если нам необходим более специфический параметр поиска, существует 4 специальных настройки в параметре `search_fields`:
+
+- `^` Поиск только в начале строки
+- `=` Полное совпадение
+- `@` Поиск по полному тексту (работает на основе индексов, работает только для postgres)
+- `$` Поиск регулярного выражения
+
+Например:
+
+```python
+class GroupViewSet(ModelViewSet):
+    queryset = Group.objects.all()
+    filter_backends = [SearchFilter, OrderingFilter]
+    search_fields = ['=name', '^label']
+```
+
+### OrderingFilter
+
+Точно также можно добавить ordering фильтр для того, чтобы указывать ordering в момент запроса через query параметр
+`ordering=` (также можно заменить через `settings.py`)
+
+Необходимо указать параметр `ordering_fields`, также принимает коллекцию из полей. Также может принимать специальное
+значение `__all__` для возможности сортировать по любому полю.
+
+```python
+class GroupViewSet(ModelViewSet):
+    queryset = Group.objects.all()
+    filter_backends = [SearchFilter, OrderingFilter]
+    ordering_fields = ['name', 'label']
+```
+
+В query параметре может принимать символ `-` или список полей через запятую.
+
+Примеры:
+
+```
+http://example.com/api/users?ordering=username
+
+http://example.com/api/users?ordering=-username
+
+http://example.com/api/users?ordering=account,username
+```
+
+### Свой собственный фильтр
+
+Как и со всем остальным, можно написать свой собственный фильтр, для этого необходимо наследоваться от
+`rest_framework.filters.BaseFilterBackend` и описать один метод `filter_queryset`, в котором можно описать любую логику.
+
+Например, этот фильтр будет отображать только те объекты, которые принадлежат юзеру.
+
+```python
+class IsOwnerFilterBackend(filters.BaseFilterBackend):
+    """
+    Filter that only allows users to see their own objects.
+    """
+
+    def filter_queryset(self, request, queryset, view):
+        return queryset.filter(owner=request.user)
+```
+
+## Сложные комплексные фильтры
+
+На самом деле, бывают и значительно более сложные фильтры, для которых существуют специальные пакеты.
+
+Например:
+
+```
+pip install django-filter
+pip install djangorestframework-filters
+pip install djangorestframework-word-filter
+```
+
+Все они легко настраиваются и значительно расширяют возможность использования фильтров. Изучите их самостоятельно.
+
+## Живой пример с заметками на DRF
+
+Напоминаю условия.
+
+Допустим, нам нужен сайт, на котором можно зарегистрироваться, залогиниться, разлогиниться и написать заметку, если ты
+залогинен. Заметки должны отображаться списком, последняя созданная отображается первой. Все пользователи видят все
+заметки. Возле тех, которые создал текущий пользователь, должна быть кнопка удалить.
+
+В случае с REST, кнопку заменяем просто на возможность это сделать для владельца заметки.
+
+Дополнительно реализуем токен время жизни которого 10 минут, после чего необходимо получать новый.
+
+### Модель сохраняется
+
+`models.py`
+
+```python
+from django.contrib.auth.models import User
+from django.db import models
+
+
+class Note(models.Model):
+    text = models.CharField(max_length=100)
+    created_at = models.DateTimeField(auto_now=True)
+    author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='notes')
+
+    class Meta:
+        ordering = ['-created_at', ]
+```
+
+И так же не забываем перед тем как сделать миграции, добавить в настройки,
+приложение, `rest_framework`, `rest_framework.authtoken`, для авторизации.
+
+### Регистрация
+
+Для регистрации, нам необходим сериалайзер и эндпоинт.
+
+`api/serializers.py`
+
+```python
+from django.contrib.auth.models import User
 from rest_framework import serializers
 
 
 class UserSerializer(serializers.ModelSerializer):
-    days_since_joined = serializers.SerializerMethodField()
+    password = serializers.CharField(write_only=True)
 
     class Meta:
         model = User
-
-    def get_days_since_joined(self, obj):
-        return (now() - obj.date_joined).days
-```
-
-## Валидация
-
-```python
-serializer.is_valid()
-serializer.validated_data
-# OrderedDict([('title', ''), ('code', 'print("hello, world")\n'), ('linenos', False), ('language', 'python'), ('style', 'friendly')])
-serializer.save()
-# <Snippet: Snippet object>
-# True
-```
-
-По аналогии с формами мы можем добавить валидацию каждого отдельного поля при помощи метода `validate_<field_name>`
-
-```python
-from rest_framework import serializers
-
-
-class BlogPostSerializer(serializers.Serializer):
-    title = serializers.CharField(max_length=100)
-    content = serializers.CharField()
-
-    def validate_title(self, value):
-        """
-        Check that the blog post is about Django.
-        """
-        if 'django' not in value.lower():
-            raise serializers.ValidationError("Blog post is not about Django")
-        return value
-```
-
-Возвращает значение или возбуждает ошибку валидации.
-
-Также валидация может быть осуществлена на уровне объекта. Метод `validate()`.
-
-```python
-from rest_framework import serializers
-
-
-class EventSerializer(serializers.Serializer):
-    description = serializers.CharField(max_length=100)
-    start = serializers.DateTimeField()
-    finish = serializers.DateTimeField()
-
-    def validate(self, data):
-        """
-        Check that start is before finish.
-        """
-        if data['start'] > data['finish']:
-            raise serializers.ValidationError("finish must occur after start")
-        return data
-```
-
-Также можно прописать валидаторы как отдельные функции:
-
-```python
-def multiple_of_ten(value):
-    if value % 10 != 0:
-        raise serializers.ValidationError('Not a multiple of ten')
-
-
-class GameRecord(serializers.Serializer):
-    score = IntegerField(validators=[multiple_of_ten])
-    ...
-```
-
-Или указать в Meta, используя уже существующие валидаторы:
-
-```python
-class EventSerializer(serializers.Serializer):
-    name = serializers.CharField()
-    room_number = serializers.IntegerField(choices=[101, 102, 103, 201])
-    date = serializers.DateField()
-
-    class Meta:
-        # Each room only has one event per day.
-        validators = [
-            UniqueTogetherValidator(
-                queryset=Event.objects.all(),
-                fields=['room_number', 'date']
-            )
-        ]
-```
-
-Также мы можем передать в сериалайзер список или queryset из объектов, указав при этом атрибут `many=True`
-
-```python
-serializer = SnippetSerializer(Snippet.objects.all(), many=True)
-serializer.data
-# [OrderedDict([('id', 1), ('title', ''), ('code', 'foo = "bar"\n'), ('linenos', False), ('language', 'python'), ('style', 'friendly')]), OrderedDict([('id', 2), ('title', ''), ('code', 'print("hello, world")\n'), ('linenos', False), ('language', 'python'), ('style', 'friendly')]), OrderedDict([('id', 3), ('title', ''), ('code', 'print("hello, world")'), ('linenos', False), ('language', 'python'), ('style', 'friendly')])]
-```
-
-### Вложенные сериалайзеры:
-
-Сериалайзер может быть полем другого сериалайзера. Такие сериалайзеры называются вложенными.
-
-```python
-class UserSerializer(serializers.Serializer):
-    email = serializers.EmailField()
-    username = serializers.CharField(max_length=100)
-
-
-class CommentSerializer(serializers.Serializer):
-    user = UserSerializer()
-    content = serializers.CharField(max_length=200)
-    created = serializers.DateTimeField()
-```
-
-Совмещаем с предыдущими знаниями и получаем вложенное поле с атрибутом `many=True`, а значит оно принимает список или
-queryset таких объектов:
-
-```python
-class CommentSerializer(serializers.Serializer):
-    user = UserSerializer(required=False)
-    edits = EditItemSerializer(many=True)  # A nested list of 'edit' items.
-    content = serializers.CharField(max_length=200)
-    created = serializers.DateTimeField()
-```
-
-### Еще раз, сериализация и десериализация:
-
-Обратите внимание, что когда мы обрабатываем данные, полученные от пользователя (например запрос), то мы передаём
-данные в сериалайзер через атрибут, `data=` и после этого обязаны провалидировать данные, так как там могут быть ошибки:
-
-```python
-serializer = CommentSerializer(data={'user': {'email': 'foobar', 'username': 'doe'}, 'content': 'baz'})
-serializer.is_valid()
-# False
-serializer.errors
-# {'user': {'email': ['Enter a valid e-mail address.']}, 'created': ['This field is required.']}
-```
-
-Если ошибок нет, то данные будут находиться в атрибуте `validated_data`.
-
-Но если мы сериализуем данные, которые мы взяли из базы, то у нас нет необходимости их валидировать. Мы передаём их без
-каких-либо атрибутов, данные будут находиться в атрибуте `data`:
-
-```python
-comment = Comment.objects.first()
-serializer = CommentSerializer(comment)
-serializer.data
-```
-
-### Метод save()
-
-У Serializer по аналогии с ModelForm есть метод `save()`, но в отличие от ModelForm дополнительные данные
-можно передать прямо в атрибуты метода `save()`.
-
-```python
-e = EventSerializer(data={'start': "05/05/2021", 'finish': "06/05/2021"})
-e.save(description='bla-bla')
-```
-
-> Не надо никаких `commit=False`!!
-
-## Связи в сериалайзерах
-
-Все мы знаем, что бывают связи в базе данных. Данные нужно каким-то образом получать, но в случае сериализации нам
-часто нет необходимости получать весь объект, а нужны, допустим, только `id` или название. DRF это предусмотрел.
-
-Предположим, у нас есть вот такие модели:
-
-```python
-class Album(models.Model):
-    album_name = models.CharField(max_length=100)
-    artist = models.CharField(max_length=100)
-
-
-class Track(models.Model):
-    album = models.ForeignKey(Album, related_name='tracks', on_delete=models.CASCADE)
-    order = models.IntegerField()
-    title = models.CharField(max_length=100)
-    duration = models.IntegerField()
-
-    class Meta:
-        unique_together = ['album', 'order']
-        ordering = ['order']
-
-    def __str__(self):
-        return '%d: %s' % (self.order, self.title)
-```
-
-Чтобы получить в сериалайзере альбома все его треки, мы можем сделать, например, так:
-
-```python
-class TrackSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Track
-        fields = ['title', 'duration']
-
-
-class AlbumSerializer(serializers.ModelSerializer):
-    tracks = TrackSerializer(many=True)
-
-    class Meta:
-        model = Album
-        fields = ['album_name', 'artist', 'tracks']
-```
-
-Но есть и другие варианты получения данных.
-
-### StringRelatedField()
-
-```python
-class AlbumSerializer(serializers.ModelSerializer):
-    tracks = serializers.StringRelatedField(many=True)
-
-    class Meta:
-        model = Album
-        fields = ['album_name', 'artist', 'tracks']
-```
-
-Вернёт значение dunder-метода `__str__` для каждого объекта:
-
-```json
-{
-  "album_name": "Things We Lost In The Fire",
-  "artist": "Low",
-  "tracks": [
-    "1: Sunflower",
-    "2: Whitetail",
-    "3: Dinosaur Act"
-  ]
-}
-```
-
-### PrimaryKeyRelatedField()
-
-```python
-class AlbumSerializer(serializers.ModelSerializer):
-    tracks = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
-
-    class Meta:
-        model = Album
-        fields = ['album_name', 'artist', 'tracks']
-```
-
-Вернёт `id`:
-
-```json
-{
-  "album_name": "Undun",
-  "artist": "The Roots",
-  "tracks": [
-    89,
-    90,
-    91
-  ]
-}
-```
-
-### HyperlinkedRelatedField()
-
-```python
-class AlbumSerializer(serializers.ModelSerializer):
-    tracks = serializers.HyperlinkedRelatedField(
-        many=True,
-        read_only=True,
-        view_name='track-detail'
-    )
-
-    class Meta:
-        model = Album
-        fields = ['album_name', 'artist', 'tracks']
-```
-
-Вернёт ссылку на обработку объекта. О том, как работает эта магия, поговорим на следующем занятии.
-
-```json
-{
-  "album_name": "Graceland",
-  "artist": "Paul Simon",
-  "tracks": [
-    "http://www.example.com/api/tracks/45/",
-    "http://www.example.com/api/tracks/46/",
-    "http://www.example.com/api/tracks/47/"
-  ]
-}
-```
-
-### SlugRelatedField()
-
-```python
-class AlbumSerializer(serializers.ModelSerializer):
-    tracks = serializers.SlugRelatedField(
-        many=True,
-        read_only=True,
-        slug_field='title'
-    )
-
-    class Meta:
-        model = Album
-        fields = ['album_name', 'artist', 'tracks']
-```
-
-Вернёт то, что указано в атрибуте `slug_field`.
-
-```json
-{
-  "album_name": "Dear John",
-  "artist": "Loney Dear",
-  "tracks": [
-    "Airport Surroundings",
-    "Everything Turns to You",
-    "I Was Only Going Out"
-  ]
-}
-```
-
-## Пример чтения и записи вложенных сериалайзеров
-
-Например, если у нас есть модели `Author` и `Book`, где каждый автор может иметь несколько книг, вложенный сериализатор
-поможет нам включить информацию о книгах автора в его сериализатор.
-
-### Пример моделей
-
-Допустим, у нас есть две модели: `Author` и `Book`.
-
-```python
-from django.db import models
-
-
-class Author(models.Model):
-    name = models.CharField(max_length=100)
-    birthdate = models.DateField()
-
-
-class Book(models.Model):
-    title = models.CharField(max_length=200)
-    published_date = models.DateField()
-    author = models.ForeignKey(Author, related_name='books', on_delete=models.CASCADE)
-```
-
-Здесь у модели `Book` есть внешний ключ `author`, указывающий на модель `Author`.
-
-### Чтение данных с вложенными сериализаторами
-
-Для сериализации данных сначала определим базовые сериализаторы для наших моделей:
-
-```python
-from rest_framework import serializers
-
-
-class BookSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Book
-        fields = ['title', 'published_date', 'id']
-
-
-class AuthorSerializer(serializers.ModelSerializer):
-    books = BookSerializer(many=True, read_only=True)  # Вложенный сериализатор
-
-    class Meta:
-        model = Author
-        fields = ['name', 'birthdate', 'books']
-```
-
-Здесь мы используем `BookSerializer` внутри `AuthorSerializer`, чтобы включить список книг автора в ответ. Поле `books`
-имеет атрибут `many=True`, потому что один автор может иметь несколько книг. Кроме того, `read_only=True` говорит о том,
-что это поле только для чтения.
-
-Теперь, если мы запросим данные об авторе, мы получим что-то вроде этого:
-
-```json
-{
-  "name": "J.K. Rowling",
-  "birthdate": "1965-07-31",
-  "books": [
-    {
-      "title": "Harry Potter and the Philosopher's Stone",
-      "published_date": "1997-06-26",
-      "id": 1
-    },
-    {
-      "title": "Harry Potter and the Chamber of Secrets",
-      "published_date": "1998-07-02",
-      "id": 2
-    }
-  ]
-}
-```
-
-### Запись данных с вложенными сериализаторами
-
-Для того чтобы создать или обновить вложенные объекты, нам нужно настроить десериализацию. В этом
-случае `BookSerializer` будет использоваться для обработки вложенных данных, когда мы создаем или обновляем автора.
-
-```python
-class AuthorSerializer(serializers.ModelSerializer):
-    books = BookSerializer(many=True)
-
-    class Meta:
-        model = Author
-        fields = ['name', 'birthdate', 'books']
+        fields = ('username', 'password', 'id')
 
     def create(self, validated_data):
-        books_data = validated_data.pop('books')
-        author = Author.objects.create(**validated_data)
-        for book_data in books_data:
-            Book.objects.create(author=author, **book_data)
-        return author
-
-    def update(self, instance, validated_data):
-        books_data = validated_data.pop('books')
-        instance.name = validated_data.get('name', instance.name)
-        instance.birthdate = validated_data.get('birthdate', instance.birthdate)
-        instance.save()
-
-        # Удаление старых книг
-        instance.books.all().delete()
-
-        # Создание новых книг
-        for book_data in books_data:
-            Book.objects.create(author=instance, **book_data)
-
-        return instance
+        user = User.objects.create_user(
+            username=validated_data['username'],
+            password=validated_data['password']
+        )
+        return user
 ```
 
-Здесь мы переопределили методы `create` и `update`, чтобы обрабатывать вложенные данные. Мы сначала создаем автора,
-затем создаем каждую книгу, связанную с этим автором. В методе `update` мы сначала удаляем старые записи книг и
-добавляем новые.
+`resources.py`
 
-### Пример запроса на создание автора с книгами
+```python
+from django.contrib.auth.models import User
+from rest_framework.generics import CreateAPIView
+from rest_framework.permissions import AllowAny
 
-Теперь мы можем создать автора и его книги за один запрос:
+from notes.api.serializers import UserSerializer
 
-```json
-{
-  "name": "George R. R. Martin",
-  "birthdate": "1948-09-20",
-  "books": [
-    {
-      "title": "A Game of Thrones",
-      "published_date": "1996-08-06"
-    },
-    {
-      "title": "A Clash of Kings",
-      "published_date": "1998-11-16"
-    }
-  ]
+
+class RegisterAPIView(CreateAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+    permission_classes = [AllowAny, ]
+```
+
+`api` - папка в которой находятся все файлы связанные с API
+
+`notes` - название приложения
+
+Добавляем url:
+
+`urls.py`
+
+```python
+from django.urls import path
+
+from notes.api.resources import RegisterAPIView
+
+urlpatterns = [
+    path('api/register/', RegisterAPIView.as_view()),
+]
+
+```
+
+### Авторизация
+
+Для авторизации мы будем использовать стандартную авторизацию по токену. Так что все что нам надо сделать, это добавить
+урл для получения токена.
+
+`urls.py`
+
+```python
+from django.urls import path
+from rest_framework.authtoken.views import obtain_auth_token
+
+from notes.api.resources import RegisterAPIView
+
+urlpatterns = [
+    path('api/register/', RegisterAPIView.as_view()),
+    path('api/token/', obtain_auth_token)
+]
+```
+
+Но мы же хотели сделать так, что бы токен "умирал" через 10 минут?
+
+Для этого много способов, но самый простой, это написать собственную аутентификацию, основанную на базовой
+
+`settings.py`
+
+```python
+...
+
+TOKEN_EXPIRE_SECONDS = 600
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': ("notes.api.authentication.TokenExpireAuthentication",),
 }
+
 ```
 
-Этот запрос будет обработан нашим `AuthorSerializer`, который создаст автора и его книги.
+`notes/api/authentication.py`
 
-## Немного забегая вперед
+```python
+from django.conf import settings
+from django.utils import timezone
+from rest_framework import exceptions
+from rest_framework.authentication import TokenAuthentication
 
-Давайте я покажу вам сколько нужно написать кода, что бы получить RestFull API для одной модели. (Смотрим на экран, тут кода не будет `:)`)
+
+class TokenExpireAuthentication(TokenAuthentication):
+    def authenticate(self, request):
+        try:
+            user, token = super().authenticate(request=request)
+        except exceptions.AuthenticationFailed as e:
+            raise exceptions.AuthenticationFailed(e)
+        except TypeError:
+            return None
+        else:
+            if (timezone.now() - token.created).seconds > settings.TOKEN_EXPIRE_SECONDS:
+                token.delete()
+                raise exceptions.AuthenticationFailed("Token expired")
+            return user, token
+
+```
+
+### Заметки. Чтение, создание, удаление
+
+Отличный пример когда мы можем либо создать свой класс и наследоваться от нужных миксинов, либо,
+ограничить `ModelViewSet`, давайте ограничим второй.
+
+Я хочу что бы при чтении я видел имя пользователя.
+
+Также мне нужно ограничить удаление чужих объектов. Возможность создания, только зарегистрированным пользователем. И
+добавление этого пользователя, напрямую из реквеста.
+
+`api/permissions.py`
+
+```python
+from rest_framework.permissions import BasePermission
+
+
+class DeleteOnlyOwner(BasePermission):
+
+    def has_object_permission(self, request, view, obj):
+        if request.method == "DELETE":
+            return obj.author == request.user
+        else:
+            return True
+```
+
+`api/serializers.py`
+
+```python
+from django.contrib.auth.models import User
+from rest_framework import serializers
+
+from notes.models import Note
+
+
+class UserSerializer(serializers.ModelSerializer):
+    password = serializers.CharField(write_only=True)
+
+    class Meta:
+        model = User
+        fields = ('username', 'password', 'id')
+
+    def create(self, validated_data):
+        user = User.objects.create_user(
+            username=validated_data['username'],
+            password=validated_data['password']
+        )
+        return user
+
+
+class NoteSerializer(serializers.ModelSerializer):
+    author = serializers.ReadOnlyField(source='author.username')
+
+    class Meta:
+        model = Note
+        fields = ['id', 'text', 'created_at', 'author']
+
+
+```
+
+`api/resources.py`
+
+```python
+from django.contrib.auth.models import User
+from rest_framework import viewsets
+from rest_framework.generics import CreateAPIView
+from rest_framework.permissions import AllowAny, IsAuthenticatedOrReadOnly
+
+from notes.api.permissions import DeleteOnlyOwner
+from notes.api.serializers import UserSerializer, NoteSerializer
+from notes.models import Note
+
+
+class RegisterAPIView(CreateAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+    permission_classes = [AllowAny,]
+
+
+class NotesViewSet(viewsets.ModelViewSet):
+    queryset = Note.objects.all()
+    http_method_names = ['get', 'post', 'delete']
+    serializer_class = NoteSerializer
+    permission_classes = [IsAuthenticatedOrReadOnly, DeleteOnlyOwner]
+
+    def perform_create(self, serializer):
+        serializer.save(author=self.request.user)
+```
+
+`urls.py`
+
+```python
+from django.urls import path, include
+from rest_framework.authtoken.views import obtain_auth_token
+
+from notes.api.resources import RegisterAPIView, NotesViewSet
+from rest_framework import routers
+router = routers.DefaultRouter()
+router.register(r'notes', NotesViewSet)
+urlpatterns = [
+    path('api/register/', RegisterAPIView.as_view()),
+    path('api/token/', obtain_auth_token),
+    path('api/', include(router.urls)),
+]
+```
+
+Все, можно проверять, весь функционал готов!

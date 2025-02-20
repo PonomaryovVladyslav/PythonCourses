@@ -1,825 +1,824 @@
-# Лекция 28. Middleware. Signals. Messages. Manage commands
+# Лекция 28. @api_view, APIView, ViewSets, Pagination, Routers
 
-## Middleware
+Все мы помним, что веб в первую очередь - это Request-Response система.
 
-![](https://memegenerator.net/img/instances/81631865.jpg)
+## Request
 
-Дока [Тут](https://docs.djangoproject.com/en/4.2/topics/http/middleware/)
+Что нового в request.
 
-Мы с вами рассмотрели основные этапы того, какие этапы должен пройти request на всём пути нашей request-response системы,
-но на самом деле каждый request проходит кучу дополнительных обработок, таких как middleware, причём каждый request 
-делает это дважды, при "входе" и при "выходе".
+Дока [тут](https://www.django-rest-framework.org/api-guide/requests/)
 
-Если открыть файл `settings.py`, то там можно обнаружить переменную `MIDDLEWARE`, или `MIDDLEWARE_CLASSES` (для старых
-версий Django), которая выглядит примерно так:
+Два новых парамера `.data` и `.query_string`
+
+`.data` - данные, если запрос POST, PUT или PATCH, аналог `request.POST` или `request.FILES`
+
+`.query_string` - данные, если запрос GET, аналог `request.GET`
+
+И параметры `.auth` и `.authenticate`, которые мы рассмотрим на следующей лекции. Она целиком про авторизацию и
+`permissions` (доступы).
+
+## Response
+
+Дока [тут](https://www.django-rest-framework.org/api-guide/responses/)
+
+В отличие от классической Django, ответом в REST системе будет обычный HTTP-ответ, содержащий набор данных, чаще
+всего JSON (но бывает и нет).
+
+Классическая Django тоже может возвращать HTTP-ответ и быть обработчиком REST архитектуры, но существующий пакет
+сильно упрощает эти процессы.
+
+Для обработки такого ответа есть специальный объект:
+
+```Response(data, status=None, template_name=None, headers=None, content_type=None)```
+
+где `data` - данные,
+
+`status` - код ответа (200, 404, 503),
+
+`template_name` - возможность указать темплейт, если необходимо вернуть страницу, а не просто набор данных,
+
+`headers` и `content_type` - заголовки и тип содержимого запроса.
+
+## Настройка для получения JSON
+
+Если нужно указать явно формат для получения или отправки, то можно указать его в `settings.py`:
 
 ```python
-MIDDLEWARE = [
-    'django.middleware.security.SecurityMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
+REST_FRAMEWORK = {
+    'DEFAULT_RENDERER_CLASSES': [
+        'rest_framework.renderers.JSONRenderer',
+    ],
+    'DEFAULT_PARSER_CLASSES': [
+        'rest_framework.parsers.JSONParser',
+    ]
+}
+```
+
+## @api_view
+
+Дока [тут](https://www.django-rest-framework.org/api-guide/views/#api_view)
+
+Для описания `endpoint` функционально нужно указать декоратор `api_view` и методы, которые он может принимать.
+Возвращает всё также объект ответа. Для использования возьмем модель `Book` и сериалайзер `BookSerializer`, из
+последнего примера прошлой лекции
+
+```python
+from rest_framework import status
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+from myapp.models import Book
+from myapp.serializers import BookSerializer
+
+
+@api_view(['GET', 'POST'])
+def book_list(request):
+    """
+    List all books, or create a new book.
+    """
+    if request.method == 'GET':
+        books = Book.objects.all()
+        serializer = BookSerializer(books, many=True)
+        return Response(serializer.data)
+
+    elif request.method == 'POST':
+        book = BookSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+```
+
+Обратите внимание, в пакете REST фреймворка сразу есть заготовленные объекты статуса для ответа.
+
+Если попытаться получить доступ методом, который не разрешен, запрос будет отклонён с ответом `405 Method not allowed`
+
+Для передачи параметров используются аргументы функции. (Очень похоже на обычную Django вью)
+
+```python
+@api_view(['GET', 'PUT', 'DELETE'])
+def book_detail(request, pk):
+    """
+    Retrieve, update or delete a book.
+    """
+    try:
+        book = Book.objects.get(pk=pk)
+    except Book.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+
+    if request.method == 'GET':
+        serializer = BookSerializer(book)
+        return Response(serializer.data)
+
+    elif request.method == 'PUT':
+        serializer = BookSerializer(book, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    elif request.method == 'DELETE':
+        book.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+```
+
+URLs для таких методов описываются точно так же как и для стандартной Django вью.
+
+```python
+from myapp.view import book_list, book_detail
+
+urlpatterns = [
+    path('books/', book_list),
+    path('books/<int:pk>/', book_detail),
 ]
 ```
 
-Каждая из этих строк - это отдельная мидлварина, и абсолютно **каждый** request проходит через код, описанный в этих
-файлах, например, `django.contrib.auth.middleware.AuthenticationMiddleware` отвечает за то, чтобы в нашем request
-всегда был пользователь, если он залогинен, а `django.middleware.csrf.CsrfViewMiddleware` отвечает за проверку наличия и
-правильности CSRF токена, которые мы рассматривали ранее.
+Ответ на GET-запрос в этому случае будет выглядеть так:
 
-Причём при "входе" request будет проходить сверху вниз (сначала секьюрити, потом сессии и т. д.), а при "выходе" снизу
-вверх (начиная XFrame и заканчивая Security)
-
-**Middleware - это декоратор над request**
-
-### Как этим пользоваться?
-
-Если мы хотим использовать самописные мидлвары, мы должны понимать, как они работают.
-
-Можно описать мидлвар двумя способами: функциональным и основанным на классах. Рассмотрим оба:
-
-Функционально:
-
-```python
-def simple_middleware(get_response):
-    # One-time configuration and initialization.
-
-    def middleware(request):
-        # Code to be executed for each request before
-        # the view (and later middleware) are called.
-
-        response = get_response(request)
-
-        # Code to be executed for each request/response after
-        # the view is called.
-
-        return response
-
-    return middleware
-```
-
-Как вы можете заметить, синтаксис очень близок к декораторам.
-
-`get_response()` - функция, которая отвечает за всё, что происходит вне мидлвары и отвечает за обработку запроса, по сути
-это будет наша `view`, а мы можем дописать любой нужный нам код до или после, соответственно на "входе" реквеста или
-на "выходе" респонса.
-
-Так почти никто не пишет :) Рассмотрим, как этот же функционал работает для классов:
-
-```python
-class SimpleMiddleware:
-    def __init__(self, get_response):
-        self.get_response = get_response
-        # One-time configuration and initialization.
-
-    def __call__(self, request):
-        # Code to be executed for each request before
-        # the view (and later middleware) are called.
-
-        response = self.get_response(request)
-
-        # Code to be executed for each request/response after
-        # the view is called.
-
-        return response
-```
-
-При таком подходе функционал работает при помощи магических методов, функционально выполняет то же самое, но по моему
-личному мнению гораздо элегантнее.
-
-При инициализации мы получаем обработчик, а при выполнении вызываем его же, но с возможностью добавить нужный код до
-или после.
-
-Чтобы активировать мидлвар, необходимо дописать путь к нему в переменную `MIDDLEWARE` в `settings.py`.
-
-Допустим, если мы создали файл `middleware.py` в приложении под названием `main`, и в этом файле создали
-класс `CheckUserStatus`, который нужен, чтобы мы могли обработать какой-либо статус пользователя, нужно дописать в
-переменную этот класс:
-
-```python
-MIDDLEWARE = [
-    'django.middleware.security.SecurityMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'main.middleware.CheckUserStatus',  # Новый мидлвар
-    'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
+```json
+[
+  {
+      "title": "Harry Potter and the Philosopher's Stone",
+      "published_date": "1997-06-26",
+      "id": 1
+    },
+    {
+      "title": "Harry Potter and the Chamber of Secrets",
+      "published_date": "1998-07-02",
+      "id": 2
+    }
 ]
 ```
 
-Обратите внимание, я добавил мидлвар после `django.contrib.auth.middleware.AuthenticationMiddleware`, так как до этого
-мидлвара в нашем реквесте нет переменной юзер.
+Поля будут зависеть от модели и сериалайзера соответственно.
 
-## Миксин для мидлвар
+Ответ на POST запрос (создание объекта):
 
-На самом деле для написания мидлвар существует миксин, чтобы упростить наш код.
+```json
+{
+   "title": "test title",
+   "published_date": "1998-07-02",
+   "id": 3
+}
+```
+
+## View
+
+Знакомимся с самым подробным сайтом по DRF классам [тут](http://www.cdrf.co/)
+
+## APIView
+
+Дока [тут](https://www.django-rest-framework.org/api-guide/views/#class-based-views)
+
+Также мы можем описать это же через Class-Based View, для этого нам нужно наследоваться от APIView:
 
 ```python
-django.utils.deprecation.MiddlewareMixin
+from myapp.models import Book
+from myapp.serializers import BookSerializer
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import status
+
+
+class BookList(APIView):
+    """
+    List all books, or create a new book.
+    """
+
+    def get(self, request, format=None):
+        books = Book.objects.all()
+        serializer = BookSerializer(books, many=True)
+        return Response(serializer.data)
+
+    def post(self, request, format=None):
+        serializer = BookSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 ```
 
-В нём уже расписаны методы `__init__` и `__call__`.
-
-`__init_()` принимает метод для обработки request, а в `__call__` расписаны методы для обработки request или response.
-
-Метод `__call__` вызывает 4 действия:
-
-1. Вызывает `self.process_request(request)` (если описан) для обработки request.
-2. Вызывает `self.get_response(request)`, чтобы получить response для дальнейшего использования.
-3. Вызывает `self.process_response(request, response)` (если описан) для обработки response.
-4. Возвращает response.
-
-Зачем это нужно?
-
-Чтобы описывать только тот функционал, который мы будем использовать, и случайно не зацепить что-то рядом.
-
-Например, так выглядит мидлвар для добавления юзера в реквест.
+Вынесем получение объекта в отдельный метод:
 
 ```python
-from django.contrib import auth
-from django.utils.deprecation import MiddlewareMixin
-from django.utils.functional import SimpleLazyObject
+class BookDetail(APIView):
+    """
+    Retrieve, update or delete a book instance.
+    """
 
+    def get_object(self, pk):
+        try:
+            return Book.objects.get(pk=pk)
+        except Book.DoesNotExist:
+            raise Http404
 
-def get_user(request):
-    if not hasattr(request, '_cached_user'):
-        request._cached_user = auth.get_user(request)
-    return request._cached_user
+    def get(self, request, pk, format=None):
+        book = self.get_object(pk)
+        serializer = BookSerializer(book)
+        return Response(serializer.data)
 
+    def put(self, request, pk, format=None):
+        book = self.get_object(pk)
+        serializer = BookSerializer(book, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-class AuthenticationMiddleware(MiddlewareMixin):
-    def process_request(self, request):
-        assert hasattr(request, 'session'), (
-            "The Django authentication middleware requires session middleware "
-            "to be installed. Edit your MIDDLEWARE setting to insert "
-            "'django.contrib.sessions.middleware.SessionMiddleware' before "
-            "'django.contrib.auth.middleware.AuthenticationMiddleware'."
-        )
-        request.user = SimpleLazyObject(lambda: get_user(request))
-```
-Описание: при получении реквеста добавить в него пользователя, информация о котором хранится в сессии.
-
-## Signals
-
-Сигналы. Часто мы оказываемся в ситуации, когда нам нужно выполнять какие-либо действия до или после определённого
-события. Конечно, мы можем прописать код там, где нам нужно, но вместо этого мы можем использовать сигналы.
-
-Сигналы отлавливают, что определённое действие выполнено или будет следующим, и выполняют необходимый нам код.
-
-Список экшенов [тут](https://docs.djangoproject.com/en/4.2/ref/signals/).
-Описание [тут](https://docs.djangoproject.com/en/4.2/topics/signals/).
-
-Примеры сигналов:
-
-```
-django.db.models.signals.pre_save & django.db.models.signals.post_save # Выполняется перед сохранением или сразу после сохранения объекта
-django.db.models.signals.pre_delete & django.db.models.signals.post_delete # Выполняется перед удалением или сразу после удаления объекта
-django.db.models.signals.m2m_changed # Выполняется при изменении любых ManyToMany связей (добавили студента в группу или убрали, например)
-django.core.signals.request_started & django.core.signals.request_finished # Выполняется при начале запроса или при его завершении.
+    def delete(self, request, pk, format=None):
+        book = self.get_object(pk)
+        book.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
 ```
 
-Это далеко не полный список действий, на которые могут реагировать сигналы.
-
-Каждый сигнал имеет функции `connect()` и `disconnect()` для того, чтобы привязать/отвязать сигнал к действию.
+URLs описываются так же, как и для Django Class-Based View:
 
 ```python
-from django.core.signals import request_finished
-
-request_finished.connect(my_callback)
+urlpatterns = [
+    path('books/', BookList.as_view()),
+    path('books/<int:pk>/', BookDetail.as_view()),
+]
 ```
 
-где `my_callback` - это функция, которую нужно выполнять по получению сигнала.
+## GenericView
 
-Но гораздо чаще применяется синтаксис с использованием декоратора `receiver`
+По аналогии с классической Django существуют заранее описанные CRUD действия.
+
+Как это работает?
+
+Существует класс `GenericAPIView`, который наследуется от обычного `APIView`.
+
+В нём описаны такие поля как:
+
+- `queryset` хранит кверисет;
+
+- `serializer_class` хранит сериалайзер;
+
+- `lookup_field = 'pk'` - название атрибута в модели, который будет отвечать за PK;
+
+- `lookup_url_kwarg = None` - название атрибута в запросе, который будет отвечать за `pk`;
+
+- `filter_backends = api_settings.DEFAULT_FILTER_BACKENDS` - фильтры запросов;
+
+- `pagination_class = api_settings.DEFAULT_PAGINATION_CLASS` - пагинация запросов.
+
+И методы:
+
+- `get_queryset` - получение кверисета;
+
+- `get_object` - получение одного объекта;
+
+- `get_serializer` - получение объекта сериалайзера;
+
+- `get_serializer_class` - получение класса сериалайзера;
+
+- `get_serializer_context` - получить контекст сериалайзера;
+
+- `filter_queryset` - отфильтровать кверисет;
+
+- `paginator` - объект пагинации;
+
+- `paginate_queryset` - пагинировать кверисет;
+
+- `get_paginated_response` - получить пагинированый ответ.
+
+*Такой класс не работает самостоятельно, только вместе с определёнными миксинами*
+
+### Миксины
+
+В DRF существует 5 миксинов:
 
 ```python
-from django.core.signals import request_finished
-from django.dispatch import receiver
+class CreateModelMixin(object):
+    """
+    Create a model instance.
+    """
 
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        self.perform_create(serializer)
+        headers = self.get_success_headers(serializer.data)
+        return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
 
-@receiver(request_finished)
-def my_callback(sender, **kwargs):
-    print("Request finished!")
+    def perform_create(self, serializer):
+        serializer.save()
+
+    def get_success_headers(self, data):
+        try:
+            return {'Location': str(data[api_settings.URL_FIELD_NAME])}
+        except (TypeError, KeyError):
+            return {}
 ```
 
-У сигнала есть параметр `receiver` и может быть параметр `sender`. Сендер - это объект, который отправляет сигнал
-(например, модель, для которой описывается сигнал).
+Рассмотрим подробнее.
+
+Это миксин, и без сторонних классов этот функционал работать не будет.
+
+При вызове метода `create()` мы предполагаем, что у нас был request.
+
+Вызываем метод `get_serializer()` из класса `GenericAPIView` для получения объекта сериалайзера, обратите внимание, что
+данные передаются через атрибут `data`, так как они получены от пользователя. Проверяем данные на валидность (обратите
+внимание на атрибут `raise_exception`, если данные будут не валидны, код сразу вылетит в traceback, а значит нам не
+нужно отдельно прописывать действия при не валидном сериалайзере), вызываем метод `perform_create`, который просто
+сохраняет сериалайзер (вызывает `create` или `update` в зависимости от данных), получает хедеры, и возвращает response
+с 201 кодом, создание успешно.
+
+По аналогии мы можем рассмотреть остальные миксины.
 
 ```python
-from django.db.models.signals import pre_save
-from django.dispatch import receiver
-from myapp.models import MyModel
+class RetrieveModelMixin(object):
+    """
+    Retrieve a model instance.
+    """
+
+    def retrieve(self, request, *args, **kwargs):
+        instance = self.get_object()
+        serializer = self.get_serializer(instance)
+        return Response(serializer.data)
+```
+
+Обратите внимание, метод называется `retrieve()` и внутри вызывает метод `get_object()`, - это миксин одиночного объекта
+
+```python
+class UpdateModelMixin(object):
+    """
+    Update a model instance.
+    """
+
+    def update(self, request, *args, **kwargs):
+        partial = kwargs.pop('partial', False)
+        instance = self.get_object()
+        serializer = self.get_serializer(instance, data=request.data, partial=partial)
+        serializer.is_valid(raise_exception=True)
+        self.perform_update(serializer)
+
+        if getattr(instance, '_prefetched_objects_cache', None):
+            # If 'prefetch_related' has been applied to a queryset, we need to
+            # forcibly invalidate the prefetch cache on the instance.
+            instance._prefetched_objects_cache = {}
+
+        return Response(serializer.data)
+
+    def perform_update(self, serializer):
+        serializer.save()
+
+    def partial_update(self, request, *args, **kwargs):
+        kwargs['partial'] = True
+        return self.update(request, *args, **kwargs)
+```
+
+Методы `update()`, `partial_update()`, `perform_update()` нужны для обновления объекта, обратите внимание на атрибут
+`partial`. Помните разницу между PUT и PATCH?
+
+```python
+class DestroyModelMixin(object):
+    """
+    Destroy a model instance.
+    """
+
+    def destroy(self, request, *args, **kwargs):
+        instance = self.get_object()
+        self.perform_destroy(instance)
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
+    def perform_destroy(self, instance):
+        instance.delete()
+```
+
+Аналогично для удаления методы `destroy()`, `perform_destroy()`.
+
+```python
+class ListModelMixin(object):
+    """
+    List a queryset.
+    """
+
+    def list(self, request, *args, **kwargs):
+        queryset = self.filter_queryset(self.get_queryset())
+
+        page = self.paginate_queryset(queryset)
+        if page is not None:
+            serializer = self.get_serializer(page, many=True)
+            return self.get_paginated_response(serializer.data)
+
+        serializer = self.get_serializer(queryset, many=True)
+        return Response(serializer.data)
+```
+
+Метод `list()` получает кверисет, дальше пытается его пагинировать, если получается, возвращает страницу, если нет -
+целый ответ.
+
+*Важно!* Ни в одном из миксинов не было методов `get()`,`post()`,`patch()`,`put()` или `delete()`, почему?
+
+Потому что их вызов перенесен в дополнительные классы.
+
+### Generic классы
+
+Вот так выглядят классы, которые уже можно использовать. Как это работает? Эти классы наследуют логику работы с данными
+из необходимого миксина, общие методы, которые актуальны для любого CRUD действия из `GenericAPIView` дальше описываем
+методы тех видов запросов, которые мы хотим обрабатывать, в которых просто вызываем необходимый метод из миксина.
+
+**Переписываются методы `create()`, `destroy()` и т. д., а не `get()`, `post()`!**
+
+```python
+class CreateAPIView(mixins.CreateModelMixin,
+                    GenericAPIView):
+    """
+    Concrete view for creating a model instance.
+    """
+
+    def post(self, request, *args, **kwargs):
+        return self.create(request, *args, **kwargs)
+
+```
+
+```python
+class ListAPIView(mixins.ListModelMixin,
+                  GenericAPIView):
+    """
+    Concrete view for listing a queryset.
+    """
+
+    def get(self, request, *args, **kwargs):
+        return self.list(request, *args, **kwargs)
+```
+
+```python
+class RetrieveAPIView(mixins.RetrieveModelMixin,
+                      GenericAPIView):
+    """
+    Concrete view for retrieving a model instance.
+    """
+
+    def get(self, request, *args, **kwargs):
+        return self.retrieve(request, *args, **kwargs)
+```
+
+```python
+class DestroyAPIView(mixins.DestroyModelMixin,
+                     GenericAPIView):
+    """
+    Concrete view for deleting a model instance.
+    """
+
+    def delete(self, request, *args, **kwargs):
+        return self.destroy(request, *args, **kwargs)
+```
+
+```python
+class UpdateAPIView(mixins.UpdateModelMixin,
+                    GenericAPIView):
+    """
+    Concrete view for updating a model instance.
+    """
+
+    def put(self, request, *args, **kwargs):
+        return self.update(request, *args, **kwargs)
+
+    def patch(self, request, *args, **kwargs):
+        return self.partial_update(request, *args, **kwargs)
+```
+
+```python
+class ListCreateAPIView(mixins.ListModelMixin,
+                        mixins.CreateModelMixin,
+                        GenericAPIView):
+    """
+    Concrete view for listing a queryset or creating a model instance.
+    """
+
+    def get(self, request, *args, **kwargs):
+        return self.list(request, *args, **kwargs)
+
+    def post(self, request, *args, **kwargs):
+        return self.create(request, *args, **kwargs)
+```
+
+```python
+class RetrieveUpdateAPIView(mixins.RetrieveModelMixin,
+                            mixins.UpdateModelMixin,
+                            GenericAPIView):
+    """
+    Concrete view for retrieving, updating a model instance.
+    """
+
+    def get(self, request, *args, **kwargs):
+        return self.retrieve(request, *args, **kwargs)
+
+    def put(self, request, *args, **kwargs):
+        return self.update(request, *args, **kwargs)
+
+    def patch(self, request, *args, **kwargs):
+        return self.partial_update(request, *args, **kwargs)
+```
+
+```python
+class RetrieveDestroyAPIView(mixins.RetrieveModelMixin,
+                             mixins.DestroyModelMixin,
+                             GenericAPIView):
+    """
+    Concrete view for retrieving or deleting a model instance.
+    """
+
+    def get(self, request, *args, **kwargs):
+        return self.retrieve(request, *args, **kwargs)
+
+    def delete(self, request, *args, **kwargs):
+        return self.destroy(request, *args, **kwargs)
+```
+
+```python
+class RetrieveUpdateDestroyAPIView(mixins.RetrieveModelMixin,
+                                   mixins.UpdateModelMixin,
+                                   mixins.DestroyModelMixin,
+                                   GenericAPIView):
+    """
+    Concrete view for retrieving, updating or deleting a model instance.
+    """
+
+    def get(self, request, *args, **kwargs):
+        return self.retrieve(request, *args, **kwargs)
+
+    def put(self, request, *args, **kwargs):
+        return self.update(request, *args, **kwargs)
+
+    def patch(self, request, *args, **kwargs):
+        return self.partial_update(request, *args, **kwargs)
+
+    def delete(self, request, *args, **kwargs):
+        return self.destroy(request, *args, **kwargs)
+```
+
+Допустим, мы хотим описать класс при GET запросе получение списка комментариев, в которых есть буква `w`, если у нас уже
+есть сериалайзер и модель, а при POST создание комментария.
+
+```python
+class CommentListView(ListCreateAPIView):
+    queryset = Comment.objects.all()
+    serializer_class = CommentSerializer
+
+    def get_queryset(self):
+        return super().get_queryset().filter(text__icontains='w')
+```
+
+Всё, этого достаточно.
+
+## ViewSet
+
+Дока [тут](https://www.django-rest-framework.org/api-guide/viewsets/)
+
+Классы, которые отвечают за поведение нескольких запросов, и отличаются друг от друга только методом, называются
+`ViewSet`.
+
+Они на самом деле описывают методы, для получения списка действий (list, retrieve, и т. д.), и преобразования их в URLs
+(об этом дальше).
+
+Например:
+
+```python
+from django.contrib.auth.models import User
+from django.shortcuts import get_object_or_404
+from myapps.serializers import UserSerializer
+from rest_framework import viewsets
+from rest_framework.response import Response
 
 
-@receiver(pre_save, sender=MyModel)
-def my_handler(sender, **kwargs):
+class UserViewSet(viewsets.ViewSet):
+    """
+    A simple ViewSet for listing or retrieving users.
+    """
+
+    def list(self, request):
+        queryset = User.objects.all()
+        serializer = UserSerializer(queryset, many=True)
+        return Response(serializer.data)
+
+    def retrieve(self, request, pk=None):
+        queryset = User.objects.all()
+        user = get_object_or_404(queryset, pk=pk)
+        serializer = UserSerializer(user)
+        return Response(serializer.data)
+```
+
+Разные действия при наличии и отсутствии `PK`, при `GET` запросе.
+
+Для описания URLs можно использовать разное описание:
+
+```python
+user_list = UserViewSet.as_view({'get': 'list'})
+user_detail = UserViewSet.as_view({'get': 'retrieve'})
+```
+
+Хоть так никто и не делает, об этом дальше.
+
+## ModelViewSet и ReadOnlyModelViewSet
+
+Дока [тут](https://www.django-rest-framework.org/api-guide/viewsets/#modelviewset)
+
+Объединяем всё, что мы уже знаем.
+
+И получаем класс `ModelViewSet`, он наследуется от `GenericViewSet` (`ViewSet` + `GenericAPIView`) и всех 5 миксинов, а
+значит там описаны методы `list()`, `retrieve()`, `create()`, `update()`, `destroy()`, `perform_create()`,
+`perform_update()` и т. д.
+
+А значит мы можем описать сущность, которая принимает модель и сериалайзер, и уже может принимать любые типы запросов и
+выполнять любые CRUD действия. Мы можем их переопределить, или дописать еще экшенов, всё что нам может быть необходимо
+уже есть.
+
+Пример:
+
+```python
+class AccountViewSet(viewsets.ModelViewSet):
+    """
+    A simple ViewSet for viewing and editing accounts.
+    """
+    queryset = Account.objects.all()
+    serializer_class = AccountSerializer
+    permission_classes = [IsAccountAdminOrReadOnly]
+```
+
+Или если необходим такой же вьюсет только для получения объектов, то:
+
+```python
+class AccountViewSet(viewsets.ReadOnlyModelViewSet):
+    """
+    A simple ViewSet for viewing accounts.
+    """
+    queryset = Account.objects.all()
+    serializer_class = AccountSerializer
+```
+
+На самом деле, можно собрать такой же вьюсет для любых действий, добавляя и убирая миксины.
+
+Например:
+
+```python
+from rest_framework import mixins
+
+
+class CreateListRetrieveViewSet(mixins.CreateModelMixin,
+                                mixins.ListModelMixin,
+                                mixins.RetrieveModelMixin,
+                                viewsets.GenericViewSet):
+    """
+    A viewset that provides `retrieve`, `create`, and `list` actions.
+
+    To use it, override the class and set the `.queryset` and
+    `.serializer_class` attributes.
+    """
+    pass
+```
+
+Чаще всего используются обычные `ModelViewSet`.
+
+### Пагинация
+
+Дока [тут](https://www.django-rest-framework.org/api-guide/pagination/)
+
+Как мы помним, для действия `list` используется пагинация. Как это работает?
+
+Если у нас нет необходимости настраивать все вьюсеты отдельно, то мы можем указать такую настройку в `settings.py`:
+
+```python
+REST_FRAMEWORK = {
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
+    'PAGE_SIZE': 100
+}
+```
+
+Там мы можем указать тип класса пагинации и размер одной страницы, и все наши запросы уже будут пагинированы.
+
+Также мы можем создать классы пагинаторов, основываясь на нашей необходимости.
+
+```python
+class LargeResultsSetPagination(PageNumberPagination):
+    page_size = 1000
+    page_size_query_param = 'page_size'
+    max_page_size = 10000
+
+
+class StandardResultsSetPagination(PageNumberPagination):
+    page_size = 100
+    page_size_query_param = 'page_size'
+    max_page_size = 1000
+```
+
+Если нужно указать пагинатор у конкретного вьюсета, то можно это сделать прямо в атрибутах.
+
+```python
+class BillingRecordsView(generics.ListAPIView):
+    queryset = Billing.objects.all()
+    serializer_class = BillingRecordsSerializer
+    pagination_class = LargeResultsSetPagination
+```
+
+## Декоратор @action
+
+Дока [тут](https://www.django-rest-framework.org/api-guide/viewsets/#marking-extra-actions-for-routing)
+
+Что делать, если вам нужно дополнительное действие, связанное с деталями вашей вью, но ни один из крудов не походит? Тут
+можно использовать декоратор `@action`, чтобы описать новое действие в этом же вьюсете.
+
+```python
+from django.contrib.auth.models import User
+from rest_framework import status, viewsets
+from rest_framework.decorators import action
+from rest_framework.response import Response
+from myapp.serializers import UserSerializer, PasswordSerializer
+
+
+class UserViewSet(viewsets.ModelViewSet):
+    """
+    A viewset that provides the standard actions
+    """
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+
+    @action(detail=True, methods=['post'])
+    def set_password(self, request, pk=None):
+        user = self.get_object()
+        serializer = PasswordSerializer(data=request.data)
+        if serializer.is_valid():
+            user.set_password(serializer.data['password'])
+            user.save()
+            return Response({'status': 'password set'})
+        else:
+            return Response(serializer.errors,
+                            status=status.HTTP_400_BAD_REQUEST)
+
+    @action(detail=False)
+    def recent_users(self, request):
+        recent_users = self.get_queryset().order_by('-last_login')
+
+        page = self.paginate_queryset(recent_users)
+        if page is not None:
+            serializer = self.get_serializer(page, many=True)
+            return self.get_paginated_response(serializer.data)
+
+        serializer = self.get_serializer(recent_users, many=True)
+        return Response(serializer.data)
+```
+
+Принимает два основных параметра: `detail` описывает должен ли этот action принимать PK (действие над всеми объектами
+или над одним конкретным), и `methods` - список HTTP методов, на которые должен срабатывать `action`.
+
+Есть и другие, например, классы permissions или имя.
+
+## Роутеры
+
+Дока [тут](https://www.django-rest-framework.org/api-guide/routers/)
+
+Роуте - это автоматический генератор URLs для вьюсетов.
+
+```python
+from rest_framework import routers
+
+router = routers.SimpleRouter()
+router.register(r'users', UserViewSet)
+router.register(r'accounts', AccountViewSet)
+urlpatterns = router.urls
+```
+
+В методе `register` принимает два параметра, на каком слове основывать URLs и для какого вьюсета.
+
+Если у вьюсета нет параметра `queryset`, то нужно указать поле `basename`, если нет, то автоматически будет использовано
+имя модели маленькими буквами.
+
+URLs будут сгенерированы автоматически, и им будут автоматически присвоены имена:
+
+```
+URL pattern: ^users/$ Name: 'user-list'
+URL pattern: ^users/{pk}/$ Name: 'user-detail'
+URL pattern: ^accounts/$ Name: 'account-list'
+URL pattern: ^accounts/{pk}/$ Name: 'account-detail'
+```
+
+Чаще всего роутеры к URLs добавляются вот такими способами:
+
+```python
+urlpatterns = [
+    path('forgot-password', ForgotPasswordFormView.as_view()),
+    path('api/', include(router.urls)),
+]
+```
+
+### Роутинг экстра экшенов
+
+Допустим, есть такой экстра экшен:
+
+```python
+from rest_framework.decorators import action
+
+
+class UserViewSet(ModelViewSet):
     ...
-```
 
-Сигнал можно создать под любое действие, если это необходимо. Допустим, нужно отправить сигнал, что пицца готова.
-
-Сначала создадим сигнал.
-
-```python
-import django.dispatch
-
-pizza_done = django.dispatch.Signal()
-```
-
-И в нужном месте можно отправить:
-
-```python
-class PizzaStore:
-    ...
-
-    def send_pizza(self, toppings, size):
-        pizza_done.send(sender=self.__class__, toppings=toppings, size=size)
+    @action(methods=['post'], detail=True)
+    def set_password(self, request, pk=None):
         ...
 ```
 
-## Messages
+Роутер автоматически сгенерирует URL `^users/{pk}/set_password/$` и имя `user-set-password`.
 
-Дока [тут](https://docs.djangoproject.com/en/4.2/ref/contrib/messages/)
-
-Довольно часто в веб-приложениях вам необходимо отображать одноразовое уведомление для пользователя после обработки
-формы или некоторых других типов пользовательского ввода ("Вы успешно зарегистрировались", "Скидка активирована",
-"Недостаточно бонусов").
-
-Для этого Django обеспечивает полную поддержку обмена сообщениями на основе файлов cookie и сеансов как для анонимных,
-так и для аутентифицированных пользователей.
-
-Инфраструктура сообщений позволяет вам временно хранить сообщения в одном запросе и извлекать их для отображения в
-следующем запросе (обычно в следующем).
-
-Каждое сообщение имеет определенный уровень, который определяет его приоритет (например, информация, предупреждение или
-ошибка).
-
-### Подключение
-
-По дефолту, если проект был создан через `django-admin`, то `messages` изначально подключены.
-
-`django.contrib.messages` должны быть в `INSTALLED_APPS`.
-
-В переменной `MIDDLEWARE` должны быть `django.contrib.sessions.middleware.SessionMiddleware`
-and `django.contrib.messages.middleware.MessageMiddleware`.
-
-По дефолту данные сообщений хранятся в сессии, это является причиной, почему мидлвар для сессий должен быть подключен.
-
-В переменной `context_processors` в переменной `TEMPLATES` должны
-содержаться `django.contrib.messages.context_processors.messages`.
-
-#### context_processors
-
-Ключ в переменной `OPTIONS` в переменной `TEMPLATES` отвечает за то, что по дефолту будет присутствовать как переменная
-во всех наших темплейтах. Изначально выглядит вот так:
-
-```python
-'context_processors': [
-    'django.template.context_processors.debug',
-    'django.template.context_processors.request',
-    'django.contrib.auth.context_processors.auth',
-    'django.contrib.messages.context_processors.messages',
-]
-```
-
-`django.template.context_processors.debug`, если в `settings.py` переменная `DEBUG`==`True`, добавляет в темплейт
-информацию о подробностях, если произошла ошибка.
-
-`django.template.context_processors.request` добавляет в контекст данные из реквеста, переменная `request`.
-
-`django.contrib.auth.context_processors.auth` добавляет переменную `user` с информацией о пользователе.
-
-`django.contrib.messages.context_processors.messages` добавляет сообщения на страницу.
-
-### Storage backends
-
-Хранить сообщения можно в разных местах.
-
-По дефолту существует три варианта хранения:
-
-`class storage.session.SessionStorage` - хранение в сессии
-
-`class storage.cookie.CookieStorage` - хранение в куке
-
-`class storage.fallback.FallbackStorage` - пытаемся хранить в куке, если не помещается используем сессию. Будет
-использовано по умолчанию.
-
-Если нужно изменить, добавьте в `settings.py` переменную:
-
-```python
-MESSAGE_STORAGE = 'django.contrib.messages.storage.cookie.CookieStorage'
-```
-
-Если нужно написать свой класс для хранения сообщений, то нужно наследоваться от `class storage.base.BaseStorage` и
-описать 2 метода `_get()` и `_store()`.
-
-### Как этим пользоваться?
-
-Во view необходимо добавить сообщение.
-
-Это можно сделать несколькими способами:
-
-#### add_message()
-
-```python
-from django.contrib import messages
-
-messages.add_message(request, messages.INFO, 'Hello world.')
-```
-
-Метод `add_message()` позволяет добавить сообщение к реквесту, принимает сам реквест, тип сообщения (успех, провал
-информация и т. д.) и сам текст сообщения. На самом деле, второй параметр - это просто цифра, а текст добавлен для чтения.
-
-Чаще всего используется в методах **form_valid()**, **form_invalid()**
-
-#### Сокращенные методы
-
-```python
-messages.debug(request, '%s SQL statements were executed.' % count)
-messages.info(request, 'Three credits remain in your account.')
-messages.success(request, 'Profile details updated.')
-messages.warning(request, 'Your account expires in three days.')
-messages.error(request, 'Document deleted.')
-```
-
-Эти 5 типов сообщений являются стандартными, но, если необходимо, всегда можно добавить свои типы. Как это сделать
-описано в доке.
-
-### Как отобразить?
-
-`context_processors`, который находится в настройках, уже добавляет нам в темплейт переменную `messages`, а дальше 
-мы можем использовать классические темплейт теги.
-
-Примеры:
-
-```html
-{% if messages %}
-<ul class="messages">
-    {% for message in messages %}
-    <li
-            {% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}
-    </li>
-    {% endfor %}
-</ul>
-{% endif %}
-```
-
-```html
-{% if messages %}
-<ul class="messages">
-    {% for message in messages %}
-    <li
-            {% if message.tags %} class="{{ message.tags }}" {% endif %}>
-        {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}Important: {% endif %}
-        {{ message }}
-    </li>
-    {% endfor %}
-</ul>
-{% endif %}
-```
-
-Чаще всего такой код располагают в блоке в базовом шаблоне, чтобы не указывать его на каждой странице отдельно.
-
-#### Использование во view
-
-Если нам вдруг необходимо получить список текущих сообщение во view, мы можем это сделать при помощи
-метода `get_messages()`.
-
-```python
-from django.contrib.messages import get_messages
-
-storage = get_messages(request)
-for message in storage:
-    do_something_with_the_message(message)
-```
-
-### Messages и Class-Based Views
-
-Можно добавлять сообщения при помощи миксинов, примеры:
-
-```python
-from django.contrib.messages.views import SuccessMessageMixin
-from django.views.generic.edit import CreateView
-from myapp.models import Author
-
-
-class AuthorCreate(SuccessMessageMixin, CreateView):
-    model = Author
-    success_url = '/success/'
-    success_message = "%(name)s was created successfully"
-```
-
-```python
-from django.contrib.messages.views import SuccessMessageMixin
-from django.views.generic.edit import CreateView
-from myapp.models import ComplicatedModel
-
-
-class ComplicatedCreate(SuccessMessageMixin, CreateView):
-    model = ComplicatedModel
-    success_url = '/success/'
-    success_message = "%(calculated_field)s was created successfully"
-
-    def get_success_message(self, cleaned_data):
-        return self.success_message % dict(
-            cleaned_data,
-            calculated_field=self.object.calculated_field,
-        )
-```
-
-## Manage-команды и настройки.
-
-Manage-команды в рамках Django - это возможность запустить скрипт из консоли для выполнения абсолютно различных действий.
-
-Существует три способа запуска manage-команды:
-
-```
-django-admin <command> [options]
-python manage.py <command> [options]
-python -m django <command> [options]
-```
-
-В случае запуска через `django-admin` вы можете указать, какой файл настроек использовать при помощи опции `--settings`.
-
-Если вы запускаете команду через `manage.py` (самый распространенный способ), файл настроек будет выбран в соответствии 
-с самим файлом `manage.py` (Напоминаю структуру, информация о файле настроек для Django проекта находится именно в
-файле `manage.py`).
-
-Мы использовали некоторые команды, но давайте посмотрим подробнее.
-
-## Доступные команды.
-
-![](https://www.meme-arsenal.com/memes/d4d5ed953c6b783bc97f142cb8e89d4d.jpg)
-
-### Check
-
-```
-python manage.py check [app_label [app_label ...]]
-```
-
-Например:
-
-```
-django-admin check auth admin myapp
-```
-
-Команда для запуска проверки кода на качество (например, что неправильно указаны аргументы модели или некорректно
-указано свойство для класса админки и т. д., список огромный)
-Посмотреть базовый список проверок можно [Тут](https://docs.djangoproject.com/en/4.2/ref/checks/)
-
-### makemessages
-
-```
-python manage.py makemessages
-```
-
-Командна для работы с переводами (локализацией) сайтов.
-
-Команда проходит через весь код и ищет места, которые заготовлены для перевода (для Python кода - это везде, где вы
-используете метод `gettext`, для шаблонов - везде, где используется темплейт тег `translate`,
-подробнее [Тут](https://docs.djangoproject.com/en/4.2/topics/i18n/translation/)).
-
-Создаёт\обновляет файлы, в которых хранятся\будут храниться переводы текста на друге языки. Принимает параметры `--all`
-, `--extension`, `--locale`, `--exclude`, `--domain`, `--ignore` и т. д.
-
-Подробности использования
-параметров [тут](https://docs.djangoproject.com/en/4.2/ref/django-admin/#django-admin-makemessages)
-
-Обсудим основные.
-
-`--locale LOCALE, -l LOCALE` нужно для указания языка, на который планируется перевод (на самом деле повлияет только 
-на то, как будет называться файл с переводами, и как этот перевод будет называться в системе), например, для 
-французского можно назвать файл `fr`, для итальянского `it` и т. д.
-
-```
-django-admin makemessages --locale=pt_BR
-django-admin makemessages --locale=pt_BR --locale=fr
-django-admin makemessages -l pt_BR
-django-admin makemessages -l pt_BR -l fr
-```
-
-`--ignore PATTERN` - игнорировать (не искать) переводы в определённых местах, например, `--ignore *.py' - игнорировать
-все Python файлы.
-
-Создаст файлы с расширением `.po` и списком всех мест, где нужно будет указать перевод.
-
-```
-#. Translators: This message appears on the home page only
-# path/to/python/file.py:123
-msgid "Welcome to my site."
-msgstr ""
-```
-
-Комментарием указано, откуда конкретно взят текст для перевода, ниже сам текст, который нужно перевести, и место, где мы
-можем указать перевод.
-
-### compilemessages
-
-Компилирует файлы для переводов.
-
-Делает из `.po` файлов `.mo` файлы. Django принимает именно `.mo` в качестве файлов, откуда брать перевод.
-
-Поддерживает указание локали и игнор, подробнее в доке.
-
-### createcachedtable
-
-Создаёт таблицу для кеша в базе данных, подробно рассматривали на занятии по сессиям и кешам.
-
-### shell
-
-Уже известная вам команда `shell` открывает интерактивную `python` консоль с уже импортированными библиотеками вашего
-проекта, например, Django.
-
-### dbshell
-
-По аналогии со знакомой нам командой `shell` открывает консоль со всеми необходимыми импортированными данными, но для
-базы данных.
-
-Например, для PostgreSQL, откроется `psql` и т. д.
-
-### diffsettings
-
-Команда, которая покажет, чем отличается ваш файл `settings.py` от оригинала.
-
-### dumpdata
-
-Команда для работы с фикстурами.
-
-Фикстуры - это файлы отображения базы данных в формат JSON.
-
-Команда `dumpdata` вытащит все данные из базы данных и преобразует всё в формат JSON.
-
-Может принимать имя только нескольких приложений или даже только некоторых моделей, или наоборот - исключить какие-то
-приложения или модели.
-
-### loaddata
-
-Команда, обратная команде `dumpdata`, для загрузки JSON файла в базу данных.
-
-Подробно будем рассматривать эти командны на практике во время занятия по тестированию Django.
-
-### flush
-
-Команда, необходимая для очистки базы данных, но не отмены миграций (сохраняем структуру, теряем все данные).
-
-### sqlflush
-
-Отпечатает, какой SQL код будет выполнен при применении команды `flush`.
-
-### inspectdb
-
-Команда, необходимая для проверки соответствия ваших моделей и вашей базы данных. Незаменимо при переносе проекта извне
-на Django.
-
-### makemigrations
-
-Уже известная вам команда, которая создаёт файлы миграций, и может принимать имя приложения, чтобы создать только для
-конкретного приложения.
-
-Может принимать важный параметр `--empty`, при этом флаге создастся пустая миграция, никак не привязанная к моделям.
-Выглядеть будет примерно вот так:
-
-```python
-# Generated by Django 3.0.7 on 2020-10-29 11:59
-
-from django.db import migrations
-
-
-class Migration(migrations.Migration):
-    dependencies = [
-        ('storages', '0003_auto_20201029_1352'),
-    ]
-
-    operations = [
-    ]
-```
-
-Тут указано приложение, для которого миграция будет применена, и прошлая миграция, с которой текущая миграция будет
-связана.
-
-Зачем это вообще надо?
-
-Мы можем в операции добавить любые интересующие нас действия, например, выполнения кода на Python.
-
-Для этого нужно добавить класс `RunPython` из пакета `migrations`, который будет принимать два метода, первый будет
-выполнен в случае выполнения миграции, второй - в случае отката миграции.
-
-```python
-# Generated by Django 3.0.7 on 2020-10-29 11:59
-
-from django.db import migrations
-
-
-def some_forward_action(apps, schema_editor):
-    Team = apps.get_model('storages', 'Team')
-    Team.objects.create(name='B2B')
-    Team.objects.create(name='CX')
-    Team.objects.create(name='SFA')
-
-
-def some_backward_action(apps, schema_editor):
-    pass
-
-
-class Migration(migrations.Migration):
-    dependencies = [
-        ('storages', '0003_auto_20201029_1352'),
-    ]
-
-    operations = [
-        migrations.RunPython(some_forward_action, some_backward_action)
-    ]
-```
-
-Такие миграции называются **Data Migrations**.
-
-Чаще всего для того, чтобы занести какие-либо данные в базу данных на этапе миграции, например, создать заведомо
-известные объекты, как в моём примере, или для установки вычисляемого значения по умолчанию.
-
-Для обратной миграции чаще всего действия не требуются (хоть и далеко не всегда), поэтому чаще всего обратная миграция
-записывается в виде лямбды `lambda x, y: None`
-
-![](https://lh3.googleusercontent.com/proxy/a3WuV3A8umBdVGJA7UVrM50cqloRtS9MhMcq9GYmYwwExEAnYkqNVajL5BBHi_3gwnu4-3s8xDHzTQStrjgrMDZg5lQ)
-
-Типовая Data Migration:
-
-```python
-# Generated by Django 3.0.7 on 2020-10-29 11:59
-
-from django.db import migrations
-
-
-def some_forward_action(apps, schema_editor):
-    Team = apps.get_model('storages', 'Team') # Приложение и модель
-    Team.objects.create(name='B2B')
-    Team.objects.create(name='CX')
-    Team.objects.create(name='SFA')
-
-
-class Migration(migrations.Migration):
-    dependencies = [
-        ('storages', '0003_auto_20201029_1352'),
-    ]
-
-    operations = [
-        migrations.RunPython(some_forward_action, lambda x, y: None)
-    ]
-```
-
-### migrate
-
-Уже известная вам команда для применения миграции
-
-```
-django-admin migrate [app_label] [migration_name]
-```
-
-Может быть указано приложение, к которому применяется, и имя миграции (на самом деле достаточно первых четырех цифр).
-Указывание имени нужно для отката миграций. Допустим, у вас уже применена миграция номер 8, а вы поняли, что проблема
-была в миграции номер 6, это значит, что можно откатить базу до миграции номер 5. Естественно с потерей данных, и 
-провести новые миграции, для этого нужно сделать:
-
-```
-manage.py migrate my_app 0005
-```
-
-Важным флагом является ```--fake```, при применении этого флага изменения в базу внесены не будут, но Django будет
-видеть, что миграция была применена. Нужно, чтобы использовать базы с уже заполненными данными, созданными вне Django
-проекта.
-
-> Вместо цифр можно указать значение `zero`, что позволяет откатить все миграции для этого приложения.
-
-### sqlmigrate
-
-Отпечатает, какой SQL код будет выполнен при применении команды `migrate`
-
-### showmigrations
-
-Также уже известная вам команда, которая отобразит список миграций и их состояние (применена или нет).
-
-### runserver
-
-Команда для запуска тестового сервера, можно указывать порт и многие другие настройки **Не применяется на продакшене,
-только для разработки**. Как это делается на продакшене, рассмотрим в следующих лекциях.
-
-### sendtestemail
-
-Отправка тестового имейла (работает, только если отправка писем была настроена) принимает два параметра - от кого и кому.
-
-Например:
-
-```python manage.py sendtestemail myownemail@gmail.com myanotheremail@gmail.com```
-
-### sqlsequencereset
-
-Команда для сброса последовательностей базы данных, может принимать название приложения.
-
-Если вы удалите все объекты из базы и начнёте создавать новые, id будут продолжаться вне зависимости от того, сколько
-объектов было раньше, потому что `id` вычисляется из специальных объектов базы, которые называются `sequence`.
-
-Если их сбросить, то `id` будет назначаться снова с `1`.
-
-**Не применять на базах с данными!!**
-
-### squashmigrations
-
-Команда, которая применяется для того, чтобы `сжать` несколько миграций в одну.
-
-Например, в приложении `myapp` миграции от 4-ой до 7-ой - это добавления новых полей в одну и ту же модель. Чтобы сжать 
-эти миграции в одну, нужно выполнить:
-
-```python manage.py squashmigrations myapp 0004 0007```
-
-### startapp
-
-Команда для создания нового приложения.
-
-### startproject
-
-Команда для создания нового проекта.
-
-### test
-
-Команда для запуска тестов. Рассмотрим её на следующих занятиях.
-
-## Команды базовых приложений
-
-### django.contrib.auth
-
-### changepassword
-
-Команда для смены пароля конкретному пользователю.
-
-```manage.py changepassword ringo```
-
-### createsuperuser
-
-Команда для создания пользователя со всеми правами.
-
-### django.contrib.sessions
-
-### clearsession
-
-Команда для очистки базы данных от информации о сессиях. При базовых настройках вся информация о сессиях автоматически
-пишется в базу данных.
-
-### django.contrib.staticfiles
-
-Команды для статики, вообще работу статики и медиа рассмотрим на следующих занятиях.
-
-## Написание своих скриптов
-
-По факту, все вышеописанные команды написаны на Python, а это значит, что мы можем написать свои команды.
-
-Допустим, у нас есть проект пиццерии, в рамках которого есть приложение `orders`, отвечающее за заказы, и мы хотим, 
-чтобы все заказы, которые не были закрыты вручную, ровно в 18:00 были переведены в статус для ручной проверки, а владелец
-заведения получил письмо о том, что такие заказы есть.
-
-Самый простой путь - это создать `manage-команду`. В приложении создадим папку `management`, а в ней папку `commands`, 
-названия созданных в этой папке файлов будет соответствовать кастомной manage-команде.
-
-```
-orders/
-    __init__.py
-    models.py
-    management/
-        commands/
-            close_orders.py
-    tests.py
-    views.py
-```
-
-В файле нужно создать класс, наследованный от `BaseCommand`:
-
-```python
-from django.core.management.base import BaseCommand
-from orders.models import Order
-import send_email
-
-
-class Command(BaseCommand):
-    help = "Close orders which weren't closed manually"
-
-    def handle(self, *args, **options):
-        orders = Order.objects.filter(status="opened")
-        if orders:
-            orders.update(status="manual")
-            send_email("Not closed orders", f"Hey, you have {orders.count()} orders with status 'opened'")
-            self.stdout.write(self.style.SUCCESS('Successfully closed orders'))
-```
-
-Запустить такую команду можно из консоли:
-
-```python manage.py close_orders```
-
-Теперь можно при помощи любой утилиты для работы с консолью поставить задачу в расписание, например, для UNIX систем
-можно использовать CRON.
-
-```python
-0 18 * * 1-5 /some/path/pizza/manage.py close_orders
-```
+Класс `SimpleRouter` может принимать параметр `trailing_slash=False` True или False, по дефолту True, поэтому все API,
+должны принимать URLs заканчивающиеся на `/`, если указать явно, то будет принимать всё без `/`.

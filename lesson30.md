@@ -1,824 +1,801 @@
-# Лекция 30. @api_view, APIView, ViewSets, Pagination, Routers
+# Лекция 30. Тестирование. Django, REST API.
 
-Все мы помним, что веб в первую очередь - это Request-Response система.
+![](https://preview.redd.it/aom6ubb0b4e71.jpg?width=640&crop=smart&auto=webp&s=d9094222a89d1f8cb0f43285d4ff9c81f274cfee)
 
-## Request
+## Общая информация
 
-Что нового в request.
+Тестирование - это огромная, нет **ОГРОМНАЯ** тема, настолько огромная, что порождает два отдельных класса сотрудников в
+IT индустрии.
 
-Дока [тут](https://www.django-rest-framework.org/api-guide/requests/)
+## Уровни тестирования
 
-Два новых парамера `.data` и `.query_string`
+Напомним себе про пирамиду тестирования
 
-`.data` - данные, если запрос POST, PUT или PATCH, аналог `request.POST` или `request.FILES`
+![](https://habrastorage.org/storage2/ec3/825/c7f/ec3825c7f0710f9fed6814c89b794ded.jpg)
 
-`.query_string` - данные, если запрос GET, аналог `request.GET`
+Существует 4 основных уровня тестирования функционала.
 
-И параметры `.auth` и `.authenticate`, которые мы рассмотрим на следующей лекции. Она целиком про авторизацию и
-`permissions` (доступы).
+**Модульные тесты (Unit Tests)** - это тесты, проверяющие функционал конкретного модуля минимального размера. 
+Если вы переписали метод `get_context_data()`, то юнит тестом будет попытка вызвать этот метод с разными входными 
+данными, и посмотреть на то, что вернёт результат.
 
-## Response
+**Интеграционные тесты (Integration Tests)** - это вид тестирования, когда проверяется целостность работы системы, без 
+сторонних средств. Например, вы переписали метод `get_context_data()`, выполняем запрос при помощи кода, и смотрим,
+изменилась ли переменная `context` в ответе на наш запрос.
 
-Дока [тут](https://www.django-rest-framework.org/api-guide/responses/)
+**Приёмочные тесты (Acceptance Tests)** - вид тестов с полной имитацией действий пользователя. При помощи специальных
+средств (например, Selenium) мы прописываем код открытия браузера, поиска необходимых элементов на странице, имитируем
+ввод данных, нажатие кнопок, переход по ссылкам и т. д.
 
-В отличие от классической Django, ответом в REST системе будет обычный HTTP-ответ, содержащий набор данных, чаще
-всего JSON (но бывает и нет).
+**Ручные тесты (Manual Tests)** - вид тестов, когда мы полностью повторяем потенциальные действия пользователя.
 
-Классическая Django тоже может возвращать HTTP-ответ и быть обработчиком REST архитектуры, но существующий пакет
-сильно упрощает эти процессы.
+## Тестирование в Django
 
-Для обработки такого ответа есть специальный объект:
+Вы знаете о существовании `unittest.TestCase`, от которого нужно наследоваться, чтобы создать обычный тест.
 
-```Response(data, status=None, template_name=None, headers=None, content_type=None)```
+У него могут быть метод `setUp()` и `tearDown()` для описания данных, которые нужно выполнить до каждого теста и после
+соответственно.
 
-где `data` - данные,
+И методы, начинающиеся со слова `test_`, которые описывают сами тесты, для чего используется ключевое слово `assert` или
+основанные на нём встроенные методы.
 
-`status` - код ответа (200, 404, 503),
+В рамках Django есть свой собственный тест кейс, наследованный от базового `unittest.TestCase`.
 
-`template_name` - возможность указать темплейт, если необходимо вернуть страницу, а не просто набор данных,
+![](https://docs.djangoproject.com/en/2.2/_images/django_unittest_classes_hierarchy.svg)
 
-`headers` и `content_type` - заголовки и тип содержимого запроса.
+### SimpleTestCase
 
-## Настройка для получения JSON
+`SimpleTestCase` наследуется от базового.
 
-Если нужно указать явно формат для получения или отправки, то можно указать его в `settings.py`:
+#### Что добавляет?
+
+Добавляет `settings.py` в структуру теста и возможность переписать или изменить `settings.py` для теста.
+
+Добавляет `Client`, который используется для написания интеграционных тестов (через него мы будем отправлять запросы).
+
+Добавляет новые методы `assert`:
+
+`assertRedirects` - проверка на то, что URL, на который мы попали, совпадёт с ожидаемым.
+
+`assertContains` - проверка на то, что страница содержит ожидаемую переменную.
+
+`assertNotContains` - проверка на то, что страница не содержит ожидаемую переменную.
+
+`assertFormError` - проверка на то, что форма содержит нужную ошибку.
+
+`assertFormsetError` - проверка на то, что formset содержит нужную ошибку.
+
+`assertTemplateUsed` - проверка на то, что был использован ожидаемый шаблон.
+
+`assertTemplateNotUsed` - проверка на то, что не был использован ожидаемый шаблон.
+
+`assertRaisesMessage` - проверка на то, что на странице присутствует определённое сообщение.
+
+`assertFieldOutput` - проверка на то, что определённое поле содержит ожидаемое значение.
+
+`assertHTMLEqual` - проверка на то, что полученный HTML соответствует ожидаемому.
+
+`assertHTMLNotEqual` - проверка на то, что полученный HTML не соответствует ожидаемому.
+
+`assertJSONEqual` - проверка на то, что полученный JSON соответствует ожидаемому.
+
+`assertJSONNotEqual` - проверка на то, что полученный JSON не соответствует ожидаемому.
+
+`assertXMLEqual` - проверка на то, что полученный XML соответствует ожидаемому.
+
+`assertXMLNotEqual` - проверка на то, что полученный XML не соответствует ожидаемому.
+
+### TransactionTestCase
+
+`TransactionTestCase` наследуется от `SimpleTestCase`.
+
+#### Что добавляет?
+
+Добавляет возможность выполнять транзакции в базу данных в рамках теста.
+
+Добавляет атрибут `fixtures` для возможности загружать базовые условия теста из фикстур.
+
+Добавляет атрибут `reset_sequences`, который позволяет сбрасывать последовательности для каждого теста (каждый созданный
+объект всегда будет начинаться с id=1)
+
+Добавляет новые методы `assert`:
+
+`assertQuerysetEqual` - проверка на то, что полученный кверисет совпадает с ожидаемым.
+
+`assertNumQueries` - проверка на то, что выполнение функции делает определённое количество запросов в базу.
+
+### TestCase из модуля Django
+
+`TestCase` наследуется от `TransactionTestCase`.
+
+#### Что добавляет?
+
+По сути ничего. :) Немного по другому выполняет запросы в базу (с использованием атомарности), из-за чего
+предпочтительнее.
+
+Дополнительный метод `setUpTestData()` для описания данных для теста. Не обязательный.
+
+Это самый часто используемый вид тестов.
+
+### LiveServerTestCase
+
+`LiveServerTestCase` наследуется от `TransactionTestCase`.
+
+#### Что добавляет?
+
+Запускает реальный сервер для возможности открыть проект в браузере. Необходим для написания Acceptance Tests.
+
+Чаще всего в таких тестах запускается сервер и имитация браузера (например, Selenium).
+
+### База данных для тестирования
+
+Для тестов используется отдельная база данных, которая будет указана в переменной `TEST` в переменной `DATABASES` в
+файле `settings.py`:
 
 ```python
-REST_FRAMEWORK = {
-    'DEFAULT_RENDERER_CLASSES': [
-        'rest_framework.renderers.JSONRenderer',
-    ],
-    'DEFAULT_PARSER_CLASSES': [
-        'rest_framework.parsers.JSONParser',
-    ]
-}
-```
-
-## @api_view
-
-Дока [тут](https://www.django-rest-framework.org/api-guide/views/#api_view)
-
-Для описания `endpoint` функционально нужно указать декоратор `api_view` и методы, которые он может принимать.
-Возвращает всё также объект ответа. Для использования возьмем модель `Book` и сериалайзер `BookSerializer`, из
-последнего примера прошлой лекции
-
-```python
-from rest_framework import status
-from rest_framework.decorators import api_view
-from rest_framework.response import Response
-from myapp.models import Book
-from myapp.serializers import BookSerializer
-
-
-@api_view(['GET', 'POST'])
-def book_list(request):
-    """
-    List all books, or create a new book.
-    """
-    if request.method == 'GET':
-        books = Book.objects.all()
-        serializer = BookSerializer(books, many=True)
-        return Response(serializer.data)
-
-    elif request.method == 'POST':
-        book = BookSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-```
-
-Обратите внимание, в пакете REST фреймворка сразу есть заготовленные объекты статуса для ответа.
-
-Если попытаться получить доступ методом, который не разрешен, запрос будет отклонён с ответом `405 Method not allowed`
-
-Для передачи параметров используются аргументы функции. (Очень похоже на обычную Django вью)
-
-```python
-@api_view(['GET', 'PUT', 'DELETE'])
-def book_detail(request, pk):
-    """
-    Retrieve, update or delete a book.
-    """
-    try:
-        book = Book.objects.get(pk=pk)
-    except Book.DoesNotExist:
-        return Response(status=status.HTTP_404_NOT_FOUND)
-
-    if request.method == 'GET':
-        serializer = BookSerializer(book)
-        return Response(serializer.data)
-
-    elif request.method == 'PUT':
-        serializer = BookSerializer(book, data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-    elif request.method == 'DELETE':
-        book.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
-```
-
-URLs для таких методов описываются точно так же как и для стандартной Django вью.
-
-```python
-from myapp.view import book_list, book_detail
-
-urlpatterns = [
-    path('books/', book_list),
-    path('books/<int:pk>/', book_detail),
-]
-```
-
-Ответ на GET-запрос в этому случае будет выглядеть так:
-
-```json
-[
-  {
-      "title": "Harry Potter and the Philosopher's Stone",
-      "published_date": "1997-06-26",
-      "id": 1
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'USER': 'mydatabaseuser',
+        'NAME': 'mydatabase',
+        'TEST': {
+            'NAME': 'mytestdatabase',
+        },
     },
-    {
-      "title": "Harry Potter and the Chamber of Secrets",
-      "published_date": "1998-07-02",
-      "id": 2
-    }
-]
-```
-
-Поля будут зависеть от модели и сериалайзера соответственно.
-
-Ответ на POST запрос (создание объекта):
-
-```json
-{
-   "title": "test title",
-   "published_date": "1998-07-02",
-   "id": 3
 }
 ```
 
-## View
+Эта база будет изначально пустая и будет очищаться после каждого выполненного тест кейса.
 
-Знакомимся с самым подробным сайтом по DRF классам [тут](http://www.cdrf.co/)
+**Ваш юзер должен иметь права на создание и очистку базы данных**
 
-## APIView
+### Расположение тестов
 
-Дока [тут](https://www.django-rest-framework.org/api-guide/views/#class-based-views)
+Несмотря на то, что Django создаёт для нас в приложении файл `tests.py`, им практически никогда не пользуются.
 
-Также мы можем описать это же через Class-Based View, для этого нам нужно наследоваться от APIView:
+Существует два самых распространённых способа хранения тестов. Если вам повезло и на вашем проекте есть специальные
+тестировщики, то ваша задача - это только юнит тесты.
 
-```python
-from myapp.models import Book
-from myapp.serializers import BookSerializer
-from rest_framework.views import APIView
-from rest_framework.response import Response
-from rest_framework import status
+И тогда в папке приложения создаётся еще одна папка `tests`, в которой уже создаются файлы для тестов различных частей,
+например, `test_models.py`, `test_forms.py` и т. д.
 
+![](https://drive.google.com/uc?export=view&id=1E_Tf8H2spWJbSOaaxvWOMiLk4c0bgvUT)
 
-class BookList(APIView):
-    """
-    List all books, or create a new book.
-    """
+Если вам не повезло, и на проекте вы за автоматических тестеров, то тогда в этой же папке (`tests`) создаётся еще 3 
+папки `unit`, `integration` и `acceptance`, и уже в них описываются различные тесты.
 
-    def get(self, request, format=None):
-        books = Book.objects.all()
-        serializer = BookSerializer(books, many=True)
-        return Response(serializer.data)
+### Запуск тестов
 
-    def post(self, request, format=None):
-        serializer = BookSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-```
-
-Вынесем получение объекта в отдельный метод:
+Предположим, что у нас в приложении `animals` есть папка `tests`, в ней папка `unit` и в ней файл `test_models`.
 
 ```python
-class BookDetail(APIView):
-    """
-    Retrieve, update or delete a book instance.
-    """
+from django.test import TestCase
+from myapp.models import Animal
 
-    def get_object(self, pk):
-        try:
-            return Book.objects.get(pk=pk)
-        except Book.DoesNotExist:
-            raise Http404
 
-    def get(self, request, pk, format=None):
-        book = self.get_object(pk)
-        serializer = BookSerializer(book)
-        return Response(serializer.data)
+class AnimalTestCase(TestCase):
+    def setUp(self):
+        Animal.objects.create(name="lion", sound="roar")
+        Animal.objects.create(name="cat", sound="meow")
 
-    def put(self, request, pk, format=None):
-        book = self.get_object(pk)
-        serializer = BookSerializer(book, data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-    def delete(self, request, pk, format=None):
-        book = self.get_object(pk)
-        book.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
+    def test_animals_can_speak(self):
+        """Animals that can speak are correctly identified"""
+        lion = Animal.objects.get(name="lion")
+        cat = Animal.objects.get(name="cat")
+        self.assertEqual(lion.speak(), 'The lion says "roar"')
+        self.assertEqual(cat.speak(), 'The cat says "meow"')
 ```
 
-URLs описываются так же, как и для Django Class-Based View:
+То для запуска тестов используется manage-команда `test`
+
+```
+# Запустить все тесты в приложении в папке тестов
+$./manage.py test animals.tests
+
+# Запустить все тесты в приложении
+$./manage.py test animals
+
+# Запустить один тест кейс
+$./manage.py test animals.tests.unit.test_models.AnimalTestCase
+
+# Запустить один тест из тест кейса
+$./manage.py test animals.tests.unit.test_models.AnimalTestCase.test_animals_can_speak
+```
+
+## Специальные инструменты тестирования
+
+### Client
+
+Для проведения `интеграционного` тестирования Django приложения нам необходимо отправлять запросы с клиента (браузера),
+функционал для этого нам предоставлен из коробки, и мы можем им воспользоваться:
 
 ```python
-urlpatterns = [
-    path('books/', BookList.as_view()),
-    path('books/<int:pk>/', BookDetail.as_view()),
-]
+from django.test import Client
+
+c = Client()
+response = c.post('/login/', {'username': 'john', 'password': 'smith'})
+response.status_code
+200
+response = c.get('/customer/details/')
+response.content
 ```
 
-## GenericView
+Такой запрос не будет требовать CSRF токен (хотя это тоже можно изменить, если необходимо).
 
-По аналогии с классической Django существуют заранее описанные CRUD действия.
-
-Как это работает?
-
-Существует класс `GenericAPIView`, который наследуется от обычного `APIView`.
-
-В нём описаны такие поля как:
-
-- `queryset` хранит кверисет;
-
-- `serializer_class` хранит сериалайзер;
-
-- `lookup_field = 'pk'` - название атрибута в модели, который будет отвечать за PK;
-
-- `lookup_url_kwarg = None` - название атрибута в запросе, который будет отвечать за `pk`;
-
-- `filter_backends = api_settings.DEFAULT_FILTER_BACKENDS` - фильтры запросов;
-
-- `pagination_class = api_settings.DEFAULT_PAGINATION_CLASS` - пагинация запросов.
-
-И методы:
-
-- `get_queryset` - получение кверисета;
-
-- `get_object` - получение одного объекта;
-
-- `get_serializer` - получение объекта сериалайзера;
-
-- `get_serializer_class` - получение класса сериалайзера;
-
-- `get_serializer_context` - получить контекст сериалайзера;
-
-- `filter_queryset` - отфильтровать кверисет;
-
-- `paginator` - объект пагинации;
-
-- `paginate_queryset` - пагинировать кверисет;
-
-- `get_paginated_response` - получить пагинированый ответ.
-
-*Такой класс не работает самостоятельно, только вместе с определёнными миксинами*
-
-### Миксины
-
-В DRF существует 5 миксинов:
+Поддерживает метод `login()`
 
 ```python
-class CreateModelMixin(object):
-    """
-    Create a model instance.
-    """
-
-    def create(self, request, *args, **kwargs):
-        serializer = self.get_serializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        self.perform_create(serializer)
-        headers = self.get_success_headers(serializer.data)
-        return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
-
-    def perform_create(self, serializer):
-        serializer.save()
-
-    def get_success_headers(self, data):
-        try:
-            return {'Location': str(data[api_settings.URL_FIELD_NAME])}
-        except (TypeError, KeyError):
-            return {}
+c = Client()
+c.login(username='fred', password='secret')
 ```
 
-Рассмотрим подробнее.
+После чего запросы будут от авторизированного пользователя.
 
-Это миксин, и без сторонних классов этот функционал работать не будет.
+Метод `force_login()`, принимающий объект юзера, а не логин и пароль.
 
-При вызове метода `create()` мы предполагаем, что у нас был request.
+Метод `logout()`, что делает, догадайтесь сами)
 
-Вызываем метод `get_serializer()` из класса `GenericAPIView` для получения объекта сериалайзера, обратите внимание, что
-данные передаются через атрибут `data`, так как они получены от пользователя. Проверяем данные на валидность (обратите
-внимание на атрибут `raise_exception`, если данные будут не валидны, код сразу вылетит в traceback, а значит нам не
-нужно отдельно прописывать действия при не валидном сериалайзере), вызываем метод `perform_create`, который просто
-сохраняет сериалайзер (вызывает `create` или `update` в зависимости от данных), получает хедеры, и возвращает response
-с 201 кодом, создание успешно.
+Естественно клиент при желании можно переписать под свои нужды.
 
-По аналогии мы можем рассмотреть остальные миксины.
+Клиент сразу есть в тест кейсе, его нет необходимости создавать, к нему можно обратиться через `self.client`.
 
 ```python
-class RetrieveModelMixin(object):
-    """
-    Retrieve a model instance.
-    """
+class SimpleTest(TestCase):
+    def test_details(self):
+        response = self.client.get('/customer/details/')
+        self.assertEqual(response.status_code, 200)
 
-    def retrieve(self, request, *args, **kwargs):
-        instance = self.get_object()
-        serializer = self.get_serializer(instance)
-        return Response(serializer.data)
+    def test_index(self):
+        response = self.client.get('/customer/index/')
+        self.assertEqual(response.status_code, 200)
 ```
 
-Обратите внимание, метод называется `retrieve()` и внутри вызывает метод `get_object()`, - это миксин одиночного объекта
+### Загрузка фикстур
+
+Всё очень просто, если у вас лежит файл с фикстурами, то достаточно его просто указать в атрибутах.
 
 ```python
-class UpdateModelMixin(object):
-    """
-    Update a model instance.
-    """
+from myapp.models import Animal
 
-    def update(self, request, *args, **kwargs):
-        partial = kwargs.pop('partial', False)
-        instance = self.get_object()
-        serializer = self.get_serializer(instance, data=request.data, partial=partial)
-        serializer.is_valid(raise_exception=True)
-        self.perform_update(serializer)
 
-        if getattr(instance, '_prefetched_objects_cache', None):
-            # If 'prefetch_related' has been applied to a queryset, we need to
-            # forcibly invalidate the prefetch cache on the instance.
-            instance._prefetched_objects_cache = {}
+class AnimalTestCase(TestCase):
+    fixtures = ['mammals.json', 'birds']
 
-        return Response(serializer.data)
+    def setUp(self):
+        # Test definitions as before.
+        call_setup_methods()
 
-    def perform_update(self, serializer):
-        serializer.save()
-
-    def partial_update(self, request, *args, **kwargs):
-        kwargs['partial'] = True
-        return self.update(request, *args, **kwargs)
+    def test_fluffy_animals(self):
+        # A test that uses the fixtures.
+        call_some_test_code()
 ```
 
-Методы `update()`, `partial_update()`, `perform_update()` нужны для обновления объекта, обратите внимание на атрибут
-`partial`. Помните разницу между PUT и PATCH?
+Загрузится файл `mammals.json`, и из него фикстура `birds`.
+
+### Теги для тестов
+
+Существует возможность поставить "тег" на каждый тест, а после запускать только те, что с определённым тегом.
 
 ```python
-class DestroyModelMixin(object):
-    """
-    Destroy a model instance.
-    """
 
-    def destroy(self, request, *args, **kwargs):
-        instance = self.get_object()
-        self.perform_destroy(instance)
-        return Response(status=status.HTTP_204_NO_CONTENT)
+class SampleTestCase(TestCase):
 
-    def perform_destroy(self, instance):
-        instance.delete()
-```
+    @tag('fast')
+    def test_fast(self):
+        ...
 
-Аналогично для удаления методы `destroy()`, `perform_destroy()`.
+    @tag('slow')
+    def test_slow(self):
+        ...
 
-```python
-class ListModelMixin(object):
-    """
-    List a queryset.
-    """
-
-    def list(self, request, *args, **kwargs):
-        queryset = self.filter_queryset(self.get_queryset())
-
-        page = self.paginate_queryset(queryset)
-        if page is not None:
-            serializer = self.get_serializer(page, many=True)
-            return self.get_paginated_response(serializer.data)
-
-        serializer = self.get_serializer(queryset, many=True)
-        return Response(serializer.data)
-```
-
-Метод `list()` получает кверисет, дальше пытается его пагинировать, если получается, возвращает страницу, если нет -
-целый ответ.
-
-*Важно!* Ни в одном из миксинов не было методов `get()`,`post()`,`patch()`,`put()` или `delete()`, почему?
-
-Потому что их вызов перенесен в дополнительные классы.
-
-### Generic классы
-
-Вот так выглядят классы, которые уже можно использовать. Как это работает? Эти классы наследуют логику работы с данными
-из необходимого миксина, общие методы, которые актуальны для любого CRUD действия из `GenericAPIView` дальше описываем
-методы тех видов запросов, которые мы хотим обрабатывать, в которых просто вызываем необходимый метод из миксина.
-
-**Переписываются методы `create()`, `destroy()` и т. д., а не `get()`, `post()`!**
-
-```python
-class CreateAPIView(mixins.CreateModelMixin,
-                    GenericAPIView):
-    """
-    Concrete view for creating a model instance.
-    """
-
-    def post(self, request, *args, **kwargs):
-        return self.create(request, *args, **kwargs)
-
-```
-
-```python
-class ListAPIView(mixins.ListModelMixin,
-                  GenericAPIView):
-    """
-    Concrete view for listing a queryset.
-    """
-
-    def get(self, request, *args, **kwargs):
-        return self.list(request, *args, **kwargs)
-```
-
-```python
-class RetrieveAPIView(mixins.RetrieveModelMixin,
-                      GenericAPIView):
-    """
-    Concrete view for retrieving a model instance.
-    """
-
-    def get(self, request, *args, **kwargs):
-        return self.retrieve(request, *args, **kwargs)
-```
-
-```python
-class DestroyAPIView(mixins.DestroyModelMixin,
-                     GenericAPIView):
-    """
-    Concrete view for deleting a model instance.
-    """
-
-    def delete(self, request, *args, **kwargs):
-        return self.destroy(request, *args, **kwargs)
-```
-
-```python
-class UpdateAPIView(mixins.UpdateModelMixin,
-                    GenericAPIView):
-    """
-    Concrete view for updating a model instance.
-    """
-
-    def put(self, request, *args, **kwargs):
-        return self.update(request, *args, **kwargs)
-
-    def patch(self, request, *args, **kwargs):
-        return self.partial_update(request, *args, **kwargs)
-```
-
-```python
-class ListCreateAPIView(mixins.ListModelMixin,
-                        mixins.CreateModelMixin,
-                        GenericAPIView):
-    """
-    Concrete view for listing a queryset or creating a model instance.
-    """
-
-    def get(self, request, *args, **kwargs):
-        return self.list(request, *args, **kwargs)
-
-    def post(self, request, *args, **kwargs):
-        return self.create(request, *args, **kwargs)
-```
-
-```python
-class RetrieveUpdateAPIView(mixins.RetrieveModelMixin,
-                            mixins.UpdateModelMixin,
-                            GenericAPIView):
-    """
-    Concrete view for retrieving, updating a model instance.
-    """
-
-    def get(self, request, *args, **kwargs):
-        return self.retrieve(request, *args, **kwargs)
-
-    def put(self, request, *args, **kwargs):
-        return self.update(request, *args, **kwargs)
-
-    def patch(self, request, *args, **kwargs):
-        return self.partial_update(request, *args, **kwargs)
-```
-
-```python
-class RetrieveDestroyAPIView(mixins.RetrieveModelMixin,
-                             mixins.DestroyModelMixin,
-                             GenericAPIView):
-    """
-    Concrete view for retrieving or deleting a model instance.
-    """
-
-    def get(self, request, *args, **kwargs):
-        return self.retrieve(request, *args, **kwargs)
-
-    def delete(self, request, *args, **kwargs):
-        return self.destroy(request, *args, **kwargs)
-```
-
-```python
-class RetrieveUpdateDestroyAPIView(mixins.RetrieveModelMixin,
-                                   mixins.UpdateModelMixin,
-                                   mixins.DestroyModelMixin,
-                                   GenericAPIView):
-    """
-    Concrete view for retrieving, updating or deleting a model instance.
-    """
-
-    def get(self, request, *args, **kwargs):
-        return self.retrieve(request, *args, **kwargs)
-
-    def put(self, request, *args, **kwargs):
-        return self.update(request, *args, **kwargs)
-
-    def patch(self, request, *args, **kwargs):
-        return self.partial_update(request, *args, **kwargs)
-
-    def delete(self, request, *args, **kwargs):
-        return self.destroy(request, *args, **kwargs)
-```
-
-Допустим, мы хотим описать класс при GET запросе получение списка комментариев, в которых есть буква `w`, если у нас уже
-есть сериалайзер и модель, а при POST создание комментария.
-
-```python
-class CommentListView(ListCreateAPIView):
-    queryset = Comment.objects.all()
-    serializer_class = CommentSerializer
-
-    def get_queryset(self):
-        return super().get_queryset().filter(text__icontains='w')
-```
-
-Всё, этого достаточно.
-
-## ViewSet
-
-Дока [тут](https://www.django-rest-framework.org/api-guide/viewsets/)
-
-Классы, которые отвечают за поведение нескольких запросов, и отличаются друг от друга только методом, называются
-`ViewSet`.
-
-Они на самом деле описывают методы, для получения списка действий (list, retrieve, и т. д.), и преобразования их в URLs
-(об этом дальше).
-
-Например:
-
-```python
-from django.contrib.auth.models import User
-from django.shortcuts import get_object_or_404
-from myapps.serializers import UserSerializer
-from rest_framework import viewsets
-from rest_framework.response import Response
-
-
-class UserViewSet(viewsets.ViewSet):
-    """
-    A simple ViewSet for listing or retrieving users.
-    """
-
-    def list(self, request):
-        queryset = User.objects.all()
-        serializer = UserSerializer(queryset, many=True)
-        return Response(serializer.data)
-
-    def retrieve(self, request, pk=None):
-        queryset = User.objects.all()
-        user = get_object_or_404(queryset, pk=pk)
-        serializer = UserSerializer(user)
-        return Response(serializer.data)
-```
-
-Разные действия при наличии и отсутствии `PK`, при `GET` запросе.
-
-Для описания URLs можно использовать разное описание:
-
-```python
-user_list = UserViewSet.as_view({'get': 'list'})
-user_detail = UserViewSet.as_view({'get': 'retrieve'})
-```
-
-Хоть так никто и не делает, об этом дальше.
-
-## ModelViewSet и ReadOnlyModelViewSet
-
-Дока [тут](https://www.django-rest-framework.org/api-guide/viewsets/#modelviewset)
-
-Объединяем всё, что мы уже знаем.
-
-И получаем класс `ModelViewSet`, он наследуется от `GenericViewSet` (`ViewSet` + `GenericAPIView`) и всех 5 миксинов, а
-значит там описаны методы `list()`, `retrieve()`, `create()`, `update()`, `destroy()`, `perform_create()`,
-`perform_update()` и т. д.
-
-А значит мы можем описать сущность, которая принимает модель и сериалайзер, и уже может принимать любые типы запросов и
-выполнять любые CRUD действия. Мы можем их переопределить, или дописать еще экшенов, всё что нам может быть необходимо
-уже есть.
-
-Пример:
-
-```python
-class AccountViewSet(viewsets.ModelViewSet):
-    """
-    A simple ViewSet for viewing and editing accounts.
-    """
-    queryset = Account.objects.all()
-    serializer_class = AccountSerializer
-    permission_classes = [IsAccountAdminOrReadOnly]
-```
-
-Или если необходим такой же вьюсет только для получения объектов, то:
-
-```python
-class AccountViewSet(viewsets.ReadOnlyModelViewSet):
-    """
-    A simple ViewSet for viewing accounts.
-    """
-    queryset = Account.objects.all()
-    serializer_class = AccountSerializer
-```
-
-На самом деле, можно собрать такой же вьюсет для любых действий, добавляя и убирая миксины.
-
-Например:
-
-```python
-from rest_framework import mixins
-
-
-class CreateListRetrieveViewSet(mixins.CreateModelMixin,
-                                mixins.ListModelMixin,
-                                mixins.RetrieveModelMixin,
-                                viewsets.GenericViewSet):
-    """
-    A viewset that provides `retrieve`, `create`, and `list` actions.
-
-    To use it, override the class and set the `.queryset` and
-    `.serializer_class` attributes.
-    """
-    pass
-```
-
-Чаще всего используются обычные `ModelViewSet`.
-
-### Пагинация
-
-Дока [тут](https://www.django-rest-framework.org/api-guide/pagination/)
-
-Как мы помним, для действия `list` используется пагинация. Как это работает?
-
-Если у нас нет необходимости настраивать все вьюсеты отдельно, то мы можем указать такую настройку в `settings.py`:
-
-```python
-REST_FRAMEWORK = {
-    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
-    'PAGE_SIZE': 100
-}
-```
-
-Там мы можем указать тип класса пагинации и размер одной страницы, и все наши запросы уже будут пагинированы.
-
-Также мы можем создать классы пагинаторов, основываясь на нашей необходимости.
-
-```python
-class LargeResultsSetPagination(PageNumberPagination):
-    page_size = 1000
-    page_size_query_param = 'page_size'
-    max_page_size = 10000
-
-
-class StandardResultsSetPagination(PageNumberPagination):
-    page_size = 100
-    page_size_query_param = 'page_size'
-    max_page_size = 1000
-```
-
-Если нужно указать пагинатор у конкретного вьюсета, то можно это сделать прямо в атрибутах.
-
-```python
-class BillingRecordsView(generics.ListAPIView):
-    queryset = Billing.objects.all()
-    serializer_class = BillingRecordsSerializer
-    pagination_class = LargeResultsSetPagination
-```
-
-## Декоратор @action
-
-Дока [тут](https://www.django-rest-framework.org/api-guide/viewsets/#marking-extra-actions-for-routing)
-
-Что делать, если вам нужно дополнительное действие, связанное с деталями вашей вью, но ни один из крудов не походит? Тут
-можно использовать декоратор `@action`, чтобы описать новое действие в этом же вьюсете.
-
-```python
-from django.contrib.auth.models import User
-from rest_framework import status, viewsets
-from rest_framework.decorators import action
-from rest_framework.response import Response
-from myapp.serializers import UserSerializer, PasswordSerializer
-
-
-class UserViewSet(viewsets.ModelViewSet):
-    """
-    A viewset that provides the standard actions
-    """
-    queryset = User.objects.all()
-    serializer_class = UserSerializer
-
-    @action(detail=True, methods=['post'])
-    def set_password(self, request, pk=None):
-        user = self.get_object()
-        serializer = PasswordSerializer(data=request.data)
-        if serializer.is_valid():
-            user.set_password(serializer.data['password'])
-            user.save()
-            return Response({'status': 'password set'})
-        else:
-            return Response(serializer.errors,
-                            status=status.HTTP_400_BAD_REQUEST)
-
-    @action(detail=False)
-    def recent_users(self, request):
-        recent_users = self.get_queryset().order_by('-last_login')
-
-        page = self.paginate_queryset(recent_users)
-        if page is not None:
-            serializer = self.get_serializer(page, many=True)
-            return self.get_paginated_response(serializer.data)
-
-        serializer = self.get_serializer(recent_users, many=True)
-        return Response(serializer.data)
-```
-
-Принимает два основных параметра: `detail` описывает должен ли этот action принимать PK (действие над всеми объектами
-или над одним конкретным), и `methods` - список HTTP методов, на которые должен срабатывать `action`.
-
-Есть и другие, например, классы permissions или имя.
-
-## Роутеры
-
-Дока [тут](https://www.django-rest-framework.org/api-guide/routers/)
-
-Роуте - это автоматический генератор URLs для вьюсетов.
-
-```python
-from rest_framework import routers
-
-router = routers.SimpleRouter()
-router.register(r'users', UserViewSet)
-router.register(r'accounts', AccountViewSet)
-urlpatterns = router.urls
-```
-
-В методе `register` принимает два параметра, на каком слове основывать URLs и для какого вьюсета.
-
-Если у вьюсета нет параметра `queryset`, то нужно указать поле `basename`, если нет, то автоматически будет использовано
-имя модели маленькими буквами.
-
-URLs будут сгенерированы автоматически, и им будут автоматически присвоены имена:
-
-```
-URL pattern: ^users/$ Name: 'user-list'
-URL pattern: ^users/{pk}/$ Name: 'user-detail'
-URL pattern: ^accounts/$ Name: 'account-list'
-URL pattern: ^accounts/{pk}/$ Name: 'account-detail'
-```
-
-Чаще всего роутеры к URLs добавляются вот такими способами:
-
-```python
-urlpatterns = [
-    path('forgot-password', ForgotPasswordFormView.as_view()),
-    path('api/', include(router.urls)),
-]
-```
-
-### Роутинг экстра экшенов
-
-Допустим, есть такой экстра экшен:
-
-```python
-from rest_framework.decorators import action
-
-
-class UserViewSet(ModelViewSet):
-    ...
-
-    @action(methods=['post'], detail=True)
-    def set_password(self, request, pk=None):
+    @tag('slow', 'core')
+    def test_slow_but_core(self):
         ...
 ```
 
-Роутер автоматически сгенерирует URL `^users/{pk}/set_password/$` и имя `user-set-password`.
+Или даже целый тесткейс:
 
-Класс `SimpleRouter` может принимать параметр `trailing_slash=False` True или False, по дефолту True, поэтому все API,
-должны принимать URLs заканчивающиеся на `/`, если указать явно, то будет принимать всё без `/`.
+```python
+@tag('slow', 'core')
+class SampleTestCase(TestCase):
+    ...
+```
+
+После чего запускать с указанием тега.
+
+```
+./manage.py test --tag=fast
+```
+
+### Тестирование manage-команд
+
+Для этого используется специальный метод `call_command()`:
+
+```python
+from io import StringIO
+from django.core.management import call_command
+from django.test import TestCase
+
+
+class ClosePollTest(TestCase):
+    def test_command_output(self):
+        out = StringIO()
+        call_command('closepoll', stdout=out)
+        self.assertIn('Expected output', out.getvalue())
+```
+
+### Пропуск тестов
+
+Тесты можно пропускать в зависимости от условий и деталей запуска.
+Дока [тут](https://docs.python.org/3/library/unittest.html#unittest.skipIf)
+
+## Фабрики и юнит тестирование
+
+### Паттерн фабрика
+
+Фабричный метод — если умным текстом, то это порождающий паттерн проектирования, который определяет общий интерфейс для
+создания объектов в суперклассе, позволяя подклассам изменять тип создаваемых объектов.
+
+Если по смыслу, то это возможность создать необходимую нам сущность внутри вызова метода.
+
+В Django есть встроенная фабрика для реквеста, зачем это нужно? Нам не для всех проверок нужно делать запрос, часто нам
+нужно его только имитировать. Для написания юнит тестов - это самый главный инструмент.
+
+```python
+from django.contrib.auth.models import AnonymousUser, User
+from django.test import RequestFactory, TestCase
+
+from .views import MyView, my_view
+
+
+class SimpleTest(TestCase):
+    def setUp(self):
+        # Every test needs access to the request factory.
+        self.factory = RequestFactory()
+        self.user = User.objects.create_user(
+            username='jacob', email='jacob@…', password='top_secret')
+
+    def test_details(self):
+        # Create an instance of a GET request.
+        request = self.factory.get('/customer/details')
+
+        # Recall that middleware are not supported. You can simulate a
+        # logged-in user by setting request.user manually.
+        request.user = self.user
+
+        # Or you can simulate an anonymous user by setting request.user to
+        # an AnonymousUser instance.
+        request.user = AnonymousUser()
+
+        # Test my_view() as if it were deployed at /customer/details
+        response = my_view(request)
+        # Use this syntax for class-based views.
+        response = MyView.as_view()(request)
+        self.assertEqual(response.status_code, 200)
+```
+
+### Тестирование отдельных методов CBV
+
+Для тестирования отдельных методов мы можем использовать метод `setup()`.
+
+Например, если мы заменили `get_context_data()`, то можно сделать так:
+
+```python
+from django.views.generic import TemplateView
+
+
+class HomeView(TemplateView):
+    template_name = 'myapp/home.html'
+
+    def get_context_data(self, **kwargs):
+        kwargs['environment'] = 'Production'
+        return super().get_context_data(**kwargs)
+```
+
+```python
+from django.test import RequestFactory, TestCase
+from .views import HomeView
+
+
+class HomePageTest(TestCase):
+    def test_environment_set_in_context(self):
+        request = RequestFactory().get('/')
+        view = HomeView()
+        view.setup(request)
+        context = view.get_context_data()
+        self.assertIn('environment', context)
+```
+
+## Тестирование REST API
+
+В Django REST Framework есть достаточно много внутренних похожих процедур и классов, например, своя фабрика реквестов:
+
+```python
+from rest_framework.test import APIRequestFactory
+
+# Using the standard RequestFactory API to create a form POST request
+factory = APIRequestFactory()
+request = factory.post('/notes/', {'title': 'new idea'})
+```
+
+По дефолту формат JSON, но это можно изменить:
+
+```python
+# Create a JSON POST request
+factory = APIRequestFactory()
+request = factory.post('/notes/', {'title': 'new idea'}, format='json')
+```
+
+А можно вообще указать content type:
+
+```python
+request = factory.post('/notes/', json.dumps({'title': 'new idea'}), content_type='application/json')
+```
+
+### force_authenticate()
+
+Часто нам необходимо проверять запросы из-под необходимого типа пользователя, но сам по себе логин уже покрыт тестами,
+а это значит, что второй раз его проверять нет необходимости, можем просто логиниться.
+
+```python
+from rest_framework.test import force_authenticate
+
+factory = APIRequestFactory()
+user = User.objects.get(username='olivia')
+view = AccountDetail.as_view()
+
+# Make an authenticated request to the view...
+request = factory.get('/accounts/django-superstars/')
+force_authenticate(request, user=user)
+response = view(request)
+```
+
+### APIClient
+
+В DRF есть свой клиент для запросов, в котором уже прописаны все необходимые методы запросов (`get()`, `post()`, 
+и т. д.)
+
+```python
+from rest_framework.test import APIClient
+
+client = APIClient()
+client.post('/notes/', {'title': 'new idea'}, format='json')
+```
+
+#### Авторизация через клиента
+
+Поддерживает метод `login()`, `logout()`и `credentials()`. Метод `login()` принимает логин и пароль, метод 
+`credentials()` принимает хедеры.
+
+Примеры:
+
+```python
+# Make all requests in the context of a logged in session.
+client = APIClient()
+client.login(username='lauren', password='secret')
+```
+
+```python
+# Log out
+client.logout()
+```
+
+```python
+from rest_framework.authtoken.models import Token
+from rest_framework.test import APIClient
+
+# Include an appropriate `Authorization:` header on all requests.
+token = Token.objects.get(user__username='lauren')
+client = APIClient()
+client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
+```
+
+Так же поддерживает форсированную аутентификацию:
+
+```python
+user = User.objects.get(username='lauren')
+client = APIClient()
+client.force_authenticate(user=user)
+```
+
+Также можно включить CSRF на этапе создания клиента:
+
+```python
+client = APIClient(enforce_csrf_checks=True)
+```
+
+Для изменения хедеров можно использовать или стандартные классы, или просто обновлять как словарь:
+
+```python
+from requests.auth import HTTPBasicAuth
+
+client.auth = HTTPBasicAuth('user', 'pass')
+client.headers.update({'x-test': 'true'})
+```
+
+Если вы включили CSRF и хотите им пользоваться при проверках, это можно сделать так:
+
+```python
+client = RequestsClient()
+
+# Obtain a CSRF token.
+response = client.get('http://testserver/homepage/')
+assert response.status_code == 200
+csrftoken = response.cookies['csrftoken']
+
+# Interact with the API.
+response = client.post('http://testserver/organisations/', json={
+    'name': 'MegaCorp',
+    'status': 'active'
+}, headers={'X-CSRFToken': csrftoken})
+assert response.status_code == 200
+```
+
+Можно настроить форматы и обработчики для таких тестов.
+
+```python
+REST_FRAMEWORK = {
+    ...
+'TEST_REQUEST_DEFAULT_FORMAT': 'json'
+}
+```
+
+```python
+REST_FRAMEWORK = {
+    ...
+'TEST_REQUEST_RENDERER_CLASSES': [
+    'rest_framework.renderers.MultiPartRenderer',
+    'rest_framework.renderers.JSONRenderer',
+    'rest_framework.renderers.TemplateHTMLRenderer'
+]
+}
+```
+
+## Фабрики для генерации данных
+
+### FactoryBoy
+
+```
+pip install factory_boy
+```
+
+Прописывание в `setUp()` создание новых объектов может занимать очень много времени. Чтобы это ускорить, упростить и
+автоматизировать, можно написать свою фабрику:
+
+```python
+import factory
+from app.models import User
+
+
+class UserFactory(factory.Factory):
+    firstname = "John"
+    lastname = "Doe"
+
+    class Meta:
+        model = User
+```
+
+На один класс можно создавать несколько объектов фабрик
+
+```
+>>>john = UserFactory()
+<User: John Doe>
+>>>jack = UserFactory(firstname="Jack")
+<User: Jack Doe>
+```
+
+Также можно использовать разные фабрики в разных местах
+
+```python
+class EnglishUserFactory(factory.Factory):
+    class Meta:
+        model = User
+
+    firstname = "John"
+    lastname = "Doe"
+    lang = 'en'
+
+
+class FrenchUserFactory(factory.Factory):
+    class Meta:
+        model = User
+
+    firstname = "Jean"
+    lastname = "Dupont"
+    lang = 'fr'
+```
+
+```
+EnglishUserFactory()
+<User: John Doe (en)>
+>>> FrenchUserFactory()
+<User: Jean Dupont (fr)>
+```
+
+Атрибутом может быть другая фабрика. Например, при создании фабрики покупки мы можем указать в качестве покупателя
+фабрику юзера
+
+```python
+class PurchaseFactory(factory.Factory):
+    class Meta:
+        model = Purchase
+
+    owner = EnglishUserFactory()
+```
+
+```
+PurchaseFactory()
+<Purchase: 1 John Doe>
+```
+
+Можно передавать специальный объект последовательности, при создании каждого нового объекта будет добавляться единица.
+Для текущего примера юзернеймы всех созданных юзеров будут `user1`, `user2`, `user3` и т. д.
+
+Sequences
+
+```python
+class UserFactory(factory.Factory):
+    class Meta:
+        model = models.User
+
+    username = factory.Sequence(lambda n: 'user%d' % n)
+```
+
+Можно передать специальный объект, который будет вызывать функцию при создании объекта, например, текущее время.
+
+`LazyFunction()`
+
+```python
+class LogFactory(factory.Factory):
+    class Meta:
+        model = models.Log
+
+    timestamp = factory.LazyFunction(datetime.now)
+```
+
+```
+LogFactory()
+<Log: log at 2016-02-12 17:02:34>
+
+# при вызове можно переписать
+LogFactory(timestamp=now - timedelta(days=1))
+<Log: log at 2016-02-11 17:02:34>
+```
+
+Иногда нужно заполнять одни поля на основании других, для этого тоже есть специальный объект.
+
+`LazyAttribute` 
+Некоторые поля могут быть заполнены при помощи других, например, электронная почта на основе имени пользователя. 
+`LazyAttribute` обрабатывает такие случаи: он должен получить функцию, принимающую создаваемый объект и
+возвращающую значение для поля:
+
+```python
+class UserFactory(factory.Factory):
+    class Meta:
+        model = models.User
+
+    username = factory.Sequence(lambda n: 'user%d' % n)
+    email = factory.LazyAttribute(lambda obj: '%s@example.com' % obj.username)
+```
+
+```
+UserFactory()
+<User: user1 (user1@example.com)>
+
+# можно переписать источник
+UserFactory(username='john')
+<User: john (john@example.com)>
+
+# а можно и само поле
+>>> UserFactory(email='doe@example.com')
+<User: user3 (doe@example.com)>
+```
+
+Наследование фабрик
+
+```python
+class UserFactory(factory.Factory):
+    class Meta:
+        model = User
+
+    firstname = "John"
+    lastname = "Doe"
+
+
+class AdminFactory(UserFactory):
+    admin = True 
+```
+
+### Генерация фейковых данных
+
+#### Fuzzy attributes
+
+Fuzzy позволяет генерировать фейковые данные:
+
+```python
+from factory import fuzzy
+
+...
+
+
+def setUp(self):
+    self.username = fuzzy.FuzzyText().fuzz()
+    self.password = fuzzy.FuzzyText().fuzz()
+    self.user_id = fuzzy.FuzzyInteger(1).fuzz()
+```
+
+#### Faker
+
+Faker пришел на замену Fuzzy и в нём гораздо больше всего, его нужно устанавливать.
+
+```
+pip install Faker
+```
+
+```python
+from faker import Faker
+
+fake = Faker()
+
+fake.name()
+
+# 'Lucy Cechtelar'
+
+fake.address()
+
+# '426 Jordy Lodge
+
+# Cartwrightshire, SC 88120-6700'
+
+fake.text()
+
+# 'Sint velit eveniet. Rerum atque repellat voluptatem quia rerum. Numquam excepturi
+
+# beatae sint laudantium consequatur. Magni occaecati itaque sint et sit tempore. Nesciunt
+
+# amet quidem. Iusto deleniti cum autem ad quia aperiam.
+
+# A consectetur quos aliquam. In iste aliquid et aut similique suscipit. Consequatur qui
+
+# quaerat iste minus hic expedita. Consequuntur error magni et laboriosam. Aut aspernatur
+
+# voluptatem sit aliquam. Dolores voluptatum est.
+
+# Aut molestias et maxime. Fugit autem facilis quos vero. Eius quibusdam possimus est.
+
+# Ea quaerat et quisquam. Deleniti sunt quam. Adipisci consequatur id in occaecati.
+
+# Et sint et. Ut ducimus quod nemo ab voluptatum.'
+
+```
+
+### Использование с Factory Boy
+
+```python
+import factory
+from myapp.models import Book
+
+
+class BookFactory(factory.Factory):
+    class Meta:
+        model = Book
+
+    title = factory.Faker('sentence', nb_words=4)
+    author_name = factory.Faker('name')
+```
+
+#### Providers
+
+У Faker есть большое количество шаблонов, которые расположены в так называемых провайдерах:
+
+```python
+from faker import Faker
+from faker.providers import internet
+
+fake = Faker()
+fake.add_provider(internet)
+fake.ipv4_private()
+'10.10.11.69'
+fake.ipv4_private()
+'10.86.161.98'
+```
