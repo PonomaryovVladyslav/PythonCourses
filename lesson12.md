@@ -1,723 +1,986 @@
-# Лекция 12. Множественное наследование. MRO. Magic methods.
+# Лекция 12. Декораторы. Декораторы с параметрами. Декораторы классов (staticmethod, classmethod, property)
 
-![](https://i.ytimg.com/vi/ektST9ppziE/maxresdefault.jpg)
+![](https://tirinox.ru/wp-content/uploads/2019/10/risovach.ru_.jpg)
 
-## Множественное наследование
+## Что такое декоратор
 
-Множественное наследование - это возможность у класса потомка наследовать функционал не от одного, а от нескольких
-родителей. Благодаря этому мы можем создавать сложные структуры, сохраняя простой и легко-поддерживаемый код.
+Итак, что же такое «декоратор»?
 
-Во многих языках программирования нет множественного наследования, так что давайте разбираться, как это вообще работает.
+Декораторы — это мощный инструмент, который позволяет изменять поведение функций или методов без изменения их исходного
+кода. Мы рассмотрим, что такое декораторы, как их создавать и использовать, а также обсудим примеры их практического
+применения.
 
-Например, у нас есть класс автомобиля:
+> Декораторы — это функции, которые принимают другую функцию в качестве аргумента и возвращают новую функцию с
+> изменённым или расширенным поведением.
+> Они позволяют добавлять функциональность к существующим функциям и методам простым и выразительным способом.
+
+На самом деле про функции, это немного обман, потому что декоратором может быть любой вызываемый объект, и можно сделать
+декоратор через классы, но об этом позже.
+
+### Пример декоратора
 
 ```python
-class Auto:
-    def ride(self):
-        print("Riding on ground")
+def simple_decorator(func):
+    def wrapper():
+        print("Что-то делается до вызова функции")
+        func()
+        print("Что-то делается после вызова функции")
+
+    return wrapper
+
+
+@simple_decorator
+def say_hello():
+    print("Hello!")
+
+
+say_hello()
+```
+
+### Давайте разбираться как это работает, и что это за магия
+
+В python все является объектами.
+
+Функции в python тоже являются объектами.
+
+Давайте посмотрим, что из этого следует:
+
+```python
+def shout(word="Yes"):
+    return word.capitalize() + "!"
+
+
+print(shout())
+# выведет: 'Yes!'
+
+# Так как функция - это объект, вы можете связать её с переменной,
+# как и любой другой объект
+scream = shout
+
+# Заметьте, что мы не используем скобок: мы НЕ вызываем функцию "shout",
+# мы связываем её с переменной "scream". Это означает, что теперь мы
+# можем вызывать "shout" через "scream":
+
+print(scream())
+# выведет: 'Yes!'
+
+# Более того, это значит, что мы можем удалить "shout", и функция всё ещё
+# будет доступна через переменную "scream"
+
+del shout
+try:
+    print(shout())
+except NameError:
+    print("Нет такой функции")
+
+print(scream())
+# выведет: 'Yes!'
+```
+
+Запомним этот факт, скоро мы к нему вернёмся, но кроме того стоит понимать, что функция в python может быть
+определена… внутри другой функции!
+
+```python
+def talk():
+    # Внутри определения функции "talk" мы можем определить другую...
+    def whisper(word="yes"):
+        return word.lower() + "..."
+
+    # ... и сразу же её использовать!
+    print(whisper())
+
+
+# Теперь, КАЖДЫЙ РАЗ при вызове "talk" внутри неё определяется, а затем
+# и вызывается функция "whisper".
+talk()
+# выведет: "yes..."
+
+# Но вне функции "talk" НЕ существует никакой функции "whisper":
+try:
+    print(whisper())
+except NameError:
+    print("Нет такой функции, она видна только внутри функции talk")
+```
+
+### Ссылки на функции
+
+Теперь мы знаем, что функции являются полноправными объектами, а значит:
+
+- могут быть связаны с переменной;
+- могут быть определены одна внутри другой.
+
+> Что ж, а это значит, что одна функция может вернуть другую функцию! (Да функция может быть возвращаемым значением)
+
+Давайте посмотрим:
+
+```python
+def get_talk(type="shout"):
+    # Мы определяем функции прямо здесь
+    def shout(word="Yes"):
+        return word.capitalize() + "!"
+
+    def whisper(word="yes"):
+        return word.lower() + "..."
+
+    # Затем возвращаем необходимую
+    if type == "shout":
+        # Заметьте, что мы НЕ используем "()", нам нужно не вызвать функцию,
+        # а вернуть объект функции
+        return shout
+    else:
+        return whisper
+
+
+# Как использовать это непонятное нечто?
+# Возьмём функцию и свяжем её с переменной
+talk = get_talk()
+
+# Как мы можем видеть, теперь "talk" - объект "function":
+print(talk)
+# выведет: <function shout at 0xb7ea817c>
+
+# Который можно вызывать, как и функцию, определённую "обычным образом":
+print(talk())
+
+# Если нам захочется, можно вызвать её напрямую из возвращаемого значения:
+print(get_talk("whisper")())
+# выведет: yes...
 
 ```
 
-Также у нас есть класс для лодки:
+> Подождите, раз мы можем возвращать функцию, значит, мы можем и передавать её другой функции как параметр:
 
 ```python
-class Boat:
-    def swim(self):
-        print("Sailing in the ocean")
+def do_something_before(func):
+    print("Я делаю что-то ещё перед тем, как вызвать функцию, которую ты мне передал")
+    print(func())
+
+
+do_something_before(scream)
+
+# выведет:
+# Я делаю что-то ещё перед тем, как вызвать функцию, которую ты мне передал
+# Yes!
+```
+
+Ну что, теперь у нас есть все необходимые знания для того, чтобы понять, как работают декораторы.
+
+Как можно догадаться, декораторы — это просто своеобразные «обёртки», которые дают нам возможность делать
+что-либо до и после того, как декорируемая функция что-то сделает, не изменяя её.
+
+Создадим свой декоратор «вручную»:
+
+```python
+
+# Декоратор - это функция, ожидающая ДРУГУЮ функцию в качестве параметра
+def my_shiny_new_decorator(a_function_to_decorate):
+    # Внутри себя декоратор определяет функцию-"обёртку".
+    # Она будет (что бы вы думали?..) обёрнута вокруг декорируемой,
+    # получая возможность исполнять произвольный код до и после неё.
+
+    def the_wrapper_around_the_original_function():
+        # Поместим здесь код, который мы хотим запускать ДО вызова
+        # оригинальной функции
+        print("Я - код, который отработает до вызова функции")
+
+        # ВЫЗОВЕМ саму декорируемую функцию
+        a_function_to_decorate()
+
+        # А здесь поместим код, который мы хотим запускать ПОСЛЕ вызова
+        # оригинальной функции
+        print("А я - код, срабатывающий после")
+
+    # На данный момент функция "a_function_to_decorate" НЕ ВЫЗЫВАЛАСЬ НИ РАЗУ
+
+    # Теперь, вернём функцию-обёртку, которая содержит в себе
+    # декорируемую функцию, и код, который необходимо выполнить до и после.
+    # Всё просто!
+    return the_wrapper_around_the_original_function
+
+
+# Представим теперь, что у нас есть функция, которую мы не планируем больше трогать.
+def a_stand_alone_function():
+    print("Я простая одинокая функция, ты ведь не посмеешь меня изменять?..")
+
+
+a_stand_alone_function()
+# выведет: Я простая одинокая функция, ты ведь не посмеешь меня изменять?..
+
+# Однако, чтобы изменить её поведение, мы можем декорировать её, то есть
+# просто передать декоратору, который обернет исходную функцию в любой код,
+# который нам потребуется, и вернёт новую, готовую к использованию функцию:
+
+a_stand_alone_function_decorated = my_shiny_new_decorator(a_stand_alone_function)
+a_stand_alone_function_decorated()
+# выведет:
+# Я - код, который отработает до вызова функции
+# Я простая одинокая функция, ты ведь не посмеешь меня изменять?..
+# А я - код, срабатывающий после
+
+# Наверное, теперь мы бы хотели, чтобы каждый раз, во время вызова a_stand_alone_function, вместо неё 
+# вызывалась a_stand_alone_function_decorated. Нет ничего проще, просто перезапишем a_stand_alone_function 
+# функцией, которую нам вернул my_shiny_new_decorator:
+a_stand_alone_function = my_shiny_new_decorator(a_stand_alone_function)
+a_stand_alone_function()
+# выведет:
+# Я - код, который отработает до вызова функции
+# Я простая одинокая функция, ты ведь не посмеешь меня изменять?..
+# А я - код, срабатывающий после
 
 ```
 
-Теперь, если нам нужно запрограммировать автомобиль-амфибию, который будет плавать в воде и ездить по земле, мы вместо
-написания нового класса можем просто унаследовать от уже существующих, просто написав их через запятую:
+Этот же синтаксис можно реализовать через @декораторы.
+
+Разрушаем ореол таинственности вокруг декораторов.
+
+Вот так можно было записать предыдущий пример, используя синтаксис декораторов:
 
 ```python
-class Auto:
-    def ride(self):
-        print("Riding on a ground")
+@my_shiny_new_decorator
+def another_stand_alone_function():
+    print("Оставь меня в покое")
 
 
-class Boat:
-    def swim(self):
-        print("Sailing in the ocean")
-
-
-class Amphibian(Auto, Boat):
-    pass
-
-
-a = Amphibian()
-a.ride()
-a.swim()
+another_stand_alone_function()
+# выведет:
+# Я - код, который отработает до вызова функции
+# Оставь меня в покое
+# А я - код, срабатывающий после
 ```
 
-![](https://python-course.eu/images/oop/clock_calendar_500w.webp)
-
-Теперь наш класс имеет атрибуты и методы обоих родителей (их может быть сколько угодно).
-
-Обратите внимание, что объект класса Amphibian будет одновременно объектом класса Auto и Boat, то есть:
+Да, всё действительно так просто! Декоратор — просто синтаксический сахар для конструкций вида:
 
 ```python
-a = Amphibian()
-isinstance(a, Auto)
-# True
-isinstance(a, Boat)
-# True
-isinstance(a, Amphibian)
-# True
+another_stand_alone_function = my_shiny_new_decorator(another_stand_alone_function)
 ```
 
-### Миксины (Mixins)
-
-Миксин, он же примесь, — это тип классов, которые нужны, чтобы добавлять к обычным классам какие-то методы или атрибуты,
-но эти классы не используются для создания объектов, только как примесь. (Нас ничего не останавливает создать объект
-этого класса, но задача в другом)
-
-Представим, что мы программируем класс для автомобиля.
-Мы хотим, чтобы у нас была возможность слушать музыку в машине.
-Конечно, можно просто добавить метод `play_music()` в класс `Car`:
+Конечно, можно вкладывать декораторы друг в друга, например так:
 
 ```python
-class Car:
-    def ride(self):
-        print("Riding a car")
+def bread(func):
+    def wrapper():
+        print("</------\>")
+        func()
+        print("<\______/>")
 
-    def play_music(self, song):
-        print(f"Now playing: {song}.")
+    return wrapper
 
 
-c = Car()
-c.ride()
-# Riding a car
-c.play_music("Queen - Bohemian Rhapsody")
-# Now playing: Queen - Bohemian Rhapsody
+def ingredients(func):
+    def wrapper():
+        print("#tomatoes#")
+        func()
+        print("~lettuce~")
+
+    return wrapper
+
+
+def sandwich(food="--ham--"):
+    print(food)
+
+
+sandwich()
+# выведет: --ham--
+sandwich = bread(ingredients(sandwich))
+sandwich()
+# выведет:
+# </------\>
+# #tomatoes#
+# --ham--
+# ~lettuce~
+# <\______/>
 ```
 
-Но что, если у нас есть еще и телефон, радио или любой другой девайс, с которого мы будем слушать музыку.
-В таком случае лучше вынести функционал проигрывания музыки в отдельный класс-миксин:
+И используя синтаксис декораторов:
 
 ```python
-class MusicPlayerMixin:
-    def play_music(self, song):
-        print(f"Now playing: {song}.")
+@bread
+@ingredients
+def sandwich(food="--ham--"):
+    print(food)
+
+
+sandwich()
+# выведет:
+# </------\>
+# #tomatoes#
+# --ham--
+# ~lettuce~
+# <\______/>
 ```
 
-Мы можем "домешивать" этот класс в любой, где нужна функция проигрывания музыки:
+Следует помнить о том, что порядок декорирования ВАЖЕН:
 
 ```python
-class Smartphone(MusicPlayerMixin):
-    pass
+@ingredients
+@bread
+def sandwich(food="--ham--"):
+    print(food)
 
 
-class Radio(MusicPlayerMixin):
-    pass
-
-
-class Amphibian(Auto, Boat, MusicPlayerMixin):
-    pass
+sandwich()
+# выведет:
+# #tomatoes#
+# </------\>
+# --ham--
+# <\______/>
+# ~lettuce~
 ```
 
-В рамках изучения Django мы будем довольно много использовать такие классы, рекомендую детально ознакомиться.
+### Передача параметров в декоратор
 
-### Diamond problem. MRO
+Однако, все декораторы, которые мы до этого рассматривали не имели одного очень важного функционала — передачи
+аргументов декорируемой функции.
 
-![](https://media.geeksforgeeks.org/wp-content/cdn-uploads/20190612120714/diamond-problem-solution.png)
+Что ж, исправим это недоразумение!
 
-Итак, классы-наследники могут использовать родительские атрибуты и методы.
-Но что, если у нескольких родителей будут одинаковые атрибуты или методы?
-Какой метод в таком случае будет использовать наследник?
+Передача («проброс») аргументов в декорируемую функцию.
 
-Рассмотрим классический пример:
+Никакой чёрной магии, всё, что нам необходимо — собственно, передать аргументы дальше!
 
 ```python
-class A:
-    def hi(self):
-        print("A")
+def a_decorator_passing_arguments(function_to_decorate):
+    def a_wrapper_accepting_arguments(arg1, arg2):  # аргументы прибывают отсюда
+        print("Look what I've got:", arg1, arg2)
+        function_to_decorate(arg1, arg2)
+
+    return a_wrapper_accepting_arguments
 
 
-class B(A):
-    def hi(self):
-        print("B")
+# Теперь, когда мы вызываем функцию, которую возвращает декоратор,
+# мы вызываем её "обёртку", передаём ей аргументы и уже в свою очередь
+# она передаёт их декорируемой функции
+
+@a_decorator_passing_arguments
+def print_full_name(first_name, last_name):
+    print("My name is", first_name, last_name)
 
 
-class C(A):
-    def hi(self):
-        print("C")
-
-
-class D(B, C):
-    pass
-
-
-d = D()
-d.hi()
+print_full_name("Peter", "Wenkman")
+# выведет:
+# Look what I've got: Peter Wenkman
+# My name is Peter Wenkman
 ```
 
-Эта ситуация, так называемое ромбовидное наследование (diamond problem), решается в Python путем установления порядка
-разрешения методов.
+### Основные сферы применения декораторов
 
-В Python3 для определения порядка используется алгоритм поиска в ширину, то есть сначала интерпретатор будет искать
-метод `hi()` в классе B, если его там нет - в классе С, потом A. **Важно в каком порядке написаны классы для наследования!**
+Декораторы могут быть использованы для различных задач, включая:
 
-В Python второй версии используется алгоритм поиска в глубину, то есть в данном случае - сначала B, потом - А, потом С.
+- Логирование
+- Измерение метрик (За сколько времени выполняется функция, или сколько раз. По сути любые метрики)
+- Управление доступом и аутентификация
+- Кэширование
 
-В Python3 можно посмотреть в каком порядке будут проинспектированы родительские классы при помощи метода класса `mro()`:
-
-### MRO - Method resolution order
-
-Чтобы посмотреть, в каком порядке Python будет искать атрибуты или методы у родителей, у любого класса можно вызывать
-метод `mro()`:
+#### Пример логирования
 
 ```python
->> D.mro()
-[ <class '__main__.D'>, < class '__main__.B' >, < class '__main__.C' >, < class '__main__.A' >, < class 'object' >]
+def log_decorator(func):
+    def wrapper(*args, **kwargs):
+        print(f"Вызов функции {func.__name__} с аргументами {args} и {kwargs}")
+        result = func(*args, **kwargs)
+        print(f"Функция {func.__name__} завершена")
+        return result
+
+    return wrapper
+
+
+@log_decorator
+def multiply(x, y):
+    return x * y
+
+
+multiply(2, 3)
 ```
 
-Обратите внимание, в конце всегда будет `object`, если вы используете любой Python.
-Потому что вообще все отнаследовано от него, как я и говорил на прошлом занятии. (Все это объект!)
-
-Если по какой-то причине вас не устраивает существующий порядок, есть возможность вызвать метод ровно из того класса,
-откуда вам надо, но это считается плохой практикой и лучше так не делать, а полностью поменять структуру.
-
-Если вам необходимо использовать метод конкретного родителя, например, `hi()` класса С, нужно напрямую вызвать его по
-имени класса, передав `self` в качестве аргумента:
+#### Пример замера времени
 
 ```python
-# НЕ НАДО ТАК ДЕЛАТЬ!!!
-class D(B, C):
-    def call_hi(self):
-        C.hi(self)
+import time
 
 
-d = D()
-d.call_hi()
+def timer_decorator(func):
+    def wrapper(*args, **kwargs):
+        start_time = time.time()
+        result = func(*args, **kwargs)
+        end_time = time.time()
+        print(f"Время выполнения {func.__name__}: {end_time - start_time:.4f} секунд")
+        return result
+
+    return wrapper
+
+
+@timer_decorator
+def slow_function():
+    time.sleep(2)
+    return "Завершено"
+
+
+slow_function()
 ```
 
-[Большая статья про МРО и вообще множественное наследование тут](https://habr.com/ru/post/62203/?_ga=2.205768979.1207595081.1598867257-330984554.1578271027)
+> Кеширование и аутентификацию будем изучать когда доберемся до веба, но да, декораторы часто там применяются
 
-## Magic methods (Они же иногда называются dunder-методы)
+### Декорирование методов
 
-![](https://files.realpython.com/media/Python-Magic-Methods_Watermarked.a69c3876000a.jpg)
-
-Магические методы, также известные как `dunder` методы (от double underscore, тут игра слов, dunder - болван), являются
-специальными методами, которые
-начинаются и заканчиваются двойным подчеркиванием, например, `__init__`. Эти методы позволяют нам настраивать поведение
-объектов классов и переопределять встроенные функции и операторы.
-
-### Что такое магические методы?
-
-Магические методы - это специальные методы, которые позволяют вам переопределить или настроить поведение объектов в
-Python. Они выполняют специфические задачи и автоматически вызываются при использовании различных операторов и функций.
-
-### Классификация магических методов
-
-Магические методы можно условно разделить на несколько категорий:
-
-1. Инициализация и удаление объектов: `__init__`, `__del__`
-2. Представление объектов: `__str__`, `__repr__`
-3. Перегрузка операторов: `__add__`, `__sub__`, `__mul__` и т.д.
-4. Контейнеры и последовательности: `__len__`, `__getitem__`, `__setitem__`, `__delitem__`, `__contains__`
-5. Итерации: `__iter__`, `__next__`
-6. Контекстные менеджеры: `__enter__`, `__exit__`
-7. Другие методы: `__call__`, `__hash__`, `__eq__` и многие другие
-
-### Инициализация и удаление объектов. `__init__` и `__del__`
-
-#### `__init__`
-
-Метод `__init__` вызывается, когда объект класса создается. Он инициализирует объект.
+Один из важных фактов, которые следует понимать, заключается в том, что функции и методы в Python — это практически
+одно и то же за исключением того, что методы всегда ожидают первым параметром ссылку на сам объект (self). Это значит,
+что мы можем создавать декораторы для методов так же, как и для функций, просто не забывая про `self`.
 
 ```python
-class Person:
+def method_friendly_decorator(method_to_decorate):
+    def wrapper(self, lie):
+        lie = lie - 3  # действительно, дружелюбно - снизим возраст ещё сильней :-)
+        return method_to_decorate(self, lie)
+
+    return wrapper
+
+
+class Lucy(object):
+
+    def __init__(self):
+        self.age = 32
+
+    @method_friendly_decorator
+    def say_your_age(self, lie):
+        print("I'm {self.age + lie}. Do I look like it?")
+
+
+l = Lucy()
+l.say_your_age(-3)
+# выведет: I'm 26. Do I look like it?
+```
+
+Конечно, если мы создаём максимально общий декоратор и хотим, чтобы его можно было применить к любой функции или методу,
+то стоит воспользоваться тем, что `*args` распаковывает список `args`, а `**kwargs` распаковывает словарь `kwargs`:
+
+```python
+def a_decorator_passing_arbitrary_arguments(function_to_decorate):
+    # Данная "обёртка" принимает любые аргументы
+    def a_wrapper_accepting_arbitrary_arguments(*args, **kwargs):
+        print("Did they pass me anything?")
+        print(args)
+        print(kwargs)
+        # Теперь мы распакуем *args и **kwargs
+        # Если вы не слишком хорошо знакомы с распаковкой, можете прочесть следующую статью:
+        # https://www.saltycrane.com/blog/2008/01/how-to-use-args-and-kwargs-in-python/
+        function_to_decorate(*args, **kwargs)
+
+    return a_wrapper_accepting_arbitrary_arguments
+
+
+@a_decorator_passing_arbitrary_arguments
+def function_with_no_argument():
+    print("Python is cool, no argument here.")
+
+
+function_with_no_argument()
+
+
+# выведет:
+# Did they pass me anything?
+# ()
+# {}
+# Python is cool, no argument here.
+
+@a_decorator_passing_arbitrary_arguments
+def function_with_arguments(a, b, c):
+    print(a, b, c)
+
+
+function_with_arguments(1, 2, 3)
+
+
+# выведет:
+# Did they pass me anything?
+# (1, 2, 3)
+# {}
+# 1 2 3
+
+@a_decorator_passing_arbitrary_arguments
+def function_with_named_arguments(a, b, c, platypus="Why not?"):
+    print("Do %s, %s and %s like platypuses? %s" % (a, b, c, platypus))
+
+
+function_with_named_arguments("Bill", "Linus", "Steve", platypus="Definitely!")
+
+
+# выведет:
+# Did they pass me anything?
+# ('Bill', 'Linus', 'Steve')
+# {'platypus': 'Definitely!'}
+# Do Bill, Linus and Steve like platypuses? Definitely!
+
+
+class Mary(object):
+    def __init__(self):
+        self.age = 31
+
+    @a_decorator_passing_arbitrary_arguments
+    def say_your_age(self, lie=-3):  # Теперь мы можем указать значение по умолчанию
+        print(f"I'm {self.age + lie}. Do I look like it?")
+
+
+m = Mary()
+m.say_your_age()
+# выведет:
+# Did they pass me anything?
+# (<__main__ .Mary object at 0xb7d303ac>,)
+# {}
+# I'm 28. Do I look like it?
+
+```
+
+### Вызов декоратора с различными аргументами
+
+Отлично, с этим разобрались. Что вы теперь скажете о том, чтобы попробовать вызывать декораторы с различными
+аргументами?
+
+Это не так просто, как кажется, поскольку декоратор должен принимать функцию в качестве аргумента, и мы не можем просто
+так передать ему что-либо ещё.
+
+## Декораторы с аргументами
+
+> Давайте сделаем нечто страшное!
+
+```python
+def decorator_maker():
+    print("I make decorators!\n"
+          "I will be called only once when you ask me to create a decorator for you.")
+
+    def my_decorator(func):
+        print("I'm a decorator!\n"
+              "I will be called only once: at the moment of decorating the function.")
+
+        def wrapped():
+            print("I'm the wrapper around the function being decorated.\n"
+                  "I will be called every time you call the decorated function.\n"
+                  "I return the result of the decorated function.")
+            return func()
+
+        print("I return the decorated function.")
+
+        return wrapped
+
+    print("I return the decorator.")
+    return my_decorator
+
+
+# Давайте теперь создадим декоратор. Это всего лишь ещё один вызов функции
+new_decorator = decorator_maker()
+
+
+# выведет:
+# I make decorators!
+# I will be called only once when you ask me to create a decorator for you.
+# I return the decorator.
+
+# Теперь декорируем функцию
+def decorated_function():
+    print("I'm the decorated function.")
+
+
+decorated_function = new_decorator(decorated_function)
+# выведет:
+# I'm a decorator!
+# I will be called only once: at the moment of decorating the function.
+# I return the decorated function.
+
+
+# Теперь наконец вызовем функцию:
+decorated_function()
+# выведет:
+# I'm the wrapper around the function being decorated.
+# I will be called every time you call the decorated function.
+# I'm the decorated function.
+
+```
+
+Длинно? Длинно. Перепишем данный код без использования промежуточных переменных:
+
+```python
+def decorated_function():
+    print("I'm the decorated function")
+
+
+decorated_function = decorator_maker()(decorated_function)
+# выведет:
+# I make decorators!
+# I will be called only once when you ask me to create a decorator for you.
+# I return the decorator.
+# I'm a decorator!
+# I will be called only once: at the moment of decorating the function.
+# I return the decorated function.
+
+# Наконец:
+decorated_function()
+# выведет:
+# I'm the wrapper around the function being decorated.
+# I will be called every time you call the decorated function.
+# I return the result of the decorated function.
+# I'm the decorated function.
+```
+
+А теперь ещё раз, ещё короче:
+
+```python
+@decorator_maker()
+def decorated_function():
+    print("I am the decorated function.")
+
+
+# выведет:
+# I make decorators!
+# I will be called only once when you ask me to create a decorator for you.
+# I return the decorator.
+# I'm a decorator!
+# I will be called only once: at the moment of decorating the function.
+# I return the decorated function.
+
+# И снова:
+decorated_function()
+# выведет:
+# I'm the wrapper around the function being decorated.
+# I will be called every time you call the decorated function.
+# I return the result of the decorated function.
+# I'm the decorated function.
+```
+
+Вы заметили, что мы вызвали функцию, после знака `@`?
+
+Вернёмся, наконец, к аргументам декораторов, ведь если мы используем функцию, чтобы создавать декораторы «на лету», мы
+можем передавать ей любые аргументы, верно?
+
+```python
+def decorator_maker_with_arguments(decorator_arg1, decorator_arg2):
+    print("Я создаю декораторы! И я получил следующие аргументы:", decorator_arg1, decorator_arg2)
+
+    def my_decorator(func):
+        print("Я - декоратор. И ты всё же смог передать мне эти аргументы:", decorator_arg1, decorator_arg2)
+
+        # Не перепутайте аргументы декораторов с аргументами функций!
+        def wrapped(function_arg1, function_arg2):
+            print("Я - обёртка вокруг декорируемой функции.\n"
+                  "И я имею доступ ко всем аргументам: \n"
+                  "\t- и декоратора: {} {}\n"
+                  "\t- и функции: {} {}\n"
+                  "Теперь я могу передать нужные аргументы дальше"
+                  .format(decorator_arg1, decorator_arg2,
+                          function_arg1, function_arg2))
+            return func(function_arg1, function_arg2)
+
+        return wrapped
+
+    return my_decorator
+
+
+@decorator_maker_with_arguments("Леонард", "Шелдон")
+def decorated_function_with_arguments(function_arg1, function_arg2):
+    print("Я - декорируемая функция и я знаю только о своих аргументах: {0}"
+          " {1}".format(function_arg1, function_arg2))
+
+
+decorated_function_with_arguments("Раджеш", "Говард")
+# выведет:
+# Я создаю декораторы! И я получил следующие аргументы: Леонард Шелдон
+# Я - декоратор. И ты всё же смог передать мне эти аргументы: Леонард Шелдон
+# Я - обёртка вокруг декорируемой функции.
+# И я имею доступ ко всем аргументам: 
+#   - и декоратора: Леонард Шелдон
+#   - и функции: Раджеш Говард
+# Теперь я могу передать нужные аргументы дальше
+# Я - декорируемая функция и я знаю только о своих аргументах: Раджеш Говард
+```
+
+Вот он, искомый декоратор, которому можно передавать произвольные аргументы.
+
+Безусловно, аргументами могут быть любые переменные:
+
+```python
+c1 = "Пенни"
+c2 = "Лесли"
+
+
+@decorator_maker_with_arguments("Леонард", c1)
+def decorated_function_with_arguments(function_arg1, function_arg2):
+    print("Я - декорируемая функция и я знаю только о своих аргументах: {0}"
+          " {1}".format(function_arg1, function_arg2))
+
+
+decorated_function_with_arguments(c2, "Говард")
+# выведет:
+# Я создаю декораторы! И я получил следующие аргументы: Леонард Пенни
+# Я - декоратор. И ты всё же смог передать мне эти аргументы: Леонард Пенни
+# Я - обёртка вокруг декорируемой функции.
+# И я имею доступ ко всем аргументам: 
+#   - и декоратора: Леонард Пенни
+#   - и функции: Лесли Говард
+# Теперь я могу передать нужные аргументы дальше
+# Я - декорируемая функция и я знаю только о своих аргументах: Лесли Говард
+```
+
+Таким образом, мы можем передавать декоратору любые аргументы, как обычной функции. Мы можем использовать и распаковку
+через `*args` и `**kwargs` в случае необходимости.
+
+Но необходимо всегда держать в голове, что декоратор вызывается ровно один раз. Ровно в момент, когда Python
+импортирует Ваш скрипт. После этого мы уже не можем никак изменить аргументы, с которыми он был вызван.
+
+Когда мы пишем `import x` все функции из `x` декорируются сразу же, и мы уже не сможем ничего изменить.
+
+> Немного практики: напишем декоратор, декорирующий декоратор.
+
+Вот вам бонус. Это небольшая хитрость позволит вам превратить любой обычный декоратор в декоратор, принимающий
+аргументы.
+
+Изначально, чтобы получить декоратор, принимающий аргументы, мы создали его с помощью другой функции.
+
+Мы обернули наш декоратор.
+
+Есть ли у нас что-нибудь, чем можно обернуть функцию?
+
+Точно, декораторы!
+
+Давайте же немного развлечёмся и напишем декоратор для декораторов:
+
+```python
+def decorator_with_args(decorator_to_enhance):
+    """
+    Эта функция задумывается КАК декоратор и ДЛЯ декораторов.
+    Она должна декорировать другую функцию, которая должна быть декоратором.
+    Лучше выпейте чашку кофе.
+    Она даёт возможность любому декоратору принимать произвольные аргументы,
+    избавляя Вас от головной боли о том, как же это делается, каждый раз, когда этот функционал необходим.
+    """
+
+    # Мы используем тот же трюк, который мы использовали для передачи аргументов:
+    def decorator_maker(*args, **kwargs):
+        # создадим на лету декоратор, который принимает как аргумент только 
+        # функцию, но сохраняет все аргументы, переданные своему "создателю"
+        def decorator_wrapper(func):
+            # Мы возвращаем то, что вернёт нам изначальный декоратор, который, в свою очередь
+            # ПРОСТО ФУНКЦИЯ (возвращающая функцию).
+            # Единственная ловушка в том, что этот декоратор должен быть именно такого
+            # decorator(func, *args, **kwargs)
+            # вида, иначе ничего не сработает
+            return decorator_to_enhance(func, *args, **kwargs)
+
+        return decorator_wrapper
+
+    return decorator_maker
+```
+
+Это может быть использовано так:
+
+```python
+# Мы создаём функцию, которую будем использовать как декоратор и декорируем её :-)
+# Не стоит забывать, что она должна иметь вид "decorator(func, *args, **kwargs)"
+
+@decorator_with_args
+def decorated_decorator(func, *args, **kwargs):
+    def wrapper(function_arg1, function_arg2):
+        print("Мне тут передали...:", args, kwargs)
+        return func(function_arg1, function_arg2)
+
+    return wrapper
+
+
+# Теперь декорируем любую нужную функцию нашим новеньким, ещё блестящим декоратором:
+
+@decorated_decorator(42, 404, 1024)
+def decorated_function(function_arg1, function_arg2):
+    print("Привет,", function_arg1, function_arg2)
+
+
+decorated_function("Вселенная и", "всё прочее")
+# выведет:
+# Мне тут передали...: (42, 404, 1024) {}
+# Привет, Вселенная и всё прочее
+
+# Уфффффф!
+```
+
+### Рекомендации для работы с декораторами:
+
+Декораторы несколько замедляют вызов функции, не забывайте об этом.
+
+Вы не можете «раздекорировать» функцию. Безусловно, существуют трюки, позволяющие создать декоратор, который можно
+отсоединить от функции, но это плохая практика. Правильней будет запомнить, что если функция декорирована — это не
+отменить.
+
+Декораторы оборачивают функции, что может затруднить отладку.
+
+## Классы как декораторы
+
+Как я и говорил, вполне допустимым является написание декораторов через классы.
+
+> Можно использовать классы как декораторы, реализовав метод __call__.
+
+```python
+class MyDecorator:
+    def __init__(self, func):
+        self.func = func
+
+    def __call__(self, *args, **kwargs):
+        print("Класс-декоратор до вызова функции")
+        result = self.func(*args, **kwargs)
+        print("Класс-декоратор после вызова функции")
+        return result
+
+
+@MyDecorator
+def say_goodbye():
+    print("Goodbye!")
+
+
+say_goodbye()
+```
+
+## Декораторы методов класса
+
+Если открыть документацию python, то вы увидите, что язык предлагает три вида методов: статические, класса и экземпляра
+класса.
+
+Все методы которые мы писали до этого момент были методами экземпляра класса.
+
+Давайте посмотрим какие еще бывают методы:
+
+```python
+class ToyClass:
+    def instancemethod(self):
+        return 'instance method called', self
+
+    @classmethod
+    def classmethod(cls):
+        return 'class method called', cls
+
+    @staticmethod
+    def staticmethod():
+        return 'static method called'
+```
+
+### Методы экземпляра класса
+
+Не будем рассматривать подробно, т. к. это любой уже знакомый нам обычный метод класса.
+
+Это наиболее часто используемый вид методов. Методы экземпляра класса принимают объект класса как первый аргумент,
+который принято называть `self` и который указывает на сам экземпляр. Количество параметров метода не ограничено.
+
+Встроенный пример метода экземпляра — `str.upper()`:
+
+### Методы класса
+
+Методы класса принимают класс в качестве параметра, который принято обозначать как `cls`. Он указывает на класс
+ToyClass, а не на объект этого класса. При декларации методов этого вида используется декоратор `classmethod`.
+
+Методы класса привязаны к самому классу, а не его экземпляру. Они могут менять состояние класса, что отразится на всех
+объектах этого класса, но не могут менять конкретный объект.
+
+Встроенный пример метода класса — `dict.fromkeys()` — возвращает новый словарь с переданными элементами в качестве
+ключей.
+
+```python
+dict.fromkeys('AEIOU')  # <- вызывается при помощи класса dict
+{'A': None, 'E': None, 'I': None, 'O': None, 'U': None}
+```
+
+Такие методы используются почти всегда для создания альтернативных конструкторов. Например, класс `Human` у которого
+есть параметр возраст. И мы можем как задать возраст напрямую, как и передать дату рождения для вычисления возраста.
+
+```python
+import datetime
+
+class Human:
+    name: str
+    age: int
+
     def __init__(self, name: str, age: int):
         self.name = name
         self.age = age
 
-alice = Person("Alice", 30)
-bob = Person(name='Bob', age=35)
-print(alice.name)  # Alice
-print(alice.age)   # 30
-print(bob.name)  # Bob
-print(bob.age)   # 35
+    @classmethod
+    def from_birthday(cls, name: str, birthdate: str, date_format: str):
+        today = datetime.datetime.now()
+        day_of_birth = datetime.datetime.strptime(birthdate, date_format)
+        age = int((today - day_of_birth).days // 365.2425)
+        return cls(name, age)
+
+
+h1 = Human("Anton", 35)
+h2 = Human.from_birthday("Vlad", "01-06-1994", "%d-%m-%Y")
 ```
 
-Инит есть практически у каждого класса, это очень часто используемый метод
+### Статические методы
 
-#### `__del__`
+Статические методы декларируются при помощи декоратора `staticmethod`. Им не нужен определённый первый аргумент (ни
+`self`, ни `cls`).
 
-Метод `__del__` вызывается перед уничтожением объекта.
+Их можно воспринимать как методы, которые “не знают, к какому классу относятся”. 
+По сути ничем не отличаются от обычных функций
+
+Таким образом, статические методы прикреплены к классу лишь для удобства и не могут менять состояние ни класса, ни его
+экземпляра.
+
+#### Когда использовать каждый из методов?
+
+Выбор того, какой из методов использовать, может показаться достаточно сложным. Тем не менее, с опытом этот выбор
+делать гораздо проще.
+
+Чаще всего метод класса используется тогда, когда нужен генерирующий метод, возвращающий объект класса. Как видим,
+метод класса `from_birthday` используется для создания объекта класса `Human` по дате рождения, а не возрасту.
+
+Статические методы в основном используются как вспомогательные функции и работают с данными, которые им передаются.
+
+## @property (Свойство)
+
+Конвертация метода класса в атрибуты только для чтения;
+
+Один из самых простых способов использования `property` - это использовать его в качестве декоратора метода. Это
+позволит вам превратить метод класса в атрибут класса.
+
+Давайте взглянем на простой пример:
 
 ```python
-class Person:
-    def __init__(self, name):
-        self.name = name
+class Person(object):
+    """"""
 
-    def __del__(self):
-        print(f"Deleting {self.name}")
+    def __init__(self, first_name, last_name):
+        """Конструктор"""
+        self.first_name = first_name
+        self.last_name = last_name
 
-alice = Person("Alice")
-del alice  # Deleting Alice
+    @property
+    def full_name(self):
+        """
+        Возвращаем полное имя
+        """
+        return f"{self.first_name} {self.last_name}"
 ```
 
+В данном коде мы создали два класса атрибута, или свойств: `self.first_name` и `self.last_name`.
 
-### Представление объектов. `__str__` и `__repr__`
-
-Методы `__str__` и `__repr__` позволяют вам определить, как объект будет представлен в виде строки.
+Далее мы создали метод `full_name`, который содержит декоратор `@property`. Это позволяет нам использовать следующий
+код в сессии интерпретатора:
 
 ```python
-class Person:
-    def __init__(self, name, age):
-        self.name = name
-        self.age = age
+person = Person("Mike", "Driscoll")
 
-    def __str__(self):
-        return f"{self.name}, {self.age} years old"
+print(person.full_name)  # Mike Driscoll
+print(person.first_name)  # Mike
 
-    def __repr__(self):
-        return f"Person(name={self.name}, age={self.age})"
-
-alice = Person("Alice", 30)
-print(str(alice))  # Alice, 30 years old
-print(repr(alice)) # Person(name=Alice, age=30)
-
+person.full_name = "Jackalope" # Ошибка, нельзя поменять значение полученное через проперти
 ```
 
-Используйте `__str__()` когда нужно строковое представление объекта для конечных пользователей, акцентируя внимание на
-читаемости, а не на полноте. Используйте `__repr__()` для создания строки, которая будет интересна разработчикам, стремясь
-к точности и однозначности представления.
-
-### Перегрузка операторов
-
-Что такое перегрузка? Это возможность переопределить действие которое уже существует.
-
-Магические методы позволяют перегружать операторы. Например, метод `__add__` перегружает оператор +.
+Как вы видите, в результате превращения метода в свойство мы можем получить к нему доступ при помощи обычной точечной
+нотации. Однако, если мы попытаемся настроить свойство на что-то другое, мы получим ошибку `AttributeError`.
+Единственный способ изменить свойство `full_name` - сделать это косвенно:
 
 ```python
-class Vector:
-    def __init__(self, x, y):
-        self.x = x
-        self.y = y
-
-    def __add__(self, other):
-        return Vector(self.x + other.x, self.y + other.y)
-
-    def __str__(self):
-        return f"Vector({self.x}, {self.y})"
-
-v1 = Vector(2, 3)
-v2 = Vector(1, 1)
-print(v1 + v2)  # Vector(3, 4)
+person.first_name = "Dan"
+print(person.full_name)  # Dan Driscoll
 ```
 
-#### Полный список магических методов перегрузки операторов
-1. Арифметические операторы
-    
-    - `__add__(self, other)`: для оператора `+`
-    - `__sub__(self, other)`: для оператора `-`
-    - `__mul__(self, other)`: для оператора `*`
-    - `__truediv__(self, other)`: для оператора `/`
-    - `__floordiv__(self, other)`: для оператора `//`
-    - `__mod__(self, other)`: для оператора `%`
-    - `__pow__(self, other)`: для оператора `**`
-    - `__radd__(self, other)`: для оператора `+ (правосторонний)`
-    - `__rsub__(self, other)`: для оператора `- (правосторонний)`
-    - `__rmul__(self, other)`: для оператора * (правосторонний)`
-    - `__rtruediv__(self, other)`: для оператора `/ (правосторонний)`
-    - `__rfloordiv__(self, other)`: для оператора `// (правосторонний)`
-    - `__rmod__(self, other)`: для оператора `% (правосторонний)`
-    - `__rpow__(self, other)`: для оператора `** (правосторонний)`
-    - `_iadd__(self, other)`: для оператора `+=`
-    - `__isub__(self, other)`: для оператора `-=`
-    - `__imul__(self, other)`: для оператора `*=`
-    - `__itruediv__(self, other)`: для оператора `/=`
-    - `__ifloordiv__(self, other)`: для оператора `//=`
-    - `__imod__(self, other)`: для оператора `%=`
-    - `__ipow__(self, other)`: для оператора `**=`
-
-```python
-class Number:
-    def __init__(self, value):
-        self.value = value
-
-    def __add__(self, other):
-        return Number(self.value + other.value)
-
-    def __sub__(self, other):
-        return Number(self.value - other.value)
-
-    def __mul__(self, other):
-        return Number(self.value * other.value)
-
-    def __truediv__(self, other):
-        return Number(self.value / other.value)
-
-    def __floordiv__(self, other):
-        return Number(self.value // other.value)
-
-    def __mod__(self, other):
-        return Number(self.value % other.value)
-
-    def __pow__(self, other):
-        return Number(self.value ** other.value)
-
-    def __str__(self):
-        return str(self.value)
-
-n1 = Number(10)
-n2 = Number(2)
-print(n1 + n2)  # 12
-print(n1 - n2)  # 8
-print(n1 * n2)  # 20
-print(n1 / n2)  # 5.0
-print(n1 // n2) # 5
-print(n1 % n2)  # 0
-print(n1 ** n2) # 100
-```
-
-2. Операторы сравнения
-
-    - `__eq__(self, other)`: для оператора `==`
-    - `__ne__(self, other)`: для оператора `!=`
-    - `__lt__(self, other)`: для оператора `<`
-    - `__le__(self, other)`: для оператора `<=`
-    - `__gt__(self, other)`: для оператора `>`
-    - `__ge__(self, other)`: для оператора `>=`
-
-```python
-class Person:
-    def __init__(self, name, age):
-        self.name = name
-        self.age = age
-
-    def __eq__(self, other):
-        return self.age == other.age
-
-    def __lt__(self, other):
-        return self.age < other.age
-
-    def __str__(self):
-        return f"{self.name}, {self.age}"
-
-p1 = Person("Alice", 30)
-p2 = Person("Bob", 25)
-print(p1 == p2)  # False
-print(p1 > p2)   # True
-```
-
-3. Логические операторы
-
-    - `__and__(self, other)`: для оператора `&`
-    - `__or__(self, other)`: для оператора `|`
-    - `__xor__(self, other)`: для оператора `^`
-    - `__invert__(self)`: для оператора `~`
-    - `__rand__(self, other)`: для оператора `& (правосторонний)`
-    - `__ror__(self, other)`: для оператора `| (правосторонний)`
-    - `__rxor__(self, other)`: для оператора `^ (правосторонний)`
-    - `__iand__(self, other)`: для оператора `&=`
-    - `__ior__(self, other)`: для оператора `|=`
-    - `__ixor__(self, other)`: для оператора `^=`
-
-```python
-class Bitwise:
-    def __init__(self, value):
-        self.value = value
-
-    def __and__(self, other):
-        return Bitwise(self.value & other.value)
-
-    def __or__(self, other):
-        return Bitwise(self.value | other.value)
-
-    def __xor__(self, other):
-        return Bitwise(self.value ^ other.value)
-
-    def __invert__(self):
-        return Bitwise(~self.value)
-
-    def __str__(self):
-        return str(self.value)
-
-b1 = Bitwise(6)  # 110 in binary
-b2 = Bitwise(3)  # 011 in binary
-print(b1 & b2)   # 2 (010 in binary)
-print(b1 | b2)   # 7 (111 in binary)
-print(b1 ^ b2)   # 5 (101 in binary)
-print(~b1)       # -7 (two's complement)
-```
-
-4. Смешанные операторы
-
-    - `__neg__(self)`: для оператора унарного минуса `-`
-    - `__pos__(self)`: для оператора унарного плюса `+`
-    - `__abs__(self)`: для функции `abs()`
-    - `__invert__(self)`: для оператора `~`
-    - `__complex__(self)`: для функции `complex()`
-    - `__int__(self)`: для функции `int()`
-    - `__float__(self)`: для функции `float()`
-    - `__round__(self, n)`: для функции `round()`
-    - `__index__(self)`: для функций `hex(), oct(), bin()`
-    - `__trunc__(self)`: для функции `math.trunc()`
-    - `__floor__(self)`: для функции `math.floor()`
-    - `__ceil__(self)`: для функции `math.ceil()`
-
-```python
-class Number:
-    def __init__(self, value):
-        self.value = value
-
-    def __neg__(self):
-        return Number(-self.value)
-
-    def __pos__(self):
-        return Number(+self.value)
-
-    def __abs__(self):
-        return Number(abs(self.value))
-
-    def __int__(self):
-        return int(self.value)
-
-    def __float__(self):
-        return float(self.value)
-
-    def __round__(self, n):
-        return round(self.value, n)
-
-    def __index__(self):
-        return self.value
-
-    def __str__(self):
-        return str(self.value)
-
-n = Number(-5.5)
-print(-n)          # 5.5
-print(+n)          # -5.5
-print(abs(n))      # 5.5
-print(int(n))      # -5
-print(float(n))    # -5.5
-print(round(n, 1)) # -5.5
-print(hex(n))      # -0x5
-```
-
-### Контейнеры и последовательности
-
-Методы, такие как `__len__`, `__getitem__`, `__setitem__`, `__delitem__`, и `__contains__`, позволяют реализовать поведение контейнеров.
-
-```python
-class CustomList:
-    def __init__(self):
-        self.items = []
-
-    def __len__(self):
-        return len(self.items)
-
-    def __getitem__(self, index):
-        return self.items[index]
-
-    def __setitem__(self, index, value):
-        self.items[index] = value
-
-    def __delitem__(self, index):
-        del self.items[index]
-
-    def __contains__(self, item):
-        return item in self.items
-
-cl = CustomList()
-cl.items.append(1)
-cl.items.append(2)
-print(len(cl))  # 2
-print(cl[0])    # 1
-cl[1] = 3
-print(cl[1])    # 3
-del cl[0]
-print(len(cl))  # 1
-print(3 in cl)  # True
-```
-
-### Итерации
-
-Для создания итераторов в Python используются методы `__iter__` и `__next__`.
-
-О том как это работает, вас ждет целая лекция ближе к концу курса!
-
-```python
-class Counter:
-    def __init__(self, max):
-        self.max = max
-        self.current = 0
-
-    def __iter__(self):
-        return self
-
-    def __next__(self):
-        if self.current >= self.max:
-            raise StopIteration
-        self.current += 1
-        return self.current
-
-c = Counter(3)
-for number in c:
-    print(number)  # 1 2 3
-
-```
-
-### Контекстные менеджеры
-
-Методы `__enter__` и `__exit__` позволяют использовать объекты в контексте with.
-
-```python
-class ManagedFile:
-    def __init__(self, filename):
-        self.filename = filename
-
-    def __enter__(self):
-        self.file = open(self.filename, 'w')
-        return self.file
-
-    def __exit__(self, exc_type, exc_val, exc_tb):
-        self.file.close()
-
-with ManagedFile('test.txt') as f:
-    f.write('Hello, world!')
-
-```
-
-### Другие методы
-
-Метод `__call__` позволяет сделать объект вызываемым, как функцию.
-
-```python
-class Greeter:
-    def __init__(self, name):
-        self.name = name
-
-    def __call__(self, greeting):
-        return f"{greeting}, {self.name}!"
-
-g = Greeter("Alice")
-print(g("Hello"))  # Hello, Alice!
-```
-
-Это свойство мы будем использовать на занятии по декораторам!
-
-`__hash__`
-
-```python
-class Person:
-    def __init__(self, name, age):
-        self.name = name
-        self.age = age
-
-    def __hash__(self):
-        return hash((self.name, self.age))
-
-p1 = Person("Alice", 30)
-p2 = Person("Alice", 30)
-print(hash(p1) == hash(p2))  # True
-```
-
-Это далеко не полный список того что можно делать с классами, меджик методов гораздо больше. Все что вам надо знать, это
-что на любое действие уже существует заготовка. Нужно только найти что именно переписывать.
-
-[Хорошая статья по теме](https://habr.com/ru/post/186608/)
-
-## Создание Собственных Исключений в Python
-
-Программирование часто требует работы с различными типами ошибок и исключений. В Python существует множество встроенных исключений, таких как `ValueError`, `TypeError` и `IndexError`, которые помогают обрабатывать различные виды ошибок. Однако иногда возникает необходимость создать собственные исключения для более точной и специфичной обработки ошибок в вашей программе. В этой статье мы рассмотрим, как создавать и использовать собственные исключения в Python.
-
-### Зачем нужны собственные исключения?
-
-Собственные исключения позволяют:
-
-1. **Улучшить читабельность кода**: Вы можете использовать описательные имена исключений, чтобы было ясно, какая ошибка произошла и почему.
-2. **Обеспечить точность обработки ошибок**: Вы можете точно указать, какие ошибки должны быть перехвачены и обработаны.
-3. **Создавать многоуровневую иерархию ошибок**: Позволяет создавать базовые и специализированные исключения для более гибкой обработки ошибок.
-
-### Как создать собственное исключение?
-
-Для создания собственного исключения в Python, необходимо создать новый класс, который наследует от базового класса исключений, обычно это `Exception`.
-
-#### Пример простого исключения
-
-```python
-class MyCustomError(Exception):
-    """Класс для пользовательского исключения."""
-```
-
-#### Пример исключения с дополнительной информацией
-
-```python
-class InvalidInputError(Exception):
-    """Исключение вызывается, когда ввод недействителен."""
-    
-    def __init__(self, message, value):
-        self.message = message
-        self.value = value
-        super().__init__(self.message)
-        
-    def __str__(self):
-        return f'{self.message}: {self.value}'
-```
-
-### Использование собственных исключений
-
-После создания собственного исключения, вы можете использовать его в своем коде, как и любое другое встроенное исключение.
-
-#### Пример использования
-
-```python
-def divide(a, b):
-    if b == 0:
-        raise InvalidInputError("Деление на ноль", b)
-    return a / b
-
-try:
-    result = divide(10, 0)
-except InvalidInputError as e:
-    print(e)
-```
-
-### Иерархия пользовательских исключений
-
-Создание иерархии исключений может быть полезным, если ваш код может генерировать различные виды ошибок, которые имеют общие черты.
-
-#### Пример иерархии
-
-```python
-class ApplicationError(Exception):
-    """Базовый класс для всех исключений приложения."""
-    pass
-
-class DatabaseError(ApplicationError):
-    """Исключения, связанные с базой данных."""
-    pass
-
-class FileNotFoundError(ApplicationError):
-    """Исключения, связанные с отсутствием файла."""
-    pass
-```
-
-### Пример использования иерархии
-
-```python
-def connect_to_database():
-    raise DatabaseError("Не удалось подключиться к базе данных")
-
-try:
-    connect_to_database()
-except ApplicationError as e:
-    print(f"Произошла ошибка приложения: {e}")
-except DatabaseError as e:
-    print(f"Ошибка базы данных: {e}")
-```
-
-Практика:
-
-1. К созданному на прошлом занятии классу студент, задаем ему имя, возраст и оценки, через `__init__`
-2. Добавляем метод для добавления оценки
-3. Добавляем метод(ы) вычисления среднего балла
-4. Прописываем меджик метод (или методы) которые позволяют найти студента с наилучшим средним балом из списка
-5. Берем класс группы из прошлого занятия
-6. Добавляем возможность добавить студента к группе
-7. Добавляем возможность удалить студента из группы
-8. Добавляем возможность найти группу в которой учится студент с самым высоким средним баллом
+## Домашняя работа
+
+1. Создайте класс, который будет считывать файл
+2. Напишите декоратор, который будет замерять время выполнения.
+3. Напишите декоратор, который будет вызывать функцию n-раз. 
+4. Воспользуйтесь декоратором для замера времени и примените его ко всем функциям в вашем модуле.
