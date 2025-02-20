@@ -1,1279 +1,1217 @@
-# Лекция 24. Django ORM. Объекты моделей и queryset, Meta моделей, прокси модели.
+# Лекция 24. ClassBaseView
 
-![](https://cs8.pikabu.ru/post_img/2016/09/12/5/og_og_1473660997242355939.jpg)
+![cbv_meme.png](pictures/cbv_meme.png)
 
 ## Что сегодня учим?
 
-![img.png](pictures/mvc_orm.png)
+![mvc_cbv.png](pictures/mvc_cbv.png)
 
-## ORM
+# Class-Based View
 
-Мы уже знаем про то, как хранить данные и как связать таблицы между собой. Давайте научимся извлекать, модифицировать и
-удалять данные при помощи кода.
+С этого момента мы переходим на использование `view`, основанных исключительно на классах.
 
-Допустим, что ваша модель выглядит так:
+Все основные существующие классы описаны [Тут](https://ccbv.co.uk/)
+
+## Class View
+
+[Дока](https://ccbv.co.uk/projects/Django/4.2/django.views.generic.base/View/)
+
+Основой всех классов, используемых во `view`, является класс `View`. Методы этого класса используются всеми остальными
+классами.
+
+Основные атрибуты:
+
+```http_method_names = ['get', 'post', 'put', 'patch', 'delete', 'head', 'options', 'trace']```
+
+Этот атрибут нужен для определения того, какие виды HTTP методов будут доступны для запросов.
+
+Основные функции:
+
+`as_view()` - метод который всегда вызывается, чтобы использовать класс в `urls.py`, внутри вызывает методы `setup`
+и `dispatch`
+
+`setup()` - метод, который добавляет `request` в `self`, благодаря чему `request` будет доступен в абсолютно любом
+методе
+всех наших `view` классов
+
+`http_method_not_allowed()` - метод, который генерирует ошибку запроса (не могу обработать, например, POST запрос).
+
+`dispatch()` - метод, отвечающий за вызов обработчика при запросе.
 
 ```python
-from django.db import models
-from django.contrib.auth.models import User
-from django.utils import timezone
-from django.utils.translation import gettext as _
-
-GENRE_CHOICES = (
-    (1, _("Not selected")),
-    (2, _("Comedy")),
-    (3, _("Action")),
-    (4, _("Beauty")),
-    (5, _("Other"))
-)
-
-
-class Author(models.Model):
-    pseudonym = models.CharField(max_length=120,
-                                 blank=True,
-                                 null=True)
-    name = models.CharField(max_length=120)
-
-    def __str__(self):
-        return self.name
-
-
-class Article(models.Model):
-    author = models.ForeignKey(Author,
-                               on_delete=models.CASCADE,
-                               null=True,
-                               related_name='articles')
-    text = models.TextField(max_length=10000,
-                            null=True)
-    created_at = models.DateTimeField(default=timezone.now)
-    updated_at = models.DateTimeField(default=timezone.now)
-    genre = models.IntegerField(choices=GENRE_CHOICES,
-                                default=1)
-
-    def __str__(self):
-        return f"Author - {self.author.name}, genre - {self.genre}, id - {self.id}"
-
-
-class Comment(models.Model):
-    text = models.CharField(max_length=1000)
-    article = models.ForeignKey(Article,
-                                on_delete=models.DO_NOTHING)
-    comment = models.ForeignKey('myapp.Comment',
-                                null=True,
-                                blank=True,
-                                on_delete=models.DO_NOTHING,
-                                related_name='comments')
-    user = models.ForeignKey(User,
-                             on_delete=models.DO_NOTHING)
-
-    def __str__(self):
-        return f"{self.text} by {self.user.username}"
-
-
-class Like(models.Model):
-    user = models.ForeignKey(User,
-                             on_delete=models.DO_NOTHING)
-    article = models.ForeignKey(Article,
-                                on_delete=models.DO_NOTHING)
-
-    def __str__(self):
-        return f"By user {self.user.username} to article {self.article.id}"
-
+def dispatch(self, request, *args, **kwargs):
+    # Try to dispatch to the right method; if a method doesn't exist,
+    # defer to the error handler. Also defer to the error handler if the      
+    # request method isn't on the approved list.
+    if request.method.lower() in self.http_method_names:  # Если запрос находится в списке разрешенных, то заходим.
+        handler = getattr(self, request.method.lower(),
+                          self.http_method_not_allowed)  # Пытаемся из self получить атрибут или метод, совпадающий названием с методом запроса (POST - post, GET - get), если не получается, то вернуть метод http_method_not_allowed
+    else:
+        handler = self.http_method_not_allowed  # Вернуть метод http_method_not_allowed
+    return handler(request, *args,
+                   **kwargs)  # Вызвать метод, который мы получили ранее, если удалось, то, например, get(), или post(), если нет, то http_method_not_allowed()
 ```
 
-Рассмотрим некоторые новые возможности
+Как это работает?
+
+Если наследоваться от этого класса, то мы можем описать функцию `get` и/или `post`, чтобы описать, что необходимо делать
+при запросе методами `GET` или `POST`.
+
+И можем описать, какие вообще запросы мы ожидаем принимать в аттрибуте `http_method_names`
+
+Например:
+
+Во `views.py`
 
 ```python
-from django.contrib.auth.models import User
+from django.views import View
+from django.shortcuts import render
+
+
+class MyView(View):
+    http_method_names = ['get', ]
+
+    def get(self, request, *args, **kwargs):
+        return render(request, 'index.html')
 ```
 
-Это модель встроенного в Django юзера, её мы рассмотрим немного позже.
+В `urls.py`:
 
 ```python
-from django.utils.translation import gettext as _
+...
+path('some-url/', MyView.as_view(), name='some-name')
+...
 ```
 
-Стандартная функция перевода языка для Django. Допустим, что ваш сайт имеет функцию переключения языка, при которой
-текст
-может отображаться на русском, украинском и английском. Именно эта функция поможет нам в будущем указать значения
-для всех трех языков. Подробнейшая информация по
-переводам [Тут](https://docs.djangoproject.com/en/4.2/topics/i18n/translation/)
+Чем такая конструкция лучше, чем обычная функция? Тем, что обычная функция обязана принимать любой запрос и дальше
+только при помощи `if` разделять разные запросы.
 
-> Мы будем рассматривать это на отдельной лекции
+Такой класс будет принимать только запросы описанных методов, отклоняя все остальные, и каждый запрос будет написан в
+отдельном методе, что сильно улучшает читабельность кода.
+
+## Class TemplateView
+
+[Дока](https://ccbv.co.uk/projects/Django/4.2/django.views.generic.base/TemplateView/)
+
+Класс, необходимый для рендера html файлов
+
+Основные атрибуты:
 
 ```python
-GENRE_CHOICES = (
-    (1, _("Not selected")),
-    (2, _("Comedy")),
-    (3, _("Action")),
-    (4, _("Beauty")),
-    (5, _("Other"))
-)
+template_name = None  # Имя html файла, который нужно рендерить
+extra_content = None  # Словарь с контентом
 ```
 
-Переменная, состоящая из кортежа кортежей (могла быть любая коллекция коллекций), которая нужна для использования
-choices значений, используется для хранения выбора чего-либо (в нашем случае жанра). То есть в базе будет храниться
-только число, а пользователю будет выводиться уже текст.
+Основные методы:
 
-Используем это вот тут:
+Описан метод `get()`
 
 ```python
-genre = models.IntegerField(choices=GENRE_CHOICES, default=1)
+def get(self, request, *args, **kwargs):
+    context = self.get_context_data(**kwargs)
+    return self.render_to_response(context)
 ```
 
-Рассмотрим вот эту строку
+`get_context_data()` - метод, возвращающий данные, которые будут добавлены в контекст
+
+Как этим пользоваться?
 
 ```python
-return f"Author - {self.author.name}, genre - {self.genre}, id - {self.id}"
+from django.views.generic.base import TemplateView
+
+from articles.models import Article
+
+
+class HomePageView(TemplateView):
+    template_name = "home.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['latest_articles'] = Article.objects.all()[:5]
+        return context
 ```
 
-**self.author.name** - в базе по значению поля ForeignKey хранится **id**, но в коде мы можем получить доступ к
-значениям
-связанной модели, конкретно в этой ситуации мы берем значение поля **name** из связанной модели **author**.
+Мы описали класс, который будет рендерить файл `home.html`, в контексте которого будет переменная `latest_articles`, в
+которой будет коллекция из объектов модели.
 
-Рассмотрим вот эту строку:
+То же самое можно было сделать через `extra_context`:
 
 ```python
-comment = models.ForeignKey('myapp.Comment',
-                            null=True,
-                            blank=True,
-                            on_delete=models.DO_NOTHING,
-                            related_name='comments')
+from django.views.generic.base import TemplateView
+
+from articles.models import Article
+
+
+class HomePageView(TemplateView):
+    template_name = "home.html"
+    extra_context = {"latest_articles": Article.objects.all()[:5]}
 ```
 
-Модель можно передать не только как класс, но и по имени модели указав приложение `appname.Modelname` (да, мне было лень
-переименовывать приложение из myapp во что-то читаемое).
+## Class RedirectView
 
-> Это пример самоссылочной связи, помните еще из занятий по `SQL`?
+[Дока](https://ccbv.co.uk/projects/Django/4.2/django.views.generic.base/RedirectView/)
 
-При такой записи мы создаём связь один ко многим к самому себе, указав при этом black=True, null=True. Можно создать
-коммент без указания родительского комментария, а если создать комментарий со ссылкой на другой, это будет комментарий к
-комментарию, причем это можно сделать любой вложенности.
+Класс, необходимый для перенаправления запросов с одного URL на другой.
 
-Кроме описания модели можно было бы использовать текст `self`. Это работает, когда нужно сделать ссылку именно на самого
-себя
+Основные атрибуты:
 
-`related_name` - в этой записи нужен для того, чтобы получить выборку всех вложенных объектов. Мы рассмотрим их немного
-дальше.
-
-## objects и shell
-
-Для доступа или модификации любых данных, у каждой модели есть атрибут `objects`, который позволяет производить
-манипуляции с данными. Он называется менеджер, и при желании его можно переопределить.
-
-Для интерактивного использования кода используется команда
-
-```python manage.py shell```
-
-Эта команда открывает нам консоль с уже импортированными стандартными, но не самописными модулями Django
-
-![](https://djangoalevel.s3.eu-central-1.amazonaws.com/lesson36/clean_shell.png)
-
-Предварительно я создал несколько объектов через админку.
-
-Для доступа к моделям их нужно импортировать, я импортирую модель Comment.
-
-Рассмотрим весь CRUD и дополнительные особенности. Очень подробная информация по всем возможным
-операциям [тут](https://docs.djangoproject.com/en/4.2/topics/db/queries/)
-
-### R - retrieve
-
-Функции для получения объектов в Django могут возвращать два типа данных, **объект модели** или **queryset**
-
-Объект - это единичный объект, queryset - это список объектов со своими встроенными методами.
-
-#### all()
-
-Для получения всех данных используется метод `all()`, который возвращает queryset со всеми существующими объектами этой
-модели.
-
-![](https://djangoalevel.s3.eu-central-1.amazonaws.com/lesson36/objects_all.png)
-
-#### filter()
-
-Для получения отфильтрованных данных мы используем метод `filter()`
-
-Если указать `filter()` без параметров, то он сделает то же самое, что и `all()`.
-
-Какие у фильтра могу быть параметры? Да практически любые, мы можем указать любые поля для фильтрации.
-Например, фильтр по полю текст:
-
-```python
-Comment.objects.filter(text='Hey everyone')
+```python 
+query_string = False  # сохранить ли квери параметры (то, что в строке браузера после ?) при редиректе
+url = None  # URL, на который надо перейти
+pattern_name = None  # Имя URL, на который надо перейти
 ```
 
-Фильтр по вложенным объектам выполняется через двойное подчеркивание.
+Основные методы:
 
-Фильтр по жанру статьи комментария:
+Описаны все HTTP методы, и все они ссылаются на `get()`, например, `delete()`:
 
 ```python
-Comment.objects.filter(article__genre=3)
+def delete(self, request, *args, **kwargs):
+    return self.get(request, *args, **kwargs)
 ```
 
-По псевдониму автора:
+Метод `get_redirect_url()` отвечает за то, чтобы получить URL, на который надо перейти
+
+Как пользоваться
 
 ```python
-Comment.objects.filter(article__author__pseudonym='The king')
+class ArticleRedirectView(RedirectView):
+    query_string = True
+    pattern_name = 'article-detail'
 ```
 
-По псевдониму автора и жанру (через запятую можно указать логическое И):
+## Class DetailView
+
+[Дока](https://ccbv.co.uk/projects/Django/4.2/django.views.generic.detail/DetailView/)
+
+Класс, который необходим для того, чтобы сделать страницу для просмотра одного объекта.
+
+Ему необходимо передать `pk` либо `slug`, и это позволит отобразить один объект (статью, товар и т. д.)
+
+Как этим пользоваться?
+
+Например:
+
+Во views.py
 
 ```python
-Comment.objects.filter(article__author__pseudonym='The king', article__genre=3)
+from django.views.generic.detail import DetailView
+
+from articles.models import Article
+
+
+class ArticleDetailView(DetailView):
+    model = Article
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['now'] = timezone.now()  # Просто добавляем текущее время к контексту
+        return context
 ```
 
-Кроме того, у каждого поля существуют встроенные системы лукапов. Синтаксис лукапов аналогичен синтаксису доступа к
-вложенным
-объектам `field__lookuptype=value`
-
-Стандартные лукапы:
-
-`lte` - меньше или равно
-
-`gte` - больше или равно
-
-`lt` - меньше
-
-`gt` - больше
-
-`startswith` - начинается с
-
-`istartswith` - начинается с, без учёта регистра
-
-`endswith` - заканчивается на
-
-`iendswith` - заканчивается на, без учёта регистра
-
-`range` - находится в диапазоне
-
-`week_day` - день недели (для дат)
-
-`year` - год (для дат)
-
-`isnull` - является `null`
-
-`contains` - частично содержит с учетом регистра ("Всем привет, я - Влад" содержит слово "Влад", но не содержит "влад")
-
-`icontains` - то же самое, но без учета регистра, теперь найдется и второй вариант.
-
-`exact` - совпадает (необязательный лукап, делает то же, что и знак равно)
-
-`iexact` - совпадает без учета регистра (по запросу "привет" найдет и "Привет", и "прИвЕт")
-
-`in` - содержится в каком-то списке
-
-Их намного больше, читать [ТУТ](https://docs.djangoproject.com/en/4.2/ref/models/querysets/#field-lookups)
-
-Примеры:
-
-Псевдоним содержит слово 'king' без учета регистра:
+В urls.py:
 
 ```python
-Comment.objects.filter(article__author__pseudonym__icontains='king')
+from django.urls import path
+
+from article.views import ArticleDetailView
+
+urlpatterns = [
+    path('<pk:pk>/', ArticleDetailView.as_view(), name='article-detail'),
+]
 ```
 
-Комменты к статье, созданной не позднее чем вчера:
+Этого уже достаточно, чтобы отрисовать страницу деталей объекта. Если `template_name` не указан явно, то Django будет
+пытаться отобразить `templates/app_name/model_detail.html`, где `app_name` - название приложения, `model` - название
+модели, `detail` - константа.
+
+В контекст будет передана переменная `object`. Методы `post`, `put` и т. д. не определены.
+
+Важные параметры.
 
 ```python
-Comment.objects.filter(article__created_at__gte=date.today() - timedelta(days=1))
+pk_url_kwarg = 'pk'  # Как переменная называется в urls.py, например, `<int:my_id>`
+queryset = None  # если указан, то возможность ограничить доступ только для части объектов (например, убрать из возможности обновления деактивированные объекты).
+template_name = None  # указать имя шаблона.
+model = None  # класс модели, если не указан queryset, сгенерирует queryset из модели.
 ```
 
-Комменты к статьям с жанрами, у которых `id = 2` и `id = 3`:
+Важные методы:
+
+`get_queryset()` - переопределить queryset
+
+`get_context_data()` - то же, что и у TemplateView
+
+`get_object()` - определяет логику получения объекта
+
+## Class ListView
+
+[Дока](https://ccbv.co.uk/projects/Django/4.2/django.views.generic.list/ListView/)
+
+Класс, необходимый для отображения списка объектов.
+
+Добавляет в контекст список объектов и информацию о пагинации.
+
+Как пользоваться?
 
 ```python
-Comment.objects.filter(article__genre__in=[2, 3])
+class CommentListView(ListView):
+    paginate_by = 10
+    template_name = 'comments_list.html'
+    queryset = Comment.objects.filter(parent__isnull=True)
 ```
 
-#### exclude()
+### Пагинация
 
-Функция обратная функции `filter` вытащит всё, что не попадает выборку.
+[Дока](https://docs.djangoproject.com/en/4.2/topics/pagination/)
 
-Например, все комментарии к статьям, у которых жанр `id != 2` и `id != 3`:
+Очень часто наше приложение хранит большое количество данных, и при отображении нам не нужно показывать прям всё
+(допустим у нас блог на 1 000 000 000 статей). Логично отдавать данные порциями - это и называется пагинация,
+или разбиение на страницы.
+
+При прокрутке ленты в соцсети вы подгружаете всё новые и новые страницы, просто при помощи JavaScript это сделано
+так, что вы этого не замечаете.
+
+За это отвечает параметр:
 
 ```python
-Comment.objects.exclude(article__genre__in=[2, 3])
+paginate_by = None  # можно указать, сколько должно быть объектов на одной странице 
 ```
 
-`filter` и `exclude` можно совмещать. К любому queryset можно применить `filter` или `exclude` еще раз. Например, все
-комменты
-к статьям, созданным не позже чем вчера, с жанрами не 2 и не 3
+В шаблон будут переданы как список объектов, так и данные по пагинации
 
 ```python
-Comment.objects.filter(article__created_at__gte=date.today() - timedelta(days=1)).exclude(article__genre__in=[2, 3])
+context = {
+    'paginator': paginator,  # объект класса пагинации, хранит все подробности, которые только могут быть.
+    'page_obj': page,
+    # информация о текущей странице, какая это страница, сколько всего страниц, URL на следующую и предыдущую страницу
+    'is_paginated': is_paginated,
+    # были ли данные вообще пагинированы, возможно у вас 10 объектов на страницу, а их всего 5, тогда нет смысла в пагинации
+    'object_list': queryset  # Сам queryset с объектами
+}
 ```
 
-Все эти функции возвращают специальный объект называемый queryset. Он является коллекцией записей базы (которые
-называются в этой терминологии instance), к любому кверисету можно применить любой метод менеджера модели (objects).
-Например, к только что отфильтрованному кверисету можно применить фильтр еще раз и т. д.
-
-#### order_by()
-
-По умолчанию все модели сортируются по полю `id`, если явно не указанно иное. Однако часто нужно отсортировать данные
-специальным
-образом. Для этого используется метод order_by(). При сортировке можно указывать вложенные объекты и знак `-`, чтобы
-указать сортировку в обратном порядке.
+Важные параметры такие же как у DetailView и еще новые
 
 ```python
-Comment.objects.filter(article__created_at__gte=date.today() - timedelta(days=1)).order_by('-article__created_at').all()
+allow_empty = True  # разрешить ли отображение пустого списка
+ordering = None  # явно указать порядок сортировки
 ```
 
-#### `distinct()`
+Всё еще описан только метод `get()`. Методы `post()`, `put()` и т. д. не разрешены.
 
-Метод `distinct()` используется для исключения дублирующихся записей из результата запроса. Он полезен, когда вам нужно
-получить уникальные записи по одному или нескольким полям.
+Важные методы:
 
-#### Пример использования:
+`get_queryset()` - переопределить queryset
 
-Предположим, у нас есть модель `Book` с полями `title`, `author`, и `published_date`.
+`get_context_data()` - то же, что и у TemplateView
+
+`get_paginator()` - определяет логику получения класса Paginator
+
+`get_paginate_by()` - определяет логику получения значение paginate_by
+
+`get_ordering()` - определяет логику получения переменной ordering
+
+`get_allow_empty()` - определяет логику получения переменной allow_empty
+
+## Class FormView
+
+[Дока](https://ccbv.co.uk/projects/Django/4.2/django.views.generic.edit/FormView/)
+
+Не все классы предназначены только для чтения данных.
+
+FormView класс необходим для обработки формы.
+
+Как пользоваться?
+
+В `forms.py`:
 
 ```python
-from myapp.models import Book
+from django import forms
 
-# Получение уникальных авторов
-unique_authors = Book.objects.distinct('author')
+
+class ContactForm(forms.Form):
+    name = forms.CharField()
+    message = forms.CharField(widget=forms.Textarea)
+
+    def send_email(self):
+        # send email using the self.cleaned_data dictionary
+        pass
 ```
 
-В этом примере запрос вернет уникальные записи на основе поля `author`. Если не указать поле, то метод `distinct()`
-уберет дубликаты всех записей.
-
-#### `values()`
-
-Метод `values()` используется для создания набора запросов, который возвращает словари, где ключами являются имена
-полей, а значениями — их значения. Это удобно, когда вам нужно получить определенные поля из базы данных, а не все поля
-модели.
-
-#### Пример использования:
+Во `views.py`:
 
 ```python
-# Получение всех названий книг
-book_titles = Book.objects.values('title')
+from myapp.forms import ContactForm
+from django.views.generic.edit import FormView
+
+
+class ContactView(FormView):
+    template_name = 'contact.html'
+    form_class = ContactForm
+    success_url = '/thanks/'
+
+    def form_valid(self, form):
+        # This method is called when valid form data has been POSTed.
+        # It should return an HttpResponse.
+        form.send_email()
+        return super().form_valid(form)
 ```
 
-Этот запрос вернет список словарей, где каждый словарь будет содержать ключ `title` и соответствующее ему значение.
+В  `contact.html`:
 
-#### `union()`
+```html
 
-Метод `union()` позволяет объединять два или более QuerySets. Результат будет содержать уникальные записи, которые
-присутствуют в любом из QuerySets.
-
-#### Пример использования:
-
-```python
-from myapp.models import Book
-
-# QuerySet с книгами, опубликованными до 2000 года
-old_books = Book.objects.filter(published_date__lt="2000-01-01")
-
-# QuerySet с книгами, опубликованными после 2020 года
-new_books = Book.objects.filter(published_date__gt="2020-01-01")
-
-# Объединение двух QuerySets
-books_union = old_books.union(new_books)
+<form method="post"> {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Send message">
+</form>
 ```
 
-В результате `books_union` будут содержаться книги, опубликованные либо до 2000 года, либо после 2020 года.
+Важные параметры:
 
-#### `intersection()`
-
-Метод `intersection()` используется для получения пересечения двух или более QuerySets. В результате запроса будут
-только те записи, которые присутствуют во всех QuerySets.
-
-#### Пример использования:
+Такие же, как у TemplateView, и еще свои
 
 ```python
-from myapp.models import Book
-
-# QuerySet с книгами определенного автора
-author_books = Book.objects.filter(author="J.K. Rowling")
-
-# QuerySet с книгами, опубликованными до 2000 года
-old_books = Book.objects.filter(published_date__lt="2000-01-01")
-
-# Пересечение двух QuerySets
-books_intersection = author_books.intersection(old_books)
+form_class = None  # сам класс формы
+success_url = None  # на какую страницу перейти, если форма была валидна
+initial = {}  # словарь с базовыми значениями формы
 ```
 
-В этом примере `books_intersection` вернет только те книги Дж. К. Роулинг, которые были опубликованы до 2000 года.
+Важные методы:
 
-#### `difference()`
-
-Метод `difference()` используется для получения разности между двумя QuerySets, то есть он возвращает записи, которые
-присутствуют в одном QuerySet, но отсутствуют в другом.
-
-#### Пример использования:
+Тут наконец определён метод `post()`:
 
 ```python
-from myapp.models import Book
-
-# QuerySet со всеми книгами
-all_books = Book.objects.all()
-
-# QuerySet с книгами, опубликованными до 2000 года
-old_books = Book.objects.filter(published_date__lt="2000-01-01")
-
-# Разность между всеми книгами и старыми книгами
-books_difference = all_books.difference(old_books)
+def post(self, request, *args, **kwargs):
+    """
+    Handle POST requests: instantiate a form instance with the passed
+    POST variables and then check if it's valid.
+    """
+    form = self.get_form()
+    if form.is_valid():
+        return self.form_valid(form)
+    else:
+        return self.form_invalid(form)
 ```
 
-В этом примере `books_difference` будет содержать все книги, которые были опубликованы после 2000 года.
+Так же все методы из TemplateView
 
-Это далеко не всё, что можно сделать с queryset.
+`get_context_data()` - дополнительно добавляет переменную `form` в темплейт
 
-Все методы кверисетов
-читаем [Тут](https://docs.djangoproject.com/en/4.2/ref/models/querysets/#methods-that-return-new-querysets)
+`get_form()` - получить объект формы
 
-### Вставка объектов в методы
+`get_form_class()` - получить класс формы
 
-Помимо прочего во все фильтры(и не только) можно вставлять целые объекты, например:
+`form_valid()` - что делать, если форма валидна
+
+`form_invalid()` - что делать, если форма не валидна
+
+`get_success_url()` - переопределить генерацию URL, на который будет совершен переход, если форма валидна
+
+## Class CreateView
+
+[Дока](https://ccbv.co.uk/projects/Django/4.2/django.views.generic.edit/CreateView/)
+
+Класс для создания объектов.
+
+Как этим пользоваться?
+
+Во `views.py`
 
 ```python
-art = Article.objects.get(id=2)
-comments = Comment.object.filter(article=art)
+from django.views.generic.edit import CreateView
+from myapp.models import Author
+
+
+class AuthorCreate(CreateView):
+    template_name = 'author_create.html'
+    model = Author
+    fields = ['name']
 ```
 
-### Объектные методы
+В `author_create.html`:
 
-#### get()
+```html
 
-В отличие от `filter` и `exclude` метод `get` получает сразу объект. Этот метод работает только в том случае, когда
-можно
-определить объект однозначно и он существует.
-
-Можно применять те же условия, что и для `filter` и `exclude`
-
-Например, получения объекта по `id`
-
-```python
-Comment.objects.get(id=3)
+<form method="post">{% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Save">
+</form>
 ```
 
-Если объект не найден или найдено больше одного объекта по заданным параметрам, вы получите исключение, которое
-желательно всегда обрабатывать. Исключения уже находятся в самой модели.
+> В класс нужно передать либо ModelForm, либо модель и поля, чтобы класс сам сгенерировал такую форму.
+
+Метод `get()` откроет страницу, на которой будет переменная `form`, как и другие view, к которым добавляется форма.
+
+Метод `post()` выполнит те же действия, что и FormView, но в случае валидности формы предварительно
+выполнит `form.save()`
+
+Важные параметры:
+
+Такие же, как у FormView, и еще свои.
 
 ```python
-try:
-    Comment.objects.get(article__genre__in=[2, 3])
-except Comment.DoesNotExist:
-    return "Can't find object"
-except Comment.MultipleObjectsReturned:
-    return "More than one object"
+form_class = None  # Должен принимать ModelForm
+model = None  # Можно указать модель вместо формы, чтобы сгенерировать её на ходу
+fields = None  # Поля модели, если не указана форма
 ```
 
-#### first() и last()
+Важные методы:
 
-К кверисету можно применять методы `first` и `last`, чтобы получить первый или последний элемент кверисета
+Все методы из FormView, но дополненные под создание объекта:
 
-Например, получить первый коммент, написанный за вчера:
+`post()` - предварительно добавит классу атрибут `self.object = None`
+
+`form_valid()` - дополнительно выполнит такую строку `self.object = form.save()`
+
+# Class UpdateView
+
+[Дока](https://ccbv.co.uk/projects/Django/4.2/django.views.generic.edit/UpdateView/)
+
+Класс для обновления объекта. Как пользоваться?
+
+Во `views.py`:
 
 ```python
-Comment.objects.filter(article__created_at__gte=date.today() - timedelta(days=1)).first()
+from django.views.generic.edit import UpdateView
+from myapp.models import Author
+
+
+class AuthorUpdate(UpdateView):
+    model = Author
+    fields = ['name']
+    template_name_suffix = '_update_form'
 ```
 
-Информация по всем остальным
-методам [Тут](https://docs.djangoproject.com/en/4.2/ref/models/querysets/#methods-that-do-not-return-querysets)
+В `myapp/author_update_form.html`:
 
-### related_name
+```html
 
-Атрибут `related_name`, который указывается для полей связи, является обратной связью и менеджером для объектов,
-например, в нашей модели у поля `author` модели `Article` есть `related_name=articles`:
-
-```python
-a = Author.objects.first()
-articles = a.articles.all()  # Тут будут все статьи конкретного автора в виде кверисета, т.к. all() возвращает кверисет
+<form method="post">{% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Update">
+</form>
 ```
 
-Можно ли получить объекты обратной связи без указания `related_name`? Можно. Связь появляется автоматически даже без
-указания этого атрибута.
+Методы и атрибуты почти полностью совпадают с CreateView, только UpdateView перед действиями вызывает
+метод `get_object()` для получения нужного объекта, и url должен принимать `pk` для определения этого объекта.
 
-Обратный менеджер формируется из названия модели и конструкции `_set`. Допустим, у поля `article` модели `Comment` не
-указано поле `related_name`:
+## Class DeleteView
+
+[Дока](https://ccbv.co.uk/projects/Django/4.2/django.views.generic.edit/DeleteView/)
+
+Класс для удаления объектов.
+
+Как пользоваться?
+
+Во views.py:
 
 ```python
-a = Article.objects.first()
-a.comment_set.all()  # такой же менеджер, как в прошлом примере, вернёт кверисет комментариев, относящихся к этой статье.
+from django.urls import reverse_lazy
+from django.views.generic.edit import DeleteView
+from myapp.models import Author
+
+
+class AuthorDelete(DeleteView):
+    model = Author
+    success_url = reverse_lazy('author-list')
 ```
 
-### C - Create
+В html:
 
-Для создания новых объектов используется два возможных варианта: метод `create()` или метод `save()`
+```html
 
-Создадим двух новых авторов при помощи разных методов:
-
-```python
-Author.objects.create(name='New author by create', pseudonym="Awesome author")
-
-a = Author(name="Another new author", pseudonym="Gomer")
-a.save()
+<form method="post">{% csrf_token %}
+    <p>Are you sure you want to delete "{{ object }}"?</p>
+    <input type="submit" value="Confirm">
+</form>
 ```
 
-В чём же разница? В том, что в первом случае при выполнении этой строки запрос в базу будет отправлен сразу, во втором -
-только при вызове метода `save()`
+Не принимает форму! Принимает модель или queryset и обязательно url, должен принимать идентификатор для определения
+объекта.
 
-Метод `save()` также является и методом для обновления значения поля, если применяется для уже существующего объекта. Мы
-рассмотрим его подробнее немного дальше.
+## Class LoginView
 
-### U - Update
+[Дока](https://ccbv.co.uk/projects/Django/4.2/django.contrib.auth.views/LoginView/)
 
-Для обновления значений полей используется метод `update()`
+Класс, реализующий логику логина.
 
-**Применяется только к кверисетам, к объекту применить нельзя**
+Основан на FormView, если форма не была заменена, то по умолчанию использует
+`django.contrib.auth.forms.AuthenticationForm`. Эта форма содержит два поля, `username` и `password`, и
+проверяет, что данные валидны, и в случае, если данные валидны и пользователь активен, добавляет пользователя в объект
+формы.
 
-Например, обновим текст в комментарии с `id = 3`:
+Также в LoginView переписан метод form_valid():
 
 ```python
-Comment.objects.filter(id=3).update(text='updated text')
-
-ИЛИ
-
-c = Comment.objects.get(id=3)
-c.text = 'updated text'
-c.save()
+def form_valid(self, form):
+    """Security check complete. Log the user in."""
+    auth_login(self.request, form.get_user())
+    return HttpResponseRedirect(self.get_success_url())
 ```
 
-### D - Delete
+Если форма валидна, то провести авторизацию.
 
-Как можно догадаться, выполняется методом `delete()`.
+## Class LogoutView
 
-Удалить все комменты от пользователя с `id = 2`:
+[Дока](https://ccbv.co.uk/projects/Django/4.2/django.contrib.auth.views/LogoutView/)
 
-```python
-Comment.objects.filter(user__id=2).delete()
-```
+Класс для логаута.
 
-### Совмещенные методы
+У LogoutView переписан метод `dispatch`, так что, каким бы методом вы не обратились к классу, вы всё равно будете
+разлогинены.
 
-#### get_or_create(), update_or_create(), bulk_create(), bulk_update()
+## Регистрация
 
-`get_or_create()` - это метод, который попытается создать новый объект. Если он не сможет найти нужный в базе, он
-возвращает сам объект и булево значение, которое обозначает, что объект был создан или получен.
-
-`update_or_create()` - обновит, если объект существует, создаст, если не существует.
-
-`bulk_create()` - массовое создание; необходимо для того, чтобы избежать большого количества обращений в базу.
-
-`bulk_update()` - массовое обновление (отличие от обычного в том, что при обычном на каждый объект создается запрос,
-в этом случае запрос делается массово)
-
-Подробно почитать про них [Тут](https://docs.djangoproject.com/en/4.2/ref/models/querysets/#get-or-create)
-
-## Подробнее о методе save()
-
-> `SQL` запрос выполняется именно при вызове метода `save`, метода `delete` или изменении M2M о чем ниже.
-
-Метод `save()` применяется при любых изменениях или создании данных, но очень часто нужно, чтобы при сохранении данных
-выполнялись еще какие-либо действия, переписывание данных или запись логов и т. д. Для этого используется переписывание
-метода `save()`. По сути является способом написать аналог триггера в базе данных.
-
-Метод `save()` вызывают явно или неявно во время вызова методов создания или обновления, но без него запись в базу не
-будет произведена.
-
-Допустим, мы хотим делать время создания статьи на один день раньше, чем фактическая. Перепишем метод `save()` для
-статьи:
+По сути регистрация - это CreateView со своими особенностями (пароль хешируется), поэтому для регистрации используют
+просто CreateView, и существует заранее описанная форма UserCreationForm()
 
 ```python
-class MyAwesomModel(models.Model):
-    name = models.CharField(max_lenght=100)
-    created_at = models.DateField()
-
-    def save(self, **kwargs):
-        self.created_at = timezone.now() - timedelta(days=1)
-        super().save(**kwargs)
-```
-
-Переопределяем значение и вызываем оригинальный `save()`, вуаля.
-
-Чтобы переопределить логику при создании, но не трогать при изменении, или наоборот, используется особенность
-данных. У уже созданного объекта `id` существует, у нового - нет. Так что фактически наш код сейчас обновляет это поле
-всегда, и когда надо, и когда не надо. Допишем его.
-
-```python
-class MyAwesomModel(models.Model):
-    name = models.CharField(max_lenght=100)
-    created_at = models.DateField()
-
-    def save(self, **kwargs):
-        if not self.id:
-            self.created_at = timezone.now() - timedelta(days=1)
-        super().save(**kwargs)
-```
-
-Теперь поле будет переписываться только в момент создания, но не будет трогаться при обновлении.
-
-Метод `delete()`, при удалении объекта `save()` не вызывается, а вызывается `delete()`. По аналогии мы можем его
-переписать, например, для отправки имейла перед удалением.
-
-```python
-class MyAwesomModel(models.Model):
-    name = models.CharField(max_lenght=100)
-    created_at = models.DateField()
-
-    def delete(self, **kwargs):
-        send_email(id=self.id)
-        super().delete(**kwargs)
-```
-
-## Использование в M2M
-
-Допустим у нас есть вот такие модели:
-
-```python
-from django.db import models
-
-
-class Publication(models.Model):
-    title = models.CharField(max_length=30)
+class UserCreationForm(forms.ModelForm):
+    """
+    A form that creates a user, with no privileges, from the given username and
+    password.
+    """
+    error_messages = {
+        'password_mismatch': _("The two password fields didn't match."),
+    }
+    password1 = forms.CharField(label=_("Password"),
+                                widget=forms.PasswordInput)
+    password2 = forms.CharField(label=_("Password confirmation"),
+                                widget=forms.PasswordInput,
+                                help_text=_("Enter the same password as above for verification."))
 
     class Meta:
-        ordering = ["title"]
+        model = User
+        fields = ("username",)
 
-    def __str__(self):
-        return self.title
+    def clean_password2(self):
+        password1 = self.cleaned_data.get("password1")
+        password2 = self.cleaned_data.get("password2")
+        if password1 and password2 and password1 != password2:
+            raise forms.ValidationError(
+                self.error_messages['password_mismatch'],
+                code='password_mismatch',
+            )
+        return password2
 
-
-class Article(models.Model):
-    headline = models.CharField(max_length=100)
-    publications = models.ManyToManyField(Publication)
-
-    class Meta:
-        ordering = ["headline"]
-
-    def __str__(self):
-        return self.headline
+    def save(self, commit=True):
+        user = super(UserCreationForm, self).save(commit=False)
+        user.set_password(self.cleaned_data["password1"])
+        if commit:
+            user.save()
+        return user
 ```
 
-Для работы с М2М связями используются методы менеджера `add` и `remove`
+Принимает `username` и два раза пароль, проверяет, чтобы пароли были одинаковые, и при сохранении записывает пароль в
+хешированном виде.
 
-Создадим несколько объектов:
+## Управление доступом
 
-```python
-p1 = Publication(title="The Python Journal")
-p1.save()
-p2 = Publication(title="Science News")
-p2.save()
-p3 = Publication(title="Science Weekly")
-p3.save()
-```
+Управление доступом — это важная часть разработки любого веб-приложения. В Django этот процесс включает контроль того,
+какие пользователи могут просматривать или изменять определенные ресурсы. Django предоставляет несколько встроенных
+инструментов для управления доступом, таких как декораторы, пермишены и миксины.
 
-> Мы могли сделать то же самое через `Publication.objects.create()`, но тут нам будет важно отследить `SQL` запросы
+> Пермишены и группы мы отдельно рассматривать не будем. Но вы можете сделать это самостоятельно по
+> вот [этой](https://docs.djangoproject.com/en/5.0/topics/auth/default/#permissions-and-authorization) ссылке
 
-```python
-a1 = Article(headline="Django lets you build web apps easily")
-```
+### Управление доступом с использованием декораторов
 
-### Добавление объекта
+> Практически не используется
 
-Если не сохранить статью и попытаться вызвать изменения в M2M, то вы увидите вот такую ошибку:
-
-```python
-a1.publications.add(p1)
-# Traceback (most recent call last):
-# ValueError: "<Article: Django lets you build web apps easily>" needs to have a value for field "id" before this many-to-many relationship can be used.
-```
-
-Потому что объект `a1` пока что сущетствует только на уровне питона, но его нет на уровне базы данных.
-
-Давайте сохраним объект и попробуем еще раз изменить M2M
-
-```python
-a1.save()
-a1.publications.add(p1)  # Тут вызовется еще один `SQL` запрос
-```
-
-И еще пример:
-
-```python
-a2 = Article(headline="NASA uses Python")
-a2.save()
-a2.publications.add(p1, p2)
-a2.publications.add(p3)
-```
-
-Как видите можно добавлять более чем один объект за раз
-
-А что если добавить объект не того типа который ожидается?
-
-```python
-a2.publications.add(a1)
-# TypeError: 'Publication' instance expected
-```
-
-Будет ошибка о неправильном типе!
-
-> Можно создать и сразу добавить объект вот так
-
-```python
-new_publication = a2.publications.create(title="Highlights for Children")
-```
-
-Метод создаст объект, добавит его к М2М и вернет в новую переменную
-
-### Получение объекта
-
-В нашем случае `publications` является менеджером, а значит, что к нему применимы все действия как и к обычному
-`objects`
-
-```python
-a1.publications.all()
-# <QuerySet [<Publication: The Python Journal>]>
-a2.publications.all()
-# <QuerySet [<Publication: Highlights for Children>, <Publication: Science News>, <Publication: Science Weekly>, <Publication: The Python Journal>]>
-```
-
-> Естественно `all` в этом случае будет возвращать только те объекты которые связаны с запрашиваемым
-
-И так же как и при связи через `FK`, мы можем использовать `related_name` для получения объектов в другом порядке (из
-той модели, где менеджер не прописан)
-
-```python
-p2.article_set.all()
-# <QuerySet [<Article: NASA uses Python>]>
-p1.article_set.all()
-# <QuerySet [<Article: Django lets you build web apps easily>, <Article: NASA uses Python>]>
-Publication.objects.get(id=4).article_set.all()
-# <QuerySet [<Article: NASA uses Python>]>
-```
-
-> `related_name` не прописан явно, поэтому мы используем стандартно сгенерированный
-
-### `filter`, `distinct`, `count`
-
-Так как ссылка является менеджером, это значит, что к ней применим весь спектр процессов доступных менеджеру. Например
-`filter`, `distinct`  или `count`
-
-```python
-Article.objects.filter(publications__id=1)
-# <QuerySet [<Article: Django lets you build web apps easily>, <Article: NASA uses Python>]>
-Article.objects.filter(publications__pk=1)
-# <QuerySet [<Article: Django lets you build web apps easily>, <Article: NASA uses Python>]>
-Article.objects.filter(publications=1)
-# <QuerySet [<Article: Django lets you build web apps easily>, <Article: NASA uses Python>]>
-Article.objects.filter(publications=p1)
-# <QuerySet [<Article: Django lets you build web apps easily>, <Article: NASA uses Python>]>
-Article.objects.filter(publications__title__startswith="Science")
-# <QuerySet [<Article: NASA uses Python>, <Article: NASA uses Python>]>
-Article.objects.filter(publications__title__startswith="Science").distinct()
-# <QuerySet [<Article: NASA uses Python>]>
-Article.objects.filter(publications__title__startswith="Science").count()
-# 2
-Article.objects.filter(publications__title__startswith="Science").distinct().count()
-# 1
-Article.objects.filter(publications__in=[1, 2]).distinct()
-# <QuerySet [<Article: Django lets you build web apps easily>, <Article: NASA uses Python>]>
-Article.objects.filter(publications__in=[p1, p2]).distinct()
-# <QuerySet [<Article: Django lets you build web apps easily>, <Article: NASA uses Python>]>
-```
-
-> Любые действия с менеджером доступны как напрямую, так и через `related_name`
-
-### Удаление объектов
-
-```python
-a4.publications.remove(p2)
-p2.article_set.all()
-# <QuerySet [<Article: Oxygen-free diet works wonders>]>
-a4.publications.all()
-# <QuerySet []>
-```
-
-И с другой стороны
-
-```python
-p2.article_set.remove(a5)
-p2.article_set.all()
-# <QuerySet []>
-a5.publications.all()
-# <QuerySet []>
-```
-
-### Назначение списком или очистка
-
-Можно назначить список который будет отображать связь:
-
-```python
-a4.publications.all()
-# <QuerySet [<Publication: Science News>]>
-a4.publications.set([p3])
-a4.publications.all()
-# <QuerySet [<Publication: Science Weekly>]>
-```
-
-Или очистить всю связь:
-
-```python
-p2.article_set.clear()
-p2.article_set.all()
-# <QuerySet []>
-```
-
-> Назаначение как и очистка так же работает с обоих концов, как и любое другое действие с менеджерами.
-
-## Сложные SQL конструкции
-
-Документация по этому разделу
-
-[Тут](https://docs.djangoproject.com/en/4.2/ref/models/expressions/#django.db.models.F)
-[Тут](https://docs.djangoproject.com/en/4.2/ref/models/querysets/#django.db.models.Q)
-
-На самом деле, мы не ограничены стандартными конструкциями. Мы можем применять предвычисления на уровне базы, добавлять
-логические конструкции и т. д., давайте рассмотрим подробнее.
-
-### Q объекты
-
-Как вы могли заметить в случае фильтрации, мы можем выбрать объекты через логическое И при помощи запятой.
-
-```python
-Comment.objects.filter(article__author__pseudonym='The king', article__genre=3)
-```
-
-В этом случае у нас есть конструкция типа "выбрать объекты, у которых псевдоним автора статьи `The king` И жанр статьи
-цифра 3"
-
-Но что же нам делать, если нам нужно использовать логическое ИЛИ?
-
-В этом нам поможет использование Q объекта. На самом деле, каждое из этих условий мы могли завернуть в такой объект:
-
-```python
-from django.db.models import Q
-
-q1 = Q(article__author__pseudonym='The king')
-q2 = Q(article__genre=3)
-``` 
-
-Теперь мы можем явно использовать логические `И` и `ИЛИ`.
-
-```python
-Comment.objects.filter(q1 & q2)  # И
-Comment.objects.filter(q1 | q2)  # ИЛИ
-```
-
-### Aggregation
-
-Агрегация в Django - это предвычисления.
-
-Допустим, что у нас есть модели:
-
-```python
-from django.db import models
-
-
-class Author(models.Model):
-    name = models.CharField(max_length=100)
-    age = models.IntegerField()
-
-
-class Publisher(models.Model):
-    name = models.CharField(max_length=300)
-
-
-class Book(models.Model):
-    name = models.CharField(max_length=300)
-    pages = models.IntegerField()
-    price = models.DecimalField(max_digits=10,
-                                decimal_places=2)
-    rating = models.FloatField()
-    authors = models.ManyToManyField(Author)
-    publisher = models.ForeignKey(Publisher,
-                                  on_delete=models.CASCADE)
-    pubdate = models.DateField()
-
-
-class Store(models.Model):
-    name = models.CharField(max_length=300)
-    books = models.ManyToManyField(Book)
-```
-
-Мы можем совершить предвычисления каких-либо средних, минимальных, максимальных значений, вычислить сумму и т. д.
-
-```python
-from django.db.models import Avg
-
-Book.objects.all().aggregate(Avg('price'))
-# {'price__avg': 34.35}
-```
-
-На самом деле, `all()` не несёт пользы в этом примере:
-
-```python
-Book.objects.aggregate(Avg('price'))
-# {'price__avg': 34.35}
-```
-
-Значение можно именовать:
-
-```python
-Book.objects.aggregate(average_price=Avg('price'))
-# {'average_price': 34.35}
-```
-
-Можно вносить больше одной агрегации за раз:
-
-```python
-from django.db.models import Avg, Max, Min
-
-Book.objects.aggregate(Avg('price'), Max('price'), Min('price'))
-# {'price__avg': 34.35, 'price__max': Decimal('81.20'), 'price__min': Decimal('12.99')}
-```
-
-Если нам нужно, чтобы подсчитанное значение было у каждого объекта модели, мы используем метод `annotate()`
-
-```python
-# Build an annotated queryset
-from django.db.models import Count
-
-q = Book.objects.annotate(Count('authors'))
-# Interrogate the first object in the queryset
-q[0]
-# "<Book: The Definitive Guide to Django>"
-q[0].authors__count
-# 2
-# Interrogate the second object in the queryset
-q[1]
-# "<Book: Practical Django Projects>"
-q[1].authors__count
-# 1
-```
-
-Их тоже может быть больше одного:
-
-```python
-book = Book.objects.first()
-book.authors.count()
-# 2
-book.store_set.count()
-# 3
-q = Book.objects.annotate(Count('authors'), Count('store'))
-q[0].authors__count
-# 6
-q[0].store__count
-# 6
-```
-
-Все эти вещи можно комбинировать:
-
-```python
-highly_rated = Count('book', filter=Q(book__rating__gte=7))
-Author.objects.annotate(num_books=Count('book'), highly_rated_books=highly_rated)
-```
-
-c сортировкой (ordering):
-
-```python
-Book.objects.annotate(num_authors=Count('authors')).order_by('num_authors')
-```
-
-## F() выражения
-
-В Django ORM (Object-Relational Mapping) для работы с базой данных часто возникает необходимость обновления полей
-модели, сравнения значений полей между собой или выполнения арифметических операций на уровне базы данных. Для этих
-целей в Django используется класс `F`.
-
-### Что такое F объекты?
-
-`F` объекты представляют собой способ обращения к полям модели без необходимости загружать их в память приложения.
-Вместо этого операции с `F` объектами выполняются непосредственно на уровне базы данных, что может значительно повысить
-производительность при выполнении запросов.
-
-### Примеры использования F объектов
-
-#### Обновление поля на основе его текущего значения
-
-Рассмотрим простой пример: допустим, у нас есть модель `Product`, которая имеет поле `price`. Предположим, что нам нужно
-увеличить цену каждого товара на 10%.
-
-```python
-from django.db.models import F
-
-Product.objects.update(price=F('price') * 1.10)
-```
-
-Этот запрос обновит поле `price` для всех записей, увеличив его значение на 10%. При этом Django выполнит операцию
-умножения на уровне базы данных, что исключит необходимость загружать все объекты в память.
-
-#### Сравнение полей внутри одной записи
-
-Предположим, у нас есть модель `Order` с полями `quantity` и `shipped_quantity`. Нам нужно найти все заказы, для которых
-количество отгруженного товара меньше заказанного.
-
-```python
-from myapp.models import Order
-from django.db.models import F
-
-orders = Order.objects.filter(shipped_quantity__lt=F('quantity'))
-```
-
-Этот запрос вернет все заказы, где количество отгруженного товара (`shipped_quantity`) меньше заказанного (`quantity`).
-
-#### Условное обновление поля
-
-Рассмотрим пример, когда у нас есть модель `Employee` с полем `bonus`. Мы хотим увеличить бонус на 500 для всех
-сотрудников, у которых текущий бонус менее 1000.
-
-```python
-from django.db.models import F, Q
-
-Employee.objects.filter(bonus__lt=1000).update(bonus=F('bonus') + 500)
-```
-
-Этот запрос обновит поле `bonus`, прибавив к текущему значению 500 для всех сотрудников, у которых бонус меньше 1000.
-
-#### Агрегатные функции с F объектами
-
-Предположим, у нас есть модель `Sale` с полями `quantity` и `unit_price`, и мы хотим узнать общую стоимость каждого
-товара, умножив количество на цену за единицу.
-
-```python
-from django.db.models import F, Sum
-
-total_sales = Sale.objects.annotate(total_price=F('quantity') * F('unit_price'))
-```
-
-Этот запрос добавит к каждому объекту `Sale` дополнительное поле `total_price`, содержащее общую стоимость товара.
-
-#### Использование F объектов в аннотациях
-
-В некоторых случаях удобно использовать `F` объекты в аннотациях для создания вычисляемых полей. Например, предположим,
-что у нас есть модель `Invoice` с полями `subtotal` и `discount`. Мы хотим добавить аннотацию с окончательной суммой
-счета, учитывая скидку.
-
-```python
-from django.db.models import F, ExpressionWrapper, FloatField
-
-invoices = Invoice.objects.annotate(
-    total=ExpressionWrapper(F('subtotal') - F('discount'), output_field=FloatField())
-)
-```
-
-Здесь мы используем `ExpressionWrapper`, чтобы указать Django тип возвращаемого значения, поскольку операции с `F`
-объектами могут привести к неоднозначности типов данных.
-
-## Select related и Prefetch related
-
-### Введение
-
-Когда вы работаете с базой данных в Django, важно учитывать, сколько запросов вы выполняете и насколько эффективны эти
-запросы. Один из частых антипаттернов – это проблема "N+1 запросов", когда для получения данных выполняется множество
-запросов, что замедляет работу приложения. Django предоставляет два мощных инструмента для оптимизации
-запросов: `select_related` и `prefetch_related`.
-
-### Проблема "N+1 запросов"
-
-Предположим, у нас есть две модели `Author` и `Book`, связанные отношением "один ко многим":
-
-```python
-class Author(models.Model):
-    name = models.CharField(max_length=100)
-
-
-class Book(models.Model):
-    title = models.CharField(max_length=100)
-    author = models.ForeignKey(Author, on_delete=models.CASCADE)
-```
-
-Теперь, если вы хотите вывести список книг и их авторов:
-
-```python
-books = Book.objects.all()
-for book in books:
-    print(book.title, book.author.name)
-```
-
-Это пример проблемы "N+1 запросов". Сначала выполняется один запрос для получения всех книг, а затем для каждой книги
-выполняется отдельный запрос для получения автора, что приводит к множеству запросов (N+1).
-
-### Использование `select_related`
-
-Метод `select_related` позволяет выполнять запросы с объединением (JOIN) таблиц, что значительно уменьшает количество
-запросов к базе данных. Он используется для отношений "ForeignKey" и "OneToOne".
-
-#### Пример использования `select_related`
-
-```python
-books = Book.objects.select_related('author').all()
-for book in books:
-    print(book.title, book.author.name)
-```
-
-В данном случае будет выполнен **один** SQL-запрос, использующий JOIN для получения данных о книгах и их авторах
-одновременно.
-
-#### Как это работает?
-
-Когда вы используете `select_related`, Django выполняет SQL-запрос с использованием INNER JOIN или LEFT OUTER JOIN,
-чтобы получить связанные объекты в рамках одного запроса. Это очень эффективно для отношений "один ко многим" и "один к
-одному".
-
-### Использование `prefetch_related`
-
-Метод `prefetch_related` используется для оптимизации запросов, когда у вас есть отношение "многие ко многим" или "один
-ко многим", и вы хотите избежать проблемы "N+1 запросов". В отличие от `select_related`, он выполняет отдельные запросы,
-но затем обрабатывает их в Python, чтобы уменьшить общее количество запросов.
-
-#### Пример использования `prefetch_related`
-
-Предположим, у вас есть модели:
-
-```python
-class Publisher(models.Model):
-    name = models.CharField(max_length=100)
-
-
-class Book(models.Model):
-    title = models.CharField(max_length=100)
-    publisher = models.ForeignKey(Publisher, on_delete=models.CASCADE)
-    authors = models.ManyToManyField(Author)
-```
-
-Теперь, если вы хотите получить все книги и авторов для каждого из них:
-
-```python
-books = Book.objects.prefetch_related('authors').all()
-for book in books:
-    print(book.title)
-    for author in book.authors.all():
-        print(author.name)
-```
-
-Здесь `prefetch_related` выполнит два отдельных запроса: один для получения всех книг, а второй для получения всех
-авторов, которые связаны с этими книгами. Django затем связывает авторов с книгами в Python, избегая проблемы "N+1
-запросов".
-
-#### Как это работает?
-
-`prefetch_related` делает два (или более) отдельных запроса и затем соединяет результаты этих запросов в Python. Это
-очень полезно для отношений "многие ко многим" или если вы хотите выполнить сложные фильтрации на связанном наборе
-данных.
-
-### Сравнение `select_related` и `prefetch_related`
-
-- **`select_related`** используется для выполнения SQL JOIN и эффективен для отношений "ForeignKey" и "OneToOne". Все
-  происходит на уровне базы данных.
-- **`prefetch_related`** используется для отношений "многие ко многим" и "один ко многим". Он выполняет несколько
-  запросов и объединяет результаты на уровне Python.
-
-### Практические примеры
-
-#### Пример с использованием обоих методов
-
-Представьте, что у нас есть следующие модели:
-
-```python
-class Store(models.Model):
-    name = models.CharField(max_length=100)
-
-
-class Product(models.Model):
-    name = models.CharField(max_length=100)
-    store = models.ForeignKey(Store, on_delete=models.CASCADE)
-    suppliers = models.ManyToManyField(Supplier)
-
-
-class Supplier(models.Model):
-    name = models.CharField(max_length=100)
-```
-
-Теперь, если нам нужно получить все продукты с их магазинами и поставщиками:
-
-```python
-products = Product.objects.select_related('store').prefetch_related('suppliers').all()
-for product in products:
-    print(product.name, product.store.name)
-    for supplier in product.suppliers.all():
-        print(supplier.name)
-```
-
-Этот пример сочетает оба подхода. Мы используем `select_related` для получения связанных магазинов с использованием JOIN
-и `prefetch_related` для получения поставщиков, выполняя несколько запросов.
-
-## Как управлять транзакциями?
-
-В Django ORM управление транзакциями можно осуществлять с помощью встроенных инструментов, таких
-как `atomic`, `transaction.on_commit`, а также с помощью ручного управления транзакциями через API транзакций.
-Рассмотрим примеры для каждого из этих подходов.
-
-### Управление транзакциями с использованием `atomic`
-
-`atomic` — это контекстный менеджер или декоратор, который гарантирует, что все операции внутри блока будут выполнены в
-одной транзакции. Если внутри блока возникает исключение, транзакция откатывается.
-
-#### Пример с использованием контекстного менеджера:
-
-```python
-from django.db import transaction
-from myapp.models import MyModel
-
-
-def create_records():
-    try:
-        with transaction.atomic():
-            obj1 = MyModel.objects.create(name="Object 1")
-            obj2 = MyModel.objects.create(name="Object 2")
-            # Если здесь возникнет исключение, то обе записи не будут добавлены
-    except Exception as e:
-        print(f"Transaction failed: {e}")
-```
-
-#### Пример с использованием декоратора:
-
-```python
-from django.db import transaction
-from myapp.models import MyModel
-
-
-@transaction.atomic
-def create_records():
-    obj1 = MyModel.objects.create(name="Object 1")
-    obj2 = MyModel.objects.create(name="Object 2")
-    # Если здесь возникнет исключение, то обе записи не будут добавлены
-```
-
-### Управление транзакциями с использованием `transaction.on_commit`
-
-`on_commit` позволяет зарегистрировать функцию, которая будет выполнена только в случае успешного завершения транзакции.
+В Django основным способом управления доступом при использовании функциональных представлений являются декораторы, такие
+как `@login_required` и `@user_passes_test`. Однако, при использовании CBV их нельзя применять напрямую. Вместо этого
+их можно использовать с помощью метода `@method_decorator`.
 
 #### Пример:
 
 ```python
-from django.db import transaction
-from myapp.models import MyModel
+from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
+from django.views.generic import ListView
+from .models import Post
 
 
-def notify_user():
-    print("Transaction committed successfully!")
-
-
-def create_record():
-    with transaction.atomic():
-        obj = MyModel.objects.create(name="Object 1")
-        transaction.on_commit(notify_user)
-        # notify_user будет вызвана только если транзакция завершится успешно
+@method_decorator(login_required, name='dispatch')
+class PostListView(ListView):
+    model = Post
+    template_name = 'post_list.html'
 ```
 
-### Ручное управление транзакциями
+Здесь `@method_decorator` оборачивает метод `dispatch`, который вызывается при каждом запросе. Это гарантирует, что
+пользователь должен быть авторизован для доступа к представлению.
 
-Можно управлять транзакциями вручную, открывая и закрывая транзакции с помощью методов `transaction.commit()`
-и `transaction.rollback()`.
+### Использование миксинов для управления доступом
+
+Django предоставляет несколько миксинов для управления доступом, которые можно использовать с CBV.
+
+#### LoginRequiredMixin
+
+Один из самых часто используемых миксинов — `LoginRequiredMixin`. Этот миксин обеспечивает доступ к представлению только
+для авторизованных пользователей.
 
 #### Пример:
 
 ```python
-from django.db import transaction
-from myapp.models import MyModel
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.views.generic import DetailView
+from .models import Post
 
 
-def create_records():
-    try:
-        transaction.set_autocommit(False)  # Отключаем автокоммит
-        obj1 = MyModel.objects.create(name="Object 1")
-        obj2 = MyModel.objects.create(name="Object 2")
-        transaction.commit()  # Явно фиксируем транзакцию
-    except Exception as e:
-        transaction.rollback()  # Откатываем транзакцию в случае ошибки
-        print(f"Transaction failed: {e}")
-    finally:
-        transaction.set_autocommit(True)  # Включаем автокоммит обратно
+class PostDetailView(LoginRequiredMixin, DetailView):
+    model = Post
+    template_name = 'post_detail.html'
 ```
 
-> Использование транзакций в Django ORM позволяет вам контролировать целостность данных, обеспечивая атомарность
-> операций.
-> Вы можете использовать контекстный менеджер или декоратор `atomic` для автоматического управления транзакциями, либо
-> вручную управлять транзакциями для более точного контроля над процессом.
+Если вам нужно указать куда именно должен происходить редикрект, вы можете указать это специальным атрибутом:
+
+```python
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.views.generic import DetailView
+from .models import Post
+
+
+class PostDetailView(LoginRequiredMixin, DetailView):
+    model = Post
+    template_name = 'post_detail.html'
+    login_url = '/login/'
+```
+
+В данном примере `PostDetailView` будет доступен только для авторизованных пользователей. Если пользователь не
+авторизован, он будет перенаправлен на страницу входа.
+
+#### UserPassesTestMixin
+
+Иногда требуется создать более сложные условия для доступа. Для этого используется `UserPassesTestMixin`, который
+позволяет определить произвольное условие доступа с помощью метода `test_func`.
+
+#### Пример:
+
+```python
+from django.contrib.auth.mixins import UserPassesTestMixin
+from django.views.generic import DeleteView
+from .models import Post
+
+
+class PostDeleteView(UserPassesTestMixin, DeleteView):
+    model = Post
+    template_name = 'post_confirm_delete.html'
+    success_url = '/'
+
+    def test_func(self) -> bool:
+        post = self.get_object()
+        return self.request.user == post.author
+```
+
+Здесь пользователь сможет удалить пост только в том случае, если он является его автором.
+
+### Комбинирование миксинов
+
+Часто бывает необходимо комбинировать несколько миксинов для достижения нужного уровня контроля доступа. Важно помнить,
+что порядок следования миксинов может быть критичным.
+
+#### Пример:
+
+```python
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
+
+
+class PostManageView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
+    model = Post
+    template_name = 'post_manage.html'
+    fields = ['title', 'content']
+
+    def test_func(self) -> bool:
+        post = self.get_object()
+        return self.request.user == post.author
+```
+
+В этом примере `PostManageView` требует как авторизации, так и пользователь должен являться автором поста.
+
+### Обработка отказа в доступе
+
+Иногда может понадобиться изменить стандартное поведение при отказе в доступе, например, вместо перенаправления на
+страницу входа, вывести сообщение об ошибке.
+
+#### Пример:
+
+```python
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.core.exceptions import PermissionDenied
+
+
+class CustomLoginRequiredMixin(LoginRequiredMixin):
+
+    def handle_no_permission(self):
+        if self.raise_exception or self.request.user.is_authenticated:
+            raise PermissionDenied
+        return super().handle_no_permission()
+```
+
+Этот миксин изменяет поведение так, что при отсутствии авторизации пользователь получит исключение `PermissionDenied`, а
+не редирект.
+
+## Живой пример
+
+Допустим, нам нужен сайт, на котором можно зарегистрироваться, залогиниться, разлогиниться и написать заметку, если ты
+залогинен. Заметки должны отображаться списком, последняя созданная отображается первой. Все пользователи видят все
+заметки. Возле тех, которые создал текущий пользователь, должна быть кнопка удалить.
+
+Как это сделать?
+
+Разработка всегда начинается с описания моделей, нам нужно две сущности: юзер и заметка.
+
+Мы не будем изменять юзера, нам подходит стандартный.
+
+Создадим модель заметки:
+
+В models.py:
+
+```python
+from django.contrib.auth.models import User
+from django.db import models
+
+
+class Note(models.Model):
+    text = models.CharField(max_length=100)
+    created_at = models.DateTimeField(auto_now=True)
+    author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='notes')
+
+    class Meta:
+        ordering = ['-created_at', ]
+```
+
+Не забываем про миграции, и про добавление приложения в settings.py
+
+Создадим необходимые шаблоны: `base.html`, `index.html`, `login.html`, `register.html`. Пока пустые, заполним чуть
+позже.
+
+Создадим view. Для базовой страницы, на которой отображается список заметок, лучше всего подходит ListView, для логина,
+и логаута - существующие классы, для регистрации - CreateView.
+
+Для логина и регистрации воспользуемся готовой формой.
+
+Базовую страницу и логаут закроем от незалогиненных пользователей.
+
+Получается как-то так:
+
+Во views.py
+
+```python
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.views import LoginView, LogoutView
+from django.views.generic import ListView, CreateView
+
+from app.models import Note
+
+
+class NoteListView(LoginRequiredMixin, ListView):
+    model = Note
+    template_name = 'index.html'
+    login_url = 'login/'
+
+
+class Login(LoginView):
+    success_url = '/'
+    template_name = 'login.html'
+
+    def get_success_url(self):
+        return self.success_url
+
+
+class Register(CreateView):
+    form_class = UserCreationForm
+    template_name = 'register.html'
+    success_url = '/'
+
+
+class Logout(LoginRequiredMixin, LogoutView):
+    next_page = '/'
+    login_url = 'login/'
+```
+
+В urls.py проекта добавим через `include` urls.py приложения
+
+В app/urls.py:
+
+```python
+from django.urls import path
+from .views import NoteListView, Login, Logout, Register
+
+urlpatterns = [
+    path('', NoteListView.as_view(), name='index'),
+    path('login/', Login.as_view(), name='login'),
+    path('register/', Register.as_view(), name='register'),
+    path('logout/', Logout.as_view(), name='logout'),
+]
+
+```
+
+И заполним html файлы
+
+base.html
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Base</title>
+</head>
+<body>
+<div>
+    {% block content %}
+    {% endblock %}
+</div>
+</body>
+</html>
+```
+
+index.html
+
+```html
+{% extends 'base.html' %}
+
+{% block content %}
+<div>
+    <a href="{% url 'logout' %}">Logout</a>
+</div>
+{% endblock %}
+```
+
+login.html
+
+```html
+{% extends 'base.html' %}
+
+{% block content %}
+<span>Wanna register? <a href="{% url 'register' %}">Sign Up</a></span>
+
+<form method="post">
+    {% csrf_token %}
+    {{ form }}
+    <input type="submit" value="Login">
+</form>
+{% endblock %}
+```
+
+register.html
+
+```html
+{% extends 'base.html' %}
+
+{% block content %}
+<span>Already has account? <a href="{% url 'login' %}">Login</a></span>
+
+<form method="post">
+    {% csrf_token %}
+    {{ form }}
+    <input type="submit" value="Register">
+</form>
+{% endblock %}
+```
+
+Структура для логина, логаута, и регистрации готова.
+
+Добавим отображение списка заметок:
+
+в index.html:
+
+```html
+{% extends 'base.html' %}
+
+{% block content %}
+<div>
+    <a href="{% url 'logout' %}">Logout</a>
+</div>
+
+<div>
+    {% for obj in object_list %}
+    <div>
+        {{ obj.text }} from {{ obj.author.username }}
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}
+```
+
+Но как добавить создание заметок?
+
+Нам нужна форма для создания заметок и CreateView.
+
+В forms.py
+
+```python
+from django.forms import ModelForm
+
+from app.models import Note
+
+
+class NoteCreateForm(ModelForm):
+    class Meta:
+        model = Note
+        fields = ('text',)
+```
+
+В полях только текст, потому что время создания будет заполняться автоматически, id тоже, а юзера мы будем брать из
+реквеста.
+
+Будем ли мы отображать отдельную страницу для создания? Нет, значит отдельный html файл нам не нужен, а раз мы не будем
+отображать страницу, то и метод `get()` нам не нужен. Оставим только `post()`.
+
+Создадим CreateView:
+
+В views.py
+
+```python
+class NoteCreateView(LoginRequiredMixin, CreateView):
+    login_url = 'login/'
+    http_method_names = ['post']
+    form_class = NoteCreateForm
+    success_url = '/'
+```
+
+Выведем URL под этот класс:
+
+В urls.py
+
+```python
+from django.urls import path
+from .views import NoteListView, Login, Logout, Register, NoteCreateView
+
+urlpatterns = [
+    path('', NoteListView.as_view(), name='index'),
+    path('login/', Login.as_view(), name='login'),
+    path('register/', Register.as_view(), name='register'),
+    path('logout/', Logout.as_view(), name='logout'),
+    path('note/create/', NoteCreateView.as_view(), name='note-create'),
+]
+```
+
+Достаточно ли этого, чтобы создавать заметки? Нет, потому что мы никуда не вывели форму для создания заметок. Давайте
+выведем её на нашу основную страницу.
+
+Во views.py изменим класс `NoteListView`, добавив атрибут `extra_context = {'create_form': NoteCreateForm()}`
+
+```python
+class NoteListView(LoginRequiredMixin, ListView):
+    model = Note
+    template_name = 'index.html'
+    login_url = 'login/'
+    extra_context = {'create_form': NoteCreateForm()}
+```
+
+Теперь мы можем вывести форму в шаблоне, изменим `index.html`
+
+```html
+{% extends 'base.html' %}
+
+{% block content %}
+<div>
+    <a href="{% url 'logout' %}">Logout</a>
+</div>
+
+<div>
+    {% for obj in object_list %}
+    <div>
+        {{ obj.text }} from {{ obj.author.username }}
+    </div>
+    {% endfor %}
+</div>
+<form method="post" action="{% url 'note-create' %}">
+    {% csrf_token %}
+    {{ create_form }}
+    <input type="submit" value="Create">
+</form>
+{% endblock %}
+```
+
+Достаточно ли этого? Нет. Наша заметка должна хранить в себе пользователя, а мы нигде его не добавляем. При попытке
+вызвать `save()` мы получим ошибку, не могу сохранить без юзера.
+
+Что будем делать? Переписывать логику `form_valid()`, мы знаем, что метод `save()` для CreateView вызывается там.
+
+Чтобы добавить пользователя, будем использовать `commit=False` для ModelForm, а пользователя возьмем из реквеста.
+
+Перепишем класс NoteCreateView:
+
+Во views.py:
+
+```python
+class NoteCreateView(LoginRequiredMixin, CreateView):
+    login_url = 'login/'
+    http_method_names = ['post']
+    form_class = NoteCreateForm
+    success_url = '/'
+
+    def form_valid(self, form):
+        obj = form.save(commit=False)
+        obj.author = self.request.user
+        obj.save()
+        return super().form_valid(form=form)
+```
+
+Обратите внимание, после успеха мы попадаем обратно на `/` (success_url), где мы сразу же увидим новую заметку.
+
+Создание готово.
+
+Как добавить удаление? Создадим новую DeleteView, она даже не требует форму.
+
+Во views.py
+
+```python
+class NoteDeleteView(LoginRequiredMixin, DeleteView):
+    model = Note
+    success_url = '/'
+```
+
+Не забываем добавить URL
+
+В urls.py:
+
+```python
+from django.urls import path
+from .views import NoteListView, Login, Logout, Register, NoteCreateView, NoteDeleteView
+
+urlpatterns = [
+    path('', NoteListView.as_view(), name='index'),
+    path('login/', Login.as_view(), name='login'),
+    path('register/', Register.as_view(), name='register'),
+    path('logout/', Logout.as_view(), name='logout'),
+    path('note/create/', NoteCreateView.as_view(), name='note-create'),
+    path('note/delete/<int:pk>/', NoteDeleteView.as_view(), name='note-delete'),
+]
+```
+
+И добавляем форму для удаления в шаблон.
+
+В index.html:
+
+```html
+{% extends 'base.html' %}
+
+{% block content %}
+<div>
+    <a href="{% url 'logout' %}">Logout</a>
+</div>
+
+<div>
+    {% for obj in object_list %}
+    <div>
+        {{ obj.text }} from {{ obj.author.username }}
+        <form method="post" action="{% url 'note-delete' obj.pk %}">
+            {% csrf_token %}
+            <input type="submit" value="Delete">
+        </form>
+    </div>
+    {% endfor %}
+</div>
+<form method="post" action="{% url 'note-create' %}">
+    {% csrf_token %}
+    {{ create_form }}
+    <input type="submit" value="Create">
+</form>
+{% endblock %}
+```
+
+Это уже будет работать. Но нам же нужно, чтобы кнопка для удаления была только у своих заметок. Ок, добавим `if`.
+
+```html
+{% extends 'base.html' %}
+
+{% block content %}
+<div>
+    <a href="{% url 'logout' %}">Logout</a>
+</div>
+
+<div>
+    {% for obj in object_list %}
+    <div>
+        {{ obj.text }} from {{ obj.author.username }}
+        {% if obj.author == request.user %}
+        <form method="post" action="{% url 'note-delete' obj.pk %}">
+            {% csrf_token %}
+            <input type="submit" value="Delete">
+        </form>
+        {% endif %}
+    </div>
+    {% endfor %}
+</div>
+<form method="post" action="{% url 'note-create' %}">
+    {% csrf_token %}
+    {{ create_form }}
+    <input type="submit" value="Create">
+</form>
+{% endblock %}
+```
+
+Осталась маленькая деталь, сейчас мы отображаем все существующие заметки, а что если их будет миллион? Это не
+рационально, давайте добавим пагинацию.
+
+ListView уже передаёт все необходимые данные, нам нужно только добавить размер страницы и добавить отображение по
+страницам в шаблоне.
+
+Во views.py изменим NoteListView
+
+```python
+class NoteListView(LoginRequiredMixin, ListView):
+    model = Note
+    template_name = 'index.html'
+    login_url = 'login/'
+    extra_context = {'create_form': NoteCreateForm()}
+    paginate_by = 5
+```
+
+А в index.html:
+
+```html
+{% extends 'base.html' %}
+
+{% block content %}
+<div>
+    <a href="{% url 'logout' %}">Logout</a>
+</div>
+
+<div>
+    {% for obj in page_obj %} {# обратите внимание я заменил объект #}
+    <div>
+        {{ obj.text }} from {{ obj.author.username }}
+        {% if obj.author == request.user %}
+        <form method="post" action="{% url 'note-delete' obj.pk %}">
+            {% csrf_token %}
+            <input type="submit" value="Delete">
+        </form>
+        {% endif %}
+    </div>
+    {% endfor %}
+    <div class="pagination">
+    <span class="step-links">
+        {% if page_obj.has_previous %}
+            <a href="?page=1">&laquo; first</a>
+            <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+        </span>
+
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}">next</a>
+            <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+        {% endif %}
+    </span>
+    </div>
+</div>
+<form method="post" action="{% url 'note-create' %}">
+    {% csrf_token %}
+    {{ create_form }}
+    <input type="submit" value="Create">
+</form>
+{% endblock %}
+
+
+```
+
+Профит! Всё работает. Переходим к заданию на модуль. Все задания должны быть выполнены через Class-Based View.

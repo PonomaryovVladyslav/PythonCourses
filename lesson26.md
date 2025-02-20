@@ -1,1217 +1,825 @@
-# Лекция 26. ClassBaseView
+# Лекция 26. Middleware. Signals. Messages. Manage commands
 
-![cbv_meme.png](pictures/cbv_meme.png)
+## Middleware
 
-## Что сегодня учим?
+![](https://memegenerator.net/img/instances/81631865.jpg)
 
-![mvc_cbv.png](pictures/mvc_cbv.png)
+Дока [Тут](https://docs.djangoproject.com/en/4.2/topics/http/middleware/)
 
-# Class-Based View
+Мы с вами рассмотрели основные этапы того, какие этапы должен пройти request на всём пути нашей request-response системы,
+но на самом деле каждый request проходит кучу дополнительных обработок, таких как middleware, причём каждый request 
+делает это дважды, при "входе" и при "выходе".
 
-С этого момента мы переходим на использование `view`, основанных исключительно на классах.
-
-Все основные существующие классы описаны [Тут](https://ccbv.co.uk/)
-
-## Class View
-
-[Дока](https://ccbv.co.uk/projects/Django/4.2/django.views.generic.base/View/)
-
-Основой всех классов, используемых во `view`, является класс `View`. Методы этого класса используются всеми остальными
-классами.
-
-Основные атрибуты:
-
-```http_method_names = ['get', 'post', 'put', 'patch', 'delete', 'head', 'options', 'trace']```
-
-Этот атрибут нужен для определения того, какие виды HTTP методов будут доступны для запросов.
-
-Основные функции:
-
-`as_view()` - метод который всегда вызывается, чтобы использовать класс в `urls.py`, внутри вызывает методы `setup`
-и `dispatch`
-
-`setup()` - метод, который добавляет `request` в `self`, благодаря чему `request` будет доступен в абсолютно любом
-методе
-всех наших `view` классов
-
-`http_method_not_allowed()` - метод, который генерирует ошибку запроса (не могу обработать, например, POST запрос).
-
-`dispatch()` - метод, отвечающий за вызов обработчика при запросе.
+Если открыть файл `settings.py`, то там можно обнаружить переменную `MIDDLEWARE`, или `MIDDLEWARE_CLASSES` (для старых
+версий Django), которая выглядит примерно так:
 
 ```python
-def dispatch(self, request, *args, **kwargs):
-    # Try to dispatch to the right method; if a method doesn't exist,
-    # defer to the error handler. Also defer to the error handler if the      
-    # request method isn't on the approved list.
-    if request.method.lower() in self.http_method_names:  # Если запрос находится в списке разрешенных, то заходим.
-        handler = getattr(self, request.method.lower(),
-                          self.http_method_not_allowed)  # Пытаемся из self получить атрибут или метод, совпадающий названием с методом запроса (POST - post, GET - get), если не получается, то вернуть метод http_method_not_allowed
-    else:
-        handler = self.http_method_not_allowed  # Вернуть метод http_method_not_allowed
-    return handler(request, *args,
-                   **kwargs)  # Вызвать метод, который мы получили ранее, если удалось, то, например, get(), или post(), если нет, то http_method_not_allowed()
-```
-
-Как это работает?
-
-Если наследоваться от этого класса, то мы можем описать функцию `get` и/или `post`, чтобы описать, что необходимо делать
-при запросе методами `GET` или `POST`.
-
-И можем описать, какие вообще запросы мы ожидаем принимать в аттрибуте `http_method_names`
-
-Например:
-
-Во `views.py`
-
-```python
-from django.views import View
-from django.shortcuts import render
-
-
-class MyView(View):
-    http_method_names = ['get', ]
-
-    def get(self, request, *args, **kwargs):
-        return render(request, 'index.html')
-```
-
-В `urls.py`:
-
-```python
-...
-path('some-url/', MyView.as_view(), name='some-name')
-...
-```
-
-Чем такая конструкция лучше, чем обычная функция? Тем, что обычная функция обязана принимать любой запрос и дальше
-только при помощи `if` разделять разные запросы.
-
-Такой класс будет принимать только запросы описанных методов, отклоняя все остальные, и каждый запрос будет написан в
-отдельном методе, что сильно улучшает читабельность кода.
-
-## Class TemplateView
-
-[Дока](https://ccbv.co.uk/projects/Django/4.2/django.views.generic.base/TemplateView/)
-
-Класс, необходимый для рендера html файлов
-
-Основные атрибуты:
-
-```python
-template_name = None  # Имя html файла, который нужно рендерить
-extra_content = None  # Словарь с контентом
-```
-
-Основные методы:
-
-Описан метод `get()`
-
-```python
-def get(self, request, *args, **kwargs):
-    context = self.get_context_data(**kwargs)
-    return self.render_to_response(context)
-```
-
-`get_context_data()` - метод, возвращающий данные, которые будут добавлены в контекст
-
-Как этим пользоваться?
-
-```python
-from django.views.generic.base import TemplateView
-
-from articles.models import Article
-
-
-class HomePageView(TemplateView):
-    template_name = "home.html"
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['latest_articles'] = Article.objects.all()[:5]
-        return context
-```
-
-Мы описали класс, который будет рендерить файл `home.html`, в контексте которого будет переменная `latest_articles`, в
-которой будет коллекция из объектов модели.
-
-То же самое можно было сделать через `extra_context`:
-
-```python
-from django.views.generic.base import TemplateView
-
-from articles.models import Article
-
-
-class HomePageView(TemplateView):
-    template_name = "home.html"
-    extra_context = {"latest_articles": Article.objects.all()[:5]}
-```
-
-## Class RedirectView
-
-[Дока](https://ccbv.co.uk/projects/Django/4.2/django.views.generic.base/RedirectView/)
-
-Класс, необходимый для перенаправления запросов с одного URL на другой.
-
-Основные атрибуты:
-
-```python 
-query_string = False  # сохранить ли квери параметры (то, что в строке браузера после ?) при редиректе
-url = None  # URL, на который надо перейти
-pattern_name = None  # Имя URL, на который надо перейти
-```
-
-Основные методы:
-
-Описаны все HTTP методы, и все они ссылаются на `get()`, например, `delete()`:
-
-```python
-def delete(self, request, *args, **kwargs):
-    return self.get(request, *args, **kwargs)
-```
-
-Метод `get_redirect_url()` отвечает за то, чтобы получить URL, на который надо перейти
-
-Как пользоваться
-
-```python
-class ArticleRedirectView(RedirectView):
-    query_string = True
-    pattern_name = 'article-detail'
-```
-
-## Class DetailView
-
-[Дока](https://ccbv.co.uk/projects/Django/4.2/django.views.generic.detail/DetailView/)
-
-Класс, который необходим для того, чтобы сделать страницу для просмотра одного объекта.
-
-Ему необходимо передать `pk` либо `slug`, и это позволит отобразить один объект (статью, товар и т. д.)
-
-Как этим пользоваться?
-
-Например:
-
-Во views.py
-
-```python
-from django.views.generic.detail import DetailView
-
-from articles.models import Article
-
-
-class ArticleDetailView(DetailView):
-    model = Article
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['now'] = timezone.now()  # Просто добавляем текущее время к контексту
-        return context
-```
-
-В urls.py:
-
-```python
-from django.urls import path
-
-from article.views import ArticleDetailView
-
-urlpatterns = [
-    path('<pk:pk>/', ArticleDetailView.as_view(), name='article-detail'),
+MIDDLEWARE = [
+    'django.middleware.security.SecurityMiddleware',
+    'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.common.CommonMiddleware',
+    'django.middleware.csrf.CsrfViewMiddleware',
+    'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'django.contrib.messages.middleware.MessageMiddleware',
+    'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 ```
 
-Этого уже достаточно, чтобы отрисовать страницу деталей объекта. Если `template_name` не указан явно, то Django будет
-пытаться отобразить `templates/app_name/model_detail.html`, где `app_name` - название приложения, `model` - название
-модели, `detail` - константа.
+Каждая из этих строк - это отдельная мидлварина, и абсолютно **каждый** request проходит через код, описанный в этих
+файлах, например, `django.contrib.auth.middleware.AuthenticationMiddleware` отвечает за то, чтобы в нашем request
+всегда был пользователь, если он залогинен, а `django.middleware.csrf.CsrfViewMiddleware` отвечает за проверку наличия и
+правильности CSRF токена, которые мы рассматривали ранее.
 
-В контекст будет передана переменная `object`. Методы `post`, `put` и т. д. не определены.
+Причём при "входе" request будет проходить сверху вниз (сначала секьюрити, потом сессии и т. д.), а при "выходе" снизу
+вверх (начиная XFrame и заканчивая Security)
 
-Важные параметры.
+**Middleware - это декоратор над request**
 
-```python
-pk_url_kwarg = 'pk'  # Как переменная называется в urls.py, например, `<int:my_id>`
-queryset = None  # если указан, то возможность ограничить доступ только для части объектов (например, убрать из возможности обновления деактивированные объекты).
-template_name = None  # указать имя шаблона.
-model = None  # класс модели, если не указан queryset, сгенерирует queryset из модели.
-```
+### Как этим пользоваться?
 
-Важные методы:
+Если мы хотим использовать самописные мидлвары, мы должны понимать, как они работают.
 
-`get_queryset()` - переопределить queryset
+Можно описать мидлвар двумя способами: функциональным и основанным на классах. Рассмотрим оба:
 
-`get_context_data()` - то же, что и у TemplateView
-
-`get_object()` - определяет логику получения объекта
-
-## Class ListView
-
-[Дока](https://ccbv.co.uk/projects/Django/4.2/django.views.generic.list/ListView/)
-
-Класс, необходимый для отображения списка объектов.
-
-Добавляет в контекст список объектов и информацию о пагинации.
-
-Как пользоваться?
+Функционально:
 
 ```python
-class CommentListView(ListView):
-    paginate_by = 10
-    template_name = 'comments_list.html'
-    queryset = Comment.objects.filter(parent__isnull=True)
+def simple_middleware(get_response):
+    # One-time configuration and initialization.
+
+    def middleware(request):
+        # Code to be executed for each request before
+        # the view (and later middleware) are called.
+
+        response = get_response(request)
+
+        # Code to be executed for each request/response after
+        # the view is called.
+
+        return response
+
+    return middleware
 ```
 
-### Пагинация
+Как вы можете заметить, синтаксис очень близок к декораторам.
 
-[Дока](https://docs.djangoproject.com/en/4.2/topics/pagination/)
+`get_response()` - функция, которая отвечает за всё, что происходит вне мидлвары и отвечает за обработку запроса, по сути
+это будет наша `view`, а мы можем дописать любой нужный нам код до или после, соответственно на "входе" реквеста или
+на "выходе" респонса.
 
-Очень часто наше приложение хранит большое количество данных, и при отображении нам не нужно показывать прям всё
-(допустим у нас блог на 1 000 000 000 статей). Логично отдавать данные порциями - это и называется пагинация,
-или разбиение на страницы.
-
-При прокрутке ленты в соцсети вы подгружаете всё новые и новые страницы, просто при помощи JavaScript это сделано
-так, что вы этого не замечаете.
-
-За это отвечает параметр:
+Так почти никто не пишет :) Рассмотрим, как этот же функционал работает для классов:
 
 ```python
-paginate_by = None  # можно указать, сколько должно быть объектов на одной странице 
+class SimpleMiddleware:
+    def __init__(self, get_response):
+        self.get_response = get_response
+        # One-time configuration and initialization.
+
+    def __call__(self, request):
+        # Code to be executed for each request before
+        # the view (and later middleware) are called.
+
+        response = self.get_response(request)
+
+        # Code to be executed for each request/response after
+        # the view is called.
+
+        return response
 ```
 
-В шаблон будут переданы как список объектов, так и данные по пагинации
+При таком подходе функционал работает при помощи магических методов, функционально выполняет то же самое, но по моему
+личному мнению гораздо элегантнее.
+
+При инициализации мы получаем обработчик, а при выполнении вызываем его же, но с возможностью добавить нужный код до
+или после.
+
+Чтобы активировать мидлвар, необходимо дописать путь к нему в переменную `MIDDLEWARE` в `settings.py`.
+
+Допустим, если мы создали файл `middleware.py` в приложении под названием `main`, и в этом файле создали
+класс `CheckUserStatus`, который нужен, чтобы мы могли обработать какой-либо статус пользователя, нужно дописать в
+переменную этот класс:
 
 ```python
-context = {
-    'paginator': paginator,  # объект класса пагинации, хранит все подробности, которые только могут быть.
-    'page_obj': page,
-    # информация о текущей странице, какая это страница, сколько всего страниц, URL на следующую и предыдущую страницу
-    'is_paginated': is_paginated,
-    # были ли данные вообще пагинированы, возможно у вас 10 объектов на страницу, а их всего 5, тогда нет смысла в пагинации
-    'object_list': queryset  # Сам queryset с объектами
-}
+MIDDLEWARE = [
+    'django.middleware.security.SecurityMiddleware',
+    'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.common.CommonMiddleware',
+    'django.middleware.csrf.CsrfViewMiddleware',
+    'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'main.middleware.CheckUserStatus',  # Новый мидлвар
+    'django.contrib.messages.middleware.MessageMiddleware',
+    'django.middleware.clickjacking.XFrameOptionsMiddleware',
+]
 ```
 
-Важные параметры такие же как у DetailView и еще новые
+Обратите внимание, я добавил мидлвар после `django.contrib.auth.middleware.AuthenticationMiddleware`, так как до этого
+мидлвара в нашем реквесте нет переменной юзер.
+
+## Миксин для мидлвар
+
+На самом деле для написания мидлвар существует миксин, чтобы упростить наш код.
 
 ```python
-allow_empty = True  # разрешить ли отображение пустого списка
-ordering = None  # явно указать порядок сортировки
+django.utils.deprecation.MiddlewareMixin
 ```
 
-Всё еще описан только метод `get()`. Методы `post()`, `put()` и т. д. не разрешены.
+В нём уже расписаны методы `__init__` и `__call__`.
 
-Важные методы:
+`__init_()` принимает метод для обработки request, а в `__call__` расписаны методы для обработки request или response.
 
-`get_queryset()` - переопределить queryset
+Метод `__call__` вызывает 4 действия:
 
-`get_context_data()` - то же, что и у TemplateView
+1. Вызывает `self.process_request(request)` (если описан) для обработки request.
+2. Вызывает `self.get_response(request)`, чтобы получить response для дальнейшего использования.
+3. Вызывает `self.process_response(request, response)` (если описан) для обработки response.
+4. Возвращает response.
 
-`get_paginator()` - определяет логику получения класса Paginator
+Зачем это нужно?
 
-`get_paginate_by()` - определяет логику получения значение paginate_by
+Чтобы описывать только тот функционал, который мы будем использовать, и случайно не зацепить что-то рядом.
 
-`get_ordering()` - определяет логику получения переменной ordering
-
-`get_allow_empty()` - определяет логику получения переменной allow_empty
-
-## Class FormView
-
-[Дока](https://ccbv.co.uk/projects/Django/4.2/django.views.generic.edit/FormView/)
-
-Не все классы предназначены только для чтения данных.
-
-FormView класс необходим для обработки формы.
-
-Как пользоваться?
-
-В `forms.py`:
+Например, так выглядит мидлвар для добавления юзера в реквест.
 
 ```python
-from django import forms
+from django.contrib import auth
+from django.utils.deprecation import MiddlewareMixin
+from django.utils.functional import SimpleLazyObject
 
 
-class ContactForm(forms.Form):
-    name = forms.CharField()
-    message = forms.CharField(widget=forms.Textarea)
+def get_user(request):
+    if not hasattr(request, '_cached_user'):
+        request._cached_user = auth.get_user(request)
+    return request._cached_user
 
-    def send_email(self):
-        # send email using the self.cleaned_data dictionary
-        pass
+
+class AuthenticationMiddleware(MiddlewareMixin):
+    def process_request(self, request):
+        assert hasattr(request, 'session'), (
+            "The Django authentication middleware requires session middleware "
+            "to be installed. Edit your MIDDLEWARE setting to insert "
+            "'django.contrib.sessions.middleware.SessionMiddleware' before "
+            "'django.contrib.auth.middleware.AuthenticationMiddleware'."
+        )
+        request.user = SimpleLazyObject(lambda: get_user(request))
+```
+Описание: при получении реквеста добавить в него пользователя, информация о котором хранится в сессии.
+
+## Signals
+
+Сигналы. Часто мы оказываемся в ситуации, когда нам нужно выполнять какие-либо действия до или после определённого
+события. Конечно, мы можем прописать код там, где нам нужно, но вместо этого мы можем использовать сигналы.
+
+Сигналы отлавливают, что определённое действие выполнено или будет следующим, и выполняют необходимый нам код.
+
+Список экшенов [тут](https://docs.djangoproject.com/en/4.2/ref/signals/).
+Описание [тут](https://docs.djangoproject.com/en/4.2/topics/signals/).
+
+Примеры сигналов:
+
+```
+django.db.models.signals.pre_save & django.db.models.signals.post_save # Выполняется перед сохранением или сразу после сохранения объекта
+django.db.models.signals.pre_delete & django.db.models.signals.post_delete # Выполняется перед удалением или сразу после удаления объекта
+django.db.models.signals.m2m_changed # Выполняется при изменении любых ManyToMany связей (добавили студента в группу или убрали, например)
+django.core.signals.request_started & django.core.signals.request_finished # Выполняется при начале запроса или при его завершении.
 ```
 
-Во `views.py`:
+Это далеко не полный список действий, на которые могут реагировать сигналы.
+
+Каждый сигнал имеет функции `connect()` и `disconnect()` для того, чтобы привязать/отвязать сигнал к действию.
 
 ```python
-from myapp.forms import ContactForm
-from django.views.generic.edit import FormView
+from django.core.signals import request_finished
 
-
-class ContactView(FormView):
-    template_name = 'contact.html'
-    form_class = ContactForm
-    success_url = '/thanks/'
-
-    def form_valid(self, form):
-        # This method is called when valid form data has been POSTed.
-        # It should return an HttpResponse.
-        form.send_email()
-        return super().form_valid(form)
+request_finished.connect(my_callback)
 ```
 
-В  `contact.html`:
+где `my_callback` - это функция, которую нужно выполнять по получению сигнала.
+
+Но гораздо чаще применяется синтаксис с использованием декоратора `receiver`
+
+```python
+from django.core.signals import request_finished
+from django.dispatch import receiver
+
+
+@receiver(request_finished)
+def my_callback(sender, **kwargs):
+    print("Request finished!")
+```
+
+У сигнала есть параметр `receiver` и может быть параметр `sender`. Сендер - это объект, который отправляет сигнал
+(например, модель, для которой описывается сигнал).
+
+```python
+from django.db.models.signals import pre_save
+from django.dispatch import receiver
+from myapp.models import MyModel
+
+
+@receiver(pre_save, sender=MyModel)
+def my_handler(sender, **kwargs):
+    ...
+```
+
+Сигнал можно создать под любое действие, если это необходимо. Допустим, нужно отправить сигнал, что пицца готова.
+
+Сначала создадим сигнал.
+
+```python
+import django.dispatch
+
+pizza_done = django.dispatch.Signal()
+```
+
+И в нужном месте можно отправить:
+
+```python
+class PizzaStore:
+    ...
+
+    def send_pizza(self, toppings, size):
+        pizza_done.send(sender=self.__class__, toppings=toppings, size=size)
+        ...
+```
+
+## Messages
+
+Дока [тут](https://docs.djangoproject.com/en/4.2/ref/contrib/messages/)
+
+Довольно часто в веб-приложениях вам необходимо отображать одноразовое уведомление для пользователя после обработки
+формы или некоторых других типов пользовательского ввода ("Вы успешно зарегистрировались", "Скидка активирована",
+"Недостаточно бонусов").
+
+Для этого Django обеспечивает полную поддержку обмена сообщениями на основе файлов cookie и сеансов как для анонимных,
+так и для аутентифицированных пользователей.
+
+Инфраструктура сообщений позволяет вам временно хранить сообщения в одном запросе и извлекать их для отображения в
+следующем запросе (обычно в следующем).
+
+Каждое сообщение имеет определенный уровень, который определяет его приоритет (например, информация, предупреждение или
+ошибка).
+
+### Подключение
+
+По дефолту, если проект был создан через `django-admin`, то `messages` изначально подключены.
+
+`django.contrib.messages` должны быть в `INSTALLED_APPS`.
+
+В переменной `MIDDLEWARE` должны быть `django.contrib.sessions.middleware.SessionMiddleware`
+and `django.contrib.messages.middleware.MessageMiddleware`.
+
+По дефолту данные сообщений хранятся в сессии, это является причиной, почему мидлвар для сессий должен быть подключен.
+
+В переменной `context_processors` в переменной `TEMPLATES` должны
+содержаться `django.contrib.messages.context_processors.messages`.
+
+#### context_processors
+
+Ключ в переменной `OPTIONS` в переменной `TEMPLATES` отвечает за то, что по дефолту будет присутствовать как переменная
+во всех наших темплейтах. Изначально выглядит вот так:
+
+```python
+'context_processors': [
+    'django.template.context_processors.debug',
+    'django.template.context_processors.request',
+    'django.contrib.auth.context_processors.auth',
+    'django.contrib.messages.context_processors.messages',
+]
+```
+
+`django.template.context_processors.debug`, если в `settings.py` переменная `DEBUG`==`True`, добавляет в темплейт
+информацию о подробностях, если произошла ошибка.
+
+`django.template.context_processors.request` добавляет в контекст данные из реквеста, переменная `request`.
+
+`django.contrib.auth.context_processors.auth` добавляет переменную `user` с информацией о пользователе.
+
+`django.contrib.messages.context_processors.messages` добавляет сообщения на страницу.
+
+### Storage backends
+
+Хранить сообщения можно в разных местах.
+
+По дефолту существует три варианта хранения:
+
+`class storage.session.SessionStorage` - хранение в сессии
+
+`class storage.cookie.CookieStorage` - хранение в куке
+
+`class storage.fallback.FallbackStorage` - пытаемся хранить в куке, если не помещается используем сессию. Будет
+использовано по умолчанию.
+
+Если нужно изменить, добавьте в `settings.py` переменную:
+
+```python
+MESSAGE_STORAGE = 'django.contrib.messages.storage.cookie.CookieStorage'
+```
+
+Если нужно написать свой класс для хранения сообщений, то нужно наследоваться от `class storage.base.BaseStorage` и
+описать 2 метода `_get()` и `_store()`.
+
+### Как этим пользоваться?
+
+Во view необходимо добавить сообщение.
+
+Это можно сделать несколькими способами:
+
+#### add_message()
+
+```python
+from django.contrib import messages
+
+messages.add_message(request, messages.INFO, 'Hello world.')
+```
+
+Метод `add_message()` позволяет добавить сообщение к реквесту, принимает сам реквест, тип сообщения (успех, провал
+информация и т. д.) и сам текст сообщения. На самом деле, второй параметр - это просто цифра, а текст добавлен для чтения.
+
+Чаще всего используется в методах **form_valid()**, **form_invalid()**
+
+#### Сокращенные методы
+
+```python
+messages.debug(request, '%s SQL statements were executed.' % count)
+messages.info(request, 'Three credits remain in your account.')
+messages.success(request, 'Profile details updated.')
+messages.warning(request, 'Your account expires in three days.')
+messages.error(request, 'Document deleted.')
+```
+
+Эти 5 типов сообщений являются стандартными, но, если необходимо, всегда можно добавить свои типы. Как это сделать
+описано в доке.
+
+### Как отобразить?
+
+`context_processors`, который находится в настройках, уже добавляет нам в темплейт переменную `messages`, а дальше 
+мы можем использовать классические темплейт теги.
+
+Примеры:
 
 ```html
-
-<form method="post"> {% csrf_token %}
-    {{ form.as_p }}
-    <input type="submit" value="Send message">
-</form>
+{% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <li
+            {% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}
+    </li>
+    {% endfor %}
+</ul>
+{% endif %}
 ```
 
-Важные параметры:
-
-Такие же, как у TemplateView, и еще свои
-
-```python
-form_class = None  # сам класс формы
-success_url = None  # на какую страницу перейти, если форма была валидна
-initial = {}  # словарь с базовыми значениями формы
+```html
+{% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <li
+            {% if message.tags %} class="{{ message.tags }}" {% endif %}>
+        {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}Important: {% endif %}
+        {{ message }}
+    </li>
+    {% endfor %}
+</ul>
+{% endif %}
 ```
 
-Важные методы:
+Чаще всего такой код располагают в блоке в базовом шаблоне, чтобы не указывать его на каждой странице отдельно.
 
-Тут наконец определён метод `post()`:
+#### Использование во view
+
+Если нам вдруг необходимо получить список текущих сообщение во view, мы можем это сделать при помощи
+метода `get_messages()`.
 
 ```python
-def post(self, request, *args, **kwargs):
-    """
-    Handle POST requests: instantiate a form instance with the passed
-    POST variables and then check if it's valid.
-    """
-    form = self.get_form()
-    if form.is_valid():
-        return self.form_valid(form)
-    else:
-        return self.form_invalid(form)
+from django.contrib.messages import get_messages
+
+storage = get_messages(request)
+for message in storage:
+    do_something_with_the_message(message)
 ```
 
-Так же все методы из TemplateView
+### Messages и Class-Based Views
 
-`get_context_data()` - дополнительно добавляет переменную `form` в темплейт
-
-`get_form()` - получить объект формы
-
-`get_form_class()` - получить класс формы
-
-`form_valid()` - что делать, если форма валидна
-
-`form_invalid()` - что делать, если форма не валидна
-
-`get_success_url()` - переопределить генерацию URL, на который будет совершен переход, если форма валидна
-
-## Class CreateView
-
-[Дока](https://ccbv.co.uk/projects/Django/4.2/django.views.generic.edit/CreateView/)
-
-Класс для создания объектов.
-
-Как этим пользоваться?
-
-Во `views.py`
+Можно добавлять сообщения при помощи миксинов, примеры:
 
 ```python
+from django.contrib.messages.views import SuccessMessageMixin
 from django.views.generic.edit import CreateView
 from myapp.models import Author
 
 
-class AuthorCreate(CreateView):
-    template_name = 'author_create.html'
+class AuthorCreate(SuccessMessageMixin, CreateView):
     model = Author
-    fields = ['name']
+    success_url = '/success/'
+    success_message = "%(name)s was created successfully"
 ```
-
-В `author_create.html`:
-
-```html
-
-<form method="post">{% csrf_token %}
-    {{ form.as_p }}
-    <input type="submit" value="Save">
-</form>
-```
-
-> В класс нужно передать либо ModelForm, либо модель и поля, чтобы класс сам сгенерировал такую форму.
-
-Метод `get()` откроет страницу, на которой будет переменная `form`, как и другие view, к которым добавляется форма.
-
-Метод `post()` выполнит те же действия, что и FormView, но в случае валидности формы предварительно
-выполнит `form.save()`
-
-Важные параметры:
-
-Такие же, как у FormView, и еще свои.
 
 ```python
-form_class = None  # Должен принимать ModelForm
-model = None  # Можно указать модель вместо формы, чтобы сгенерировать её на ходу
-fields = None  # Поля модели, если не указана форма
+from django.contrib.messages.views import SuccessMessageMixin
+from django.views.generic.edit import CreateView
+from myapp.models import ComplicatedModel
+
+
+class ComplicatedCreate(SuccessMessageMixin, CreateView):
+    model = ComplicatedModel
+    success_url = '/success/'
+    success_message = "%(calculated_field)s was created successfully"
+
+    def get_success_message(self, cleaned_data):
+        return self.success_message % dict(
+            cleaned_data,
+            calculated_field=self.object.calculated_field,
+        )
 ```
 
-Важные методы:
+## Manage-команды и настройки.
 
-Все методы из FormView, но дополненные под создание объекта:
+Manage-команды в рамках Django - это возможность запустить скрипт из консоли для выполнения абсолютно различных действий.
 
-`post()` - предварительно добавит классу атрибут `self.object = None`
+Существует три способа запуска manage-команды:
 
-`form_valid()` - дополнительно выполнит такую строку `self.object = form.save()`
+```
+django-admin <command> [options]
+python manage.py <command> [options]
+python -m django <command> [options]
+```
 
-# Class UpdateView
+В случае запуска через `django-admin` вы можете указать, какой файл настроек использовать при помощи опции `--settings`.
 
-[Дока](https://ccbv.co.uk/projects/Django/4.2/django.views.generic.edit/UpdateView/)
+Если вы запускаете команду через `manage.py` (самый распространенный способ), файл настроек будет выбран в соответствии 
+с самим файлом `manage.py` (Напоминаю структуру, информация о файле настроек для Django проекта находится именно в
+файле `manage.py`).
 
-Класс для обновления объекта. Как пользоваться?
+Мы использовали некоторые команды, но давайте посмотрим подробнее.
 
-Во `views.py`:
+## Доступные команды.
+
+![](https://www.meme-arsenal.com/memes/d4d5ed953c6b783bc97f142cb8e89d4d.jpg)
+
+### Check
+
+```
+python manage.py check [app_label [app_label ...]]
+```
+
+Например:
+
+```
+django-admin check auth admin myapp
+```
+
+Команда для запуска проверки кода на качество (например, что неправильно указаны аргументы модели или некорректно
+указано свойство для класса админки и т. д., список огромный)
+Посмотреть базовый список проверок можно [Тут](https://docs.djangoproject.com/en/4.2/ref/checks/)
+
+### makemessages
+
+```
+python manage.py makemessages
+```
+
+Командна для работы с переводами (локализацией) сайтов.
+
+Команда проходит через весь код и ищет места, которые заготовлены для перевода (для Python кода - это везде, где вы
+используете метод `gettext`, для шаблонов - везде, где используется темплейт тег `translate`,
+подробнее [Тут](https://docs.djangoproject.com/en/4.2/topics/i18n/translation/)).
+
+Создаёт\обновляет файлы, в которых хранятся\будут храниться переводы текста на друге языки. Принимает параметры `--all`
+, `--extension`, `--locale`, `--exclude`, `--domain`, `--ignore` и т. д.
+
+Подробности использования
+параметров [тут](https://docs.djangoproject.com/en/4.2/ref/django-admin/#django-admin-makemessages)
+
+Обсудим основные.
+
+`--locale LOCALE, -l LOCALE` нужно для указания языка, на который планируется перевод (на самом деле повлияет только 
+на то, как будет называться файл с переводами, и как этот перевод будет называться в системе), например, для 
+французского можно назвать файл `fr`, для итальянского `it` и т. д.
+
+```
+django-admin makemessages --locale=pt_BR
+django-admin makemessages --locale=pt_BR --locale=fr
+django-admin makemessages -l pt_BR
+django-admin makemessages -l pt_BR -l fr
+```
+
+`--ignore PATTERN` - игнорировать (не искать) переводы в определённых местах, например, `--ignore *.py' - игнорировать
+все Python файлы.
+
+Создаст файлы с расширением `.po` и списком всех мест, где нужно будет указать перевод.
+
+```
+#. Translators: This message appears on the home page only
+# path/to/python/file.py:123
+msgid "Welcome to my site."
+msgstr ""
+```
+
+Комментарием указано, откуда конкретно взят текст для перевода, ниже сам текст, который нужно перевести, и место, где мы
+можем указать перевод.
+
+### compilemessages
+
+Компилирует файлы для переводов.
+
+Делает из `.po` файлов `.mo` файлы. Django принимает именно `.mo` в качестве файлов, откуда брать перевод.
+
+Поддерживает указание локали и игнор, подробнее в доке.
+
+### createcachedtable
+
+Создаёт таблицу для кеша в базе данных, подробно рассматривали на занятии по сессиям и кешам.
+
+### shell
+
+Уже известная вам команда `shell` открывает интерактивную `python` консоль с уже импортированными библиотеками вашего
+проекта, например, Django.
+
+### dbshell
+
+По аналогии со знакомой нам командой `shell` открывает консоль со всеми необходимыми импортированными данными, но для
+базы данных.
+
+Например, для PostgreSQL, откроется `psql` и т. д.
+
+### diffsettings
+
+Команда, которая покажет, чем отличается ваш файл `settings.py` от оригинала.
+
+### dumpdata
+
+Команда для работы с фикстурами.
+
+Фикстуры - это файлы отображения базы данных в формат JSON.
+
+Команда `dumpdata` вытащит все данные из базы данных и преобразует всё в формат JSON.
+
+Может принимать имя только нескольких приложений или даже только некоторых моделей, или наоборот - исключить какие-то
+приложения или модели.
+
+### loaddata
+
+Команда, обратная команде `dumpdata`, для загрузки JSON файла в базу данных.
+
+Подробно будем рассматривать эти командны на практике во время занятия по тестированию Django.
+
+### flush
+
+Команда, необходимая для очистки базы данных, но не отмены миграций (сохраняем структуру, теряем все данные).
+
+### sqlflush
+
+Отпечатает, какой SQL код будет выполнен при применении команды `flush`.
+
+### inspectdb
+
+Команда, необходимая для проверки соответствия ваших моделей и вашей базы данных. Незаменимо при переносе проекта извне
+на Django.
+
+### makemigrations
+
+Уже известная вам команда, которая создаёт файлы миграций, и может принимать имя приложения, чтобы создать только для
+конкретного приложения.
+
+Может принимать важный параметр `--empty`, при этом флаге создастся пустая миграция, никак не привязанная к моделям.
+Выглядеть будет примерно вот так:
 
 ```python
-from django.views.generic.edit import UpdateView
-from myapp.models import Author
+# Generated by Django 3.0.7 on 2020-10-29 11:59
+
+from django.db import migrations
 
 
-class AuthorUpdate(UpdateView):
-    model = Author
-    fields = ['name']
-    template_name_suffix = '_update_form'
+class Migration(migrations.Migration):
+    dependencies = [
+        ('storages', '0003_auto_20201029_1352'),
+    ]
+
+    operations = [
+    ]
 ```
 
-В `myapp/author_update_form.html`:
+Тут указано приложение, для которого миграция будет применена, и прошлая миграция, с которой текущая миграция будет
+связана.
 
-```html
+Зачем это вообще надо?
 
-<form method="post">{% csrf_token %}
-    {{ form.as_p }}
-    <input type="submit" value="Update">
-</form>
-```
+Мы можем в операции добавить любые интересующие нас действия, например, выполнения кода на Python.
 
-Методы и атрибуты почти полностью совпадают с CreateView, только UpdateView перед действиями вызывает
-метод `get_object()` для получения нужного объекта, и url должен принимать `pk` для определения этого объекта.
-
-## Class DeleteView
-
-[Дока](https://ccbv.co.uk/projects/Django/4.2/django.views.generic.edit/DeleteView/)
-
-Класс для удаления объектов.
-
-Как пользоваться?
-
-Во views.py:
+Для этого нужно добавить класс `RunPython` из пакета `migrations`, который будет принимать два метода, первый будет
+выполнен в случае выполнения миграции, второй - в случае отката миграции.
 
 ```python
-from django.urls import reverse_lazy
-from django.views.generic.edit import DeleteView
-from myapp.models import Author
+# Generated by Django 3.0.7 on 2020-10-29 11:59
+
+from django.db import migrations
 
 
-class AuthorDelete(DeleteView):
-    model = Author
-    success_url = reverse_lazy('author-list')
+def some_forward_action(apps, schema_editor):
+    Team = apps.get_model('storages', 'Team')
+    Team.objects.create(name='B2B')
+    Team.objects.create(name='CX')
+    Team.objects.create(name='SFA')
+
+
+def some_backward_action(apps, schema_editor):
+    pass
+
+
+class Migration(migrations.Migration):
+    dependencies = [
+        ('storages', '0003_auto_20201029_1352'),
+    ]
+
+    operations = [
+        migrations.RunPython(some_forward_action, some_backward_action)
+    ]
 ```
 
-В html:
+Такие миграции называются **Data Migrations**.
 
-```html
+Чаще всего для того, чтобы занести какие-либо данные в базу данных на этапе миграции, например, создать заведомо
+известные объекты, как в моём примере, или для установки вычисляемого значения по умолчанию.
 
-<form method="post">{% csrf_token %}
-    <p>Are you sure you want to delete "{{ object }}"?</p>
-    <input type="submit" value="Confirm">
-</form>
-```
+Для обратной миграции чаще всего действия не требуются (хоть и далеко не всегда), поэтому чаще всего обратная миграция
+записывается в виде лямбды `lambda x, y: None`
 
-Не принимает форму! Принимает модель или queryset и обязательно url, должен принимать идентификатор для определения
-объекта.
+![](https://lh3.googleusercontent.com/proxy/a3WuV3A8umBdVGJA7UVrM50cqloRtS9MhMcq9GYmYwwExEAnYkqNVajL5BBHi_3gwnu4-3s8xDHzTQStrjgrMDZg5lQ)
 
-## Class LoginView
-
-[Дока](https://ccbv.co.uk/projects/Django/4.2/django.contrib.auth.views/LoginView/)
-
-Класс, реализующий логику логина.
-
-Основан на FormView, если форма не была заменена, то по умолчанию использует
-`django.contrib.auth.forms.AuthenticationForm`. Эта форма содержит два поля, `username` и `password`, и
-проверяет, что данные валидны, и в случае, если данные валидны и пользователь активен, добавляет пользователя в объект
-формы.
-
-Также в LoginView переписан метод form_valid():
+Типовая Data Migration:
 
 ```python
-def form_valid(self, form):
-    """Security check complete. Log the user in."""
-    auth_login(self.request, form.get_user())
-    return HttpResponseRedirect(self.get_success_url())
+# Generated by Django 3.0.7 on 2020-10-29 11:59
+
+from django.db import migrations
+
+
+def some_forward_action(apps, schema_editor):
+    Team = apps.get_model('storages', 'Team') # Приложение и модель
+    Team.objects.create(name='B2B')
+    Team.objects.create(name='CX')
+    Team.objects.create(name='SFA')
+
+
+class Migration(migrations.Migration):
+    dependencies = [
+        ('storages', '0003_auto_20201029_1352'),
+    ]
+
+    operations = [
+        migrations.RunPython(some_forward_action, lambda x, y: None)
+    ]
 ```
 
-Если форма валидна, то провести авторизацию.
+### migrate
 
-## Class LogoutView
+Уже известная вам команда для применения миграции
 
-[Дока](https://ccbv.co.uk/projects/Django/4.2/django.contrib.auth.views/LogoutView/)
+```
+django-admin migrate [app_label] [migration_name]
+```
 
-Класс для логаута.
+Может быть указано приложение, к которому применяется, и имя миграции (на самом деле достаточно первых четырех цифр).
+Указывание имени нужно для отката миграций. Допустим, у вас уже применена миграция номер 8, а вы поняли, что проблема
+была в миграции номер 6, это значит, что можно откатить базу до миграции номер 5. Естественно с потерей данных, и 
+провести новые миграции, для этого нужно сделать:
 
-У LogoutView переписан метод `dispatch`, так что, каким бы методом вы не обратились к классу, вы всё равно будете
-разлогинены.
+```
+manage.py migrate my_app 0005
+```
 
-## Регистрация
+Важным флагом является ```--fake```, при применении этого флага изменения в базу внесены не будут, но Django будет
+видеть, что миграция была применена. Нужно, чтобы использовать базы с уже заполненными данными, созданными вне Django
+проекта.
 
-По сути регистрация - это CreateView со своими особенностями (пароль хешируется), поэтому для регистрации используют
-просто CreateView, и существует заранее описанная форма UserCreationForm()
+> Вместо цифр можно указать значение `zero`, что позволяет откатить все миграции для этого приложения.
+
+### sqlmigrate
+
+Отпечатает, какой SQL код будет выполнен при применении команды `migrate`
+
+### showmigrations
+
+Также уже известная вам команда, которая отобразит список миграций и их состояние (применена или нет).
+
+### runserver
+
+Команда для запуска тестового сервера, можно указывать порт и многие другие настройки **Не применяется на продакшене,
+только для разработки**. Как это делается на продакшене, рассмотрим в следующих лекциях.
+
+### sendtestemail
+
+Отправка тестового имейла (работает, только если отправка писем была настроена) принимает два параметра - от кого и кому.
+
+Например:
+
+```python manage.py sendtestemail myownemail@gmail.com myanotheremail@gmail.com```
+
+### sqlsequencereset
+
+Команда для сброса последовательностей базы данных, может принимать название приложения.
+
+Если вы удалите все объекты из базы и начнёте создавать новые, id будут продолжаться вне зависимости от того, сколько
+объектов было раньше, потому что `id` вычисляется из специальных объектов базы, которые называются `sequence`.
+
+Если их сбросить, то `id` будет назначаться снова с `1`.
+
+**Не применять на базах с данными!!**
+
+### squashmigrations
+
+Команда, которая применяется для того, чтобы `сжать` несколько миграций в одну.
+
+Например, в приложении `myapp` миграции от 4-ой до 7-ой - это добавления новых полей в одну и ту же модель. Чтобы сжать 
+эти миграции в одну, нужно выполнить:
+
+```python manage.py squashmigrations myapp 0004 0007```
+
+### startapp
+
+Команда для создания нового приложения.
+
+### startproject
+
+Команда для создания нового проекта.
+
+### test
+
+Команда для запуска тестов. Рассмотрим её на следующих занятиях.
+
+## Команды базовых приложений
+
+### django.contrib.auth
+
+### changepassword
+
+Команда для смены пароля конкретному пользователю.
+
+```manage.py changepassword ringo```
+
+### createsuperuser
+
+Команда для создания пользователя со всеми правами.
+
+### django.contrib.sessions
+
+### clearsession
+
+Команда для очистки базы данных от информации о сессиях. При базовых настройках вся информация о сессиях автоматически
+пишется в базу данных.
+
+### django.contrib.staticfiles
+
+Команды для статики, вообще работу статики и медиа рассмотрим на следующих занятиях.
+
+## Написание своих скриптов
+
+По факту, все вышеописанные команды написаны на Python, а это значит, что мы можем написать свои команды.
+
+Допустим, у нас есть проект пиццерии, в рамках которого есть приложение `orders`, отвечающее за заказы, и мы хотим, 
+чтобы все заказы, которые не были закрыты вручную, ровно в 18:00 были переведены в статус для ручной проверки, а владелец
+заведения получил письмо о том, что такие заказы есть.
+
+Самый простой путь - это создать `manage-команду`. В приложении создадим папку `management`, а в ней папку `commands`, 
+названия созданных в этой папке файлов будет соответствовать кастомной manage-команде.
+
+```
+orders/
+    __init__.py
+    models.py
+    management/
+        commands/
+            close_orders.py
+    tests.py
+    views.py
+```
+
+В файле нужно создать класс, наследованный от `BaseCommand`:
 
 ```python
-class UserCreationForm(forms.ModelForm):
-    """
-    A form that creates a user, with no privileges, from the given username and
-    password.
-    """
-    error_messages = {
-        'password_mismatch': _("The two password fields didn't match."),
-    }
-    password1 = forms.CharField(label=_("Password"),
-                                widget=forms.PasswordInput)
-    password2 = forms.CharField(label=_("Password confirmation"),
-                                widget=forms.PasswordInput,
-                                help_text=_("Enter the same password as above for verification."))
+from django.core.management.base import BaseCommand
+from orders.models import Order
+import send_email
 
-    class Meta:
-        model = User
-        fields = ("username",)
 
-    def clean_password2(self):
-        password1 = self.cleaned_data.get("password1")
-        password2 = self.cleaned_data.get("password2")
-        if password1 and password2 and password1 != password2:
-            raise forms.ValidationError(
-                self.error_messages['password_mismatch'],
-                code='password_mismatch',
-            )
-        return password2
+class Command(BaseCommand):
+    help = "Close orders which weren't closed manually"
 
-    def save(self, commit=True):
-        user = super(UserCreationForm, self).save(commit=False)
-        user.set_password(self.cleaned_data["password1"])
-        if commit:
-            user.save()
-        return user
+    def handle(self, *args, **options):
+        orders = Order.objects.filter(status="opened")
+        if orders:
+            orders.update(status="manual")
+            send_email("Not closed orders", f"Hey, you have {orders.count()} orders with status 'opened'")
+            self.stdout.write(self.style.SUCCESS('Successfully closed orders'))
 ```
 
-Принимает `username` и два раза пароль, проверяет, чтобы пароли были одинаковые, и при сохранении записывает пароль в
-хешированном виде.
+Запустить такую команду можно из консоли:
 
-## Управление доступом
+```python manage.py close_orders```
 
-Управление доступом — это важная часть разработки любого веб-приложения. В Django этот процесс включает контроль того,
-какие пользователи могут просматривать или изменять определенные ресурсы. Django предоставляет несколько встроенных
-инструментов для управления доступом, таких как декораторы, пермишены и миксины.
-
-> Пермишены и группы мы отдельно рассматривать не будем. Но вы можете сделать это самостоятельно по
-> вот [этой](https://docs.djangoproject.com/en/5.0/topics/auth/default/#permissions-and-authorization) ссылке
-
-### Управление доступом с использованием декораторов
-
-> Практически не используется
-
-В Django основным способом управления доступом при использовании функциональных представлений являются декораторы, такие
-как `@login_required` и `@user_passes_test`. Однако, при использовании CBV их нельзя применять напрямую. Вместо этого
-их можно использовать с помощью метода `@method_decorator`.
-
-#### Пример:
+Теперь можно при помощи любой утилиты для работы с консолью поставить задачу в расписание, например, для UNIX систем
+можно использовать CRON.
 
 ```python
-from django.contrib.auth.decorators import login_required
-from django.utils.decorators import method_decorator
-from django.views.generic import ListView
-from .models import Post
-
-
-@method_decorator(login_required, name='dispatch')
-class PostListView(ListView):
-    model = Post
-    template_name = 'post_list.html'
+0 18 * * 1-5 /some/path/pizza/manage.py close_orders
 ```
-
-Здесь `@method_decorator` оборачивает метод `dispatch`, который вызывается при каждом запросе. Это гарантирует, что
-пользователь должен быть авторизован для доступа к представлению.
-
-### Использование миксинов для управления доступом
-
-Django предоставляет несколько миксинов для управления доступом, которые можно использовать с CBV.
-
-#### LoginRequiredMixin
-
-Один из самых часто используемых миксинов — `LoginRequiredMixin`. Этот миксин обеспечивает доступ к представлению только
-для авторизованных пользователей.
-
-#### Пример:
-
-```python
-from django.contrib.auth.mixins import LoginRequiredMixin
-from django.views.generic import DetailView
-from .models import Post
-
-
-class PostDetailView(LoginRequiredMixin, DetailView):
-    model = Post
-    template_name = 'post_detail.html'
-```
-
-Если вам нужно указать куда именно должен происходить редикрект, вы можете указать это специальным атрибутом:
-
-```python
-from django.contrib.auth.mixins import LoginRequiredMixin
-from django.views.generic import DetailView
-from .models import Post
-
-
-class PostDetailView(LoginRequiredMixin, DetailView):
-    model = Post
-    template_name = 'post_detail.html'
-    login_url = '/login/'
-```
-
-В данном примере `PostDetailView` будет доступен только для авторизованных пользователей. Если пользователь не
-авторизован, он будет перенаправлен на страницу входа.
-
-#### UserPassesTestMixin
-
-Иногда требуется создать более сложные условия для доступа. Для этого используется `UserPassesTestMixin`, который
-позволяет определить произвольное условие доступа с помощью метода `test_func`.
-
-#### Пример:
-
-```python
-from django.contrib.auth.mixins import UserPassesTestMixin
-from django.views.generic import DeleteView
-from .models import Post
-
-
-class PostDeleteView(UserPassesTestMixin, DeleteView):
-    model = Post
-    template_name = 'post_confirm_delete.html'
-    success_url = '/'
-
-    def test_func(self) -> bool:
-        post = self.get_object()
-        return self.request.user == post.author
-```
-
-Здесь пользователь сможет удалить пост только в том случае, если он является его автором.
-
-### Комбинирование миксинов
-
-Часто бывает необходимо комбинировать несколько миксинов для достижения нужного уровня контроля доступа. Важно помнить,
-что порядок следования миксинов может быть критичным.
-
-#### Пример:
-
-```python
-from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
-
-
-class PostManageView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
-    model = Post
-    template_name = 'post_manage.html'
-    fields = ['title', 'content']
-
-    def test_func(self) -> bool:
-        post = self.get_object()
-        return self.request.user == post.author
-```
-
-В этом примере `PostManageView` требует как авторизации, так и пользователь должен являться автором поста.
-
-### Обработка отказа в доступе
-
-Иногда может понадобиться изменить стандартное поведение при отказе в доступе, например, вместо перенаправления на
-страницу входа, вывести сообщение об ошибке.
-
-#### Пример:
-
-```python
-from django.contrib.auth.mixins import LoginRequiredMixin
-from django.core.exceptions import PermissionDenied
-
-
-class CustomLoginRequiredMixin(LoginRequiredMixin):
-
-    def handle_no_permission(self):
-        if self.raise_exception or self.request.user.is_authenticated:
-            raise PermissionDenied
-        return super().handle_no_permission()
-```
-
-Этот миксин изменяет поведение так, что при отсутствии авторизации пользователь получит исключение `PermissionDenied`, а
-не редирект.
-
-## Живой пример
-
-Допустим, нам нужен сайт, на котором можно зарегистрироваться, залогиниться, разлогиниться и написать заметку, если ты
-залогинен. Заметки должны отображаться списком, последняя созданная отображается первой. Все пользователи видят все
-заметки. Возле тех, которые создал текущий пользователь, должна быть кнопка удалить.
-
-Как это сделать?
-
-Разработка всегда начинается с описания моделей, нам нужно две сущности: юзер и заметка.
-
-Мы не будем изменять юзера, нам подходит стандартный.
-
-Создадим модель заметки:
-
-В models.py:
-
-```python
-from django.contrib.auth.models import User
-from django.db import models
-
-
-class Note(models.Model):
-    text = models.CharField(max_length=100)
-    created_at = models.DateTimeField(auto_now=True)
-    author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='notes')
-
-    class Meta:
-        ordering = ['-created_at', ]
-```
-
-Не забываем про миграции, и про добавление приложения в settings.py
-
-Создадим необходимые шаблоны: `base.html`, `index.html`, `login.html`, `register.html`. Пока пустые, заполним чуть
-позже.
-
-Создадим view. Для базовой страницы, на которой отображается список заметок, лучше всего подходит ListView, для логина,
-и логаута - существующие классы, для регистрации - CreateView.
-
-Для логина и регистрации воспользуемся готовой формой.
-
-Базовую страницу и логаут закроем от незалогиненных пользователей.
-
-Получается как-то так:
-
-Во views.py
-
-```python
-from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth.mixins import LoginRequiredMixin
-from django.contrib.auth.views import LoginView, LogoutView
-from django.views.generic import ListView, CreateView
-
-from app.models import Note
-
-
-class NoteListView(LoginRequiredMixin, ListView):
-    model = Note
-    template_name = 'index.html'
-    login_url = 'login/'
-
-
-class Login(LoginView):
-    success_url = '/'
-    template_name = 'login.html'
-
-    def get_success_url(self):
-        return self.success_url
-
-
-class Register(CreateView):
-    form_class = UserCreationForm
-    template_name = 'register.html'
-    success_url = '/'
-
-
-class Logout(LoginRequiredMixin, LogoutView):
-    next_page = '/'
-    login_url = 'login/'
-```
-
-В urls.py проекта добавим через `include` urls.py приложения
-
-В app/urls.py:
-
-```python
-from django.urls import path
-from .views import NoteListView, Login, Logout, Register
-
-urlpatterns = [
-    path('', NoteListView.as_view(), name='index'),
-    path('login/', Login.as_view(), name='login'),
-    path('register/', Register.as_view(), name='register'),
-    path('logout/', Logout.as_view(), name='logout'),
-]
-
-```
-
-И заполним html файлы
-
-base.html
-
-```html
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Base</title>
-</head>
-<body>
-<div>
-    {% block content %}
-    {% endblock %}
-</div>
-</body>
-</html>
-```
-
-index.html
-
-```html
-{% extends 'base.html' %}
-
-{% block content %}
-<div>
-    <a href="{% url 'logout' %}">Logout</a>
-</div>
-{% endblock %}
-```
-
-login.html
-
-```html
-{% extends 'base.html' %}
-
-{% block content %}
-<span>Wanna register? <a href="{% url 'register' %}">Sign Up</a></span>
-
-<form method="post">
-    {% csrf_token %}
-    {{ form }}
-    <input type="submit" value="Login">
-</form>
-{% endblock %}
-```
-
-register.html
-
-```html
-{% extends 'base.html' %}
-
-{% block content %}
-<span>Already has account? <a href="{% url 'login' %}">Login</a></span>
-
-<form method="post">
-    {% csrf_token %}
-    {{ form }}
-    <input type="submit" value="Register">
-</form>
-{% endblock %}
-```
-
-Структура для логина, логаута, и регистрации готова.
-
-Добавим отображение списка заметок:
-
-в index.html:
-
-```html
-{% extends 'base.html' %}
-
-{% block content %}
-<div>
-    <a href="{% url 'logout' %}">Logout</a>
-</div>
-
-<div>
-    {% for obj in object_list %}
-    <div>
-        {{ obj.text }} from {{ obj.author.username }}
-    </div>
-    {% endfor %}
-</div>
-{% endblock %}
-```
-
-Но как добавить создание заметок?
-
-Нам нужна форма для создания заметок и CreateView.
-
-В forms.py
-
-```python
-from django.forms import ModelForm
-
-from app.models import Note
-
-
-class NoteCreateForm(ModelForm):
-    class Meta:
-        model = Note
-        fields = ('text',)
-```
-
-В полях только текст, потому что время создания будет заполняться автоматически, id тоже, а юзера мы будем брать из
-реквеста.
-
-Будем ли мы отображать отдельную страницу для создания? Нет, значит отдельный html файл нам не нужен, а раз мы не будем
-отображать страницу, то и метод `get()` нам не нужен. Оставим только `post()`.
-
-Создадим CreateView:
-
-В views.py
-
-```python
-class NoteCreateView(LoginRequiredMixin, CreateView):
-    login_url = 'login/'
-    http_method_names = ['post']
-    form_class = NoteCreateForm
-    success_url = '/'
-```
-
-Выведем URL под этот класс:
-
-В urls.py
-
-```python
-from django.urls import path
-from .views import NoteListView, Login, Logout, Register, NoteCreateView
-
-urlpatterns = [
-    path('', NoteListView.as_view(), name='index'),
-    path('login/', Login.as_view(), name='login'),
-    path('register/', Register.as_view(), name='register'),
-    path('logout/', Logout.as_view(), name='logout'),
-    path('note/create/', NoteCreateView.as_view(), name='note-create'),
-]
-```
-
-Достаточно ли этого, чтобы создавать заметки? Нет, потому что мы никуда не вывели форму для создания заметок. Давайте
-выведем её на нашу основную страницу.
-
-Во views.py изменим класс `NoteListView`, добавив атрибут `extra_context = {'create_form': NoteCreateForm()}`
-
-```python
-class NoteListView(LoginRequiredMixin, ListView):
-    model = Note
-    template_name = 'index.html'
-    login_url = 'login/'
-    extra_context = {'create_form': NoteCreateForm()}
-```
-
-Теперь мы можем вывести форму в шаблоне, изменим `index.html`
-
-```html
-{% extends 'base.html' %}
-
-{% block content %}
-<div>
-    <a href="{% url 'logout' %}">Logout</a>
-</div>
-
-<div>
-    {% for obj in object_list %}
-    <div>
-        {{ obj.text }} from {{ obj.author.username }}
-    </div>
-    {% endfor %}
-</div>
-<form method="post" action="{% url 'note-create' %}">
-    {% csrf_token %}
-    {{ create_form }}
-    <input type="submit" value="Create">
-</form>
-{% endblock %}
-```
-
-Достаточно ли этого? Нет. Наша заметка должна хранить в себе пользователя, а мы нигде его не добавляем. При попытке
-вызвать `save()` мы получим ошибку, не могу сохранить без юзера.
-
-Что будем делать? Переписывать логику `form_valid()`, мы знаем, что метод `save()` для CreateView вызывается там.
-
-Чтобы добавить пользователя, будем использовать `commit=False` для ModelForm, а пользователя возьмем из реквеста.
-
-Перепишем класс NoteCreateView:
-
-Во views.py:
-
-```python
-class NoteCreateView(LoginRequiredMixin, CreateView):
-    login_url = 'login/'
-    http_method_names = ['post']
-    form_class = NoteCreateForm
-    success_url = '/'
-
-    def form_valid(self, form):
-        obj = form.save(commit=False)
-        obj.author = self.request.user
-        obj.save()
-        return super().form_valid(form=form)
-```
-
-Обратите внимание, после успеха мы попадаем обратно на `/` (success_url), где мы сразу же увидим новую заметку.
-
-Создание готово.
-
-Как добавить удаление? Создадим новую DeleteView, она даже не требует форму.
-
-Во views.py
-
-```python
-class NoteDeleteView(LoginRequiredMixin, DeleteView):
-    model = Note
-    success_url = '/'
-```
-
-Не забываем добавить URL
-
-В urls.py:
-
-```python
-from django.urls import path
-from .views import NoteListView, Login, Logout, Register, NoteCreateView, NoteDeleteView
-
-urlpatterns = [
-    path('', NoteListView.as_view(), name='index'),
-    path('login/', Login.as_view(), name='login'),
-    path('register/', Register.as_view(), name='register'),
-    path('logout/', Logout.as_view(), name='logout'),
-    path('note/create/', NoteCreateView.as_view(), name='note-create'),
-    path('note/delete/<int:pk>/', NoteDeleteView.as_view(), name='note-delete'),
-]
-```
-
-И добавляем форму для удаления в шаблон.
-
-В index.html:
-
-```html
-{% extends 'base.html' %}
-
-{% block content %}
-<div>
-    <a href="{% url 'logout' %}">Logout</a>
-</div>
-
-<div>
-    {% for obj in object_list %}
-    <div>
-        {{ obj.text }} from {{ obj.author.username }}
-        <form method="post" action="{% url 'note-delete' obj.pk %}">
-            {% csrf_token %}
-            <input type="submit" value="Delete">
-        </form>
-    </div>
-    {% endfor %}
-</div>
-<form method="post" action="{% url 'note-create' %}">
-    {% csrf_token %}
-    {{ create_form }}
-    <input type="submit" value="Create">
-</form>
-{% endblock %}
-```
-
-Это уже будет работать. Но нам же нужно, чтобы кнопка для удаления была только у своих заметок. Ок, добавим `if`.
-
-```html
-{% extends 'base.html' %}
-
-{% block content %}
-<div>
-    <a href="{% url 'logout' %}">Logout</a>
-</div>
-
-<div>
-    {% for obj in object_list %}
-    <div>
-        {{ obj.text }} from {{ obj.author.username }}
-        {% if obj.author == request.user %}
-        <form method="post" action="{% url 'note-delete' obj.pk %}">
-            {% csrf_token %}
-            <input type="submit" value="Delete">
-        </form>
-        {% endif %}
-    </div>
-    {% endfor %}
-</div>
-<form method="post" action="{% url 'note-create' %}">
-    {% csrf_token %}
-    {{ create_form }}
-    <input type="submit" value="Create">
-</form>
-{% endblock %}
-```
-
-Осталась маленькая деталь, сейчас мы отображаем все существующие заметки, а что если их будет миллион? Это не
-рационально, давайте добавим пагинацию.
-
-ListView уже передаёт все необходимые данные, нам нужно только добавить размер страницы и добавить отображение по
-страницам в шаблоне.
-
-Во views.py изменим NoteListView
-
-```python
-class NoteListView(LoginRequiredMixin, ListView):
-    model = Note
-    template_name = 'index.html'
-    login_url = 'login/'
-    extra_context = {'create_form': NoteCreateForm()}
-    paginate_by = 5
-```
-
-А в index.html:
-
-```html
-{% extends 'base.html' %}
-
-{% block content %}
-<div>
-    <a href="{% url 'logout' %}">Logout</a>
-</div>
-
-<div>
-    {% for obj in page_obj %} {# обратите внимание я заменил объект #}
-    <div>
-        {{ obj.text }} from {{ obj.author.username }}
-        {% if obj.author == request.user %}
-        <form method="post" action="{% url 'note-delete' obj.pk %}">
-            {% csrf_token %}
-            <input type="submit" value="Delete">
-        </form>
-        {% endif %}
-    </div>
-    {% endfor %}
-    <div class="pagination">
-    <span class="step-links">
-        {% if page_obj.has_previous %}
-            <a href="?page=1">&laquo; first</a>
-            <a href="?page={{ page_obj.previous_page_number }}">previous</a>
-        {% endif %}
-
-        <span class="current">
-            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
-        </span>
-
-        {% if page_obj.has_next %}
-            <a href="?page={{ page_obj.next_page_number }}">next</a>
-            <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
-        {% endif %}
-    </span>
-    </div>
-</div>
-<form method="post" action="{% url 'note-create' %}">
-    {% csrf_token %}
-    {{ create_form }}
-    <input type="submit" value="Create">
-</form>
-{% endblock %}
-
-
-```
-
-Профит! Всё работает. Переходим к заданию на модуль. Все задания должны быть выполнены через Class-Based View.

@@ -1,789 +1,1279 @@
-# Лекция 22. Templates. Static
+# Лекция 22. Django ORM. Объекты моделей и queryset, Meta моделей, прокси модели.
 
-![](https://imgflip.com/s/meme/Boardroom-Meeting-Suggestion.jpg)
+![](https://cs8.pikabu.ru/post_img/2016/09/12/5/og_og_1473660997242355939.jpg)
 
 ## Что сегодня учим?
 
-![mvc_templates.png](pictures/mvc_templates.png)
+![img.png](pictures/mvc_orm.png)
 
-## Шаблоны
+## ORM
 
-Что же такое шаблон? В бытовом понимании - это заготовка под что-то, что потом будет использоваться, в Django это почти
-также.
+Мы уже знаем про то, как хранить данные и как связать таблицы между собой. Давайте научимся извлекать, модифицировать и
+удалять данные при помощи кода.
 
-Шаблонами мы называем заготовленные html страницы, в которые мы можем добавить необходимые нам данные и логику.
-
-Но как это работает?
-
-Откроем начатый проект с прошлого занятия.
-
-Создадим новую папку на уровне корня проекта и назовём её `templates` (название может быть любым, но принято называть
-именно так.) Чтобы получилась вот такая структура:
-
-```
-mysite/
-myapp/
-templates/
-manage.py
-```
-
-Чтобы обрабатывать шаблоны, мы должны "рассказать" Django, где именно искать эти самые шаблоны. Для этого нужно
-открыть `mysite/settings.py` и отредактировать его.
-
-В данный момент нас интересует переменная `TEMPLATES`, выглядит она примерно так:
-
-![](https://djangoalevel.s3.eu-central-1.amazonaws.com/lesson34/templates_var.png)
-
-В ключ `DIRS` добавим нашу папку с шаблонами, чтобы получилось так:
-
-![](https://djangoalevel.s3.eu-central-1.amazonaws.com/lesson34/templates_filled.png)
-
-Ключи:
-
-`BACKEND`: путь к классу, который отвечает за обработку данных и логику. (Замена требуется очень редко.)
-
-`DIRS`: список папок, в которых Django будет искать шаблоны.
-
-`APP_DIRS`: булевое поле, которое отвечает за то, нужно ли искать папки с шаблонами внутри папки с приложениями,
-например,
-в нашей структуре, если значение `False`, то поиск будет только в папке `templates` на уровне файла `manage.py`, а если
-значение `True`, то в папках `/templates` и `/myapp/templates/`.
-
-`OPTIONS`: дополнительные настройки, будем рассматривать позже.
-
-Для применения любых изменений нужно перезапускать сервер (команда `python manage.py runserver`).
-
-Мы "рассказали" Django, где именно искать шаблоны, но пока ни одного не создали. Давайте сделаем это!
-
-В папке `templates` нужно создать html файл, назовём его `index.html` (название не имеет значения, главное, чтобы
-формат был `html`).
-
-```
-mysite/
-myapp/
-templates/
-    index.html
-manage.py
-```
-
-Содержимое файла `index.html`:
-
-```html
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-
-That's template!
-
-</body>
-</html>
-```
-
-Итак, теперь у нас есть один шаблон, но мы его не используем, давайте переделаем нашу `view` для обработки шаблонов.
-
-В файле `myapp/views.py` нужно импортировать обработчик шаблонов, в начало файла добавляем
+Допустим, что ваша модель выглядит так:
 
 ```python
-from django.shortcuts import render
+from django.db import models
+from django.contrib.auth.models import User
+from django.utils import timezone
+from django.utils.translation import gettext as _
+
+GENRE_CHOICES = (
+    (1, _("Not selected")),
+    (2, _("Comedy")),
+    (3, _("Action")),
+    (4, _("Beauty")),
+    (5, _("Other"))
+)
+
+
+class Author(models.Model):
+    pseudonym = models.CharField(max_length=120,
+                                 blank=True,
+                                 null=True)
+    name = models.CharField(max_length=120)
+
+    def __str__(self):
+        return self.name
+
+
+class Article(models.Model):
+    author = models.ForeignKey(Author,
+                               on_delete=models.CASCADE,
+                               null=True,
+                               related_name='articles')
+    text = models.TextField(max_length=10000,
+                            null=True)
+    created_at = models.DateTimeField(default=timezone.now)
+    updated_at = models.DateTimeField(default=timezone.now)
+    genre = models.IntegerField(choices=GENRE_CHOICES,
+                                default=1)
+
+    def __str__(self):
+        return f"Author - {self.author.name}, genre - {self.genre}, id - {self.id}"
+
+
+class Comment(models.Model):
+    text = models.CharField(max_length=1000)
+    article = models.ForeignKey(Article,
+                                on_delete=models.DO_NOTHING)
+    comment = models.ForeignKey('myapp.Comment',
+                                null=True,
+                                blank=True,
+                                on_delete=models.DO_NOTHING,
+                                related_name='comments')
+    user = models.ForeignKey(User,
+                             on_delete=models.DO_NOTHING)
+
+    def __str__(self):
+        return f"{self.text} by {self.user.username}"
+
+
+class Like(models.Model):
+    user = models.ForeignKey(User,
+                             on_delete=models.DO_NOTHING)
+    article = models.ForeignKey(Article,
+                                on_delete=models.DO_NOTHING)
+
+    def __str__(self):
+        return f"By user {self.user.username} to article {self.article.id}"
+
 ```
 
-> Функция render возвращает объект типа HttpResponse
-
-И перепишем функцию `index`:
+Рассмотрим некоторые новые возможности
 
 ```python
-def index(request):
-    return render(request, 'index.html')
+from django.contrib.auth.models import User
 ```
 
-Перезапустим сервер и увидим результат на главной странице `http://127.0.0.1:8000/`
-
-![](https://djangoalevel.s3.eu-central-1.amazonaws.com/lesson34/render_template.png)
-
-Мы отрендерили шаблон! Но в нём нет никаких переданных данных, для передачи данных нужно в метод render добавить третий
-аргумент в виде словаря.
-
-Для демонстрации основных типов данных я допишу функцию `index` и передам большое количество значений в словаре:
+Это модель встроенного в Django юзера, её мы рассмотрим немного позже.
 
 ```python
-class MyClass:
-    string = ''
-
-    def __init__(self, s):
-        self.string = s
-
-
-def index(request):
-    my_num = 33
-    my_str = 'some string'
-    my_dict = {"some_key": "some_value"}
-    my_list = ['list_first_item', 'list_second_item', 'list_third_item']
-    my_set = {'set_first_item', 'set_second_item', 'set_third_item'}
-    my_tuple = ('tuple_first_item', 'tuple_second_item', 'tuple_third_item')
-    my_class = MyClass('class string')
-    return render(request, 'index.html', {
-        'my_num': my_num,
-        'my_str': my_str,
-        'my_dict': my_dict,
-        'my_list': my_list,
-        'my_set': my_set,
-        'my_tuple': my_tuple,
-        'my_class': my_class,
-    })
+from django.utils.translation import gettext as _
 ```
 
-Значения переданы, но пока они никак не используются, давайте же посмотрим, как отобразить переменные в шаблоне!
+Стандартная функция перевода языка для Django. Допустим, что ваш сайт имеет функцию переключения языка, при которой
+текст
+может отображаться на русском, украинском и английском. Именно эта функция поможет нам в будущем указать значения
+для всех трех языков. Подробнейшая информация по
+переводам [Тут](https://docs.djangoproject.com/en/4.2/topics/i18n/translation/)
 
-Для вывода данных в Django темплейте используются фигурные скобки `{{ }}`
-
-```
-{{first_name}}
-{{last_name}}
-```
-
-Для доступа к вложенным структурам используется точка:
-
-```
-{{my_dict.key}}
-{{my_object.attribute}}
-{{my_list.0}}
-```
-
-Изменим наш `index.html`:
-
-```html
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-<div>
-    <div style="border: 1px darkblue solid">
-        {{ my_num }}
-    </div>
-    <div style="border: 1px darkseagreen solid">
-        {{ my_str }}
-    </div>
-    <div style="border: 1px fuchsia solid">
-        {{ my_set }}
-    </div>
-    <div style="border: 1px firebrick solid">
-        {{ my_dict.some_key }}
-    </div>
-
-    <div style="border: 1px cyan solid">
-        {{ my_class.string }}
-    </div>
-    <div style="border: 1px cyan solid">
-        {{ my_list.0 }}
-    </div>
-    <div style="border: 1px burlywood solid">
-        {{ my_tuple.1 }}
-    </div>
-</div>
-</body>
-</html>
-```
-
-Обновим страницу и увидим.
-
-![](https://djangoalevel.s3.eu-central-1.amazonaws.com/lesson34/render_variables.png)
-
-### Логические операторы и циклы
-
-![](http://risovach.ru/upload/2013/01/mem/kakoy-pacan_7772237_orig_.jpeg)
-
-> После всех логических операторов и циклов в шаблонах нужно ставить соответствующий закрывающий тег!
-> Например, `{% for ...%} {% endfor %}`, `{% if ... %} {% endif %}`.
-
-#### Логические операторы
-
-В шаблонах можно оперировать не только переменными, но и несложной логикой, такой как логические операторы и циклы.
-
-Давайте добавим в наши параметры переменную `display_num` и назначим ей значение `False`.
-
-`myapp/views.py`
+> Мы будем рассматривать это на отдельной лекции
 
 ```python
- return render(request, 'index.html', {
-    'my_num': my_num,
-    'my_str': my_str,
-    'my_dict': my_dict,
-    'my_list': my_list,
-    'my_set': my_set,
-    'my_tuple': my_tuple,
-    'my_class': my_class,
-    'display_num': False
-})
+GENRE_CHOICES = (
+    (1, _("Not selected")),
+    (2, _("Comedy")),
+    (3, _("Action")),
+    (4, _("Beauty")),
+    (5, _("Other"))
+)
 ```
 
-Для логических условий и циклов используются другие скобки `{% %}`
+Переменная, состоящая из кортежа кортежей (могла быть любая коллекция коллекций), которая нужна для использования
+choices значений, используется для хранения выбора чего-либо (в нашем случае жанра). То есть в базе будет храниться
+только число, а пользователю будет выводиться уже текст.
 
-Изменим наш шаблон с использованием логики:
-
-```html
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-<div>
-    {% if display_num %}
-    {{ my_num }}
-    {% else %}
-    <span> We don't display num </span>
-    {% endif %}
-</div>
-</body>
-</html>
-```
-
-> Отступы тут не имеют никакого значения, просто так удобнее читать
-
-Обновим страницу и увидим:
-
-![](https://djangoalevel.s3.eu-central-1.amazonaws.com/lesson34/If_statement.png)
-
-А если в файле `views.py` изменим переменную `display_num` с `False` на `True`:
-
-`myapp/views.py`
+Используем это вот тут:
 
 ```python
- return render(request, 'index.html', {
-    'my_num': my_num,
-    'my_str': my_str,
-    'my_dict': my_dict,
-    'my_list': my_list,
-    'my_set': my_set,
-    'my_tuple': my_tuple,
-    'my_class': my_class,
-    'display_num': True
-})
+genre = models.IntegerField(choices=GENRE_CHOICES, default=1)
 ```
 
-То увидим:
-
-![](https://djangoalevel.s3.eu-central-1.amazonaws.com/lesson34/if_true.png)
-
-Т.к. значение переменной `display_num` True, то мы видим значение переменной `my_num`
-
-#### Циклы
-
-Так же как и в python мы можем использовать циклы в шаблонах, но только цикл `for`, цикла `while` в шаблонах не
-существует.
-
-Изменим наш `index.html`:
-
-```html
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-<div>
-    {% for item in my_list %}
-    <span>{{ item }}</span>
-    <br>
-    {% endfor %}
-</div>
-</body>
-</html>
-```
-
-Обновим страницу и увидим:
-
-![](https://djangoalevel.s3.eu-central-1.amazonaws.com/lesson34/basic_for.png)
-
-> Еще раз, логика через `{% %}`, данные через `{{ }}`
-
-Давайте скомбинируем!
-
-Внутри цикла `for` Джанго уже генерирует некоторые переменные, например, переменную `{{ forloop.counter0 }}`,
-
-в которой хранится индекс текущей итерации, давайте не будем выводить в цикле второй элемент.
-
-```html
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-<div>
-    {% for item in my_list %}
-    {% if forloop.counter0 != 1 %}
-    <span>{{ item }}</span>
-    <br>
-    {% endif %}
-    {% endfor %}
-</div>
-</body>
-</html>
-```
-
-`{% if forloop.counter0 != 1 %}`
-
-Символ != это не равно, а значение 1, потому что индекс начинается с 0.
-
-Обновляем страницу и видим:
-
-![](https://djangoalevel.s3.eu-central-1.amazonaws.com/lesson34/for_if.png)
-
-## Встроенные темплейт теги.
-
-На самом деле все ключевые слова используемые внутри `{% %}` называются template tags, и их существует огромное
-множество.
-
-[Ссылка на доку](https://docs.djangoproject.com/en/4.2/ref/templates/builtins/)
-
-Их очень много, часть мы рассмотрим, часть вам придется изучить самостоятельно.
-
-## Tag URL
-
-Тег url позволяет нам сгенерировать урл по его имени. Это очень удобно, если адрес меняется, а его имя нет.
-
-Давайте сгенерируем две ссылки на два наших урла.
-
-`mysite/urls.py`
-
-Назначим имя `index`
+Рассмотрим вот эту строку
 
 ```python
-path('', index, name='index')
+return f"Author - {self.author.name}, genre - {self.genre}, id - {self.id}"
 ```
 
-`myapp/urls.py`
+**self.author.name** - в базе по значению поля ForeignKey хранится **id**, но в коде мы можем получить доступ к
+значениям
+связанной модели, конкретно в этой ситуации мы берем значение поля **name** из связанной модели **author**.
 
-Назначим имя `first`
+Рассмотрим вот эту строку:
 
 ```python
-path('', first, name='first'),
+comment = models.ForeignKey('myapp.Comment',
+                            null=True,
+                            blank=True,
+                            on_delete=models.DO_NOTHING,
+                            related_name='comments')
 ```
 
-Добавим в наш шаблон ссылку на вторую страницу:
+Модель можно передать не только как класс, но и по имени модели указав приложение `appname.Modelname` (да, мне было лень
+переименовывать приложение из myapp во что-то читаемое).
 
-```html
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-<div>
-    <a href="{% url 'first' %}">Another page</a>
-</div>
-</body>
-</html>
-```
+> Это пример самоссылочной связи, помните еще из занятий по `SQL`?
 
-Наш индекс пейдж:
+При такой записи мы создаём связь один ко многим к самому себе, указав при этом black=True, null=True. Можно создать
+коммент без указания родительского комментария, а если создать комментарий со ссылкой на другой, это будет комментарий к
+комментарию, причем это можно сделать любой вложенности.
 
-![](https://djangoalevel.s3.eu-central-1.amazonaws.com/lesson34/index_link.png)
+Кроме описания модели можно было бы использовать текст `self`. Это работает, когда нужно сделать ссылку именно на самого
+себя
 
-После клика:
+`related_name` - в этой записи нужен для того, чтобы получить выборку всех вложенных объектов. Мы рассмотрим их немного
+дальше.
 
-![](https://djangoalevel.s3.eu-central-1.amazonaws.com/lesson34/first_link.png)
+## objects и shell
 
-### Наследование шаблонов
+Для доступа или модификации любых данных, у каждой модели есть атрибут `objects`, который позволяет производить
+манипуляции с данными. Он называется менеджер, и при желании его можно переопределить.
 
-![](https://i.pinimg.com/originals/43/3e/8f/433e8f7ebb982220a6f43b829679dd5d.jpg)
+Для интерактивного использования кода используется команда
 
-#### Extends и block
+```python manage.py shell```
 
-Теги наследования шаблонов `extends`, `block`
+Эта команда открывает нам консоль с уже импортированными стандартными, но не самописными модулями Django
 
-Зачем нам это надо?
+![](https://djangoalevel.s3.eu-central-1.amazonaws.com/lesson36/clean_shell.png)
 
-Наследование шаблонов нужно, чтобы не писать одно и то же отображение много раз. Как часто вы видели сайты, где сверху,
-снизу, слева, справа и т. д. всегда одно и тоже, а меняется только "середина"? Самый простой способ так сделать - это
-наследование.
+Предварительно я создал несколько объектов через админку.
 
-Тут нам и помогут наши волшебные теги!
+Для доступа к моделям их нужно импортировать, я импортирую модель Comment.
 
-Создадим в папке `templates` новые файлы `base.html` и `first.html` и изменим файлы `templates/index.html` и
-функцию `first` в `myapp/views.py`
+Рассмотрим весь CRUD и дополнительные особенности. Очень подробная информация по всем возможным
+операциям [тут](https://docs.djangoproject.com/en/4.2/topics/db/queries/)
 
-`template/base.html`
+### R - retrieve
 
-```html
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-<div style="background-color: aqua">
-    {% block content %}
-    {% endblock %}
-</div>
-</body>
-</html>
-```
+Функции для получения объектов в Django могут возвращать два типа данных, **объект модели** или **queryset**
 
-`template/index.html`
+Объект - это единичный объект, queryset - это список объектов со своими встроенными методами.
 
-```html
-{% extends 'base.html' %}
+#### all()
 
-{% block content %}
-<div style="padding: 20px; background-color: fuchsia"> Extended template index!</div>
-<a href="{% url 'first' %}">To the first page</a>
-{% endblock %}
-```
+Для получения всех данных используется метод `all()`, который возвращает queryset со всеми существующими объектами этой
+модели.
 
-`template/first.html`
+![](https://djangoalevel.s3.eu-central-1.amazonaws.com/lesson36/objects_all.png)
 
-```html
-{% extends 'base.html' %}
+#### filter()
 
-{% block content %}
-<div style="padding: 20px; background-color: chocolate"> Extended template first!</div>
-<a href="{% url 'index' %}">To the index page</a>
-{% endblock %}
-```
+Для получения отфильтрованных данных мы используем метод `filter()`
 
-Функция `first` в `myapp/views.py`
+Если указать `filter()` без параметров, то он сделает то же самое, что и `all()`.
+
+Какие у фильтра могу быть параметры? Да практически любые, мы можем указать любые поля для фильтрации.
+Например, фильтр по полю текст:
 
 ```python
-def first(request):
-    return render(request, 'first.html')
+Comment.objects.filter(text='Hey everyone')
 ```
 
-Смотрим результаты произошедшего и пытаемся их понять. (ссылки добавлены для удобства)
+Фильтр по вложенным объектам выполняется через двойное подчеркивание.
 
-Индекс страница
-
-![](https://djangoalevel.s3.eu-central-1.amazonaws.com/lesson34/extended_index.png)
-
-Первая страница
-
-![](https://djangoalevel.s3.eu-central-1.amazonaws.com/lesson34/extended_first.png)
-
-Что произошло?
-
-Мы создали базовый шаблон `base.html`, в котором описали то, что будет во всех шаблонах (и покрасили в голубенький, для
-наглядности), которые от него наследуются, и обозначили `{% block content %}` (здесь block - это тэг, а content -
-присвоенное ему название, его можно выбрать произвольно) вся нужная нам информация будет наследоваться именно в
-указанный блок, на странице разных блоков может
-быть сколько угодно главное, что бы они имели разные названия.
-
-Наш индекс пейдж рендерит страницу `index.html`, в ней мы отнаследовались от нашей `base.html`, вписали такой же
-блок `content`, чтобы передать в него нужные нам данные, в нашем случае это просто текст и ссылка, текст мы перекрасили,
-чтобы было видно, что это данные из нового файла, а ссылку нет, чтобы было видно, что цвет из `base.html`
-отнаследовался, то же самое произошло и с `first.html`.
-
-#### Include
-
-А теперь представим обратную ситуацию: нам нужно в разные части сайта "засунуть" один и тот же блок (рекламу, например)
-
-Тут нас спасает тег `include` который позволяет "внедрить" нужную часть страницы куда угодно
-
-Создадим в папке `templates` еще один файл с названием `add.html`
-
-`templates/add.html`
-
- ```html
-
-<div style="padding: 20px; background-color: chartreuse"> That's included html!</div>
-```
-
-И теперь добавим этот файл к страницам `index.html` и `first.html`, но в разные места, чтобы получилось
-
-`template/index.html`
-
-```html
-{% extends 'base.html' %}
-
-{% block content %}
-{% include 'add.html' %}
-<div style="padding: 20px; background-color: fuchsia"> Extended template index!</div>
-<a href="{% url 'first' %}">To the first page</a>
-{% endblock %}
-```
-
-`template/first.html`
-
-```html
-{% extends 'base.html' %}
-
-{% block content %}
-<div style="padding: 20px; background-color: chocolate"> Extended template first!</div>
-<a href="{% url 'index' %}">To the index page</a>
-{% include 'add.html' %}
-{% endblock %}
-```
-
-Смотрим на результат:
-
-`index.html`:
-
-![](https://djangoalevel.s3.eu-central-1.amazonaws.com/lesson34/include_index.png)
-
-`first.html`:
-
-![](https://djangoalevel.s3.eu-central-1.amazonaws.com/lesson34/include_first.png)
-
-В добавленную станицу можно передать переменные при помощи тега `with`
-
-Изменим файл `templates/add.html`
-
-```html
-
-<div style="padding: 20px; background-color: chartreuse"> Hello {{ name }} !</div>
-```
-
-И файл `templates/index.html`
-
-```html
-{% extends 'base.html' %}
-
-{% block content %}
-{% include 'add.html' with name='Vlad' %}
-<div style="padding: 20px; background-color: fuchsia"> Extended template index!</div>
-<a href="{% url 'first' %}">To the first page</a>
-{% endblock %}
-```
-
-Смотрим на результат:
-
-`index.html`
-
-![](https://djangoalevel.s3.eu-central-1.amazonaws.com/lesson34/include_var.png)
-
-`first.html`
-
-![](https://djangoalevel.s3.eu-central-1.amazonaws.com/lesson34/include_non_var.png)
-
-В первом случае мы видим добавленную переменную, во втором - ничего, так как мы ничего не передавали.
-
-Давайте добавим проверку на наличие переменной!
-
-`templates/add.html`
-
-```html
-
-<div style="padding: 20px; background-color: chartreuse">{% if name %} Hello {{ name }} ! {% else %} Sorry, I don't know
-    your name {% endif %}
-</div>
-```
-
-Смотрим на first page
-
-![](https://djangoalevel.s3.eu-central-1.amazonaws.com/lesson34/first_no_var.png)
-
-Переменной нет, срабатывает if
-
-Так же можно передавать эту переменную из view, для этого нужно в with дописать `{{variable }}`
-
-## Фильтры
-
-![](https://a.d-cd.net/egAAAgNDHeA-1920.jpg)
-
-Что это такое, и зачем это нужно?
-
-Фильтры - это возможность видоизменить данные перед их отображением. Давайте попробуем ими воспользоваться, для этого
-во `view` добавим сверху файла
+Фильтр по жанру статьи комментария:
 
 ```python
-from datetime import datetime
+Comment.objects.filter(article__genre=3)
 ```
 
-`myapp/views.py` функция `index`
+По псевдониму автора:
 
 ```python
-def index(request):
-    my_num = 33
-    my_str = 'some string'
-    my_dict = {"some_key": "some_value"}
-    my_list = ['list_first_item', 'list_second_item', 'list_third_item']
-    my_set = {'set_first_item', 'set_second_item', 'set_third_item'}
-    my_tuple = ('tuple_first_item', 'tuple_second_item', 'tuple_third_item')
-    my_class = MyClass('class string')
-    return render(request, 'index.html', {
-        'my_num': my_num,
-        'my_str': my_str,
-        'my_dict': my_dict,
-        'my_list': my_list,
-        'my_set': my_set,
-        'my_tuple': my_tuple,
-        'my_class': my_class,
-        'display_num': True,
-        'now': datetime.now()
-    })
+Comment.objects.filter(article__author__pseudonym='The king')
 ```
 
-А `index.html` изменим так
+По псевдониму автора и жанру (через запятую можно указать логическое И):
 
-```html
-{% extends 'base.html' %}
-
-{% block content %}
-<div>{{ now| date:"SHORT_DATE_FORMAT" }}</div>
-<div>{{ now|date:"D d M Y" }} {{ value|time:"H:i" }}</div>
-<div>{{ not_exist|default:"nothing" }}</div>
-<div>{{ my_str | capfirst }}</div>
-<div>{{ my_list | join:"**" }}</div>
-{% endblock %}
+```python
+Comment.objects.filter(article__author__pseudonym='The king', article__genre=3)
 ```
 
-Смотрим на результат
+Кроме того, у каждого поля существуют встроенные системы лукапов. Синтаксис лукапов аналогичен синтаксису доступа к
+вложенным
+объектам `field__lookuptype=value`
 
-![](https://djangoalevel.s3.eu-central-1.amazonaws.com/lesson34/filters.png)
+Стандартные лукапы:
 
-Каждый фильтр имеет свои особенности и правила написания, подробнее можно посмотреть по ссылке выше.
+`lte` - меньше или равно
 
-Кроме того, для данных существуют встроенные фильтры.
+`gte` - больше или равно
 
-Например `date`, `default`, `join`, `capfirst`. На самом деле их огромное количество, весь список встроенных фильтров
+`lt` - меньше
+
+`gt` - больше
+
+`startswith` - начинается с
+
+`istartswith` - начинается с, без учёта регистра
+
+`endswith` - заканчивается на
+
+`iendswith` - заканчивается на, без учёта регистра
+
+`range` - находится в диапазоне
+
+`week_day` - день недели (для дат)
+
+`year` - год (для дат)
+
+`isnull` - является `null`
+
+`contains` - частично содержит с учетом регистра ("Всем привет, я - Влад" содержит слово "Влад", но не содержит "влад")
+
+`icontains` - то же самое, но без учета регистра, теперь найдется и второй вариант.
+
+`exact` - совпадает (необязательный лукап, делает то же, что и знак равно)
+
+`iexact` - совпадает без учета регистра (по запросу "привет" найдет и "Привет", и "прИвЕт")
+
+`in` - содержится в каком-то списке
+
+Их намного больше, читать [ТУТ](https://docs.djangoproject.com/en/4.2/ref/models/querysets/#field-lookups)
+
+Примеры:
+
+Псевдоним содержит слово 'king' без учета регистра:
+
+```python
+Comment.objects.filter(article__author__pseudonym__icontains='king')
+```
+
+Комменты к статье, созданной не позднее чем вчера:
+
+```python
+Comment.objects.filter(article__created_at__gte=date.today() - timedelta(days=1))
+```
+
+Комменты к статьям с жанрами, у которых `id = 2` и `id = 3`:
+
+```python
+Comment.objects.filter(article__genre__in=[2, 3])
+```
+
+#### exclude()
+
+Функция обратная функции `filter` вытащит всё, что не попадает выборку.
+
+Например, все комментарии к статьям, у которых жанр `id != 2` и `id != 3`:
+
+```python
+Comment.objects.exclude(article__genre__in=[2, 3])
+```
+
+`filter` и `exclude` можно совмещать. К любому queryset можно применить `filter` или `exclude` еще раз. Например, все
+комменты
+к статьям, созданным не позже чем вчера, с жанрами не 2 и не 3
+
+```python
+Comment.objects.filter(article__created_at__gte=date.today() - timedelta(days=1)).exclude(article__genre__in=[2, 3])
+```
+
+Все эти функции возвращают специальный объект называемый queryset. Он является коллекцией записей базы (которые
+называются в этой терминологии instance), к любому кверисету можно применить любой метод менеджера модели (objects).
+Например, к только что отфильтрованному кверисету можно применить фильтр еще раз и т. д.
+
+#### order_by()
+
+По умолчанию все модели сортируются по полю `id`, если явно не указанно иное. Однако часто нужно отсортировать данные
+специальным
+образом. Для этого используется метод order_by(). При сортировке можно указывать вложенные объекты и знак `-`, чтобы
+указать сортировку в обратном порядке.
+
+```python
+Comment.objects.filter(article__created_at__gte=date.today() - timedelta(days=1)).order_by('-article__created_at').all()
+```
+
+#### `distinct()`
+
+Метод `distinct()` используется для исключения дублирующихся записей из результата запроса. Он полезен, когда вам нужно
+получить уникальные записи по одному или нескольким полям.
+
+#### Пример использования:
+
+Предположим, у нас есть модель `Book` с полями `title`, `author`, и `published_date`.
+
+```python
+from myapp.models import Book
+
+# Получение уникальных авторов
+unique_authors = Book.objects.distinct('author')
+```
+
+В этом примере запрос вернет уникальные записи на основе поля `author`. Если не указать поле, то метод `distinct()`
+уберет дубликаты всех записей.
+
+#### `values()`
+
+Метод `values()` используется для создания набора запросов, который возвращает словари, где ключами являются имена
+полей, а значениями — их значения. Это удобно, когда вам нужно получить определенные поля из базы данных, а не все поля
+модели.
+
+#### Пример использования:
+
+```python
+# Получение всех названий книг
+book_titles = Book.objects.values('title')
+```
+
+Этот запрос вернет список словарей, где каждый словарь будет содержать ключ `title` и соответствующее ему значение.
+
+#### `union()`
+
+Метод `union()` позволяет объединять два или более QuerySets. Результат будет содержать уникальные записи, которые
+присутствуют в любом из QuerySets.
+
+#### Пример использования:
+
+```python
+from myapp.models import Book
+
+# QuerySet с книгами, опубликованными до 2000 года
+old_books = Book.objects.filter(published_date__lt="2000-01-01")
+
+# QuerySet с книгами, опубликованными после 2020 года
+new_books = Book.objects.filter(published_date__gt="2020-01-01")
+
+# Объединение двух QuerySets
+books_union = old_books.union(new_books)
+```
+
+В результате `books_union` будут содержаться книги, опубликованные либо до 2000 года, либо после 2020 года.
+
+#### `intersection()`
+
+Метод `intersection()` используется для получения пересечения двух или более QuerySets. В результате запроса будут
+только те записи, которые присутствуют во всех QuerySets.
+
+#### Пример использования:
+
+```python
+from myapp.models import Book
+
+# QuerySet с книгами определенного автора
+author_books = Book.objects.filter(author="J.K. Rowling")
+
+# QuerySet с книгами, опубликованными до 2000 года
+old_books = Book.objects.filter(published_date__lt="2000-01-01")
+
+# Пересечение двух QuerySets
+books_intersection = author_books.intersection(old_books)
+```
+
+В этом примере `books_intersection` вернет только те книги Дж. К. Роулинг, которые были опубликованы до 2000 года.
+
+#### `difference()`
+
+Метод `difference()` используется для получения разности между двумя QuerySets, то есть он возвращает записи, которые
+присутствуют в одном QuerySet, но отсутствуют в другом.
+
+#### Пример использования:
+
+```python
+from myapp.models import Book
+
+# QuerySet со всеми книгами
+all_books = Book.objects.all()
+
+# QuerySet с книгами, опубликованными до 2000 года
+old_books = Book.objects.filter(published_date__lt="2000-01-01")
+
+# Разность между всеми книгами и старыми книгами
+books_difference = all_books.difference(old_books)
+```
+
+В этом примере `books_difference` будет содержать все книги, которые были опубликованы после 2000 года.
+
+Это далеко не всё, что можно сделать с queryset.
+
+Все методы кверисетов
+читаем [Тут](https://docs.djangoproject.com/en/4.2/ref/models/querysets/#methods-that-return-new-querysets)
+
+### Вставка объектов в методы
+
+Помимо прочего во все фильтры(и не только) можно вставлять целые объекты, например:
+
+```python
+art = Article.objects.get(id=2)
+comments = Comment.object.filter(article=art)
+```
+
+### Объектные методы
+
+#### get()
+
+В отличие от `filter` и `exclude` метод `get` получает сразу объект. Этот метод работает только в том случае, когда
 можно
-посмотреть [Тыц](https://docs.djangoproject.com/en/4.2/ref/templates/builtins/)
+определить объект однозначно и он существует.
 
-## Кастомные темплейт теги и фильтры
+Можно применять те же условия, что и для `filter` и `exclude`
 
-На самом деле, стандартным набором дело не ограничивается, и в случае необходимости можно дописать свои теги и фильтры,
-почитать об этом можно вот [тут](https://docs.djangoproject.com/en/4.2/howto/custom-template-tags/)
+Например, получения объекта по `id`
 
-![](https://i.ytimg.com/vi/gF060AIFiB8/hqdefault.jpg)
-
-# Работа со статикой
-
-## Что такое статические файлы?
-
-Прежде чем перейти к рассмотрению template tag, давайте разберемся, что такое статические файлы. В контексте
-веб-разработки статические файлы — это те файлы, которые не изменяются на сервере, а напрямую передаются пользователю. К
-ним относятся:
-
-- CSS файлы, отвечающие за стилизацию веб-страниц.
-- JavaScript файлы, добавляющие интерактивность страницам.
-- Изображения, иконки, шрифты и другие медиафайлы.
-
-В Django эти файлы не хранятся в базе данных и не генерируются динамически, как HTML-контент. Они должны быть доступны
-для всех клиентов в неизменном виде.
-
-## Настройка Django для работы со статическими файлами
-
-Прежде чем мы сможем использовать `{% static %}`, необходимо правильно настроить Django для работы со статическими
-файлами. Основные шаги включают:
-
-- Указание директории для хранения статических файлов.
-- Настройка URL для доступа к статическим файлам.
-
-В файле `settings.py` вы найдете (или добавите) следующие параметры:
-
-- `STATIC_URL`: Этот параметр определяет URL, по которому будут доступны статические файлы. Обычно это `/static/`.
-
-  ```python
-  STATIC_URL = '/static/'
-  ```
-
-> Этот параметр скорее всего указан автоматически, он отвечает за то, что бы ваши статические файлы можно было бы
-> получить по адресу `http://127.0.0.1:8000/static/` на самом деле там много деталей и нюансов, но их мы будем
-> рассматривать гораздо позже.
-
-> Для того что бы у вас отрабатывали статические файлы нужно что бы у вас в `settings.py` был указан `DEBUG=True`, что
-> это и зачем опять же дальше по курсу
-
-- `STATICFILES_DIRS`: Этот параметр указывает на дополнительные директории, в которых Django будет искать статические
-  файлы. Это полезно, если у вас есть несколько источников для статических файлов.
-
-  ```python
-  STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
-  ```
-
-> Просто указываете папку куда вы сложили свои статические файлы.
-
-- `STATIC_ROOT`: Этот параметр используется для указания директории, куда Django будет собирать все статические файлы
-  при выполнении команды `collectstatic`. Это полезно для деплоя на продакшн сервер.
-
-  ```python
-  STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-  ```
-
-> Этот параметр вам пока не нужен! Он используется для запуска приложений на реальных серверах
-
-## Использование template tag `{% static %}`
-
-Теперь, когда мы настроили Django для работы со статическими файлами, давайте рассмотрим, как используется template
-tag `{% static %}`. Этот тег позволяет нам генерировать правильные URL для статических файлов в шаблонах.
-
-### Загрузка библиотеки static
-
-Прежде чем использовать тег `{% static %}`, необходимо загрузить соответствующую библиотеку в вашем шаблоне. Это
-делается с помощью тега `{% load static %}`. Этот тег должен быть расположен в верхней части вашего шаблона, как
-правило, до использования `{% static %}`.
-
-> Обычно записывается в самом верху, по аналогии с `import` в python
-
-Пример:
-
-```html
-{% load static %}
+```python
+Comment.objects.get(id=3)
 ```
 
-### Основной синтаксис
+Если объект не найден или найдено больше одного объекта по заданным параметрам, вы получите исключение, которое
+желательно всегда обрабатывать. Исключения уже находятся в самой модели.
 
-Синтаксис тега `{% static %}` выглядит следующим образом:
-
-```html
-{% static 'path/to/your/static/file.ext' %}
+```python
+try:
+    Comment.objects.get(article__genre__in=[2, 3])
+except Comment.DoesNotExist:
+    return "Can't find object"
+except Comment.MultipleObjectsReturned:
+    return "More than one object"
 ```
 
-Здесь `'path/to/your/static/file.ext'` — это путь к файлу относительно одной из директорий, указанных
-в `STATICFILES_DIRS`.
+#### first() и last()
 
-### Пример использования
+К кверисету можно применять методы `first` и `last`, чтобы получить первый или последний элемент кверисета
 
-Предположим, у вас есть файл `styles.css`, находящийся в директории `static/css/`. Чтобы подключить этот файл в шаблоне,
-вам нужно использовать следующий код:
+Например, получить первый коммент, написанный за вчера:
 
-```html
-{% load static %}
-<link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
+```python
+Comment.objects.filter(article__created_at__gte=date.today() - timedelta(days=1)).first()
 ```
 
-Django автоматически преобразует это в правильный URL, который будет выглядеть как `/static/css/styles.css`.
+Информация по всем остальным
+методам [Тут](https://docs.djangoproject.com/en/4.2/ref/models/querysets/#methods-that-do-not-return-querysets)
 
-### Использование в различных контекстах
+### related_name
 
-Тег `{% static %}` можно использовать не только для CSS, но и для других типов файлов, например, изображений или
-JavaScript:
+Атрибут `related_name`, который указывается для полей связи, является обратной связью и менеджером для объектов,
+например, в нашей модели у поля `author` модели `Article` есть `related_name=articles`:
 
-```html
-{% load static %}
-<img src="{% static 'images/logo.png' %}" alt="Logo">
-<script src="{% static 'js/main.js' %}"></script>
+```python
+a = Author.objects.first()
+articles = a.articles.all()  # Тут будут все статьи конкретного автора в виде кверисета, т.к. all() возвращает кверисет
 ```
 
-## Практическое значение и важность
+Можно ли получить объекты обратной связи без указания `related_name`? Можно. Связь появляется автоматически даже без
+указания этого атрибута.
 
-Преимущество использования `{% static %}` заключается в том, что он обеспечивает правильное разрешение путей к
-статическим файлам независимо от того, где они находятся. Это особенно важно при деплое (отправке кода на настоящий
-сервер) приложения, когда может измениться базовый URL для статических файлов.
+Обратный менеджер формируется из названия модели и конструкции `_set`. Допустим, у поля `article` модели `Comment` не
+указано поле `related_name`:
 
-Кроме того, использование `{% static %}` делает ваш код более устойчивым к изменениям. Например, если вы решите
-переместить свои статические файлы в другую директорию, вам не придется изменять все шаблоны — достаточно будет обновить
-настройки.
+```python
+a = Article.objects.first()
+a.comment_set.all()  # такой же менеджер, как в прошлом примере, вернёт кверисет комментариев, относящихся к этой статье.
+```
 
-## Практические рекомендации
+### C - Create
 
-1. **Всегда загружайте библиотеку static.** Не забывайте добавлять `{% load static %}` в начало ваших шаблонов, где
-   используются статические файлы.
+Для создания новых объектов используется два возможных варианта: метод `create()` или метод `save()`
 
-2. **Не хардкодьте пути к статическим файлам.** Всегда используйте `{% static %}` для создания ссылок на статические
-   файлы.
+Создадим двух новых авторов при помощи разных методов:
 
-3. **Организуйте свои статические файлы логически.** Размещайте их в соответствующих поддиректориях,
-   например, `css`, `js`, `images`.
+```python
+Author.objects.create(name='New author by create', pseudonym="Awesome author")
+
+a = Author(name="Another new author", pseudonym="Gomer")
+a.save()
+```
+
+В чём же разница? В том, что в первом случае при выполнении этой строки запрос в базу будет отправлен сразу, во втором -
+только при вызове метода `save()`
+
+Метод `save()` также является и методом для обновления значения поля, если применяется для уже существующего объекта. Мы
+рассмотрим его подробнее немного дальше.
+
+### U - Update
+
+Для обновления значений полей используется метод `update()`
+
+**Применяется только к кверисетам, к объекту применить нельзя**
+
+Например, обновим текст в комментарии с `id = 3`:
+
+```python
+Comment.objects.filter(id=3).update(text='updated text')
+
+ИЛИ
+
+c = Comment.objects.get(id=3)
+c.text = 'updated text'
+c.save()
+```
+
+### D - Delete
+
+Как можно догадаться, выполняется методом `delete()`.
+
+Удалить все комменты от пользователя с `id = 2`:
+
+```python
+Comment.objects.filter(user__id=2).delete()
+```
+
+### Совмещенные методы
+
+#### get_or_create(), update_or_create(), bulk_create(), bulk_update()
+
+`get_or_create()` - это метод, который попытается создать новый объект. Если он не сможет найти нужный в базе, он
+возвращает сам объект и булево значение, которое обозначает, что объект был создан или получен.
+
+`update_or_create()` - обновит, если объект существует, создаст, если не существует.
+
+`bulk_create()` - массовое создание; необходимо для того, чтобы избежать большого количества обращений в базу.
+
+`bulk_update()` - массовое обновление (отличие от обычного в том, что при обычном на каждый объект создается запрос,
+в этом случае запрос делается массово)
+
+Подробно почитать про них [Тут](https://docs.djangoproject.com/en/4.2/ref/models/querysets/#get-or-create)
+
+## Подробнее о методе save()
+
+> `SQL` запрос выполняется именно при вызове метода `save`, метода `delete` или изменении M2M о чем ниже.
+
+Метод `save()` применяется при любых изменениях или создании данных, но очень часто нужно, чтобы при сохранении данных
+выполнялись еще какие-либо действия, переписывание данных или запись логов и т. д. Для этого используется переписывание
+метода `save()`. По сути является способом написать аналог триггера в базе данных.
+
+Метод `save()` вызывают явно или неявно во время вызова методов создания или обновления, но без него запись в базу не
+будет произведена.
+
+Допустим, мы хотим делать время создания статьи на один день раньше, чем фактическая. Перепишем метод `save()` для
+статьи:
+
+```python
+class MyAwesomModel(models.Model):
+    name = models.CharField(max_lenght=100)
+    created_at = models.DateField()
+
+    def save(self, **kwargs):
+        self.created_at = timezone.now() - timedelta(days=1)
+        super().save(**kwargs)
+```
+
+Переопределяем значение и вызываем оригинальный `save()`, вуаля.
+
+Чтобы переопределить логику при создании, но не трогать при изменении, или наоборот, используется особенность
+данных. У уже созданного объекта `id` существует, у нового - нет. Так что фактически наш код сейчас обновляет это поле
+всегда, и когда надо, и когда не надо. Допишем его.
+
+```python
+class MyAwesomModel(models.Model):
+    name = models.CharField(max_lenght=100)
+    created_at = models.DateField()
+
+    def save(self, **kwargs):
+        if not self.id:
+            self.created_at = timezone.now() - timedelta(days=1)
+        super().save(**kwargs)
+```
+
+Теперь поле будет переписываться только в момент создания, но не будет трогаться при обновлении.
+
+Метод `delete()`, при удалении объекта `save()` не вызывается, а вызывается `delete()`. По аналогии мы можем его
+переписать, например, для отправки имейла перед удалением.
+
+```python
+class MyAwesomModel(models.Model):
+    name = models.CharField(max_lenght=100)
+    created_at = models.DateField()
+
+    def delete(self, **kwargs):
+        send_email(id=self.id)
+        super().delete(**kwargs)
+```
+
+## Использование в M2M
+
+Допустим у нас есть вот такие модели:
+
+```python
+from django.db import models
+
+
+class Publication(models.Model):
+    title = models.CharField(max_length=30)
+
+    class Meta:
+        ordering = ["title"]
+
+    def __str__(self):
+        return self.title
+
+
+class Article(models.Model):
+    headline = models.CharField(max_length=100)
+    publications = models.ManyToManyField(Publication)
+
+    class Meta:
+        ordering = ["headline"]
+
+    def __str__(self):
+        return self.headline
+```
+
+Для работы с М2М связями используются методы менеджера `add` и `remove`
+
+Создадим несколько объектов:
+
+```python
+p1 = Publication(title="The Python Journal")
+p1.save()
+p2 = Publication(title="Science News")
+p2.save()
+p3 = Publication(title="Science Weekly")
+p3.save()
+```
+
+> Мы могли сделать то же самое через `Publication.objects.create()`, но тут нам будет важно отследить `SQL` запросы
+
+```python
+a1 = Article(headline="Django lets you build web apps easily")
+```
+
+### Добавление объекта
+
+Если не сохранить статью и попытаться вызвать изменения в M2M, то вы увидите вот такую ошибку:
+
+```python
+a1.publications.add(p1)
+# Traceback (most recent call last):
+# ValueError: "<Article: Django lets you build web apps easily>" needs to have a value for field "id" before this many-to-many relationship can be used.
+```
+
+Потому что объект `a1` пока что сущетствует только на уровне питона, но его нет на уровне базы данных.
+
+Давайте сохраним объект и попробуем еще раз изменить M2M
+
+```python
+a1.save()
+a1.publications.add(p1)  # Тут вызовется еще один `SQL` запрос
+```
+
+И еще пример:
+
+```python
+a2 = Article(headline="NASA uses Python")
+a2.save()
+a2.publications.add(p1, p2)
+a2.publications.add(p3)
+```
+
+Как видите можно добавлять более чем один объект за раз
+
+А что если добавить объект не того типа который ожидается?
+
+```python
+a2.publications.add(a1)
+# TypeError: 'Publication' instance expected
+```
+
+Будет ошибка о неправильном типе!
+
+> Можно создать и сразу добавить объект вот так
+
+```python
+new_publication = a2.publications.create(title="Highlights for Children")
+```
+
+Метод создаст объект, добавит его к М2М и вернет в новую переменную
+
+### Получение объекта
+
+В нашем случае `publications` является менеджером, а значит, что к нему применимы все действия как и к обычному
+`objects`
+
+```python
+a1.publications.all()
+# <QuerySet [<Publication: The Python Journal>]>
+a2.publications.all()
+# <QuerySet [<Publication: Highlights for Children>, <Publication: Science News>, <Publication: Science Weekly>, <Publication: The Python Journal>]>
+```
+
+> Естественно `all` в этом случае будет возвращать только те объекты которые связаны с запрашиваемым
+
+И так же как и при связи через `FK`, мы можем использовать `related_name` для получения объектов в другом порядке (из
+той модели, где менеджер не прописан)
+
+```python
+p2.article_set.all()
+# <QuerySet [<Article: NASA uses Python>]>
+p1.article_set.all()
+# <QuerySet [<Article: Django lets you build web apps easily>, <Article: NASA uses Python>]>
+Publication.objects.get(id=4).article_set.all()
+# <QuerySet [<Article: NASA uses Python>]>
+```
+
+> `related_name` не прописан явно, поэтому мы используем стандартно сгенерированный
+
+### `filter`, `distinct`, `count`
+
+Так как ссылка является менеджером, это значит, что к ней применим весь спектр процессов доступных менеджеру. Например
+`filter`, `distinct`  или `count`
+
+```python
+Article.objects.filter(publications__id=1)
+# <QuerySet [<Article: Django lets you build web apps easily>, <Article: NASA uses Python>]>
+Article.objects.filter(publications__pk=1)
+# <QuerySet [<Article: Django lets you build web apps easily>, <Article: NASA uses Python>]>
+Article.objects.filter(publications=1)
+# <QuerySet [<Article: Django lets you build web apps easily>, <Article: NASA uses Python>]>
+Article.objects.filter(publications=p1)
+# <QuerySet [<Article: Django lets you build web apps easily>, <Article: NASA uses Python>]>
+Article.objects.filter(publications__title__startswith="Science")
+# <QuerySet [<Article: NASA uses Python>, <Article: NASA uses Python>]>
+Article.objects.filter(publications__title__startswith="Science").distinct()
+# <QuerySet [<Article: NASA uses Python>]>
+Article.objects.filter(publications__title__startswith="Science").count()
+# 2
+Article.objects.filter(publications__title__startswith="Science").distinct().count()
+# 1
+Article.objects.filter(publications__in=[1, 2]).distinct()
+# <QuerySet [<Article: Django lets you build web apps easily>, <Article: NASA uses Python>]>
+Article.objects.filter(publications__in=[p1, p2]).distinct()
+# <QuerySet [<Article: Django lets you build web apps easily>, <Article: NASA uses Python>]>
+```
+
+> Любые действия с менеджером доступны как напрямую, так и через `related_name`
+
+### Удаление объектов
+
+```python
+a4.publications.remove(p2)
+p2.article_set.all()
+# <QuerySet [<Article: Oxygen-free diet works wonders>]>
+a4.publications.all()
+# <QuerySet []>
+```
+
+И с другой стороны
+
+```python
+p2.article_set.remove(a5)
+p2.article_set.all()
+# <QuerySet []>
+a5.publications.all()
+# <QuerySet []>
+```
+
+### Назначение списком или очистка
+
+Можно назначить список который будет отображать связь:
+
+```python
+a4.publications.all()
+# <QuerySet [<Publication: Science News>]>
+a4.publications.set([p3])
+a4.publications.all()
+# <QuerySet [<Publication: Science Weekly>]>
+```
+
+Или очистить всю связь:
+
+```python
+p2.article_set.clear()
+p2.article_set.all()
+# <QuerySet []>
+```
+
+> Назаначение как и очистка так же работает с обоих концов, как и любое другое действие с менеджерами.
+
+## Сложные SQL конструкции
+
+Документация по этому разделу
+
+[Тут](https://docs.djangoproject.com/en/4.2/ref/models/expressions/#django.db.models.F)
+[Тут](https://docs.djangoproject.com/en/4.2/ref/models/querysets/#django.db.models.Q)
+
+На самом деле, мы не ограничены стандартными конструкциями. Мы можем применять предвычисления на уровне базы, добавлять
+логические конструкции и т. д., давайте рассмотрим подробнее.
+
+### Q объекты
+
+Как вы могли заметить в случае фильтрации, мы можем выбрать объекты через логическое И при помощи запятой.
+
+```python
+Comment.objects.filter(article__author__pseudonym='The king', article__genre=3)
+```
+
+В этом случае у нас есть конструкция типа "выбрать объекты, у которых псевдоним автора статьи `The king` И жанр статьи
+цифра 3"
+
+Но что же нам делать, если нам нужно использовать логическое ИЛИ?
+
+В этом нам поможет использование Q объекта. На самом деле, каждое из этих условий мы могли завернуть в такой объект:
+
+```python
+from django.db.models import Q
+
+q1 = Q(article__author__pseudonym='The king')
+q2 = Q(article__genre=3)
+``` 
+
+Теперь мы можем явно использовать логические `И` и `ИЛИ`.
+
+```python
+Comment.objects.filter(q1 & q2)  # И
+Comment.objects.filter(q1 | q2)  # ИЛИ
+```
+
+### Aggregation
+
+Агрегация в Django - это предвычисления.
+
+Допустим, что у нас есть модели:
+
+```python
+from django.db import models
+
+
+class Author(models.Model):
+    name = models.CharField(max_length=100)
+    age = models.IntegerField()
+
+
+class Publisher(models.Model):
+    name = models.CharField(max_length=300)
+
+
+class Book(models.Model):
+    name = models.CharField(max_length=300)
+    pages = models.IntegerField()
+    price = models.DecimalField(max_digits=10,
+                                decimal_places=2)
+    rating = models.FloatField()
+    authors = models.ManyToManyField(Author)
+    publisher = models.ForeignKey(Publisher,
+                                  on_delete=models.CASCADE)
+    pubdate = models.DateField()
+
+
+class Store(models.Model):
+    name = models.CharField(max_length=300)
+    books = models.ManyToManyField(Book)
+```
+
+Мы можем совершить предвычисления каких-либо средних, минимальных, максимальных значений, вычислить сумму и т. д.
+
+```python
+from django.db.models import Avg
+
+Book.objects.all().aggregate(Avg('price'))
+# {'price__avg': 34.35}
+```
+
+На самом деле, `all()` не несёт пользы в этом примере:
+
+```python
+Book.objects.aggregate(Avg('price'))
+# {'price__avg': 34.35}
+```
+
+Значение можно именовать:
+
+```python
+Book.objects.aggregate(average_price=Avg('price'))
+# {'average_price': 34.35}
+```
+
+Можно вносить больше одной агрегации за раз:
+
+```python
+from django.db.models import Avg, Max, Min
+
+Book.objects.aggregate(Avg('price'), Max('price'), Min('price'))
+# {'price__avg': 34.35, 'price__max': Decimal('81.20'), 'price__min': Decimal('12.99')}
+```
+
+Если нам нужно, чтобы подсчитанное значение было у каждого объекта модели, мы используем метод `annotate()`
+
+```python
+# Build an annotated queryset
+from django.db.models import Count
+
+q = Book.objects.annotate(Count('authors'))
+# Interrogate the first object in the queryset
+q[0]
+# "<Book: The Definitive Guide to Django>"
+q[0].authors__count
+# 2
+# Interrogate the second object in the queryset
+q[1]
+# "<Book: Practical Django Projects>"
+q[1].authors__count
+# 1
+```
+
+Их тоже может быть больше одного:
+
+```python
+book = Book.objects.first()
+book.authors.count()
+# 2
+book.store_set.count()
+# 3
+q = Book.objects.annotate(Count('authors'), Count('store'))
+q[0].authors__count
+# 6
+q[0].store__count
+# 6
+```
+
+Все эти вещи можно комбинировать:
+
+```python
+highly_rated = Count('book', filter=Q(book__rating__gte=7))
+Author.objects.annotate(num_books=Count('book'), highly_rated_books=highly_rated)
+```
+
+c сортировкой (ordering):
+
+```python
+Book.objects.annotate(num_authors=Count('authors')).order_by('num_authors')
+```
+
+## F() выражения
+
+В Django ORM (Object-Relational Mapping) для работы с базой данных часто возникает необходимость обновления полей
+модели, сравнения значений полей между собой или выполнения арифметических операций на уровне базы данных. Для этих
+целей в Django используется класс `F`.
+
+### Что такое F объекты?
+
+`F` объекты представляют собой способ обращения к полям модели без необходимости загружать их в память приложения.
+Вместо этого операции с `F` объектами выполняются непосредственно на уровне базы данных, что может значительно повысить
+производительность при выполнении запросов.
+
+### Примеры использования F объектов
+
+#### Обновление поля на основе его текущего значения
+
+Рассмотрим простой пример: допустим, у нас есть модель `Product`, которая имеет поле `price`. Предположим, что нам нужно
+увеличить цену каждого товара на 10%.
+
+```python
+from django.db.models import F
+
+Product.objects.update(price=F('price') * 1.10)
+```
+
+Этот запрос обновит поле `price` для всех записей, увеличив его значение на 10%. При этом Django выполнит операцию
+умножения на уровне базы данных, что исключит необходимость загружать все объекты в память.
+
+#### Сравнение полей внутри одной записи
+
+Предположим, у нас есть модель `Order` с полями `quantity` и `shipped_quantity`. Нам нужно найти все заказы, для которых
+количество отгруженного товара меньше заказанного.
+
+```python
+from myapp.models import Order
+from django.db.models import F
+
+orders = Order.objects.filter(shipped_quantity__lt=F('quantity'))
+```
+
+Этот запрос вернет все заказы, где количество отгруженного товара (`shipped_quantity`) меньше заказанного (`quantity`).
+
+#### Условное обновление поля
+
+Рассмотрим пример, когда у нас есть модель `Employee` с полем `bonus`. Мы хотим увеличить бонус на 500 для всех
+сотрудников, у которых текущий бонус менее 1000.
+
+```python
+from django.db.models import F, Q
+
+Employee.objects.filter(bonus__lt=1000).update(bonus=F('bonus') + 500)
+```
+
+Этот запрос обновит поле `bonus`, прибавив к текущему значению 500 для всех сотрудников, у которых бонус меньше 1000.
+
+#### Агрегатные функции с F объектами
+
+Предположим, у нас есть модель `Sale` с полями `quantity` и `unit_price`, и мы хотим узнать общую стоимость каждого
+товара, умножив количество на цену за единицу.
+
+```python
+from django.db.models import F, Sum
+
+total_sales = Sale.objects.annotate(total_price=F('quantity') * F('unit_price'))
+```
+
+Этот запрос добавит к каждому объекту `Sale` дополнительное поле `total_price`, содержащее общую стоимость товара.
+
+#### Использование F объектов в аннотациях
+
+В некоторых случаях удобно использовать `F` объекты в аннотациях для создания вычисляемых полей. Например, предположим,
+что у нас есть модель `Invoice` с полями `subtotal` и `discount`. Мы хотим добавить аннотацию с окончательной суммой
+счета, учитывая скидку.
+
+```python
+from django.db.models import F, ExpressionWrapper, FloatField
+
+invoices = Invoice.objects.annotate(
+    total=ExpressionWrapper(F('subtotal') - F('discount'), output_field=FloatField())
+)
+```
+
+Здесь мы используем `ExpressionWrapper`, чтобы указать Django тип возвращаемого значения, поскольку операции с `F`
+объектами могут привести к неоднозначности типов данных.
+
+## Select related и Prefetch related
+
+### Введение
+
+Когда вы работаете с базой данных в Django, важно учитывать, сколько запросов вы выполняете и насколько эффективны эти
+запросы. Один из частых антипаттернов – это проблема "N+1 запросов", когда для получения данных выполняется множество
+запросов, что замедляет работу приложения. Django предоставляет два мощных инструмента для оптимизации
+запросов: `select_related` и `prefetch_related`.
+
+### Проблема "N+1 запросов"
+
+Предположим, у нас есть две модели `Author` и `Book`, связанные отношением "один ко многим":
+
+```python
+class Author(models.Model):
+    name = models.CharField(max_length=100)
+
+
+class Book(models.Model):
+    title = models.CharField(max_length=100)
+    author = models.ForeignKey(Author, on_delete=models.CASCADE)
+```
+
+Теперь, если вы хотите вывести список книг и их авторов:
+
+```python
+books = Book.objects.all()
+for book in books:
+    print(book.title, book.author.name)
+```
+
+Это пример проблемы "N+1 запросов". Сначала выполняется один запрос для получения всех книг, а затем для каждой книги
+выполняется отдельный запрос для получения автора, что приводит к множеству запросов (N+1).
+
+### Использование `select_related`
+
+Метод `select_related` позволяет выполнять запросы с объединением (JOIN) таблиц, что значительно уменьшает количество
+запросов к базе данных. Он используется для отношений "ForeignKey" и "OneToOne".
+
+#### Пример использования `select_related`
+
+```python
+books = Book.objects.select_related('author').all()
+for book in books:
+    print(book.title, book.author.name)
+```
+
+В данном случае будет выполнен **один** SQL-запрос, использующий JOIN для получения данных о книгах и их авторах
+одновременно.
+
+#### Как это работает?
+
+Когда вы используете `select_related`, Django выполняет SQL-запрос с использованием INNER JOIN или LEFT OUTER JOIN,
+чтобы получить связанные объекты в рамках одного запроса. Это очень эффективно для отношений "один ко многим" и "один к
+одному".
+
+### Использование `prefetch_related`
+
+Метод `prefetch_related` используется для оптимизации запросов, когда у вас есть отношение "многие ко многим" или "один
+ко многим", и вы хотите избежать проблемы "N+1 запросов". В отличие от `select_related`, он выполняет отдельные запросы,
+но затем обрабатывает их в Python, чтобы уменьшить общее количество запросов.
+
+#### Пример использования `prefetch_related`
+
+Предположим, у вас есть модели:
+
+```python
+class Publisher(models.Model):
+    name = models.CharField(max_length=100)
+
+
+class Book(models.Model):
+    title = models.CharField(max_length=100)
+    publisher = models.ForeignKey(Publisher, on_delete=models.CASCADE)
+    authors = models.ManyToManyField(Author)
+```
+
+Теперь, если вы хотите получить все книги и авторов для каждого из них:
+
+```python
+books = Book.objects.prefetch_related('authors').all()
+for book in books:
+    print(book.title)
+    for author in book.authors.all():
+        print(author.name)
+```
+
+Здесь `prefetch_related` выполнит два отдельных запроса: один для получения всех книг, а второй для получения всех
+авторов, которые связаны с этими книгами. Django затем связывает авторов с книгами в Python, избегая проблемы "N+1
+запросов".
+
+#### Как это работает?
+
+`prefetch_related` делает два (или более) отдельных запроса и затем соединяет результаты этих запросов в Python. Это
+очень полезно для отношений "многие ко многим" или если вы хотите выполнить сложные фильтрации на связанном наборе
+данных.
+
+### Сравнение `select_related` и `prefetch_related`
+
+- **`select_related`** используется для выполнения SQL JOIN и эффективен для отношений "ForeignKey" и "OneToOne". Все
+  происходит на уровне базы данных.
+- **`prefetch_related`** используется для отношений "многие ко многим" и "один ко многим". Он выполняет несколько
+  запросов и объединяет результаты на уровне Python.
+
+### Практические примеры
+
+#### Пример с использованием обоих методов
+
+Представьте, что у нас есть следующие модели:
+
+```python
+class Store(models.Model):
+    name = models.CharField(max_length=100)
+
+
+class Product(models.Model):
+    name = models.CharField(max_length=100)
+    store = models.ForeignKey(Store, on_delete=models.CASCADE)
+    suppliers = models.ManyToManyField(Supplier)
+
+
+class Supplier(models.Model):
+    name = models.CharField(max_length=100)
+```
+
+Теперь, если нам нужно получить все продукты с их магазинами и поставщиками:
+
+```python
+products = Product.objects.select_related('store').prefetch_related('suppliers').all()
+for product in products:
+    print(product.name, product.store.name)
+    for supplier in product.suppliers.all():
+        print(supplier.name)
+```
+
+Этот пример сочетает оба подхода. Мы используем `select_related` для получения связанных магазинов с использованием JOIN
+и `prefetch_related` для получения поставщиков, выполняя несколько запросов.
+
+## Как управлять транзакциями?
+
+В Django ORM управление транзакциями можно осуществлять с помощью встроенных инструментов, таких
+как `atomic`, `transaction.on_commit`, а также с помощью ручного управления транзакциями через API транзакций.
+Рассмотрим примеры для каждого из этих подходов.
+
+### Управление транзакциями с использованием `atomic`
+
+`atomic` — это контекстный менеджер или декоратор, который гарантирует, что все операции внутри блока будут выполнены в
+одной транзакции. Если внутри блока возникает исключение, транзакция откатывается.
+
+#### Пример с использованием контекстного менеджера:
+
+```python
+from django.db import transaction
+from myapp.models import MyModel
+
+
+def create_records():
+    try:
+        with transaction.atomic():
+            obj1 = MyModel.objects.create(name="Object 1")
+            obj2 = MyModel.objects.create(name="Object 2")
+            # Если здесь возникнет исключение, то обе записи не будут добавлены
+    except Exception as e:
+        print(f"Transaction failed: {e}")
+```
+
+#### Пример с использованием декоратора:
+
+```python
+from django.db import transaction
+from myapp.models import MyModel
+
+
+@transaction.atomic
+def create_records():
+    obj1 = MyModel.objects.create(name="Object 1")
+    obj2 = MyModel.objects.create(name="Object 2")
+    # Если здесь возникнет исключение, то обе записи не будут добавлены
+```
+
+### Управление транзакциями с использованием `transaction.on_commit`
+
+`on_commit` позволяет зарегистрировать функцию, которая будет выполнена только в случае успешного завершения транзакции.
+
+#### Пример:
+
+```python
+from django.db import transaction
+from myapp.models import MyModel
+
+
+def notify_user():
+    print("Transaction committed successfully!")
+
+
+def create_record():
+    with transaction.atomic():
+        obj = MyModel.objects.create(name="Object 1")
+        transaction.on_commit(notify_user)
+        # notify_user будет вызвана только если транзакция завершится успешно
+```
+
+### Ручное управление транзакциями
+
+Можно управлять транзакциями вручную, открывая и закрывая транзакции с помощью методов `transaction.commit()`
+и `transaction.rollback()`.
+
+#### Пример:
+
+```python
+from django.db import transaction
+from myapp.models import MyModel
+
+
+def create_records():
+    try:
+        transaction.set_autocommit(False)  # Отключаем автокоммит
+        obj1 = MyModel.objects.create(name="Object 1")
+        obj2 = MyModel.objects.create(name="Object 2")
+        transaction.commit()  # Явно фиксируем транзакцию
+    except Exception as e:
+        transaction.rollback()  # Откатываем транзакцию в случае ошибки
+        print(f"Transaction failed: {e}")
+    finally:
+        transaction.set_autocommit(True)  # Включаем автокоммит обратно
+```
+
+> Использование транзакций в Django ORM позволяет вам контролировать целостность данных, обеспечивая атомарность
+> операций.
+> Вы можете использовать контекстный менеджер или декоратор `atomic` для автоматического управления транзакциями, либо
+> вручную управлять транзакциями для более точного контроля над процессом.

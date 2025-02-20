@@ -1,1062 +1,789 @@
-# Лекция 20. Virtual env. Pip. Устанавливаемые модули. Pyenv.
+# Лекция 20. Templates. Static
 
-![](https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSLlWo64j4TGyFMYwBtv1W8eHaE4fXnaoZLDQ&s)
+![](https://imgflip.com/s/meme/Boardroom-Meeting-Suggestion.jpg)
 
-Виртуальное окружение (virtual environment) — это изолированная среда для выполнения Python, которая позволяет управлять
-зависимостями проекта без влияния на системные пакеты Python. Это особенно важно для проектов, которые требуют различных
-версий библиотек.
+## Что сегодня учим?
 
-## Зачем это вообще нужно?
+![mvc_templates.png](pictures/mvc_templates.png)
 
-Когда вы работаете с различными устанавливаемыми модулями (а мы будем с ними работать). То у вас возникает ситуация,
-когда у вас на одном компьютере есть больше чем один проект. И эти проекты вполне могут требовать совершенно разных
-модулей или их версий. А это значит что может сложиться ситуация когда у вас модули в одном проекте конфликтуют с
-модулями в другом.
+## Шаблоны
 
-Например, один проект новый и требует новых версий зависимостей, а второй старый и требует старых. Но оба проекта
-используют одни и те же пакеты. В этой ситуации вам и требуется изоляция проекта. Что и делается с помощью виртуального
-окружения.
+Что же такое шаблон? В бытовом понимании - это заготовка под что-то, что потом будет использоваться, в Django это почти
+также.
 
-## Как работает виртуальное окружение?
+Шаблонами мы называем заготовленные html страницы, в которые мы можем добавить необходимые нам данные и логику.
 
-![](https://www.dataquest.io/wp-content/uploads/2022/01/python-virtual-envs1.webp)
+Но как это работает?
 
-Виртуальное окружение (virtual environment) — это изолированная среда для выполнения Python, которая позволяет управлять
-зависимостями проекта без влияния на системные пакеты Python. Виртуальное окружение позволяет создавать независимые
-окружения для разных проектов, каждый со своими установленными библиотеками и версиями Python.
+Откроем начатый проект с прошлого занятия.
 
-### Основные концепции и компоненты
-
-1. **Изоляция**: Виртуальное окружение изолирует зависимости проекта, что предотвращает конфликты между пакетами,
-   используемыми в разных проектах.
-2. **Копия интерпретатора Python**: Виртуальное окружение содержит копию интерпретатора Python и минимальный набор
-   необходимых стандартных библиотек.
-3. **Собственная директория для пакетов**: Все установленные пакеты и зависимости хранятся в отдельной директории, что
-   обеспечивает независимость от глобальных пакетов.
-
-### Создание виртуального окружения
-
-При создании виртуального окружения происходит следующее:
-
-1. **Создание директорий**: Создаются директории для хранения копий интерпретатора Python и пакетов.
-2. **Копирование интерпретатора**: Копируется или создается ссылка на интерпретатор Python, используемый для создания
-   окружения.
-3. **Установка необходимых файлов**: Создаются и устанавливаются необходимые файлы и скрипты для управления окружением,
-   такие как `activate`, `deactivate`, и конфигурационные файлы.
-
-> Это же вкратце.
-> - Когда вы устанавливаете python на компьютер, вы устанавливаете сам язык, его зависимости и стандартную
-    > библиотеку.
-> - Если вы начнете устанавливать пакеты прям туда, то вы установите модули сразу для всех проектов.
-> - Виртуальное окружение это по сути создание папки с копией всего что устанавливается вместе с python-ом. И теперь
-    когда у нас есть копия мы можем делать с ней все что угодно. Она никак не повлияет, ни на оригинал, ни на другие
-    копии
-> - После создания виртуальное окружение необходимо активировать (об этом дальше)
-
-### Структура виртуального окружения
-
-Структура типичного виртуального окружения выглядит следующим образом (внутри той папки которую вы создадите):
+Создадим новую папку на уровне корня проекта и назовём её `templates` (название может быть любым, но принято называть
+именно так.) Чтобы получилась вот такая структура:
 
 ```
-myenv/ (это название, тут могло быть все что угодно)
-├── bin/ (Scripts/ на Windows)
-│   ├── activate
-│   ├── python
-│   └── ...
-├── lib/ (Lib/ на Windows)
-│   └── pythonX.X/
-│       └── site-packages/
-├── include/
-└── pyvenv.cfg
+mysite/
+myapp/
+templates/
+manage.py
 ```
 
-- **bin/Scripts**: Содержит скрипты для активации/деактивации окружения и сам интерпретатор Python.
-- **lib/Lib**: Содержит установленные пакеты и зависимости.
-- **include**: Содержит файлы заголовков C, если они требуются для пакетов.
-- **pyvenv.cfg**: Конфигурационный файл, содержащий информацию о виртуальном окружении.
+Чтобы обрабатывать шаблоны, мы должны "рассказать" Django, где именно искать эти самые шаблоны. Для этого нужно
+открыть `mysite/settings.py` и отредактировать его.
 
-### Создание виртуального окружения
+В данный момент нас интересует переменная `TEMPLATES`, выглядит она примерно так:
 
-#### Windows
+![](https://djangoalevel.s3.eu-central-1.amazonaws.com/lesson34/templates_var.png)
 
-Для создания виртуального окружения на Windows, выполните следующие шаги:
+В ключ `DIRS` добавим нашу папку с шаблонами, чтобы получилось так:
 
-1. Установите Python, если он еще не установлен.
-2. Откройте командную строку (Command Prompt) или PowerShell.
-3. Выполните команду:
-    ```bash
-    python -m venv myenv
-    ```
-   Здесь `myenv` — это имя вашего виртуального окружения.
+![](https://djangoalevel.s3.eu-central-1.amazonaws.com/lesson34/templates_filled.png)
 
-#### macOS и Linux
+Ключи:
 
-Для создания виртуального окружения на macOS и Linux, выполните следующие шаги:
+`BACKEND`: путь к классу, который отвечает за обработку данных и логику. (Замена требуется очень редко.)
 
-1. Установите Python, если он еще не установлен.
-2. Откройте терминал.
-3. Выполните команду:
-    ```bash
-    python3 -m venv myenv
-    ```
-   Здесь `myenv` — это имя вашего виртуального окружения.
+`DIRS`: список папок, в которых Django будет искать шаблоны.
 
-> Обратите внимание!
-> В данной команде `venv` - это название модуля который нужно запустить, а `myenv` название виртуального окружения
-> которое нужно создать.
+`APP_DIRS`: булевое поле, которое отвечает за то, нужно ли искать папки с шаблонами внутри папки с приложениями,
+например,
+в нашей структуре, если значение `False`, то поиск будет только в папке `templates` на уровне файла `manage.py`, а если
+значение `True`, то в папках `/templates` и `/myapp/templates/`.
 
-> Команда в этой ситуации использует **относительный путь**. Это значит что вам нужно быть осторожным и проверять в
-> какой папке вы в данный момент находитесь. Либо использовать **абсолютный путь**
+`OPTIONS`: дополнительные настройки, будем рассматривать позже.
 
-### Активация виртуального окружения
+Для применения любых изменений нужно перезапускать сервер (команда `python manage.py runserver`).
 
-При активации виртуального окружения происходит изменение переменных окружения:
+Мы "рассказали" Django, где именно искать шаблоны, но пока ни одного не создали. Давайте сделаем это!
 
-1. **Изменение `PATH`**: Путь к исполняемым файлам виртуального окружения добавляется в начало переменной `PATH`. Это
-   обеспечивает приоритет использования интерпретатора и скриптов из виртуального окружения.
-2. **Установка переменных окружения**: Устанавливаются специфические переменные окружения, такие как `VIRTUAL_ENV`,
-   указывающая на путь к активному виртуальному окружению.
+В папке `templates` нужно создать html файл, назовём его `index.html` (название не имеет значения, главное, чтобы
+формат был `html`).
 
-Пример активации на разных операционных системах:
-
-- **Windows**: `myenv\Scripts\activate`
-- **macOS и Linux**: `source myenv/bin/activate`
-
-> Как только вы активируете свое виртуальное окружение, в консоли тут же появится об этом отметка (скрин ниже). Теперь
-> все ваши действия связанные с python, будут затрагивать только это виртуальное окружение. А значит вы можете с ним
-> делать, все что угодно.
-
-![](https://miro.medium.com/v2/resize:fit:1400/0*EZpE6Kb4wKI3ih88.png)
-
-> Пример из Git bash консоли, на Windows, но в стиле linux.
-
-```shell
-(myvenv)
+```
+mysite/
+myapp/
+templates/
+    index.html
+manage.py
 ```
 
-Вот эта надпись перед началом строки и говорит нам о том, что виртуальное окружение подключено
-
-### Работа в виртуальном окружении
-
-После активации виртуального окружения все команды `python` и `pip` будут использоваться из активного окружения. Это
-позволяет устанавливать и управлять пакетами, не затрагивая глобальные установки.
-
-### Деактивация виртуального окружения
-
-Для деактивации виртуального окружения и возврата к глобальной среде Python, используется команда:
-
-```bash
-deactivate
-```
-
-Эта команда восстанавливает первоначальные значения переменных окружения, такие как `PATH`.
-
-> Виртуальные окружения в Python являются мощным инструментом для управления зависимостями и обеспечения изоляции
-> проектов. Они просты в использовании и эффективно решают проблемы совместимости и конфликтов пакетов, делая разработку
-> более удобной и безопасной.
-
-### Удаление виртуального окружения
-
-Для удаления виртуального окружения просто удалите его папку:
-
-```bash
-rm -rf myenv  # для macOS и Linux
-rmdir /s /q myenv  # для Windows
-```
-
-### Сравнение виртуальных окружений и Docker
-
-![](https://www.meme-arsenal.com/memes/c69830fc6e8ed01171ad3167fe4405ef.jpg)
-
-#### Что такое Docker?
-
-Docker — это платформа для контейнеризации, которая позволяет разработчикам упаковывать приложения и их зависимости в
-контейнеры. Контейнеры обеспечивают изоляцию, подобную виртуальным машинам, но более легковесны и эффективны. Они
-содержат все необходимое для запуска приложения: код, библиотеки, зависимости и настройки. В отличие от виртуальных
-окружений Python, которые изолируют только пакеты Python, Docker обеспечивает полную изоляцию на уровне операционной
-системы, позволяя запускать любые приложения и среды независимо от хоста. Docker более универсален, поддерживает любые
-языки и стеки технологий, тогда как виртуальные окружения Python удобны для управления зависимостями и изоляцией
-исключительно Python-проектов.
-
-> Docker работает с любыми языками программирования и базами данных.
-> И в целом является более мощным инструментом для изоляции.
-
-#### Виртуальное окружение
-
-- **Изоляция**: Обеспечивает изоляцию библиотек и пакетов Python.
-- **Использование**: Легко создать и использовать для небольших проектов.
-- **Производительность**: Низкие накладные расходы на систему.
-- **Ограничения**: Изоляция ограничена только Python-зависимостями.
-
-#### Docker
-
-- **Изоляция**: Полная изоляция на уровне операционной системы, включая все зависимости и системные библиотеки.
-- **Использование**: Более сложен в настройке, но обеспечивает высокий уровень изоляции и воспроизводимости.
-- **Производительность**: Больше накладных расходов по сравнению с виртуальными окружениями Python.
-- **Применение**: Подходит для комплексных проектов, требующих определенной версии ОС или нескольких языков
-  программирования.
-
-Виртуальные окружения Python и Docker служат для различных целей и решают разные задачи. Виртуальные окружения удобны
-для управления зависимостями Python-проектов, в то время как Docker предоставляет более универсальное решение для
-изоляции и развертывания приложений. Выбор между ними зависит от конкретных потребностей вашего проекта.
-
-> В рамках нашего курса нам будет достаточно `virtual env`. Но вы всегда можете изучить `docker` самостоятельно, лишними
-> эти знания точно не окажутся, а возможно даже пригодятся на собеседованиях.
-
-## Pip и его аналоги
-
-![](https://i.redd.it/99y476u8o3751.jpg)
-
-`pip` (от англ. `Python Installs Packages`) – это основной инструмент для управления пакетами в Python. С его помощью
-можно устанавливать, обновлять и удалять библиотеки и другие зависимости. pip широко используется благодаря своей
-простоте и удобству.
-
-`pip` идет в комплекте с `python`, если вы уже установили `python` это значит что `pip` у вас уже установлен и вы можете
-им свободно пользоваться.
-
-> Если установить пакет без включенного виртуального окружения. То он установится прямо в основной
-> установленный `python`.
-> Следите за этим и устанавливайте пакеты только при включенном виртуальном окружении.
-
-### Основные функции pip
-
-#### Установка пакетов
-
-Для установки пакета используется команда:
-
-```bash
-pip install имя_пакета
-```
-
-Например, чтобы установить библиотеку requests, выполните:
-
-```bash
-pip install requests
-```
-
-#### Установка пакетов конкретной версии
-
-Достаточно часто нам нужно поставить пакет какой-то определенной версии, а не самый последний.
-Для этого нужно сделать так:
-
-```bash
-pip install имя_пакета==x.x
-```
-
-где `x.x` - это номер версии
-
-Например, чтобы установить библиотеку requests, выполните:
-
-```bash
-pip install requests==2.16
-```
-
-или
-
-```bash
-pip install requests==2.16.2
-```
-
-#### Обновление пакетов
-
-Чтобы обновить пакет до последней версии, используется команда:
-
-```bash
-pip install --upgrade имя_пакета
-```
-
-Например, чтобы обновить библиотеку numpy:
-
-```bash
-pip install --upgrade numpy
-```
-
-#### Удаление пакетов
-
-Для удаления пакета используется команда:
-
-```bash
-pip uninstall имя_пакета
-```
-
-Например, чтобы удалить библиотеку pandas:
-
-```bash
-pip uninstall pandas
-```
-
-#### Список установленных пакетов
-
-Для просмотра списка установленных пакетов используется команда:
-
-```bash
-pip list
-```
-
-#### Поиск пакетов
-
-Для поиска пакетов по ключевому слову используется команда:
-
-```bash
-pip search ключевое_слово
-```
-
-#### Замораживание и восстановление зависимостей
-
-> Это сверх важная штука, мы будем это делать. И даже больше, с этого занятия ПР без `requirements.txt` рассматриваться
-> не будет
-
-pip позволяет замораживать (фиксировать) зависимости проекта в файл `requirements.txt`, что удобно для развертывания
-приложения на других системах:
-
-```bash
-pip freeze > requirements.txt
-```
-
-Для установки зависимостей из файла `requirements.txt` используется команда:
-
-```bash
-pip install -r requirements.txt
-```
-
-## Как работает pip
-
-pip работает с репозиторием пакетов Python Package Index (PyPI), откуда загружает и устанавливает пакеты. Когда вы
-устанавливаете пакет, pip выполняет следующие шаги:
-
-1. **Поиск пакета**: pip отправляет запрос в PyPI для поиска указанного пакета.
-2. **Загрузка пакета**: pip загружает пакет и его зависимости.
-3. **Установка пакета**: pip устанавливает пакет в вашу систему, включая все необходимые зависимости.
-
-> На момент написания лекции в [PyPI](https://pypi.org/) находилось `559249` пакетов, доступных к установке
-
-pip также поддерживает установку пакетов из различных источников, таких как:
-
-- Локальные файлы (`pip install ./some-package`)
-- Архивы (`pip install some-package.tar.gz`)
-- Репозитории версионного контроля (например, Git) (`pip install git+https://github.com/username/repo.git`)
-
-## Настройка pip
-
-pip можно настраивать через файл конфигурации `pip.conf` (Linux и macOS) или `pip.ini` (Windows). Вот пример файла
-конфигурации:
-
-```ini
-[global]
-timeout = 60
-index-url = https://pypi.org/simple
-trusted-host = pypi.org
-```
-
-Этот файл можно разместить в одном из следующих мест:
-
-- `/etc/pip.conf` (глобально для всех пользователей)
-- `~/.pip/pip.conf` (для текущего пользователя)
-- в папке проекта под именем `pip.conf` или `pip.ini`
-
-## Аналоги pip
-
-Кроме pip, существуют и другие системы управления пакетами для Python:
-
-1. **conda**: Инструмент для управления пакетами и окружениями, используемый в Anaconda и Miniconda. Поддерживает пакеты
-   не только для Python, но и для других языков и системных библиотек.
-
-   ```bash
-   conda install имя_пакета
-   ```
-
-2. **poetry**: Современный инструмент для управления зависимостями и упаковки проектов. Poetry включает в себя
-   функциональность для работы с виртуальными окружениями.
-
-   ```bash
-   poetry add имя_пакета
-   ```
-
-3. **pipenv**: Инструмент, объединяющий функциональность pip и virtualenv. Pipenv упрощает создание и управление
-   виртуальными окружениями и зависимостями проекта.
-
-   ```bash
-   pipenv install имя_пакета
-   ```
-
-4. **easy_install**: Устаревший инструмент, который входил в состав setuptools. В настоящее время рекомендуется
-   использовать pip вместо easy_install.
-
-> В реальности используется и `pip`, и `conda`, и `poetry`, и `pipenv`. Чаще я все таки пользовался `pip`, но остальные
-> мне тоже встречались. Если где-то столкнетесь, знайте это просто аналоги `pip`
-
-## Устанавливаемые модули
-
-Существует невероятно огромное количество различных устанавливаемых пакетов которыми мы можем (и будем пользоваться).
-
-Если попытаться найти самые популярные пакеты для установки `python`, то вы найдете:
-
-- `NumPy`: Библиотека для работы с массивами и матрицами, а также для выполнения математических операций над ними.
-- `Pandas`: Библиотека для удобной работы с данными, обеспечивающая средства для их манипуляции и анализа.
-- `Requests`: Библиотека для простого и удобного выполнения HTTP-запросов.
-- `Matplotlib`: Библиотека для создания статических, анимированных и интерактивных визуализаций данных.
-- `SciPy`: Библиотека для научных и технических вычислений, которая включает модули для оптимизации, линейной алгебры,
-  интеграции и других задач.
-- `TensorFlow`: Платформа для машинного обучения и искусственного интеллекта, разработанная для построения и обучения
-  моделей.
-- `Scikit-Learn`: Библиотека для машинного обучения, предоставляющая простые и эффективные инструменты для анализа и
-  моделирования данных.
-- `Flask`: Легковесный веб-фреймворк для создания веб-приложений на Python.
-- `Django`: Высокоуровневый веб-фреймворк, предназначенный для быстрого создания безопасных и масштабируемых
-  веб-приложений.
-- `PyTorch`: Библиотека для машинного обучения, известная своей гибкостью и динамическими вычислительными графами.
-
-Итого, 4 пакета для работы с данными(`DS/Big data`), 3 пакета для машинного обучения (`ML`), 2 веб-фреймворка (`web`) и
-одна библиотека `requests`
-
-Инструменты для DS/ML мы разбирать не будем. Веб фреймворк будем изучать весь остаток курса. Что же такое `requests`?
-
-### requests
-
-Это пакет нужен, что бы отправлять `HTTP` запросы. Технически внутри `python`-а уже есть все необходимое для отправки
-таких запросов. Но в этой библиотеке все описано просто невероятно удобно и элегантно.
-
-Библиотека `requests` для Python используется для выполнения HTTP-запросов. Она предоставляет простой и интуитивно
-понятный API для взаимодействия с веб-сервисами. Вот краткий обзор с примерами использования:
-
-#### Установка
-
-Установить библиотеку можно с помощью pip:
-
-```bash
-pip install requests
-```
-
-#### Выполнение GET-запроса
-
-GET-запрос используется для получения данных с сервера.
-
-```python
-import requests
-
-response = requests.get('https://api.example.com/data')
-print(response.status_code)  # Статус ответа, например, 200
-print(response.text)  # Тело ответа в виде текста
-print(response.json())  # Тело ответа, преобразованное в JSON (если применимо)
-```
-
-#### Передача параметров в GET-запросе
-
-Можно передавать параметры запроса в URL с помощью параметра `params`.
-
-```python
-params = {'key1': 'value1', 'key2': 'value2'}
-response = requests.get('https://api.example.com/data', params=params)
-print(response.url)  # Полный URL запроса
-```
-
-#### Выполнение POST-запроса
-
-POST-запрос используется для отправки данных на сервер.
-
-```python
-data = {'username': 'testuser', 'password': 'testpass'}
-response = requests.post('https://api.example.com/login', data=data)
-print(response.status_code)  # Статус ответа
-print(response.json())  # Тело ответа, преобразованное в JSON (если применимо)
-```
-
-#### Отправка JSON данных в POST-запросе
-
-Можно отправлять данные в формате JSON, указав параметр `json`.
-
-```python
-json_data = {'key1': 'value1', 'key2': 'value2'}
-response = requests.post('https://api.example.com/data', json=json_data)
-print(response.json())  # Тело ответа в виде JSON
-```
-
-#### Обработка заголовков ответа
-
-Можно получать и обрабатывать заголовки ответа.
-
-```python
-response = requests.get('https://api.example.com/data')
-print(response.headers)  # Все заголовки ответа
-print(response.headers['Content-Type'])  # Определенный заголовок
-```
-
-#### Добавление заголовков в запрос
-
-Можно добавлять свои заголовки в запрос с помощью параметра `headers`.
-
-```python
-headers = {'Authorization': 'Bearer YOUR_TOKEN'}
-response = requests.get('https://api.example.com/protected', headers=headers)
-print(response.status_code)
-```
-
-#### Обработка ошибок
-
-Библиотека `requests` предоставляет удобные методы для обработки ошибок.
-
-```python
-try:
-    response = requests.get('https://api.example.com/data')
-    response.raise_for_status()  # Возбудит исключение для кодов ответа 4xx/5xx
-except requests.exceptions.HTTPError as err:
-    print(f"HTTP error occurred: {err}")
-except requests.exceptions.RequestException as err:
-    print(f"Error occurred: {err}")
-```
-
-## Просто полезные пакеты
-
-### `more_itertools`
-
-```shell
-pip install more_itertools
-```
-
-`more_itertools` - это библиотека, предоставляющая дополнительные инструменты для работы с итераторами и
-последовательностями, расширяя возможности стандартного модуля `itertools`.
-
-#### Примеры использования:
-
-- **chunked**: Разделяет последовательность на подсписки фиксированной длины.
-  ```python
-  from more_itertools import chunked
-
-  data = [1, 2, 3, 4, 5, 6, 7, 8, 9]
-  chunks = list(chunked(data, 3))
-  print(chunks)  # [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
-  ```
-
-- **collapse**: Развертывает вложенные итераторы в один плоский итератор.
-  ```python
-  from more_itertools import collapse
-
-  nested = [[1, 2, [3, 4]], [5, 6], 7]
-  flat = list(collapse(nested))
-  print(flat)  # [1, 2, 3, 4, 5, 6, 7]
-  ```
-
-### `dateutils`
-
-```shell
-pip install dateutil
-```
-
-`dateutil` (часто упоминается как `dateutils`) - мощная библиотека для работы с датами и временем. Она предоставляет
-инструменты для анализа, обработки и вычисления дат.
-
-#### Примеры использования:
-
-- **парсинг строк даты**:
-  ```python
-  from dateutil import parser
-
-  date_str = "2023-07-14 12:34:56"
-  date = parser.parse(date_str)
-  print(date)  # 2023-07-14 12:34:56
-  ```
-
-- **релятивные дельты**: Позволяют выполнять операции с датами, такие как добавление месяцев или дней.
-  ```python
-  from datetime import datetime
-  from dateutil.relativedelta import relativedelta
-
-  now = datetime.now()
-  one_year_later = now + relativedelta(years=1)
-  print(one_year_later)  # Дата ровно через год от текущей даты
-  ```
-
-### `openpyxl`
-
-```shell
-pip install openpyxl
-```
-
-`openpyxl` - это библиотека для чтения и записи файлов Excel (формата .xlsx).
-
-#### Примеры использования:
-
-- **Создание нового файла Excel и запись данных**:
-  ```python
-  from openpyxl import Workbook
-
-  wb = Workbook()
-  ws = wb.active
-
-  ws['A1'] = 'Hello'
-  ws['B1'] = 'World'
-
-  wb.save("example.xlsx")
-  ```
-
-- **Чтение данных из файла Excel**:
-  ```python
-  from openpyxl import load_workbook
-
-  wb = load_workbook("example.xlsx")
-  ws = wb.active
-
-  print(ws['A1'].value)  # Hello
-  print(ws['B1'].value)  # World
-  ```
-
-### `pytest`
-
-```shell
-pip install pytest
-```
-
-`pytest` - популярная библиотека для написания тестов в Python. Она поддерживает простое написание тестов, фикстуры,
-параметризацию тестов и многое другое.
-
-#### Примеры использования:
-
-- **Простой тест**:
-  ```python
-  def test_sum():
-      assert sum([1, 2, 3]) == 6, "Should be 6"
-  ```
-
-- **Использование фикстур**:
-  ```python
-  import pytest
-
-  @pytest.fixture
-  def sample_list():
-      return [1, 2, 3]
-
-  def test_sum(sample_list):
-      assert sum(sample_list) == 6, "Should be 6"
-  ```
-
-- **Параметризация тестов**:
-  ```python
-  @pytest.mark.parametrize("input,expected", [
-      ([1, 2, 3], 6),
-      ([1, 1, 1], 3),
-      ([1, -1, 1], 1),
-  ])
-  def test_sum(input, expected):
-      assert sum(input) == expected
-  ```
-
-## Пакеты часто используемые в web
-
-### BeautifulSoup
-
-BeautifulSoup — это библиотека для парсинга HTML и XML документов. Она создает дерево разбора из страниц, что позволяет
-легко извлекать данные из HTML и XML документов.
-
-**Установка**:
-
-```bash
-pip install beautifulsoup4
-```
-
-**Пример использования**:
-
-```python
-from bs4 import BeautifulSoup
-
-html_doc = """
-<html>
- <head><title>The Dormouse's story</title></head>
- <body>
-  <p class="title"><b>The Dormouse's story</b></p>
-  <p class="story">Once upon a time there were three little sisters; and their names were
-   <a href="http://example.com/elsie" class="sister" id="link1">Elsie</a>,
-   <a href="http://example.com/lacie" class="sister" id="link2">Lacie</a> and
-   <a href="http://example.com/tillie" class="sister" id="link3">Tillie</a>;
-   and they lived at the bottom of a well.</p>
- </body>
+Содержимое файла `index.html`:
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+That's template!
+
+</body>
 </html>
-"""
-
-soup = BeautifulSoup(html_doc, 'html.parser')
-
-print(soup.title.string)
-# Output: The Dormouse's story
-
-print(soup.find_all('a'))
-# Output: [<a class="sister" href="http://example.com/elsie" id="link1">Elsie</a>, <a class="sister" href="http://example.com/lacie" id="link2">Lacie</a>, <a class="sister" href="http://example.com/tillie" id="link3">Tillie</a>]
-
-for link in soup.find_all('a'):
-    print(link.get('href'))
-# Output:
-# http://example.com/elsie
-# http://example.com/lacie
-# http://example.com/tillie
 ```
 
-### Pillow
+Итак, теперь у нас есть один шаблон, но мы его не используем, давайте переделаем нашу `view` для обработки шаблонов.
 
-Pillow — это библиотека для работы с изображениями на Python. Она позволяет открывать, изменять, создавать и сохранять
-различные форматы изображений.
-
-**Установка**:
-
-```bash
-pip install pillow
-```
-
-**Пример использования**:
+В файле `myapp/views.py` нужно импортировать обработчик шаблонов, в начало файла добавляем
 
 ```python
-from PIL import Image
-
-# Открыть изображение
-image = Image.open('example.jpg')
-
-# Показать изображение
-image.show()
-
-# Изменить размер изображения
-resized_image = image.resize((200, 200))
-resized_image.save('resized_example.jpg')
-
-# Применить фильтр
-from PIL import ImageFilter
-
-filtered_image = image.filter(ImageFilter.BLUR)
-filtered_image.save('blurred_example.jpg')
+from django.shortcuts import render
 ```
 
-### Scrapy
+> Функция render возвращает объект типа HttpResponse
 
-Scrapy — это фреймворк для веб-скрейпинга, который позволяет извлекать данные из веб-сайтов и обрабатывать
-их. Scrapy поддерживает различные методы обхода и парсинга веб-страниц.
-
-**Установка**:
-
-```bash
-pip install scrapy
-```
-
-**Пример использования**:
+И перепишем функцию `index`:
 
 ```python
-import scrapy
-
-
-class QuotesSpider(scrapy.Spider):
-    name = "quotes"
-    start_urls = [
-        'http://quotes.toscrape.com/page/1/',
-    ]
-
-    def parse(self, response):
-        for quote in response.css('div.quote'):
-            yield {
-                'text': quote.css('span.text::text').get(),
-                'author': quote.css('span small::text').get(),
-                'tags': quote.css('div.tags a.tag::text').getall(),
-            }
-
-# Чтобы запустить паука, сохраните этот код в файл quotes_spider.py и выполните команду:
-# scrapy runspider quotes_spider.py -o quotes.json
+def index(request):
+    return render(request, 'index.html')
 ```
 
-### psycopg
+Перезапустим сервер и увидим результат на главной странице `http://127.0.0.1:8000/`
 
-`psycopg2` - это популярная библиотека для работы с базой данных PostgreSQL в Python. Она позволяет выполнять запросы,
-управлять транзакциями и взаимодействовать с PostgreSQL.
+![](https://djangoalevel.s3.eu-central-1.amazonaws.com/lesson34/render_template.png)
 
-### Установка
+Мы отрендерили шаблон! Но в нём нет никаких переданных данных, для передачи данных нужно в метод render добавить третий
+аргумент в виде словаря.
 
-Для установки `psycopg2` можно использовать pip:
-
-```sh
-pip install psycopg2
-```
-
-### Примеры использования:
-
-#### Подключение к базе данных
+Для демонстрации основных типов данных я допишу функцию `index` и передам большое количество значений в словаре:
 
 ```python
-import psycopg2
+class MyClass:
+    string = ''
 
-conn = psycopg2.connect(
-    dbname="yourdbname",
-    user="yourusername",
-    password="yourpassword",
-    host="yourhost",
-    port="yourport"
-)
+    def __init__(self, s):
+        self.string = s
+
+
+def index(request):
+    my_num = 33
+    my_str = 'some string'
+    my_dict = {"some_key": "some_value"}
+    my_list = ['list_first_item', 'list_second_item', 'list_third_item']
+    my_set = {'set_first_item', 'set_second_item', 'set_third_item'}
+    my_tuple = ('tuple_first_item', 'tuple_second_item', 'tuple_third_item')
+    my_class = MyClass('class string')
+    return render(request, 'index.html', {
+        'my_num': my_num,
+        'my_str': my_str,
+        'my_dict': my_dict,
+        'my_list': my_list,
+        'my_set': my_set,
+        'my_tuple': my_tuple,
+        'my_class': my_class,
+    })
 ```
 
-#### Создание курсора и выполнение запросов
+Значения переданы, но пока они никак не используются, давайте же посмотрим, как отобразить переменные в шаблоне!
+
+Для вывода данных в Django темплейте используются фигурные скобки `{{ }}`
+
+```
+{{first_name}}
+{{last_name}}
+```
+
+Для доступа к вложенным структурам используется точка:
+
+```
+{{my_dict.key}}
+{{my_object.attribute}}
+{{my_list.0}}
+```
+
+Изменим наш `index.html`:
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div>
+    <div style="border: 1px darkblue solid">
+        {{ my_num }}
+    </div>
+    <div style="border: 1px darkseagreen solid">
+        {{ my_str }}
+    </div>
+    <div style="border: 1px fuchsia solid">
+        {{ my_set }}
+    </div>
+    <div style="border: 1px firebrick solid">
+        {{ my_dict.some_key }}
+    </div>
+
+    <div style="border: 1px cyan solid">
+        {{ my_class.string }}
+    </div>
+    <div style="border: 1px cyan solid">
+        {{ my_list.0 }}
+    </div>
+    <div style="border: 1px burlywood solid">
+        {{ my_tuple.1 }}
+    </div>
+</div>
+</body>
+</html>
+```
+
+Обновим страницу и увидим.
+
+![](https://djangoalevel.s3.eu-central-1.amazonaws.com/lesson34/render_variables.png)
+
+### Логические операторы и циклы
+
+![](http://risovach.ru/upload/2013/01/mem/kakoy-pacan_7772237_orig_.jpeg)
+
+> После всех логических операторов и циклов в шаблонах нужно ставить соответствующий закрывающий тег!
+> Например, `{% for ...%} {% endfor %}`, `{% if ... %} {% endif %}`.
+
+#### Логические операторы
+
+В шаблонах можно оперировать не только переменными, но и несложной логикой, такой как логические операторы и циклы.
+
+Давайте добавим в наши параметры переменную `display_num` и назначим ей значение `False`.
+
+`myapp/views.py`
 
 ```python
-cur = conn.cursor()
-cur.execute("SELECT version();")
-db_version = cur.fetchone()
-print(db_version)
+ return render(request, 'index.html', {
+    'my_num': my_num,
+    'my_str': my_str,
+    'my_dict': my_dict,
+    'my_list': my_list,
+    'my_set': my_set,
+    'my_tuple': my_tuple,
+    'my_class': my_class,
+    'display_num': False
+})
 ```
 
-#### Создание таблицы
+Для логических условий и циклов используются другие скобки `{% %}`
+
+Изменим наш шаблон с использованием логики:
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div>
+    {% if display_num %}
+    {{ my_num }}
+    {% else %}
+    <span> We don't display num </span>
+    {% endif %}
+</div>
+</body>
+</html>
+```
+
+> Отступы тут не имеют никакого значения, просто так удобнее читать
+
+Обновим страницу и увидим:
+
+![](https://djangoalevel.s3.eu-central-1.amazonaws.com/lesson34/If_statement.png)
+
+А если в файле `views.py` изменим переменную `display_num` с `False` на `True`:
+
+`myapp/views.py`
 
 ```python
-create_table_query = '''
-CREATE TABLE IF NOT EXISTS employees (
-    id SERIAL PRIMARY KEY,
-    name VARCHAR(100),
-    salary NUMERIC
-);
-'''
-cur.execute(create_table_query)
-conn.commit()
+ return render(request, 'index.html', {
+    'my_num': my_num,
+    'my_str': my_str,
+    'my_dict': my_dict,
+    'my_list': my_list,
+    'my_set': my_set,
+    'my_tuple': my_tuple,
+    'my_class': my_class,
+    'display_num': True
+})
 ```
 
-#### Вставка данных в таблицу
+То увидим:
+
+![](https://djangoalevel.s3.eu-central-1.amazonaws.com/lesson34/if_true.png)
+
+Т.к. значение переменной `display_num` True, то мы видим значение переменной `my_num`
+
+#### Циклы
+
+Так же как и в python мы можем использовать циклы в шаблонах, но только цикл `for`, цикла `while` в шаблонах не
+существует.
+
+Изменим наш `index.html`:
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div>
+    {% for item in my_list %}
+    <span>{{ item }}</span>
+    <br>
+    {% endfor %}
+</div>
+</body>
+</html>
+```
+
+Обновим страницу и увидим:
+
+![](https://djangoalevel.s3.eu-central-1.amazonaws.com/lesson34/basic_for.png)
+
+> Еще раз, логика через `{% %}`, данные через `{{ }}`
+
+Давайте скомбинируем!
+
+Внутри цикла `for` Джанго уже генерирует некоторые переменные, например, переменную `{{ forloop.counter0 }}`,
+
+в которой хранится индекс текущей итерации, давайте не будем выводить в цикле второй элемент.
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div>
+    {% for item in my_list %}
+    {% if forloop.counter0 != 1 %}
+    <span>{{ item }}</span>
+    <br>
+    {% endif %}
+    {% endfor %}
+</div>
+</body>
+</html>
+```
+
+`{% if forloop.counter0 != 1 %}`
+
+Символ != это не равно, а значение 1, потому что индекс начинается с 0.
+
+Обновляем страницу и видим:
+
+![](https://djangoalevel.s3.eu-central-1.amazonaws.com/lesson34/for_if.png)
+
+## Встроенные темплейт теги.
+
+На самом деле все ключевые слова используемые внутри `{% %}` называются template tags, и их существует огромное
+множество.
+
+[Ссылка на доку](https://docs.djangoproject.com/en/4.2/ref/templates/builtins/)
+
+Их очень много, часть мы рассмотрим, часть вам придется изучить самостоятельно.
+
+## Tag URL
+
+Тег url позволяет нам сгенерировать урл по его имени. Это очень удобно, если адрес меняется, а его имя нет.
+
+Давайте сгенерируем две ссылки на два наших урла.
+
+`mysite/urls.py`
+
+Назначим имя `index`
 
 ```python
-insert_query = '''
-INSERT INTO employees (name, salary) VALUES (%s, %s);
-'''
-cur.execute(insert_query, ('John Doe', 50000))
-conn.commit()
+path('', index, name='index')
 ```
 
-#### Чтение данных из таблицы
+`myapp/urls.py`
+
+Назначим имя `first`
 
 ```python
-select_query = '''
-SELECT * FROM employees;
-'''
-cur.execute(select_query)
-rows = cur.fetchall()
-for row in rows:
-    print(row)
+path('', first, name='first'),
 ```
 
-#### Обновление данных
+Добавим в наш шаблон ссылку на вторую страницу:
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div>
+    <a href="{% url 'first' %}">Another page</a>
+</div>
+</body>
+</html>
+```
+
+Наш индекс пейдж:
+
+![](https://djangoalevel.s3.eu-central-1.amazonaws.com/lesson34/index_link.png)
+
+После клика:
+
+![](https://djangoalevel.s3.eu-central-1.amazonaws.com/lesson34/first_link.png)
+
+### Наследование шаблонов
+
+![](https://i.pinimg.com/originals/43/3e/8f/433e8f7ebb982220a6f43b829679dd5d.jpg)
+
+#### Extends и block
+
+Теги наследования шаблонов `extends`, `block`
+
+Зачем нам это надо?
+
+Наследование шаблонов нужно, чтобы не писать одно и то же отображение много раз. Как часто вы видели сайты, где сверху,
+снизу, слева, справа и т. д. всегда одно и тоже, а меняется только "середина"? Самый простой способ так сделать - это
+наследование.
+
+Тут нам и помогут наши волшебные теги!
+
+Создадим в папке `templates` новые файлы `base.html` и `first.html` и изменим файлы `templates/index.html` и
+функцию `first` в `myapp/views.py`
+
+`template/base.html`
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div style="background-color: aqua">
+    {% block content %}
+    {% endblock %}
+</div>
+</body>
+</html>
+```
+
+`template/index.html`
+
+```html
+{% extends 'base.html' %}
+
+{% block content %}
+<div style="padding: 20px; background-color: fuchsia"> Extended template index!</div>
+<a href="{% url 'first' %}">To the first page</a>
+{% endblock %}
+```
+
+`template/first.html`
+
+```html
+{% extends 'base.html' %}
+
+{% block content %}
+<div style="padding: 20px; background-color: chocolate"> Extended template first!</div>
+<a href="{% url 'index' %}">To the index page</a>
+{% endblock %}
+```
+
+Функция `first` в `myapp/views.py`
 
 ```python
-update_query = '''
-UPDATE employees SET salary = %s WHERE name = %s;
-'''
-cur.execute(update_query, (55000, 'John Doe'))
-conn.commit()
+def first(request):
+    return render(request, 'first.html')
 ```
 
-#### Удаление данных
+Смотрим результаты произошедшего и пытаемся их понять. (ссылки добавлены для удобства)
+
+Индекс страница
+
+![](https://djangoalevel.s3.eu-central-1.amazonaws.com/lesson34/extended_index.png)
+
+Первая страница
+
+![](https://djangoalevel.s3.eu-central-1.amazonaws.com/lesson34/extended_first.png)
+
+Что произошло?
+
+Мы создали базовый шаблон `base.html`, в котором описали то, что будет во всех шаблонах (и покрасили в голубенький, для
+наглядности), которые от него наследуются, и обозначили `{% block content %}` (здесь block - это тэг, а content -
+присвоенное ему название, его можно выбрать произвольно) вся нужная нам информация будет наследоваться именно в
+указанный блок, на странице разных блоков может
+быть сколько угодно главное, что бы они имели разные названия.
+
+Наш индекс пейдж рендерит страницу `index.html`, в ней мы отнаследовались от нашей `base.html`, вписали такой же
+блок `content`, чтобы передать в него нужные нам данные, в нашем случае это просто текст и ссылка, текст мы перекрасили,
+чтобы было видно, что это данные из нового файла, а ссылку нет, чтобы было видно, что цвет из `base.html`
+отнаследовался, то же самое произошло и с `first.html`.
+
+#### Include
+
+А теперь представим обратную ситуацию: нам нужно в разные части сайта "засунуть" один и тот же блок (рекламу, например)
+
+Тут нас спасает тег `include` который позволяет "внедрить" нужную часть страницы куда угодно
+
+Создадим в папке `templates` еще один файл с названием `add.html`
+
+`templates/add.html`
+
+ ```html
+
+<div style="padding: 20px; background-color: chartreuse"> That's included html!</div>
+```
+
+И теперь добавим этот файл к страницам `index.html` и `first.html`, но в разные места, чтобы получилось
+
+`template/index.html`
+
+```html
+{% extends 'base.html' %}
+
+{% block content %}
+{% include 'add.html' %}
+<div style="padding: 20px; background-color: fuchsia"> Extended template index!</div>
+<a href="{% url 'first' %}">To the first page</a>
+{% endblock %}
+```
+
+`template/first.html`
+
+```html
+{% extends 'base.html' %}
+
+{% block content %}
+<div style="padding: 20px; background-color: chocolate"> Extended template first!</div>
+<a href="{% url 'index' %}">To the index page</a>
+{% include 'add.html' %}
+{% endblock %}
+```
+
+Смотрим на результат:
+
+`index.html`:
+
+![](https://djangoalevel.s3.eu-central-1.amazonaws.com/lesson34/include_index.png)
+
+`first.html`:
+
+![](https://djangoalevel.s3.eu-central-1.amazonaws.com/lesson34/include_first.png)
+
+В добавленную станицу можно передать переменные при помощи тега `with`
+
+Изменим файл `templates/add.html`
+
+```html
+
+<div style="padding: 20px; background-color: chartreuse"> Hello {{ name }} !</div>
+```
+
+И файл `templates/index.html`
+
+```html
+{% extends 'base.html' %}
+
+{% block content %}
+{% include 'add.html' with name='Vlad' %}
+<div style="padding: 20px; background-color: fuchsia"> Extended template index!</div>
+<a href="{% url 'first' %}">To the first page</a>
+{% endblock %}
+```
+
+Смотрим на результат:
+
+`index.html`
+
+![](https://djangoalevel.s3.eu-central-1.amazonaws.com/lesson34/include_var.png)
+
+`first.html`
+
+![](https://djangoalevel.s3.eu-central-1.amazonaws.com/lesson34/include_non_var.png)
+
+В первом случае мы видим добавленную переменную, во втором - ничего, так как мы ничего не передавали.
+
+Давайте добавим проверку на наличие переменной!
+
+`templates/add.html`
+
+```html
+
+<div style="padding: 20px; background-color: chartreuse">{% if name %} Hello {{ name }} ! {% else %} Sorry, I don't know
+    your name {% endif %}
+</div>
+```
+
+Смотрим на first page
+
+![](https://djangoalevel.s3.eu-central-1.amazonaws.com/lesson34/first_no_var.png)
+
+Переменной нет, срабатывает if
+
+Так же можно передавать эту переменную из view, для этого нужно в with дописать `{{variable }}`
+
+## Фильтры
+
+![](https://a.d-cd.net/egAAAgNDHeA-1920.jpg)
+
+Что это такое, и зачем это нужно?
+
+Фильтры - это возможность видоизменить данные перед их отображением. Давайте попробуем ими воспользоваться, для этого
+во `view` добавим сверху файла
 
 ```python
-delete_query = '''
-DELETE FROM employees WHERE name = %s;
-'''
-cur.execute(delete_query, ('John Doe',))
-conn.commit()
+from datetime import datetime
 ```
 
-#### Закрытие курсора и соединения
+`myapp/views.py` функция `index`
 
 ```python
-cur.close()
-conn.close()
+def index(request):
+    my_num = 33
+    my_str = 'some string'
+    my_dict = {"some_key": "some_value"}
+    my_list = ['list_first_item', 'list_second_item', 'list_third_item']
+    my_set = {'set_first_item', 'set_second_item', 'set_third_item'}
+    my_tuple = ('tuple_first_item', 'tuple_second_item', 'tuple_third_item')
+    my_class = MyClass('class string')
+    return render(request, 'index.html', {
+        'my_num': my_num,
+        'my_str': my_str,
+        'my_dict': my_dict,
+        'my_list': my_list,
+        'my_set': my_set,
+        'my_tuple': my_tuple,
+        'my_class': my_class,
+        'display_num': True,
+        'now': datetime.now()
+    })
 ```
 
-### Использование контекстных менеджеров
+А `index.html` изменим так
 
-`psycopg2` поддерживает использование контекстных менеджеров для автоматического закрытия соединений и курсоров:
+```html
+{% extends 'base.html' %}
 
-```python
-import psycopg2
-
-with psycopg2.connect(
-        dbname="yourdbname",
-        user="yourusername",
-        password="yourpassword",
-        host="yourhost",
-        port="yourport"
-) as conn:
-    with conn.cursor() as cur:
-        cur.execute("SELECT version();")
-        db_version = cur.fetchone()
-        print(db_version)
+{% block content %}
+<div>{{ now| date:"SHORT_DATE_FORMAT" }}</div>
+<div>{{ now|date:"D d M Y" }} {{ value|time:"H:i" }}</div>
+<div>{{ not_exist|default:"nothing" }}</div>
+<div>{{ my_str | capfirst }}</div>
+<div>{{ my_list | join:"**" }}</div>
+{% endblock %}
 ```
 
-### Обработка исключений
+Смотрим на результат
 
-При работе с базами данных важно обрабатывать возможные исключения:
+![](https://djangoalevel.s3.eu-central-1.amazonaws.com/lesson34/filters.png)
 
-```python
-import psycopg2
-from psycopg2 import OperationalError, errorcodes, errors
+Каждый фильтр имеет свои особенности и правила написания, подробнее можно посмотреть по ссылке выше.
 
-try:
-    conn = psycopg2.connect(
-        dbname="yourdbname",
-        user="yourusername",
-        password="yourpassword",
-        host="yourhost",
-        port="yourport"
-    )
-    cur = conn.cursor()
-    cur.execute("SELECT version();")
-    db_version = cur.fetchone()
-    print(db_version)
-except OperationalError as e:
-    print(f"The error '{e}' occurred")
-finally:
-    if conn:
-        cur.close()
-        conn.close()
+Кроме того, для данных существуют встроенные фильтры.
+
+Например `date`, `default`, `join`, `capfirst`. На самом деле их огромное количество, весь список встроенных фильтров
+можно
+посмотреть [Тыц](https://docs.djangoproject.com/en/4.2/ref/templates/builtins/)
+
+## Кастомные темплейт теги и фильтры
+
+На самом деле, стандартным набором дело не ограничивается, и в случае необходимости можно дописать свои теги и фильтры,
+почитать об этом можно вот [тут](https://docs.djangoproject.com/en/4.2/howto/custom-template-tags/)
+
+![](https://i.ytimg.com/vi/gF060AIFiB8/hqdefault.jpg)
+
+# Работа со статикой
+
+## Что такое статические файлы?
+
+Прежде чем перейти к рассмотрению template tag, давайте разберемся, что такое статические файлы. В контексте
+веб-разработки статические файлы — это те файлы, которые не изменяются на сервере, а напрямую передаются пользователю. К
+ним относятся:
+
+- CSS файлы, отвечающие за стилизацию веб-страниц.
+- JavaScript файлы, добавляющие интерактивность страницам.
+- Изображения, иконки, шрифты и другие медиафайлы.
+
+В Django эти файлы не хранятся в базе данных и не генерируются динамически, как HTML-контент. Они должны быть доступны
+для всех клиентов в неизменном виде.
+
+## Настройка Django для работы со статическими файлами
+
+Прежде чем мы сможем использовать `{% static %}`, необходимо правильно настроить Django для работы со статическими
+файлами. Основные шаги включают:
+
+- Указание директории для хранения статических файлов.
+- Настройка URL для доступа к статическим файлам.
+
+В файле `settings.py` вы найдете (или добавите) следующие параметры:
+
+- `STATIC_URL`: Этот параметр определяет URL, по которому будут доступны статические файлы. Обычно это `/static/`.
+
+  ```python
+  STATIC_URL = '/static/'
+  ```
+
+> Этот параметр скорее всего указан автоматически, он отвечает за то, что бы ваши статические файлы можно было бы
+> получить по адресу `http://127.0.0.1:8000/static/` на самом деле там много деталей и нюансов, но их мы будем
+> рассматривать гораздо позже.
+
+> Для того что бы у вас отрабатывали статические файлы нужно что бы у вас в `settings.py` был указан `DEBUG=True`, что
+> это и зачем опять же дальше по курсу
+
+- `STATICFILES_DIRS`: Этот параметр указывает на дополнительные директории, в которых Django будет искать статические
+  файлы. Это полезно, если у вас есть несколько источников для статических файлов.
+
+  ```python
+  STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+  ```
+
+> Просто указываете папку куда вы сложили свои статические файлы.
+
+- `STATIC_ROOT`: Этот параметр используется для указания директории, куда Django будет собирать все статические файлы
+  при выполнении команды `collectstatic`. Это полезно для деплоя на продакшн сервер.
+
+  ```python
+  STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+  ```
+
+> Этот параметр вам пока не нужен! Он используется для запуска приложений на реальных серверах
+
+## Использование template tag `{% static %}`
+
+Теперь, когда мы настроили Django для работы со статическими файлами, давайте рассмотрим, как используется template
+tag `{% static %}`. Этот тег позволяет нам генерировать правильные URL для статических файлов в шаблонах.
+
+### Загрузка библиотеки static
+
+Прежде чем использовать тег `{% static %}`, необходимо загрузить соответствующую библиотеку в вашем шаблоне. Это
+делается с помощью тега `{% load static %}`. Этот тег должен быть расположен в верхней части вашего шаблона, как
+правило, до использования `{% static %}`.
+
+> Обычно записывается в самом верху, по аналогии с `import` в python
+
+Пример:
+
+```html
+{% load static %}
 ```
 
-Эти примеры показывают основные операции, которые можно выполнять с помощью `psycopg2` для взаимодействия с базой данных
-PostgreSQL.
+### Основной синтаксис
 
-> По сути этот случайный набор инструментов демонстрирует практически бесконечный функционал для работы с `python`
+Синтаксис тега `{% static %}` выглядит следующим образом:
 
-## Pyenv
-
-`pyenv` — это утилита для управления версиями Python, которая позволяет пользователям легко переключаться между разными
-версиями Python. Это особенно полезно для разработчиков, которые работают над проектами, требующими различных версий
-Python, или тех, кто хочет протестировать свои проекты на нескольких версиях.
-
-### Основные возможности `pyenv`
-
-1. **Установка различных версий Python:**
-    - `pyenv` позволяет установить любую версию Python, начиная с самых ранних версий до самых последних релизов,
-      включая версии Anaconda и PyPy.
-
-2. **Переключение между версиями Python:**
-    - Легко переключаться между установленными версиями Python для различных проектов.
-
-3. **Глобальные и локальные версии Python:**
-    - `pyenv` поддерживает установку глобальной версии Python, которая будет использоваться по умолчанию, и локальных
-      версий для конкретных проектов.
-
-4. **Поддержка виртуальных окружений:**
-    - В сочетании с `pyenv-virtualenv` можно управлять виртуальными окружениями Python, что делает разработку еще более
-      гибкой.
-
-### Установка `pyenv`
-
-#### На macOS и Linux:
-
-Для установки `pyenv` на macOS и Linux выполните следующие команды:
-
-```bash
-curl https://pyenv.run | bash
+```html
+{% static 'path/to/your/static/file.ext' %}
 ```
 
-Далее добавьте следующие строки в ваш профиль оболочки (например, `.bashrc` или `.zshrc`):
+Здесь `'path/to/your/static/file.ext'` — это путь к файлу относительно одной из директорий, указанных
+в `STATICFILES_DIRS`.
 
-```bash
-export PATH="$HOME/.pyenv/bin:$PATH"
-eval "$(pyenv init --path)"
-eval "$(pyenv init -)"
-eval "$(pyenv virtualenv-init -)"
+### Пример использования
+
+Предположим, у вас есть файл `styles.css`, находящийся в директории `static/css/`. Чтобы подключить этот файл в шаблоне,
+вам нужно использовать следующий код:
+
+```html
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
 ```
 
-После этого перезапустите терминал или выполните `source ~/.bashrc` (или соответствующую команду для вашей оболочки).
+Django автоматически преобразует это в правильный URL, который будет выглядеть как `/static/css/styles.css`.
 
-#### На Windows:
+### Использование в различных контекстах
 
-Для Windows рекомендуется использовать `pyenv-win`, который является портом `pyenv` для Windows. Установка
-осуществляется через команду:
+Тег `{% static %}` можно использовать не только для CSS, но и для других типов файлов, например, изображений или
+JavaScript:
 
-```bash
-pip install pyenv-win --target %USERPROFILE%\.pyenv
+```html
+{% load static %}
+<img src="{% static 'images/logo.png' %}" alt="Logo">
+<script src="{% static 'js/main.js' %}"></script>
 ```
 
-Далее добавьте следующие пути в переменную окружения PATH:
+## Практическое значение и важность
 
-```
-setx PATH "%PATH%;%USERPROFILE%\.pyenv\pyenv-win\bin"
-setx PATH "%PATH%;%USERPROFILE%\.pyenv\pyenv-win\shims"
-```
+Преимущество использования `{% static %}` заключается в том, что он обеспечивает правильное разрешение путей к
+статическим файлам независимо от того, где они находятся. Это особенно важно при деплое (отправке кода на настоящий
+сервер) приложения, когда может измениться базовый URL для статических файлов.
 
-### Основные команды `pyenv`
+Кроме того, использование `{% static %}` делает ваш код более устойчивым к изменениям. Например, если вы решите
+переместить свои статические файлы в другую директорию, вам не придется изменять все шаблоны — достаточно будет обновить
+настройки.
 
-1. **Установка Python:**
+## Практические рекомендации
 
-   ```bash
-   pyenv install 3.9.1
-   ```
+1. **Всегда загружайте библиотеку static.** Не забывайте добавлять `{% load static %}` в начало ваших шаблонов, где
+   используются статические файлы.
 
-   Эта команда установит Python версии 3.9.1.
+2. **Не хардкодьте пути к статическим файлам.** Всегда используйте `{% static %}` для создания ссылок на статические
+   файлы.
 
-2. **Просмотр доступных версий для установки:**
-
-   ```bash
-   pyenv install --list
-   ```
-
-3. **Установка глобальной версии Python:**
-
-   ```bash
-   pyenv global 3.9.1
-   ```
-
-   Эта версия будет использоваться по умолчанию.
-
-4. **Установка локальной версии Python:**
-
-   Внутри каталога проекта выполните:
-
-   ```bash
-   pyenv local 3.8.5
-   ```
-
-   Эта версия будет использоваться только внутри данного проекта.
-
-5. **Переключение между версиями Python:**
-
-   ```bash
-   pyenv shell 3.7.9
-   ```
-
-   Эта команда переключит версию Python только для текущей сессии оболочки.
-
-### Примеры использования
-
-#### Пример 1: Установка и переключение между версиями
-
-Установим две версии Python и переключимся между ними.
-
-```bash
-# Установка версий Python
-pyenv install 3.8.5
-pyenv install 3.9.1
-
-# Установка глобальной версии Python
-pyenv global 3.9.1
-
-# Проверка текущей версии Python
-python --version
-# Output: Python 3.9.1
-
-# Переключение на другую версию Python
-pyenv shell 3.8.5
-
-# Проверка текущей версии Python
-python --version
-# Output: Python 3.8.5
-```
-
-#### Пример 2: Локальная версия для проекта
-
-Создадим проект и установим для него локальную версию Python.
-
-```bash
-# Создание нового проекта
-mkdir my_project
-cd my_project
-
-# Установка локальной версии Python для проекта
-pyenv local 3.7.9
-
-# Проверка текущей версии Python
-python --version
-# Output: Python 3.7.9
-```
-
-## Домашка
-
-1. Создать виртуальное окружение
-2. Установить там psycopg2
-3. Для обоих ваших модулей, заменить файлы для хранения данных. На базы данных.
+3. **Организуйте свои статические файлы логически.** Размещайте их в соответствующих поддиректориях,
+   например, `css`, `js`, `images`.
