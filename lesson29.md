@@ -18,7 +18,7 @@
 CSRF Token, а это значит, что для выполнения таких запросов необходимо каждый раз делать дополнительный запрос для
 получения токена.
 
-Во вторых такой подход подразумевает, что сервер хранит информацию о сессиях, такой подход не будет RESTful.
+Во‑вторых такой подход подразумевает, что сервер хранит информацию о сессиях, такой подход не будет RESTful.
 
 ### Базовая аутентификация
 
@@ -104,26 +104,30 @@ class ExampleView(APIView):
 
     def get(self, request, format=None):
         content = {
-            'user': unicode(request.user),  # `django.contrib.auth.User` instance.
-            'auth': unicode(request.auth),  # None
+            'user': str(request.user),  # `django.contrib.auth.User` instance.
+            'auth': str(request.auth),  # None
         }
         return Response(content)
 ```
 
 ```python
+from rest_framework.decorators import api_view, authentication_classes
+from rest_framework.response import Response
+from rest_framework.authentication import SessionAuthentication, BasicAuthentication
+
 @api_view(['GET'])
 @authentication_classes([SessionAuthentication, BasicAuthentication])
 def example_view(request, format=None):
     content = {
-        'user': unicode(request.user),  # `django.contrib.auth.User` instance.
-        'auth': unicode(request.auth),  # None
+        'user': str(request.user),  # `django.contrib.auth.User` instance.
+        'auth': str(request.auth),  # None
     }
     return Response(content)
 ```
 
-### Авторизация по токену
+### Аутентификация по токену
 
-Если необходимо использовать токен авторизацию, то DRF предоставляет нам такой функционал "из коробки", для этого нужно
+Если необходимо использовать токен-аутентификацию, то DRF предоставляет нам такой функционал "из коробки", для этого нужно
 добавить `rest_framework.authtoken` в `INSTALLED_APPS`
 
 ```python
@@ -155,7 +159,7 @@ token = Token.objects.create(user=...)
 print(token.key)
 ```
 
-После этого можно использовать авторизацию токеном:
+После этого можно использовать аутентификацию токеном:
 
 ```Authorization: Token 9944b09199c62bcf9418ad846dd0e4bbdfc6ee4b```
 
@@ -219,6 +223,52 @@ urlpatterns += [
     path('api-token-auth/', CustomAuthToken.as_view())
 ]
 ```
+### JWT (SimpleJWT) кратко
+
+JWT решает задачу срока жизни и обновления токенов из коробки.
+
+settings.py:
+```python
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ),
+}
+```
+
+urls.py:
+```python
+from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
+
+urlpatterns += [
+    path('api/jwt/token/', TokenObtainPairView.as_view()),
+    path('api/jwt/refresh/', TokenRefreshView.as_view()),
+]
+```
+
+Примеры:
+- получить пару токенов: POST /api/jwt/token/ { "username": "...", "password": "..." }
+- обновить access по refresh: POST /api/jwt/refresh/ { "refresh": "<REFRESH>" }
+
+Используйте HTTPS; токены передавайте в заголовке Authorization: Bearer <token>.
+
+
+#### Немного теории о JWT
+
+JWT (JSON Web Token) — это компактный самодостаточный токен вида `HEADER.PAYLOAD.SIGNATURE` (Base64Url), подписанный алгоритмом (например, HS256/RS256).
+
+- Header: метаданные токена (тип, алгоритм)
+- Payload (claims): утверждения, например `sub` (ид пользователя), `exp` (время истечения), `iat` (время выпуска), `nbf` (не раньше)
+- Signature: подпись для проверки целостности и подлинности
+
+Ключевые особенности:
+- Stateless: сервер не хранит состояние каждого access-токена; проверка — через подпись и время жизни
+- Access vs Refresh: короткоживущий access (минуты) и более долгоживущий refresh (часы/дни) для обновления пары
+- Ротация refresh-токенов и blacklist: для отзыва/компрометации используйте «чёрный список» (SimpleJWT поддерживает)
+- Хранение токена: обычно в заголовке Authorization: `Bearer <access>`; для браузеров — возможны HttpOnly+Secure cookie (учтите CSRF)
+- Безопасность: всегда HTTPS, минимальные сроки жизни, ограничение областей применения (scopes), ограничение аудитории (aud), clock skew
+
+JWT не шифрует данные, а подписывает их: содержимое видно клиенту. Не кладите в токен чувствительные данные.
 
 ### Кастомная авторизация
 
@@ -298,6 +348,7 @@ REST_FRAMEWORK = {
 
 ```python
 from rest_framework import permissions
+from rest_framework.viewsets import ModelViewSet
 
 
 class ExampleModelViewSet(ModelViewSet):
@@ -308,15 +359,15 @@ class ExampleModelViewSet(ModelViewSet):
 
 ```
 AllowAny - можно всем
-IsAuthenticated - только авторизированным пользователям
+IsAuthenticated - только аутентифицированным пользователям
 IsAdminUser - только администраторам
-IsAuthenticatedOrReadOnly - залогиненым или только на чтение
+IsAuthenticatedOrReadOnly - аутентифицированным пользователям или только на чтение
 ```
 
-Все они изначально наследуются от `rest_framework.permissons.BasePermission`.
+Все они изначально наследуются от `rest_framework.permissions.BasePermission`.
 
 Но если нам нужны кастомные, то мы можем создать их, отнаследовавшись от `permissions.BasePermission` и переписав один
-или оба метода `has_permisson()` и `has_object_permission()`
+или оба метода `has_permission()` и `has_object_permission()`
 
 Например, владельцу можно выполнять любые действия, а остальным только чтение объекта:
 
@@ -396,7 +447,51 @@ class PostView(APIView):
             'body': 'Post content'
         }
         return Response(content)
+    
+## Тротлинг (Throttling)
+
+Тротлинг ограничивает частоту запросов, защищая API от злоупотреблений (brute force, DoS) и сглаживая нагрузку.
+
+Настройка глобально в settings.py:
+```python
+REST_FRAMEWORK = {
+    'DEFAULT_THROTTLE_CLASSES': [
+        'rest_framework.throttling.AnonRateThrottle',
+        'rest_framework.throttling.UserRateThrottle',
+        'rest_framework.throttling.ScopedRateThrottle',
+    ],
+    'DEFAULT_THROTTLE_RATES': {
+        'anon': '100/day',      # для неаутентифицированных
+        'user': '1000/day',     # для аутентифицированных
+        'auth-endpoint': '10/min',  # пример для scope
+    },
+}
 ```
+
+На уровне вью: можно задать конкретные классы или использовать scope для ScopedRateThrottle:
+```python
+from rest_framework.throttling import ScopedRateThrottle
+
+class NotesViewSet(ModelViewSet):
+    throttle_classes = [ScopedRateThrottle]
+    throttle_scope = 'auth-endpoint'  # будет применена ставка из DEFAULT_THROTTLE_RATES
+```
+
+Поведение:
+- При превышении лимита возвращается 429 Too Many Requests (часто с заголовком `Retry-After`).
+- По умолчанию используется кеш бэкенд Django; в продакшене используйте общий кеш (например, Redis) для нескольких инстансов.
+
+Кастомный тротлинг:
+```python
+from rest_framework.throttling import SimpleRateThrottle
+
+class LoginThrottle(SimpleRateThrottle):
+    scope = 'login'
+    def get_cache_key(self, request, view):
+        ident = request.user.pk if request.user.is_authenticated else self.get_ident(request)
+        return f"throttle_login_{ident}"
+```
+Регистрируем ставку `login` в DEFAULT_THROTTLE_RATES, применяем к нужным вью.
 
 `cache_page` декоратор кеширует только `GET` и `HEAD` запросы со статусом 200.
 
@@ -444,7 +539,7 @@ class GroupViewSet(ModelViewSet):
 
 ```
 
-Или же соответсвующий декоратор для использования в функциях.
+Или же соответствующий декоратор для использования в функциях.
 
 #### Как пользоваться?
 
@@ -513,6 +608,30 @@ http://example.com/api/users?ordering=-username
 
 http://example.com/api/users?ordering=account,username
 ```
+### DjangoFilterBackend (рекомендовано)
+
+Declarative-фильтрация без написания кода:
+
+settings.py:
+```python
+REST_FRAMEWORK = {
+    'DEFAULT_FILTER_BACKENDS': [
+        'django_filters.rest_framework.DjangoFilterBackend',
+        'rest_framework.filters.SearchFilter',
+        'rest_framework.filters.OrderingFilter',
+    ],
+}
+```
+
+views.py:
+```python
+class GroupViewSet(ModelViewSet):
+    queryset = Group.objects.all()
+    filterset_fields = ['name', 'label']  # ?name=py&label=basic
+    search_fields = ['^name', 'label']
+    ordering_fields = ['name', 'label']
+```
+
 
 ### Свой собственный фильтр
 
@@ -568,7 +687,7 @@ from django.db import models
 
 class Note(models.Model):
     text = models.CharField(max_length=100)
-    created_at = models.DateTimeField(auto_now=True)
+    created_at = models.DateTimeField(auto_now_add=True)
     author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='notes')
 
     class Meta:
@@ -639,9 +758,9 @@ urlpatterns = [
 
 ```
 
-### Авторизация
+### Аутентификация
 
-Для авторизации мы будем использовать стандартную авторизацию по токену. Так что все что нам надо сделать, это добавить
+Для аутентификации мы будем использовать стандартную аутентификацию по токену. Так что все что нам надо сделать, это добавить
 урл для получения токена.
 
 `urls.py`
@@ -693,7 +812,7 @@ class TokenExpireAuthentication(TokenAuthentication):
         except TypeError:
             return None
         else:
-            if (timezone.now() - token.created).seconds > settings.TOKEN_EXPIRE_SECONDS:
+            if (timezone.now() - token.created).total_seconds() > settings.TOKEN_EXPIRE_SECONDS:
                 token.delete()
                 raise exceptions.AuthenticationFailed("Token expired")
             return user, token
