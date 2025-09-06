@@ -8,14 +8,13 @@
 
 Дока [тут](https://www.django-rest-framework.org/api-guide/requests/)
 
-Два новых парамера `.data` и `.query_string`
+Два новых параметра `.data` и `.query_params`
 
 `.data` - данные, если запрос POST, PUT или PATCH, аналог `request.POST` или `request.FILES`
 
-`.query_string` - данные, если запрос GET, аналог `request.GET`
+`.query_params` - данные, если запрос GET, аналог `request.GET`
 
-И параметры `.auth` и `.authenticate`, которые мы рассмотрим на следующей лекции. Она целиком про авторизацию и
-`permissions` (доступы).
+Также доступны `request.user` и `request.auth`. Детали аутентификации/авторизации рассмотрим на следующей лекции (про permissions и др.).
 
 ## Response
 
@@ -38,6 +37,14 @@
 `template_name` - возможность указать темплейт, если необходимо вернуть страницу, а не просто набор данных,
 
 `headers` и `content_type` - заголовки и тип содержимого запроса.
+
+
+### Коротко на практике
+- request.data — тело запроса (JSON/форма/файлы)
+- request.query_params — параметры строки запроса (?page=1&search=...)
+- request.FILES — загружаемые файлы
+- Возвращайте Response(data, status=...) и используйте константы из rest_framework.status, например status.HTTP_201_CREATED
+- Если отключить BrowsableAPIRenderer, «Browsable API» исчезнет и ответы будут только в JSON
 
 ## Настройка для получения JSON
 
@@ -81,7 +88,7 @@ def book_list(request):
         return Response(serializer.data)
 
     elif request.method == 'POST':
-        book = BookSerializer(data=request.data)
+        serializer = BookSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
@@ -124,7 +131,7 @@ def book_detail(request, pk):
 URLs для таких методов описываются точно так же как и для стандартной Django вью.
 
 ```python
-from myapp.view import book_list, book_detail
+from myapp.views import book_list, book_detail
 
 urlpatterns = [
     path('books/', book_list),
@@ -132,7 +139,7 @@ urlpatterns = [
 ]
 ```
 
-Ответ на GET-запрос в этому случае будет выглядеть так:
+Ответ на GET-запрос в этом случае будет выглядеть так:
 
 ```json
 [
@@ -167,6 +174,13 @@ urlpatterns = [
 
 ## APIView
 
+
+### Шпаргалка выбора: @api_view vs APIView vs GenericAPIView vs ViewSet
+- Быстрое функциональное представление: @api_view — простые эндпоинты без классов, минимум кода
+- Точная кастомизация: APIView — полный контроль над методами get/post/put/delete
+- CRUD из коробки по одному ресурсу: GenericAPIView + миксины (ListCreateAPIView, RetrieveUpdateDestroyAPIView)
+- Полный набор CRUD и экшены + автоматический роутинг: ModelViewSet/ReadOnlyModelViewSet + Router (чаще всего на практике)
+
 Дока [тут](https://www.django-rest-framework.org/api-guide/views/#class-based-views)
 
 Также мы можем описать это же через Class-Based View, для этого нам нужно наследоваться от APIView:
@@ -177,6 +191,8 @@ from myapp.serializers import BookSerializer
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
+
+from django.http import Http404
 
 
 class BookList(APIView):
@@ -200,6 +216,8 @@ class BookList(APIView):
 Вынесем получение объекта в отдельный метод:
 
 ```python
+from django.http import Http404
+
 class BookDetail(APIView):
     """
     Retrieve, update or delete a book instance.
@@ -681,16 +699,24 @@ class CreateListRetrieveViewSet(mixins.CreateModelMixin,
 
 ```python
 REST_FRAMEWORK = {
-    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
     'PAGE_SIZE': 100
 }
 ```
+
+### Параметры запросов: PageNumber vs LimitOffset
+- PageNumberPagination: page, page_size (пример: /api/books/?page=2&page_size=50)
+- LimitOffsetPagination: limit, offset (пример: /api/books/?limit=50&offset=100)
+- Советы: ограничивайте максимальный размер страницы (max_page_size), не давайте запрашивать слишком большие выборки
+
 
 Там мы можем указать тип класса пагинации и размер одной страницы, и все наши запросы уже будут пагинированы.
 
 Также мы можем создать классы пагинаторов, основываясь на нашей необходимости.
 
 ```python
+from rest_framework.pagination import PageNumberPagination
+
 class LargeResultsSetPagination(PageNumberPagination):
     page_size = 1000
     page_size_query_param = 'page_size'
@@ -706,6 +732,8 @@ class StandardResultsSetPagination(PageNumberPagination):
 Если нужно указать пагинатор у конкретного вьюсета, то можно это сделать прямо в атрибутах.
 
 ```python
+from rest_framework import generics
+
 class BillingRecordsView(generics.ListAPIView):
     queryset = Billing.objects.all()
     serializer_class = BillingRecordsSerializer
@@ -768,7 +796,7 @@ class UserViewSet(viewsets.ModelViewSet):
 
 Дока [тут](https://www.django-rest-framework.org/api-guide/routers/)
 
-Роуте - это автоматический генератор URLs для вьюсетов.
+Роутер - это автоматический генератор URLs для вьюсетов.
 
 ```python
 from rest_framework import routers
