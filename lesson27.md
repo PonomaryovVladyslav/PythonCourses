@@ -7,7 +7,7 @@
 Итак, начнём с определения. API (Application Programming Interface) — это интерфейс программирования, интерфейс создания
 приложений.
 
-В нашем конкретном случае под API практически всегда будет подразумеваться REST API, о котором мы поговорим дальше.  
+В нашем конкретном случае под API практически всегда будет подразумеваться REST API, о котором мы поговорим дальше.
 Сейчас для нас - это endpoint (url, на который можно отправить запрос), который выполняет какие-либо действия или
 возвращает нам информацию.
 
@@ -60,6 +60,8 @@ REST (Representational State Transfer — «передача состояния 
    параметры строки запроса, заголовки запросов и запрашиваемый URI (имя ресурса). Это называется гипермедиа (или
    гиперссылки с гипертекстом). HATEOAS также означает, что в случае необходимости ссылки могут содержаться в теле
    ответа (или заголовках) для поддержки URI, извлечения самого объекта или запрошенных объектов.
+Примечание: в практических DRF‑проектах HATEOAS используют редко — это полезная теоретическая концепция, но её реализация в API не обязательна.
+
 
 5. Layered System. В REST допускается разделить систему на иерархию слоев, но с условием, что каждый компонент может
    видеть компоненты только непосредственно следующего слоя. Например, если вы вызываете службу PayPal, а она в свою
@@ -314,10 +316,18 @@ else:
 
 Что изменилось?
 
-- Мы использовали `data=`, именованый аргумент дает сериалайзеру понять, что мы десериализуем данные!
+- Мы использовали `data=`, именованный аргумент дает сериалайзеру понять, что мы десериализуем данные!
 - Нам необходимо валидировать данные. Данные полученные от пользователя обязательно нужно валидировать! (об этом дальше)
 - У сериалайзера есть метод `.save()`, который вызовет `.create()` или `.update()`, в зависимости от переданных в него
   параметров.
+
+> На практике: удобно валидировать с исключением и не разбирать ошибки вручную
+```python
+serializer = BookSerializer(data=data)
+serializer.is_valid(raise_exception=True)
+obj = serializer.save()
+```
+
 
 ### Сериалайзер на основе `ModelSerializer`
 
@@ -377,7 +387,7 @@ class BookModelSerializer(serializers.ModelSerializer):
 4. **Использование аннотированных полей**: Можно передать имя аннотированного поля, которое было добавлено в queryset с
    помощью `annotate()`.
 
-###№ Примеры использования
+### Примеры использования
 
 1. **Переименование поля**
 
@@ -466,12 +476,15 @@ scores = serializers.ListField(
 DictField - поле для передачи словаря. Сигнатура `DictField(child=<A_FIELD_INSTANCE>, allow_empty=True)`
 
 ```python
-document = DictField(child=CharField())
+from rest_framework import serializers
+
+document = serializers.DictField(child=serializers.CharField())
 ```
 
 HiddenField - скрытое поле, может быть нужно для валидаций.
 
 ```python
+from django.utils import timezone
 modified = serializers.HiddenField(default=timezone.now)
 ```
 
@@ -490,6 +503,7 @@ class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
+        fields = ['id', 'username', 'days_since_joined']
 
     def get_days_since_joined(self, obj):
         return (now() - obj.date_joined).days
@@ -563,6 +577,8 @@ class GameRecord(serializers.Serializer):
 Или указать в Meta, используя уже существующие валидаторы:
 
 ```python
+from rest_framework.validators import UniqueTogetherValidator
+
 class EventSerializer(serializers.Serializer):
     name = serializers.CharField()
     room_number = serializers.IntegerField(choices=[101, 102, 103, 201])
@@ -773,6 +789,8 @@ class AlbumSerializer(serializers.ModelSerializer):
   ]
 }
 ```
+Примечание: для HyperlinkedRelatedField нужен корректный `view_name`, а также presence `request` в контексте сериалайзера (передаётся автоматически во ViewSet/GenericAPIView). Для гиперссылок удобно использовать HyperlinkedModelSerializer.
+
 
 ### SlugRelatedField()
 
@@ -941,4 +959,4 @@ class AuthorSerializer(serializers.ModelSerializer):
 
 ## Немного забегая вперед
 
-Давайте я покажу вам сколько нужно написать кода, что бы получить RestFull API для одной модели. (Смотрим на экран, тут кода не будет `:)`)
+Давайте я покажу вам сколько нужно написать кода, что бы получить RESTful API для одной модели. (Смотрим на экран, тут кода не будет `:)`)
