@@ -15,11 +15,11 @@ IT индустрии.
 
 Существует 4 основных уровня тестирования функционала.
 
-**Модульные тесты (Unit Tests)** - это тесты, проверяющие функционал конкретного модуля минимального размера. 
-Если вы переписали метод `get_context_data()`, то юнит тестом будет попытка вызвать этот метод с разными входными 
+**Модульные тесты (Unit Tests)** - это тесты, проверяющие функционал конкретного модуля минимального размера.
+Если вы переписали метод `get_context_data()`, то юнит тестом будет попытка вызвать этот метод с разными входными
 данными, и посмотреть на то, что вернёт результат.
 
-**Интеграционные тесты (Integration Tests)** - это вид тестирования, когда проверяется целостность работы системы, без 
+**Интеграционные тесты (Integration Tests)** - это вид тестирования, когда проверяется целостность работы системы, без
 сторонних средств. Например, вы переписали метод `get_context_data()`, выполняем запрос при помощи кода, и смотрим,
 изменилась ли переменная `context` в ответе на наш запрос.
 
@@ -28,6 +28,34 @@ IT индустрии.
 ввод данных, нажатие кнопок, переход по ссылкам и т. д.
 
 **Ручные тесты (Manual Tests)** - вид тестов, когда мы полностью повторяем потенциальные действия пользователя.
+
+## Современный инструментарий: pytest и pytest-django
+
+pytest стал стандартом де-факто для тестов в Django/DRF за счёт простоты, фикстур и полезных плагинов.
+
+Установка:
+```bash
+pip install pytest pytest-django pytest-cov
+```
+
+Базовый пример:
+```python
+import pytest
+
+@pytest.mark.django_db
+def test_animals_can_speak(animal_factory):
+    lion = animal_factory(name="lion", sound="roar")
+    assert lion.speak() == 'The lion says "roar"'
+```
+
+Запуск:
+```bash
+pytest -q
+pytest -k speak   # фильтр по имени
+pytest --cov=yourpkg --cov-report=term-missing
+```
+
+В pytest-django доступны фикстуры: client (Django client), db/transactional_db, settings, monkeypatch и др.
 
 ## Тестирование в Django
 
@@ -77,6 +105,9 @@ IT индустрии.
 
 `assertHTMLNotEqual` - проверка на то, что полученный HTML не соответствует ожидаемому.
 
+Важно: TransactionTestCase заметно медленнее TestCase, так как выполняет полноценную очистку БД между тестами. Используйте его, когда нужно проверить реальное поведение транзакций (commit/rollback, select_for_update, взаимодействие с внешними транзакционными системами).
+
+
 `assertJSONEqual` - проверка на то, что полученный JSON соответствует ожидаемому.
 
 `assertJSONNotEqual` - проверка на то, что полученный JSON не соответствует ожидаемому.
@@ -86,6 +117,7 @@ IT индустрии.
 `assertXMLNotEqual` - проверка на то, что полученный XML не соответствует ожидаемому.
 
 ### TransactionTestCase
+
 
 `TransactionTestCase` наследуется от `SimpleTestCase`.
 
@@ -117,9 +149,18 @@ IT индустрии.
 
 Это самый часто используемый вид тестов.
 
+
+Примечание: Django обычно автоматически создаёт тестовую БД (например, `test_<NAME>` для PostgreSQL). Явное указание TEST.NAME требуется редко; убедитесь, что у пользователя БД есть права на создание/удаление.
+
 ### LiveServerTestCase
 
 `LiveServerTestCase` наследуется от `TransactionTestCase`.
+
+
+Ключевые свойства TestCase:
+- Каждый тест запускается в транзакции и откатывается (rollback) — быстро и изолированно.
+- setUpTestData() выполняется один раз на класс и экономит время на подготовке данных.
+- Если нужно проверить поведение транзакций — используйте TransactionTestCase.
 
 #### Что добавляет?
 
@@ -161,10 +202,28 @@ DATABASES = {
 
 ![](https://drive.google.com/uc?export=view&id=1E_Tf8H2spWJbSOaaxvWOMiLk4c0bgvUT)
 
-Если вам не повезло, и на проекте вы за автоматических тестеров, то тогда в этой же папке (`tests`) создаётся еще 3 
+Если вам не повезло, и на проекте вы за автоматических тестеров, то тогда в этой же папке (`tests`) создаётся еще 3
 папки `unit`, `integration` и `acceptance`, и уже в них описываются различные тесты.
 
+### Запуск через pytest (рекомендовано)
+
+```bash
+pytest -q                 # все тесты
+pytest tests/unit -q      # каталог
+pytest -k "animals and speak"  # отбор по выражению
+pytest --maxfail=1 --disable-warnings -q
+pytest --cov=yourpkg --cov-report=term-missing
+```
+
+
 ### Запуск тестов
+
+### Выбор инструмента: RequestFactory vs Client и APIRequestFactory vs APIClient
+
+- RequestFactory / APIRequestFactory — юнит-уровень: вызываем view напрямую, middleware и маршрутизация не участвуют. Быстро и изолировано.
+- Client / APIClient — интеграционный уровень: запрос проходит через URLConf и middleware. Для API используйте APIClient (форматы, JSON, удобные методы).
+- Рекомендация: начинать с APIClient/Client для «сквозных» проверок и использовать *RequestFactory для узконаправленных юнит-тестов view/permission/serializer.
+
 
 Предположим, что у нас в приложении `animals` есть папка `tests`, в ней папка `unit` и в ней файл `test_models`.
 
@@ -229,7 +288,7 @@ c = Client()
 c.login(username='fred', password='secret')
 ```
 
-После чего запросы будут от авторизированного пользователя.
+После чего запросы будут от аутентифицированного пользователя.
 
 Метод `force_login()`, принимающий объект юзера, а не логин и пароль.
 
@@ -452,7 +511,7 @@ response = view(request)
 
 ### APIClient
 
-В DRF есть свой клиент для запросов, в котором уже прописаны все необходимые методы запросов (`get()`, `post()`, 
+В DRF есть свой клиент для запросов, в котором уже прописаны все необходимые методы запросов (`get()`, `post()`,
 и т. д.)
 
 ```python
@@ -462,9 +521,24 @@ client = APIClient()
 client.post('/notes/', {'title': 'new idea'}, format='json')
 ```
 
+### APITestCase (DRF)
+
+Удобный базовый класс, комбинирующий TestCase и APIClient:
+```python
+from rest_framework.test import APITestCase
+from rest_framework import status
+from django.urls import reverse
+
+class NotesTests(APITestCase):
+    def test_list_anon(self):
+        url = reverse('notes-list')
+        res = self.client.get(url)
+        assert res.status_code == status.HTTP_200_OK
+```
+
 #### Авторизация через клиента
 
-Поддерживает метод `login()`, `logout()`и `credentials()`. Метод `login()` принимает логин и пароль, метод 
+Поддерживает метод `login()`, `logout()`и `credentials()`. Метод `login()` принимает логин и пароль, метод
 `credentials()` принимает хедеры.
 
 Примеры:
@@ -490,7 +564,7 @@ client = APIClient()
 client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
 ```
 
-Так же поддерживает форсированную аутентификацию:
+Также поддерживает форсированную аутентификацию:
 
 ```python
 user = User.objects.get(username='lauren')
@@ -551,6 +625,28 @@ REST_FRAMEWORK = {
 }
 ```
 
+
+#### Рекомендовано: DjangoModelFactory и SubFactory
+
+```python
+import factory
+from factory.django import DjangoModelFactory
+from django.contrib.auth import get_user_model
+
+User = get_user_model()
+
+class UserFactory(DjangoModelFactory):
+    class Meta:
+        model = User
+    username = factory.Sequence(lambda n: f"user{n}")
+    email = factory.LazyAttribute(lambda o: f"{o.username}@example.com")
+
+class PurchaseFactory(DjangoModelFactory):
+    class Meta:
+        model = Purchase
+    owner = factory.SubFactory(UserFactory)
+```
+
 ## Фабрики для генерации данных
 
 ### FactoryBoy
@@ -558,6 +654,30 @@ REST_FRAMEWORK = {
 ```
 pip install factory_boy
 ```
+
+#### Рекомендовано: DjangoModelFactory и SubFactory
+
+Используйте DjangoModelFactory для моделей Django и SubFactory для связей между моделями — это упростит подготовку данных для API‑тестов и тестов тротлинга.
+
+```python
+import factory
+from factory.django import DjangoModelFactory
+from django.contrib.auth import get_user_model
+
+User = get_user_model()
+
+class UserFactory(DjangoModelFactory):
+    class Meta:
+        model = User
+    username = factory.Sequence(lambda n: f"user{n}")
+    email = factory.LazyAttribute(lambda o: f"{o.username}@example.com")
+
+class PurchaseFactory(DjangoModelFactory):
+    class Meta:
+        model = Purchase
+    owner = factory.SubFactory(UserFactory)
+```
+
 
 Прописывание в `setUp()` создание новых объектов может занимать очень много времени. Чтобы это ускорить, упростить и
 автоматизировать, можно написать свою фабрику:
@@ -664,8 +784,8 @@ LogFactory(timestamp=now - timedelta(days=1))
 
 Иногда нужно заполнять одни поля на основании других, для этого тоже есть специальный объект.
 
-`LazyAttribute` 
-Некоторые поля могут быть заполнены при помощи других, например, электронная почта на основе имени пользователя. 
+`LazyAttribute`
+Некоторые поля могут быть заполнены при помощи других, например, электронная почта на основе имени пользователя.
 `LazyAttribute` обрабатывает такие случаи: он должен получить функцию, принимающую создаваемый объект и
 возвращающую значение для поля:
 
@@ -703,7 +823,7 @@ class UserFactory(factory.Factory):
 
 
 class AdminFactory(UserFactory):
-    admin = True 
+    admin = True
 ```
 
 ### Генерация фейковых данных
@@ -799,3 +919,43 @@ fake.ipv4_private()
 fake.ipv4_private()
 '10.86.161.98'
 ```
+
+
+## Мокирование и изоляция внешних сервисов
+
+```python
+from unittest.mock import patch
+
+def do_payment(amount):
+    # обёртка над внешним SDK
+    from app.payments.gateway import charge
+    return charge(amount).get('ok')
+
+@patch('app.payments.gateway.charge', return_value={'ok': True})
+def test_charge_ok(mock_charge):
+    assert do_payment(100) is True
+    mock_charge.assert_called_once_with(100)
+```
+
+
+### Тестирование тротлинга (429 Too Many Requests)
+
+```python
+from django.test import override_settings
+from django.urls import reverse
+from rest_framework import status
+from rest_framework.test import APITestCase
+
+class ThrottleTests(APITestCase):
+    @override_settings(REST_FRAMEWORK={
+        'DEFAULT_THROTTLE_CLASSES': ['rest_framework.throttling.AnonRateThrottle'],
+        'DEFAULT_THROTTLE_RATES': {'anon': '2/min'}
+    })
+    def test_throttle_for_anon(self):
+        # При необходимости подготовьте данные через фабрики (см. раздел про DjangoModelFactory)
+        url = reverse('notes-list')
+        assert self.client.get(url).status_code == status.HTTP_200_OK
+        assert self.client.get(url).status_code == status.HTTP_200_OK
+        assert self.client.get(url).status_code == status.HTTP_429_TOO_MANY_REQUESTS
+```
+
