@@ -610,26 +610,18 @@ COMMIT;
 выполнения обновления происходит ошибка (например, попытка установить отрицательную зарплату). ROLLBACK поможет откатить
 изменения:
 
-_Пример для SQL Server (T‑SQL):_
+_Пример (PostgreSQL):_
 
 ```sql
-BEGIN TRANSACTION;
+BEGIN;
+SAVEPOINT sp1;
 UPDATE employees
 SET salary = salary * 1.1
 WHERE department = 'Sales';
-
--- Ошибка: попытка установить отрицательную зарплату (например, из-за неправильного вычисления)
-IF @@ERROR != 0
-BEGIN
-ROLLBACK;
-PRINT 'Ошибка при обновлении данных. Изменения откатаны.';
-
-END
-    ELSE
-BEGIN
+-- Если сработает ограничение (например, CHECK salary >= 0) или иная ошибка,
+-- можно откатиться к savepoint и обработать ситуацию:
+ROLLBACK TO SAVEPOINT sp1; -- по необходимости
 COMMIT;
-END
-
 ```
 
 #### Пример 2: Обнаружение нарушения целостности
@@ -639,26 +631,34 @@ END
 использовать ROLLBACK:
 
 ```sql
-BEGIN TRANSACTION;
+BEGIN;
 INSERT INTO orders (customer_id, order_date)
 VALUES (1, '2024-08-01');
+
+SAVEPOINT s1;
 INSERT INTO order_items (order_id, product_id, quantity)
 VALUES (1, 10, 2);
 
--- Проверка на наличие продукта
-IF NOT EXISTS (SELECT 1 FROM products WHERE product_id = 10)
-BEGIN
-ROLLBACK;
-PRINT 'Ошибка: продукт не существует. Изменения откатаны.';
-END
-    ELSE
-BEGIN
-COMMIT;
-END
+-- Если product_id отсутствует и есть внешний ключ на products(id),
+-- вставка завершится ошибкой. Откатываемся к savepoint, чтобы продолжить альтернативный сценарий:
+ROLLBACK TO SAVEPOINT s1; -- по необходимости
 
+COMMIT;
 ```
 
 #### Пример 3: Сбой системы
+> Примечание (PostgreSQL): целостность лучше обеспечивать на уровне схемы — через ограничения CHECK и FOREIGN KEY.
+> Примеры:
+>
+> ```sql
+> ALTER TABLE employees
+>   ADD CONSTRAINT employees_salary_nonnegative CHECK (salary >= 0);
+>
+> ALTER TABLE order_items
+>   ADD CONSTRAINT order_items_product_fk FOREIGN KEY (product_id)
+>   REFERENCES products(id);
+> ```
+
 
 Представьте, что во время выполнения транзакции происходит сбой системы (например, отключение питания). В этом случае,
 благодаря использованию ROLLBACK, при следующем запуске базы данных изменения будут откатаны, и система вернется в
@@ -781,47 +781,15 @@ COMMIT;
 1. **Перевод денег между счетами**:
 
 ```sql
-BEGIN TRANSACTION;
-
-UPDATE accounts
-SET balance = balance - 500
-WHERE account_id = 1;
-UPDATE accounts
-SET balance = balance + 500
-WHERE account_id = 2;
-
-IF @@ERROR <> 0
-BEGIN
-ROLLBACK;
-END
-    ELSE
-BEGIN
+BEGIN;
+UPDATE accounts SET balance = balance - 500 WHERE account_id = 1;
+UPDATE accounts SET balance = balance + 500 WHERE account_id = 2;
 COMMIT;
-END
 ```
 
 В этом примере транзакция атомарна, согласована, изолирована (в зависимости от уровня изоляции) и долговечна.
 
 2. **Обновление данных с проверкой целостности**:
-
-```sql
-BEGIN TRANSACTION;
-
-UPDATE inventory
-SET quantity = quantity - 10
-WHERE product_id = 5;
-
-IF (SELECT quantity FROM inventory WHERE product_id = 5) < 0
-BEGIN
-    ROLLBACK;
-END
-ELSE
-BEGIN
-    COMMIT;
-END
-```
-
-_Вариант для PostgreSQL:_
 
 ```sql
 BEGIN;
