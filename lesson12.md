@@ -217,8 +217,8 @@ a_stand_alone_function_decorated()
 # Я простая одинокая функция, ты ведь не посмеешь меня изменять?..
 # А я - код, срабатывающий после
 
-# Наверное, теперь мы бы хотели, чтобы каждый раз, во время вызова a_stand_alone_function, вместо неё 
-# вызывалась a_stand_alone_function_decorated. Нет ничего проще, просто перезапишем a_stand_alone_function 
+# Наверное, теперь мы бы хотели, чтобы каждый раз, во время вызова a_stand_alone_function, вместо неё
+# вызывалась a_stand_alone_function_decorated. Нет ничего проще, просто перезапишем a_stand_alone_function
 # функцией, которую нам вернул my_shiny_new_decorator:
 a_stand_alone_function = my_shiny_new_decorator(a_stand_alone_function)
 a_stand_alone_function()
@@ -326,6 +326,8 @@ sandwich()
 # <\______/>
 # ~lettuce~
 ```
+> Примечание: декораторы применяются сверху вниз, а при вызове функции выполняются «изнутри наружу» (ближайший к функции — самый внутренний).
+
 
 ### Передача параметров в декоратор
 
@@ -400,9 +402,9 @@ import time
 
 def timer_decorator(func):
     def wrapper(*args, **kwargs):
-        start_time = time.time()
+        start_time = time.perf_counter()
         result = func(*args, **kwargs)
-        end_time = time.time()
+        end_time = time.perf_counter()
         print(f"Время выполнения {func.__name__}: {end_time - start_time:.4f} секунд")
         return result
 
@@ -442,7 +444,7 @@ class Lucy(object):
 
     @method_friendly_decorator
     def say_your_age(self, lie):
-        print("I'm {self.age + lie}. Do I look like it?")
+        print(f"I'm {self.age + lie}. Do I look like it?")
 
 
 l = Lucy()
@@ -461,8 +463,8 @@ def a_decorator_passing_arbitrary_arguments(function_to_decorate):
         print(args)
         print(kwargs)
         # Теперь мы распакуем *args и **kwargs
-        # Если вы не слишком хорошо знакомы с распаковкой, можете прочесть следующую статью:
-        # https://www.saltycrane.com/blog/2008/01/how-to-use-args-and-kwargs-in-python/
+        # Если вы не слишком хорошо знакомы с распаковкой, см. официальную документацию:
+        # https://docs.python.org/3/tutorial/controlflow.html#unpacking-argument-lists
         function_to_decorate(*args, **kwargs)
 
     return a_wrapper_accepting_arbitrary_arguments
@@ -498,7 +500,7 @@ function_with_arguments(1, 2, 3)
 
 @a_decorator_passing_arbitrary_arguments
 def function_with_named_arguments(a, b, c, platypus="Why not?"):
-    print("Do %s, %s and %s like platypuses? %s" % (a, b, c, platypus))
+    print(f"Do {a}, {b} and {c} like platypuses? {platypus}")
 
 
 function_with_named_arguments("Bill", "Linus", "Steve", platypus="Definitely!")
@@ -684,7 +686,7 @@ decorated_function_with_arguments("Раджеш", "Говард")
 # Я создаю декораторы! И я получил следующие аргументы: Леонард Шелдон
 # Я - декоратор. И ты всё же смог передать мне эти аргументы: Леонард Шелдон
 # Я - обёртка вокруг декорируемой функции.
-# И я имею доступ ко всем аргументам: 
+# И я имею доступ ко всем аргументам:
 #   - и декоратора: Леонард Шелдон
 #   - и функции: Раджеш Говард
 # Теперь я могу передать нужные аргументы дальше
@@ -711,7 +713,7 @@ decorated_function_with_arguments(c2, "Говард")
 # Я создаю декораторы! И я получил следующие аргументы: Леонард Пенни
 # Я - декоратор. И ты всё же смог передать мне эти аргументы: Леонард Пенни
 # Я - обёртка вокруг декорируемой функции.
-# И я имею доступ ко всем аргументам: 
+# И я имею доступ ко всем аргументам:
 #   - и декоратора: Леонард Пенни
 #   - и функции: Лесли Говард
 # Теперь я могу передать нужные аргументы дальше
@@ -753,7 +755,7 @@ def decorator_with_args(decorator_to_enhance):
 
     # Мы используем тот же трюк, который мы использовали для передачи аргументов:
     def decorator_maker(*args, **kwargs):
-        # создадим на лету декоратор, который принимает как аргумент только 
+        # создадим на лету декоратор, который принимает как аргумент только
         # функцию, но сохраняет все аргументы, переданные своему "создателю"
         def decorator_wrapper(func):
             # Мы возвращаем то, что вернёт нам изначальный декоратор, который, в свою очередь
@@ -805,8 +807,6 @@ decorated_function("Вселенная и", "всё прочее")
 Вы не можете «раздекорировать» функцию. Безусловно, существуют трюки, позволяющие создать декоратор, который можно
 отсоединить от функции, но это плохая практика. Правильней будет запомнить, что если функция декорирована — это не
 отменить.
-
-Декораторы оборачивают функции, что может затруднить отладку.
 
 ## Классы как декораторы
 
@@ -913,7 +913,7 @@ h2 = Human.from_birthday("Vlad", "01-06-1994", "%d-%m-%Y")
 Статические методы декларируются при помощи декоратора `staticmethod`. Им не нужен определённый первый аргумент (ни
 `self`, ни `cls`).
 
-Их можно воспринимать как методы, которые “не знают, к какому классу относятся”. 
+Их можно воспринимать как методы, которые “не знают, к какому классу относятся”.
 По сути ничем не отличаются от обычных функций
 
 Таким образом, статические методы прикреплены к классу лишь для удобства и не могут менять состояние ни класса, ни его
@@ -978,9 +978,115 @@ person.first_name = "Dan"
 print(person.full_name)  # Dan Driscoll
 ```
 
+## Абстракция и модуль abc
+
+Абстракция позволяет задать «контракт» для подклассов: какие методы/свойства они обязаны реализовать.
+В Python это делается через абстрактные базовые классы (ABC) из модуля `abc`.
+
+### Базовое использование: ABC и @abstractmethod
+
+```python
+from abc import ABC, abstractmethod
+
+class Shape(ABC):
+    @abstractmethod
+    def area(self) -> float:
+        ...  # обязан быть реализован в подклассе
+
+class Rectangle(Shape):
+    def __init__(self, w: float, h: float):
+        self.w, self.h = w, h
+    def area(self) -> float:
+        return self.w * self.h
+```
+
+- Нельзя инстанцировать `Shape()`: будет `TypeError` (есть нереализованные абстрактные методы).
+- Можно инстанцировать `Rectangle()`, поскольку `area` реализован.
+
+### Абстрактные свойства (@property + @abstractmethod)
+
+```python
+from abc import ABC, abstractmethod
+
+class DataSource(ABC):
+    @property
+    @abstractmethod
+    def url(self) -> str:  # только «интерфейс»
+        ...
+
+    @property
+    def host(self) -> str:  # обычное свойство, использует url
+        return self.url.split('/')[2]
+
+class Api(DataSource):
+    def __init__(self, url: str):
+        self._url = url
+    @property
+    def url(self) -> str:  # реализация абстрактного свойства
+        return self._url
+```
+
+Замечания:
+- Порядок декораторов важен: сначала `@property`, затем `@abstractmethod`.
+- В подклассе можно расширять поведение, сохраняя контракт базового класса.
+
+### Абстрактные classmethod и staticmethod
+
+```python
+from abc import ABC, abstractmethod
+
+class Serializer(ABC):
+    @classmethod
+    @abstractmethod
+    def from_dict(cls, d: dict) -> 'Serializer':
+        ...
+
+    @staticmethod
+    @abstractmethod
+    def name() -> str:
+        ...
+
+class UserSerializer(Serializer):
+    @classmethod
+    def from_dict(cls, d: dict) -> 'UserSerializer':
+        return cls()
+    @staticmethod
+    def name() -> str:
+        return 'user'
+```
+> Примечание: для абстрактных методов класса/статических методов обычно пишут сначала @classmethod/@staticmethod, затем @abstractmethod — как в примере выше.
+
+
+### Виртуальная регистрация подклассов (register)
+
+Иногда нужно объявить класс «подклассом» ABC без фактического наследования:
+
+```python
+from abc import ABC
+
+class JsonSerializable(ABC):
+    pass
+
+class DictLike:
+    def to_json(self) -> str:
+        return '{}'
+
+JsonSerializable.register(DictLike)
+assert isinstance(DictLike(), JsonSerializable)  # True
+```
+
+Предупреждение: `register` не проверяет наличие «контракта» на уровне рантайма — это лишь маркировка для `isinstance`/`issubclass`.
+Для статической проверки интерфейсов в больших кодовых базах часто удобнее `typing.Protocol`.
+
+### Практические советы
+- ABC — хороший способ зафиксировать обязательные методы и свойства и явно сообщить о намерениях дизайна.
+- Если класс остался абстрактным (есть нереализованные методы/свойства), инстанцировать его нельзя.
+- ABC удобно комбинировать с миксинами; держите миксины мелкими и ортогональными.
+- Абстрактные `@property`, `@classmethod`, `@staticmethod` помогают описывать интерфейсы на уровне API, а не только реализации.
+
 ## Домашняя работа
 
 1. Создайте класс, который будет считывать файл
 2. Напишите декоратор, который будет замерять время выполнения.
-3. Напишите декоратор, который будет вызывать функцию n-раз. 
+3. Напишите декоратор, который будет вызывать функцию n-раз.
 4. Воспользуйтесь декоратором для замера времени и примените его ко всем функциям в вашем модуле.
