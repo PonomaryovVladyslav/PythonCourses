@@ -84,7 +84,7 @@
 
 Устанавливается через `pip`
 
-```pip install channels```
+```pip install "channels[daphne]"```
 
 ### Туториал
 
@@ -107,10 +107,10 @@ chatsite/
         wsgi.py
 ```
 
-Если вы используете версию django 2.2, то у вас не будет файла `asgi.py`, а он нам будет нужен. Не переживайте, мы его
-создадим.
+В современных версиях Django `asgi.py` создаётся автоматически (Django 3.0+). Если у вас очень старая версия, файл можно
+создать вручную.
 
-Файлы `wsgi.py` и `asgi.py` необходимы для запуска серверов, `wsgi` - синхронных, `asgi` - асинхронных. Веб сокет это
+Файлы `wsgi.py` и `asgi.py` необходимы для запуска серверов: `wsgi` — синхронных, `asgi` — асинхронных. WebSocket —
 асинхронная технология.
 
 Создадим приложение для чата
@@ -156,7 +156,7 @@ INSTALLED_APPS = [
 ]
 ```
 
-Создадим папку `templates`, добавим её в `settigns.py`
+Создадим папку `templates`, добавим её в `settings.py`
 
 Создадим файл `index.html` в папке `templates`:
 
@@ -237,8 +237,7 @@ urlpatterns = [
 
 ```
 # chatsite/urls.py
-from django.conf.urls import include
-from django.urls import path
+from django.urls import include, path
 from django.contrib import admin
 
 urlpatterns = [
@@ -351,11 +350,9 @@ Quit the server with CONTROL-C.
     const roomName = JSON.parse(document.getElementById('room-name').textContent);
 
     const chatSocket = new WebSocket(
-            'ws://'
-            + window.location.host
-            + '/ws/chat/'
-            + roomName
-            + '/'
+            (window.location.protocol === 'https:' ? 'wss' : 'ws') + '://' +
+            window.location.host +
+            '/ws/chat/' + roomName + '/'
     );
 
     chatSocket.onmessage = function (e) {
@@ -511,7 +508,7 @@ class ChatConsumer(WebsocketConsumer):
 
 - receive - Что делать при приходе сообщения.
 
-- send - Отправить сообщение всем кто подключён (включая отправителя, вообще всем).
+- send - отправить сообщение текущему клиентскому соединению. Для широковещательной отправки используйте group_send (через channel layer).
 
 Создаём новый файл для урлов веб сокета `routing.py`.
 
@@ -526,11 +523,11 @@ chat/
 
 ```python
 # chat/routing.py
-from django.urls import path
-from .comsumer import ChatConsumer
+from django.urls import re_path
+from .consumers import ChatConsumer
 
 websocket_urlpatterns = [
-    path('ws/chat/<str:room_name>/', ChatConsumer.as_asgi(), name='room'),
+    re_path(r"^ws/chat/(?P<room_name>[\w-]+)/$", ChatConsumer.as_asgi()),
 ]
 ```
 
@@ -547,7 +544,7 @@ from channels.routing import ProtocolTypeRouter, URLRouter
 from channels.security.websocket import AllowedHostsOriginValidator
 from django.core.asgi import get_asgi_application
 
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "mysite.settings")
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "chatsite.settings")
 # Initialize Django ASGI application early to ensure the AppRegistry
 # is populated before importing code that may import ORM models.
 django_asgi_app = get_asgi_application()
@@ -565,6 +562,8 @@ application = ProtocolTypeRouter(
 ```
 
 Обратите внимание, мы добавили новый протокол для обработки.
+Примечание: если используете AllowedHostsOriginValidator, убедитесь, что в settings.py добавлены ALLOWED_HOSTS = ['127.0.0.1', 'localhost'] (для dev), иначе WebSocket-подключение может отклоняться.
+
 
 Для того, что бы сокет работал необходимы сессии, а для этого необходимо провести миграции.
 
@@ -604,7 +603,7 @@ application = ProtocolTypeRouter(
 ```python
 # chatsite/settings.py
 # Channels
-ASGI_APPLICATION = 'mysite.asgi.application'
+ASGI_APPLICATION = 'chatsite.asgi.application'
 CHANNEL_LAYERS = {
     'default': {
         'BACKEND': 'channels_redis.core.RedisChannelLayer',
@@ -922,4 +921,71 @@ DATABASES = {
 
 ```
 python3 manage.py test chat.tests
+```
+
+### pytest-django: live_server (пример e2e)
+
+Для pytest можно написать аналогичный end-to-end тест, используя фикстуру live_server из pytest-django.
+
+```bash
+pip install pytest pytest-django selenium
+```
+
+Пример фикстуры браузера (Chrome в headless-режиме) в conftest.py:
+
+```python
+# conftest.py
+import pytest
+from selenium.webdriver import Chrome
+from selenium.webdriver.chrome.options import Options as ChromeOptions
+
+
+@pytest.fixture(scope="session")
+def chrome_driver():
+    opts = ChromeOptions()
+    opts.add_argument("--headless=new")
+    opts.add_argument("--no-sandbox")
+    opts.add_argument("--disable-dev-shm-usage")
+    driver = Chrome(options=opts)
+    try:
+        yield driver
+    finally:
+        driver.quit()
+```
+
+Тест с использованием live_server:
+
+```python
+# tests/test_chat_live.py
+from selenium.webdriver.common.action_chains import ActionChains
+from selenium.webdriver.common.by import By
+from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.support.ui import WebDriverWait
+
+
+def test_chat_room_e2e(live_server, chrome_driver):
+    driver = chrome_driver
+
+    # Открываем форму выбора комнаты
+    driver.get(f"{live_server.url}/chat/")
+
+    # Вводим имя комнаты и заходим
+    ActionChains(driver).send_keys("room_pytest", Keys.ENTER).perform()
+    WebDriverWait(driver, 3).until(lambda d: "room_pytest" in d.current_url)
+
+    # Отправляем сообщение Enter'ом
+    ActionChains(driver).send_keys("hello from pytest", Keys.ENTER).perform()
+
+    # Проверяем, что сообщение появилось в логах
+    def _has_message(d):
+        val = d.find_element(By.CSS_SELECTOR, "#chat-log").get_property("value")
+        return "hello from pytest" in val
+
+    WebDriverWait(driver, 3).until(_has_message)
+```
+
+Запуск:
+
+```bash
+pytest -q -k chat_live
 ```
