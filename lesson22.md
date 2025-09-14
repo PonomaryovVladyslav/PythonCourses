@@ -1,4 +1,4 @@
-# Лекция 22. Django ORM. Объекты моделей и queryset, Meta моделей, прокси модели.
+# Лекция 22. Django ORM.
 
 ![](https://cs8.pikabu.ru/post_img/2016/09/12/5/og_og_1473660997242355939.jpg)
 
@@ -45,8 +45,8 @@ class Article(models.Model):
                                related_name='articles')
     text = models.TextField(max_length=10000,
                             null=True)
-    created_at = models.DateTimeField(default=timezone.now)
-    updated_at = models.DateTimeField(default=timezone.now)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
     genre = models.IntegerField(choices=GENRE_CHOICES,
                                 default=1)
 
@@ -97,7 +97,7 @@ from django.utils.translation import gettext as _
 текст
 может отображаться на русском, украинском и английском. Именно эта функция поможет нам в будущем указать значения
 для всех трех языков. Подробнейшая информация по
-переводам [Тут](https://docs.djangoproject.com/en/4.2/topics/i18n/translation/)
+переводам [Тут](https://docs.djangoproject.com/en/stable/topics/i18n/translation/)
 
 > Мы будем рассматривать это на отдельной лекции
 
@@ -146,7 +146,7 @@ comment = models.ForeignKey('myapp.Comment',
 
 > Это пример самоссылочной связи, помните еще из занятий по `SQL`?
 
-При такой записи мы создаём связь один ко многим к самому себе, указав при этом black=True, null=True. Можно создать
+При такой записи мы создаём связь один ко многим к самому себе, указав при этом blank=True, null=True. Можно создать
 коммент без указания родительского комментария, а если создать комментарий со ссылкой на другой, это будет комментарий к
 комментарию, причем это можно сделать любой вложенности.
 
@@ -174,7 +174,7 @@ comment = models.ForeignKey('myapp.Comment',
 Для доступа к моделям их нужно импортировать, я импортирую модель Comment.
 
 Рассмотрим весь CRUD и дополнительные особенности. Очень подробная информация по всем возможным
-операциям [тут](https://docs.djangoproject.com/en/4.2/topics/db/queries/)
+операциям [тут](https://docs.djangoproject.com/en/stable/topics/db/queries/)
 
 ### R - retrieve
 
@@ -262,7 +262,7 @@ Comment.objects.filter(article__author__pseudonym='The king', article__genre=3)
 
 `in` - содержится в каком-то списке
 
-Их намного больше, читать [ТУТ](https://docs.djangoproject.com/en/4.2/ref/models/querysets/#field-lookups)
+Их намного больше, читать [ТУТ](https://docs.djangoproject.com/en/stable/ref/models/querysets/#field-lookups)
 
 Примеры:
 
@@ -335,6 +335,8 @@ unique_authors = Book.objects.distinct('author')
 
 В этом примере запрос вернет уникальные записи на основе поля `author`. Если не указать поле, то метод `distinct()`
 уберет дубликаты всех записей.
+> Примечание: distinct('field') доступен только в некоторых БД (например, PostgreSQL) и имеет ограничения при совместном использовании с order_by().
+
 
 #### `values()`
 
@@ -420,7 +422,7 @@ books_difference = all_books.difference(old_books)
 Это далеко не всё, что можно сделать с queryset.
 
 Все методы кверисетов
-читаем [Тут](https://docs.djangoproject.com/en/4.2/ref/models/querysets/#methods-that-return-new-querysets)
+читаем [Тут](https://docs.djangoproject.com/en/stable/ref/models/querysets/#methods-that-return-new-querysets)
 
 ### Вставка объектов в методы
 
@@ -428,7 +430,7 @@ books_difference = all_books.difference(old_books)
 
 ```python
 art = Article.objects.get(id=2)
-comments = Comment.object.filter(article=art)
+comments = Comment.objects.filter(article=art)
 ```
 
 ### Объектные методы
@@ -470,7 +472,7 @@ Comment.objects.filter(article__created_at__gte=date.today() - timedelta(days=1)
 ```
 
 Информация по всем остальным
-методам [Тут](https://docs.djangoproject.com/en/4.2/ref/models/querysets/#methods-that-do-not-return-querysets)
+методам [Тут](https://docs.djangoproject.com/en/stable/ref/models/querysets/#methods-that-do-not-return-querysets)
 
 ### related_name
 
@@ -554,7 +556,7 @@ Comment.objects.filter(user__id=2).delete()
 `bulk_update()` - массовое обновление (отличие от обычного в том, что при обычном на каждый объект создается запрос,
 в этом случае запрос делается массово)
 
-Подробно почитать про них [Тут](https://docs.djangoproject.com/en/4.2/ref/models/querysets/#get-or-create)
+Подробно почитать про них [Тут](https://docs.djangoproject.com/en/stable/ref/models/querysets/#get-or-create)
 
 ## Подробнее о методе save()
 
@@ -572,8 +574,8 @@ Comment.objects.filter(user__id=2).delete()
 
 ```python
 class MyAwesomModel(models.Model):
-    name = models.CharField(max_lenght=100)
-    created_at = models.DateField()
+    name = models.CharField(max_length=100)
+    created_at = models.DateTimeField()
 
     def save(self, **kwargs):
         self.created_at = timezone.now() - timedelta(days=1)
@@ -588,8 +590,8 @@ class MyAwesomModel(models.Model):
 
 ```python
 class MyAwesomModel(models.Model):
-    name = models.CharField(max_lenght=100)
-    created_at = models.DateField()
+    name = models.CharField(max_length=100)
+    created_at = models.DateTimeField()
 
     def save(self, **kwargs):
         if not self.id:
@@ -604,8 +606,8 @@ class MyAwesomModel(models.Model):
 
 ```python
 class MyAwesomModel(models.Model):
-    name = models.CharField(max_lenght=100)
-    created_at = models.DateField()
+    name = models.CharField(max_length=100)
+    created_at = models.DateTimeField()
 
     def delete(self, **kwargs):
         send_email(id=self.id)
@@ -805,14 +807,14 @@ p2.article_set.all()
 # <QuerySet []>
 ```
 
-> Назаначение как и очистка так же работает с обоих концов, как и любое другое действие с менеджерами.
+> Назначение, как и очистка, также работает с обоих концов, как и любое другое действие с менеджерами.
 
 ## Сложные SQL конструкции
 
 Документация по этому разделу
 
-[Тут](https://docs.djangoproject.com/en/4.2/ref/models/expressions/#django.db.models.F)
-[Тут](https://docs.djangoproject.com/en/4.2/ref/models/querysets/#django.db.models.Q)
+[Тут](https://docs.djangoproject.com/en/stable/ref/models/expressions/#django.db.models.F)
+[Тут](https://docs.djangoproject.com/en/stable/ref/models/querysets/#django.db.models.Q)
 
 На самом деле, мы не ограничены стандартными конструкциями. Мы можем применять предвычисления на уровне базы, добавлять
 логические конструкции и т. д., давайте рассмотрим подробнее.
@@ -837,7 +839,7 @@ from django.db.models import Q
 
 q1 = Q(article__author__pseudonym='The king')
 q2 = Q(article__genre=3)
-``` 
+```
 
 Теперь мы можем явно использовать логические `И` и `ИЛИ`.
 
