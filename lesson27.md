@@ -50,9 +50,9 @@ REST (Representational State Transfer — «передача состояния 
    текущее или желаемое состояние ресурса. Например, если ресурсом является пользователь, то представлением может
    являться XML или HTML описание этого пользователя.
 
-   4.3) **Self-descriptive messages (само-документируемые сообщения)**. Под само-описательностью имеется в виду, что
+   4.3) **Self-descriptive messages (самоописательные сообщения)**. Под самоописательностью имеется в виду, что
    запрос и ответ должны хранить в себе всю необходимую информацию для их обработки. Не должны быть дополнительные
-   сообщения или кэши для обработки одного запроса. Другими словами, отсутствие состояния, сохраняемого между запросами
+   сообщения или кеши для обработки одного запроса. Другими словами, отсутствие состояния, сохраняемого между запросами
    к
    ресурсам. Это очень важно для масштабирования системы.
 
@@ -96,6 +96,14 @@ REST (Representational State Transfer — «передача состояния 
 По определению, безопасные операции идемпотентны, так как они приводят к одному и тому же результату на сервере.
 Безопасные методы реализованы как операции только для чтения. Однако безопасность не означает, что сервер должен
 возвращать тот же самый результат каждый раз.
+Дополнения по методам и статусам:
+- Безопасные: GET, HEAD, OPTIONS, TRACE — не изменяют состояние, по определению безопасны и тем самым идемпотентны.
+- Идемпотентные: PUT, DELETE — повторные вызовы не меняют результат на сервере; POST — не идемпотентен; PATCH обычно не идемпотентен.
+- Рекомендации по статусам:
+  - POST (создание) → 201 Created и заголовок Location на ресурс
+  - PUT/PATCH (обновление) → 200 OK с телом или 204 No Content без тела
+  - DELETE → 204 No Content (без тела)
+
 
 ### Коды состояний HTTP (основные)
 
@@ -144,6 +152,10 @@ REST (Representational State Transfer — «передача состояния 
 503: Service Unavailable
 
 504: Gateway Timeout
+Полезные ссылки:
+- Методы HTTP (MDN): https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods
+- Коды ответов (MDN): https://developer.mozilla.org/en-US/docs/Web/HTTP/Status
+
 
 ![](https://project-static-assets.s3.amazonaws.com/APISpreadsheets/APIMemes/StatusCodeBad.jpeg)
 
@@ -152,7 +164,7 @@ REST (Representational State Transfer — «передача состояния 
 На практике обычно backend-разработчики вообще не имеют отношения к тому, что происходит на фронте (если ты не
 fullstack`:)`). А только подготавливают для фронта API для различных действий, чаще всего CRUD.
 
-Для проверки работоспособности API чаще всего используется **postman** скачать можно [ТУТ](https://www.getpostman.com/)
+Для проверки API часто используют Postman — скачать: https://www.postman.com/downloads/. Альтернативы: curl/httpie (CLI), VS Code REST Client.
 
 > Это программа, которая позволяет создавать запросы любой сложности к серверу. Рекомендую тщательно разобраться, как
 > этим
@@ -166,13 +178,17 @@ fullstack`:)`). А только подготавливают для фронта
 ## Как это работает на практике и при чём тут Django?
 
 Для Django существует несколько различных пакетов для применения REST архитектуры, но основным является **Django REST
-Framework** дока [тут](https://www.django-rest-framework.org/).
+Framework**. Документация: https://www.django-rest-framework.org/
 
 ### Установка
 
 ```pip install djangorestframework```
 
 Не забываем добавить в INSTALLED_APPS **'rest_framework'**
+
+Примечания:
+- DRF по умолчанию рендерит Python-представление данных (serializer.data) в JSON через настроенный рендерер.
+- serializer.data — это уже Python-структура (dict/list). В JSON она превращается при возврате Response(serializer.data).
 
 ## Сериализация
 
@@ -327,6 +343,19 @@ serializer = BookSerializer(data=data)
 serializer.is_valid(raise_exception=True)
 obj = serializer.save()
 ```
+Примеры на практике:
+```
+# Частичное обновление
+serializer = BookSerializer(instance=book, data=partial_data, partial=True)
+serializer.is_valid(raise_exception=True)
+serializer.save()
+
+# Передача дополнительных аргументов в save (например, автор)
+serializer = BookSerializer(data=data, context={'request': request})
+serializer.is_valid(raise_exception=True)
+serializer.save(author=request.user)
+```
+
 
 
 ### Сериалайзер на основе `ModelSerializer`
@@ -342,6 +371,19 @@ class BookModelSerializer(serializers.ModelSerializer):
         model = Book
         fields = ['title', 'author', 'published_date', 'isbn', 'price']
 ```
+Пример настроек Meta: read_only_fields и extra_kwargs
+```
+class BookModelSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Book
+        fields = ['id', 'title', 'author', 'published_date', 'isbn', 'price']
+        read_only_fields = ['id', 'published_date']
+        extra_kwargs = {
+            'isbn': {'required': False},
+            'price': {'min_value': 0}
+        }
+```
+
 
 > И в нем уже прописаны `create` и `update`
 
@@ -353,7 +395,10 @@ class BookModelSerializer(serializers.ModelSerializer):
 
 ## Поля и их особенности
 
-Дока [тут](https://www.django-rest-framework.org/api-guide/fields/)
+Документация:
+- Поля: https://www.django-rest-framework.org/api-guide/fields/
+- Связи: https://www.django-rest-framework.org/api-guide/relations/
+- Валидаторы: https://www.django-rest-framework.org/api-guide/validators/
 
 Любое из полей может иметь такие аргументы:
 
@@ -438,6 +483,9 @@ class BookModelSerializer(serializers.ModelSerializer):
    Иногда вам нужно использовать метод модели, чтобы вычислить значение для поля сериалайзера:
 
    ```python
+   from django.utils import timezone
+   from datetime import timedelta
+
    class Book(models.Model):
        title = models.CharField(max_length=200)
        publication_date = models.DateField()
@@ -748,6 +796,16 @@ class AlbumSerializer(serializers.ModelSerializer):
 ```
 
 Вернёт `id`:
+Для записи используйте queryset:
+```
+class AlbumWriteSerializer(serializers.ModelSerializer):
+    tracks = serializers.PrimaryKeyRelatedField(many=True, queryset=Track.objects.all())
+
+    class Meta:
+        model = Album
+        fields = ['album_name', 'artist', 'tracks']
+```
+
 
 ```json
 {
@@ -789,7 +847,7 @@ class AlbumSerializer(serializers.ModelSerializer):
   ]
 }
 ```
-Примечание: для HyperlinkedRelatedField нужен корректный `view_name`, а также presence `request` в контексте сериалайзера (передаётся автоматически во ViewSet/GenericAPIView). Для гиперссылок удобно использовать HyperlinkedModelSerializer.
+Примечание: для HyperlinkedRelatedField нужен корректный `view_name`, а также наличие `request` в контексте сериалайзера (во ViewSet/GenericAPIView передаётся автоматически; вне CBV передавайте вручную через `context={'request': request}`). Для гиперссылок удобно использовать HyperlinkedModelSerializer.
 
 
 ### SlugRelatedField()
@@ -956,6 +1014,11 @@ class AuthorSerializer(serializers.ModelSerializer):
 ```
 
 Этот запрос будет обработан нашим `AuthorSerializer`, который создаст автора и его книги.
+Замечание про вложенные сериалайзеры:
+- DRF не выполняет сложные операции с вложенными записями «из коробки». Частичное обновление списков, сопоставление по id и удаление/создание требуют явной логики.
+- Для нетривиальных случаев рассматривайте отдельные endpoints для вложенных ресурсов или сторонние пакеты.
+- Обязательно покрывайте такие операции тестами.
+
 
 ## Немного забегая вперед
 
