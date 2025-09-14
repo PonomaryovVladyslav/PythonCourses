@@ -14,7 +14,7 @@
 
 ## Class View
 
-[Дока](https://ccbv.co.uk/projects/Django/4.2/django.views.generic.base/View/)
+[Дока](https://ccbv.co.uk/projects/Django/)
 
 Основой всех классов, используемых во `view`, является класс `View`. Методы этого класса используются всеми остальными
 классами.
@@ -57,7 +57,7 @@ def dispatch(self, request, *args, **kwargs):
 Если наследоваться от этого класса, то мы можем описать функцию `get` и/или `post`, чтобы описать, что необходимо делать
 при запросе методами `GET` или `POST`.
 
-И можем описать, какие вообще запросы мы ожидаем принимать в аттрибуте `http_method_names`
+И можем описать, какие вообще запросы мы ожидаем принимать в атрибуте `http_method_names`
 
 Например:
 
@@ -91,7 +91,7 @@ path('some-url/', MyView.as_view(), name='some-name')
 
 ## Class TemplateView
 
-[Дока](https://ccbv.co.uk/projects/Django/4.2/django.views.generic.base/TemplateView/)
+[Дока](https://ccbv.co.uk/projects/Django/)
 
 Класс, необходимый для рендера html файлов
 
@@ -99,7 +99,7 @@ path('some-url/', MyView.as_view(), name='some-name')
 
 ```python
 template_name = None  # Имя html файла, который нужно рендерить
-extra_content = None  # Словарь с контентом
+extra_context = None  # Словарь с контентом
 ```
 
 Основные методы:
@@ -149,7 +149,7 @@ class HomePageView(TemplateView):
 
 ## Class RedirectView
 
-[Дока](https://ccbv.co.uk/projects/Django/4.2/django.views.generic.base/RedirectView/)
+[Дока](https://ccbv.co.uk/projects/Django/)
 
 Класс, необходимый для перенаправления запросов с одного URL на другой.
 
@@ -182,7 +182,7 @@ class ArticleRedirectView(RedirectView):
 
 ## Class DetailView
 
-[Дока](https://ccbv.co.uk/projects/Django/4.2/django.views.generic.detail/DetailView/)
+[Дока](https://ccbv.co.uk/projects/Django/)
 
 Класс, который необходим для того, чтобы сделать страницу для просмотра одного объекта.
 
@@ -200,6 +200,8 @@ from django.views.generic.detail import DetailView
 from articles.models import Article
 
 
+from django.utils import timezone
+
 class ArticleDetailView(DetailView):
     model = Article
 
@@ -214,10 +216,10 @@ class ArticleDetailView(DetailView):
 ```python
 from django.urls import path
 
-from article.views import ArticleDetailView
+from articles.views import ArticleDetailView
 
 urlpatterns = [
-    path('<pk:pk>/', ArticleDetailView.as_view(), name='article-detail'),
+    path('<int:pk>/', ArticleDetailView.as_view(), name='article-detail'),
 ]
 ```
 
@@ -246,7 +248,7 @@ model = None  # класс модели, если не указан queryset, с
 
 ## Class ListView
 
-[Дока](https://ccbv.co.uk/projects/Django/4.2/django.views.generic.list/ListView/)
+[Дока](https://ccbv.co.uk/projects/Django/)
 
 Класс, необходимый для отображения списка объектов.
 
@@ -263,7 +265,7 @@ class CommentListView(ListView):
 
 ### Пагинация
 
-[Дока](https://docs.djangoproject.com/en/4.2/topics/pagination/)
+[Дока](https://docs.djangoproject.com/en/stable/topics/pagination/)
 
 Очень часто наше приложение хранит большое количество данных, и при отображении нам не нужно показывать прям всё
 (допустим у нас блог на 1 000 000 000 статей). Логично отдавать данные порциями - это и называется пагинация,
@@ -316,7 +318,7 @@ ordering = None  # явно указать порядок сортировки
 
 ## Class FormView
 
-[Дока](https://ccbv.co.uk/projects/Django/4.2/django.views.generic.edit/FormView/)
+[Дока](https://ccbv.co.uk/projects/Django/)
 
 Не все классы предназначены только для чтения данных.
 
@@ -395,7 +397,7 @@ def post(self, request, *args, **kwargs):
         return self.form_invalid(form)
 ```
 
-Так же все методы из TemplateView
+Также все методы из TemplateView
 
 `get_context_data()` - дополнительно добавляет переменную `form` в темплейт
 
@@ -411,7 +413,7 @@ def post(self, request, *args, **kwargs):
 
 ## Class CreateView
 
-[Дока](https://ccbv.co.uk/projects/Django/4.2/django.views.generic.edit/CreateView/)
+[Дока](https://ccbv.co.uk/projects/Django/)
 
 Класс для создания объектов.
 
@@ -467,7 +469,7 @@ fields = None  # Поля модели, если не указана форма
 
 # Class UpdateView
 
-[Дока](https://ccbv.co.uk/projects/Django/4.2/django.views.generic.edit/UpdateView/)
+[Дока](https://ccbv.co.uk/projects/Django/)
 
 Класс для обновления объекта. Как пользоваться?
 
@@ -499,7 +501,7 @@ class AuthorUpdate(UpdateView):
 
 ## Class DeleteView
 
-[Дока](https://ccbv.co.uk/projects/Django/4.2/django.views.generic.edit/DeleteView/)
+[Дока](https://ccbv.co.uk/projects/Django/)
 
 Класс для удаления объектов.
 
@@ -533,7 +535,7 @@ class AuthorDelete(DeleteView):
 
 ## Class LoginView
 
-[Дока](https://ccbv.co.uk/projects/Django/4.2/django.contrib.auth.views/LoginView/)
+[Дока](https://ccbv.co.uk/projects/Django/)
 
 Класс, реализующий логику логина.
 
@@ -555,7 +557,7 @@ def form_valid(self, form):
 
 ## Class LogoutView
 
-[Дока](https://ccbv.co.uk/projects/Django/4.2/django.contrib.auth.views/LogoutView/)
+[Дока](https://ccbv.co.uk/projects/Django/)
 
 Класс для логаута.
 
@@ -614,7 +616,7 @@ class UserCreationForm(forms.ModelForm):
 инструментов для управления доступом, таких как декораторы, пермишены и миксины.
 
 > Пермишены и группы мы отдельно рассматривать не будем. Но вы можете сделать это самостоятельно по
-> вот [этой](https://docs.djangoproject.com/en/5.0/topics/auth/default/#permissions-and-authorization) ссылке
+> вот [этой](https://docs.djangoproject.com/en/stable/topics/auth/default/#permissions-and-authorization) ссылке
 
 ### Управление доступом с использованием декораторов
 
@@ -664,7 +666,7 @@ class PostDetailView(LoginRequiredMixin, DetailView):
     template_name = 'post_detail.html'
 ```
 
-Если вам нужно указать куда именно должен происходить редикрект, вы можете указать это специальным атрибутом:
+Если вам нужно указать, куда именно должен происходить редирект, вы можете указать это специальным атрибутом:
 
 ```python
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -769,14 +771,14 @@ class CustomLoginRequiredMixin(LoginRequiredMixin):
 В models.py:
 
 ```python
-from django.contrib.auth.models import User
+from django.conf import settings
 from django.db import models
 
 
 class Note(models.Model):
     text = models.CharField(max_length=100)
-    created_at = models.DateTimeField(auto_now=True)
-    author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='notes')
+    created_at = models.DateTimeField(auto_now_add=True)
+    author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='notes')
 
     class Meta:
         ordering = ['-created_at', ]
@@ -1033,11 +1035,9 @@ class NoteListView(LoginRequiredMixin, ListView):
 
 Что будем делать? Переписывать логику `form_valid()`, мы знаем, что метод `save()` для CreateView вызывается там.
 
-Чтобы добавить пользователя, будем использовать `commit=False` для ModelForm, а пользователя возьмем из реквеста.
+Есть два способа добавить пользователя к создаваемому объекту.
 
-Перепишем класс NoteCreateView:
-
-Во views.py:
+Вариант 1 — через `commit=False` (получить объект, дополнить, сохранить):
 
 ```python
 class NoteCreateView(LoginRequiredMixin, CreateView):
@@ -1050,8 +1050,24 @@ class NoteCreateView(LoginRequiredMixin, CreateView):
         obj = form.save(commit=False)
         obj.author = self.request.user
         obj.save()
-        return super().form_valid(form=form)
+        return super().form_valid(form)
 ```
+
+Вариант 2 — через `form.instance` (короче и современнее):
+
+```python
+class NoteCreateView(LoginRequiredMixin, CreateView):
+    login_url = 'login/'
+    http_method_names = ['post']
+    form_class = NoteCreateForm
+    success_url = '/'
+
+    def form_valid(self, form):
+        form.instance.author = self.request.user
+        return super().form_valid(form)
+```
+
+Мы будем использовать второй вариант.
 
 Обратите внимание, после успеха мы попадаем обратно на `/` (success_url), где мы сразу же увидим новую заметку.
 
@@ -1062,9 +1078,11 @@ class NoteCreateView(LoginRequiredMixin, CreateView):
 Во views.py
 
 ```python
+from django.urls import reverse_lazy
+
 class NoteDeleteView(LoginRequiredMixin, DeleteView):
     model = Note
-    success_url = '/'
+    success_url = reverse_lazy('index')
 ```
 
 Не забываем добавить URL
@@ -1156,12 +1174,18 @@ ListView уже передаёт все необходимые данные, н�
 Во views.py изменим NoteListView
 
 ```python
+from django.urls import reverse_lazy
+
 class NoteListView(LoginRequiredMixin, ListView):
     model = Note
     template_name = 'index.html'
-    login_url = 'login/'
-    extra_context = {'create_form': NoteCreateForm()}
+    login_url = reverse_lazy('login')
     paginate_by = 5
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['create_form'] = NoteCreateForm()
+        return context
 ```
 
 А в index.html:

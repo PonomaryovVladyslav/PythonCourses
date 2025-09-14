@@ -717,6 +717,14 @@ author.title = 'Mr'
 author.save()
 ```
 
+> Примечание: Альтернатива без `commit=False` — заполнять связанные поля через `form.instance` и затем вызывать `form.save()`:
+
+```python
+form = PartialAuthorForm(request.POST)
+form.instance.title = 'Mr'
+form.save()
+```
+
 ### Передача объекта
 
 Такая форма может принимать не только данные, но и целый объект из базы:
