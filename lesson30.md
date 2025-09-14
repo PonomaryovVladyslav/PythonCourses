@@ -29,35 +29,10 @@ IT индустрии.
 
 **Ручные тесты (Manual Tests)** - вид тестов, когда мы полностью повторяем потенциальные действия пользователя.
 
-## Современный инструментарий: pytest и pytest-django
-
-pytest стал стандартом де-факто для тестов в Django/DRF за счёт простоты, фикстур и полезных плагинов.
-
-Установка:
-```bash
-pip install pytest pytest-django pytest-cov
-```
-
-Базовый пример:
-```python
-import pytest
-
-@pytest.mark.django_db
-def test_animals_can_speak(animal_factory):
-    lion = animal_factory(name="lion", sound="roar")
-    assert lion.speak() == 'The lion says "roar"'
-```
-
-Запуск:
-```bash
-pytest -q
-pytest -k speak   # фильтр по имени
-pytest --cov=yourpkg --cov-report=term-missing
-```
-
-В pytest-django доступны фикстуры: client (Django client), db/transactional_db, settings, monkeypatch и др.
-
 ## Тестирование в Django
+Документация: https://docs.djangoproject.com/en/stable/topics/testing/
+Инструменты: https://docs.djangoproject.com/en/stable/topics/testing/tools/
+
 
 Вы знаете о существовании `unittest.TestCase`, от которого нужно наследоваться, чтобы создать обычный тест.
 
@@ -205,18 +180,7 @@ DATABASES = {
 Если вам не повезло, и на проекте вы за автоматических тестеров, то тогда в этой же папке (`tests`) создаётся еще 3
 папки `unit`, `integration` и `acceptance`, и уже в них описываются различные тесты.
 
-### Запуск через pytest (рекомендовано)
-
-```bash
-pytest -q                 # все тесты
-pytest tests/unit -q      # каталог
-pytest -k "animals and speak"  # отбор по выражению
-pytest --maxfail=1 --disable-warnings -q
-pytest --cov=yourpkg --cov-report=term-missing
-```
-
-
-### Запуск тестов
+> Примечание: запуск через pytest см. в финальном разделе «Современный инструментарий: pytest и pytest-django».
 
 ### Выбор инструмента: RequestFactory vs Client и APIRequestFactory vs APIClient
 
@@ -247,7 +211,7 @@ class AnimalTestCase(TestCase):
 
 То для запуска тестов используется manage-команда `test`
 
-```
+```bash
 # Запустить все тесты в приложении в папке тестов
 $./manage.py test animals.tests
 
@@ -336,6 +300,7 @@ class AnimalTestCase(TestCase):
 Существует возможность поставить "тег" на каждый тест, а после запускать только те, что с определённым тегом.
 
 ```python
+from django.test import tag
 
 class SampleTestCase(TestCase):
 
@@ -386,7 +351,7 @@ class ClosePollTest(TestCase):
 ### Пропуск тестов
 
 Тесты можно пропускать в зависимости от условий и деталей запуска.
-Дока [тут](https://docs.python.org/3/library/unittest.html#unittest.skipIf)
+Документация: https://docs.python.org/3/library/unittest.html#unittest.skipIf
 
 ## Фабрики и юнит тестирование
 
@@ -466,6 +431,7 @@ class HomePageTest(TestCase):
 ```
 
 ## Тестирование REST API
+Документация: https://www.django-rest-framework.org/api-guide/testing/
 
 В Django REST Framework есть достаточно много внутренних похожих процедур и классов, например, своя фабрика реквестов:
 
@@ -590,6 +556,7 @@ client.headers.update({'x-test': 'true'})
 Если вы включили CSRF и хотите им пользоваться при проверках, это можно сделать так:
 
 ```python
+from rest_framework.test import RequestsClient
 client = RequestsClient()
 
 # Obtain a CSRF token.
@@ -650,6 +617,7 @@ class PurchaseFactory(DjangoModelFactory):
 ## Фабрики для генерации данных
 
 ### FactoryBoy
+Документация: https://factoryboy.readthedocs.io/
 
 ```
 pip install factory_boy
@@ -845,6 +813,7 @@ def setUp(self):
 ```
 
 #### Faker
+Документация: https://faker.readthedocs.io/
 
 Faker пришел на замену Fuzzy и в нём гораздо больше всего, его нужно устанавливать.
 
@@ -922,6 +891,10 @@ fake.ipv4_private()
 
 
 ## Мокирование и изоляция внешних сервисов
+Документация: https://docs.python.org/3/library/unittest.mock.html
+
+- Патчьте точку использования (where it’s used), а не место определения.
+- Пригодится autospec=True и проверка вызовов: mock.assert_called_once_with(...)
 
 ```python
 from unittest.mock import patch
@@ -957,5 +930,187 @@ class ThrottleTests(APITestCase):
         assert self.client.get(url).status_code == status.HTTP_200_OK
         assert self.client.get(url).status_code == status.HTTP_200_OK
         assert self.client.get(url).status_code == status.HTTP_429_TOO_MANY_REQUESTS
+```
+
+> Совет: для предсказуемости очищайте кеш между тестами или используйте отдельный cache alias для тестов:
+
+```python
+from django.core.cache import cache
+
+def teardown_function():
+    cache.clear()
+```
+
+В многосерверной среде используйте общий backend кеша (например, Redis) для тротлинга.
+
+## Современный инструментарий: pytest и pytest-django
+
+pytest стал стандартом де-факто для тестов в Django/DRF за счёт простоты, фикстур и полезных плагинов.
+Документация: https://docs.pytest.org/
+pytest-django: https://pytest-django.readthedocs.io/
+
+Установка:
+```bash
+pip install pytest pytest-django pytest-cov
+```
+
+Базовый пример:
+```python
+import pytest
+
+@pytest.mark.django_db
+def test_animals_can_speak(animal_factory):
+    lion = animal_factory(name="lion", sound="roar")
+    assert lion.speak() == 'The lion says "roar"'
+```
+
+Запуск:
+```bash
+pytest -q
+pytest -k speak   # фильтр по имени
+pytest --cov=yourpkg --cov-report=term-missing
+```
+
+Совет: для ускорения повторных прогонов используйте ключ --reuse-db (плагин pytest-django).
+
+Пример pytest.ini:
+```ini
+[pytest]
+DJANGO_SETTINGS_MODULE = project.settings
+python_files = tests.py test_*.py *_tests.py
+```
+
+#### Фикстуры в conftest.py
+Повторно используйте фикстуры в корневом файле conftest.py, чтобы не импортировать их в каждом тесте:
+
+```python
+# conftest.py
+import pytest
+from rest_framework.test import APIClient
+
+
+
+@pytest.fixture
+def api_client():
+    return APIClient()
+```
+
+
+
+#### Дополнительные фикстуры: user и auth_client
+```python
+# conftest.py
+@pytest.fixture
+def user(db, user_factory):
+    return user_factory()
+
+@pytest.fixture
+def auth_client(api_client, user):
+    api_client.force_authenticate(user=user)
+    return api_client
+```
+
+
+В pytest-django доступны фикстуры: client (Django client), db/transactional_db, settings, monkeypatch и др.
+
+
+
+#### Расширенный pytest.ini
+```ini
+[pytest]
+DJANGO_SETTINGS_MODULE = project.settings
+python_files = tests.py test_*.py *_tests.py
+# Флаги по умолчанию
+addopts = -q --strict-markers --disable-warnings
+# Где искать тесты
+testpaths = tests
+```
+
+#### База данных в тестах
+```python
+import pytest
+
+@pytest.mark.django_db
+def test_uses_db():
+    # Обычные ORM-операции в рамках транзакции TestCase
+    ...
+
+@pytest.mark.django_db(transaction=True)
+def test_needs_transactions():
+    # Для кейсов, где нужна настоящая транзакция (например, тесты celery/task или raw SQL)
+    ...
+```
+
+#### Параметризация тестов
+```python
+import pytest
+
+@pytest.mark.parametrize(
+    "a,b,expected",
+    [(1, 2, 3), (2, 3, 5)],
+    ids=["1+2", "2+3"],
+)
+def test_add(a, b, expected):
+    assert a + b == expected
+```
+
+#### Переопределение настроек и окружения
+```python
+def test_override_settings(settings):
+    settings.DEBUG = False
+```
+
+```python
+def test_env(monkeypatch):
+    monkeypatch.setenv("FEATURE_X", "1")
+```
+
+#### Полезные инструменты: caplog и tmp_path
+```python
+def test_logging(caplog):
+    with caplog.at_level("INFO"):
+        ...
+    assert "Started" in caplog.text
+```
+
+```python
+def test_tmp_path(tmp_path):
+    p = tmp_path / "data.txt"
+    p.write_text("hello")
+    assert p.read_text() == "hello"
+```
+
+
+#### Маркеры pytest и контроль запуска
+Документация: https://docs.pytest.org/en/stable/reference/reference.html#marks
+
+pytest.ini:
+```ini
+[pytest]
+markers =
+    slow: медленные тесты
+    api: API-тесты
+```
+
+Использование:
+```python
+import pytest
+
+@pytest.mark.slow
+def test_something():
+    ...
+```
+
+xfail и skipif:
+```python
+import pytest, sys
+
+@pytest.mark.skipif(sys.platform == 'win32', reason='no Windows support')
+def test_only_unix():
+    ...
+
+@pytest.mark.xfail(reason='bug #123', strict=True)
+def test_known_bug():
+    assert 1 == 2
 ```
 
