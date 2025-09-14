@@ -1,6 +1,8 @@
 # Лекция 32. Асинхронное программирование в Python. Корутины. Asyncio.
 
 ## Итераторы
+Документация: https://docs.python.org/3/tutorial/classes.html#iterators
+
 
 Во многих современных языках программирования используют такие сущности как итераторы. Основное их назначение – это
 упрощение навигации по элементам объекта, который, как правило, представляет собой некоторую коллекцию (список, словарь
@@ -273,12 +275,13 @@ for i in s_iter2:
     print(i)
 ```
 
-### Выражение итератора
+### Генераторные выражения
 
-Объект созданный при помощи list comprehension тоже является итератором.
+Генераторное выражение (в круглых скобках) создаёт ленивую последовательность. Списковое включение (в квадратных скобках) создаёт список сразу в памяти.
 
 ```python
-iterator = [i for i in range(10)]
+gen = (i for i in range(10))      # генераторное выражение (лениво)
+lst = [i for i in range(10)]      # списковое включение (список)
 ```
 
 ## Генераторы
@@ -356,11 +359,11 @@ next(iter)
 
 ```python
 >>> def custom_range(number):
-...     index = 0 
+...     index = 0
 ...     while index < number:
 ...         yield index
 ...         index += 1
-... 
+...
 >>> range_of_four = custom_range(4)
 >>> next(range_of_four)
 0
@@ -519,9 +522,13 @@ for a_ele in a_pipeline:
     print(a_ele)
 ```
 
+
+
 В примере выше связаны две функции. Первая находит все простые числа от 1 до 100, а вторая — выбирает четные.
 
 #### yield from
+Документация: PEP 380 — https://peps.python.org/pep-0380/
+
 
 Есть специальная конструкция `yield from`, она нужна для:
 
@@ -681,11 +688,15 @@ def calc():
 ## Asyncio
 
 ![](http://risovach.ru/upload/2020/10/mem/internet_253267592_orig_.jpg)
+Документация: https://docs.python.org/3/library/asyncio.html
 
-Начиная с Python 3.4, существует новый модуль `asyncio`, который вводит `API` для обобщенного асинхронного 
-программирования. Мы можем использовать корутины с этим модулем для простого и понятного выполнения асинхронного кода. 
-Мы можем использовать корутины вместе с модулем `asyncio` для простого выполнения асинхронных операций. Пример из 
+
+Начиная с Python 3.4, существует новый модуль `asyncio`, который вводит `API` для обобщенного асинхронного
+программирования. Мы можем использовать корутины с этим модулем для простого и понятного выполнения асинхронного кода.
+Мы можем использовать корутины вместе с модулем `asyncio` для простого выполнения асинхронных операций. Пример из
 официальной документации:
+
+Исторический пример (устаревший для Python 3.8+):
 
 ```python
 import asyncio
@@ -711,22 +722,24 @@ asyncio.ensure_future(display_date(2, loop))
 loop.run_forever()
 ```
 
-Мы создали функцию `display_date(num, loop)`, которая принимает два аргумента, первый - номер, а второй - цикл событий, 
-после чего наша корутина печатает текущее время. После чего используется ключевое слово `yield from` для ожидания 
-результата выполнения `asyncio.sleep`, которая является корутиной, выполняющейся через указанное количество 
+Мы создали функцию `display_date(num, loop)`, которая принимает два аргумента, первый - номер, а второй - цикл событий,
+после чего наша корутина печатает текущее время. После чего используется ключевое слово `yield from` для ожидания
+результата выполнения `asyncio.sleep`, которая является корутиной, выполняющейся через указанное количество
 секунд (пауза выполнения), мы в своем коде передаем в эту функцию случайное количество секунд. После чего мы используем
 `asyncio.ensure_future` для планирования выполнения корутины в цикле событий. После чего мы указываем, что цикл событий
 должен работать бесконечно долго.
 
-Если мы посмотрим на вывод программы, то увидим, что две функции выполняются одновременно. Когда мы используем 
+Если мы посмотрим на вывод программы, то увидим, что две функции выполняются одновременно. Когда мы используем
 `yield from`, цикл обработки событий знает, что он будет какое-то время занят, поэтому он приостанавливает
 выполнение функции и запускает другую. Таким образом, две функции работают одновременно (но не параллельно, поскольку
 цикл обработки событий является однопоточным).
 
-Стоит отметить, что `yield from` – это синтаксический сахар для `for x in asyncio.sleep(random.randint(0, 5)): yield x` 
+Стоит отметить, что `yield from` – это синтаксический сахар для `for x in asyncio.sleep(random.randint(0, 5)): yield x`
 – который делает код чище и проще.
 
 **Этот декоратор был удалён в Python 3.8**
+
+Документация: PEP 492 — https://peps.python.org/pep-0492/
 
 ### Встроенные корутины
 
@@ -764,7 +777,7 @@ loop.run_forever()
 ### Корутины на генераторах и встроенные корутины
 
 Функционально нет никакой разницы между корутинами на генераторах и встроенными корутинами кроме различия в синтаксисе.
-Кроме того, не допускается смешивания их синтаксисов. То есть нельзя использовать `await` внутри корутин на генераторах 
+Кроме того, не допускается смешивания их синтаксисов. То есть нельзя использовать `await` внутри корутин на генераторах
 или `yield` / `yeild from` внутри встроенных корутин.
 
 Несмотря на различия, мы можем организовывать взаимодействия между ними. Нам просто нужно добавить декоратор
@@ -1004,23 +1017,106 @@ async def main():
     )
     print(res)
 
+### Ограничение параллелизма (concurrency limits)
 
+Иногда важно ограничить одновременное число выполняющихся задач (например, чтобы не перегружать API/БД).
+
+— Семафор
+```python
+import asyncio
+
+sem = asyncio.Semaphore(10)
+
+async def fetch(url):
+    async with sem:          # одновременно не более 10
+        return await do_io(url)
+
+await asyncio.gather(*(fetch(u) for u in urls))
+```
+
+— BoundedSemaphore
+```python
+sem = asyncio.BoundedSemaphore(10)  # выбросит ошибку, если кто-то "вернёт" семафор лишний раз
+```
+
+— Пакетная обработка (батчи)
+```python
+BATCH = 20
+for i in range(0, len(urls), BATCH):
+    chunk = urls[i:i+BATCH]
+    await asyncio.gather(*(fetch(u) for u in chunk))
+```
+
+— Worker pool через очередь
+```python
+import asyncio
+
+async def worker(name, q):
+    while True:
+        url = await q.get()
+        try:
+            await fetch(url)
+        finally:
+            q.task_done()
+
+q = asyncio.Queue()
+for u in urls:
+    q.put_nowait(u)
+
+workers = [asyncio.create_task(worker(i, q)) for i in range(5)]
+await q.join()
+for w in workers:
+    w.cancel()
+```
+
+### Таймауты, ошибки и отмена
+
+— Таймауты (оборачиваем awaited-операцию)
+```python
+await asyncio.wait_for(fetch(url), timeout=5)
+```
+
+— Ошибки в gather
+```python
+results = await asyncio.gather(*tasks, return_exceptions=True)
+```
+
+— Отмена задач
+```python
+task = asyncio.create_task(fetch(url))
+...
+task.cancel()
+try:
+    await task
+except asyncio.CancelledError:
+    pass
+```
+
+### TaskGroup (Python 3.11+)
+```python
+async def main():
+    async with asyncio.TaskGroup() as tg:
+        tg.create_task(fetch("/a"))
+        tg.create_task(fetch("/b"))
+        
 asyncio.run(main())
 
 ```
 
-Вы можете быть уверены в том, что в переменную `res` результаты придут именно в том порядке, в котором вы их запросили, 
+Вы можете быть уверены в том, что в переменную `res` результаты придут именно в том порядке, в котором вы их запросили,
 в примере результат всегда будет [24, 6, 2], никакой неожиданности.
 
 Это далеко не все методы и подробности корутин, за всеми деталями
 в [доку](https://docs.python.org/3/library/asyncio.html)
 
 ## Aiohttp.
+Документация: https://docs.aiohttp.org/
+
 
 Как мы помним, одно из основных преимуществ использования асинхронности - это возможность отправки параллельных HTTP
 запросов, не дожидаясь результатов других. К сожалению, при использовании корутин вместе с классическим `requests`
 запросы будут выполнены синхронно, т. к. сами запросы не являются `awaitable` объектами, и результат будет таким же, как
-если бы вы использовали обычный `sleep`, а не асинхронными, соседние корутины будут ждать остальные. Чтобы такого не 
+если бы вы использовали обычный `sleep`, а не асинхронными, соседние корутины будут ждать остальные. Чтобы такого не
 было, существует специальный пакет `aiohttp`, его необходимо устанавливать через `pip`:
 
 ```pip install aiohttp```
@@ -1033,23 +1129,38 @@ import asyncio
 
 
 async def main():
-    async with aiohttp.ClientSession() as session:
-        async with session.get('https://httpbin.org/#/HTTP_Methods/get_get') as resp:
+    timeout = aiohttp.ClientTimeout(total=10)
+    async with aiohttp.ClientSession(timeout=timeout) as session:
+        async with session.get("https://httpbin.org/get") as resp:
             print(resp.status)
-            print(await resp.text())
+            data = await resp.json()
+            print(data.get("url"))
 
 
 asyncio.run(main())
 
 # Output:
 # 200
-# <!DOCTYPE html>
-# <html lang="en">
-# 
-# <head>
-#     <meta charset="UTF-8">
-#     <title>httpbin.org</title>
-#     <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700|Source+Code+Pro:300,600|Titillium+Web:400,600,700"
-#         rel="stylesheet">
-# ...
+# https://httpbin.org/get
+
+#### Ограничение параллельных HTTP-запросов (aiohttp + Semaphore)
+```python
+import aiohttp
+import asyncio
+
+sem = asyncio.Semaphore(10)
+
+async def fetch(session, url):
+    async with sem:
+        async with session.get(url, timeout=10) as r:
+            return await r.text()
+
+async def main():
+    async with aiohttp.ClientSession() as session:
+        results = await asyncio.gather(*(fetch(session, u) for u in urls))
+        print(len(results))
 ```
+
+Замечания: переиспользуйте один ClientSession, всегда задавайте таймауты, избегайте блокирующих вызовов внутри async-функций.
+
+
