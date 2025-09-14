@@ -6,7 +6,7 @@
 
 Что нового в request.
 
-Дока [тут](https://www.django-rest-framework.org/api-guide/requests/)
+Документация: https://www.django-rest-framework.org/api-guide/requests/
 
 Два новых параметра `.data` и `.query_params`
 
@@ -14,11 +14,27 @@
 
 `.query_params` - данные, если запрос GET, аналог `request.GET`
 
-Также доступны `request.user` и `request.auth`. Детали аутентификации/авторизации рассмотрим на следующей лекции (про permissions и др.).
+Также доступны `request.user` и `request.auth`. Детали аутентификации/авторизации рассмотрим на следующей лекции.
+Практические нюансы:
+- request.data объединяет данные из JSON/формы/файлов в зависимости от подключённых парсеров (JSONParser, FormParser, MultiPartParser)
+- request.query_params — это QueryDict (поддерживает несколько значений для одного ключа)
+- Полезные атрибуты: request.content_type, request.accepted_renderer, request.accepted_media_type
+- Расширяйте DEFAULT_PARSER_CLASSES, если нужны формы/файлы
+
+Пример настройки парсеров (частично):
+```python
+REST_FRAMEWORK = {
+    "DEFAULT_PARSER_CLASSES": [
+        "rest_framework.parsers.JSONParser",
+        "rest_framework.parsers.MultiPartParser",
+        "rest_framework.parsers.FormParser",
+    ],
+}
+```
 
 ## Response
 
-Дока [тут](https://www.django-rest-framework.org/api-guide/responses/)
+Документация: https://www.django-rest-framework.org/api-guide/responses/
 
 В отличие от классической Django, ответом в REST системе будет обычный HTTP-ответ, содержащий набор данных, чаще
 всего JSON (но бывает и нет).
@@ -29,6 +45,13 @@
 Для обработки такого ответа есть специальный объект:
 
 ```Response(data, status=None, template_name=None, headers=None, content_type=None)```
+
+Пример ответа при создании ресурса (201 + Location):
+```python
+from rest_framework import status
+# после serializer.save() -> obj
+return Response(serializer.data, status=status.HTTP_201_CREATED, headers={"Location": obj.get_absolute_url()})
+```
 
 где `data` - данные,
 
@@ -63,13 +86,14 @@ REST_FRAMEWORK = {
 
 ## @api_view
 
-Дока [тут](https://www.django-rest-framework.org/api-guide/views/#api_view)
+Документация: https://www.django-rest-framework.org/api-guide/views/#api_view
 
 Для описания `endpoint` функционально нужно указать декоратор `api_view` и методы, которые он может принимать.
 Возвращает всё также объект ответа. Для использования возьмем модель `Book` и сериалайзер `BookSerializer`, из
 последнего примера прошлой лекции
 
 ```python
+from django.shortcuts import get_object_or_404
 from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
@@ -89,10 +113,9 @@ def book_list(request):
 
     elif request.method == 'POST':
         serializer = BookSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
 ```
 
 Обратите внимание, в пакете REST фреймворка сразу есть заготовленные объекты статуса для ответа.
@@ -102,15 +125,14 @@ def book_list(request):
 Для передачи параметров используются аргументы функции. (Очень похоже на обычную Django вью)
 
 ```python
+from django.shortcuts import get_object_or_404
+
 @api_view(['GET', 'PUT', 'DELETE'])
 def book_detail(request, pk):
     """
     Retrieve, update or delete a book.
     """
-    try:
-        book = Book.objects.get(pk=pk)
-    except Book.DoesNotExist:
-        return Response(status=status.HTTP_404_NOT_FOUND)
+    book = get_object_or_404(Book, pk=pk)
 
     if request.method == 'GET':
         serializer = BookSerializer(book)
@@ -118,17 +140,16 @@ def book_detail(request, pk):
 
     elif request.method == 'PUT':
         serializer = BookSerializer(book, data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response(serializer.data)
 
     elif request.method == 'DELETE':
         book.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 ```
 
-URLs для таких методов описываются точно так же как и для стандартной Django вью.
+URL для таких методов описываются точно так же, как и для стандартной Django вью.
 
 ```python
 from myapp.views import book_list, book_detail
@@ -170,7 +191,7 @@ urlpatterns = [
 
 ## View
 
-Знакомимся с самым подробным сайтом по DRF классам [тут](http://www.cdrf.co/)
+Справочник по CBV/DRF: https://www.cdrf.co/
 
 ## APIView
 
@@ -181,8 +202,9 @@ urlpatterns = [
 - CRUD из коробки по одному ресурсу: GenericAPIView + миксины (ListCreateAPIView, RetrieveUpdateDestroyAPIView)
 - Полный набор CRUD и экшены + автоматический роутинг: ModelViewSet/ReadOnlyModelViewSet + Router (чаще всего на практике)
 
-Дока [тут](https://www.django-rest-framework.org/api-guide/views/#class-based-views)
+Документация: https://www.django-rest-framework.org/api-guide/views/#class-based-views
 
+На уровне класса можно настраивать: parser_classes, renderer_classes, throttle_classes.
 Также мы можем описать это же через Class-Based View, для этого нам нужно наследоваться от APIView:
 
 ```python
@@ -192,7 +214,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 
-from django.http import Http404
+from django.shortcuts import get_object_or_404
 
 
 class BookList(APIView):
@@ -207,16 +229,15 @@ class BookList(APIView):
 
     def post(self, request, format=None):
         serializer = BookSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
 ```
 
 Вынесем получение объекта в отдельный метод:
 
 ```python
-from django.http import Http404
+from django.shortcuts import get_object_or_404
 
 class BookDetail(APIView):
     """
@@ -224,10 +245,7 @@ class BookDetail(APIView):
     """
 
     def get_object(self, pk):
-        try:
-            return Book.objects.get(pk=pk)
-        except Book.DoesNotExist:
-            raise Http404
+        return get_object_or_404(Book, pk=pk)
 
     def get(self, request, pk, format=None):
         book = self.get_object(pk)
@@ -237,10 +255,9 @@ class BookDetail(APIView):
     def put(self, request, pk, format=None):
         book = self.get_object(pk)
         serializer = BookSerializer(book, data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response(serializer.data)
 
     def delete(self, request, pk, format=None):
         book = self.get_object(pk)
@@ -248,7 +265,7 @@ class BookDetail(APIView):
         return Response(status=status.HTTP_204_NO_CONTENT)
 ```
 
-URLs описываются так же, как и для Django Class-Based View:
+URL описываются так же, как и для Django Class-Based View:
 
 ```python
 urlpatterns = [
@@ -257,7 +274,7 @@ urlpatterns = [
 ]
 ```
 
-## GenericView
+## GenericAPIView и generic-классы
 
 По аналогии с классической Django существуют заранее описанные CRUD действия.
 
@@ -583,12 +600,12 @@ class CommentListView(ListCreateAPIView):
 
 ## ViewSet
 
-Дока [тут](https://www.django-rest-framework.org/api-guide/viewsets/)
+Документация: https://www.django-rest-framework.org/api-guide/viewsets/
 
 Классы, которые отвечают за поведение нескольких запросов, и отличаются друг от друга только методом, называются
 `ViewSet`.
 
-Они на самом деле описывают методы, для получения списка действий (list, retrieve, и т. д.), и преобразования их в URLs
+Они на самом деле описывают методы, для получения списка действий (list, retrieve, и т. д.), и преобразования их в URL
 (об этом дальше).
 
 Например:
@@ -620,7 +637,7 @@ class UserViewSet(viewsets.ViewSet):
 
 Разные действия при наличии и отсутствии `PK`, при `GET` запросе.
 
-Для описания URLs можно использовать разное описание:
+Для описания URL можно использовать разные варианты:
 
 ```python
 user_list = UserViewSet.as_view({'get': 'list'})
@@ -631,7 +648,7 @@ user_detail = UserViewSet.as_view({'get': 'retrieve'})
 
 ## ModelViewSet и ReadOnlyModelViewSet
 
-Дока [тут](https://www.django-rest-framework.org/api-guide/viewsets/#modelviewset)
+Документация: https://www.django-rest-framework.org/api-guide/viewsets/#modelviewset
 
 Объединяем всё, что мы уже знаем.
 
@@ -652,7 +669,19 @@ class AccountViewSet(viewsets.ModelViewSet):
     """
     queryset = Account.objects.all()
     serializer_class = AccountSerializer
-    permission_classes = [IsAccountAdminOrReadOnly]
+
+```
+
+Per-action поведение (разные сериалайзеры для разных действий):
+```python
+
+
+class AccountViewSet(viewsets.ModelViewSet):
+    ...
+    def get_serializer_class(self):
+        return PasswordSerializer if self.action == "set_password" else AccountSerializer
+
+
 ```
 
 Или если необходим такой же вьюсет только для получения объектов, то:
@@ -691,7 +720,7 @@ class CreateListRetrieveViewSet(mixins.CreateModelMixin,
 
 ### Пагинация
 
-Дока [тут](https://www.django-rest-framework.org/api-guide/pagination/)
+Документация: https://www.django-rest-framework.org/api-guide/pagination/
 
 Как мы помним, для действия `list` используется пагинация. Как это работает?
 
@@ -704,11 +733,15 @@ REST_FRAMEWORK = {
 }
 ```
 
+Пример ответа пагинации (PageNumberPagination):
+```json
+{"count": 123, "next": ".../?page=3", "previous": null, "results": [ ... ]}
+```
+
 ### Параметры запросов: PageNumber vs LimitOffset
 - PageNumberPagination: page, page_size (пример: /api/books/?page=2&page_size=50)
 - LimitOffsetPagination: limit, offset (пример: /api/books/?limit=50&offset=100)
 - Советы: ограничивайте максимальный размер страницы (max_page_size), не давайте запрашивать слишком большие выборки
-
 
 Там мы можем указать тип класса пагинации и размер одной страницы, и все наши запросы уже будут пагинированы.
 
@@ -742,7 +775,7 @@ class BillingRecordsView(generics.ListAPIView):
 
 ## Декоратор @action
 
-Дока [тут](https://www.django-rest-framework.org/api-guide/viewsets/#marking-extra-actions-for-routing)
+Документация: https://www.django-rest-framework.org/api-guide/viewsets/#marking-extra-actions-for-routing
 
 Что делать, если вам нужно дополнительное действие, связанное с деталями вашей вью, но ни один из крудов не походит? Тут
 можно использовать декоратор `@action`, чтобы описать новое действие в этом же вьюсете.
@@ -790,13 +823,13 @@ class UserViewSet(viewsets.ModelViewSet):
 Принимает два основных параметра: `detail` описывает должен ли этот action принимать PK (действие над всеми объектами
 или над одним конкретным), и `methods` - список HTTP методов, на которые должен срабатывать `action`.
 
-Есть и другие, например, классы permissions или имя.
+Есть и другие параметры.
 
 ## Роутеры
 
-Дока [тут](https://www.django-rest-framework.org/api-guide/routers/)
+Документация: https://www.django-rest-framework.org/api-guide/routers/
 
-Роутер - это автоматический генератор URLs для вьюсетов.
+Роутер — это автоматический генератор URL для вьюсетов.
 
 ```python
 from rest_framework import routers
@@ -807,12 +840,30 @@ router.register(r'accounts', AccountViewSet)
 urlpatterns = router.urls
 ```
 
-В методе `register` принимает два параметра, на каком слове основывать URLs и для какого вьюсета.
+
+Для API root используйте DefaultRouter:
+```python
+from rest_framework import routers
+router = routers.DefaultRouter()  # API root at /
+router.register("users", UserViewSet)
+urlpatterns = router.urls
+```
+
+Если у ViewSet нет queryset, укажите basename:
+```python
+class ReportViewSet(viewsets.ViewSet):
+    ...
+
+router = routers.DefaultRouter()
+router.register("reports", ReportViewSet, basename="report")
+```
+
+В методе `register` принимает два параметра: на каком слове основывать URL и для какого вьюсета.
 
 Если у вьюсета нет параметра `queryset`, то нужно указать поле `basename`, если нет, то автоматически будет использовано
 имя модели маленькими буквами.
 
-URLs будут сгенерированы автоматически, и им будут автоматически присвоены имена:
+URL будут сгенерированы автоматически, и им будут автоматически присвоены имена:
 
 ```
 URL pattern: ^users/$ Name: 'user-list'
@@ -821,7 +872,7 @@ URL pattern: ^accounts/$ Name: 'account-list'
 URL pattern: ^accounts/{pk}/$ Name: 'account-detail'
 ```
 
-Чаще всего роутеры к URLs добавляются вот такими способами:
+Чаще всего роутеры к URL добавляются вот такими способами:
 
 ```python
 urlpatterns = [
@@ -849,4 +900,4 @@ class UserViewSet(ModelViewSet):
 Роутер автоматически сгенерирует URL `^users/{pk}/set_password/$` и имя `user-set-password`.
 
 Класс `SimpleRouter` может принимать параметр `trailing_slash=False` True или False, по дефолту True, поэтому все API,
-должны принимать URLs заканчивающиеся на `/`, если указать явно, то будет принимать всё без `/`.
+должны принимать URL, заканчивающиеся на `/`. Если указать явно, то будет принимать всё без `/`.
