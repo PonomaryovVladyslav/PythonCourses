@@ -38,6 +38,18 @@ manage.py
 
 ![](https://djangoalevel.s3.eu-central-1.amazonaws.com/lesson34/templates_filled.png)
 
+Пример минимальной настройки DIRS:
+
+```python
+from pathlib import Path
+BASE_DIR = Path(__file__).resolve().parent.parent
+
+TEMPLATES[0]["DIRS"] = [BASE_DIR / "templates"]
+# APP_DIRS=True также ищет шаблоны в myapp/templates/
+```
+
+> Для шаблонов приложений удобно использовать неймспейсы: `myapp/templates/myapp/index.html` и вызывать `render(request, 'myapp/index.html')`.
+
 Ключи:
 
 `BACKEND`: путь к классу, который отвечает за обработку данных и логику. (Замена требуется очень редко.)
@@ -51,7 +63,7 @@ manage.py
 
 `OPTIONS`: дополнительные настройки, будем рассматривать позже.
 
-Для применения любых изменений нужно перезапускать сервер (команда `python manage.py runserver`).
+В режиме разработки runserver автоматически перезагружает сервер при изменениях кода и шаблонов; при изменении некоторых настроек может потребоваться ручной перезапуск (`python manage.py runserver`).
 
 Мы "рассказали" Django, где именно искать шаблоны, но пока ни одного не создали. Давайте сделаем это!
 
@@ -115,7 +127,6 @@ class MyClass:
 
     def __init__(self, s):
         self.string = s
-
 
 def index(request):
     my_num = 33
@@ -277,8 +288,7 @@ def index(request):
 
 #### Циклы
 
-Так же как и в python мы можем использовать циклы в шаблонах, но только цикл `for`, цикла `while` в шаблонах не
-существует.
+Также, как и в Python, мы можем использовать циклы в шаблонах, но только цикл `for` — цикла `while` в шаблонах не существует.
 
 Изменим наш `index.html`:
 
@@ -345,7 +355,7 @@ def index(request):
 На самом деле все ключевые слова используемые внутри `{% %}` называются template tags, и их существует огромное
 множество.
 
-[Ссылка на доку](https://docs.djangoproject.com/en/4.2/ref/templates/builtins/)
+[Ссылка на доку](https://docs.djangoproject.com/en/stable/ref/templates/builtins/)
 
 Их очень много, часть мы рассмотрим, часть вам придется изучить самостоятельно.
 
@@ -388,6 +398,10 @@ path('', first, name='first'),
 </html>
 ```
 
+```html
+<a href="{% url 'article' 33 %}">Article #33</a>
+```
+
 Наш индекс пейдж:
 
 ![](https://djangoalevel.s3.eu-central-1.amazonaws.com/lesson34/index_link.png)
@@ -415,7 +429,7 @@ path('', first, name='first'),
 Создадим в папке `templates` новые файлы `base.html` и `first.html` и изменим файлы `templates/index.html` и
 функцию `first` в `myapp/views.py`
 
-`template/base.html`
+`templates/base.html`
 
 ```html
 <!DOCTYPE html>
@@ -433,7 +447,7 @@ path('', first, name='first'),
 </html>
 ```
 
-`template/index.html`
+`templates/index.html`
 
 ```html
 {% extends 'base.html' %}
@@ -444,7 +458,7 @@ path('', first, name='first'),
 {% endblock %}
 ```
 
-`template/first.html`
+`templates/first.html`
 
 ```html
 {% extends 'base.html' %}
@@ -502,7 +516,7 @@ def first(request):
 
 И теперь добавим этот файл к страницам `index.html` и `first.html`, но в разные места, чтобы получилось
 
-`template/index.html`
+`templates/index.html`
 
 ```html
 {% extends 'base.html' %}
@@ -514,7 +528,7 @@ def first(request):
 {% endblock %}
 ```
 
-`template/first.html`
+`templates/first.html`
 
 ```html
 {% extends 'base.html' %}
@@ -574,10 +588,7 @@ def first(request):
 `templates/add.html`
 
 ```html
-
-<div style="padding: 20px; background-color: chartreuse">{% if name %} Hello {{ name }} ! {% else %} Sorry, I don't know
-    your name {% endif %}
-</div>
+<div style="padding: 20px; background-color: chartreuse">{% if name %} Hello {{ name }} ! {% else %} Sorry, I don't know your name {% endif %}</div>
 ```
 
 Смотрим на first page
@@ -586,7 +597,13 @@ def first(request):
 
 Переменной нет, срабатывает if
 
-Так же можно передавать эту переменную из view, для этого нужно в with дописать `{{variable }}`
+Также можно передавать эту переменную из view; в with передаём имя переменной без фигурных скобок.
+
+Пример:
+
+```html
+{% include 'add.html' with name=my_str %}
+```
 
 ## Фильтры
 
@@ -632,7 +649,7 @@ def index(request):
 
 {% block content %}
 <div>{{ now| date:"SHORT_DATE_FORMAT" }}</div>
-<div>{{ now|date:"D d M Y" }} {{ value|time:"H:i" }}</div>
+<div>{{ now|date:"D d M Y" }} {{ now|time:"H:i" }}</div>
 <div>{{ not_exist|default:"nothing" }}</div>
 <div>{{ my_str | capfirst }}</div>
 <div>{{ my_list | join:"**" }}</div>
@@ -649,12 +666,12 @@ def index(request):
 
 Например `date`, `default`, `join`, `capfirst`. На самом деле их огромное количество, весь список встроенных фильтров
 можно
-посмотреть [Тыц](https://docs.djangoproject.com/en/4.2/ref/templates/builtins/)
+посмотреть [Тыц](https://docs.djangoproject.com/en/stable/ref/templates/builtins/)
 
 ## Кастомные темплейт теги и фильтры
 
 На самом деле, стандартным набором дело не ограничивается, и в случае необходимости можно дописать свои теги и фильтры,
-почитать об этом можно вот [тут](https://docs.djangoproject.com/en/4.2/howto/custom-template-tags/)
+почитать об этом можно вот [тут](https://docs.djangoproject.com/en/stable/howto/custom-template-tags/)
 
 ![](https://i.ytimg.com/vi/gF060AIFiB8/hqdefault.jpg)
 
@@ -684,6 +701,7 @@ def index(request):
 В файле `settings.py` вы найдете (или добавите) следующие параметры:
 
 - `STATIC_URL`: Этот параметр определяет URL, по которому будут доступны статические файлы. Обычно это `/static/`.
+- Убедитесь, что приложение 'django.contrib.staticfiles' есть в INSTALLED_APPS (в новых проектах добавляется по умолчанию).
 
   ```python
   STATIC_URL = '/static/'
@@ -700,8 +718,16 @@ def index(request):
   файлы. Это полезно, если у вас есть несколько источников для статических файлов.
 
   ```python
-  STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+  STATICFILES_DIRS = [BASE_DIR / "static"]
   ```
+
+```text
+project/
+  static/
+    css/styles.css
+  templates/
+    base.html
+```
 
 > Просто указываете папку куда вы сложили свои статические файлы.
 
@@ -709,7 +735,7 @@ def index(request):
   при выполнении команды `collectstatic`. Это полезно для деплоя на продакшн сервер.
 
   ```python
-  STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+  STATIC_ROOT = BASE_DIR / "staticfiles"
   ```
 
 > Этот параметр вам пока не нужен! Он используется для запуска приложений на реальных серверах
