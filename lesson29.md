@@ -62,7 +62,14 @@ CSRF Token, а это значит, что для выполнения таки�
 
 ## Реализация и использование в Django REST Framework
 
+Документация: https://www.django-rest-framework.org/api-guide/authentication/
+
 Из-за CSRF токенов авторизация через сессию практически не используется, поэтому мы не будем подробно её рассматривать
+
+Безопасность и нюансы:
+- Всегда используйте HTTPS.
+- С SessionAuthentication в браузере учитывайте CSRF.
+- Token/JWT обычно передаются через заголовок Authorization и не требуют CSRF для небраузерных клиентов.
 
 ### Basic Аутентификация
 
@@ -126,6 +133,7 @@ def example_view(request, format=None):
 ```
 
 ### Аутентификация по токену
+Документация: https://www.django-rest-framework.org/api-guide/authentication/#tokenauthentication
 
 Если необходимо использовать токен-аутентификацию, то DRF предоставляет нам такой функционал "из коробки", для этого нужно
 добавить `rest_framework.authtoken` в `INSTALLED_APPS`
@@ -182,7 +190,7 @@ def create_auth_token(sender, instance=None, created=False, **kwargs):
 
 #### Получение токена
 
-Для получения токена можно использовать стандартную вью, для этого нужно добавить в URLs `obtain_auth_token`:
+Для получения токена можно использовать стандартную вью, для этого нужно добавить в URL `obtain_auth_token`:
 
 ```python
 from rest_framework.authtoken import views
@@ -216,16 +224,20 @@ class CustomAuthToken(ObtainAuthToken):
         })
 ```
 
-Не забыв заменить URLs:
+Не забыв заменить URL:
 
 ```python
 urlpatterns += [
     path('api-token-auth/', CustomAuthToken.as_view())
 ]
+
 ```
 ### JWT (SimpleJWT) кратко
 
 JWT решает задачу срока жизни и обновления токенов из коробки.
+Документация: https://django-rest-framework-simplejwt.readthedocs.io/
+
+
 
 settings.py:
 ```python
@@ -310,6 +322,7 @@ python manage.py drf_create_token -r <username>
 
 На практике практически всегда необходимо переписать токен под свои задачи, как минимум ограничить его время для жизни и
 сделать перегенерацию по истечении времени жизни, сделаем это как практику на этом занятии.
+Документация: https://www.django-rest-framework.org/topics/browsable-api/#log-in-and-log-out
 
 ### Внешние сервисы
 
@@ -317,10 +330,12 @@ python manage.py drf_create_token -r <username>
 аутентификаций, а если нет, то их всегда можно написать. :)
 
 ### Авторизация для тестирования через браузер
+Документация: https://www.django-rest-framework.org/topics/browsable-api/#log-in-and-log-out
 
 В REST фреймворк встроена возможность тестировать API через браузер, используя сессионную авторизацию. Для этого
-достаточно добавить встроенные URLs и перейти по этому адресу, после этого по вашим API URLs вы будете переходить как
-уже авторизированный пользователь:
+достаточно добавить встроенные URL и перейти по этому адресу; после этого по вашим API URL вы будете переходить как
+уже авторизованный пользователь:
+include('rest_framework.urls') добавляет формы логина/логаута для Browsable API; в продакшене оставляйте только при необходимости.
 
 ```python
 urlpatterns += [
@@ -329,6 +344,7 @@ urlpatterns += [
 ```
 
 ## Permissions
+Документация: https://www.django-rest-framework.org/api-guide/permissions/
 
 Они же права доступа.
 
@@ -343,6 +359,11 @@ REST_FRAMEWORK = {
     ]
 }
 ```
+
+- По умолчанию (если DEFAULT_PERMISSION_CLASSES не задан), действует AllowAny.
+- SAFE_METHODS = {"GET", "HEAD", "OPTIONS"} — считаются методами только для чтения.
+- 401 Unauthorized — отсутствует/невалидна аутентификация; 403 Forbidden — аутентификация есть, но прав недостаточно.
+
 
 Для описания на уровне объектов используется аргумент `permission_classes`:
 
@@ -403,6 +424,19 @@ permission_classes = [permissions.IsAuthenticatedOrReadOnly,
                       IsOwnerOrReadOnly]
 ```
 
+Пример per-action (разные права для разных действий):
+```python
+from rest_framework.permissions import AllowAny, IsAuthenticated
+
+class NotesViewSet(ModelViewSet):
+    ...
+    def get_permissions(self):
+        if self.action in ["list", "retrieve"]:
+            return [AllowAny()]
+        return [IsAuthenticated(), DeleteOnlyOwner()]
+```
+
+
 Если у вас нет доступов, вы получите вот такой ответ:
 
 ```
@@ -415,6 +449,7 @@ permission_classes = [permissions.IsAuthenticatedOrReadOnly,
 
 Используется декоратор `method_decorator` и методы `cache_page()` и `vary_on_cookie()`:
 
+Документация: https://www.django-rest-framework.org/api-guide/throttling/
 ```python
 from django.utils.decorators import method_decorator
 from django.views.decorators.cache import cache_page
@@ -447,8 +482,11 @@ class PostView(APIView):
             'body': 'Post content'
         }
         return Response(content)
-    
+
 ## Тротлинг (Throttling)
+Документация: https://www.django-rest-framework.org/api-guide/throttling/
+
+
 
 Тротлинг ограничивает частоту запросов, защищая API от злоупотреблений (brute force, DoS) и сглаживая нагрузку.
 
@@ -509,6 +547,11 @@ class SomeModelViewSet(ModelViewSet):
 Таким образом, мы можем добавлять объект юзера при сохранении нашего сериалайзера.
 
 ## Фильтрация
+Документация:
+- Filtering: https://www.django-rest-framework.org/api-guide/filtering/
+- SearchFilter: https://www.django-rest-framework.org/api-guide/filtering/#searchfilter
+- OrderingFilter: https://www.django-rest-framework.org/api-guide/filtering/#orderingfilter
+- django-filter: https://django-filter.readthedocs.io/
 
 DRF предоставляет нам огромные возможности для фильтрации, практически не дописывая для этого специальный код.
 
@@ -610,6 +653,18 @@ http://example.com/api/users?ordering=account,username
 ```
 ### DjangoFilterBackend (рекомендовано)
 
+Документация: https://django-filter.readthedocs.io/
+
+Установка: pip install django-filter
+
+Добавьте в INSTALLED_APPS:
+
+```python
+INSTALLED_APPS = [
+    ...,
+    'django_filters',
+]
+```
 Declarative-фильтрация без написания кода:
 
 settings.py:
@@ -621,6 +676,16 @@ REST_FRAMEWORK = {
         'rest_framework.filters.OrderingFilter',
     ],
 }
+
+```python
+import django_filters as df
+from .models import User
+
+class UserFilter(df.FilterSet):
+    min_age = df.NumberFilter(field_name='age', lookup_expr='gte')
+    class Meta:
+        model = User
+        fields = ['min_age', 'city']
 ```
 
 views.py:
