@@ -30,9 +30,9 @@ IT индустрии.
 **Ручные тесты (Manual Tests)** - вид тестов, когда мы полностью повторяем потенциальные действия пользователя.
 
 ## Тестирование в Django
+
 Документация: https://docs.djangoproject.com/en/stable/topics/testing/
 Инструменты: https://docs.djangoproject.com/en/stable/topics/testing/tools/
-
 
 Вы знаете о существовании `unittest.TestCase`, от которого нужно наследоваться, чтобы создать обычный тест.
 
@@ -80,8 +80,9 @@ IT индустрии.
 
 `assertHTMLNotEqual` - проверка на то, что полученный HTML не соответствует ожидаемому.
 
-Важно: TransactionTestCase заметно медленнее TestCase, так как выполняет полноценную очистку БД между тестами. Используйте его, когда нужно проверить реальное поведение транзакций (commit/rollback, select_for_update, взаимодействие с внешними транзакционными системами).
-
+Важно: TransactionTestCase заметно медленнее TestCase, так как выполняет полноценную очистку БД между тестами.
+Используйте его, когда нужно проверить реальное поведение транзакций (commit/rollback, select_for_update, взаимодействие
+с внешними транзакционными системами).
 
 `assertJSONEqual` - проверка на то, что полученный JSON соответствует ожидаемому.
 
@@ -92,7 +93,6 @@ IT индустрии.
 `assertXMLNotEqual` - проверка на то, что полученный XML не соответствует ожидаемому.
 
 ### TransactionTestCase
-
 
 `TransactionTestCase` наследуется от `SimpleTestCase`.
 
@@ -124,15 +124,15 @@ IT индустрии.
 
 Это самый часто используемый вид тестов.
 
-
-Примечание: Django обычно автоматически создаёт тестовую БД (например, `test_<NAME>` для PostgreSQL). Явное указание TEST.NAME требуется редко; убедитесь, что у пользователя БД есть права на создание/удаление.
+Примечание: Django обычно автоматически создаёт тестовую БД (например, `test_<NAME>` для PostgreSQL). Явное указание
+TEST.NAME требуется редко; убедитесь, что у пользователя БД есть права на создание/удаление.
 
 ### LiveServerTestCase
 
 `LiveServerTestCase` наследуется от `TransactionTestCase`.
 
-
 Ключевые свойства TestCase:
+
 - Каждый тест запускается в транзакции и откатывается (rollback) — быстро и изолированно.
 - setUpTestData() выполняется один раз на класс и экономит время на подготовке данных.
 - Если нужно проверить поведение транзакций — используйте TransactionTestCase.
@@ -184,10 +184,12 @@ DATABASES = {
 
 ### Выбор инструмента: RequestFactory vs Client и APIRequestFactory vs APIClient
 
-- RequestFactory / APIRequestFactory — юнит-уровень: вызываем view напрямую, middleware и маршрутизация не участвуют. Быстро и изолировано.
-- Client / APIClient — интеграционный уровень: запрос проходит через URLConf и middleware. Для API используйте APIClient (форматы, JSON, удобные методы).
-- Рекомендация: начинать с APIClient/Client для «сквозных» проверок и использовать *RequestFactory для узконаправленных юнит-тестов view/permission/serializer.
-
+- RequestFactory / APIRequestFactory — юнит-уровень: вызываем view напрямую, middleware и маршрутизация не участвуют.
+  Быстро и изолировано.
+- Client / APIClient — интеграционный уровень: запрос проходит через URLConf и middleware. Для API используйте
+  APIClient (форматы, JSON, удобные методы).
+- Рекомендация: начинать с APIClient/Client для «сквозных» проверок и использовать *RequestFactory для узконаправленных
+  юнит-тестов view/permission/serializer.
 
 Предположим, что у нас в приложении `animals` есть папка `tests`, в ней папка `unit` и в ней файл `test_models`.
 
@@ -301,6 +303,7 @@ class AnimalTestCase(TestCase):
 
 ```python
 from django.test import tag
+
 
 class SampleTestCase(TestCase):
 
@@ -431,6 +434,7 @@ class HomePageTest(TestCase):
 ```
 
 ## Тестирование REST API
+
 Документация: https://www.django-rest-framework.org/api-guide/testing/
 
 В Django REST Framework есть достаточно много внутренних похожих процедур и классов, например, своя фабрика реквестов:
@@ -490,10 +494,12 @@ client.post('/notes/', {'title': 'new idea'}, format='json')
 ### APITestCase (DRF)
 
 Удобный базовый класс, комбинирующий TestCase и APIClient:
+
 ```python
 from rest_framework.test import APITestCase
 from rest_framework import status
 from django.urls import reverse
+
 
 class NotesTests(APITestCase):
     def test_list_anon(self):
@@ -557,6 +563,7 @@ client.headers.update({'x-test': 'true'})
 
 ```python
 from rest_framework.test import RequestsClient
+
 client = RequestsClient()
 
 # Obtain a CSRF token.
@@ -576,47 +583,26 @@ assert response.status_code == 200
 
 ```python
 REST_FRAMEWORK = {
-    ...
-'TEST_REQUEST_DEFAULT_FORMAT': 'json'
+    # Другие настройки
+    'TEST_REQUEST_DEFAULT_FORMAT': 'json'
 }
 ```
 
 ```python
 REST_FRAMEWORK = {
-    ...
-'TEST_REQUEST_RENDERER_CLASSES': [
-    'rest_framework.renderers.MultiPartRenderer',
-    'rest_framework.renderers.JSONRenderer',
-    'rest_framework.renderers.TemplateHTMLRenderer'
-]
+    # Другие настройки
+    'TEST_REQUEST_RENDERER_CLASSES': [
+        'rest_framework.renderers.MultiPartRenderer',
+        'rest_framework.renderers.JSONRenderer',
+        'rest_framework.renderers.TemplateHTMLRenderer'
+    ]
 }
-```
-
-
-#### Рекомендовано: DjangoModelFactory и SubFactory
-
-```python
-import factory
-from factory.django import DjangoModelFactory
-from django.contrib.auth import get_user_model
-
-User = get_user_model()
-
-class UserFactory(DjangoModelFactory):
-    class Meta:
-        model = User
-    username = factory.Sequence(lambda n: f"user{n}")
-    email = factory.LazyAttribute(lambda o: f"{o.username}@example.com")
-
-class PurchaseFactory(DjangoModelFactory):
-    class Meta:
-        model = Purchase
-    owner = factory.SubFactory(UserFactory)
 ```
 
 ## Фабрики для генерации данных
 
 ### FactoryBoy
+
 Документация: https://factoryboy.readthedocs.io/
 
 ```
@@ -625,7 +611,8 @@ pip install factory_boy
 
 #### Рекомендовано: DjangoModelFactory и SubFactory
 
-Используйте DjangoModelFactory для моделей Django и SubFactory для связей между моделями — это упростит подготовку данных для API‑тестов и тестов тротлинга.
+Используйте DjangoModelFactory для моделей Django и SubFactory для связей между моделями — это упростит подготовку
+данных для API‑тестов и тестов тротлинга.
 
 ```python
 import factory
@@ -634,18 +621,21 @@ from django.contrib.auth import get_user_model
 
 User = get_user_model()
 
+
 class UserFactory(DjangoModelFactory):
     class Meta:
         model = User
+
     username = factory.Sequence(lambda n: f"user{n}")
     email = factory.LazyAttribute(lambda o: f"{o.username}@example.com")
+
 
 class PurchaseFactory(DjangoModelFactory):
     class Meta:
         model = Purchase
+
     owner = factory.SubFactory(UserFactory)
 ```
-
 
 Прописывание в `setUp()` создание новых объектов может занимать очень много времени. Чтобы это ускорить, упростить и
 автоматизировать, можно написать свою фабрику:
@@ -813,6 +803,7 @@ def setUp(self):
 ```
 
 #### Faker
+
 Документация: https://faker.readthedocs.io/
 
 Faker пришел на замену Fuzzy и в нём гораздо больше всего, его нужно устанавливать.
@@ -889,8 +880,8 @@ fake.ipv4_private()
 '10.86.161.98'
 ```
 
-
 ## Мокирование и изоляция внешних сервисов
+
 Документация: https://docs.python.org/3/library/unittest.mock.html
 
 - Патчьте точку использования (where it’s used), а не место определения.
@@ -899,17 +890,18 @@ fake.ipv4_private()
 ```python
 from unittest.mock import patch
 
+
 def do_payment(amount):
     # обёртка над внешним SDK
     from app.payments.gateway import charge
     return charge(amount).get('ok')
+
 
 @patch('app.payments.gateway.charge', return_value={'ok': True})
 def test_charge_ok(mock_charge):
     assert do_payment(100) is True
     mock_charge.assert_called_once_with(100)
 ```
-
 
 ### Тестирование тротлинга (429 Too Many Requests)
 
@@ -918,6 +910,7 @@ from django.test import override_settings
 from django.urls import reverse
 from rest_framework import status
 from rest_framework.test import APITestCase
+
 
 class ThrottleTests(APITestCase):
     @override_settings(REST_FRAMEWORK={
@@ -937,6 +930,7 @@ class ThrottleTests(APITestCase):
 ```python
 from django.core.cache import cache
 
+
 def teardown_function():
     cache.clear()
 ```
@@ -950,13 +944,16 @@ pytest стал стандартом де-факто для тестов в Djan
 pytest-django: https://pytest-django.readthedocs.io/
 
 Установка:
+
 ```bash
 pip install pytest pytest-django pytest-cov
 ```
 
 Базовый пример:
+
 ```python
 import pytest
+
 
 @pytest.mark.django_db
 def test_animals_can_speak(animal_factory):
@@ -965,6 +962,7 @@ def test_animals_can_speak(animal_factory):
 ```
 
 Запуск:
+
 ```bash
 pytest -q
 pytest -k speak   # фильтр по имени
@@ -974,6 +972,7 @@ pytest --cov=yourpkg --cov-report=term-missing
 Совет: для ускорения повторных прогонов используйте ключ --reuse-db (плагин pytest-django).
 
 Пример pytest.ini:
+
 ```ini
 [pytest]
 DJANGO_SETTINGS_MODULE = project.settings
@@ -981,6 +980,7 @@ python_files = tests.py test_*.py *_tests.py
 ```
 
 #### Фикстуры в conftest.py
+
 Повторно используйте фикстуры в корневом файле conftest.py, чтобы не импортировать их в каждом тесте:
 
 ```python
@@ -989,20 +989,19 @@ import pytest
 from rest_framework.test import APIClient
 
 
-
 @pytest.fixture
 def api_client():
     return APIClient()
 ```
 
-
-
 #### Дополнительные фикстуры: user и auth_client
+
 ```python
 # conftest.py
 @pytest.fixture
 def user(db, user_factory):
     return user_factory()
+
 
 @pytest.fixture
 def auth_client(api_client, user):
@@ -1010,12 +1009,10 @@ def auth_client(api_client, user):
     return api_client
 ```
 
-
 В pytest-django доступны фикстуры: client (Django client), db/transactional_db, settings, monkeypatch и др.
 
-
-
 #### Расширенный pytest.ini
+
 ```ini
 [pytest]
 DJANGO_SETTINGS_MODULE = project.settings
@@ -1027,13 +1024,16 @@ testpaths = tests
 ```
 
 #### База данных в тестах
+
 ```python
 import pytest
+
 
 @pytest.mark.django_db
 def test_uses_db():
     # Обычные ORM-операции в рамках транзакции TestCase
     ...
+
 
 @pytest.mark.django_db(transaction=True)
 def test_needs_transactions():
@@ -1042,8 +1042,10 @@ def test_needs_transactions():
 ```
 
 #### Параметризация тестов
+
 ```python
 import pytest
+
 
 @pytest.mark.parametrize(
     "a,b,expected",
@@ -1055,6 +1057,7 @@ def test_add(a, b, expected):
 ```
 
 #### Переопределение настроек и окружения
+
 ```python
 def test_override_settings(settings):
     settings.DEBUG = False
@@ -1066,6 +1069,7 @@ def test_env(monkeypatch):
 ```
 
 #### Полезные инструменты: caplog и tmp_path
+
 ```python
 def test_logging(caplog):
     with caplog.at_level("INFO"):
@@ -1080,11 +1084,12 @@ def test_tmp_path(tmp_path):
     assert p.read_text() == "hello"
 ```
 
-
 #### Маркеры pytest и контроль запуска
+
 Документация: https://docs.pytest.org/en/stable/reference/reference.html#marks
 
 pytest.ini:
+
 ```ini
 [pytest]
 markers =
@@ -1093,8 +1098,10 @@ markers =
 ```
 
 Использование:
+
 ```python
 import pytest
+
 
 @pytest.mark.slow
 def test_something():
@@ -1102,12 +1109,15 @@ def test_something():
 ```
 
 xfail и skipif:
+
 ```python
 import pytest, sys
+
 
 @pytest.mark.skipif(sys.platform == 'win32', reason='no Windows support')
 def test_only_unix():
     ...
+
 
 @pytest.mark.xfail(reason='bug #123', strict=True)
 def test_known_bug():
