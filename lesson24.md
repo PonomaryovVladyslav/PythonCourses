@@ -1,5 +1,55 @@
 # Лекция 24. ClassBaseView
 
+### Оглавление курса
+
+- Блок 1 — Python Basic (1–6):
+  - [Лекция 1. Введение. Типизации. Переменные. Строки и числа. Булева алгебра. Ветвление](lesson01.md)
+  - [Лекция 2. Обработка исключений. Списки, строки детальнее, срезы, циклы.](lesson02.md)
+  - [Лекция 3: None. Range, list comprehension, sum, max, min, len, sorted, all, any. Работа с файлами](lesson03.md)
+  - [Лекция 4. Хэш таблицы. Set, frozenset. Dict. Tuple. Немного об импортах. Namedtuple, OrderedDict](lesson04.md)
+  - [Лекция 5. Функции, типизация, lambda. Map, zip, filter.](lesson05.md)
+  - [Лекция 6. Рекурсия. Алгоритмы. Бинарный поиск, сортировки](lesson06.md)
+- Блок 2 — Git (7–8):
+  - [Лекция 7. Git. История системы контроля версий. Локальный репозиторий. Базовые команды управления репозиторием.](lesson07.md)
+  - [Лекция 8. Git. Удаленный репозиторий. Remote, push, pull. GitHub, Bitbucket, GitLab, etc. Pull request.](lesson08.md)
+- Блок 3 — Python Advanced (9–14):
+  - [Лекция 9. Введение в ООП. Основные парадигмы ООП. Классы и объекты.](lesson09.md)
+  - [Лекция 10. Множественное наследование. MRO. Magic methods.](lesson10.md)
+  - [Лекция 11. Imports. Standard library. PEP8](lesson11.md)
+  - [Лекция 12. Декораторы. Декораторы с параметрами. Декораторы классов (staticmethod, classmethod, property)](lesson12.md)
+  - [Лекция 13. Тестирование](lesson13.md)
+  - [Лекция 14. Проектирование. Паттерны. SOLID.](lesson14.md)
+- Блок 4 — SQL (15–17):
+  - [Лекция 15. СУБД. PostgreSQL. SQL. DDL. Пользователи. DCL. DML. Связи.](lesson15.md)
+  - [Лекция 16. СУБД. DQL. SELECT. Индексы. Group by. Joins.](lesson16.md)
+  - [Лекция 17. СУБД. Нормализация. Аномалии. Транзакции. ACID. TCL. Backup](lesson17.md)
+- Вне блоков:
+  - [Лекция 18. Virtual env. Pip. Устанавливаемые модули. Pyenv.](lesson18.md)
+- Блок 5 — Django (19–26):
+  - [Лекция 19. Знакомство с Django](lesson19.md)
+  - [Лекция 20. Templates. Static](lesson20.md)
+  - [Лекция 21. Модели. Связи. Meta. Abstract, proxy.](lesson21.md)
+  - [Лекция 22. Django ORM.](lesson22.md)
+  - [Лекция 23. Forms, ModelForms. User, Authentication.](lesson23.md)
+  - ▶ **Лекция 24. ClassBaseView**
+  - [Лекция 25. NoSQL. Куки, сессии, кеш](lesson25.md)
+  - [Лекция 26. Логирование. Middleware. Signals. Messages. Manage commands](lesson26.md)
+- Блок 6 — Django Rest Framework (27–30):
+  - [Лекция 27. Что такое API. REST и RESTful. Django REST Framework.](lesson27.md)
+  - [Лекция 28. @api_view, APIView, ViewSets, Pagination, Routers](lesson28.md)
+  - [Лекция 29. REST аутентификация. Авторизация. Permissions. Фильтрация.](lesson29.md)
+  - [Лекция 30. Тестирование. Django, REST API.](lesson30.md)
+- Блок 7 — Python async (31–33):
+  - [Лекция 31. Celery. Multithreading. GIL. Multiprocessing](lesson31.md)
+  - [Лекция 32. Асинхронное программирование в Python. Корутины. Asyncio.](lesson32.md)
+  - [Лекция 33. Сокеты. Django channels.](lesson33.md)
+- Блок 8 — Deployment (34–35):
+  - [Лекция 34. Linux. Все что нужно знать для деплоймента.](lesson34.md)
+  - [Лекция 35. Deployment](lesson35.md)
+- Вне блоков:
+  - [Лекция 36. Методологии разработки. CI/CD. Монолит и микросервисы. Docker](lesson36.md)
+
+
 ![cbv_meme.png](pictures/cbv_meme.png)
 
 ## Что сегодня учим?
@@ -41,7 +91,7 @@
 ```python
 def dispatch(self, request, *args, **kwargs):
     # Try to dispatch to the right method; if a method doesn't exist,
-    # defer to the error handler. Also defer to the error handler if the      
+    # defer to the error handler. Also defer to the error handler if the
     # request method isn't on the approved list.
     if request.method.lower() in self.http_method_names:  # Если запрос находится в списке разрешенных, то заходим.
         handler = getattr(self, request.method.lower(),
@@ -155,7 +205,7 @@ class HomePageView(TemplateView):
 
 Основные атрибуты:
 
-```python 
+```python
 query_string = False  # сохранить ли квери параметры (то, что в строке браузера после ?) при редиректе
 url = None  # URL, на который надо перейти
 pattern_name = None  # Имя URL, на который надо перейти
@@ -277,7 +327,7 @@ class CommentListView(ListView):
 За это отвечает параметр:
 
 ```python
-paginate_by = None  # можно указать, сколько должно быть объектов на одной странице 
+paginate_by = None  # можно указать, сколько должно быть объектов на одной странице
 ```
 
 В шаблон будут переданы как список объектов, так и данные по пагинации
