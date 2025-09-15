@@ -23,8 +23,7 @@
   - [Лекция 15. СУБД. PostgreSQL. SQL. DDL. Пользователи. DCL. DML. Связи.](lesson15.md)
   - [Лекция 16. СУБД. DQL. SELECT. Индексы. Group by. Joins.](lesson16.md)
   - [Лекция 17. СУБД. Нормализация. Аномалии. Транзакции. ACID. TCL. Backup](lesson17.md)
-- Вне блоков:
-  - [Лекция 18. Virtual env. Pip. Устанавливаемые модули. Pyenv.](lesson18.md)
+- [Лекция 18. Virtual env. Pip. Устанавливаемые модули. Pyenv.](lesson18.md)
 - Блок 5 — Django (19–26):
   - [Лекция 19. Знакомство с Django](lesson19.md)
   - [Лекция 20. Templates. Static](lesson20.md)
@@ -46,8 +45,7 @@
 - Блок 8 — Deployment (34–35):
   - [Лекция 34. Linux. Все что нужно знать для деплоймента.](lesson34.md)
   - [Лекция 35. Deployment](lesson35.md)
-- Вне блоков:
-  - [Лекция 36. Методологии разработки. CI/CD. Монолит и микросервисы. Docker](lesson36.md)
+- [Лекция 36. Методологии разработки. CI/CD. Монолит и микросервисы. Docker](lesson36.md)
 
 
 ![](https://habrastorage.org/r/w780/getpro/habr/post_images/d7e/34f/ba6/d7e34fba6115e561d2016fa85f7a846a.jpg)
