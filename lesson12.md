@@ -13,6 +13,13 @@
   - [Лекция 6. Рекурсия. Алгоритмы. Бинарный поиск, сортировки](lesson06.md)
 </details>
 
+<details>
+  <summary>Блок 2 — Git (7–8)</summary>
+
+  - [Лекция 7. Git. История системы контроля версий. Локальный репозиторий. Базовые команды управления репозиторием.](lesson07.md)
+  - [Лекция 8. Git. Удаленный репозиторий. Remote, push, pull. GitHub, Bitbucket, GitLab, etc. Pull request.](lesson08.md)
+</details>
+
 <details open>
   <summary>Блок 3 — Python Advanced (9–14)</summary>
 
@@ -23,14 +30,6 @@
   - [Лекция 13. Тестирование](lesson13.md)
   - [Лекция 14. Проектирование. Паттерны. SOLID.](lesson14.md)
 </details>
-
-<details>
-  <summary>Блок 2 — Git (7–8)</summary>
-
-  - [Лекция 7. Git. История системы контроля версий. Локальный репозиторий. Базовые команды управления репозиторием.](lesson07.md)
-  - [Лекция 8. Git. Удаленный репозиторий. Remote, push, pull. GitHub, Bitbucket, GitLab, etc. Pull request.](lesson08.md)
-</details>
-
 <details>
   <summary>Блок 4 — SQL (15–17)</summary>
 
