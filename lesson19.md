@@ -983,3 +983,11 @@ def regex(request: HttpRequest, text: str) -> HttpResponse:
 по [вот этой ссылке](https://docs.djangoproject.com/en/stable/topics/http/urls/)
 
 На практике редко встречаются более сложные конструкции, но Django представляет нам такую возможность.
+
+Как сдавать домашку?
+
+[Тут](pr_explanation_django.md) ссылка с подробностями.
+
+## Домашки на весь блок по web
+
+[Ссылка](web_homeworks.md)

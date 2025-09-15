@@ -705,6 +705,6 @@ PR: в `develop` и в `main`.
 
 ## Как сдавать домашки
 
-Для этого есть вот [эта](https://github.com/PonomaryovVladyslav/PythonCources/blob/master/pr_explanation.md) инструкция!
+Для этого есть вот [эта](pr_explanation.md) инструкция!
 
 Жду код первого модуля в виде пулл реквеста! Всем удачи!!!

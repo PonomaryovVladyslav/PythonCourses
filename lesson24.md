@@ -1320,3 +1320,7 @@ class NoteListView(LoginRequiredMixin, ListView):
 ```
 
 Профит! Всё работает. Переходим к заданию на модуль. Все задания должны быть выполнены через Class-Based View.
+
+## Модуль номер 3
+
+[Cсылка](module3.md)
