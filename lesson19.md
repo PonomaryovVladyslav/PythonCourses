@@ -899,6 +899,6 @@ def regex(request: HttpRequest, text: str) -> HttpResponse:
 Мы получили данные из урла.
 
 Бывают и более сложные конструкции, рассмотрите их
-по [вот этой ссылке](https://docs.djangoproject.com/en/4.2/topics/http/urls/)
+по [вот этой ссылке](https://docs.djangoproject.com/en/stable/topics/http/urls/)
 
 На практике редко встречаются более сложные конструкции, но Django представляет нам такую возможность.
