@@ -299,7 +299,7 @@ Graph) - направленный ациклический граф. Потом�
 
 ## Алгоритм бинарного поиска
 
-!()[https://www.mathwarehouse.com/programming/images/binary-vs-linear-search/linear-vs-binary-search-worst-case.gif]
+![](https://www.mathwarehouse.com/programming/images/binary-vs-linear-search/linear-vs-binary-search-worst-case.gif)
 
 Для понимания, что такое сложность, давайте рассмотрим один из базовых алгоритмов, бинарный поиск.
 
