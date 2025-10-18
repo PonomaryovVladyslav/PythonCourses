@@ -10,7 +10,7 @@
   - ▶ **Лекция 3: None. Range, list comprehension, sum, max, min, len, sorted, all, any. Работа с файлами**
   - [Лекция 4. Хэш таблицы. Set, frozenset. Dict. Tuple. Немного об импортах. Namedtuple, OrderedDict](lesson04.md)
   - [Лекция 5. Функции, типизация, lambda. Map, zip, filter.](lesson05.md)
-  - [Лекция6. Алгоритмы и структуры данных](lesson06.md)
+  - [Лекция 6. Алгоритмы и структуры данных](lesson06.md)
 </details>
 
 <details>
