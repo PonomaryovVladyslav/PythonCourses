@@ -10,7 +10,7 @@
   - [Лекция 3: None. Range, list comprehension, sum, max, min, len, sorted, all, any. Работа с файлами](lesson03.md)
   - [Лекция 4. Хэш таблицы. Set, frozenset. Dict. Tuple. Немного об импортах. Namedtuple, OrderedDict](lesson04.md)
   - [Лекция 5. Функции, типизация, lambda. Map, zip, filter.](lesson05.md)
-  - [Лекция6. Алгоритмы и структуры данных](lesson06.md)
+  - [Лекция 6. Рекурсия. Алгоритмы. Бинарный поиск, сортировки](lesson06.md)
 </details>
 
 <details>
@@ -260,21 +260,44 @@ git интерфейс поддерживает команду `ssh`.
 Свежесозданный инстанс не содержит вообще ничего, даже интерпретатора Python, а значит, нам необходимо его установить,
 но вместе с ним установим и другие нужные пакеты (БД, сервера и т.д.).
 
-```
+```bash
+# Обновляем список пакетов
 sudo apt update
-sudo apt install python3-pip python3-dev python3-venv libpq-dev postgresql postgresql-contrib nginx curl
+
+# Устанавливаем необходимые пакеты
+sudo apt install python3-pip python3-dev python3-venv libpq-dev postgresql postgresql-contrib nginx curl git
+
+# Проверяем версии установленных пакетов
+python3 --version
+pip3 --version
+nginx -v
+psql --version
 ```
 
 ### База данных
 
 Как создать базу данных и пользователя с доступом к ней, вы уже знаете, заходим в консоль postgresql и делаем это:
 
-```sudo -u postgres psql```
+```bash
+# Заходим в консоль PostgreSQL
+sudo -u postgres psql
+
+# В консоли PostgreSQL выполняем следующие команды:
+CREATE DATABASE mydb;
+CREATE USER myuser WITH ENCRYPTED PASSWORD 'mypass';
+GRANT ALL PRIVILEGES ON DATABASE mydb TO myuser;
+
+# Дополнительные права для Django (важно!)
+ALTER USER myuser CREATEDB;
+
+# Выходим из консоли
+\q
 ```
-User: myuser
-DB: mydb
-password: mypass
-```
+
+**Параметры БД:**
+- User: myuser
+- DB: mydb
+- Password: mypass
 
 ## Переменные операционной системы
 
@@ -288,26 +311,38 @@ password: mypass
 поэтому экспорт переменных нужно вносить в файл, загружаемый при каждом запуске, например, `~/.bashrc`, открываем
 `sudo nano ~/.bashrc` и в самом конце дописываем:
 
-```
-export PROD='True';
-export DBNAME='mydb';
-export DBUSER='myuser';
-export DBPASS='mypass';
+```bash
+export PROD='True'
+export DBNAME='mydb'
+export DBUSER='myuser'
+export DBPASS='mypass'
+export DBHOST='127.0.0.1'
+export DBPORT='5432'
 ```
 
-Не забываем выполнить source, чтобы применить эти изменения.
+Не забываем выполнить source, чтобы применить эти изменения:
+
+```bash
+source ~/.bashrc
+```
 
 Для gunicorn проще занести все переменные в отдельный файл, и мы будем использовать его в дальнейшем, создадим еще один
 файл с этими же переменными.
 
-```sudo nano /home/ubuntu/.env```
+```bash
+sudo nano /home/ubuntu/.env
+```
 
+```bash
+PROD=True
+DBNAME=mydb
+DBUSER=myuser
+DBPASS=mypass
+DBHOST=127.0.0.1
+DBPORT=5432
 ```
-PROD='True'
-DBNAME='mydb'
-DBUSER='myuser'
-DBPASS='mypass'
-```
+
+**Важно:** В .env файле НЕ используйте кавычки вокруг значений!
 
 ### Правки в `settings.py`
 
@@ -336,15 +371,27 @@ else:
 import os
 
 DEBUG = False
-ALLOWED_HOSTS = ['54.186.155.252']
+ALLOWED_HOSTS = ['54.186.155.252']  # Замените на ваш IP адрес
 
 # Security for reverse proxy/HTTPS
-CSRF_TRUSTED_ORIGINS = ['http://54.186.155.252', 'https://54.186.155.252']
+CSRF_TRUSTED_ORIGINS = ['http://54.186.155.252', 'https://54.186.155.252']  # Замените на ваш IP
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
-SESSION_COOKIE_SECURE = True
-CSRF_COOKIE_SECURE = True
-# Enable after HTTPS is configured and TLS terminates at Nginx:
+
+# Настройки безопасности для HTTPS (раскомментировать после настройки SSL)
+# SESSION_COOKIE_SECURE = True
+# CSRF_COOKIE_SECURE = True
 # SECURE_SSL_REDIRECT = True
+
+# Настройки для статики и медиа
+STATIC_ROOT = '/home/ubuntu/myprojectdir/static/'
+STATIC_URL = '/static/'
+
+MEDIA_ROOT = '/home/ubuntu/myprojectdir/media/'
+MEDIA_URL = '/media/'
+
+# Максимальный размер загружаемых файлов (100MB)
+FILE_UPLOAD_MAX_MEMORY_SIZE = 104857600
+DATA_UPLOAD_MAX_MEMORY_SIZE = 104857600
 
 DATABASES = {
     'default': {
@@ -355,12 +402,9 @@ DATABASES = {
         'HOST': os.environ.get('DBHOST', '127.0.0.1'),
         'PORT': os.environ.get('DBPORT', '5432'),
         'OPTIONS': {
-            # Require SSL when connecting to managed Postgres (e.g., Amazon RDS)
-            'sslmode': 'require',
-            # Optionally pin CA certificate if you download it to the server:
-            # 'sslrootcert': '/etc/ssl/certs/rds-combined-ca-bundle.pem',
+            # Для локальной БД убираем SSL требование
+            # 'sslmode': 'require',  # Раскомментировать для Amazon RDS
         },
-
     }
 }
 ```
@@ -376,45 +420,98 @@ DATABASES = {
 
 Клонируем код нашего проекта:
 
-```git clone https://github.com/your-git/your-repo.git```
-
-Создаём виртуальное окружение, я обычно создаю отдельную папку в рабочей папке:
-
-```
+```bash
 cd ~/
-mkdir venv
-python3 -m venv venv/
+git clone https://github.com/your-git/your-repo.git
+# Переименуйте папку проекта, если нужно
+# mv your-repo myprojectdir
+```
+
+Создаём виртуальное окружение:
+
+```bash
+cd ~/
+python3 -m venv venv
 ```
 
 И активируем его:
 
-```source ~/venv/bin/activate```
+```bash
+source ~/venv/bin/activate
+```
 
 Переходим в раздел с проектом и устанавливаем всё, что есть в `requirements.txt`:
 
-```
+```bash
 cd ~/myprojectdir
+pip install --upgrade pip
 pip install -r requirements.txt
 ```
 
 Если локально вы не работали с базой postgresql, то необходимо доставить модуль для работы с ним:
 
-```pip install psycopg2-binary```
+```bash
+pip install psycopg2-binary
+```
+
+**Важно:** Если возникают ошибки с psycopg2, попробуйте:
+```bash
+sudo apt-get install python3-dev libpq-dev
+pip install psycopg2-binary --no-cache-dir
+```
 
 После чего вы должны успешно применить миграции:
 
-```python manage.py migrate```
+```bash
+python manage.py migrate
+```
+
+Если возникают ошибки с миграциями, проверьте:
+1. Правильность переменных окружения: `echo $DBNAME`
+2. Доступность базы данных: `psql -h $DBHOST -U $DBUSER -d $DBNAME`
+
+**Важно для медиа файлов:** Убедитесь, что в основном `urls.py` проекта добавлены URL для медиа файлов:
+
+```python
+# myproject/urls.py
+from django.contrib import admin
+from django.urls import path, include
+from django.conf import settings
+from django.conf.urls.static import static
+
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    # ваши другие URL
+]
+
+# Добавляем обслуживание медиа файлов в режиме разработки
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+```
+
+**Примечание:** В продакшене медиа файлы обслуживает nginx, но эта настройка нужна для корректной работы Django.
 
 ## Проверяем работоспособность сервера
 
 Для проверки того, что ваше приложение можно разворачивать, запустим его через стандартную команду:
 
-```python manage.py runserver```
+```bash
+# Убедитесь, что виртуальное окружение активировано
+source ~/venv/bin/activate
+
+# Соберите статику (если нужно)
+python manage.py collectstatic --noinput
+
+# Запустите сервер
+python manage.py runserver 0.0.0.0:8000
+```
 
 Чтобы это сработало, необходимо разрешить использовать порт, который мы будем использовать для теста, по стандарту это
 порт номер 8000:
 
-```sudo ufw allow 8000```
+```bash
+sudo ufw allow 8000
+```
 
 Мы открыли порт со стороны сервера, но пока что он закрыт со стороны Amazon, давайте временно откроем его тоже. Для
 этого идём на страницу Amazon с описанием инстанса, открываем вкладку `Security` и кликаем на название секьюрити группы:
@@ -429,7 +526,9 @@ pip install -r requirements.txt
 
 После этого можно запустить команду `runserver` с такими правилами:
 
-```python manage.py runserver 0.0.0.0:8000```
+```bash
+python manage.py runserver 0.0.0.0:8000
+```
 
 Если вы всё сделали правильно, то теперь вы можете открыть в браузере IP адрес, который вам выдал Amazon, с портом 8000:
 
@@ -441,11 +540,18 @@ http://54.186.155.252:8000/
 Обратите внимание, сайт откроется БЕЗ СТАТИКИ, потому что `runserver` при `DEBUG = False` не должен обрабатывать
 статику.
 
+**Возможные проблемы и решения:**
+- Если сайт не открывается, проверьте правильность IP в ALLOWED_HOSTS
+- Если ошибка 500, проверьте логи: `python manage.py check --deploy`
+- Если проблемы с БД, проверьте подключение: `python manage.py dbshell`
+
 ## Проверяем gunicorn
 
 Устанавливаем gunicorn
 
-```pip install gunicorn```
+```bash
+pip install gunicorn
+```
 
 Как вы помните, **gunicorn** - это WSGI сервер. Если вы откроете папку с `settings.py`, то вы увидите там еще два
 файла `wsgi.py` и `asgi.py`.
@@ -454,9 +560,20 @@ http://54.186.155.252:8000/
 
 Для проверки работы gunicorn запустим сервер через него:
 
-```gunicorn --bind 0.0.0.0:8000 myproject.wsgi:application```
+```bash
+# Убедитесь, что вы в папке проекта и виртуальное окружение активировано
+cd ~/myprojectdir
+source ~/venv/bin/activate
 
-Где `Proj` - это название папки, в котором лежит файл `wsgi.py`.
+# Запустите gunicorn (замените myproject на название вашего проекта)
+gunicorn --bind 0.0.0.0:8000 myproject.wsgi:application
+```
+
+Где `myproject` - это название папки, в которой лежит файл `wsgi.py`.
+
+**Важно:** Если возникает ошибка "No module named 'myproject'", проверьте:
+1. Правильность названия проекта в команде
+2. Находитесь ли вы в корневой папке проекта (где manage.py)
 
 Опять же, если вы всё сделали правильно, то тот же самый URL всё ещё будет работать.
 
@@ -483,8 +600,11 @@ http://54.186.155.252:8000/
 
 Теперь создадим файл сервиса, который и будет выполнять запуск:
 
-```sudo nano /etc/systemd/system/gunicorn.service```
+```bash
+sudo nano /etc/systemd/system/gunicorn.service
 ```
+
+```ini
 [Unit]
 Description=gunicorn daemon
 After=network.target
@@ -507,6 +627,10 @@ RestartSec=5
 [Install]
 WantedBy=multi-user.target
 ```
+
+**Важно:** Замените `myproject` на название вашего Django проекта и убедитесь, что пути правильные:
+- `/home/ubuntu/myprojectdir` - путь к вашему проекту
+- `/home/ubuntu/venv/bin/gunicorn` - путь к gunicorn в виртуальном окружении
 
 Блок `Unit`:
 
@@ -549,7 +673,7 @@ WantedBy=multi-user.target
 
 Для запуска сокета нужно запустить его из системы:
 
-```
+```bash
 sudo systemctl daemon-reload
 sudo systemctl start gunicorn
 sudo systemctl enable gunicorn
@@ -559,30 +683,52 @@ sudo systemctl enable gunicorn
 
 ### Проверим статус сервиса
 
-```sudo systemctl status gunicorn```
+```bash
+sudo systemctl status gunicorn
+```
 
 Если ошибок нет, значит сервис запущен и создал unix-сокет по указанному пути.
 
+**Возможные проблемы:**
+- Если статус "failed", проверьте логи: `sudo journalctl -u gunicorn -f`
+- Если ошибка с путями, убедитесь что все пути в service файле правильные
+- Если ошибка с модулем, проверьте название проекта в ExecStart
 
 Должны увидеть примерно такой статус:
 
 ```
-gunicorn.service - gunicorn daemon
-   Loaded: loaded (/etc/systemd/system/gunicorn.service; disabled; vendor preset: enabled)
-   Active: inactive (dead)
+● gunicorn.service - gunicorn daemon
+   Loaded: loaded (/etc/systemd/system/gunicorn.service; enabled; vendor preset: enabled)
+   Active: active (running) since ...
 ```
 
 Попробуем выполнить запрос к нашему сокету:
 
-```curl --unix-socket /run/gunicorn/gunicorn.sock http://localhost```
+```bash
+curl --unix-socket /run/gunicorn/gunicorn.sock http://localhost
+```
 
-И проверим статус еще раз, теперь он будет `active`
+Если всё работает правильно, вы должны увидеть HTML код вашего сайта.
 
 ### Рестарт gunicorn
 
 Теперь мы можем перезапускать наш сокет за 1 команду:
 
-```sudo systemctl restart gunicorn```
+```bash
+sudo systemctl restart gunicorn
+```
+
+Полезные команды для отладки:
+```bash
+# Просмотр логов в реальном времени
+sudo journalctl -u gunicorn -f
+
+# Остановка сервиса
+sudo systemctl stop gunicorn
+
+# Проверка конфигурации
+sudo systemctl daemon-reload
+```
 
 ## Nginx
 
@@ -594,20 +740,36 @@ gunicorn.service - gunicorn daemon
 Настроим Nginx, если вы установили Nginx (мы сделали это первым действием на этом инстансе), то у вас будет
 существовать папка с базовыми настройками Nginx, давайте создадим новую настройку:
 
-```sudo nano /etc/nginx/sites-available/myproject```
+```bash
+sudo nano /etc/nginx/sites-available/myproject
+```
 
 Где `myproject` - это название вашего проекта.
 
-```
+```nginx
 server {
     listen 80;
-    server_name 54.186.155.252;
+    server_name 54.186.155.252;  # Замените на ваш IP
 }
 ```
 
 Сохранить и закрыть, пробросить симлинк в соседнюю папку, которую по дефолту обслуживает Nginx:
 
-```sudo ln -s /etc/nginx/sites-available/myproject /etc/nginx/sites-enabled/```
+```bash
+sudo ln -s /etc/nginx/sites-available/myproject /etc/nginx/sites-enabled/
+```
+
+Проверим конфигурацию Nginx:
+
+```bash
+sudo nginx -t
+```
+
+Если конфигурация корректна, перезапустим Nginx:
+
+```bash
+sudo systemctl restart nginx
+```
 
 **ОБЯЗАТЕЛЬНО! Добавить 80 порт в security groups, разрешенные на Amazon!!!**
 
@@ -617,16 +779,18 @@ server {
 
 Чтобы Nginx начал проксировать наш проект, нужно его указать:
 
-```sudo nano /etc/nginx/sites-available/myproject```
-
+```bash
+sudo nano /etc/nginx/sites-available/myproject
 ```
+
+```nginx
 upstream django {
     server unix:/run/gunicorn/gunicorn.sock;
 }
 
 server {
     listen 80;
-    server_name some_IP_or_url;
+    server_name 54.186.155.252;  # Замените на ваш IP
 
     location / {
         include proxy_params;
@@ -635,40 +799,97 @@ server {
 }
 ```
 
-Перезапускаем Nginx и проверяем:
+Проверяем конфигурацию и перезапускаем Nginx:
 
-```sudo systemctl restart nginx```
+```bash
+sudo nginx -t
+sudo systemctl restart nginx
+```
 
 Всё должно работать, но без статики.
 
-Вспомним самое начало лекции, что мы можем придумать куда команда `collectstatic` должна сложить статику. Запускаем
-команду и указываем Nginx, что нужно обрабатывать статику и медиа.
+**Возможные проблемы:**
+- Если ошибка 502 Bad Gateway, проверьте статус gunicorn: `sudo systemctl status gunicorn`
+- Если ошибка конфигурации nginx, проверьте синтаксис: `sudo nginx -t`
+- Проверьте логи nginx: `sudo tail -f /var/log/nginx/error.log`
 
+Вспомним самое начало лекции, что мы можем придумать куда команда `collectstatic` должна сложить статику. Сначала соберем статику:
+
+```bash
+cd ~/myprojectdir
+source ~/venv/bin/activate
+python manage.py collectstatic --noinput
 ```
+
+Создадим папки для медиа файлов:
+
+```bash
+mkdir -p /home/ubuntu/myprojectdir/media
+```
+
+Теперь обновим конфигурацию Nginx для обработки статики и медиа:
+
+```bash
+sudo nano /etc/nginx/sites-available/myproject
+```
+
+```nginx
 upstream django {
     server unix:/run/gunicorn/gunicorn.sock;
 }
 
 server {
     listen 80;
-    server_name 34.221.249.152;
+    server_name 54.186.155.252;  # Замените на ваш IP
 
-    location /static/ { alias /home/ubuntu/myprojectdir/static/; }
-    location /media/  { alias /home/ubuntu/myprojectdir/media/;  }
+    # ВАЖНО: Увеличиваем лимит размера загружаемых файлов
+    client_max_body_size 100M;
+
+    location /static/ {
+        alias /home/ubuntu/myprojectdir/static/;
+        expires 1y;
+        add_header Cache-Control "public, immutable";
+        access_log off;
+    }
+
+    location /media/ {
+        alias /home/ubuntu/myprojectdir/media/;
+        expires 30d;
+        add_header Cache-Control "public";
+        access_log off;
+
+        # Безопасность: запрещаем выполнение скриптов
+        location ~* \.(php|py|pl|sh|cgi)$ {
+            deny all;
+        }
+    }
 
     location / {
         include proxy_params;
         proxy_pass http://django;
     }
 }
+```
 
+Проверяем конфигурацию и перезапускаем Nginx:
+
+```bash
+sudo nginx -t
+sudo systemctl restart nginx
 ```
 
 Перезапускаем Nginx и наслаждаемся результатом!
 
 **Не забываем закрыть 8000 порт и на инстансе, и на Amazon в секьюрити группе!!**
 
-```sudo ufw delete allow 8000```
+```bash
+sudo ufw delete allow 8000
+```
+
+**Проверка работы:**
+- Откройте ваш сайт по IP без порта
+- Статика должна загружаться корректно
+- Проверьте в браузере Developer Tools, что статические файлы загружаются с кодом 200
 
 ## Сервисы Amazon
 
@@ -960,3 +1181,208 @@ server {
 для активации изменений. Если процесс автоматического обновления когда-нибудь не выполнится, то *Let’s Encrypt*
 отправит сообщение на указанный вами адрес электронной почты с предупреждением о том, что срок действия сертификата
 подходит к концу.
+
+## Частые проблемы и их решения
+
+### 1. Ошибки с базой данных
+
+**Проблема:** `FATAL: password authentication failed for user "myuser"`
+
+**Решение:**
+```bash
+# Проверьте переменные окружения
+echo $DBUSER
+echo $DBPASS
+echo $DBNAME
+
+# Проверьте подключение к БД
+psql -h 127.0.0.1 -U myuser -d mydb
+
+# Если не работает, пересоздайте пользователя в PostgreSQL
+sudo -u postgres psql
+DROP USER IF EXISTS myuser;
+CREATE USER myuser WITH ENCRYPTED PASSWORD 'mypass';
+GRANT ALL PRIVILEGES ON DATABASE mydb TO myuser;
+ALTER USER myuser CREATEDB;
+\q
+```
+
+### 2. Ошибки с gunicorn
+
+**Проблема:** `ModuleNotFoundError: No module named 'myproject'`
+
+**Решение:**
+```bash
+# Убедитесь, что вы в правильной папке
+cd ~/myprojectdir
+ls -la  # Должен быть файл manage.py
+
+# Проверьте название проекта
+ls */wsgi.py  # Покажет правильное название
+
+# Обновите service файл с правильным названием
+sudo nano /etc/systemd/system/gunicorn.service
+sudo systemctl daemon-reload
+sudo systemctl restart gunicorn
+```
+
+### 3. Ошибки с nginx
+
+**Проблема:** `502 Bad Gateway`
+
+**Решение:**
+```bash
+# Проверьте статус gunicorn
+sudo systemctl status gunicorn
+
+# Проверьте существование сокета
+ls -la /run/gunicorn/
+
+# Проверьте логи
+sudo journalctl -u gunicorn -f
+sudo tail -f /var/log/nginx/error.log
+
+# Перезапустите сервисы
+sudo systemctl restart gunicorn
+sudo systemctl restart nginx
+```
+
+### 4. Проблемы со статикой и медиа
+
+**Проблема:** Статические файлы не загружаются
+
+**Решение:**
+```bash
+# Соберите статику заново
+cd ~/myprojectdir
+source ~/venv/bin/activate
+python manage.py collectstatic --clear --noinput
+
+# Проверьте права доступа
+sudo chown -R ubuntu:www-data /home/ubuntu/myprojectdir/static/
+sudo chmod -R 755 /home/ubuntu/myprojectdir/static/
+
+# Проверьте конфигурацию nginx
+sudo nginx -t
+```
+
+**Проблема:** Медиа файлы не загружаются или возвращают 403/404
+
+**Решение:**
+```bash
+# Создайте папку для медиа, если её нет
+mkdir -p /home/ubuntu/myprojectdir/media
+
+# Установите правильные права доступа
+sudo chown -R ubuntu:www-data /home/ubuntu/myprojectdir/media/
+sudo chmod -R 755 /home/ubuntu/myprojectdir/media/
+
+# Проверьте настройки Django
+cd ~/myprojectdir
+source ~/venv/bin/activate
+python manage.py shell
+>>> from django.conf import settings
+>>> print("MEDIA_URL:", settings.MEDIA_URL)
+>>> print("MEDIA_ROOT:", settings.MEDIA_ROOT)
+>>> exit()
+
+# Проверьте, что nginx может читать файлы
+sudo -u www-data ls -la /home/ubuntu/myprojectdir/media/
+
+# Тестовая загрузка файла
+echo "test" | sudo tee /home/ubuntu/myprojectdir/media/test.txt
+curl http://your-ip/media/test.txt
+```
+
+**Проблема:** Ошибка "413 Request Entity Too Large" при загрузке файлов
+
+**Решение:**
+```bash
+# Проверьте текущий лимит в nginx
+grep -r "client_max_body_size" /etc/nginx/
+
+# Если лимит не установлен или слишком мал, отредактируйте конфигурацию
+sudo nano /etc/nginx/sites-available/myproject
+
+# Добавьте в блок server:
+# client_max_body_size 100M;
+
+# Также можно установить глобально в nginx.conf
+sudo nano /etc/nginx/nginx.conf
+
+# Добавьте в блок http:
+# client_max_body_size 100M;
+
+# Перезапустите nginx
+sudo nginx -t
+sudo systemctl restart nginx
+
+# Проверьте настройки Django (должны соответствовать nginx)
+cd ~/myprojectdir
+source ~/venv/bin/activate
+python manage.py shell
+>>> from django.conf import settings
+>>> print("FILE_UPLOAD_MAX_MEMORY_SIZE:", getattr(settings, 'FILE_UPLOAD_MAX_MEMORY_SIZE', 'Not set'))
+>>> print("DATA_UPLOAD_MAX_MEMORY_SIZE:", getattr(settings, 'DATA_UPLOAD_MAX_MEMORY_SIZE', 'Not set'))
+>>> exit()
+```
+
+### 5. Проблемы с переменными окружения
+
+**Проблема:** Переменные не загружаются
+
+**Решение:**
+```bash
+# Проверьте файл .env
+cat /home/ubuntu/.env
+
+# Убедитесь, что нет кавычек в .env файле
+# Неправильно: DBNAME="mydb"
+# Правильно: DBNAME=mydb
+
+# Перезапустите gunicorn после изменений
+sudo systemctl restart gunicorn
+```
+
+### 6. Полезные команды для отладки
+
+```bash
+# Проверка статуса всех сервисов
+sudo systemctl status nginx
+sudo systemctl status gunicorn
+sudo systemctl status postgresql
+
+# Просмотр логов
+sudo journalctl -u gunicorn -f
+sudo tail -f /var/log/nginx/access.log
+sudo tail -f /var/log/nginx/error.log
+
+# Проверка портов
+sudo netstat -tlnp | grep :80
+sudo netstat -tlnp | grep :443
+
+# Проверка Django
+cd ~/myprojectdir
+source ~/venv/bin/activate
+python manage.py check --deploy
+python manage.py collectstatic --dry-run
+```
+
+### 7. Чек-лист для успешного деплоя
+
+- [ ] Установлены все необходимые пакеты
+- [ ] Создана база данных и пользователь PostgreSQL
+- [ ] Настроены переменные окружения в ~/.bashrc и ~/.env
+- [ ] Клонирован код проекта
+- [ ] Создано и активировано виртуальное окружение
+- [ ] Установлены зависимости из requirements.txt
+- [ ] Применены миграции Django
+- [ ] Создан и настроен service файл для gunicorn
+- [ ] Настроен nginx конфигурационный файл
+- [ ] Добавлен client_max_body_size в nginx для загрузки файлов
+- [ ] Собрана статика командой collectstatic
+- [ ] Созданы папки для медиа файлов с правильными правами
+- [ ] Открыты необходимые порты в AWS Security Groups
+- [ ] Проверена работа сайта
+- [ ] Протестирована загрузка медиа файлов
+- [ ] Настроен SSL сертификат (опционально)
