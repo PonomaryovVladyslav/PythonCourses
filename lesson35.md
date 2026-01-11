@@ -201,7 +201,7 @@ STATIC_URL = '/static/'
 **EC2** - это сервис, который позволяет запускать виртуальные сервера с различной мощностью на различных операционных
 системах.
 
-Для нашего случая будем рассматривать недорогой сервер (t3.micro/x86 или t4g.micro/ARM) на базе Ubuntu Server 22.04 LTS.
+Для нашего случая будем рассматривать недорогой сервер (t3.micro/x86 или t4g.micro/ARM) на базе Ubuntu Server 24.04 LTS (или 22.04 LTS).
 
 ![](https://djangoalevel.s3.eu-central-1.amazonaws.com/lesson47/ec2-ubuntu.png)
 
@@ -215,7 +215,7 @@ STATIC_URL = '/static/'
 
 Первый сервер - это WSGI (*Web-Server Gateway Interface*), работает примерно так:
 
-![](http://lectures.uralbash.ru/_images/server-app.png)
+![](https://miro.medium.com/1*hQ2cFumu-YU2P1iWyg-xKg.jpeg)
 
 В качестве WSGI сервера может быть использовано достаточно большое количество разных серверов:
 
@@ -250,7 +250,7 @@ STATIC_URL = '/static/'
 
 ## Пример развёртывания
 
-Рассмотрим, как развернуть наш проект на примере EC2 (Ubuntu 22.04) + Gunicorn + Nginx
+Рассмотрим, как развернуть наш проект на примере EC2 (Ubuntu 24.04/22.04) + Gunicorn + Nginx
 
 Для начала необходимо зайти на наш EC2 сервер при помощи SSH.
 
@@ -991,25 +991,35 @@ INSTALLED_APPS = [
 после чего достаточно добавить настройки:
 
 ```python
+import os
+
 # Optional
 AWS_S3_OBJECT_PARAMETERS = {
     'Expires': 'Thu, 31 Dec 2099 20:00:00 GMT',
     'CacheControl': 'max-age=94608000',
 }
 # Required
-AWS_STORAGE_BUCKET_NAME = 'BUCKET_NAME'
-AWS_S3_REGION_NAME = 'REGION_NAME'  # e.g. us-east-2
-AWS_ACCESS_KEY_ID = 'xxxxxxxxxxxxxxxxxxxx'
-AWS_SECRET_ACCESS_KEY = 'yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy'
+AWS_STORAGE_BUCKET_NAME = os.environ.get('AWS_BUCKET_NAME')
+AWS_S3_REGION_NAME = os.environ.get('AWS_REGION', 'us-east-1')
+AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID')
+AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY')
 # НЕ ВПИСЫВАЙТЕ САМИ КЛЮЧИ, ТОЛЬКО os.environ.get('SOME_KEY')
 # Recommended for django-storages >= 1.13: manage ACLs via bucket policy
 AWS_DEFAULT_ACL = None
 
-
-# Tell the staticfiles app to use S3Boto3 storage when writing the collected static files (when
-# you run `collectstatic`).
-STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+# Django 4.2+ использует STORAGES вместо устаревших STATICFILES_STORAGE и DEFAULT_FILE_STORAGE
+STORAGES = {
+    "default": {
+        "BACKEND": "storages.backends.s3boto3.S3Boto3Storage",
+    },
+    "staticfiles": {
+        "BACKEND": "storages.backends.s3boto3.S3Boto3Storage",
+    },
+}
 ```
+
+> **Важно:** Начиная с Django 4.2, настройки `STATICFILES_STORAGE` и `DEFAULT_FILE_STORAGE` устарели.
+> Используйте новый формат `STORAGES`. В Django 5.1+ старые настройки полностью удалены.
 
 Этого достаточно, чтобы команда `collectstatic` собирала всю статику в S3 Bucket от Amazon, а template tag `static`
 генерировал URL с параметрами безопасности, получить такую статику просто так нельзя.
@@ -1025,28 +1035,38 @@ STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 
 ```python
 # custom_storages.py
-from django.conf import settings
 from storages.backends.s3boto3 import S3Boto3Storage
 
 
 class StaticStorage(S3Boto3Storage):
-    location = settings.STATICFILES_LOCATION
+    location = 'static'
+    default_acl = None
 
 
 class MediaStorage(S3Boto3Storage):
-    location = settings.MEDIAFILES_LOCATION
+    location = 'media'
+    default_acl = None
 ```
 
 А в `settings.py` укажем:
 
 ```python
-# settings.py
-STATICFILES_LOCATION = 'static'
-STATICFILES_STORAGE = 'custom_storages.StaticStorage'
-
-MEDIAFILES_LOCATION = 'media'
-DEFAULT_FILE_STORAGE = 'custom_storages.MediaStorage'
+# settings.py (Django 4.2+)
+STORAGES = {
+    "default": {
+        "BACKEND": "myproject.custom_storages.MediaStorage",
+    },
+    "staticfiles": {
+        "BACKEND": "myproject.custom_storages.StaticStorage",
+    },
+}
 ```
+
+> **Для Django < 4.2 (устаревший синтаксис):**
+> ```python
+> STATICFILES_STORAGE = 'custom_storages.StaticStorage'
+> DEFAULT_FILE_STORAGE = 'custom_storages.MediaStorage'
+> ```
 
 Этого полностью достаточно, чтобы команда `collectstatic` собрала всё статику в папку `static` на S3 Bucket, а любые
 загруженные пользователями файлы - в папку `media`.
