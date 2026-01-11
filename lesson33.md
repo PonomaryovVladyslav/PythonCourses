@@ -80,7 +80,7 @@
 
 - [Лекция 36. Методологии разработки. CI/CD. Монолит и микросервисы. Docker](lesson36.md)
 
-![](https://www.imaginarycloud.com/blog/content/images/2016/03/gifmachine-2.gif)
+![](https://media1.giphy.com/media/v1.Y2lkPTZjMDliOTUybzBodTR3NTVqbjBuZjk0Z3A5NTFsb200dWtvYm1qYmNocnN5NnFlbyZlcD12MV9naWZzX3NlYXJjaCZjdD1n/9r75ILTJtiDACKOKoY/200w.gif)
 
 ## Протокол
 
@@ -211,13 +211,14 @@ chat/
     views.py
 ```
 
-Для простоты, предлагаю удалить всё кроме `views.py` и `__init__.py`
+Для простоты, предлагаю удалить всё кроме `views.py` и `__init__.py`, и создать папку `templates`:
 
 Полученная структура:
 
 ```
 chat/
     __init__.py
+    templates/
     views.py
 ```
 
@@ -334,8 +335,8 @@ System check identified no issues (0 silenced).
 
 You have 18 unapplied migration(s). Your project may not work properly until you apply the migrations for app(s): admin, auth, contenttypes, sessions.
 Run 'python manage.py migrate' to apply them.
-October 21, 2020 - 18:49:39
-Django version 3.1.2, using settings 'mysite.settings'
+January 11, 2026 - 10:30:00
+Django version 5.1, using settings 'chatsite.settings'
 Starting development server at http://127.0.0.1:8000/
 Quit the server with CONTROL-C.
 ```
@@ -401,9 +402,9 @@ System check identified no issues (0 silenced).
 
 You have 18 unapplied migration(s). Your project may not work properly until you apply the migrations for app(s): admin, auth, contenttypes, sessions.
 Run 'python manage.py migrate' to apply them.
-August 19, 2022 - 10:20:28
-Django version 4.1, using settings 'mysite.settings'
-Starting ASGI/Daphne version 3.0.2 development server at http://127.0.0.1:8000/
+January 11, 2026 - 10:35:00
+Django version 5.1, using settings 'chatsite.settings'
+Starting ASGI/Daphne version 4.1.0 development server at http://127.0.0.1:8000/
 Quit the server with CONTROL-C.
 ```
 
@@ -411,10 +412,10 @@ Quit the server with CONTROL-C.
 
 ### Создаём страницу с конкретным чатом
 
-Создадим html, `room.html`
+Создадим html файл `room.html` в папке `chat/templates/`:
 
 ```html
-<!-- chat/templates/chat/room.html -->
+<!-- chat/templates/room.html -->
 <!DOCTYPE html>
 <html>
 <head>
@@ -515,14 +516,24 @@ document.querySelector('#chat-message-submit').onclick = function (e) {
 };
 ```
 
-И создать view.
+И создать view. Обратите внимание: нужно передать `room_name` в контекст шаблона:
 
 ```python
+# chat/views.py
 from django.views.generic import TemplateView
+
+
+class Index(TemplateView):
+    template_name = 'index.html'
 
 
 class Room(TemplateView):
     template_name = 'room.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['room_name'] = self.kwargs['room_name']
+        return context
 ```
 
 `urls.py`:
@@ -694,22 +705,27 @@ CHANNEL_LAYERS = {
 }
 ```
 
-Для проверки работы редиса необходимо открыть `shell`:
+Для проверки работы Redis необходимо открыть `shell`:
 
-```python manage.py shell```
+```bash
+python manage.py shell
+```
 
 ```python
 import channels.layers
-
-channel_layer = channels.layers.get_channel_layer()
 from asgiref.sync import async_to_sync
 
+channel_layer = channels.layers.get_channel_layer()
+
+# Отправляем сообщение в канал
 async_to_sync(channel_layer.send)('test_channel', {'type': 'hello'})
+
+# Получаем сообщение из канала
 async_to_sync(channel_layer.receive)('test_channel')
-{'type': 'hello'}
+# Output: {'type': 'hello'}
 ```
 
-Напоминаю, изначально вебсокеты это асинхронная технология. Для использования её синхронно, мы будем использовать
+Напоминаю, изначально WebSocket — это асинхронная технология. Для использования её синхронно мы используем
 встроенный метод `async_to_sync`.
 
 В тесте мы отправили сообщение и получили его.
@@ -726,7 +742,7 @@ from channels.generic.websocket import WebsocketConsumer
 class ChatConsumer(WebsocketConsumer):
     def connect(self):
         self.room_name = self.scope['url_route']['kwargs']['room_name']
-        self.room_group_name = 'chat_%s' % self.room_name
+        self.room_group_name = f'chat_{self.room_name}'
 
         # Join room group
         async_to_sync(self.channel_layer.group_add)(
@@ -796,7 +812,7 @@ from channels.generic.websocket import AsyncWebsocketConsumer
 class ChatConsumer(AsyncWebsocketConsumer):
     async def connect(self):
         self.room_name = self.scope['url_route']['kwargs']['room_name']
-        self.room_group_name = 'chat_%s' % self.room_name
+        self.room_group_name = f'chat_{self.room_name}'
 
         # Join room group
         await self.channel_layer.group_add(
@@ -844,10 +860,10 @@ class ChatConsumer(AsyncWebsocketConsumer):
 
 ### Тестирование
 
-Для тестирования веб сокетов используются специфический ацептанс тесты.
+Для тестирования веб сокетов используются специфические acceptance (приёмочные) тесты.
 
-> Для этих тестов, необходимо предварительно установить Google Chrome, chromedriver и селениум. И только последний
-> ставится через `pip`
+> Для этих тестов необходимо предварительно установить Google Chrome, chromedriver и Selenium. Только Selenium
+> устанавливается через `pip`
 
 ```
 pip install selenium
@@ -855,7 +871,7 @@ pip install selenium
 
 Создадим файл `chat/tests.py`
 
-Текущая структура файлов
+Текущая структура файлов:
 
 ```
 chat/
@@ -863,9 +879,8 @@ chat/
     consumers.py
     routing.py
     templates/
-        chat/
-            index.html
-            room.html
+        index.html
+        room.html
     tests.py
     urls.py
     views.py
@@ -1069,3 +1084,49 @@ def test_chat_room_e2e(live_server, chrome_driver):
 ```bash
 pytest -q -k chat_live
 ```
+
+> **Примечание:** Для pytest-django необходимо создать файл `pytest.ini` или добавить секцию в `pyproject.toml`:
+> ```ini
+> # pytest.ini
+> [pytest]
+> DJANGO_SETTINGS_MODULE = chatsite.settings
+> ```
+
+## Дополнительные темы
+
+### Аутентификация в WebSocket
+
+В `scope` доступен объект `user`, если используется `AuthMiddlewareStack`:
+
+```python
+# chat/consumers.py
+class ChatConsumer(AsyncWebsocketConsumer):
+    async def connect(self):
+        self.user = self.scope["user"]
+
+        if self.user.is_anonymous:
+            # Отклоняем неаутентифицированных пользователей
+            await self.close()
+            return
+
+        self.room_name = self.scope['url_route']['kwargs']['room_name']
+        self.room_group_name = f'chat_{self.room_name}'
+
+        await self.channel_layer.group_add(
+            self.room_group_name,
+            self.channel_name
+        )
+        await self.accept()
+```
+
+### Альтернативы Django Channels
+
+- **Socket.IO** (с python-socketio) — популярная библиотека с автоматическим fallback на long-polling
+- **Starlette WebSockets** — если используете FastAPI/Starlette
+- **websockets** — низкоуровневая asyncio библиотека для WebSocket
+
+### Полезные ссылки
+
+- [Django Channels Documentation](https://channels.readthedocs.io/en/stable/)
+- [channels_redis Documentation](https://github.com/django/channels_redis)
+- [Daphne Documentation](https://github.com/django/daphne)
