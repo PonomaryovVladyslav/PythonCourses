@@ -509,10 +509,92 @@ class ClosePollTest(TestCase):
         self.assertIn('Expected output', out.getvalue())
 ```
 
-### Пропуск тестов
+---
 
-Тесты можно пропускать в зависимости от условий и деталей запуска.
-Документация: https://docs.python.org/3/library/unittest.html#unittest.skipIf
+## Acceptance-тестирование в Django
+
+Acceptance-тесты (приёмочные) имитируют реальные действия пользователя: открытие страниц, клики, ввод текста, проверку отображения элементов. Это самый медленный, но и самый "честный" уровень тестирования — проверяется то, что видит пользователь.
+
+### WebDriver и Selenium
+
+**WebDriver** — это стандартизированный API для программного управления браузером. Позволяет открывать страницы, кликать по элементам, заполнять формы и проверять результат.
+
+**Selenium** — популярная библиотека, реализующая WebDriver для Python.
+
+```bash
+pip install selenium
+```
+
+Также нужен драйвер для конкретного браузера:
+- Chrome → `chromedriver`
+- Firefox → `geckodriver`
+- Edge → `msedgedriver`
+
+> **Совет:** Используйте `webdriver-manager` для автоматической загрузки драйверов:
+> ```bash
+> pip install webdriver-manager
+> ```
+
+### LiveServerTestCase + Selenium
+
+`LiveServerTestCase` запускает реальный Django-сервер на случайном порту, к которому можно обращаться через Selenium:
+
+```python
+from django.contrib.auth.models import User
+from django.test import LiveServerTestCase
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.chrome.service import Service
+from webdriver_manager.chrome import ChromeDriverManager
+
+
+class LoginAcceptanceTest(LiveServerTestCase):
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        # Автоматическая загрузка chromedriver
+        cls.browser = webdriver.Chrome(
+            service=Service(ChromeDriverManager().install())
+        )
+        cls.browser.implicitly_wait(5)  # Ожидание элементов до 5 сек
+
+    @classmethod
+    def tearDownClass(cls):
+        cls.browser.quit()
+        super().tearDownClass()
+
+    def setUp(self):
+        self.user = User.objects.create_user('john', password='secret123')
+
+    def test_login_page_loads(self):
+        """Проверяем, что страница логина открывается"""
+        self.browser.get(f'{self.live_server_url}/login/')
+        self.assertIn('Login', self.browser.title)
+
+    def test_user_can_login(self):
+        """Полный сценарий: пользователь логинится и попадает на главную"""
+        self.browser.get(f'{self.live_server_url}/login/')
+
+        # Заполняем форму
+        self.browser.find_element(By.NAME, 'username').send_keys('john')
+        self.browser.find_element(By.NAME, 'password').send_keys('secret123')
+        self.browser.find_element(By.CSS_SELECTOR, 'button[type="submit"]').click()
+
+        # Проверяем результат
+        self.assertIn('Dashboard', self.browser.title)
+        welcome = self.browser.find_element(By.CLASS_NAME, 'welcome-message')
+        self.assertIn('john', welcome.text)
+```
+
+### Когда использовать Acceptance-тесты
+
+| ✅ Используйте для                          | ❌ Не используйте для     |
+|--------------------------------------------|--------------------------|
+| Критические сценарии (регистрация, оплата) | Проверки бизнес-логики   |
+| Сложные JS-взаимодействия                  | Валидации форм           |
+| Smoke-тесты перед релизом                  | Покрытия всех edge-cases |
+
+> **Важно:** Acceptance-тесты медленные и хрупкие (ломаются при изменении вёрстки). Держите их количество минимальным — только для самых важных сценариев.
 
 ---
 
