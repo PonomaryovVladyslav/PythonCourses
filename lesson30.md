@@ -60,7 +60,7 @@
   - [Лекция 27. Что такое API. REST и RESTful. Django REST Framework](lesson27.md)
   - [Лекция 28. @api_view, APIView, ViewSets, Pagination, Routers](lesson28.md)
   - [Лекция 29. REST аутентификация. Авторизация. Permissions. Фильтрация](lesson29.md)
-  - ▶ **Лекция 30. Тестирование. Django, REST API.](lesson30.md)
+  - ▶ **[Лекция 30. Тестирование. Django, REST API.](lesson30.md)**
 </details>
 
 <details>
@@ -110,10 +110,7 @@ IT индустрии.
 
 **Ручные тесты (Manual Tests)** - вид тестов, когда мы полностью повторяем потенциальные действия пользователя.
 
-## Тестирование в Django
-
-Документация: https://docs.djangoproject.com/en/stable/topics/testing/
-Инструменты: https://docs.djangoproject.com/en/stable/topics/testing/tools/
+### Базовые концепции unittest
 
 Вы знаете о существовании `unittest.TestCase`, от которого нужно наследоваться, чтобы создать обычный тест.
 
@@ -123,9 +120,11 @@ IT индустрии.
 И методы, начинающиеся со слова `test_`, которые описывают сами тесты, для чего используется ключевое слово `assert` или
 основанные на нём встроенные методы.
 
+### Иерархия тест-кейсов Django
+
 В рамках Django есть свой собственный тест кейс, наследованный от базового `unittest.TestCase`.
 
-![](https://docs.djangoproject.com/en/2.2/_images/django_unittest_classes_hierarchy.svg)
+![](https://docs.djangoproject.com/en/stable/_images/django_unittest_classes_hierarchy.svg)
 
 ### SimpleTestCase
 
@@ -161,10 +160,6 @@ IT индустрии.
 
 `assertHTMLNotEqual` - проверка на то, что полученный HTML не соответствует ожидаемому.
 
-Важно: TransactionTestCase заметно медленнее TestCase, так как выполняет полноценную очистку БД между тестами.
-Используйте его, когда нужно проверить реальное поведение транзакций (commit/rollback, select_for_update, взаимодействие
-с внешними транзакционными системами).
-
 `assertJSONEqual` - проверка на то, что полученный JSON соответствует ожидаемому.
 
 `assertJSONNotEqual` - проверка на то, что полученный JSON не соответствует ожидаемому.
@@ -192,6 +187,9 @@ IT индустрии.
 
 `assertNumQueries` - проверка на то, что выполнение функции делает определённое количество запросов в базу.
 
+**Важно:** `TransactionTestCase` заметно медленнее `TestCase`, так как выполняет полноценную очистку БД между тестами.
+Используйте его, когда нужно проверить реальное поведение транзакций (`commit`/`rollback`, `select_for_update`, взаимодействие с внешними транзакционными системами).
+
 ### TestCase из модуля Django
 
 `TestCase` наследуется от `TransactionTestCase`.
@@ -205,18 +203,15 @@ IT индустрии.
 
 Это самый часто используемый вид тестов.
 
-Примечание: Django обычно автоматически создаёт тестовую БД (например, `test_<NAME>` для PostgreSQL). Явное указание
-TEST.NAME требуется редко; убедитесь, что у пользователя БД есть права на создание/удаление.
+**Ключевые свойства TestCase:**
+
+- Каждый тест запускается в транзакции и откатывается (rollback) — быстро и изолированно.
+- `setUpTestData()` выполняется один раз на класс и экономит время на подготовке данных.
+- Если нужно проверить поведение транзакций — используйте `TransactionTestCase`.
 
 ### LiveServerTestCase
 
 `LiveServerTestCase` наследуется от `TransactionTestCase`.
-
-Ключевые свойства TestCase:
-
-- Каждый тест запускается в транзакции и откатывается (rollback) — быстро и изолированно.
-- setUpTestData() выполняется один раз на класс и экономит время на подготовке данных.
-- Если нужно проверить поведение транзакций — используйте TransactionTestCase.
 
 #### Что добавляет?
 
@@ -246,6 +241,8 @@ DATABASES = {
 
 **Ваш юзер должен иметь права на создание и очистку базы данных**
 
+> **Примечание:** Django обычно автоматически создаёт тестовую БД (например, `test_<NAME>` для PostgreSQL). Явное указание `TEST.NAME` требуется редко; убедитесь, что у пользователя БД есть права на создание/удаление.
+
 ### Расположение тестов
 
 Несмотря на то, что Django создаёт для нас в приложении файл `tests.py`, им практически никогда не пользуются.
@@ -263,16 +260,109 @@ DATABASES = {
 
 > Примечание: запуск через pytest см. в финальном разделе «Современный инструментарий: pytest и pytest-django».
 
-### Выбор инструмента: RequestFactory vs Client и APIRequestFactory vs APIClient
+### Запуск тестов
 
-- RequestFactory / APIRequestFactory — юнит-уровень: вызываем view напрямую, middleware и маршрутизация не участвуют.
-  Быстро и изолировано.
-- Client / APIClient — интеграционный уровень: запрос проходит через URLConf и middleware. Для API используйте
-  APIClient (форматы, JSON, удобные методы).
-- Рекомендация: начинать с APIClient/Client для «сквозных» проверок и использовать *RequestFactory для узконаправленных
-  юнит-тестов view/permission/serializer.
+Для запуска тестов используется manage-команда `test`:
 
-Предположим, что у нас в приложении `animals` есть папка `tests`, в ней папка `unit` и в ней файл `test_models`.
+```bash
+# Запустить все тесты в приложении
+$./manage.py test animals
+
+# Запустить все тесты в папке tests
+$./manage.py test animals.tests
+
+# Запустить один тест кейс
+$./manage.py test animals.tests.unit.test_models.AnimalTestCase
+
+# Запустить один тест из тест кейса
+$./manage.py test animals.tests.unit.test_models.AnimalTestCase.test_animals_can_speak
+```
+
+---
+## Тестирование в Django — основы
+
+Документация: https://docs.djangoproject.com/en/stable/topics/testing/
+Инструменты: https://docs.djangoproject.com/en/stable/topics/testing/tools/
+
+### Обзор инструментов тестирования
+
+| Тип теста       | Инструмент                      | Что проверяет                                  | Скорость     |
+|-----------------|---------------------------------|------------------------------------------------|--------------|
+| **Unit**        | `RequestFactory`                | Отдельный метод view/модели, без middleware    | ⚡ Быстро     |
+| **Integration** | `Client`                        | Полный цикл запрос → middleware → view → ответ | 🐢 Медленнее |
+| **Acceptance**  | `LiveServerTestCase` + Selenium | Браузер + UI                                   | 🐌 Медленно  |
+
+## Unit-тестирование в Django
+
+Unit-тесты проверяют отдельные компоненты в изоляции: методы моделей, отдельные view, формы. Они быстрые и не требуют полного цикла запроса.
+
+### RequestFactory — имитация запросов без middleware
+
+`RequestFactory` создаёт объект запроса, который можно передать напрямую во view. Middleware и URL-маршрутизация **не участвуют** — это делает тесты быстрыми и изолированными.
+
+```python
+from django.contrib.auth.models import AnonymousUser, User
+from django.test import RequestFactory, TestCase
+
+from .views import MyView, my_view
+
+
+class SimpleTest(TestCase):
+    def setUp(self):
+        self.factory = RequestFactory()
+        self.user = User.objects.create_user(
+            username='jacob', email='jacob@example.com', password='top_secret')
+
+    def test_details(self):
+        # Создаём GET-запрос
+        request = self.factory.get('/customer/details')
+
+        # Middleware не работает — устанавливаем user вручную
+        request.user = self.user
+
+        # Или анонимный пользователь
+        request.user = AnonymousUser()
+
+        # Вызываем view напрямую (function-based)
+        response = my_view(request)
+
+        # Для class-based views
+        response = MyView.as_view()(request)
+
+        self.assertEqual(response.status_code, 200)
+```
+
+### Тестирование отдельных методов CBV
+
+Для тестирования отдельных методов класса view используйте метод `setup()`:
+
+```python
+from django.views.generic import TemplateView
+
+
+class HomeView(TemplateView):
+    template_name = 'myapp/home.html'
+
+    def get_context_data(self, **kwargs):
+        kwargs['environment'] = 'Production'
+        return super().get_context_data(**kwargs)
+```
+
+```python
+from django.test import RequestFactory, TestCase
+from .views import HomeView
+
+
+class HomePageTest(TestCase):
+    def test_environment_set_in_context(self):
+        request = RequestFactory().get('/')
+        view = HomeView()
+        view.setup(request)
+        context = view.get_context_data()
+        self.assertIn('environment', context)
+```
+
+### Пример unit-теста модели
 
 ```python
 from django.test import TestCase
@@ -285,35 +375,22 @@ class AnimalTestCase(TestCase):
         Animal.objects.create(name="cat", sound="meow")
 
     def test_animals_can_speak(self):
-        """Animals that can speak are correctly identified"""
+        """Проверяем метод speak() модели Animal"""
         lion = Animal.objects.get(name="lion")
         cat = Animal.objects.get(name="cat")
         self.assertEqual(lion.speak(), 'The lion says "roar"')
         self.assertEqual(cat.speak(), 'The cat says "meow"')
 ```
 
-То для запуска тестов используется manage-команда `test`
+---
 
-```bash
-# Запустить все тесты в приложении в папке тестов
-$./manage.py test animals.tests
+## Интеграционное тестирование в Django
 
-# Запустить все тесты в приложении
-$./manage.py test animals
+Интеграционные тесты проверяют полный цикл: запрос проходит через URL-маршрутизацию, middleware, view и возвращает ответ.
 
-# Запустить один тест кейс
-$./manage.py test animals.tests.unit.test_models.AnimalTestCase
+### Client — полный цикл запроса
 
-# Запустить один тест из тест кейса
-$./manage.py test animals.tests.unit.test_models.AnimalTestCase.test_animals_can_speak
-```
-
-## Специальные инструменты тестирования
-
-### Client
-
-Для проведения `интеграционного` тестирования Django приложения нам необходимо отправлять запросы с клиента (браузера),
-функционал для этого нам предоставлен из коробки, и мы можем им воспользоваться:
+`Client` имитирует браузер и отправляет HTTP-запросы через весь стек Django:
 
 ```python
 from django.test import Client
@@ -376,7 +453,7 @@ class AnimalTestCase(TestCase):
         call_some_test_code()
 ```
 
-Загрузится файл `mammals.json`, и из него фикстура `birds`.
+Загрузятся два файла фикстур: `mammals.json` и `birds` (Django автоматически найдёт `birds.json` или `birds.yaml`).
 
 ### Теги для тестов
 
@@ -437,144 +514,107 @@ class ClosePollTest(TestCase):
 Тесты можно пропускать в зависимости от условий и деталей запуска.
 Документация: https://docs.python.org/3/library/unittest.html#unittest.skipIf
 
-## Фабрики и юнит тестирование
+---
 
-### Паттерн фабрика
-
-Фабричный метод — если умным текстом, то это порождающий паттерн проектирования, который определяет общий интерфейс для
-создания объектов в суперклассе, позволяя подклассам изменять тип создаваемых объектов.
-
-Если по смыслу, то это возможность создать необходимую нам сущность внутри вызова метода.
-
-В Django есть встроенная фабрика для реквеста, зачем это нужно? Нам не для всех проверок нужно делать запрос, часто нам
-нужно его только имитировать. Для написания юнит тестов - это самый главный инструмент.
-
-```python
-from django.contrib.auth.models import AnonymousUser, User
-from django.test import RequestFactory, TestCase
-
-from .views import MyView, my_view
-
-
-class SimpleTest(TestCase):
-    def setUp(self):
-        # Every test needs access to the request factory.
-        self.factory = RequestFactory()
-        self.user = User.objects.create_user(
-            username='jacob', email='jacob@…', password='top_secret')
-
-    def test_details(self):
-        # Create an instance of a GET request.
-        request = self.factory.get('/customer/details')
-
-        # Recall that middleware are not supported. You can simulate a
-        # logged-in user by setting request.user manually.
-        request.user = self.user
-
-        # Or you can simulate an anonymous user by setting request.user to
-        # an AnonymousUser instance.
-        request.user = AnonymousUser()
-
-        # Test my_view() as if it were deployed at /customer/details
-        response = my_view(request)
-        # Use this syntax for class-based views.
-        response = MyView.as_view()(request)
-        self.assertEqual(response.status_code, 200)
-```
-
-### Тестирование отдельных методов CBV
-
-Для тестирования отдельных методов мы можем использовать метод `setup()`.
-
-Например, если мы заменили `get_context_data()`, то можно сделать так:
-
-```python
-from django.views.generic import TemplateView
-
-
-class HomeView(TemplateView):
-    template_name = 'myapp/home.html'
-
-    def get_context_data(self, **kwargs):
-        kwargs['environment'] = 'Production'
-        return super().get_context_data(**kwargs)
-```
-
-```python
-from django.test import RequestFactory, TestCase
-from .views import HomeView
-
-
-class HomePageTest(TestCase):
-    def test_environment_set_in_context(self):
-        request = RequestFactory().get('/')
-        view = HomeView()
-        view.setup(request)
-        context = view.get_context_data()
-        self.assertIn('environment', context)
-```
-
-## Тестирование REST API
+## Тестирование REST API (DRF)
 
 Документация: https://www.django-rest-framework.org/api-guide/testing/
 
-В Django REST Framework есть достаточно много внутренних похожих процедур и классов, например, своя фабрика реквестов:
+### Обзор инструментов DRF
+
+| Тип теста       | Инструмент                  | Что проверяет                         | Когда использовать          |
+|-----------------|-----------------------------|---------------------------------------|-----------------------------|
+| **Unit**        | `APIRequestFactory`         | View, serializer, permission отдельно | Быстрые изолированные тесты |
+| **Integration** | `APIClient` / `APITestCase` | Endpoint через URLConf и middleware   | Проверка полного цикла API  |
+
+### Unit-тестирование API
+
+#### APIRequestFactory
+
+`APIRequestFactory` — аналог Django `RequestFactory` для DRF. Создаёт объект запроса без прохождения через URL-маршрутизацию и middleware.
 
 ```python
 from rest_framework.test import APIRequestFactory
 
-# Using the standard RequestFactory API to create a form POST request
 factory = APIRequestFactory()
 request = factory.post('/notes/', {'title': 'new idea'})
 ```
 
-По дефолту формат JSON, но это можно изменить:
+По умолчанию используется формат `multipart` (как HTML-форма). Для отправки JSON нужно указать явно:
 
 ```python
-# Create a JSON POST request
 factory = APIRequestFactory()
 request = factory.post('/notes/', {'title': 'new idea'}, format='json')
 ```
 
-А можно вообще указать content type:
+Или указать content-type напрямую:
 
 ```python
+import json
 request = factory.post('/notes/', json.dumps({'title': 'new idea'}), content_type='application/json')
 ```
 
-### force_authenticate()
+#### force_authenticate()
 
-Часто нам необходимо проверять запросы из-под необходимого типа пользователя, но сам по себе логин уже покрыт тестами,
-а это значит, что второй раз его проверять нет необходимости, можем просто логиниться.
+Для unit-тестов не нужно проходить реальную аутентификацию — используйте `force_authenticate()`:
 
 ```python
-from rest_framework.test import force_authenticate
+from rest_framework.test import APIRequestFactory, force_authenticate
+from django.contrib.auth.models import User
+from .views import AccountDetail
+
 
 factory = APIRequestFactory()
 user = User.objects.get(username='olivia')
 view = AccountDetail.as_view()
 
-# Make an authenticated request to the view...
 request = factory.get('/accounts/django-superstars/')
 force_authenticate(request, user=user)
 response = view(request)
 ```
 
-### APIClient
+#### Пример unit-теста view
 
-В DRF есть свой клиент для запросов, в котором уже прописаны все необходимые методы запросов (`get()`, `post()`,
-и т. д.)
+```python
+from rest_framework.test import APIRequestFactory, force_authenticate, APITestCase
+from .views import NoteViewSet
+from .models import Note
+
+
+class NoteViewUnitTest(APITestCase):
+    def setUp(self):
+        self.factory = APIRequestFactory()
+        self.user = User.objects.create_user('testuser', password='testpass')
+        self.note = Note.objects.create(title='Test', owner=self.user)
+
+    def test_retrieve_returns_note(self):
+        """Unit-тест: проверяем только метод retrieve"""
+        view = NoteViewSet.as_view({'get': 'retrieve'})
+        request = self.factory.get(f'/notes/{self.note.pk}/')
+        force_authenticate(request, user=self.user)
+
+        response = view(request, pk=self.note.pk)
+
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.data['title'], 'Test')
+```
+
+### Интеграционное тестирование API
+
+#### APIClient
+
+`APIClient` — полноценный HTTP-клиент для DRF. Запросы проходят через URL-маршрутизацию и middleware.
 
 ```python
 from rest_framework.test import APIClient
 
 client = APIClient()
-client.post('/notes/', {'title': 'new idea'}, format='json')
+response = client.post('/notes/', {'title': 'new idea'}, format='json')
 ```
 
-### APITestCase (DRF)
+#### APITestCase
 
-Удобный базовый класс, комбинирующий TestCase и APIClient:
+Удобный базовый класс, комбинирующий `TestCase` и `APIClient`:
 
 ```python
 from rest_framework.test import APITestCase
@@ -582,118 +622,121 @@ from rest_framework import status
 from django.urls import reverse
 
 
-class NotesTests(APITestCase):
-    def test_list_anon(self):
+class NotesIntegrationTests(APITestCase):
+    def test_list_notes_anonymous(self):
+        """Интеграционный тест: полный цикл запроса"""
         url = reverse('notes-list')
-        res = self.client.get(url)
-        assert res.status_code == status.HTTP_200_OK
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_create_note_authenticated(self):
+        """Интеграционный тест: создание заметки"""
+        user = User.objects.create_user('testuser', password='testpass')
+        self.client.force_authenticate(user=user)
+
+        url = reverse('notes-list')
+        response = self.client.post(url, {'title': 'New Note'}, format='json')
+
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        self.assertEqual(Note.objects.count(), 1)
 ```
 
-#### Авторизация через клиента
+#### Авторизация через APIClient
 
-Поддерживает метод `login()`, `logout()`и `credentials()`. Метод `login()` принимает логин и пароль, метод
-`credentials()` принимает хедеры.
-
-Примеры:
+`APIClient` поддерживает несколько способов авторизации:
 
 ```python
-# Make all requests in the context of a logged in session.
+from rest_framework.test import APIClient
+
 client = APIClient()
-client.login(username='lauren', password='secret')
-```
 
-```python
-# Log out
+# Способ 1: login (session-based)
+client.login(username='lauren', password='secret')
+
+# Способ 2: force_authenticate (без проверки пароля)
+client.force_authenticate(user=user)
+
+# Способ 3: credentials (для token/JWT)
+from rest_framework.authtoken.models import Token
+token = Token.objects.get(user__username='lauren')
+client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
+
+# Способ 4: logout (сброс авторизации)
 client.logout()
 ```
 
-```python
-from rest_framework.authtoken.models import Token
-from rest_framework.test import APIClient
+#### Дополнительные заголовки
 
-# Include an appropriate `Authorization:` header on all requests.
-token = Token.objects.get(user__username='lauren')
-client = APIClient()
-client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
-```
-
-Также поддерживает форсированную аутентификацию:
+Для передачи заголовков в каждом запросе:
 
 ```python
-user = User.objects.get(username='lauren')
 client = APIClient()
-client.force_authenticate(user=user)
+client.get('/notes/', HTTP_X_CUSTOM_HEADER='value')
 ```
 
-Также можно включить CSRF на этапе создания клиента:
+#### CSRF в тестах
+
+Для включения проверки CSRF:
 
 ```python
 client = APIClient(enforce_csrf_checks=True)
 ```
 
-Для изменения хедеров можно использовать или стандартные классы, или просто обновлять как словарь:
+### Настройки DRF для тестов
 
-```python
-from requests.auth import HTTPBasicAuth
-
-client.auth = HTTPBasicAuth('user', 'pass')
-client.headers.update({'x-test': 'true'})
-```
-
-Если вы включили CSRF и хотите им пользоваться при проверках, это можно сделать так:
-
-```python
-from rest_framework.test import RequestsClient
-
-client = RequestsClient()
-
-# Obtain a CSRF token.
-response = client.get('http://testserver/homepage/')
-assert response.status_code == 200
-csrftoken = response.cookies['csrftoken']
-
-# Interact with the API.
-response = client.post('http://testserver/organisations/', json={
-    'name': 'MegaCorp',
-    'status': 'active'
-}, headers={'X-CSRFToken': csrftoken})
-assert response.status_code == 200
-```
-
-Можно настроить форматы и обработчики для таких тестов.
+Можно настроить форматы по умолчанию для тестов в `settings.py`:
 
 ```python
 REST_FRAMEWORK = {
-    # Другие настройки
-    'TEST_REQUEST_DEFAULT_FORMAT': 'json'
-}
-```
-
-```python
-REST_FRAMEWORK = {
-    # Другие настройки
+    'TEST_REQUEST_DEFAULT_FORMAT': 'json',
     'TEST_REQUEST_RENDERER_CLASSES': [
         'rest_framework.renderers.MultiPartRenderer',
         'rest_framework.renderers.JSONRenderer',
-        'rest_framework.renderers.TemplateHTMLRenderer'
     ]
 }
 ```
 
-## Фабрики для генерации данных
+---
+
+## Генерация тестовых данных
+
+Создание тестовых данных вручную в `setUp()` занимает много времени и делает тесты громоздкими. Для автоматизации используются специальные библиотеки.
 
 ### FactoryBoy
 
 Документация: https://factoryboy.readthedocs.io/
 
-```
+```bash
 pip install factory_boy
 ```
 
-#### Рекомендовано: DjangoModelFactory и SubFactory
+FactoryBoy — библиотека для создания тестовых объектов. Позволяет описать "шаблон" объекта и генерировать экземпляры с нужными вариациями.
 
-Используйте DjangoModelFactory для моделей Django и SubFactory для связей между моделями — это упростит подготовку
-данных для API‑тестов и тестов тротлинга.
+#### Базовое использование
+
+```python
+import factory
+from app.models import User
+
+
+class UserFactory(factory.Factory):
+    class Meta:
+        model = User
+
+    firstname = "John"
+    lastname = "Doe"
+```
+
+```python
+>>> john = UserFactory()
+<User: John Doe>
+>>> jack = UserFactory(firstname="Jack")
+<User: Jack Doe>
+```
+
+#### DjangoModelFactory (рекомендуется для Django)
+
+Для моделей Django используйте `DjangoModelFactory` — он автоматически сохраняет объекты в БД:
 
 ```python
 import factory
@@ -709,8 +752,13 @@ class UserFactory(DjangoModelFactory):
 
     username = factory.Sequence(lambda n: f"user{n}")
     email = factory.LazyAttribute(lambda o: f"{o.username}@example.com")
+```
 
+#### SubFactory — связи между моделями
 
+Для связанных моделей используйте `SubFactory`:
+
+```python
 class PurchaseFactory(DjangoModelFactory):
     class Meta:
         model = Purchase
@@ -718,236 +766,131 @@ class PurchaseFactory(DjangoModelFactory):
     owner = factory.SubFactory(UserFactory)
 ```
 
-Прописывание в `setUp()` создание новых объектов может занимать очень много времени. Чтобы это ускорить, упростить и
-автоматизировать, можно написать свою фабрику:
+```python
+>>> purchase = PurchaseFactory()
+<Purchase: 1 John Doe>
+>>> purchase.owner
+<User: user0>
+```
+
+> **Важно:** Используйте `factory.SubFactory()`, а не прямой вызов фабрики. Иначе будет создан один и тот же объект для всех экземпляров.
+
+#### Наследование фабрик
+
+Можно создавать специализированные фабрики:
 
 ```python
-import factory
-from app.models import User
-
-
-class UserFactory(factory.Factory):
-    firstname = "John"
-    lastname = "Doe"
-
-    class Meta:
-        model = User
-```
-
-На один класс можно создавать несколько объектов фабрик
-
-```
->>>john = UserFactory()
-<User: John Doe>
->>>jack = UserFactory(firstname="Jack")
-<User: Jack Doe>
-```
-
-Также можно использовать разные фабрики в разных местах
-
-```python
-class EnglishUserFactory(factory.Factory):
-    class Meta:
-        model = User
-
+class EnglishUserFactory(UserFactory):
     firstname = "John"
     lastname = "Doe"
     lang = 'en'
 
 
-class FrenchUserFactory(factory.Factory):
-    class Meta:
-        model = User
-
+class FrenchUserFactory(UserFactory):
     firstname = "Jean"
     lastname = "Dupont"
     lang = 'fr'
 ```
 
-```
-EnglishUserFactory()
-<User: John Doe (en)>
->>> FrenchUserFactory()
-<User: Jean Dupont (fr)>
-```
+#### Sequence — уникальные значения
 
-Атрибутом может быть другая фабрика. Например, при создании фабрики покупки мы можем указать в качестве покупателя
-фабрику юзера
+Для генерации уникальных значений используйте `Sequence`:
 
 ```python
-class PurchaseFactory(factory.Factory):
+class UserFactory(DjangoModelFactory):
     class Meta:
-        model = Purchase
+        model = User
 
-    owner = EnglishUserFactory()
+    username = factory.Sequence(lambda n: f'user{n}')
 ```
 
-```
-PurchaseFactory()
-<Purchase: 1 John Doe>
-```
+#### LazyFunction — динамические значения
 
-Можно передавать специальный объект последовательности, при создании каждого нового объекта будет добавляться единица.
-Для текущего примера юзернеймы всех созданных юзеров будут `user1`, `user2`, `user3` и т. д.
-
-Sequences
+Для значений, вычисляемых в момент создания объекта:
 
 ```python
-class UserFactory(factory.Factory):
+from datetime import datetime
+
+
+class LogFactory(DjangoModelFactory):
     class Meta:
-        model = models.User
-
-    username = factory.Sequence(lambda n: 'user%d' % n)
-```
-
-Можно передать специальный объект, который будет вызывать функцию при создании объекта, например, текущее время.
-
-`LazyFunction()`
-
-```python
-class LogFactory(factory.Factory):
-    class Meta:
-        model = models.Log
+        model = Log
 
     timestamp = factory.LazyFunction(datetime.now)
 ```
 
-```
-LogFactory()
+```python
+>>> LogFactory()
 <Log: log at 2016-02-12 17:02:34>
-
-# при вызове можно переписать
-LogFactory(timestamp=now - timedelta(days=1))
+>>> LogFactory(timestamp=datetime.now() - timedelta(days=1))  # можно переопределить
 <Log: log at 2016-02-11 17:02:34>
 ```
 
-Иногда нужно заполнять одни поля на основании других, для этого тоже есть специальный объект.
+#### LazyAttribute — зависимые поля
 
-`LazyAttribute`
-Некоторые поля могут быть заполнены при помощи других, например, электронная почта на основе имени пользователя.
-`LazyAttribute` обрабатывает такие случаи: он должен получить функцию, принимающую создаваемый объект и
-возвращающую значение для поля:
+Для полей, зависящих от других полей объекта:
 
 ```python
-class UserFactory(factory.Factory):
-    class Meta:
-        model = models.User
-
-    username = factory.Sequence(lambda n: 'user%d' % n)
-    email = factory.LazyAttribute(lambda obj: '%s@example.com' % obj.username)
-```
-
-```
-UserFactory()
-<User: user1 (user1@example.com)>
-
-# можно переписать источник
-UserFactory(username='john')
-<User: john (john@example.com)>
-
-# а можно и само поле
->>> UserFactory(email='doe@example.com')
-<User: user3 (doe@example.com)>
-```
-
-Наследование фабрик
-
-```python
-class UserFactory(factory.Factory):
+class UserFactory(DjangoModelFactory):
     class Meta:
         model = User
 
-    firstname = "John"
-    lastname = "Doe"
-
-
-class AdminFactory(UserFactory):
-    admin = True
+    username = factory.Sequence(lambda n: f'user{n}')
+    email = factory.LazyAttribute(lambda obj: f'{obj.username}@example.com')
 ```
-
-### Генерация фейковых данных
-
-#### Fuzzy attributes
-
-Fuzzy позволяет генерировать фейковые данные:
 
 ```python
-from factory import fuzzy
-
-...
-
-
-def setUp(self):
-    self.username = fuzzy.FuzzyText().fuzz()
-    self.password = fuzzy.FuzzyText().fuzz()
-    self.user_id = fuzzy.FuzzyInteger(1).fuzz()
+>>> UserFactory()
+<User: user1 (user1@example.com)>
+>>> UserFactory(username='john')
+<User: john (john@example.com)>
 ```
 
-#### Faker
+### Faker
 
 Документация: https://faker.readthedocs.io/
 
-Faker пришел на замену Fuzzy и в нём гораздо больше всего, его нужно устанавливать.
-
-```
+```bash
 pip install Faker
 ```
+
+Faker генерирует реалистичные тестовые данные: имена, адреса, тексты, даты и многое другое.
+
+#### Базовое использование
 
 ```python
 from faker import Faker
 
 fake = Faker()
 
-fake.name()
-
-# 'Lucy Cechtelar'
-
-fake.address()
-
-# '426 Jordy Lodge
-
-# Cartwrightshire, SC 88120-6700'
-
-fake.text()
-
-# 'Sint velit eveniet. Rerum atque repellat voluptatem quia rerum. Numquam excepturi
-
-# beatae sint laudantium consequatur. Magni occaecati itaque sint et sit tempore. Nesciunt
-
-# amet quidem. Iusto deleniti cum autem ad quia aperiam.
-
-# A consectetur quos aliquam. In iste aliquid et aut similique suscipit. Consequatur qui
-
-# quaerat iste minus hic expedita. Consequuntur error magni et laboriosam. Aut aspernatur
-
-# voluptatem sit aliquam. Dolores voluptatum est.
-
-# Aut molestias et maxime. Fugit autem facilis quos vero. Eius quibusdam possimus est.
-
-# Ea quaerat et quisquam. Deleniti sunt quam. Adipisci consequatur id in occaecati.
-
-# Et sint et. Ut ducimus quod nemo ab voluptatum.'
-
+fake.name()       # 'Lucy Cechtelar'
+fake.address()    # '426 Jordy Lodge\nCartwrightshire, SC 88120-6700'
+fake.email()      # 'john.doe@example.com'
+fake.text()       # Случайный текст
 ```
 
-### Использование с Factory Boy
+#### Интеграция с FactoryBoy
+
+Faker отлично интегрируется с FactoryBoy через `factory.Faker`:
 
 ```python
 import factory
+from factory.django import DjangoModelFactory
 from myapp.models import Book
 
 
-class BookFactory(factory.Factory):
+class BookFactory(DjangoModelFactory):
     class Meta:
         model = Book
 
     title = factory.Faker('sentence', nb_words=4)
     author_name = factory.Faker('name')
+    published_date = factory.Faker('date_this_decade')
 ```
 
-#### Providers
+#### Providers — дополнительные генераторы
 
-У Faker есть большое количество шаблонов, которые расположены в так называемых провайдерах:
+Faker имеет множество провайдеров для разных типов данных:
 
 ```python
 from faker import Faker
@@ -955,10 +898,10 @@ from faker.providers import internet
 
 fake = Faker()
 fake.add_provider(internet)
-fake.ipv4_private()
-'10.10.11.69'
-fake.ipv4_private()
-'10.86.161.98'
+
+fake.ipv4_private()  # '10.10.11.69'
+fake.url()           # 'https://example.com/path'
+fake.user_name()     # 'john_doe'
 ```
 
 ## Мокирование и изоляция внешних сервисов
@@ -1152,8 +1095,11 @@ def test_env(monkeypatch):
 #### Полезные инструменты: caplog и tmp_path
 
 ```python
+import logging
+
+
 def test_logging(caplog):
-    with caplog.at_level("INFO"):
+    with caplog.at_level(logging.INFO):
         ...
     assert "Started" in caplog.text
 ```
@@ -1204,4 +1150,3 @@ def test_only_unix():
 def test_known_bug():
     assert 1 == 2
 ```
-
