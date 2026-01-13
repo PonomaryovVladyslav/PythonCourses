@@ -93,13 +93,11 @@
 Самый простой вариант запроса выглядит так:
 
 ```sql
-SELECT *
-FROM book;
+SELECT * FROM book;
 ```
 
 Выбрать все столбцы и все колонки из таблицы `book`.
 > В продакшене старайтесь избегать SELECT * — лучше явно перечислять нужные столбцы.
-
 
 Можно выбрать только часть столбцов:
 
@@ -417,6 +415,94 @@ DROP INDEX idx_users_last_name;
 > Если в таблицу часто производится запись/изменение/удаление, то индекс только замедлит работу базы! А он ещё и место
 > занимает! Поэтому всегда нужно очень аккуратно относиться к индексам — это очень хороший инструмент, который легко
 > может всё сломать.
+
+### EXPLAIN и EXPLAIN ANALYZE
+
+Чтобы понять, как PostgreSQL выполняет запрос и использует ли индексы, используется команда `EXPLAIN`.
+
+#### EXPLAIN — план выполнения
+
+```sql
+EXPLAIN SELECT * FROM users WHERE email = 'test@example.com';
+```
+
+Результат:
+```
+                        QUERY PLAN
+-----------------------------------------------------------
+ Seq Scan on users  (cost=0.00..25.00 rows=1 width=100)
+   Filter: (email = 'test@example.com'::text)
+```
+
+- **Seq Scan** — последовательное сканирование (читает всю таблицу)
+- **cost** — оценка стоимости (startup..total)
+- **rows** — ожидаемое количество строк
+- **width** — средний размер строки в байтах
+
+#### EXPLAIN ANALYZE — реальное выполнение
+
+`EXPLAIN ANALYZE` не только показывает план, но и выполняет запрос, показывая реальное время:
+
+```sql
+EXPLAIN ANALYZE SELECT * FROM users WHERE email = 'test@example.com';
+```
+
+Результат:
+```
+                        QUERY PLAN
+-----------------------------------------------------------
+ Seq Scan on users  (cost=0.00..25.00 rows=1 width=100)
+                    (actual time=0.015..0.234 rows=1 loops=1)
+   Filter: (email = 'test@example.com'::text)
+   Rows Removed by Filter: 999
+ Planning Time: 0.085 ms
+ Execution Time: 0.267 ms
+```
+
+- **actual time** — реальное время (startup..total) в миллисекундах
+- **rows** — реальное количество возвращённых строк
+- **loops** — сколько раз выполнялся этот узел
+- **Rows Removed by Filter** — сколько строк отфильтровано
+
+#### Сравнение с индексом и без
+
+```sql
+-- Без индекса
+EXPLAIN ANALYZE SELECT * FROM users WHERE email = 'test@example.com';
+-- Seq Scan on users ... (actual time=0.015..0.234 rows=1 loops=1)
+
+-- Создаём индекс
+CREATE INDEX idx_users_email ON users(email);
+
+-- С индексом
+EXPLAIN ANALYZE SELECT * FROM users WHERE email = 'test@example.com';
+-- Index Scan using idx_users_email on users ... (actual time=0.012..0.013 rows=1 loops=1)
+```
+
+#### Типы сканирования
+
+| Тип сканирования    | Описание                                      |
+|---------------------|-----------------------------------------------|
+| Seq Scan            | Последовательное чтение всей таблицы          |
+| Index Scan          | Поиск по индексу + чтение данных из таблицы   |
+| Index Only Scan     | Все данные берутся из индекса (самый быстрый) |
+| Bitmap Index Scan   | Индекс создаёт битовую карту, потом читает    |
+
+#### Полезные опции EXPLAIN
+
+```sql
+-- Подробный вывод с буферами
+EXPLAIN (ANALYZE, BUFFERS) SELECT * FROM users WHERE id = 1;
+
+-- Вывод в формате JSON (удобно для парсинга)
+EXPLAIN (FORMAT JSON) SELECT * FROM users WHERE id = 1;
+
+-- Показать настройки планировщика
+EXPLAIN (VERBOSE) SELECT * FROM users WHERE id = 1;
+```
+
+> Используйте `EXPLAIN ANALYZE` для оптимизации медленных запросов. Если видите `Seq Scan` на большой таблице с
+> условием WHERE — скорее всего, нужен индекс.
 
 ## Встроенные функции
 
@@ -755,6 +841,144 @@ HAVING COUNT(student_id) > 30;
 
 Этот запрос отображает только те курсы, на которых зарегистрировано больше 30 студентов.
 
+## Оконные функции (Window Functions)
+
+Оконные функции выполняют вычисления над набором строк, связанных с текущей строкой, но в отличие от агрегатных функций
+не схлопывают строки в одну. Каждая строка сохраняется в результате.
+
+### Синтаксис
+
+```sql
+function_name() OVER (
+    [PARTITION BY column1, column2, ...]
+    [ORDER BY column3, column4, ...]
+    [ROWS/RANGE frame_specification]
+)
+```
+
+- **PARTITION BY** — разбивает данные на группы (как GROUP BY, но без схлопывания)
+- **ORDER BY** — определяет порядок строк внутри окна
+- **ROWS/RANGE** — определяет границы окна
+
+### ROW_NUMBER, RANK, DENSE_RANK
+
+```sql
+SELECT
+    name,
+    department,
+    salary,
+    ROW_NUMBER() OVER (ORDER BY salary DESC) AS row_num,
+    RANK() OVER (ORDER BY salary DESC) AS rank,
+    DENSE_RANK() OVER (ORDER BY salary DESC) AS dense_rank
+FROM employees;
+```
+
+| name  | department | salary | row_num | rank | dense_rank |
+|-------|------------|--------|---------|------|------------|
+| Alice | IT         | 100000 | 1       | 1    | 1          |
+| Bob   | Sales      | 100000 | 2       | 1    | 1          |
+| Carol | IT         | 90000  | 3       | 3    | 2          |
+| Dave  | HR         | 80000  | 4       | 4    | 3          |
+
+- **ROW_NUMBER** — уникальный номер для каждой строки
+- **RANK** — одинаковые значения получают одинаковый ранг, следующий ранг пропускается
+- **DENSE_RANK** — как RANK, но без пропусков
+
+### PARTITION BY — группировка без схлопывания
+
+```sql
+-- Ранг сотрудника внутри своего отдела
+SELECT
+    name,
+    department,
+    salary,
+    RANK() OVER (PARTITION BY department ORDER BY salary DESC) AS dept_rank
+FROM employees;
+```
+
+| name  | department | salary | dept_rank |
+|-------|------------|--------|-----------|
+| Alice | IT         | 100000 | 1         |
+| Carol | IT         | 90000  | 2         |
+| Bob   | Sales      | 100000 | 1         |
+| Dave  | HR         | 80000  | 1         |
+
+### LAG и LEAD — доступ к соседним строкам
+
+```sql
+SELECT
+    date,
+    revenue,
+    LAG(revenue, 1) OVER (ORDER BY date) AS prev_day_revenue,
+    LEAD(revenue, 1) OVER (ORDER BY date) AS next_day_revenue,
+    revenue - LAG(revenue, 1) OVER (ORDER BY date) AS daily_change
+FROM daily_sales;
+```
+
+| date       | revenue | prev_day_revenue | next_day_revenue | daily_change |
+|------------|---------|------------------|------------------|--------------|
+| 2024-01-01 | 1000    | NULL             | 1200             | NULL         |
+| 2024-01-02 | 1200    | 1000             | 1100             | 200          |
+| 2024-01-03 | 1100    | 1200             | 1500             | -100         |
+
+- **LAG(column, n)** — значение из строки на n позиций назад
+- **LEAD(column, n)** — значение из строки на n позиций вперёд
+
+### FIRST_VALUE, LAST_VALUE, NTH_VALUE
+
+```sql
+SELECT
+    name,
+    department,
+    salary,
+    FIRST_VALUE(name) OVER (PARTITION BY department ORDER BY salary DESC) AS top_earner,
+    LAST_VALUE(name) OVER (
+        PARTITION BY department ORDER BY salary DESC
+        ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING
+    ) AS lowest_earner
+FROM employees;
+```
+
+### Агрегатные функции как оконные
+
+```sql
+SELECT
+    date,
+    revenue,
+    SUM(revenue) OVER (ORDER BY date) AS running_total,
+    AVG(revenue) OVER (ORDER BY date ROWS BETWEEN 6 PRECEDING AND CURRENT ROW) AS week_avg
+FROM daily_sales;
+```
+
+- **running_total** — накопительная сумма
+- **week_avg** — скользящее среднее за 7 дней
+
+### Практические примеры
+
+```sql
+-- Топ-3 сотрудника по зарплате в каждом отделе
+SELECT * FROM (
+    SELECT
+        name,
+        department,
+        salary,
+        ROW_NUMBER() OVER (PARTITION BY department ORDER BY salary DESC) AS rn
+    FROM employees
+) ranked
+WHERE rn <= 3;
+
+-- Процент от общей суммы
+SELECT
+    department,
+    salary,
+    ROUND(salary * 100.0 / SUM(salary) OVER (), 2) AS percent_of_total,
+    ROUND(salary * 100.0 / SUM(salary) OVER (PARTITION BY department), 2) AS percent_of_dept
+FROM employees;
+```
+
+> Оконные функции — мощный инструмент для аналитических запросов. Они позволяют делать вычисления, которые раньше
+> требовали сложных подзапросов или самосоединений.
+
 ## Вложенность
 
 На самом деле в любом месте запроса можно разместить другой запрос (внутри `WHERE`, внутри `FROM` и т. д.).
@@ -926,6 +1150,64 @@ ORDER BY name;
 ```
 
 Этот запрос объединяет списки имен и email-адресов, исключает дубликаты и сортирует результат по имени.
+
+### Порядок выполнения SQL-запроса
+
+Теперь, когда вы знакомы со всеми основными ключевыми словами, важно понять, что порядок написания SQL-запроса
+отличается от порядка его выполнения. Это объясняет многие «странности» SQL.
+
+**Порядок написания:**
+```sql
+SELECT columns
+FROM table
+WHERE condition
+GROUP BY columns
+HAVING condition
+ORDER BY columns
+LIMIT n;
+```
+
+**Порядок выполнения:**
+
+```
+1. FROM      — определяется источник данных (таблицы, JOIN)
+2. WHERE     — фильтруются строки
+3. GROUP BY  — группируются строки
+4. HAVING    — фильтруются группы
+5. SELECT    — выбираются и вычисляются столбцы
+6. DISTINCT  — удаляются дубликаты
+7. ORDER BY  — сортируются результаты
+8. LIMIT     — ограничивается количество строк
+```
+
+**Почему это важно:**
+
+```sql
+-- Ошибка: нельзя использовать алиас из SELECT в WHERE
+SELECT price * quantity AS total
+FROM orders
+WHERE total > 100;  -- Ошибка! total ещё не существует
+
+-- Правильно: повторить выражение
+SELECT price * quantity AS total
+FROM orders
+WHERE price * quantity > 100;
+
+-- Или использовать подзапрос
+SELECT * FROM (
+    SELECT price * quantity AS total
+    FROM orders
+) AS subquery
+WHERE total > 100;
+```
+
+```sql
+-- Алиас можно использовать в ORDER BY (выполняется после SELECT)
+SELECT price * quantity AS total
+FROM orders
+ORDER BY total;  -- Работает!
+```
+
 
 #### Примеры использования в реальных задачах
 
@@ -1217,3 +1499,424 @@ FROM EmployeeHierarchy;
 | 5           | Eve   | 2          | 3     |
 
 Этот запрос строит иерархию сотрудников, начиная с тех, у кого нет менеджера, и далее рекурсивно добавляя подчинённых.
+
+### LATERAL JOIN
+
+`LATERAL` позволяет подзапросу в `FROM` ссылаться на столбцы из предыдущих таблиц в том же `FROM`. Это похоже на
+коррелированный подзапрос, но в контексте `JOIN`.
+
+**Пример: получить 3 последних заказа для каждого пользователя**
+
+Без LATERAL пришлось бы использовать оконные функции:
+
+```sql
+SELECT * FROM (
+    SELECT
+        u.id AS user_id,
+        u.name,
+        o.id AS order_id,
+        o.created_at,
+        ROW_NUMBER() OVER (PARTITION BY u.id ORDER BY o.created_at DESC) AS rn
+    FROM users u
+    JOIN orders o ON u.id = o.user_id
+) ranked
+WHERE rn <= 3;
+```
+
+С LATERAL — более читаемо:
+
+```sql
+SELECT u.id, u.name, recent_orders.*
+FROM users u
+CROSS JOIN LATERAL (
+    SELECT o.id AS order_id, o.created_at, o.total_amount
+    FROM orders o
+    WHERE o.user_id = u.id
+    ORDER BY o.created_at DESC
+    LIMIT 3
+) AS recent_orders;
+```
+
+**Как это работает:**
+1. Для каждой строки из `users` выполняется подзапрос
+2. Подзапрос может использовать `u.id` из внешней таблицы
+3. Результаты соединяются
+
+**Пример: статистика по каждому отделу**
+
+```sql
+SELECT d.name AS department, stats.*
+FROM departments d
+CROSS JOIN LATERAL (
+    SELECT
+        COUNT(*) AS employee_count,
+        AVG(salary) AS avg_salary,
+        MAX(salary) AS max_salary
+    FROM employees e
+    WHERE e.department_id = d.id
+) AS stats;
+```
+
+**LEFT JOIN LATERAL**
+
+Если подзапрос может вернуть 0 строк, используйте `LEFT JOIN LATERAL`:
+
+```sql
+SELECT u.id, u.name, last_order.order_id, last_order.created_at
+FROM users u
+LEFT JOIN LATERAL (
+    SELECT o.id AS order_id, o.created_at
+    FROM orders o
+    WHERE o.user_id = u.id
+    ORDER BY o.created_at DESC
+    LIMIT 1
+) AS last_order ON true;
+```
+
+> `LATERAL` полезен, когда нужно выполнить подзапрос для каждой строки основной таблицы с использованием значений из
+> этой строки. Часто это более читаемая альтернатива оконным функциям или коррелированным подзапросам.
+
+## Представления (Views)
+
+Представление (View) — это виртуальная таблица, основанная на результате SQL-запроса. Представление не хранит данные
+физически, а выполняет запрос каждый раз при обращении к нему.
+
+### Создание представления
+
+```sql
+-- Простое представление
+CREATE VIEW active_users AS
+SELECT id, name, email
+FROM users
+WHERE is_active = true;
+
+-- Использование представления как обычной таблицы
+SELECT * FROM active_users;
+SELECT name FROM active_users WHERE id > 100;
+```
+
+### Представления с вычислениями
+
+```sql
+CREATE VIEW order_summary AS
+SELECT
+    o.id AS order_id,
+    u.name AS customer_name,
+    o.created_at,
+    SUM(oi.quantity * oi.price) AS total_amount
+FROM orders o
+JOIN users u ON o.user_id = u.id
+JOIN order_items oi ON o.id = oi.order_id
+GROUP BY o.id, u.name, o.created_at;
+```
+
+### Обновляемые представления
+
+Простые представления (без JOIN, GROUP BY, DISTINCT и т. д.) могут быть обновляемыми:
+
+```sql
+CREATE VIEW russian_users AS
+SELECT id, name, email, country
+FROM users
+WHERE country = 'Russia';
+
+-- Можно вставлять данные через представление
+INSERT INTO russian_users (name, email, country)
+VALUES ('Иван', 'ivan@example.com', 'Russia');
+
+-- WITH CHECK OPTION запрещает вставку данных, не соответствующих условию представления
+CREATE VIEW russian_users AS
+SELECT id, name, email, country
+FROM users
+WHERE country = 'Russia'
+WITH CHECK OPTION;
+```
+
+### Управление представлениями
+
+```sql
+-- Изменить представление
+CREATE OR REPLACE VIEW active_users AS
+SELECT id, name, email, created_at
+FROM users
+WHERE is_active = true AND email_verified = true;
+
+-- Удалить представление
+DROP VIEW active_users;
+
+-- Удалить каскадно (если есть зависимые представления)
+DROP VIEW active_users CASCADE;
+```
+
+> Представления полезны для: упрощения сложных запросов, ограничения доступа к данным (показывать только определённые
+> столбцы), создания абстракций над структурой БД.
+
+## Материализованные представления (Materialized Views)
+
+В отличие от обычных представлений, материализованные представления физически хранят результат запроса. Это ускоряет
+чтение, но данные могут устаревать.
+
+### Создание материализованного представления
+
+```sql
+CREATE MATERIALIZED VIEW monthly_sales AS
+SELECT
+    DATE_TRUNC('month', created_at) AS month,
+    COUNT(*) AS orders_count,
+    SUM(total_amount) AS total_sales
+FROM orders
+GROUP BY DATE_TRUNC('month', created_at);
+```
+
+### Обновление данных
+
+```sql
+-- Полное обновление (блокирует чтение)
+REFRESH MATERIALIZED VIEW monthly_sales;
+
+-- Обновление без блокировки (требует UNIQUE INDEX)
+CREATE UNIQUE INDEX ON monthly_sales (month);
+REFRESH MATERIALIZED VIEW CONCURRENTLY monthly_sales;
+```
+
+### Когда использовать
+
+| Обычное представление                   | Материализованное представление             |
+|-----------------------------------------|---------------------------------------------|
+| Данные всегда актуальны                 | Данные могут устаревать                     |
+| Запрос выполняется при каждом обращении | Запрос выполняется при REFRESH              |
+| Подходит для простых запросов           | Подходит для сложных аналитических запросов |
+| Не занимает дополнительное место        | Занимает место на диске                     |
+
+```sql
+-- Удаление
+DROP MATERIALIZED VIEW monthly_sales;
+```
+
+## Хранимые функции (Stored Functions)
+
+Хранимые функции позволяют инкапсулировать логику на стороне базы данных. PostgreSQL поддерживает несколько языков,
+наиболее распространённый — PL/pgSQL.
+
+### Простая функция
+
+```sql
+CREATE OR REPLACE FUNCTION get_full_name(first_name TEXT, last_name TEXT)
+RETURNS TEXT AS $$
+BEGIN
+    RETURN first_name || ' ' || last_name;
+END;
+$$ LANGUAGE plpgsql;
+
+-- Использование
+SELECT get_full_name('John', 'Doe');  -- 'John Doe'
+```
+
+### Функция с запросом
+
+```sql
+CREATE OR REPLACE FUNCTION get_user_orders_count(user_id_param INTEGER)
+RETURNS INTEGER AS $$
+DECLARE
+    orders_count INTEGER;
+BEGIN
+    SELECT COUNT(*) INTO orders_count
+    FROM orders
+    WHERE user_id = user_id_param;
+
+    RETURN orders_count;
+END;
+$$ LANGUAGE plpgsql;
+
+-- Использование
+SELECT name, get_user_orders_count(id) AS orders
+FROM users;
+```
+
+### Функция, возвращающая таблицу
+
+```sql
+CREATE OR REPLACE FUNCTION get_active_users_by_country(country_param TEXT)
+RETURNS TABLE (
+    user_id INTEGER,
+    user_name TEXT,
+    user_email TEXT
+) AS $$
+BEGIN
+    RETURN QUERY
+    SELECT id, name, email
+    FROM users
+    WHERE country = country_param AND is_active = true;
+END;
+$$ LANGUAGE plpgsql;
+
+-- Использование
+SELECT * FROM get_active_users_by_country('Russia');
+```
+
+### Функция с условной логикой
+
+```sql
+CREATE OR REPLACE FUNCTION calculate_discount(total NUMERIC, customer_type TEXT)
+RETURNS NUMERIC AS $$
+BEGIN
+    IF customer_type = 'vip' THEN
+        RETURN total * 0.20;
+    ELSIF customer_type = 'regular' THEN
+        RETURN total * 0.10;
+    ELSE
+        RETURN 0;
+    END IF;
+END;
+$$ LANGUAGE plpgsql;
+```
+
+### Управление функциями
+
+```sql
+-- Удалить функцию
+DROP FUNCTION get_full_name(TEXT, TEXT);
+
+-- Посмотреть определение функции
+\df+ get_full_name
+```
+
+> Хранимые функции полезны для: инкапсуляции бизнес-логики, повторного использования кода, повышения производительности
+> (меньше сетевых запросов), обеспечения безопасности (доступ через функции, а не напрямую к таблицам).
+
+## Триггеры (Triggers)
+
+Триггер — это автоматическое действие, которое выполняется при изменении данных в таблице. Представьте его как
+"наблюдателя", который реагирует на INSERT, UPDATE или DELETE.
+
+### Зачем нужны триггеры
+
+- **Автоматическое обновление полей** — например, `updated_at` при каждом изменении
+- **Валидация данных** — проверка бизнес-правил перед сохранением
+- **Ведение истории изменений** — логирование кто, когда и что изменил
+- **Синхронизация данных** — обновление связанных таблиц
+
+### Как работает триггер
+
+Триггер состоит из двух частей:
+1. **Триггерная функция** — что делать
+2. **Сам триггер** — когда это делать
+
+### Пример 1: Автоматическое обновление даты изменения
+
+Самый частый случай — автоматически обновлять поле `updated_at`:
+
+```sql
+-- Шаг 1: Создаём функцию
+CREATE OR REPLACE FUNCTION update_modified_at()
+RETURNS TRIGGER AS $$
+BEGIN
+    -- NEW — это новая версия строки, которую мы изменяем
+    NEW.updated_at = NOW();
+    RETURN NEW;  -- Возвращаем изменённую строку
+END;
+$$ LANGUAGE plpgsql;
+
+-- Шаг 2: Создаём триггер
+CREATE TRIGGER set_updated_at
+    BEFORE UPDATE ON users           -- Перед обновлением таблицы users
+    FOR EACH ROW                     -- Для каждой изменяемой строки
+    EXECUTE FUNCTION update_modified_at();
+```
+
+Теперь при любом UPDATE в таблице users поле `updated_at` обновится автоматически:
+
+```sql
+UPDATE users SET name = 'Новое имя' WHERE id = 1;
+-- updated_at обновится автоматически!
+```
+
+### Пример 2: Валидация email перед вставкой
+
+```sql
+CREATE OR REPLACE FUNCTION validate_email()
+RETURNS TRIGGER AS $$
+BEGIN
+    -- Проверяем, что email содержит @
+    IF NEW.email NOT LIKE '%@%' THEN
+        RAISE EXCEPTION 'Некорректный email: %', NEW.email;
+    END IF;
+
+    -- Приводим email к нижнему регистру
+    NEW.email = LOWER(NEW.email);
+
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER check_email
+    BEFORE INSERT OR UPDATE ON users
+    FOR EACH ROW
+    EXECUTE FUNCTION validate_email();
+```
+
+### Пример 3: Логирование удалений
+
+```sql
+-- Таблица для хранения удалённых записей
+CREATE TABLE deleted_users (
+    id BIGINT,
+    name TEXT,
+    email TEXT,
+    deleted_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+-- Функция, которая сохраняет удалённую запись
+CREATE OR REPLACE FUNCTION log_deleted_user()
+RETURNS TRIGGER AS $$
+BEGIN
+    -- OLD — это удаляемая строка
+    INSERT INTO deleted_users (id, name, email)
+    VALUES (OLD.id, OLD.name, OLD.email);
+
+    RETURN OLD;  -- Для DELETE возвращаем OLD
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER save_deleted_user
+    AFTER DELETE ON users            -- После удаления
+    FOR EACH ROW
+    EXECUTE FUNCTION log_deleted_user();
+```
+
+### BEFORE vs AFTER
+
+| BEFORE                                    | AFTER                                  |
+|-------------------------------------------|----------------------------------------|
+| Выполняется **до** операции               | Выполняется **после** операции         |
+| Можно изменить данные (NEW)               | Данные уже сохранены                   |
+| Можно отменить операцию (RETURN NULL)     | Операция уже выполнена                 |
+| Для валидации и модификации               | Для логирования и уведомлений          |
+
+### Специальные переменные в триггерах
+
+| Переменная      | Описание                                   |
+|-----------------|--------------------------------------------|
+| `NEW`           | Новая версия строки (для INSERT/UPDATE)    |
+| `OLD`           | Старая версия строки (для UPDATE/DELETE)   |
+| `TG_OP`         | Тип операции: 'INSERT', 'UPDATE', 'DELETE' |
+| `TG_TABLE_NAME` | Имя таблицы, на которой сработал триггер   |
+
+### Управление триггерами
+
+```sql
+-- Временно отключить триггер (например, для массовой загрузки данных)
+ALTER TABLE users DISABLE TRIGGER set_updated_at;
+
+-- Включить обратно
+ALTER TABLE users ENABLE TRIGGER set_updated_at;
+
+-- Отключить ВСЕ триггеры на таблице
+ALTER TABLE users DISABLE TRIGGER ALL;
+
+-- Удалить триггер
+DROP TRIGGER set_updated_at ON users;
+```
+
+> **Важно:** Триггеры выполняются внутри той же транзакции, что и основная операция. Если триггер вызовет ошибку,
+> вся операция будет отменена.

@@ -466,6 +466,84 @@ GRANT ALL ON DATABASE mydatabase TO admin;
 Это пример выдачи пользователю `admin` всех прав к базе данных `mydatabase`. Именно так команда нам пока нужна — чтобы
 выдать все права пользователю к базе данных.
 
+### Схемы (Schemas)
+
+Схема в PostgreSQL — это логический контейнер для объектов базы данных (таблиц, представлений, функций и т. д.). Схемы
+позволяют организовать объекты в группы и разграничить доступ к ним.
+
+> Можно думать о схеме как о папке в файловой системе: база данных — это диск, а схемы — папки внутри него.
+
+#### Схема public
+
+По умолчанию все объекты создаются в схеме `public`. Когда вы пишете `CREATE TABLE users`, на самом деле создаётся
+`public.users`.
+
+```sql
+-- Эти две команды эквивалентны
+CREATE TABLE users (id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY);
+CREATE TABLE public.users (id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY);
+```
+
+#### Создание схемы
+
+```sql
+CREATE SCHEMA sales;
+CREATE SCHEMA hr;
+
+-- Создание таблицы в конкретной схеме
+CREATE TABLE sales.orders (
+    id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    amount NUMERIC
+);
+
+CREATE TABLE hr.employees (
+    id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    name VARCHAR(100)
+);
+```
+
+#### search_path
+
+Параметр `search_path` определяет, в каких схемах PostgreSQL будет искать объекты, если схема не указана явно.
+
+```sql
+-- Посмотреть текущий search_path
+SHOW search_path;
+-- Результат: "$user", public
+
+-- Изменить search_path для текущей сессии
+SET search_path TO sales, public;
+
+-- Теперь можно обращаться к таблицам sales без указания схемы
+SELECT * FROM orders;  -- Ищет сначала в sales, потом в public
+```
+
+#### Права на схемы
+
+```sql
+-- Выдать право на использование схемы
+GRANT USAGE ON SCHEMA sales TO sales_user;
+
+-- Выдать право на создание объектов в схеме
+GRANT CREATE ON SCHEMA sales TO sales_user;
+
+-- Выдать права на все таблицы в схеме
+GRANT SELECT ON ALL TABLES IN SCHEMA sales TO sales_user;
+```
+
+#### Удаление схемы
+
+```sql
+-- Удалить пустую схему
+DROP SCHEMA sales;
+
+-- Удалить схему со всеми объектами внутри
+DROP SCHEMA sales CASCADE;
+```
+
+> Схемы полезны для разделения данных разных модулей приложения, мультитенантных систем (каждый клиент — своя схема) или
+> разграничения прав доступа.
+
 ## Продолжим DDL
 
 Для подключения к базе данных в PostgreSQL используется такая команда:
@@ -538,6 +616,54 @@ CREATE TABLE product
     created_at TIMESTAMPTZ DEFAULT now()
 );
 ```
+
+#### Последовательности (Sequences)
+
+Последовательность (sequence) — это специальный объект базы данных, который генерирует уникальные числовые значения.
+Именно последовательности используются «под капотом» для `SERIAL` и `GENERATED AS IDENTITY`.
+
+```sql
+-- Создание последовательности
+CREATE SEQUENCE order_number_seq
+    START WITH 1000
+    INCREMENT BY 1
+    MINVALUE 1000
+    MAXVALUE 9999999
+    NO CYCLE;
+
+-- Получить следующее значение
+SELECT nextval('order_number_seq');  -- 1000
+SELECT nextval('order_number_seq');  -- 1001
+
+-- Получить текущее значение (без инкремента)
+SELECT currval('order_number_seq');  -- 1001
+
+-- Установить значение
+SELECT setval('order_number_seq', 2000);
+
+-- Использование в таблице
+CREATE TABLE orders (
+    order_number INTEGER DEFAULT nextval('order_number_seq'),
+    created_at TIMESTAMPTZ DEFAULT now()
+);
+```
+
+#### Управление последовательностями
+
+```sql
+-- Изменить последовательность
+ALTER SEQUENCE order_number_seq RESTART WITH 5000;
+ALTER SEQUENCE order_number_seq INCREMENT BY 10;
+
+-- Удалить последовательность
+DROP SEQUENCE order_number_seq;
+
+-- Посмотреть все последовательности
+SELECT * FROM pg_sequences;
+```
+
+> При использовании `SERIAL` или `GENERATED AS IDENTITY` PostgreSQL автоматически создаёт последовательность с именем
+> `tablename_columnname_seq`. Например, для `users.id` будет создана `users_id_seq`.
 
 #### Виртуальные столбцы
 
@@ -740,6 +866,39 @@ DROP TABLE book;
 ```sql
 DROP DATABASE mydb;
 ```
+
+### TRUNCATE
+
+`TRUNCATE` — команда для быстрого удаления всех строк из таблицы.
+
+```sql
+-- Удалить все данные из таблицы
+TRUNCATE TABLE orders;
+
+-- Удалить данные из нескольких таблиц
+TRUNCATE TABLE orders, order_items;
+
+-- Удалить данные и сбросить счётчик IDENTITY/SERIAL
+TRUNCATE TABLE orders RESTART IDENTITY;
+
+-- Удалить данные каскадно (включая зависимые таблицы)
+TRUNCATE TABLE users CASCADE;
+```
+
+#### Разница между TRUNCATE и DELETE
+
+| Характеристика  | TRUNCATE                          | DELETE                                  |
+|-----------------|-----------------------------------|-----------------------------------------|
+| Скорость        | Очень быстро                      | Медленнее (особенно для больших таблиц) |
+| WHERE           | Нельзя указать условие            | Можно удалить выборочно                 |
+| Триггеры        | Не вызывает row-level триггеры    | Вызывает триггеры для каждой строки     |
+| IDENTITY/SERIAL | Можно сбросить (RESTART IDENTITY) | Не сбрасывается                         |
+| Транзакции      | Можно откатить (в PostgreSQL)     | Можно откатить                          |
+| Блокировки      | Блокирует всю таблицу             | Блокирует отдельные строки              |
+| Возврат данных  | Не поддерживает RETURNING         | Поддерживает RETURNING                  |
+
+> Используйте `TRUNCATE`, когда нужно быстро очистить таблицу целиком. Используйте `DELETE`, когда нужно удалить
+> конкретные строки или важно вызвать триггеры.
 
 ## DML (Data manipulating language) (Язык манипулирования данными)
 
@@ -1213,3 +1372,5 @@ WHERE id = 1;
 - `RESTRICT` / `NO ACTION` — запретить обновление, если есть зависимые строки
 
 По умолчанию в PostgreSQL действует `NO ACTION`.
+
+

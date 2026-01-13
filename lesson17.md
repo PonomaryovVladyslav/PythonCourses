@@ -485,6 +485,72 @@ username -> level -> skill_level
 
 > Наши данные теперь приведены в 3-ю нормальную форму! И они защищены от аномалий вставки, обновления и удаления!
 
+### Денормализация
+
+Денормализация — это намеренное нарушение нормальных форм для повышения производительности чтения.
+
+#### Когда применять денормализацию
+
+- **Частые сложные JOIN** — если запрос постоянно соединяет 5+ таблиц
+- **Аналитические запросы** — агрегации по большим объёмам данных
+- **Кэширование вычислений** — хранение предрассчитанных значений
+- **Высокая нагрузка на чтение** — когда чтений в 100+ раз больше, чем записей
+
+#### Примеры денормализации
+
+**1. Дублирование данных:**
+
+```sql
+-- Нормализованная структура
+CREATE TABLE orders (
+    id SERIAL PRIMARY KEY,
+    user_id INTEGER REFERENCES users(id),
+    total_amount NUMERIC
+);
+
+-- Денормализованная — добавляем имя пользователя
+CREATE TABLE orders (
+    id SERIAL PRIMARY KEY,
+    user_id INTEGER REFERENCES users(id),
+    user_name VARCHAR(100),  -- Дублирование!
+    total_amount NUMERIC
+);
+```
+
+**2. Предрассчитанные агрегаты:**
+
+```sql
+-- Вместо COUNT(*) каждый раз
+CREATE TABLE users (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(100),
+    orders_count INTEGER DEFAULT 0  -- Обновляется триггером
+);
+```
+
+**3. Материализованные представления:**
+
+```sql
+CREATE MATERIALIZED VIEW monthly_sales AS
+SELECT
+    DATE_TRUNC('month', created_at) AS month,
+    SUM(total_amount) AS total
+FROM orders
+GROUP BY 1;
+```
+
+#### Цена денормализации
+
+| Преимущество                | Недостаток                              |
+|-----------------------------|-----------------------------------------|
+| Быстрее чтение              | Медленнее запись                        |
+| Меньше JOIN                 | Дублирование данных                     |
+| Проще запросы               | Риск рассинхронизации                   |
+| Меньше нагрузка на CPU      | Больше места на диске                   |
+
+> Денормализация — это компромисс. Применяйте её осознанно, когда есть измеримая проблема производительности, и
+> обеспечьте механизмы поддержания консистентности (триггеры, очереди, REFRESH MATERIALIZED VIEW).
+
 ## Транзакции
 
 ### Что такое Транзакция?
@@ -1113,6 +1179,287 @@ COMMIT;
 Эти примеры иллюстрируют, как уровни изоляции транзакций помогают справляться с аномалиями и обеспечивать целостность
 данных в многопользовательских системах.
 
+## Процедуры (Procedures)
+
+В PostgreSQL 11+ появились процедуры. Главное отличие от функций — процедуры могут управлять транзакциями внутри себя
+(выполнять COMMIT и ROLLBACK).
+
+### Когда использовать процедуры
+
+- Когда нужно выполнить несколько операций с промежуточными COMMIT
+- Для длительных операций, где важно фиксировать прогресс
+- Для миграций данных большими порциями
+
+### Создание процедуры
+
+```sql
+CREATE OR REPLACE PROCEDURE transfer_money(
+    from_account INTEGER,
+    to_account INTEGER,
+    amount NUMERIC
+)
+LANGUAGE plpgsql AS $$
+BEGIN
+    -- Списываем с одного счёта
+    UPDATE accounts SET balance = balance - amount WHERE id = from_account;
+
+    -- Зачисляем на другой
+    UPDATE accounts SET balance = balance + amount WHERE id = to_account;
+
+    -- Фиксируем транзакцию
+    COMMIT;
+END;
+$$;
+
+-- Вызов процедуры
+CALL transfer_money(1, 2, 100.00);
+```
+
+### Процедура с обработкой ошибок
+
+```sql
+CREATE OR REPLACE PROCEDURE safe_transfer(
+    from_account INTEGER,
+    to_account INTEGER,
+    amount NUMERIC
+)
+LANGUAGE plpgsql AS $$
+DECLARE
+    from_balance NUMERIC;
+BEGIN
+    -- Проверяем баланс
+    SELECT balance INTO from_balance FROM accounts WHERE id = from_account;
+
+    IF from_balance < amount THEN
+        RAISE EXCEPTION 'Недостаточно средств на счёте %', from_account;
+    END IF;
+
+    UPDATE accounts SET balance = balance - amount WHERE id = from_account;
+    UPDATE accounts SET balance = balance + amount WHERE id = to_account;
+
+    COMMIT;
+EXCEPTION
+    WHEN OTHERS THEN
+        ROLLBACK;
+        RAISE;
+END;
+$$;
+```
+
+### Процедура для пакетной обработки
+
+```sql
+-- Обработка данных порциями с промежуточными COMMIT
+CREATE OR REPLACE PROCEDURE archive_old_orders(batch_size INTEGER DEFAULT 1000)
+LANGUAGE plpgsql AS $$
+DECLARE
+    rows_moved INTEGER;
+BEGIN
+    LOOP
+        -- Перемещаем порцию данных
+        WITH moved AS (
+            DELETE FROM orders
+            WHERE created_at < NOW() - INTERVAL '1 year'
+            LIMIT batch_size
+            RETURNING *
+        )
+        INSERT INTO orders_archive SELECT * FROM moved;
+
+        GET DIAGNOSTICS rows_moved = ROW_COUNT;
+
+        -- Фиксируем каждую порцию
+        COMMIT;
+
+        -- Выходим, если больше нечего обрабатывать
+        EXIT WHEN rows_moved < batch_size;
+    END LOOP;
+END;
+$$;
+
+-- Вызов
+CALL archive_old_orders(5000);
+```
+
+### Отличия функций от процедур
+
+| Функции                              | Процедуры                              |
+|--------------------------------------|----------------------------------------|
+| Возвращают значение (RETURNS)        | Не возвращают значение                 |
+| Вызываются через SELECT              | Вызываются через CALL                  |
+| Не могут управлять транзакциями      | Могут делать COMMIT/ROLLBACK           |
+| Можно использовать в выражениях      | Нельзя использовать в выражениях       |
+
+```sql
+-- Удаление процедуры
+DROP PROCEDURE transfer_money(INTEGER, INTEGER, NUMERIC);
+```
+
+## Блокировки (Locks)
+
+Блокировки — это механизм, который предотвращает конфликты при одновременном доступе к данным. PostgreSQL использует
+различные типы блокировок для обеспечения целостности данных.
+
+### Блокировки на уровне строк
+
+#### FOR UPDATE
+
+Блокирует выбранные строки для обновления. Другие транзакции не смогут изменить или заблокировать эти строки до
+завершения текущей транзакции.
+
+```sql
+BEGIN;
+
+-- Блокируем строку для обновления
+SELECT * FROM accounts WHERE id = 1 FOR UPDATE;
+
+-- Теперь можно безопасно обновить
+UPDATE accounts SET balance = balance - 100 WHERE id = 1;
+
+COMMIT;
+```
+
+#### FOR SHARE
+
+Блокирует строки для чтения. Другие транзакции могут читать, но не могут изменять эти строки.
+
+```sql
+BEGIN;
+
+-- Блокируем для чтения
+SELECT * FROM accounts WHERE id = 1 FOR SHARE;
+
+-- Другие транзакции могут читать, но не могут UPDATE/DELETE
+
+COMMIT;
+```
+
+#### Варианты блокировок
+
+```sql
+-- Не ждать, если строка заблокирована (вернёт ошибку)
+SELECT * FROM accounts WHERE id = 1 FOR UPDATE NOWAIT;
+
+-- Пропустить заблокированные строки
+SELECT * FROM accounts WHERE id = 1 FOR UPDATE SKIP LOCKED;
+
+-- Полезно для очередей задач
+SELECT * FROM tasks
+WHERE status = 'pending'
+ORDER BY created_at
+LIMIT 1
+FOR UPDATE SKIP LOCKED;
+```
+
+### Deadlock (Взаимная блокировка)
+
+Deadlock возникает, когда две транзакции ждут друг друга.
+
+```sql
+-- Транзакция 1
+BEGIN;
+UPDATE accounts SET balance = balance - 100 WHERE id = 1;
+-- Ждёт блокировку на id = 2
+
+-- Транзакция 2
+BEGIN;
+UPDATE accounts SET balance = balance - 50 WHERE id = 2;
+-- Ждёт блокировку на id = 1
+
+-- Deadlock! PostgreSQL автоматически откатит одну из транзакций
+```
+
+**Как избежать deadlock:**
+- Всегда блокируйте ресурсы в одинаковом порядке
+- Используйте короткие транзакции
+- Используйте `NOWAIT` или `SKIP LOCKED`
+
+### Advisory Locks (Рекомендательные блокировки)
+
+Advisory locks — это блокировки на уровне приложения. PostgreSQL не связывает их с конкретными данными — это просто
+числовые идентификаторы.
+
+```sql
+-- Получить эксклюзивную блокировку (ждать, если занята)
+SELECT pg_advisory_lock(12345);
+
+-- Попробовать получить блокировку (не ждать)
+SELECT pg_try_advisory_lock(12345);  -- Вернёт true/false
+
+-- Освободить блокировку
+SELECT pg_advisory_unlock(12345);
+
+-- Блокировка на уровне сессии (автоматически освобождается при отключении)
+SELECT pg_advisory_lock(12345);
+
+-- Блокировка на уровне транзакции (освобождается при COMMIT/ROLLBACK)
+SELECT pg_advisory_xact_lock(12345);
+```
+
+**Пример использования — предотвращение дублирования задач:**
+
+```sql
+-- Только один процесс может выполнять эту задачу
+DO $$
+BEGIN
+    IF pg_try_advisory_lock(hashtext('daily_report')) THEN
+        -- Выполняем задачу
+        PERFORM generate_daily_report();
+        PERFORM pg_advisory_unlock(hashtext('daily_report'));
+    ELSE
+        RAISE NOTICE 'Task is already running';
+    END IF;
+END $$;
+```
+
+## MVCC (Multi-Version Concurrency Control)
+
+MVCC — это механизм, который PostgreSQL использует для обеспечения изоляции транзакций без блокировки чтения.
+
+### Как работает MVCC
+
+1. **Каждая строка имеет версии** — при UPDATE создаётся новая версия строки, старая помечается как устаревшая
+2. **Читатели не блокируют писателей** — транзакция читает снимок данных на момент своего начала
+3. **Писатели не блокируют читателей** — изменения видны только после COMMIT
+
+```
+Время →
+
+T1: BEGIN ─────────────────────────────────────────── COMMIT
+         SELECT balance  (видит 1000)
+                                    SELECT balance (всё ещё 1000!)
+
+T2:           BEGIN ─── UPDATE balance=900 ─── COMMIT
+```
+
+### Системные столбцы
+
+Каждая строка в PostgreSQL имеет скрытые системные столбцы:
+
+```sql
+SELECT xmin, xmax, ctid, * FROM accounts WHERE id = 1;
+```
+
+- **xmin** — ID транзакции, создавшей эту версию строки
+- **xmax** — ID транзакции, удалившей/обновившей строку (0 если актуальна)
+- **ctid** — физическое расположение строки (страница, позиция)
+
+### VACUUM
+
+Из-за MVCC старые версии строк накапливаются. VACUUM очищает их:
+
+```sql
+-- Ручная очистка таблицы
+VACUUM accounts;
+
+-- Очистка с анализом статистики
+VACUUM ANALYZE accounts;
+
+-- Полная очистка (блокирует таблицу, освобождает место на диске)
+VACUUM FULL accounts;
+```
+
+> PostgreSQL автоматически запускает autovacuum. Для большинства случаев ручной VACUUM не нужен.
+
 ## Backup
 
 ![](https://cs14.pikabu.ru/post_img/2021/09/17/7/1631876621194950069.jpg)
@@ -1262,4 +1609,108 @@ pg_dumpall -U username -h hostname -g > globals.sql
 2. **Восстановление после сбоя**: Если база данных повреждена из-за сбоя оборудования, можно быстро восстановить данные из последнего бэкапа.
 3. **Создание тестовых сред**: Разработчики могут использовать резервные копии для создания тестовых баз данных, что позволяет тестировать новые функции без риска для основной базы.
 
-> Резервное копирование и восстановление — это критически важные процессы для обеспечения безопасности данных в PostgreSQL. Понимание различных методов резервного копирования и восстановления поможет вам эффективно управлять базами данных и минимизировать риски потери данных. Спасибо за внимание!
+> Резервное копирование и восстановление — это критически важные процессы для обеспечения безопасности данных в PostgreSQL. Понимание различных методов резервного копирования и восстановления поможет вам эффективно управлять базами данных и минимизировать риски потери данных.
+
+## WAL и Point-in-Time Recovery (PITR)
+
+### WAL (Write-Ahead Logging)
+
+WAL — это журнал, в который PostgreSQL записывает все изменения перед их применением к данным. Это обеспечивает:
+
+- **Durability** — данные не теряются при сбое
+- **Атомарность** — транзакции либо полностью применяются, либо полностью откатываются
+- **Репликацию** — WAL можно передавать на реплики
+
+```
+Запись данных:
+1. Записать изменение в WAL
+2. Подтвердить транзакцию (COMMIT)
+3. Позже применить изменения к файлам данных (checkpoint)
+```
+
+### Point-in-Time Recovery (PITR)
+
+PITR позволяет восстановить базу данных на любой момент времени в прошлом.
+
+**Как это работает:**
+1. Создаётся базовый бэкап (pg_basebackup)
+2. Архивируются WAL-файлы
+3. При восстановлении применяются WAL до нужного момента
+
+```bash
+# Создание базового бэкапа
+pg_basebackup -D /backup/base -Ft -z -P
+
+# Настройка архивации WAL (postgresql.conf)
+archive_mode = on
+archive_command = 'cp %p /backup/wal/%f'
+```
+
+**Восстановление на конкретный момент:**
+
+```bash
+# recovery.conf (или postgresql.conf в новых версиях)
+restore_command = 'cp /backup/wal/%f %p'
+recovery_target_time = '2024-01-15 14:30:00'
+```
+
+> PITR критически важен для production-систем. Он позволяет восстановиться после ошибок пользователей (случайный DELETE)
+> или повреждения данных.
+
+## Репликация
+
+Репликация — это процесс копирования данных с одного сервера (primary/master) на другие (replica/standby).
+
+### Физическая репликация (Streaming Replication)
+
+Копирует WAL-файлы побайтово. Реплика — точная копия primary.
+
+```
+Primary ──WAL──> Replica
+```
+
+**Настройка primary (postgresql.conf):**
+```
+wal_level = replica
+max_wal_senders = 3
+```
+
+**Настройка replica:**
+```bash
+pg_basebackup -h primary_host -D /var/lib/postgresql/data -U replicator -P -R
+```
+
+**Преимущества:**
+- Простота настройки
+- Реплика может использоваться для чтения (hot standby)
+- Автоматический failover с помощью Patroni, pg_auto_failover
+
+### Логическая репликация
+
+Копирует изменения на уровне строк (INSERT, UPDATE, DELETE). Позволяет:
+- Реплицировать отдельные таблицы
+- Реплицировать между разными версиями PostgreSQL
+- Трансформировать данные при репликации
+
+```sql
+-- На primary: создаём публикацию
+CREATE PUBLICATION my_pub FOR TABLE users, orders;
+
+-- На replica: создаём подписку
+CREATE SUBSCRIPTION my_sub
+CONNECTION 'host=primary_host dbname=mydb user=replicator'
+PUBLICATION my_pub;
+```
+
+### Сравнение
+
+| Характеристика        | Физическая              | Логическая              |
+|-----------------------|-------------------------|-------------------------|
+| Что копируется        | Весь кластер            | Выбранные таблицы       |
+| Версии PostgreSQL     | Одинаковые              | Могут отличаться        |
+| Использование реплики | Только чтение           | Чтение и запись         |
+| Настройка             | Проще                   | Сложнее                 |
+| Производительность    | Выше                    | Ниже                    |
+
+> Для большинства случаев используйте физическую репликацию. Логическая нужна для специфических сценариев: миграция
+> между версиями, выборочная репликация, мультимастер.
