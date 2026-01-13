@@ -24,7 +24,7 @@
   <summary>Блок 3 — Python Advanced (9–14)</summary>
 
   - [Лекция 9. Введение в ООП. Основные парадигмы ООП. Классы и объекты.](lesson09.md)
-  - [Лекция 10. Множественное наследование. MRO. Magic methods.](lesson10.md)
+  - [Лекция 10. Magic methods. Итераторы и генераторы.](lesson10.md)
   - [Лекция 11. Imports. Standard library. PEP8](lesson11.md)
   - [Лекция 12. Декораторы. Декораторы с параметрами. Декораторы классов (staticmethod, classmethod, property)](lesson12.md)
   - [Лекция 13. Тестирование](lesson13.md)
@@ -654,7 +654,7 @@ python -m pip install more_itertools
 python -m pip install python-dateutil
 ```
 
-`dateutil` (часто упоминается как `dateutils`) - мощная библиотека для работы с датами и временем. Она предоставляет
+`dateutil` - мощная библиотека для работы с датами и временем. Она предоставляет
 инструменты для анализа, обработки и вычисления дат.
 
 #### Примеры использования:
