@@ -705,129 +705,324 @@ class MyForm(forms.Form):
 
 Дока [Тут](https://docs.djangoproject.com/en/stable/topics/forms/modelforms/)
 
-ModelForm - это тип формы, который генерируется напрямую из модели. Это очень мощный инструмент работы с моделями.
+ModelForm — это тип формы, который генерируется напрямую из модели. Это очень мощный инструмент для работы с моделями.
 
-`models.py`
-
-```python
-from django.db import models
-
-TITLE_CHOICES = [
-    ('MR', 'Mr.'),
-    ('MRS', 'Mrs.'),
-    ('MS', 'Ms.'),
-]
-
-
-class Author(models.Model):
-    name = models.CharField(max_length=100)
-    title = models.CharField(max_length=3, choices=TITLE_CHOICES)
-    birth_date = models.DateField(blank=True, null=True)
-
-    def __str__(self):
-        return self.name
-
-
-class Book(models.Model):
-    name = models.CharField(max_length=100)
-    authors = models.ManyToManyField(Author)
-```
+Используем наши модели блога:
 
 `forms.py`
 
 ```python
 from django.forms import ModelForm
+from blog.models import Article, Comment, Topic
 
 
-class AuthorForm(ModelForm):
+class ArticleForm(ModelForm):
     class Meta:
-        model = Author
-        fields = ['name', 'title', 'birth_date']
+        model = Article
+        fields = ['title', 'slug', 'content', 'status', 'topics']
 
 
-class BookForm(ModelForm):
+class CommentForm(ModelForm):
     class Meta:
-        model = Book
-        fields = ['name', 'authors']
+        model = Comment
+        fields = ['text']
+
+
+class TopicForm(ModelForm):
+    class Meta:
+        model = Topic
+        fields = ['name']
 ```
 
 Поле `fields` или поле `exclude` являются обязательными.
 
-Такой вид форм эквивалентен обычной форме с объявлением всех полей:
+#### Варианты указания полей
 
-`forms.py`
+```python
+# Явный список полей (рекомендуется)
+fields = ['title', 'slug', 'content']
+
+# Все поля модели
+fields = '__all__'
+
+# Все поля, кроме указанных
+exclude = ['created_at', 'updated_at']
+```
+
+> **Важно:** Использование `fields = '__all__'` или `exclude` может быть небезопасным — если вы добавите новое поле в модель, оно автоматически появится в форме. Лучше явно указывать список полей.
+
+### Настройка полей в Meta
+
+В классе `Meta` можно настроить отображение полей:
 
 ```python
 from django import forms
+from django.forms import ModelForm
+from blog.models import Article
 
 
-class AuthorForm(forms.Form):
-    name = forms.CharField(max_length=100)
-    title = forms.CharField(
-        max_length=3,
-        widget=forms.Select(choices=TITLE_CHOICES),
-    )
-    birth_date = forms.DateField(required=False)
+class ArticleForm(ModelForm):
+    class Meta:
+        model = Article
+        fields = ['title', 'slug', 'content', 'status', 'topics']
+
+        # Подписи к полям
+        labels = {
+            'title': 'Заголовок статьи',
+            'slug': 'URL-адрес',
+            'content': 'Текст статьи',
+        }
+
+        # Подсказки
+        help_texts = {
+            'slug': 'Только латинские буквы, цифры и дефисы',
+            'topics': 'Выберите одну или несколько тем',
+        }
+
+        # Виджеты (как отображать поля)
+        widgets = {
+            'content': forms.Textarea(attrs={'rows': 10, 'class': 'form-control'}),
+            'status': forms.RadioSelect(),
+            'topics': forms.CheckboxSelectMultiple(),
+        }
+
+        # Сообщения об ошибках
+        error_messages = {
+            'title': {
+                'required': 'Заголовок обязателен',
+                'max_length': 'Заголовок слишком длинный',
+            },
+        }
+```
+
+### Эквивалент обычной формы
+
+ModelForm автоматически создаёт поля на основе модели. Например, `ArticleForm` эквивалентна:
+
+```python
+from django import forms
+from blog.models import Topic
 
 
-class BookForm(forms.Form):
-    name = forms.CharField(max_length=100)
-    authors = forms.ModelMultipleChoiceField(queryset=Author.objects.all())
+class ArticleForm(forms.Form):
+    title = forms.CharField(max_length=200)
+    slug = forms.SlugField(max_length=200)
+    content = forms.CharField(widget=forms.Textarea)
+    status = forms.ChoiceField(choices=Article.Status.choices)
+    topics = forms.ModelMultipleChoiceField(queryset=Topic.objects.all())
 ```
 
 ### Валидация
 
-Помимо стандартного метода `is_valid()` у ModelForm существует также встроенный метод `full_clean()`
+Помимо стандартного метода `is_valid()` у ModelForm существует также встроенный метод `full_clean()`.
 
-Если первый отвечает за валидацию формы, то второй отвечает за валидацию для объекта модели.
+Первый отвечает за валидацию формы, второй — за валидацию объекта модели (включая `unique`, `unique_together` и т.д.).
 
 ### Метод save() у формы
 
-Метод `save()` в ModelForm объекте выполняет по сути два действия: получает объект модели, основываясь на переданных
-данных, и вызывает метод `save()`, но уже для модели.
+Метод `save()` в ModelForm выполняет два действия: создаёт объект модели из данных формы и вызывает `save()` модели.
 
-Метод `save()` может принимать аргумент `commit`, по умолчанию - `True`. Если указать `commit=False`, метод `save()`
-модели не будет вызван (объект не будет сохранён в базу), будет только создан предварительный объект модели. Такой
-подход используется, когда нужно "дополнить" данные перед сохранением в базу. Очень часто используется! Например,
-добавление пользователя из `request`.
+Аргумент `commit=False` позволяет получить объект без сохранения в базу — полезно, когда нужно дополнить данные:
 
 ```python
-form = PartialAuthorForm(request.POST)
-author = form.save(commit=False)
-author.title = 'Mr'
-author.save()
+def create_article(request):
+    if request.method == 'POST':
+        form = ArticleForm(request.POST)
+        if form.is_valid():
+            article = form.save(commit=False)
+            article.author = request.user  # Добавляем автора из request
+            article.save()
+            form.save_m2m()  # Важно! Сохраняем M2M связи (topics)
+            return redirect('article-detail', slug=article.slug)
+    else:
+        form = ArticleForm()
+    return render(request, 'blog/article_form.html', {'form': form})
 ```
 
-> Примечание: Альтернатива без `commit=False` — заполнять связанные поля через `form.instance` и затем вызывать `form.save()`:
+> **Важно:** При использовании `commit=False` с формой, содержащей ManyToMany поля, нужно вызвать `form.save_m2m()` после сохранения объекта.
+
+Альтернатива — использовать `form.instance`:
 
 ```python
-form = PartialAuthorForm(request.POST)
-form.instance.title = 'Mr'
-form.save()
+form = ArticleForm(request.POST)
+form.instance.author = request.user
+form.save()  # M2M сохранится автоматически
 ```
 
-### Передача объекта
+### Передача объекта (редактирование)
 
-Такая форма может принимать не только данные, но и целый объект из базы:
+ModelForm может принимать существующий объект для редактирования:
 
 ```python
-from myapp.models import Article
-from myapp.forms import ArticleForm
+from blog.models import Article
+from blog.forms import ArticleForm
 
-# Create a form instance from POST data.
-f = ArticleForm(request.POST)
 
-# Save a new Article object from the form's data.
-new_article = f.save()
+def edit_article(request, slug):
+    article = Article.objects.get(slug=slug)
 
-# Create a form to edit an existing Article, but use
-# POST data to populate the form.
-a = Article.objects.get(pk=1)
-f = ArticleForm(request.POST, instance=a)
-f.save()
+    if request.method == 'POST':
+        # Передаём instance для обновления существующего объекта
+        form = ArticleForm(request.POST, instance=article)
+        if form.is_valid():
+            form.save()
+            return redirect('article-detail', slug=article.slug)
+    else:
+        # Форма заполнится данными из article
+        form = ArticleForm(instance=article)
+
+    return render(request, 'blog/article_form.html', {'form': form})
 ```
 
-По аналогии, мы можем не только создавать новый объект, но и обновлять существующий.
+Без `instance` форма создаст новый объект, с `instance` — обновит существующий.
+
+## Практические примеры форм для блога
+
+Рассмотрим полноценные примеры форм для нашего блога.
+
+### Форма комментария
+
+```python
+# blog/forms.py
+from django import forms
+from django.forms import ModelForm
+from blog.models import Comment
+
+
+class CommentForm(ModelForm):
+    class Meta:
+        model = Comment
+        fields = ['text']
+        widgets = {
+            'text': forms.Textarea(attrs={
+                'rows': 4,
+                'placeholder': 'Напишите ваш комментарий...',
+                'class': 'form-control',
+            }),
+        }
+        labels = {
+            'text': '',  # Убираем label
+        }
+```
+
+Использование во view:
+
+```python
+# blog/views.py
+from django.shortcuts import render, redirect, get_object_or_404
+from blog.models import Article
+from blog.forms import CommentForm
+
+
+def article_detail(request, slug):
+    article = get_object_or_404(Article, slug=slug)
+    comments = article.comments.all()
+
+    if request.method == 'POST':
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.article = article
+            comment.author = request.user
+            comment.save()
+            return redirect('article-detail', slug=slug)
+    else:
+        form = CommentForm()
+
+    return render(request, 'blog/article_detail.html', {
+        'article': article,
+        'comments': comments,
+        'form': form,
+    })
+```
+
+### Форма профиля пользователя
+
+```python
+# blog/forms.py
+from django import forms
+from django.contrib.auth import get_user_model
+
+User = get_user_model()
+
+
+class ProfileForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ['first_name', 'last_name', 'email']
+
+    def clean_email(self):
+        email = self.cleaned_data.get('email')
+        # Проверяем, что email не занят другим пользователем
+        if User.objects.filter(email=email).exclude(pk=self.instance.pk).exists():
+            raise forms.ValidationError('Этот email уже используется')
+        return email
+```
+
+Использование:
+
+```python
+# blog/views.py
+from django.contrib.auth.decorators import login_required
+from blog.forms import ProfileForm
+
+
+@login_required
+def profile_edit(request):
+    if request.method == 'POST':
+        form = ProfileForm(request.POST, instance=request.user)
+        if form.is_valid():
+            form.save()
+            return redirect('profile')
+    else:
+        form = ProfileForm(instance=request.user)
+
+    return render(request, 'blog/profile_edit.html', {'form': form})
+```
+
+### Форма поиска (обычная Form)
+
+Не все формы связаны с моделями. Форма поиска — пример обычной `Form`:
+
+```python
+# blog/forms.py
+class SearchForm(forms.Form):
+    query = forms.CharField(
+        max_length=100,
+        required=False,
+        widget=forms.TextInput(attrs={
+            'placeholder': 'Поиск статей...',
+            'class': 'form-control',
+        })
+    )
+```
+
+Использование:
+
+```python
+# blog/views.py
+from blog.forms import SearchForm
+from blog.models import Article
+
+
+def search(request):
+    form = SearchForm(request.GET)
+    articles = Article.objects.none()
+
+    if form.is_valid():
+        query = form.cleaned_data.get('query')
+        if query:
+            articles = Article.objects.filter(
+                title__icontains=query
+            ) | Article.objects.filter(
+                content__icontains=query
+            )
+
+    return render(request, 'blog/search.html', {
+        'form': form,
+        'articles': articles,
+    })
+```
 
 ## Модель User
 
@@ -979,10 +1174,10 @@ class User(AbstractUser):
 Чтобы Django оценивала эту модель как пользователя в `settings.py` нужно в любом месте указать:
 
 ```python
-AUTH_USER_MODEL = 'myapp.User'
+AUTH_USER_MODEL = 'blog.User'
 ```
 
-Где `myapp` - название приложения, `User` - название модели.
+Где `blog` — название приложения, `User` — название модели.
 
 Юзер `обязательно` должен быть описан до первой миграции!! Иначе Django автоматически будет использовать базового
 встроенного юзера, и использовать сразу несколько юзеров у вас не получится. Так как по дефолту, если этой переменной
@@ -1078,20 +1273,18 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
 Метод `login` принимает реквест и объект модели пользователя и отвечает за процесс авторизации, после этого действия
 во всех следующих запросах в переменной `request` будет храниться наш текущий пользователь.
 
-Поэтому стандартным способом авторизации является примерно такой код:
+Рассмотрим пример самописной формы для понимания принципа работы (на практике лучше использовать встроенную `AuthenticationForm`, о которой поговорим ниже):
 
 В forms.py
 
 ```python
 from django.contrib.auth import authenticate
 from django import forms
-from django.utils.translation import gettext as _
-
 
 
 class AuthenticationForm(forms.Form):
     username = forms.CharField(max_length=254)
-    password = forms.CharField(label=_("Password"), widget=forms.PasswordInput)
+    password = forms.CharField(label="Password", widget=forms.PasswordInput)
 
     def clean(self):
         cleaned_data = super().clean()
@@ -1152,6 +1345,102 @@ def logout_view(request):
 ```python
 request.user.is_authenticated
 ```
+
+## Встроенные формы Django для аутентификации
+
+Django предоставляет готовые формы для работы с пользователями в модуле `django.contrib.auth.forms`. Не нужно писать их с нуля!
+
+### AuthenticationForm
+
+Форма для входа в систему. Уже содержит валидацию логина и пароля:
+
+```python
+from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth import login
+from django.shortcuts import render, redirect
+
+
+def login_view(request):
+    if request.method == 'POST':
+        form = AuthenticationForm(request, data=request.POST)
+        if form.is_valid():
+            user = form.get_user()
+            login(request, user)
+            return redirect('home')
+    else:
+        form = AuthenticationForm()
+    return render(request, 'registration/login.html', {'form': form})
+```
+
+> **Важно:** `AuthenticationForm` принимает `request` первым аргументом!
+
+### UserCreationForm
+
+Форма для регистрации нового пользователя:
+
+```python
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth import login
+from django.shortcuts import render, redirect
+
+
+def register_view(request):
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)  # Автоматический вход после регистрации
+            return redirect('home')
+    else:
+        form = UserCreationForm()
+    return render(request, 'registration/register.html', {'form': form})
+```
+
+#### Расширение UserCreationForm
+
+Стандартная форма содержит только `username`, `password1`, `password2`. Чтобы добавить email:
+
+```python
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth import get_user_model
+
+User = get_user_model()
+
+
+class CustomUserCreationForm(UserCreationForm):
+    class Meta:
+        model = User
+        fields = ['username', 'email', 'password1', 'password2']
+```
+
+### PasswordChangeForm
+
+Форма для смены пароля авторизованным пользователем:
+
+```python
+from django.contrib.auth.forms import PasswordChangeForm
+from django.contrib.auth import update_session_auth_hash
+from django.shortcuts import render, redirect
+
+
+def change_password_view(request):
+    if request.method == 'POST':
+        form = PasswordChangeForm(request.user, request.POST)
+        if form.is_valid():
+            user = form.save()
+            # Важно! Обновляем сессию, чтобы пользователь не вылетел
+            update_session_auth_hash(request, user)
+            return redirect('profile')
+    else:
+        form = PasswordChangeForm(request.user)
+    return render(request, 'registration/change_password.html', {'form': form})
+```
+
+### Другие полезные формы
+
+- `SetPasswordForm` — установка пароля (без ввода старого)
+- `PasswordResetForm` — запрос на сброс пароля по email
+- `UserChangeForm` — редактирование пользователя (используется в админке)
 
 ## Управление доступом
 
@@ -1260,3 +1549,289 @@ from django.contrib.auth.decorators import login_required, user_passes_test
 def special_view(request):
     return render(request, 'special.html')
 ```
+
+## Система разрешений (Permissions)
+
+Django имеет встроенную систему разрешений, которая позволяет гибко управлять доступом пользователей к различным действиям.
+
+### Автоматические разрешения
+
+При создании модели Django автоматически создаёт 4 разрешения:
+
+- `add_<model>` — право на создание объектов
+- `change_<model>` — право на изменение объектов
+- `delete_<model>` — право на удаление объектов
+- `view_<model>` — право на просмотр объектов
+
+Например, для модели `Article` будут созданы:
+- `blog.add_article`
+- `blog.change_article`
+- `blog.delete_article`
+- `blog.view_article`
+
+Формат: `<app_label>.<permission_codename>`
+
+### Кастомные разрешения
+
+Можно создать свои разрешения в Meta модели:
+
+```python
+# blog/models.py
+class Article(models.Model):
+    title = models.CharField(max_length=200)
+    status = models.CharField(max_length=20, choices=Status.choices)
+    # ...
+
+    class Meta:
+        permissions = [
+            ('publish_article', 'Can publish article'),
+            ('feature_article', 'Can mark article as featured'),
+            ('moderate_comments', 'Can moderate comments on articles'),
+        ]
+```
+
+После миграции эти разрешения появятся в базе данных.
+
+### Проверка разрешений
+
+#### В коде Python
+
+```python
+# Проверка одного разрешения
+user.has_perm('blog.add_article')  # True/False
+
+# Проверка нескольких разрешений (все должны быть)
+user.has_perms(['blog.add_article', 'blog.change_article'])
+
+# Получить все разрешения пользователя
+user.get_all_permissions()
+# {'blog.add_article', 'blog.change_article', 'auth.change_user', ...}
+
+# Получить разрешения только от групп
+user.get_group_permissions()
+```
+
+#### Во view с декоратором
+
+```python
+from django.contrib.auth.decorators import permission_required
+
+
+@permission_required('blog.add_article')
+def create_article(request):
+    # Только пользователи с правом add_article попадут сюда
+    ...
+
+
+# С указанием страницы для редиректа
+@permission_required('blog.publish_article', login_url='/no-access/')
+def publish_article(request, pk):
+    ...
+
+
+# Проверка нескольких разрешений
+@permission_required(['blog.change_article', 'blog.publish_article'])
+def edit_and_publish(request, pk):
+    ...
+```
+
+#### В шаблонах
+
+```html
+{% if perms.blog.add_article %}
+    <a href="{% url 'article-create' %}">Создать статью</a>
+{% endif %}
+
+{% if perms.blog.change_article %}
+    <a href="{% url 'article-edit' article.pk %}">Редактировать</a>
+{% endif %}
+
+{% if perms.blog.delete_article %}
+    <button>Удалить</button>
+{% endif %}
+```
+
+### Назначение разрешений
+
+#### Через админку
+
+Разрешения можно назначать пользователям в админ-панели Django:
+1. Перейти в раздел Users
+2. Выбрать пользователя
+3. В разделе "User permissions" выбрать нужные разрешения
+
+#### Через код
+
+```python
+from django.contrib.auth.models import Permission
+from django.contrib.contenttypes.models import ContentType
+from blog.models import Article
+
+# Получить разрешение
+permission = Permission.objects.get(codename='publish_article')
+
+# Добавить разрешение пользователю
+user.user_permissions.add(permission)
+
+# Удалить разрешение
+user.user_permissions.remove(permission)
+
+# Очистить все разрешения
+user.user_permissions.clear()
+
+# Проверить (нужно обновить кеш!)
+user = User.objects.get(pk=user.pk)  # Перезагрузить из БД
+user.has_perm('blog.publish_article')  # True
+```
+
+> **Важно:** После изменения разрешений нужно перезагрузить объект пользователя из базы данных, так как разрешения кешируются.
+
+### Группы (Groups)
+
+Группы позволяют объединять разрешения и назначать их сразу нескольким пользователям.
+
+#### Создание группы
+
+```python
+from django.contrib.auth.models import Group, Permission
+
+# Создать группу
+editors_group, created = Group.objects.get_or_create(name='Editors')
+
+# Добавить разрешения в группу
+permissions = Permission.objects.filter(
+    codename__in=['add_article', 'change_article', 'view_article']
+)
+editors_group.permissions.set(permissions)
+
+# Добавить пользователя в группу
+user.groups.add(editors_group)
+
+# Проверить группы пользователя
+user.groups.all()  # <QuerySet [<Group: Editors>]>
+```
+
+#### Типичные группы для блога
+
+```python
+# Создание групп при инициализации проекта
+def create_default_groups():
+    # Группа "Авторы" — могут создавать и редактировать свои статьи
+    authors, _ = Group.objects.get_or_create(name='Authors')
+    authors.permissions.set(Permission.objects.filter(
+        codename__in=['add_article', 'change_article', 'add_comment']
+    ))
+
+    # Группа "Редакторы" — могут редактировать и публиковать любые статьи
+    editors, _ = Group.objects.get_or_create(name='Editors')
+    editors.permissions.set(Permission.objects.filter(
+        codename__in=['add_article', 'change_article', 'delete_article',
+                      'publish_article', 'view_article']
+    ))
+
+    # Группа "Модераторы" — могут модерировать комментарии
+    moderators, _ = Group.objects.get_or_create(name='Moderators')
+    moderators.permissions.set(Permission.objects.filter(
+        codename__in=['change_comment', 'delete_comment', 'moderate_comments']
+    ))
+```
+
+### Проверка владельца объекта
+
+Часто нужно разрешить пользователю редактировать только свои объекты:
+
+```python
+from django.shortcuts import get_object_or_404
+from django.http import HttpResponseForbidden
+from django.contrib.auth.decorators import login_required
+
+
+@login_required
+def edit_article(request, pk):
+    article = get_object_or_404(Article, pk=pk)
+
+    # Проверяем: либо автор, либо есть право change_article
+    if article.author != request.user and not request.user.has_perm('blog.change_article'):
+        return HttpResponseForbidden('У вас нет прав для редактирования этой статьи')
+
+    # ... логика редактирования
+```
+
+Или через `user_passes_test`:
+
+```python
+def can_edit_article(user, article):
+    return article.author == user or user.has_perm('blog.change_article')
+
+
+@login_required
+def edit_article(request, pk):
+    article = get_object_or_404(Article, pk=pk)
+
+    if not can_edit_article(request.user, article):
+        return HttpResponseForbidden('Нет доступа')
+
+    # ...
+```
+
+## Домашнее задание
+
+### Задание 1: Формы для блога
+
+1. Создайте `ArticleForm` (ModelForm) для создания и редактирования статей:
+   - Поля: `title`, `slug`, `content`, `status`, `topics`
+   - Добавьте кастомные виджеты: `Textarea` для контента с 15 строками
+   - Добавьте валидацию: slug должен содержать только латинские буквы, цифры и дефисы
+
+2. Создайте `CommentForm` для добавления комментариев:
+   - Только поле `text`
+   - Placeholder: "Напишите ваш комментарий..."
+
+3. Создайте view `create_article`, которая:
+   - Доступна только авторизованным пользователям
+   - Автоматически устанавливает `author` из `request.user`
+   - После успешного создания перенаправляет на страницу статьи
+
+### Задание 2: Регистрация и аутентификация
+
+1. Создайте форму регистрации `CustomUserCreationForm`, расширяющую `UserCreationForm`:
+   - Добавьте обязательное поле `email`
+   - Добавьте валидацию: email должен быть уникальным
+
+2. Создайте view для регистрации:
+   - После успешной регистрации автоматически авторизуйте пользователя
+   - Перенаправьте на главную страницу
+
+3. Создайте view для входа, используя встроенную `AuthenticationForm`
+
+4. Создайте view для выхода из системы
+
+### Задание 3: Права доступа
+
+1. Добавьте кастомные permissions в модель `Article`:
+   - `publish_article` — право публиковать статьи
+   - `feature_article` — право отмечать статьи как избранные
+
+2. Создайте view `publish_article`:
+   - Доступна только пользователям с правом `publish_article`
+   - Меняет статус статьи на "published"
+
+3. Создайте группы:
+   - `Authors` — права на создание и редактирование своих статей
+   - `Editors` — права на редактирование и публикацию любых статей
+
+4. В шаблоне списка статей:
+   - Показывайте кнопку "Редактировать" только если пользователь — автор или имеет право `change_article`
+   - Показывайте кнопку "Опубликовать" только если пользователь имеет право `publish_article`
+
+### Задание 4: Профиль пользователя
+
+1. Создайте `ProfileForm` для редактирования профиля:
+   - Поля: `first_name`, `last_name`, `email`
+   - Валидация: email должен быть уникальным (кроме текущего пользователя)
+
+2. Создайте view `profile_edit`:
+   - Доступна только авторизованным пользователям
+   - Использует `instance=request.user` для заполнения формы
+
+3. Добавьте возможность смены пароля с использованием `PasswordChangeForm`

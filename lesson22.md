@@ -158,8 +158,9 @@ class Profile(models.Model):
 
 ## objects и shell
 
-Для доступа или модификации любых данных, у каждой модели есть атрибут `objects`, который позволяет производить
-манипуляции с данными. Он называется менеджер, и при желании его можно переопределить.
+Для доступа или модификации любых данных, у каждой модели есть атрибут `objects`. Это **менеджер** (Manager) — специальный объект, который предоставляет интерфейс для работы с базой данных. Именно через менеджер мы вызываем методы `all()`, `filter()`, `get()`, `create()` и другие.
+
+По умолчанию Django создаёт менеджер `objects` для каждой модели автоматически. При необходимости его можно переопределить или добавить дополнительные менеджеры (об этом подробнее в разделе "Кастомные менеджеры" ниже).
 
 Для интерактивного использования кода используется команда
 
@@ -171,7 +172,7 @@ class Profile(models.Model):
 
 Предварительно я создал несколько объектов через админку.
 
-Для доступа к моделям их нужно импортировать:
+Для доступа к моделям их нужно импортировать(после версии 5.0 больше не нужно, все модели будут доступны из коробки):
 
 ```python
 from blog.models import Topic, Article, Comment
@@ -736,6 +737,204 @@ class MyAwesomModel(models.Model):
         send_email(id=self.id)
         super().delete(**kwargs)
 ```
+
+## Кастомные менеджеры
+
+Как мы узнали ранее, `objects` — это менеджер модели, через который мы обращаемся к базе данных. Django позволяет создавать собственные менеджеры для добавления часто используемых запросов или изменения поведения по умолчанию.
+
+### Зачем нужны кастомные менеджеры?
+
+1. **Инкапсуляция часто используемых запросов** — вместо повторения `filter(status='published')` везде в коде
+2. **Изменение базового QuerySet** — например, показывать только активные записи
+3. **Добавление методов уровня таблицы** — операции, которые не относятся к конкретному объекту
+4. **Разделение логики** — разные менеджеры для разных сценариев использования
+
+### Создание кастомного менеджера
+
+#### Способ 1: Добавление методов в менеджер
+
+```python
+# blog/models.py
+from django.db import models
+
+
+class ArticleManager(models.Manager):
+    def published(self):
+        """Возвращает только опубликованные статьи"""
+        return self.filter(status='published')
+
+    def drafts(self):
+        """Возвращает только черновики"""
+        return self.filter(status='draft')
+
+    def by_author(self, user):
+        """Статьи конкретного автора"""
+        return self.filter(author=user)
+
+    def popular(self, min_comments=10):
+        """Статьи с большим количеством комментариев"""
+        from django.db.models import Count
+        return self.annotate(
+            comment_count=Count('comments')
+        ).filter(comment_count__gte=min_comments)
+
+
+class Article(models.Model):
+    title = models.CharField(max_length=200)
+    status = models.CharField(max_length=20)
+    author = models.ForeignKey('auth.User', on_delete=models.CASCADE)
+    # ...
+
+    objects = ArticleManager()  # Заменяем стандартный менеджер
+```
+
+Использование:
+
+```python
+# Вместо Article.objects.filter(status='published')
+Article.objects.published()
+
+# Цепочка вызовов работает!
+Article.objects.published().order_by('-created_at')[:5]
+
+# Кастомные методы
+Article.objects.by_author(request.user)
+Article.objects.popular(min_comments=5)
+```
+
+#### Способ 2: Изменение базового QuerySet
+
+Если нужно изменить поведение **всех** запросов через менеджер:
+
+```python
+class PublishedManager(models.Manager):
+    def get_queryset(self):
+        """Всегда возвращает только опубликованные статьи"""
+        return super().get_queryset().filter(status='published')
+
+
+class Article(models.Model):
+    title = models.CharField(max_length=200)
+    status = models.CharField(max_length=20)
+    # ...
+
+    objects = models.Manager()  # Стандартный менеджер (все статьи)
+    published = PublishedManager()  # Только опубликованные
+```
+
+Использование:
+
+```python
+# Все статьи (включая черновики)
+Article.objects.all()
+
+# Только опубликованные
+Article.published.all()
+Article.published.filter(author=user)  # Опубликованные статьи автора
+```
+
+### Несколько менеджеров в одной модели
+
+Можно использовать несколько менеджеров для разных сценариев:
+
+```python
+class Article(models.Model):
+    title = models.CharField(max_length=200)
+    status = models.CharField(max_length=20)
+    is_deleted = models.BooleanField(default=False)  # Soft delete
+    # ...
+
+    # Стандартный менеджер — первый будет использоваться по умолчанию
+    objects = ArticleManager()
+
+    # Только опубликованные
+    published = PublishedManager()
+
+    # Все записи, включая удалённые (для админки)
+    all_objects = models.Manager()
+
+    class Meta:
+        default_manager_name = 'objects'  # Явно указываем менеджер по умолчанию
+```
+
+### Менеджер с кастомным QuerySet
+
+Для более гибкого подхода можно создать кастомный QuerySet и использовать его в менеджере:
+
+```python
+class ArticleQuerySet(models.QuerySet):
+    def published(self):
+        return self.filter(status='published')
+
+    def drafts(self):
+        return self.filter(status='draft')
+
+    def by_topic(self, topic):
+        return self.filter(topics=topic)
+
+
+class ArticleManager(models.Manager):
+    def get_queryset(self):
+        return ArticleQuerySet(self.model, using=self._db)
+
+    # Проксируем методы QuerySet
+    def published(self):
+        return self.get_queryset().published()
+
+    def drafts(self):
+        return self.get_queryset().drafts()
+
+
+# Или короче — использовать as_manager()
+class Article(models.Model):
+    # ...
+    objects = ArticleQuerySet.as_manager()
+```
+
+Преимущество `QuerySet.as_manager()` — методы можно вызывать в цепочке:
+
+```python
+# Это работает!
+Article.objects.published().by_topic(python_topic).order_by('-created_at')
+```
+
+### Практический пример: Soft Delete
+
+Частый паттерн — "мягкое удаление", когда записи не удаляются физически:
+
+```python
+class SoftDeleteManager(models.Manager):
+    def get_queryset(self):
+        return super().get_queryset().filter(is_deleted=False)
+
+
+class SoftDeleteModel(models.Model):
+    is_deleted = models.BooleanField(default=False)
+    deleted_at = models.DateTimeField(null=True, blank=True)
+
+    objects = SoftDeleteManager()  # Только активные
+    all_objects = models.Manager()  # Все, включая удалённые
+
+    def delete(self, *args, **kwargs):
+        """Мягкое удаление вместо физического"""
+        self.is_deleted = True
+        self.deleted_at = timezone.now()
+        self.save()
+
+    def hard_delete(self, *args, **kwargs):
+        """Физическое удаление"""
+        super().delete(*args, **kwargs)
+
+    class Meta:
+        abstract = True
+
+
+class Article(SoftDeleteModel):
+    title = models.CharField(max_length=200)
+    # ...
+```
+
+> **Примечание:** В лекции 23 мы увидим пример кастомного менеджера для модели пользователя (`CustomUserManager`), который переопределяет методы `create_user()` и `create_superuser()`.
 
 ## Работа с ManyToMany
 
