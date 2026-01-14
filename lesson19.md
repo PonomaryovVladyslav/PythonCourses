@@ -127,51 +127,228 @@
 компьютерах, и в случае веб-приложения на python это практически всегда будет компьютер с операционной системой
 Linux, зачем и как это настроить, мы поговорим ближе к концу нашего курса.
 
-#### А бывает ли не клиент-сервер?
+## HTTP
 
-Бывает, но используется крайне редко, и для очень специфических случаев. Так что для нас не несёт полезной информации.
+### Что такое HTTP?
 
-### Краткое описание http запросов
+![](https://mdn.github.io/shared-assets/images/diagrams/http/messages/http-message-anatomy.svg)
 
-Из чего состоит http запрос можно почитать [тут](https://developer.mozilla.org/ru/docs/Web/HTTP/Messages), но, если
-вкратце, то из тела, где хранятся данные, и хедеров, где хранится служебная информация.
+HTTP (HyperText Transfer Protocol) — это протокол передачи данных, который используется для общения между клиентом
+и сервером в интернете. Когда вы открываете сайт в браузере, браузер отправляет HTTP-запрос на сервер, а сервер
+отвечает HTTP-ответом.
 
-#### Метод GET
+Представьте HTTP как язык общения между вашим браузером и сервером. Как в обычном разговоре есть правила (поздороваться,
+задать вопрос, получить ответ), так и в HTTP есть чёткая структура общения.
 
-Используется для запроса содержимого указанного ресурса. Например, получить данные, файл или любую другую информацию,
-браузер (Chrome, Mozilla, etc.) при вводе
-url (https://ru.wikipedia.org/, https://www.youtube.com/watch?v=dQw4w9WgXcQ&t=0s) использует именно GET запрос, может
-передавать переменные в query
-параметре (в примере с YouTube `?v=dQw4w9WgXcQ&t=0s` - это query параметры, первый параметр начинается с символа ?,
-следующий параметр добавляется при помощи символа `&`, в данном примере параметр - это
-словарь `{'v': 'dQw4w9WgXcQ', 't': '0s'}`).
+#### Структура HTTP-запроса
 
-Обычно не используется для отправки данных (query параметры чаще используются для уточнения того, что вы хотите
-получить, например, значения фильтров или каких-то системных параметров).
+Каждый HTTP-запрос состоит из нескольких частей:
 
-Например, получение комментариев к посту в блоге, или списка рекомендаций на YouTube, открытие любого сайта это уже
-`GET` запрос.
+1. **Стартовая строка (Request Line)** — содержит:
+   - Метод (GET, POST и т.д.) — что мы хотим сделать
+   - URL — куда мы обращаемся
+   - Версия протокола (HTTP/1.1, HTTP/2)
 
-#### Метод POST
+2. **Заголовки (Headers)** — служебная информация:
+   - `Host` — адрес сервера
+   - `User-Agent` — информация о браузере
+   - `Content-Type` — тип передаваемых данных
+   - И многие другие
 
-Применяется для передачи пользовательских данных заданному ресурсу. Если мы хотим ввести имя пользователя и пароль,
-обычно мы используем `POST`, потому что это передача пользовательских данных. Хотим оставить комментарий - `POST`,
-заказать товар из интернет-магазина - `POST`, и т. д. Практически всегда, когда мы отправляем пользовательские данные,
-это будет `POST`.
+3. **Тело запроса (Body)** — данные, которые мы отправляем (не всегда присутствует)
 
-#### Методы PUT и PATCH
+Пример простого GET-запроса:
+```
+GET /articles/1/ HTTP/1.1
+Host: example.com
+User-Agent: Mozilla/5.0
+```
 
-Применяются для обновления данных. Например, изменить текст сообщения или пароль пользователя. Подробно будем
-разбираться с ними и с методом `DELETE` в следующем блоке этого курса.
+#### Структура HTTP-ответа
 
-#### Метод DELETE
+Сервер отвечает похожей структурой:
 
-Используется для удаления объектов. Подробно рассмотрим в следующем блоке.
+1. **Стартовая строка** — содержит:
+   - Версия протокола
+   - Код статуса (200, 404, 500 и т.д.)
+   - Текстовое описание статуса
 
-#### Методы TRACE, HEAD, OPTIONS и т. д.
+2. **Заголовки** — служебная информация ответа
 
-Существуют и другие запросы, которые используются реже и с другими назначениями, подробно их изучать не будем, хотя я
-расскажу несколько практических примеров использования их в дальнейшем.
+3. **Тело ответа** — сами данные (HTML-страница, JSON, картинка и т.д.)
+
+Пример ответа:
+```
+HTTP/1.1 200 OK
+Content-Type: text/html
+
+<html>...</html>
+```
+
+### HTTP-методы
+
+![](https://miro.medium.com/1*LZy_JDCW0m9H1IhLicnn_Q.png)
+
+Метод HTTP определяет, какое действие мы хотим выполнить. Это ответ на вопрос **"Как?"** мы обращаемся к серверу.
+
+#### GET — получить данные
+
+Самый распространённый метод. Используется для получения информации с сервера.
+
+Когда вы:
+- Открываете любой сайт в браузере
+- Смотрите список статей в блоге
+- Читаете комментарии под постом
+- Открываете видео на YouTube
+
+...браузер отправляет GET-запрос.
+
+GET-запрос может содержать **query-параметры** — дополнительные данные в URL после знака `?`:
+
+```
+https://www.youtube.com/watch?v=dQw4w9WgXcQ&t=42s
+```
+
+Здесь `v=dQw4w9WgXcQ` и `t=42s` — это query-параметры. Они используются для уточнения запроса (фильтры, сортировка,
+идентификаторы).
+
+> **Важно:** GET-запросы не должны изменять данные на сервере. Они только читают.
+
+#### POST — отправить данные
+
+Используется для отправки данных на сервер и создания новых ресурсов.
+
+Когда вы:
+- Входите на сайт (логин/пароль)
+- Оставляете комментарий
+- Отправляете сообщение
+- Оформляете заказ в интернет-магазине
+- Загружаете файл
+
+...браузер отправляет POST-запрос.
+
+Данные передаются в теле запроса, а не в URL, поэтому POST безопаснее для передачи конфиденциальной информации.
+
+#### PUT и PATCH — обновить данные
+
+- **PUT** — полная замена ресурса (отправляем все поля)
+- **PATCH** — частичное обновление (отправляем только изменённые поля)
+
+Примеры: изменить текст статьи, обновить профиль пользователя, изменить пароль.
+
+Подробно будем разбираться с ними в следующем блоке курса.
+
+#### DELETE — удалить данные
+
+Используется для удаления ресурсов: удалить комментарий, удалить статью, удалить аккаунт.
+
+Подробно рассмотрим в следующем блоке.
+
+#### Другие методы
+
+Существуют и другие методы (HEAD, OPTIONS, TRACE), которые используются реже. О некоторых из них расскажу позже
+на практических примерах.
+
+### URL — куда отправляем запрос
+
+![](https://developer.mozilla.org/en-US/docs/Learn_web_development/Howto/Web_mechanics/What_is_a_URL/mdn-url-all.png)
+
+Мы разобрались с HTTP-методами — это ответ на вопрос **"Как?"** мы обращаемся к серверу. Но есть ещё один
+важный вопрос — **"Куда?"**. На него отвечает URL.
+
+URL (Uniform Resource Locator) — это унифицированный указатель ресурса, который используется для идентификации и доступа
+к ресурсам в Интернете. URL указывает на адрес ресурса и способ его получения. URL состоит из нескольких частей, каждая
+из которых имеет свое предназначение.
+
+#### Структура URL
+
+Вот основные компоненты URL:
+
+1. **Схема (Scheme)**:
+    - Определяет протокол, используемый для доступа к ресурсу. Наиболее распространенные схемы
+      включают `http`, `https`, `ftp`, `mailto` и другие.
+    - Пример: `https`
+   > Мы будем практически до конца курса использовать только `http`
+
+2. **Имя хоста (Hostname)**:
+    - Указывает на доменное имя или IP-адрес сервера, на котором размещен ресурс.
+    - Пример: `www.example.com`
+   > Мы будем использовать `127.0.0.1` тоже практически до конца
+3. **Порт (Port)** (необязательный):
+    - Определяет порт, через который происходит соединение. Если порт не указан, используются порты по умолчанию для
+      соответствующих схем (например, 80 для HTTP и 443 для HTTPS).
+    - Пример: `:443`
+   > Мы будем использовать `8000` тоже практически до конца
+
+4. **Путь (Path)**:
+    - Указывает на конкретный ресурс на сервере, такой как файл или страница.
+    - Пример: `/path/to/resource`
+
+   > Вот эта та часть которую мы сегодня и научимся программировать
+
+5. **Запрос (Query)** (необязательный):
+    - Содержит дополнительные параметры, передаваемые на сервер. Запрос начинается с символа `?`, и параметры
+      разделяются символами `&`.
+    - Пример: `?key1=value1&key2=value2`
+
+6. **Фрагмент (Fragment)** (необязательный):
+    - Указывает на часть ресурса, такую как якорь внутри страницы. Фрагмент начинается с символа `#`.
+    - Пример: `#section1`
+
+#### Пример полного URL
+
+```plaintext
+https://www.example.com:443/path/to/resource?key1=value1&key2=value2#section1
+```
+
+#### Использование URL
+
+URL используется во многих контекстах:
+
+- Веб-браузеры используют URL для доступа к веб-страницам.
+- API используют URL для отправки запросов к веб-сервисам.
+- Программы и скрипты используют URL для загрузки файлов или доступа к удаленным ресурсам.
+
+URL является важной частью Интернета, обеспечивая стандартизированный способ указания на ресурсы и взаимодействия с
+ними.
+
+### Коды статусов HTTP
+
+![](https://miro.medium.com/1*w_iicbG7L3xEQTArjHUS6g.jpeg)
+
+Когда сервер отвечает на запрос, он возвращает **код статуса** — число, которое говорит о результате обработки запроса.
+
+- **1xx — Информационные**
+  - `100 Continue` — сервер получил начало запроса, клиент может продолжать
+  - `101 Switching Protocols` — сервер переключается на другой протокол (например, WebSocket)
+
+- **2xx — Успех**
+  - `200 OK` — всё хорошо, запрос выполнен
+  - `201 Created` — ресурс успешно создан
+
+- **3xx — Перенаправление**
+  - `301 Moved Permanently` — ресурс переехал навсегда
+  - `302 Found` — временное перенаправление
+
+- **4xx — Ошибка клиента**
+  - `400 Bad Request` — неправильный запрос
+  - `401 Unauthorized` — требуется авторизация
+  - `403 Forbidden` — доступ запрещён
+  - `404 Not Found` — ресурс не найден
+
+- **5xx — Ошибка сервера**
+  - `500 Internal Server Error` — ошибка на сервере
+  - `503 Service Unavailable` — сервер временно недоступен
+
+> Подробнее о структуре HTTP-сообщений можно почитать
+> [тут](https://developer.mozilla.org/ru/docs/Web/HTTP/Messages).
+
+---
+
+Таким образом, каждый HTTP-запрос и ответ можно описать тремя ключевыми элементами:
+- **Метод** — что мы хотим сделать (GET, POST, PUT, DELETE)
+- **URL** — куда мы обращаемся (адрес ресурса)
+- **Код статуса** — что получилось (200, 404, 500 и т.д.)
 
 ## Шаблон проектирования MVC
 
@@ -247,7 +424,9 @@ Controller) (Модель - Отображение - Контроллер)**
 
 > Но это точно такая же идея, изменились только названия блоков.
 
-## Что же такое все-таки Django?
+## Django
+
+![](https://www.fullstackpython.com/img/logos/django.png)
 
 **Django** - это веб-фреймворк, а фреймворк - это конструктор, который помогает нам собирать блоки, часто даже
 не задумываясь, как именно это работает под капотом.
@@ -287,23 +466,27 @@ python -m pip install django==x.y
 После установки django и перехода в папку, в которой вы собираетесь работать, необходимо создать проект, сделать это
 можно через такую команду:
 
-```django-admin startproject mysite```
+```bash
+django-admin startproject blog_project
+```
+
 Или создать проект в текущей директории, добавив точку в конце:
 
 ```bash
-django-admin startproject mysite .
+django-admin startproject blog_project .
 ```
 
-`mysite` - это название вашего проекта, может быть таким, как вам необходимо.
+`blog_project` - это название вашего проекта, может быть таким, как вам необходимо. Мы будем создавать блог, поэтому
+назовём проект соответствующе.
 
 Эта команда создаёт новый проект, и заполняет его базово нужными файлами, давайте рассмотрим их.
 
 Структура файлов:
 
 ```
-mysite /
+blog_project/
     manage.py
-    mysite /
+    blog_project/
         __init__.py
         settings.py
         urls.py
@@ -314,7 +497,7 @@ mysite /
 **manage.py** - файл являющийся точкой входа, при помощи которого мы будем взаимодействовать со многими частями Django
 из консоли
 
-Внутри папки `mysite`:
+Внутри папки `blog_project`:
 
 **\_\_init__.py** - пустой файл, который говорит Python-у, что этот каталог должен рассматриваться как пакет Python-а
 
@@ -330,9 +513,9 @@ mysite /
 
 Проверим работоспособность.
 
-В консоли запустим локальный "сервер" из папки с нашим "сайтом" (в моём примере `mysite`)
+В консоли запустим локальный "сервер" из папки с нашим "сайтом" (в моём примере `blog_project`)
 
-Если вы только что создали проект, то ```cd mysite```.
+Если вы только что создали проект, то ```cd blog_project```.
 
 > Необходимо находиться в консоли в той же папке, где находится `manage.py` с включённым виртуальным окружением.
 
@@ -374,16 +557,18 @@ mysite /
 модулей как части сайта (бывает один на весь сайт, а бывают и тысячи), такие модули называются приложениями, и именно в
 них пишется "суть" сайта.
 
-Через консоль и уже известную нам `manage.py` создадим приложение
+Через консоль и уже известную нам `manage.py` создадим приложение для нашего блога:
 
-```python manage.py startapp myapp```
+```python manage.py startapp blog```
 
 Команда создаст вам папку с вашим приложением, давайте разберем её подробнее.
 
 ```
-mysite/
-    ...
-    myapp/
+blog_project/
+    manage.py
+    blog_project/
+        ...
+    blog/
         __init__.py
         admin.py
         apps.py
@@ -416,74 +601,16 @@ mysite/
 После создания приложения его нужно добавить в настройки проекта:
 
 ```python
-# mysite/settings.py
+# blog_project/settings.py
 INSTALLED_APPS = [
     # ...
-    "myapp",
+    "blog",
 ]
 ```
 
 ## Что сегодня учим?
 
 ![mvc_urls.png](pictures/mvc_urls.png)
-
-## URL
-
-URL (Uniform Resource Locator) — это унифицированный указатель ресурса, который используется для идентификации и доступа
-к ресурсам в Интернете. URL указывает на адрес ресурса и способ его получения. URL состоит из нескольких частей, каждая
-из которых имеет свое предназначение.
-
-### Структура URL
-
-Вот основные компоненты URL:
-
-1. **Схема (Scheme)**:
-    - Определяет протокол, используемый для доступа к ресурсу. Наиболее распространенные схемы
-      включают `http`, `https`, `ftp`, `mailto` и другие.
-    - Пример: `https`
-   > Мы будем практически до конца курса использовать только `http`
-
-2. **Имя хоста (Hostname)**:
-    - Указывает на доменное имя или IP-адрес сервера, на котором размещен ресурс.
-    - Пример: `www.example.com`
-   > Мы будем использовать `127.0.0.1` тоже практически до конца
-3. **Порт (Port)** (необязательный):
-    - Определяет порт, через который происходит соединение. Если порт не указан, используются порты по умолчанию для
-      соответствующих схем (например, 80 для HTTP и 443 для HTTPS).
-    - Пример: `:443`
-   > Мы будем использовать `8000` тоже практически до конца
-
-4. **Путь (Path)**:
-    - Указывает на конкретный ресурс на сервере, такой как файл или страница.
-    - Пример: `/path/to/resource`
-
-   > Вот эта та часть которую мы сегодня и научимся программировать
-
-5. **Запрос (Query)** (необязательный):
-    - Содержит дополнительные параметры, передаваемые на сервер. Запрос начинается с символа `?`, и параметры
-      разделяются символами `&`.
-    - Пример: `?key1=value1&key2=value2`
-
-6. **Фрагмент (Fragment)** (необязательный):
-    - Указывает на часть ресурса, такую как якорь внутри страницы. Фрагмент начинается с символа `#`.
-    - Пример: `#section1`
-
-### Пример полного URL
-
-```plaintext
-https://www.example.com:443/path/to/resource?key1=value1&key2=value2#section1
-```
-
-### Использование URL
-
-URL используется во многих контекстах:
-
-- Веб-браузеры используют URL для доступа к веб-страницам.
-- API используют URL для отправки запросов к веб-сервисам.
-- Программы и скрипты используют URL для загрузки файлов или доступа к удаленным ресурсам.
-
-URL является важной частью Интернета, обеспечивая стандартизированный способ указания на ресурсы и взаимодействия с
-ними.
 
 ## Наш первый URL
 
@@ -505,7 +632,7 @@ import sys
 
 def main():
     """Run administrative tasks."""
-    os.environ.setdefault("DJANGO_SETTINGS_MODULE", "mysite.settings")
+    os.environ.setdefault("DJANGO_SETTINGS_MODULE", "blog_project.settings")
     try:
         from django.core.management import execute_from_command_line
     except ImportError as exc:
@@ -523,13 +650,13 @@ if __name__ == "__main__":
 
 > Кстати обратите внимание и `__main__`, использование `sys`, `os`. Все как мы учили.
 
-нас в данный момент интересует строчка:
+Нас в данный момент интересует строчка:
 
 ```python
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "mysite.settings")
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "blog_project.settings")
 ```
 
-Она сообщает всей системе, что в качестве настроек нужно использовать файл `settings.py` из папки `mysite`
+Она сообщает всей системе, что в качестве настроек нужно использовать файл `settings.py` из папки `blog_project`
 
 Поэтому при любом запросе к запущенному Django приложению при обработке запроса запущенный сервер в первую очередь
 заходит в файл `settings.py` и ищет там переменную `ROOT_URLCONF`, по умолчанию там будет указан файл `urls.py`,который
@@ -538,26 +665,27 @@ os.environ.setdefault("DJANGO_SETTINGS_MODULE", "mysite.settings")
 Внутри этого файла Django ожидает наличие переменной `urlpatterns`, которая содержит коллекцию (например, список),
 состоящую из специальных объектов `path` или `re_path`.
 
-На самом деле эти объекты появились в Django только после версии, 2.0, сейчас актуальная версия это 5+, но потенциально
+На самом деле эти объекты появились в Django только после версии, 2.0, сейчас актуальная версия это 6+, но потенциально
 вы можете встретить и версии ниже, например, 1.11, поэтому ниже мы разберем и более старые варианты урлов. До 2.0 там
 были коллекции из объектов `url`, и все они работали на регулярных выражениях, о них позже.
 
 Вся основная логика обработки запросов пишется в приложениях в файлах `views.py`, у нас всего одно приложение, поэтому
-всю логику (сегодня она будет простейшая) мы будем писать в файл `myapp/views.py`.
+всю логику (сегодня она будет простейшая) мы будем писать в файл `blog/views.py`.
 
-Для начала изменим файл `views.py`
+### Самый простой пример
+
+Давайте начнём с самого простого — функция, которая возвращает текст "Hello, World!":
 
 ```python
-# mysite/myapp/views.py
-from django.http import HttpResponse, HttpRequest
+# blog/views.py
+from django.http import HttpResponse
 
 
-# Поздравляю, это ваш первый контроллер, который может принять запрос и отдать ответ с текстом, больше ничего
-def main(request: HttpRequest) -> HttpResponse:
-    return HttpResponse("Hey! It's your main view!!")
+def hello(request):
+    return HttpResponse("Hello, World!")
 ```
 
-Мы создали функцию, которая принимает один параметр `request` типа `HttpRequest` и возвращает объект типа `HttpResponse`.
+Мы создали функцию, которая принимает один параметр `request` и возвращает объект типа `HttpResponse`.
 
 Это нужно, потому что вся веб-инфраструктура работает на `request-response` системе, мы тоже не будем её нарушать, и
 будем принимать запросы и возвращать ответы.
@@ -570,16 +698,16 @@ def main(request: HttpRequest) -> HttpResponse:
 Для использования этого контроллера в качестве логики, он должен быть описан в файле `urls.py`:
 
 ```python
-# mysite/mysite/urls.py
+# blog_project/urls.py
 from django.urls import path
-from myapp.views import main
+from blog.views import hello
 
 urlpatterns = [
-    path('', main)
+    path('hello/', hello),
 ]
 ```
 
-Мы импортировали `path` из Django и метод `main` из нашего `views.py`
+Мы импортировали `path` из Django и функцию `hello` из нашего `views.py`
 
 Объект `path` принимает два обязательных параметра:
 
@@ -590,10 +718,10 @@ urlpatterns = [
 
 Строка, которая указывает, как именно можно выполнить запрос к данному `url`.
 
-Например, если указать там пустую строку и запустить сервер на локалхосте на 8000 порту, то запросы нужно выполнять по
-адресу `127.0.0.1:8000/`
+Например, если указать там `hello/` и запустить сервер на локалхосте на 8000 порту, то запросы нужно выполнять по
+адресу `127.0.0.1:8000/hello/`
 
-Если указать там, например, `super_cool_path/`, то обращаться нужно было бы к `127.0.0.1:8000/super_cool_path/`
+Если указать пустую строку `''`, то это будет главная страница: `127.0.0.1:8000/`
 
 Не может содержать пробелов, может содержать `/`
 
@@ -602,237 +730,189 @@ urlpatterns = [
 Что угодно, что можно вызвать `()`, на данном этапе это функции, дальше мы будем использовать классы. При вызове
 добавляем в качестве аргумента переменную `request`.
 
-Объект `path` так же может принимать атрибут `name=`, который нужен дня автоматической генерации адресов, будем изучать
+Объект `path` так же может принимать атрибут `name=`, который нужен для автоматической генерации адресов, будем изучать
 на следующем занятии, и некоторые другие необязательные атрибуты.
 
-Если мы перезапустим (ну или запустим) сервер и откроем [страницу](http://127.0.0.1:8000/), то мы увидим, что-то такое:
-
-![](https://djangoalevel.s3.eu-central-1.amazonaws.com/lesson28/main_home.png)
+Если мы перезапустим (ну или запустим) сервер и откроем [страницу](http://127.0.0.1:8000/hello/), то мы увидим текст "Hello, World!".
 
 Список урлов проекта называется `routing` (маршрутизация). Маршрутизацию можно строить так, как вам удобно, или как того
 требует задание.
 
-Напишем еще один контроллер, для "другой" страницы. В файле `myapp/views.py`
+### Главная страница блога
+
+Теперь создадим что-то более осмысленное — главную страницу и страницу "О блоге":
 
 ```python
-from django.http import HttpResponse, HttpRequest
+# blog/views.py
+from django.http import HttpResponse
 
 
-def main(request: HttpRequest) -> HttpResponse:
-    return HttpResponse("Hey! It's your main view!!")
+def hello(request):
+    return HttpResponse("Hello, World!")
 
 
-def another(request: HttpRequest) -> HttpResponse:
-    return HttpResponse("It's another page!!")
+def home(request):
+    return HttpResponse("Добро пожаловать в наш блог!")
 
+
+def about(request):
+    return HttpResponse("Это блог о программировании на Python и Django")
 ```
 
-А в файле `mysite/urls.py` импортируем эти функции и добавим маршрут в список, чтобы получилось так:
+А в файле `blog_project/urls.py` импортируем эти функции и добавим маршруты:
 
 ```python
+# blog_project/urls.py
 from django.urls import path
-from myapp.views import main, another
+from blog.views import hello, home, about
 
 urlpatterns = [
-    path('', main),
-    path('some_url/', another)
+    path('', home, name='home'),
+    path('hello/', hello, name='hello'),
+    path('about/', about, name='about'),
 ]
 ```
 
-То, что написано в строке до контроллера - это путь к урлу, а значит, чтобы увидеть обработку этого контроллера, нужно
-открыть страницу `http://127.0.0.1:8000/some_url/`
-
-Открываем [эту](http://127.0.0.1:8000/some_url/) страницу и видим результат:
-
-![](https://djangoalevel.s3.eu-central-1.amazonaws.com/lesson28/another_page.png)
+Теперь у нас есть три страницы:
+- `http://127.0.0.1:8000/` — главная страница блога
+- `http://127.0.0.1:8000/hello/` — наш первый тестовый URL
+- `http://127.0.0.1:8000/about/` — страница "О блоге"
 
 ## Урлы с параметрами
 
-Урл может заведомо принимать параметры, самый простой способ - это описание параметра через синтаксис `<type:variable>`
+URL может принимать параметры — динамические части адреса. Это очень важно для блога: нам нужно показывать разные
+статьи по разным адресам.
 
-Обновим наш `urls.py`:
+### Простейший пример с параметром
+
+Синтаксис параметра: `<тип:имя_переменной>`
 
 ```python
+# blog/views.py
+def article_detail(request, pk):
+    return HttpResponse(f"Статья #{pk}")
+```
+
+```python
+# blog_project/urls.py
 from django.urls import path
-from myapp.views import main, another, main_article, uniq_article, article
+from blog.views import home, about, article_detail
 
 urlpatterns = [
-    path('', main),
-    path('some_url/', another),
-    path('article/', main_article, name='main_article'),
-    path('article/33/', uniq_article, name='unique_article'),
-    path('article/<int:article_id>/', article, name='article'),
+    path('', home, name='home'),
+    path('about/', about, name='about'),
+    path('articles/<int:pk>/', article_detail, name='article-detail'),
 ]
 ```
 
-> Обратите внимание, часть урлов теперь имеет параметр `name`, он понадобится на следующем занятии.
+Теперь при переходе на `http://127.0.0.1:8000/articles/1/` мы увидим "Статья #1", а на `http://127.0.0.1:8000/articles/42/` — "Статья #42".
 
-А в последнем url мы указали параметр `<int:article_id>`, значение до двоеточия - это тип данных, принимаемых
-параметром,
-а после двоеточия - это имя параметра, который можно будет использовать в контроллере, чтобы получить значение этого
-параметра.
+### Типы параметров
 
-Всего существует 5 таких типов:
+Всего существует 5 встроенных типов:
 
-- str - ищет непустую строку, без символа `/`
+- **str** — непустая строка без символа `/`. Используется по умолчанию.
 
-- int - ноль или любое положительное число.
+- **int** — ноль или любое положительное целое число.
 
-- slug - по сути, это тоже строка, которая состоит из букв, цифр, нижних подчеркиваний, дефисов, символов плюс,
-  например, `building-your-1st-django-site` отличается от обычной строки тем, что обычно этот урл берет данные из уже
-  существующих данных. Слагом может быть название статьи, уникальный номер товара и т. д.
+- **slug** — строка из букв, цифр, дефисов и подчёркиваний. Например: `my-first-article`, `python-django-tutorial`.
+  Идеально подходит для человекочитаемых URL статей.
 
-- uuid - ищет соответствие UUID, это специальный формат, состоящий из шестнадцатеричных цифр, букв и дефисов, дефисы
-  должны быть обязательно, буквы в нижнем регистре. Например, `075194d3-6885-417e-a8a8-6c931e272f00`.
+- **uuid** — UUID в формате `075194d3-6885-417e-a8a8-6c931e272f00`.
 
-- path - строка с одним или несколькими символами `/`
+- **path** — строка, которая может содержать `/`.
 
-> Обратите внимание, что url `article/33/` попадает так же и под `article/<int:article_id>/`, потому что `33` - это тоже
-> цифра, в этом случае будет использован тот, который находится в списке первым. Урлы считываются сверху вниз
+### Применение к блогу
 
-Изменим `myapp/views.py`:
+Добавим URL для списка статей и просмотра статьи по slug:
 
 ```python
-from django.http import HttpResponse, HttpRequest
+# blog/views.py
+from django.http import HttpResponse
 
 
-def main(request: HttpRequest) -> HttpResponse:
-    return HttpResponse("Hey! It's your main view!!")
+def home(request):
+    return HttpResponse("Добро пожаловать в наш блог!")
 
 
-def another(request: HttpRequest) -> HttpResponse:
-    return HttpResponse("It's another page!!")
+def about(request):
+    return HttpResponse("Это блог о программировании на Python и Django")
 
 
-def main_article(request: HttpRequest) -> HttpResponse:
-    return HttpResponse('There will be a list with articles')
+def article_list(request):
+    return HttpResponse("Список всех статей")
 
 
-def uniq_article(request: HttpRequest) -> HttpResponse:
-    return HttpResponse('This is a unique answer for a unique value')
+def article_detail(request, pk):
+    return HttpResponse(f"Статья #{pk}")
 
 
-def article(request: HttpRequest, article_id: int) -> HttpResponse:
-    return HttpResponse(f"This is article #{article_id}.")
+def article_by_slug(request, slug):
+    return HttpResponse(f"Статья: {slug}")
 ```
 
-Обратите внимание, в функцию `article` я добавил параметр `article_id` для получения значения в контроллере.
-
-Давайте посмотрим на результат при переходе на разные страницы.
-
-![](https://djangoalevel.s3.eu-central-1.amazonaws.com/lesson33/static_url.png)
-
-![](https://djangoalevel.s3.eu-central-1.amazonaws.com/lesson33/static_const_url.png)
-
-![](https://djangoalevel.s3.eu-central-1.amazonaws.com/lesson28/page_article_with_num.png)
-
-![](https://djangoalevel.s3.eu-central-1.amazonaws.com/lesson28/page_article_with_str.png)
-
-Последнее - это пример работы, если url не был описан (всем известная страница 404, в debug режиме она может рассказать
-много подробностей об ошибке). В данном примере ошибка говорит о том, что контроллера для указанного запроса не
-существует.
-
-Так как параметры в функции могут быть не обязательными, мы можем воспользоваться и этим свойством тоже.
-
-`views.py`
-
 ```python
-from django.http import HttpResponse, HttpRequest
-
-
-def main(request: HttpRequest) -> HttpResponse:
-    return HttpResponse("Hey! It's your main view!!")
-
-
-def another(request: HttpRequest) -> HttpResponse:
-    return HttpResponse("It's another page!!")
-
-
-def main_article(request: HttpRequest) -> HttpResponse:
-    return HttpResponse('There will be a list with articles')
-
-
-def uniq_article(request: HttpRequest) -> HttpResponse:
-    return HttpResponse('This is a unique answer for a unique value')
-
-
-def article(request: HttpRequest, article_id: int, name: str = '') -> HttpResponse:
-    return HttpResponse(
-        "This is an article #{}. {}".format(article_id, "Name of this article is {}".format(
-            name) if name else "This is unnamed article"))
-```
-
-`urls.py`
-
-```python
+# blog_project/urls.py
 from django.urls import path
-from myapp.views import main, another, main_article, uniq_article, article
+from blog.views import home, about, article_list, article_detail, article_by_slug
 
 urlpatterns = [
-    path('', main),
-    path('some_url/', another),
-    path('article/', main_article, name='main_article'),
-    path('article/33/', uniq_article, name='unique_article'),
-    path('article/<int:article_id>/', article, name='article'),
-    path('article/<int:article_id>/<slug:name>/', article, name='article_name'),
+    path('', home, name='home'),
+    path('about/', about, name='about'),
+    path('articles/', article_list, name='article-list'),
+    path('articles/<int:pk>/', article_detail, name='article-detail'),
+    path('articles/<slug:slug>/', article_by_slug, name='article-by-slug'),
 ]
 ```
 
-Результаты некоторых запросов:
+Примеры URL:
+- `http://127.0.0.1:8000/articles/` — список статей
+- `http://127.0.0.1:8000/articles/1/` — статья с id=1
+- `http://127.0.0.1:8000/articles/my-first-post/` — статья со slug "my-first-post"
 
-![](https://djangoalevel.s3.eu-central-1.amazonaws.com/lesson28/unnamed_article.png)
-
-![](https://djangoalevel.s3.eu-central-1.amazonaws.com/lesson28/named_article.png)
+> **Важно:** URL проверяются сверху вниз. Если URL подходит под несколько паттернов, будет использован первый
+> подходящий. Поэтому более специфичные URL должны быть выше.
 
 ### include
 
 На самом деле path может принимать не только обработчик, но и специальный параметр `include`, который позволяет
 добавить urls из другого файла к основному.
 
-Например, вы видите, что у нас есть 4 урла, которые начинаются на `article/`, а значит, что удобным вариантом было бы
-вынести urls в отдельный файл. Обычно такие файлы создаются на уровне приложений, а основной файл с urls содержит
-только команды `include`.
+Например, все URL, связанные со статьями, начинаются на `articles/`. Удобно вынести их в отдельный файл внутри
+приложения `blog`. Это стандартная практика в Django.
 
-Чтобы перенести часть urls, нам необходимо создать файл `urls.py` в приложении `myapp` (на самом деле мы
-могли и назвать его как угодно, и сложить его куда угодно, но так просто удобнее и читаемее), и обязательно в этом файле
-создать переменную `urlpatterns`, содержащую коллекцию url.
-
-Посмотрим на измененные и добавленные файлы:
-
-`myapp/urls.py`
+Создадим файл `blog/urls.py`:
 
 ```python
+# blog/urls.py
 from django.urls import path
-from .views import main_article, uniq_article, article
+from blog.views import article_list, article_detail, article_by_slug
 
 urlpatterns = [
-    path('', main_article, name='main_article'),
-    path('33/', uniq_article, name='unique_article'),
-    path('<int:article_id>/', article, name='article'),
-    path('<int:article_id>/<slug:name>/', article, name='article_name'),
+    path('', article_list, name='article-list'),
+    path('<int:pk>/', article_detail, name='article-detail'),
+    path('<slug:slug>/', article_by_slug, name='article-by-slug'),
 ]
 ```
 
-`mysite/urls.py`
+Теперь изменим главный файл `blog_project/urls.py`:
 
 ```python
+# blog_project/urls.py
 from django.urls import path, include
-from myapp.views import main, another
+from blog.views import home, about
 
 urlpatterns = [
-    path('', main),
-    path('some_url/', another),
-    path('article/', include('myapp.urls'))
+    path('', home, name='home'),
+    path('about/', about, name='about'),
+    path('articles/', include('blog.urls')),
 ]
 ```
 
-**После этого изменения ни один url не изменился** - они просто стали по другому располагаться
+**После этого изменения ни один URL не изменился** — они просто стали по-другому располагаться в коде.
 
-> В случае с 4 urls не до конца понятно, зачем это может быть нужно,
-> но когда у нас существует 20 приложений и в них 5000+ url, структура
-> становится очень важна, чтобы ничего не потерять. Поэтому правилом хорошего тона для Django кода считается создание
-> файла с urls в каждом приложении, а в основном файле хранить только команды `include` на них. (Если сделать `url`
-> `path('', include('app.urls'))`, то можно перенести и те 2 url, которые мы сейчас оставили в основных url.)
+> Когда у вас 20 приложений и тысячи URL, такая структура становится критически важной. Правило хорошего тона в Django —
+> создавать файл `urls.py` в каждом приложении, а в основном файле хранить только команды `include`.
 
 ## re_path
 
@@ -841,148 +921,83 @@ urlpatterns = [
 ![](https://www.meme-arsenal.com/memes/d92b55ae26fca33c655197ce4c6a79b9.jpg)
 
 Как говорит нам
-википедия [Регуля́рные выраже́ния](https://ru.wikipedia.org/wiki/%D0%A0%D0%B5%D0%B3%D1%83%D0%BB%D1%8F%D1%80%D0%BD%D1%8B%D0%B5_%D0%B2%D1%8B%D1%80%D0%B0%D0%B6%D0%B5%D0%BD%D0%B8%D1%8F) (
-англ. regular expressions) — это используемый в компьютерных программах, работающих с текстом, формальный язык поиска и
-осуществления манипуляций с подстроками в тексте, основанный на использовании метасимволов (символов-джокеров, англ.
-wildcard characters). Для поиска используется строка-образец (англ. pattern, по-русски её часто называют «шаблоном»,
-«маской»), состоящая из символов и метасимволов и задающая правило поиска. Для манипуляций с текстом дополнительно
-задаётся строка замены, которая также может содержать в себе специальные символы.
+википедия [Регуля́рные выраже́ния](https://ru.wikipedia.org/wiki/%D0%A0%D0%B5%D0%B3%D1%83%D0%BB%D1%8F%D1%80%D0%BD%D1%8B%D0%B5_%D0%B2%D1%8B%D1%80%D0%B0%D0%B6%D0%B5%D0%BD%D0%B8%D1%8F) (англ. regular expressions) — это формальный язык поиска и манипуляций с подстроками в тексте, основанный на
+использовании метасимволов.
 
 По факту это механизм, который позволяет понять, соответствует ли наша строка заданному шаблону.
 
 ![](https://python-school.ru/wp-content/uploads/2020/12/2.jpg)
 
-Например, бывают случаи, когда нам не подходит просто строка или просто число, а нужно указывать более сложные
-параметры.
+Иногда стандартных типов параметров (`int`, `str`, `slug`) недостаточно. Например, нам нужен URL с датой в формате
+`YYYY-MM-DD`. Для таких случаев используется `re_path`.
 
-Предположим, что нам нужно указать в качестве части урла три цифры и хотя бы 2 буквы (`123blabla`, `432fo`,`111aaaaa`
-и т. д., но `12asd` не подходило)
+### Практический пример: архив статей по дате
 
-![](https://miro.medium.com/max/660/0*NfcqRr1hjlXdl2lZ.jpg)
+Допустим, мы хотим показывать статьи за определённую дату. URL должен выглядеть так:
+`/articles/2024-01-15/` — статьи за 15 января 2024 года.
 
-Чтобы собрать такую конструкцию, нужно воспользоваться синтаксисом регулярных выражений, мне лично нравится
-вот этот [сайт](https://regex101.com/), на нем можно изучить базовые принципы использования регулярных выражений.
-
-Получаем необходимое регулярное выражение:
-
-![](https://djangoalevel.s3.eu-central-1.amazonaws.com/lesson28/regex.png)
-
-Теперь давайте попробуем использовать его в url
-
-`mysite/urls.py`:
+Для проверки регулярных выражений рекомендую [regex101.com](https://regex101.com/).
 
 ```python
+# blog/views.py
+from django.http import HttpResponse
+
+
+def home(request):
+    return HttpResponse("Добро пожаловать в наш блог!")
+
+
+def about(request):
+    return HttpResponse("Это блог о программировании на Python и Django")
+
+
+def article_list(request):
+    return HttpResponse("Список всех статей")
+
+
+def article_detail(request, pk):
+    return HttpResponse(f"Статья #{pk}")
+
+
+def articles_by_date(request, year, month, day):
+    return HttpResponse(f"Статьи за {day}.{month}.{year}")
+```
+
+```python
+# blog_project/urls.py
 from django.urls import path, include, re_path
-from myapp.views import main, another, regex
+from blog.views import home, about, articles_by_date
 
 urlpatterns = [
-    path('', main),
-    path('some_url/', another),
-    path('article/', include('myapp.urls')),
-    re_path(r'\d{3}[A-Za-z]{2,}', regex),
+    path('', home, name='home'),
+    path('about/', about, name='about'),
+    path('articles/', include('blog.urls')),
+    re_path(
+        r'^articles/(?P<year>\d{4})-(?P<month>\d{2})-(?P<day>\d{2})/$',
+        articles_by_date,
+        name='articles-by-date'
+    ),
 ]
 ```
 
-`views.py`
+Разберём регулярное выражение:
+- `^articles/` — URL начинается с "articles/"
+- `(?P<year>\d{4})` — именованная группа `year`, ровно 4 цифры
+- `-` — дефис-разделитель
+- `(?P<month>\d{2})` — именованная группа `month`, ровно 2 цифры
+- `-` — дефис-разделитель
+- `(?P<day>\d{2})` — именованная группа `day`, ровно 2 цифры
+- `/$` — URL заканчивается слешем
 
-```python
-from django.http import HttpResponse, HttpRequest
+Теперь при переходе на `http://127.0.0.1:8000/articles/2024-01-15/` мы увидим "Статьи за 15.01.2024".
 
-
-def main(request: HttpRequest) -> HttpResponse:
-    return HttpResponse("Hey! It's your main view!!")
-
-
-def another(request: HttpRequest) -> HttpResponse:
-    return HttpResponse("It's another page!!")
-
-
-def main_article(request: HttpRequest) -> HttpResponse:
-    return HttpResponse('There will be a list with articles')
-
-
-def uniq_article(request: HttpRequest) -> HttpResponse:
-    return HttpResponse('This is a unique answer for a unique value')
-
-
-def article(request: HttpRequest, article_id: int, name: str = '') -> HttpResponse:
-    return HttpResponse(
-        "This is an article #{}. {}".format(article_id, "Name of this article is {}".format(
-            name) if name else "This is unnamed article"))
-
-
-def regex(request: HttpRequest) -> HttpResponse:
-    return HttpResponse("It's regexp")
-
-```
-
-Обратите внимание, мы используем не `path`, a `re_path`.
-
-Такой url уже будет работать.
-
-![](https://djangoalevel.s3.eu-central-1.amazonaws.com/lesson28/regex_url.png)
-
-Но как нам получить значение именно этого регулярного выражения? Как бы не было ужасно, но завернуть его в другое
-регулярное выражение.
-
-И после этого не забыть получить его в контроллере.
-
-`mysite/urls.py`
-
-```python
-from django.urls import path, include, re_path
-from myapp.views import main, another, regex
-
-urlpatterns = [
-    path('', main),
-    path('some_url/', another),
-    path('article/', include('myapp.urls')),
-    re_path(r'^(?P<text>\d{3}[a-zA-Z]{2,}$)', regex),
-]
-
-```
-
-`views.py`
-
-```python
-from django.http import HttpResponse, HttpRequest
-
-
-def main(request: HttpRequest) -> HttpResponse:
-    return HttpResponse("Hey! It's your main view!!")
-
-
-def another(request: HttpRequest) -> HttpResponse:
-    return HttpResponse("It's another page!!")
-
-
-def main_article(request: HttpRequest) -> HttpResponse:
-    return HttpResponse('There will be a list with articles')
-
-
-def uniq_article(request: HttpRequest) -> HttpResponse:
-    return HttpResponse('This is a unique answer for a unique value')
-
-
-def article(request: HttpRequest, article_id: int, name: str = '') -> HttpResponse:
-    return HttpResponse(
-        "This is an article #{}. {}".format(article_id, "Name of this article is {}".format(
-            name) if name else "This is unnamed article"))
-
-
-def regex(request: HttpRequest, text: str) -> HttpResponse:
-    return HttpResponse(f"It's regexp with text: {text}")
-
-```
-
-![](https://djangoalevel.s3.eu-central-1.amazonaws.com/lesson28/regex_text.png)
-
-Мы получили данные из урла.
+> **Важно:** Все параметры из `re_path` приходят как строки. Если нужны числа, конвертируйте их в контроллере:
+> `year = int(year)`.
 
 Бывают и более сложные конструкции, рассмотрите их
 по [вот этой ссылке](https://docs.djangoproject.com/en/stable/topics/http/urls/)
 
-На практике редко встречаются более сложные конструкции, но Django представляет нам такую возможность.
+На практике `re_path` используется редко — обычно хватает стандартных типов параметров в `path`.
 
 Как сдавать домашку?
 
