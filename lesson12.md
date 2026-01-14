@@ -502,6 +502,47 @@ slow_function()
 
 > Кеширование и аутентификацию будем изучать, когда доберёмся до веба, но да, декораторы часто там применяются.
 
+### Сохранение метаданных: functools.wraps
+
+При декорировании функции мы заменяем её на wrapper. Это приводит к потере метаданных оригинальной функции:
+
+```python
+def my_decorator(func):
+    def wrapper(*args, **kwargs):
+        return func(*args, **kwargs)
+    return wrapper
+
+@my_decorator
+def greet():
+    """Приветствует пользователя"""
+    print("Hello!")
+
+print(greet.__name__)  # wrapper — не greet!
+print(greet.__doc__)   # None — документация потеряна!
+```
+
+Это ломает интроспекцию, отладку и генерацию документации. Решение — `functools.wraps`:
+
+```python
+from functools import wraps
+
+def my_decorator(func):
+    @wraps(func)  # копирует __name__, __doc__, __annotations__ и др.
+    def wrapper(*args, **kwargs):
+        return func(*args, **kwargs)
+    return wrapper
+
+@my_decorator
+def greet():
+    """Приветствует пользователя"""
+    print("Hello!")
+
+print(greet.__name__)  # greet — правильно!
+print(greet.__doc__)   # Приветствует пользователя — сохранено!
+```
+
+> **Правило:** всегда используйте `@wraps(func)` в своих декораторах. Это стандартная практика.
+
 ### Декорирование методов
 
 Один из важных фактов, которые следует понимать, заключается в том, что функции и методы в Python — это практически
@@ -887,6 +928,71 @@ decorated_function("Вселенная и", "всё прочее")
 Вы не можете «раздекорировать» функцию. Безусловно, существуют трюки, позволяющие создать декоратор, который можно
 отсоединить от функции, но это плохая практика. Правильнее будет запомнить, что если функция декорирована — это не
 отменить.
+
+### Декоратор с опциональными аргументами
+
+Часто возникает потребность в декораторе, который можно использовать двумя способами:
+
+```python
+@decorator        # без аргументов
+def func(): ...
+
+@decorator(arg=5) # с аргументами
+def func(): ...
+```
+
+Вот универсальный шаблон для такого декоратора:
+
+```python
+from functools import wraps
+
+def repeat(_func=None, *, times=2):
+    """Декоратор, повторяющий вызов функции несколько раз.
+
+    Можно использовать как @repeat, так и @repeat(times=5)
+    """
+    def decorator(func):
+        @wraps(func)
+        def wrapper(*args, **kwargs):
+            result = None
+            for _ in range(times):
+                result = func(*args, **kwargs)
+            return result
+        return wrapper
+
+    # Если декоратор вызван без аргументов (@repeat)
+    if _func is not None:
+        return decorator(_func)
+    # Если декоратор вызван с аргументами (@repeat(times=5))
+    return decorator
+
+
+# Использование без аргументов — times=2 по умолчанию
+@repeat
+def say_hello():
+    print("Hello!")
+
+say_hello()
+# Hello!
+# Hello!
+
+
+# Использование с аргументами
+@repeat(times=3)
+def say_bye():
+    print("Bye!")
+
+say_bye()
+# Bye!
+# Bye!
+# Bye!
+```
+
+Ключевые моменты:
+- `_func=None` — позволяет определить, вызван ли декоратор с аргументами
+- `*` после `_func` — все остальные аргументы только именованные (keyword-only)
+- Если `_func` не None — декоратор вызван без скобок, сразу декорируем
+- Если `_func` is None — декоратор вызван со скобками, возвращаем внутренний decorator
 
 ## Классы как декораторы
 

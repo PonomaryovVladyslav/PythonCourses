@@ -572,10 +572,61 @@ class TestSum(unittest.TestCase):
 Также есть `setUpClass`/`tearDownClass` (выполняются один раз на класс) и `setUpModule`/`tearDownModule` (один раз на модуль):
 
 ```python
-@classmethod
-def setUpClass(cls): ...
+import unittest
+
+class TestDatabase(unittest.TestCase):
+
+    @classmethod
+    def setUpClass(cls):
+        """Выполняется один раз перед всеми тестами класса.
+        Используется для дорогих операций: подключение к БД, загрузка данных.
+        """
+        cls.connection = create_database_connection()
+        cls.test_data = load_test_fixtures()
+
+    @classmethod
+    def tearDownClass(cls):
+        """Выполняется один раз после всех тестов класса."""
+        cls.connection.close()
+
+    def setUp(self):
+        """Выполняется перед КАЖДЫМ тестом."""
+        self.connection.begin_transaction()
+
+    def tearDown(self):
+        """Выполняется после КАЖДОГО теста."""
+        self.connection.rollback()
+
+    def test_insert(self):
+        # Использует self.connection и self.test_data
+        pass
 ```
 
+### subTest — параметризация в unittest
+
+Когда нужно проверить функцию с разными входными данными, используйте `subTest`:
+
+```python
+import unittest
+
+class TestMath(unittest.TestCase):
+
+    def test_square(self):
+        test_cases = [
+            (2, 4),
+            (3, 9),
+            (0, 0),
+            (-2, 4),
+        ]
+        for x, expected in test_cases:
+            with self.subTest(x=x):
+                self.assertEqual(x ** 2, expected)
+```
+
+Преимущества `subTest`:
+- Если один subTest падает, остальные продолжают выполняться
+- В отчёте видно, какой именно случай упал
+- Не нужно писать отдельный тест для каждого случая
 
 ### Пропуск тестов
 
@@ -606,6 +657,104 @@ class MyTestCase(unittest.TestCase):
         # Windows-specific testing code
         pass
 ```
+
+## pytest — альтернатива unittest
+
+Хотя мы пока используем `unittest`, на реальных проектах чаще встречается `pytest`. Вот краткое сравнение:
+
+### Базовый пример pytest
+
+```python
+# test_example.py
+def test_sum():
+    assert sum([1, 2, 3]) == 6
+
+def test_sum_tuple():
+    assert sum((1, 2, 2)) == 5
+```
+
+Запуск: `pytest test_example.py` или просто `pytest` (найдёт все `test_*.py`).
+
+### Сравнение синтаксиса
+
+| unittest | pytest |
+|----------|--------|
+| `self.assertEqual(a, b)` | `assert a == b` |
+| `self.assertTrue(x)` | `assert x` |
+| `self.assertIn(a, b)` | `assert a in b` |
+| `self.assertRaises(E)` | `pytest.raises(E)` |
+| Классы обязательны | Функции достаточно |
+
+### Фикстуры в pytest
+
+```python
+import pytest
+
+@pytest.fixture
+def sample_list():
+    return [1, 2, 3, 4, 5]
+
+def test_sum(sample_list):
+    assert sum(sample_list) == 15
+
+def test_len(sample_list):
+    assert len(sample_list) == 5
+```
+
+### Параметризация тестов
+
+```python
+import pytest
+
+@pytest.mark.parametrize("input,expected", [
+    ([1, 2, 3], 6),
+    ([0, 0], 0),
+    ([-1, 1], 0),
+])
+def test_sum_parametrized(input, expected):
+    assert sum(input) == expected
+```
+
+> pytest — мощный инструмент с богатой экосистемой плагинов. После изучения pip (лекция 18) рекомендую попробовать его в своих проектах.
+
+## Измерение покрытия кода (Coverage)
+
+Покрытие кода (code coverage) показывает, какой процент кода выполняется при запуске тестов.
+
+### Установка и использование
+
+```bash
+pip install coverage
+
+# Запуск тестов с измерением покрытия
+coverage run -m unittest discover
+
+# Просмотр отчёта в консоли
+coverage report
+
+# Генерация HTML-отчёта
+coverage html
+# Откройте htmlcov/index.html в браузере
+```
+
+### Пример вывода
+
+```
+Name                 Stmts   Miss  Cover
+----------------------------------------
+my_module.py            20      4    80%
+utils.py                15      0   100%
+----------------------------------------
+TOTAL                   35      4    89%
+```
+
+### Важные замечания
+
+- 100% покрытие ≠ отсутствие багов. Покрытие показывает, что код выполнялся, но не что он правильный.
+- Стремитесь к 80-90% покрытия для критичного кода.
+- Не гонитесь за процентами — качество тестов важнее количества.
+
+> Для pytest используйте плагин `pytest-cov`: `pytest --cov=my_module tests/`
 
 ## Mock
 

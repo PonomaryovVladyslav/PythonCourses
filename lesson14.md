@@ -218,6 +218,47 @@ SOLID принципы советуют, как проектировать мо�
 
 Один класс — одна ответственность!
 
+**❌ Плохо — класс делает слишком много:**
+
+```python
+class User:
+    def __init__(self, name: str, email: str):
+        self.name = name
+        self.email = email
+
+    def save_to_database(self):
+        # Сохранение в БД — это не ответственность User
+        db.execute(f"INSERT INTO users ...")
+
+    def send_welcome_email(self):
+        # Отправка email — тоже не его дело
+        smtp.send(self.email, "Welcome!")
+
+    def generate_report(self):
+        # И генерация отчётов тоже
+        return f"Report for {self.name}"
+```
+
+**✅ Хорошо — разделение ответственностей:**
+
+```python
+class User:
+    def __init__(self, name: str, email: str):
+        self.name = name
+        self.email = email
+
+class UserRepository:
+    def save(self, user: User):
+        db.execute(f"INSERT INTO users ...")
+
+class EmailService:
+    def send_welcome(self, user: User):
+        smtp.send(user.email, "Welcome!")
+
+class UserReportGenerator:
+    def generate(self, user: User) -> str:
+        return f"Report for {user.name}"
+```
 
 Python‑подход: вместо жёсткого наследования чаще используйте композицию, стратегии (передача функции/объекта), регистрацию обработчиков и расширение через плагины; это позволяет добавлять поведение без правки существующего кода.
 
@@ -233,6 +274,46 @@ Python‑подход: вместо жёсткого наследования ч
 `Принцип открытости/закрытости` гласит, что программные сущности должны быть открыты для расширения, но закрыты для
 модификации. Это означает, что мы можем добавлять новый функционал, не изменяя существующий код.
 
+**❌ Плохо — при добавлении нового типа нужно менять существующий код:**
+
+```python
+class DiscountCalculator:
+    def calculate(self, customer_type: str, amount: float) -> float:
+        if customer_type == "regular":
+            return amount * 0.95
+        elif customer_type == "vip":
+            return amount * 0.85
+        elif customer_type == "premium":  # Добавили новый тип — изменили класс!
+            return amount * 0.80
+        return amount
+```
+
+**✅ Хорошо — расширение через новые классы:**
+
+```python
+from abc import ABC, abstractmethod
+
+class DiscountStrategy(ABC):
+    @abstractmethod
+    def calculate(self, amount: float) -> float: ...
+
+class RegularDiscount(DiscountStrategy):
+    def calculate(self, amount: float) -> float:
+        return amount * 0.95
+
+class VIPDiscount(DiscountStrategy):
+    def calculate(self, amount: float) -> float:
+        return amount * 0.85
+
+class PremiumDiscount(DiscountStrategy):  # Новый класс — старый код не трогаем!
+    def calculate(self, amount: float) -> float:
+        return amount * 0.80
+
+# Использование
+def apply_discount(strategy: DiscountStrategy, amount: float) -> float:
+    return strategy.calculate(amount)
+```
+
 #### LSP: The Liskov Substitution Principle (L)
 
 ![](https://media.licdn.com/dms/image/D4E12AQHkeXa87_C0LQ/article-cover_image-shrink_720_1280/0/1671577706434?e=2147483647&v=beta&t=AsUbafBvcH731OIN5Q7EQf3nGRukb28rCHrmnUIT_Yk)
@@ -242,6 +323,64 @@ Python‑подход: вместо жёсткого наследования ч
 Если мы из отвертки, сделали класс мультитул, значит что мультитул тоже должен уметь закручивать шурупы.
 
 Если класс родитель делал кофе, а класс потомок начал продавать наркотики, то что-то у нас пошло не так.
+
+**❌ Плохо — классический антипример «Квадрат и Прямоугольник»:**
+
+```python
+class Rectangle:
+    def __init__(self, width: int, height: int):
+        self.width = width
+        self.height = height
+
+    def set_width(self, width: int):
+        self.width = width
+
+    def set_height(self, height: int):
+        self.height = height
+
+    def area(self) -> int:
+        return self.width * self.height
+
+class Square(Rectangle):  # Квадрат — это прямоугольник?
+    def set_width(self, width: int):
+        self.width = width
+        self.height = width  # Нарушаем ожидания!
+
+    def set_height(self, height: int):
+        self.width = height
+        self.height = height
+
+# Проблема:
+def resize(rect: Rectangle):
+    rect.set_width(5)
+    rect.set_height(10)
+    assert rect.area() == 50  # Для Square это упадёт!
+```
+
+**✅ Хорошо — отдельные классы или общий интерфейс:**
+
+```python
+from abc import ABC, abstractmethod
+
+class Shape(ABC):
+    @abstractmethod
+    def area(self) -> int: ...
+
+class Rectangle(Shape):
+    def __init__(self, width: int, height: int):
+        self.width = width
+        self.height = height
+
+    def area(self) -> int:
+        return self.width * self.height
+
+class Square(Shape):
+    def __init__(self, side: int):
+        self.side = side
+
+    def area(self) -> int:
+        return self.side ** 2
+```
 
 #### ISP: The Interface Segregation Principle (I)
 
@@ -261,6 +400,58 @@ Python‑подход: вместо жёсткого наследования ч
 
 Чем меньше нагружены функции/методы, тем проще их поддерживать и тестировать.
 
+**❌ Плохо — «толстый» интерфейс:**
+
+```python
+from abc import ABC, abstractmethod
+
+class Worker(ABC):
+    @abstractmethod
+    def work(self): ...
+
+    @abstractmethod
+    def eat(self): ...
+
+    @abstractmethod
+    def sleep(self): ...
+
+class Robot(Worker):
+    def work(self):
+        print("Working...")
+
+    def eat(self):
+        pass  # Роботы не едят! Но вынуждены реализовывать
+
+    def sleep(self):
+        pass  # И не спят!
+```
+
+**✅ Хорошо — мелкие специализированные интерфейсы:**
+
+```python
+from abc import ABC, abstractmethod
+
+class Workable(ABC):
+    @abstractmethod
+    def work(self): ...
+
+class Eatable(ABC):
+    @abstractmethod
+    def eat(self): ...
+
+class Sleepable(ABC):
+    @abstractmethod
+    def sleep(self): ...
+
+class Human(Workable, Eatable, Sleepable):
+    def work(self): print("Working...")
+    def eat(self): print("Eating...")
+    def sleep(self): print("Sleeping...")
+
+class Robot(Workable):  # Только то, что нужно
+    def work(self): print("Working...")
+```
+
 #### DIP: The Dependency Inversion Principle (D)
 
 ![](https://toidicodedao.com/wp-content/uploads/2016/05/oop-principles-15-638.jpg)
@@ -271,16 +462,58 @@ Python‑подход: вместо жёсткого наследования ч
 уровней. Оба типа модулей должны зависеть от абстракций. Абстракции не должны зависеть от деталей. Детали должны
 зависеть от абстракций.
 
+**❌ Плохо — жёсткая зависимость от конкретной реализации:**
 
-Пример внедрения зависимостей (DIP):
+```python
+class MySQLDatabase:
+    def save(self, data: dict):
+        print(f"Saving to MySQL: {data}")
 
-````python
-class Storage: ...
+class UserService:
+    def __init__(self):
+        self.db = MySQLDatabase()  # Жёсткая привязка!
 
-class Service:
-    def __init__(self, store: Storage):
-        self.store = store
-````
+    def create_user(self, name: str):
+        self.db.save({"name": name})
+
+# Проблема: как протестировать без реальной БД?
+# Как переключиться на PostgreSQL?
+```
+
+**✅ Хорошо — зависимость от абстракции:**
+
+```python
+from abc import ABC, abstractmethod
+
+class Database(ABC):
+    @abstractmethod
+    def save(self, data: dict): ...
+
+class MySQLDatabase(Database):
+    def save(self, data: dict):
+        print(f"Saving to MySQL: {data}")
+
+class PostgreSQLDatabase(Database):
+    def save(self, data: dict):
+        print(f"Saving to PostgreSQL: {data}")
+
+class FakeDatabase(Database):  # Для тестов!
+    def save(self, data: dict):
+        self.last_saved = data
+
+class UserService:
+    def __init__(self, db: Database):  # Зависимость внедряется
+        self.db = db
+
+    def create_user(self, name: str):
+        self.db.save({"name": name})
+
+# Использование
+service = UserService(MySQLDatabase())
+# Или для тестов:
+fake_db = FakeDatabase()
+service = UserService(fake_db)
+```
 
 Если нормальным языком: в вашей реализации должно быть как можно меньше деталей до момента, когда эти детали необходимы.
 
@@ -436,6 +669,29 @@ class Service:
 - Логирование, чтобы обеспечить централизованное управление логами.
 - Настройки приложения, чтобы убедиться, что все части программы используют одни и те же параметры конфигурации.
 
+#### Пример реализации:
+
+```python
+class DatabaseConnection:
+    _instance = None
+
+    def __new__(cls):
+        if cls._instance is None:
+            cls._instance = super().__new__(cls)
+            cls._instance.connection = cls._connect()
+        return cls._instance
+
+    @staticmethod
+    def _connect():
+        print("Connecting to database...")
+        return "connection_object"
+
+# Использование
+db1 = DatabaseConnection()
+db2 = DatabaseConnection()
+print(db1 is db2)  # True — один и тот же объект
+```
+
 > Замечание: в Python роль «одиночки» часто играет сам модуль (его импортируется один раз и кешируется). По возможности предпочитайте внедрение зависимостей (DI) вместо глобального состояния.
 
 ### Фабричный метод (Factory Method)
@@ -559,6 +815,42 @@ def make_parser(fmt: str) -> Parser:
 - В системах, где необходимо изменять алгоритмы сортировки или поиска.
 - В играх для реализации различных стратегий поведения персонажей.
 
+#### Пример реализации:
+
+```python
+from abc import ABC, abstractmethod
+
+class PaymentStrategy(ABC):
+    @abstractmethod
+    def pay(self, amount: float) -> str: ...
+
+class CreditCardPayment(PaymentStrategy):
+    def pay(self, amount: float) -> str:
+        return f"Paid {amount} via Credit Card"
+
+class PayPalPayment(PaymentStrategy):
+    def pay(self, amount: float) -> str:
+        return f"Paid {amount} via PayPal"
+
+class CryptoPayment(PaymentStrategy):
+    def pay(self, amount: float) -> str:
+        return f"Paid {amount} via Crypto"
+
+class ShoppingCart:
+    def __init__(self, payment_strategy: PaymentStrategy):
+        self.payment = payment_strategy
+
+    def checkout(self, amount: float) -> str:
+        return self.payment.pay(amount)
+
+# Использование — легко менять стратегию
+cart = ShoppingCart(CreditCardPayment())
+print(cart.checkout(100))  # Paid 100 via Credit Card
+
+cart = ShoppingCart(PayPalPayment())
+print(cart.checkout(50))   # Paid 50 via PayPal
+```
+
 Pythonic‑вариант стратегии — передать функцию/ключ сортировки:
 
 ````python
@@ -567,6 +859,57 @@ def by_neg(x): return -x
 
 sorted(data, key=by_len)  # замена стратегии выбором функции
 ````
+
+## Антипаттерны
+
+Антипаттерны — это распространённые ошибки проектирования, которых следует избегать.
+
+### God Object (Божественный объект)
+
+Класс, который знает слишком много или делает слишком много. Нарушает SRP.
+
+```python
+# ❌ Плохо
+class Application:
+    def handle_request(self): ...
+    def connect_database(self): ...
+    def send_email(self): ...
+    def generate_report(self): ...
+    def validate_user(self): ...
+    def calculate_taxes(self): ...
+    # ... ещё 50 методов
+```
+
+### Spaghetti Code
+
+Код без чёткой структуры, где всё связано со всем. Трудно читать, тестировать и поддерживать.
+
+### Magic Numbers / Strings
+
+Использование «магических» значений без объяснения:
+
+```python
+# ❌ Плохо
+if user.role == 1:  # Что такое 1?
+    discount = price * 0.15  # Откуда 0.15?
+
+# ✅ Хорошо
+ADMIN_ROLE = 1
+VIP_DISCOUNT = 0.15
+
+if user.role == ADMIN_ROLE:
+    discount = price * VIP_DISCOUNT
+```
+
+### Copy-Paste Programming
+
+Дублирование кода вместо выделения в функцию. Нарушает DRY.
+
+### Premature Optimization
+
+Оптимизация кода до того, как она реально нужна. Усложняет код без измеримой пользы.
+
+> «Преждевременная оптимизация — корень всех зол» — Дональд Кнут
 
 ## Практика
 
