@@ -92,673 +92,683 @@
 Что же такое шаблон? В бытовом понимании - это заготовка под что-то, что потом будет использоваться, в Django это почти
 также.
 
-Шаблонами мы называем заготовленные html страницы, в которые мы можем добавить необходимые нам данные и логику.
+Шаблонами мы называем заготовленные HTML-страницы, в которые мы можем добавить необходимые нам данные и логику.
 
 Но как это работает?
 
 Откроем начатый проект с прошлого занятия.
 
-Создадим новую папку на уровне корня проекта и назовём её `templates` (название может быть любым, но принято называть
-именно так.) Чтобы получилась вот такая структура:
+Создадим новую папку на уровне корня проекта и назовём её `templates` (название может быть любым, но принято называть именно так). Структура проекта:
 
 ```
-mysite/
-myapp/
-templates/
-manage.py
+blog_project/
+    blog_project/
+        settings.py
+        urls.py
+        ...
+    blog/
+        views.py
+        ...
+    templates/
+    manage.py
 ```
 
-Чтобы обрабатывать шаблоны, мы должны "рассказать" Django, где именно искать эти самые шаблоны. Для этого нужно
-открыть `mysite/settings.py` и отредактировать его.
+Чтобы обрабатывать шаблоны, мы должны "рассказать" Django, где именно искать эти самые шаблоны. Для этого нужно открыть `blog_project/settings.py` и отредактировать переменную `TEMPLATES`.
 
-В данный момент нас интересует переменная `TEMPLATES`, выглядит она примерно так:
-
-![](https://djangoalevel.s3.eu-central-1.amazonaws.com/lesson34/templates_var.png)
-
-В ключ `DIRS` добавим нашу папку с шаблонами, чтобы получилось так:
-
-![](https://djangoalevel.s3.eu-central-1.amazonaws.com/lesson34/templates_filled.png)
-
-Пример минимальной настройки DIRS:
+В ключ `DIRS` добавим нашу папку с шаблонами:
 
 ```python
-from pathlib import Path
-BASE_DIR = Path(__file__).resolve().parent.parent
-
-TEMPLATES[0]["DIRS"] = [BASE_DIR / "templates"]
-# APP_DIRS=True также ищет шаблоны в myapp/templates/
+# blog_project/settings.py
+TEMPLATES = [
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'DIRS': [BASE_DIR / "templates"],  # <-- добавляем путь к папке templates
+        'APP_DIRS': True,
+        'OPTIONS': {
+            # ...
+        },
+    },
+]
 ```
 
-> Для шаблонов приложений удобно использовать неймспейсы: `myapp/templates/myapp/index.html` и вызывать `render(request, 'myapp/index.html')`.
+> Для шаблонов приложений удобно использовать неймспейсы: `blog/templates/blog/home.html` и вызывать `render(request, 'blog/home.html')`.
 
 Ключи:
 
-`BACKEND`: путь к классу, который отвечает за обработку данных и логику. (Замена требуется очень редко.)
+- `BACKEND`: путь к классу, который отвечает за обработку шаблонов. (Замена требуется очень редко.)
+- `DIRS`: список папок, в которых Django будет искать шаблоны.
+- `APP_DIRS`: если `True`, Django также ищет шаблоны в папках `templates` внутри каждого приложения (например, `blog/templates/`).
+- `OPTIONS`: дополнительные настройки.
 
-`DIRS`: список папок, в которых Django будет искать шаблоны.
+Мы "рассказали" Django, где искать шаблоны, но пока ни одного не создали. Давайте сделаем это!
 
-`APP_DIRS`: булевое поле, которое отвечает за то, нужно ли искать папки с шаблонами внутри папки с приложениями,
-например,
-в нашей структуре, если значение `False`, то поиск будет только в папке `templates` на уровне файла `manage.py`, а если
-значение `True`, то в папках `/templates` и `/myapp/templates/`.
-
-`OPTIONS`: дополнительные настройки, будем рассматривать позже.
-
-В режиме разработки runserver автоматически перезагружает сервер при изменениях кода и шаблонов; при изменении некоторых настроек может потребоваться ручной перезапуск (`python manage.py runserver`).
-
-Мы "рассказали" Django, где именно искать шаблоны, но пока ни одного не создали. Давайте сделаем это!
-
-В папке `templates` нужно создать html файл, назовём его `index.html` (название не имеет значения, главное, чтобы
-формат был `html`).
+В папке `templates` создадим файл `home.html`:
 
 ```
-mysite/
-myapp/
-templates/
-    index.html
-manage.py
+blog_project/
+    blog_project/
+    blog/
+    templates/
+        home.html
+    manage.py
 ```
 
-Содержимое файла `index.html`:
+Содержимое файла `home.html`:
 
 ```html
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Мой блог</title>
 </head>
 <body>
-
-That's template!
-
+    <h1>Добро пожаловать в блог!</h1>
 </body>
 </html>
 ```
 
-Итак, теперь у нас есть один шаблон, но мы его не используем, давайте переделаем нашу `view` для обработки шаблонов.
+Итак, теперь у нас есть шаблон, но мы его не используем. Давайте переделаем нашу view для обработки шаблонов.
 
-В файле `myapp/views.py` нужно импортировать обработчик шаблонов, в начало файла добавляем
+## Что такое рендеринг?
+
+**Рендеринг (rendering)** — это процесс преобразования шаблона в готовый HTML, который будет отправлен браузеру.
+
+Когда мы "рендерим" шаблон, Django:
+1. Находит файл шаблона по указанному пути
+2. Подставляет переданные данные (контекст) вместо переменных в шаблоне
+3. Выполняет логику шаблона (циклы, условия)
+4. Возвращает готовую HTML-строку
+
+Для рендеринга используется функция `render()` из `django.shortcuts`:
 
 ```python
+# blog/views.py
 from django.shortcuts import render
+
+def home(request):
+    return render(request, 'home.html')
 ```
 
-> Функция render возвращает объект типа HttpResponse
+Функция `render()` принимает:
+- `request` — объект запроса (обязательно)
+- `template_name` — путь к шаблону относительно папки templates
+- `context` — словарь с данными для шаблона (опционально)
 
-И перепишем функцию `index`:
-
-```python
-def index(request):
-    return render(request, 'index.html')
-```
+> Функция `render()` возвращает объект `HttpResponse` с отрендеренным HTML.
 
 Перезапустим сервер и увидим результат на главной странице `http://127.0.0.1:8000/`
 
-![](https://djangoalevel.s3.eu-central-1.amazonaws.com/lesson34/render_template.png)
-
-Мы отрендерили шаблон! Но в нём нет никаких переданных данных, для передачи данных нужно в метод render добавить третий
-аргумент в виде словаря.
-
-Для демонстрации основных типов данных я допишу функцию `index` и передам большое количество значений в словаре:
+Мы отрендерили шаблон! Но в нём нет никаких переданных данных. Для передачи данных нужно добавить третий аргумент — словарь (context):
 
 ```python
-class MyClass:
-    string = ''
+# blog/views.py
+from django.shortcuts import render
 
-    def __init__(self, s):
-        self.string = s
-
-def index(request):
-    my_num = 33
-    my_str = 'some string'
-    my_dict = {"some_key": "some_value"}
-    my_list = ['list_first_item', 'list_second_item', 'list_third_item']
-    my_set = {'set_first_item', 'set_second_item', 'set_third_item'}
-    my_tuple = ('tuple_first_item', 'tuple_second_item', 'tuple_third_item')
-    my_class = MyClass('class string')
-    return render(request, 'index.html', {
-        'my_num': my_num,
-        'my_str': my_str,
-        'my_dict': my_dict,
-        'my_list': my_list,
-        'my_set': my_set,
-        'my_tuple': my_tuple,
-        'my_class': my_class,
+def home(request):
+    return render(request, 'home.html', {
+        'site_name': 'Мой блог',
+        'articles_count': 42,
     })
 ```
 
-Значения переданы, но пока они никак не используются, давайте же посмотрим, как отобразить переменные в шаблоне!
+Для вывода данных в Django-шаблоне используются двойные фигурные скобки `{{ }}`:
 
-Для вывода данных в Django темплейте используются фигурные скобки `{{ }}`
-
-```
-{{first_name}}
-{{last_name}}
+```html
+<h1>{{ site_name }}</h1>
+<p>Всего статей: {{ articles_count }}</p>
 ```
 
 Для доступа к вложенным структурам используется точка:
 
-```
-{{my_dict.key}}
-{{my_object.attribute}}
-{{my_list.0}}
+```html
+{{ article.title }}       {# атрибут объекта #}
+{{ article.author.username }}  {# вложенный атрибут #}
+{{ topics.0 }}            {# первый элемент списка #}
+{{ config.debug }}        {# значение словаря #}
 ```
 
-Изменим наш `index.html`:
+Пример с передачей разных типов данных:
+
+```python
+# blog/views.py
+def home(request):
+    # Пока у нас нет моделей, используем словари для имитации данных
+    articles = [
+        {'title': 'Первая статья', 'author': 'Иван'},
+        {'title': 'Вторая статья', 'author': 'Мария'},
+    ]
+    return render(request, 'home.html', {
+        'site_name': 'Мой блог',
+        'articles': articles,
+        'topics': ['Python', 'Django', 'Web'],
+    })
+```
 
 ```html
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-<div>
-    <div style="border: 1px darkblue solid">
-        {{ my_num }}
-    </div>
-    <div style="border: 1px darkseagreen solid">
-        {{ my_str }}
-    </div>
-    <div style="border: 1px fuchsia solid">
-        {{ my_set }}
-    </div>
-    <div style="border: 1px firebrick solid">
-        {{ my_dict.some_key }}
-    </div>
-
-    <div style="border: 1px cyan solid">
-        {{ my_class.string }}
-    </div>
-    <div style="border: 1px cyan solid">
-        {{ my_list.0 }}
-    </div>
-    <div style="border: 1px burlywood solid">
-        {{ my_tuple.1 }}
-    </div>
-</div>
-</body>
-</html>
+{# templates/home.html #}
+<h1>{{ site_name }}</h1>
+<p>Первая тема: {{ topics.0 }}</p>
+<p>Автор первой статьи: {{ articles.0.author }}</p>
 ```
 
-Обновим страницу и увидим.
-
-![](https://djangoalevel.s3.eu-central-1.amazonaws.com/lesson34/render_variables.png)
-
-### Логические операторы и циклы
+## Логика в шаблонах
 
 ![](http://risovach.ru/upload/2013/01/mem/kakoy-pacan_7772237_orig_.jpeg)
+
+Для логических условий и циклов используются специальные скобки `{% %}`.
 
 > После всех логических операторов и циклов в шаблонах нужно ставить соответствующий закрывающий тег!
 > Например, `{% for ...%} {% endfor %}`, `{% if ... %} {% endif %}`.
 
-#### Логические операторы
+### Условия (if/else)
 
-В шаблонах можно оперировать не только переменными, но и несложной логикой, такой как логические операторы и циклы.
-
-Давайте добавим в наши параметры переменную `display_num` и назначим ей значение `False`.
-
-`myapp/views.py`
-
-```python
- return render(request, 'index.html', {
-    'my_num': my_num,
-    'my_str': my_str,
-    'my_dict': my_dict,
-    'my_list': my_list,
-    'my_set': my_set,
-    'my_tuple': my_tuple,
-    'my_class': my_class,
-    'display_num': False
-})
-```
-
-Для логических условий и циклов используются другие скобки `{% %}`
-
-Изменим наш шаблон с использованием логики:
+В шаблонах можно использовать условную логику. Это полезно, например, чтобы показывать разный контент залогиненным и незалогиненным пользователям:
 
 ```html
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-<div>
-    {% if display_num %}
-    {{ my_num }}
-    {% else %}
-    <span> We don't display num </span>
-    {% endif %}
-</div>
-</body>
-</html>
+{% if user.is_authenticated %}
+    <p>Добро пожаловать, {{ user.username }}!</p>
+    <a href="{% url 'logout' %}">Выйти</a>
+{% else %}
+    <a href="{% url 'login' %}">Войти</a>
+    <a href="{% url 'register' %}">Регистрация</a>
+{% endif %}
 ```
 
-> Отступы тут не имеют никакого значения, просто так удобнее читать
-
-Обновим страницу и увидим:
-
-![](https://djangoalevel.s3.eu-central-1.amazonaws.com/lesson34/If_statement.png)
-
-А если в файле `views.py` изменим переменную `display_num` с `False` на `True`:
-
-`myapp/views.py`
-
-```python
- return render(request, 'index.html', {
-    'my_num': my_num,
-    'my_str': my_str,
-    'my_dict': my_dict,
-    'my_list': my_list,
-    'my_set': my_set,
-    'my_tuple': my_tuple,
-    'my_class': my_class,
-    'display_num': True
-})
-```
-
-То увидим:
-
-![](https://djangoalevel.s3.eu-central-1.amazonaws.com/lesson34/if_true.png)
-
-Т.к. значение переменной `display_num` True, то мы видим значение переменной `my_num`
-
-#### Циклы
-
-Также, как и в Python, мы можем использовать циклы в шаблонах, но только цикл `for` — цикла `while` в шаблонах не существует.
-
-Изменим наш `index.html`:
+Ещё пример — показываем кнопку редактирования только автору статьи:
 
 ```html
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-<div>
-    {% for item in my_list %}
-    <span>{{ item }}</span>
-    <br>
+{% if article.author == user %}
+    <a href="{% url 'article-update' article.id %}">Редактировать</a>
+    <a href="{% url 'article-delete' article.id %}">Удалить</a>
+{% endif %}
+```
+
+> Отступы в шаблонах не имеют значения для Django, но делают код читаемее.
+
+#### Использование elif
+
+Для множественных условий используется `{% elif %}`:
+
+```html
+{% if user.is_superuser %}
+    <span class="badge">Администратор</span>
+{% elif user.is_staff %}
+    <span class="badge">Модератор</span>
+{% elif user.is_authenticated %}
+    <span>Добро пожаловать, {{ user.username }}!</span>
+{% else %}
+    <a href="{% url 'login' %}">Войти</a>
+{% endif %}
+```
+
+Также можно использовать логические операторы `and`, `or`, `not`:
+
+```html
+{% if user.is_authenticated and user.is_active %}
+    <p>Активный пользователь</p>
+{% endif %}
+
+{% if not items %}
+    <p>Список пуст</p>
+{% endif %}
+
+{% if category == 'news' or category == 'articles' %}
+    <p>Контент</p>
+{% endif %}
+```
+
+### Циклы (for)
+
+В шаблонах можно использовать только цикл `for` — цикла `while` не существует.
+
+Пример — выводим список статей на главной странице:
+
+```html
+{# templates/home.html #}
+<h1>Все статьи</h1>
+<ul>
+{% for article in articles %}
+    <li>
+        <a href="{% url 'article-detail' article.id %}">{{ article.title }}</a>
+        <span>— {{ article.author }}</span>
+    </li>
+{% endfor %}
+</ul>
+```
+
+> Напоминание: логика через `{% %}`, данные через `{{ }}`
+
+Вложенный цикл — выводим темы для каждой статьи:
+
+```html
+{% for article in articles %}
+    <div class="article">
+        <h2>{{ article.title }}</h2>
+        <div class="topics">
+            {% for topic in article.topics %}
+                <span class="badge">{{ topic }}</span>
+            {% endfor %}
+        </div>
+    </div>
+{% endfor %}
+```
+
+#### Переменные forloop
+
+Внутри цикла доступны следующие переменные:
+
+| Переменная            | Описание                                           |
+|-----------------------|----------------------------------------------------|
+| `forloop.counter`     | Номер текущей итерации (начиная с 1)               |
+| `forloop.counter0`    | Номер текущей итерации (начиная с 0)               |
+| `forloop.revcounter`  | Номер итерации с конца (до 1)                      |
+| `forloop.revcounter0` | Номер итерации с конца (до 0)                      |
+| `forloop.first`       | True, если это первая итерация                     |
+| `forloop.last`        | True, если это последняя итерация                  |
+| `forloop.parentloop`  | Ссылка на родительский цикл (для вложенных циклов) |
+
+Пример использования:
+
+```html
+<ul>
+{% for article in articles %}
+    <li class="{% if forloop.first %}first{% endif %} {% if forloop.last %}last{% endif %}">
+        {{ forloop.counter }}. {{ article.title }}
+    </li>
+{% endfor %}
+</ul>
+```
+
+#### Тег empty
+
+Тег `{% empty %}` позволяет отобразить альтернативный контент, если список пуст:
+
+```html
+<ul>
+{% for article in articles %}
+    <li>{{ article.title }}</li>
+{% empty %}
+    <li>Статей пока нет</li>
+{% endfor %}
+</ul>
+```
+
+Это эквивалентно:
+
+```html
+{% if articles %}
+    <ul>
+    {% for article in articles %}
+        <li>{{ article.title }}</li>
     {% endfor %}
-</div>
-</body>
-</html>
+    </ul>
+{% else %}
+    <p>Статей пока нет</p>
+{% endif %}
 ```
 
-Обновим страницу и увидим:
+Но `{% empty %}` — более лаконичный и читаемый способ.
 
-![](https://djangoalevel.s3.eu-central-1.amazonaws.com/lesson34/basic_for.png)
+## Template Tags
 
-> Еще раз, логика через `{% %}`, данные через `{{ }}`
-
-Давайте скомбинируем!
-
-Внутри цикла `for` Джанго уже генерирует некоторые переменные, например, переменную `{{ forloop.counter0 }}`,
-
-в которой хранится индекс текущей итерации, давайте не будем выводить в цикле второй элемент.
-
-```html
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-<div>
-    {% for item in my_list %}
-    {% if forloop.counter0 != 1 %}
-    <span>{{ item }}</span>
-    <br>
-    {% endif %}
-    {% endfor %}
-</div>
-</body>
-</html>
-```
-
-`{% if forloop.counter0 != 1 %}`
-
-Символ != это не равно, а значение 1, потому что индекс начинается с 0.
-
-Обновляем страницу и видим:
-
-![](https://djangoalevel.s3.eu-central-1.amazonaws.com/lesson34/for_if.png)
-
-## Встроенные темплейт теги.
-
-На самом деле все ключевые слова используемые внутри `{% %}` называются template tags, и их существует огромное
+На самом деле все ключевые слова, используемые внутри `{% %}`, называются template tags, и их существует огромное
 множество.
 
-[Ссылка на доку](https://docs.djangoproject.com/en/stable/ref/templates/builtins/)
+[Ссылка на документацию](https://docs.djangoproject.com/en/stable/ref/templates/builtins/)
 
 Их очень много, часть мы рассмотрим, часть вам придется изучить самостоятельно.
 
-## Tag URL
+### Тег url
 
-Тег url позволяет нам сгенерировать урл по его имени. Это очень удобно, если адрес меняется, а его имя нет.
+Тег `url` позволяет сгенерировать URL по его имени. Это очень удобно — если адрес меняется, а его имя остаётся прежним, ссылки продолжат работать.
 
-Давайте сгенерируем две ссылки на два наших урла.
-
-`mysite/urls.py`
-
-Назначим имя `index`
-
-```python
-path('', index, name='index')
-```
-
-`myapp/urls.py`
-
-Назначим имя `first`
-
-```python
-path('', first, name='first'),
-```
-
-Добавим в наш шаблон ссылку на вторую страницу:
+Примеры использования в блоге:
 
 ```html
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-<div>
-    <a href="{% url 'first' %}">Another page</a>
-</div>
-</body>
-</html>
+{# Ссылка на главную #}
+<a href="{% url 'home' %}">Главная</a>
+
+{# Ссылка на статью с параметром #}
+<a href="{% url 'article-detail' article.id %}">{{ article.title }}</a>
+
+{# Ссылка на тему #}
+<a href="{% url 'topic-detail' topic.id %}">{{ topic.name }}</a>
+
+{# Ссылка на профиль #}
+<a href="{% url 'profile' %}">Мой профиль</a>
 ```
 
-```html
-<a href="{% url 'article' 33 %}">Article #33</a>
-```
-
-Наш индекс пейдж:
-
-![](https://djangoalevel.s3.eu-central-1.amazonaws.com/lesson34/index_link.png)
-
-После клика:
-
-![](https://djangoalevel.s3.eu-central-1.amazonaws.com/lesson34/first_link.png)
-
-### Наследование шаблонов
+### Наследование шаблонов (extends, block)
 
 ![](https://i.pinimg.com/originals/43/3e/8f/433e8f7ebb982220a6f43b829679dd5d.jpg)
 
-#### Extends и block
+Наследование шаблонов позволяет не дублировать общие части страниц (шапка, навигация, подвал). Вы создаёте базовый шаблон с "дырками" (блоками), а дочерние шаблоны заполняют эти блоки своим контентом.
 
-Теги наследования шаблонов `extends`, `block`
-
-Зачем нам это надо?
-
-Наследование шаблонов нужно, чтобы не писать одно и то же отображение много раз. Как часто вы видели сайты, где сверху,
-снизу, слева, справа и т. д. всегда одно и тоже, а меняется только "середина"? Самый простой способ так сделать - это
-наследование.
-
-Тут нам и помогут наши волшебные теги!
-
-Создадим в папке `templates` новые файлы `base.html` и `first.html` и изменим файлы `templates/index.html` и
-функцию `first` в `myapp/views.py`
+Создадим базовый шаблон для нашего блога:
 
 `templates/base.html`
 
 ```html
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>{% block title %}Мой блог{% endblock %}</title>
+    {% block extra_css %}{% endblock %}
 </head>
 <body>
-<div style="background-color: aqua">
-    {% block content %}
-    {% endblock %}
-</div>
+    <header>
+        <nav>
+            <a href="{% url 'home' %}">Главная</a>
+            <a href="{% url 'topics' %}">Темы</a>
+            {% if user.is_authenticated %}
+                <a href="{% url 'my-feed' %}">Моя лента</a>
+                <a href="{% url 'profile' %}">Профиль</a>
+                <a href="{% url 'logout' %}">Выйти</a>
+            {% else %}
+                <a href="{% url 'login' %}">Войти</a>
+                <a href="{% url 'register' %}">Регистрация</a>
+            {% endif %}
+        </nav>
+    </header>
+
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Мой блог</p>
+    </footer>
+
+    {% block extra_js %}{% endblock %}
 </body>
 </html>
 ```
 
-`templates/index.html`
+Теперь создадим страницы, которые наследуются от базового шаблона:
+
+`templates/home.html`
 
 ```html
 {% extends 'base.html' %}
 
+{% block title %}Главная — Мой блог{% endblock %}
+
 {% block content %}
-<div style="padding: 20px; background-color: fuchsia"> Extended template index!</div>
-<a href="{% url 'first' %}">To the first page</a>
+<h1>Все статьи</h1>
+<ul>
+{% for article in articles %}
+    <li><a href="{% url 'article-detail' article.id %}">{{ article.title }}</a></li>
+{% empty %}
+    <li>Статей пока нет</li>
+{% endfor %}
+</ul>
 {% endblock %}
 ```
 
-`templates/first.html`
+`templates/about.html`
 
 ```html
 {% extends 'base.html' %}
 
+{% block title %}О нас — Мой блог{% endblock %}
+
 {% block content %}
-<div style="padding: 20px; background-color: chocolate"> Extended template first!</div>
-<a href="{% url 'index' %}">To the index page</a>
+<h1>О нашем блоге</h1>
+<p>Это учебный проект для изучения Django.</p>
 {% endblock %}
 ```
-
-Функция `first` в `myapp/views.py`
-
-```python
-def first(request):
-    return render(request, 'first.html')
-```
-
-Смотрим результаты произошедшего и пытаемся их понять. (ссылки добавлены для удобства)
-
-Индекс страница
-
-![](https://djangoalevel.s3.eu-central-1.amazonaws.com/lesson34/extended_index.png)
-
-Первая страница
-
-![](https://djangoalevel.s3.eu-central-1.amazonaws.com/lesson34/extended_first.png)
 
 Что произошло?
 
-Мы создали базовый шаблон `base.html`, в котором описали то, что будет во всех шаблонах (и покрасили в голубенький, для
-наглядности), которые от него наследуются, и обозначили `{% block content %}` (здесь block - это тэг, а content -
-присвоенное ему название, его можно выбрать произвольно) вся нужная нам информация будет наследоваться именно в
-указанный блок, на странице разных блоков может
-быть сколько угодно главное, что бы они имели разные названия.
+Мы создали базовый шаблон `base.html`, в котором описали общую структуру всех страниц: навигацию, шапку, подвал. Тег `{% block content %}` определяет "дырку", которую дочерние шаблоны заполняют своим контентом.
 
-Наш индекс пейдж рендерит страницу `index.html`, в ней мы отнаследовались от нашей `base.html`, вписали такой же
-блок `content`, чтобы передать в него нужные нам данные, в нашем случае это просто текст и ссылка, текст мы перекрасили,
-чтобы было видно, что это данные из нового файла, а ссылку нет, чтобы было видно, что цвет из `base.html`
-отнаследовался, то же самое произошло и с `first.html`.
+В `home.html` мы указали `{% extends 'base.html' %}` — это означает, что шаблон наследуется от базового. Затем мы переопределили блоки `title` и `content`.
 
-#### Include
+> Блоков может быть сколько угодно, главное — давать им разные имена.
 
-А теперь представим обратную ситуацию: нам нужно в разные части сайта "засунуть" один и тот же блок (рекламу, например)
+#### Использование {{ block.super }}
 
-Тут нас спасает тег `include` который позволяет "внедрить" нужную часть страницы куда угодно
+Иногда нужно не заменить содержимое родительского блока, а дополнить его. Для этого используется `{{ block.super }}`:
 
-Создадим в папке `templates` еще один файл с названием `add.html`
+```html
+{# base.html #}
+{% block content %}
+<div class="container">
+{% endblock %}
 
-`templates/add.html`
+{# child.html #}
+{% extends 'base.html' %}
 
- ```html
-
-<div style="padding: 20px; background-color: chartreuse"> That's included html!</div>
+{% block content %}
+{{ block.super }}
+    <h1>Мой контент</h1>
+</div>
+{% endblock %}
 ```
 
-И теперь добавим этот файл к страницам `index.html` и `first.html`, но в разные места, чтобы получилось
+Результат будет содержать и `<div class="container">` из родителя, и `<h1>` из дочернего шаблона.
 
-`templates/index.html`
+### Включение шаблонов (include)
+
+Тег `include` позволяет вставить один шаблон внутрь другого. Это полезно для переиспользуемых компонентов: карточка статьи, форма комментария, блок навигации.
+
+Создадим компонент карточки статьи:
+
+`templates/components/article_card.html`
+
+```html
+<article class="article-card">
+    <h2><a href="{% url 'article-detail' article.id %}">{{ article.title }}</a></h2>
+    <p class="meta">
+        Автор: {{ article.author }} |
+        {% for topic in article.topics %}
+            <a href="{% url 'topic-detail' topic.id %}">{{ topic.name }}</a>{% if not forloop.last %}, {% endif %}
+        {% endfor %}
+    </p>
+    <p>{{ article.content|truncatechars:100 }}</p>
+</article>
+```
+
+Теперь используем этот компонент на главной странице:
+
+`templates/home.html`
 
 ```html
 {% extends 'base.html' %}
 
 {% block content %}
-{% include 'add.html' %}
-<div style="padding: 20px; background-color: fuchsia"> Extended template index!</div>
-<a href="{% url 'first' %}">To the first page</a>
+<h1>Все статьи</h1>
+{% for article in articles %}
+    {% include 'components/article_card.html' %}
+{% empty %}
+    <p>Статей пока нет</p>
+{% endfor %}
 {% endblock %}
 ```
 
-`templates/first.html`
+#### Передача переменных в include
+
+Можно передать переменные в подключаемый шаблон с помощью `with`:
 
 ```html
-{% extends 'base.html' %}
-
-{% block content %}
-<div style="padding: 20px; background-color: chocolate"> Extended template first!</div>
-<a href="{% url 'index' %}">To the index page</a>
-{% include 'add.html' %}
-{% endblock %}
+{% include 'components/article_card.html' with article=featured_article %}
 ```
 
-Смотрим на результат:
+Пример — компонент кнопки подписки на тему:
 
-`index.html`:
-
-![](https://djangoalevel.s3.eu-central-1.amazonaws.com/lesson34/include_index.png)
-
-`first.html`:
-
-![](https://djangoalevel.s3.eu-central-1.amazonaws.com/lesson34/include_first.png)
-
-В добавленную станицу можно передать переменные при помощи тега `with`
-
-Изменим файл `templates/add.html`
+`templates/components/subscribe_button.html`
 
 ```html
-
-<div style="padding: 20px; background-color: chartreuse"> Hello {{ name }} !</div>
+{% if user.is_authenticated %}
+    {% if is_subscribed %}
+        <a href="{% url 'topic-unsubscribe' topic.id %}">Отписаться</a>
+    {% else %}
+        <a href="{% url 'topic-subscribe' topic.id %}">Подписаться</a>
+    {% endif %}
+{% endif %}
 ```
 
-И файл `templates/index.html`
+Использование:
 
 ```html
-{% extends 'base.html' %}
-
-{% block content %}
-{% include 'add.html' with name='Vlad' %}
-<div style="padding: 20px; background-color: fuchsia"> Extended template index!</div>
-<a href="{% url 'first' %}">To the first page</a>
-{% endblock %}
+{% include 'components/subscribe_button.html' with topic=topic is_subscribed=True %}
 ```
 
-Смотрим на результат:
+### Другие полезные теги
 
-`index.html`
-
-![](https://djangoalevel.s3.eu-central-1.amazonaws.com/lesson34/include_var.png)
-
-`first.html`
-
-![](https://djangoalevel.s3.eu-central-1.amazonaws.com/lesson34/include_non_var.png)
-
-В первом случае мы видим добавленную переменную, во втором - ничего, так как мы ничего не передавали.
-
-Давайте добавим проверку на наличие переменной!
-
-`templates/add.html`
+#### Комментарии
 
 ```html
-<div style="padding: 20px; background-color: chartreuse">{% if name %} Hello {{ name }} ! {% else %} Sorry, I don't know your name {% endif %}</div>
+{# Однострочный комментарий #}
+
+{% comment "Описание" %}
+    Многострочный комментарий.
+    Этот код не будет отображаться.
+{% endcomment %}
 ```
 
-Смотрим на first page
+#### CSRF Token
 
-![](https://djangoalevel.s3.eu-central-1.amazonaws.com/lesson34/first_no_var.png)
-
-Переменной нет, срабатывает if
-
-Также можно передавать эту переменную из view; в with передаём имя переменной без фигурных скобок.
-
-Пример:
+Тег `{% csrf_token %}` обязателен для всех POST-форм. Он защищает от CSRF-атак:
 
 ```html
-{% include 'add.html' with name=my_str %}
+<form method="post" action="{% url 'article-create' %}">
+    {% csrf_token %}
+    <input type="text" name="title">
+    <textarea name="content"></textarea>
+    <button type="submit">Создать статью</button>
+</form>
 ```
+
+> Без `{% csrf_token %}` POST-запросы будут отклонены с ошибкой 403 Forbidden.
 
 ## Фильтры
 
 ![](https://a.d-cd.net/egAAAgNDHeA-1920.jpg)
 
-Что это такое, и зачем это нужно?
+Фильтры позволяют преобразовать данные перед отображением. Синтаксис: `{{ переменная|фильтр }}`
 
-Фильтры - это возможность видоизменить данные перед их отображением. Давайте попробуем ими воспользоваться, для этого
-во `view` добавим сверху файла
-
-```python
-from datetime import datetime
-```
-
-`myapp/views.py` функция `index`
-
-```python
-def index(request):
-    my_num = 33
-    my_str = 'some string'
-    my_dict = {"some_key": "some_value"}
-    my_list = ['list_first_item', 'list_second_item', 'list_third_item']
-    my_set = {'set_first_item', 'set_second_item', 'set_third_item'}
-    my_tuple = ('tuple_first_item', 'tuple_second_item', 'tuple_third_item')
-    my_class = MyClass('class string')
-    return render(request, 'index.html', {
-        'my_num': my_num,
-        'my_str': my_str,
-        'my_dict': my_dict,
-        'my_list': my_list,
-        'my_set': my_set,
-        'my_tuple': my_tuple,
-        'my_class': my_class,
-        'display_num': True,
-        'now': datetime.now()
-    })
-```
-
-А `index.html` изменим так
+Примеры для блога:
 
 ```html
-{% extends 'base.html' %}
+{# Обрезаем текст статьи до 100 символов #}
+<p>{{ article.content|truncatechars:100 }}</p>
 
-{% block content %}
-<div>{{ now| date:"SHORT_DATE_FORMAT" }}</div>
-<div>{{ now|date:"D d M Y" }} {{ now|time:"H:i" }}</div>
-<div>{{ not_exist|default:"nothing" }}</div>
-<div>{{ my_str | capfirst }}</div>
-<div>{{ my_list | join:"**" }}</div>
-{% endblock %}
+{# Форматируем дату создания #}
+<span>{{ article.created_at|date:"d.m.Y" }}</span>
+
+{# Показываем темы через запятую #}
+<span>Темы: {{ article.topic_names|join:", " }}</span>
+
+{# Значение по умолчанию #}
+<p>Автор: {{ article.author.username|default:"Аноним" }}</p>
 ```
 
-Смотрим на результат
+### Часто используемые фильтры
 
-![](https://djangoalevel.s3.eu-central-1.amazonaws.com/lesson34/filters.png)
+| Фильтр          | Описание                                      | Пример                                   |
+|-----------------|-----------------------------------------------|------------------------------------------|
+| `default`       | Значение по умолчанию, если переменная пустая | `{{ value\|default:"ничего" }}`          |
+| `length`        | Длина строки или списка                       | `{{ articles\|length }}`                 |
+| `truncatechars` | Обрезает строку до N символов                 | `{{ text\|truncatechars:50 }}`           |
+| `truncatewords` | Обрезает строку до N слов                     | `{{ text\|truncatewords:10 }}`           |
+| `date`          | Форматирование даты                           | `{{ created\|date:"d.m.Y" }}`            |
+| `time`          | Форматирование времени                        | `{{ created\|time:"H:i" }}`              |
+| `join`          | Объединяет список в строку                    | `{{ tags\|join:", " }}`                  |
+| `add`           | Сложение чисел или конкатенация               | `{{ value\|add:5 }}`                     |
+| `capfirst`      | Первая буква заглавная                        | `{{ name\|capfirst }}`                   |
+| `lower`         | Все буквы строчные                            | `{{ name\|lower }}`                      |
+| `upper`         | Все буквы заглавные                           | `{{ name\|upper }}`                      |
+| `title`         | Каждое слово с заглавной                      | `{{ name\|title }}`                      |
+| `slugify`       | Преобразует в slug                            | `{{ title\|slugify }}`                   |
+| `linebreaks`    | Переносы строк в `<p>` и `<br>`               | `{{ text\|linebreaks }}`                 |
+| `linebreaksbr`  | Переносы строк в `<br>`                       | `{{ text\|linebreaksbr }}`               |
+| `yesno`         | Преобразует True/False/None                   | `{{ flag\|yesno:"да,нет,неизвестно" }}`  |
+| `pluralize`     | Склонение для чисел                           | `{{ count }} item{{ count\|pluralize }}` |
 
-Каждый фильтр имеет свои особенности и правила написания, подробнее можно посмотреть по ссылке выше.
+Примеры использования:
 
-Кроме того, для данных существуют встроенные фильтры.
+```html
+{# Обрезка текста #}
+<p>{{ article.content|truncatewords:30 }}...</p>
 
-Например `date`, `default`, `join`, `capfirst`. На самом деле их огромное количество, весь список встроенных фильтров
-можно
-посмотреть [Тыц](https://docs.djangoproject.com/en/stable/ref/templates/builtins/)
+{# Длина списка #}
+<p>Всего статей: {{ articles|length }}</p>
 
-## Кастомные темплейт теги и фильтры
+{# Сложение #}
+<p>Следующая страница: {{ page|add:1 }}</p>
 
-На самом деле, стандартным набором дело не ограничивается, и в случае необходимости можно дописать свои теги и фильтры,
-почитать об этом можно вот [тут](https://docs.djangoproject.com/en/stable/howto/custom-template-tags/)
+{# Форматирование даты #}
+<p>Опубликовано: {{ article.created_at|date:"d F Y" }}</p>
+```
+
+Полный список встроенных фильтров можно посмотреть в [документации](https://docs.djangoproject.com/en/stable/ref/templates/builtins/).
+
+### Автоэкранирование и безопасность
+
+Django автоматически экранирует HTML в переменных для защиты от XSS-атак (Cross-Site Scripting). Это означает, что если пользователь введёт `<script>alert('hack')</script>`, это будет отображено как текст, а не выполнено как код.
+
+```html
+{# Если user_input = "<script>alert('XSS')</script>" #}
+{{ user_input }}
+{# Результат: &lt;script&gt;alert('XSS')&lt;/script&gt; #}
+```
+
+#### Фильтр safe
+
+Если вы уверены, что HTML безопасен (например, это контент из WYSIWYG-редактора администратора), используйте фильтр `|safe`:
+
+```html
+{{ article.content|safe }}
+```
+
+> ⚠️ **Внимание!** Используйте `|safe` только для доверенного контента. Никогда не применяйте его к пользовательскому вводу!
+
+#### Фильтр escape
+
+Фильтр `|escape` явно экранирует HTML (полезно, если автоэкранирование отключено):
+
+```html
+{{ user_input|escape }}
+```
+
+#### Тег autoescape
+
+Можно управлять автоэкранированием для блока кода:
+
+```html
+{% autoescape off %}
+    {# Здесь автоэкранирование отключено #}
+    {{ trusted_html }}
+{% endautoescape %}
+
+{% autoescape on %}
+    {# Здесь автоэкранирование включено (по умолчанию) #}
+    {{ user_input }}
+{% endautoescape %}
+```
+
+#### Фильтр striptags
+
+Удаляет все HTML-теги из строки:
+
+```html
+{{ user_input|striptags }}
+{# "<p>Hello</p>" → "Hello" #}
+```
+
+### Кастомные теги и фильтры
+
+На самом деле, стандартным набором дело не ограничивается, и в случае необходимости можно дописать свои теги и фильтры.
+Подробнее об этом можно почитать в [документации](https://docs.djangoproject.com/en/stable/howto/custom-template-tags/).
 
 ![](https://i.ytimg.com/vi/gF060AIFiB8/hqdefault.jpg)
 
-# Работа со статикой
+## Статические файлы
 
-## Что такое статические файлы?
+### Что такое статические файлы?
 
 Прежде чем перейти к рассмотрению template tag, давайте разберемся, что такое статические файлы. В контексте
 веб-разработки статические файлы — это те файлы, которые не изменяются на сервере, а напрямую передаются пользователю. К
@@ -771,7 +781,7 @@ def index(request):
 В Django эти файлы не хранятся в базе данных и не генерируются динамически, как HTML-контент. Они должны быть доступны
 для всех клиентов в неизменном виде.
 
-## Настройка Django для работы со статическими файлами
+### Настройка статики в Django
 
 Прежде чем мы сможем использовать `{% static %}`, необходимо правильно настроить Django для работы со статическими
 файлами. Основные шаги включают:
@@ -821,12 +831,12 @@ project/
 
 > Этот параметр вам пока не нужен! Он используется для запуска приложений на реальных серверах
 
-## Использование template tag `{% static %}`
+### Использование тега {% static %}
 
 Теперь, когда мы настроили Django для работы со статическими файлами, давайте рассмотрим, как используется template
 tag `{% static %}`. Этот тег позволяет нам генерировать правильные URL для статических файлов в шаблонах.
 
-### Загрузка библиотеки static
+#### Загрузка библиотеки static
 
 Прежде чем использовать тег `{% static %}`, необходимо загрузить соответствующую библиотеку в вашем шаблоне. Это
 делается с помощью тега `{% load static %}`. Этот тег должен быть расположен в верхней части вашего шаблона, как
@@ -840,7 +850,7 @@ tag `{% static %}`. Этот тег позволяет нам генериров
 {% load static %}
 ```
 
-### Основной синтаксис
+#### Основной синтаксис
 
 Синтаксис тега `{% static %}` выглядит следующим образом:
 
@@ -851,7 +861,7 @@ tag `{% static %}`. Этот тег позволяет нам генериров
 Здесь `'path/to/your/static/file.ext'` — это путь к файлу относительно одной из директорий, указанных
 в `STATICFILES_DIRS`.
 
-### Пример использования
+#### Пример использования
 
 Предположим, у вас есть файл `styles.css`, находящийся в директории `static/css/`. Чтобы подключить этот файл в шаблоне,
 вам нужно использовать следующий код:
@@ -863,7 +873,7 @@ tag `{% static %}`. Этот тег позволяет нам генериров
 
 Django автоматически преобразует это в правильный URL, который будет выглядеть как `/static/css/styles.css`.
 
-### Использование в различных контекстах
+#### Использование в различных контекстах
 
 Тег `{% static %}` можно использовать не только для CSS, но и для других типов файлов, например, изображений или
 JavaScript:
@@ -874,17 +884,7 @@ JavaScript:
 <script src="{% static 'js/main.js' %}"></script>
 ```
 
-## Практическое значение и важность
-
-Преимущество использования `{% static %}` заключается в том, что он обеспечивает правильное разрешение путей к
-статическим файлам независимо от того, где они находятся. Это особенно важно при деплое (отправке кода на настоящий
-сервер) приложения, когда может измениться базовый URL для статических файлов.
-
-Кроме того, использование `{% static %}` делает ваш код более устойчивым к изменениям. Например, если вы решите
-переместить свои статические файлы в другую директорию, вам не придется изменять все шаблоны — достаточно будет обновить
-настройки.
-
-## Практические рекомендации
+### Практические рекомендации
 
 1. **Всегда загружайте библиотеку static.** Не забывайте добавлять `{% load static %}` в начало ваших шаблонов, где
    используются статические файлы.
@@ -894,3 +894,40 @@ JavaScript:
 
 3. **Организуйте свои статические файлы логически.** Размещайте их в соответствующих поддиректориях,
    например, `css`, `js`, `images`.
+
+Преимущество использования `{% static %}` заключается в том, что он обеспечивает правильное разрешение путей к
+статическим файлам независимо от того, где они находятся. Это особенно важно при деплое приложения, когда может
+измениться базовый URL для статических файлов.
+
+## Домашнее задание
+
+Продолжаем работу над проектом блога. На этом этапе страницы всё ещё заполнены абстрактным контентом — работать должен только переход между страницами.
+
+### Задание
+
+1. **Создайте базовый шаблон `base.html`** с общей структурой:
+   - Навигация (ссылки на главную, список тем, профиль и т.д.)
+   - Место для основного контента (`{% block content %}`)
+   - Подвал страницы
+
+2. **Все остальные страницы должны наследоваться от `base.html`**. Создайте шаблоны для всех URL, у которых в задании указано слово "страница":
+   - Главная страница (`/`)
+   - Моя лента (`/my-feed/`)
+   - Страница статьи (`/<article_id>/`)
+   - Страница редактирования статьи (`/<article_id>/update/`)
+   - Страница создания статьи (`/create/`)
+   - Список тем (`/topics/`)
+   - Страница темы (`/topics/<topic_id>/`)
+   - Профиль (`/profile/`)
+   - Регистрация (`/register/`)
+   - Смена пароля (`/set-password/`)
+   - Вход (`/login/`)
+   - Статьи по дате (`/<year>/<month>/`)
+
+3. **У всех страниц должен быть разный `<title>`** — используйте блок `{% block title %}`.
+
+4. **Используйте тег `{% url %}` для всех ссылок** между страницами.
+
+5. **(Опционально)** Добавьте CSS-файл для базовой стилизации и подключите его через `{% static %}`.
+
+> На данном этапе контент страниц может быть заглушкой (placeholder). Главное — правильная структура шаблонов и работающая навигация.
