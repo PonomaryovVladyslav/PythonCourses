@@ -677,13 +677,13 @@ def test_sum_tuple():
 
 ### Сравнение синтаксиса
 
-| unittest | pytest |
-|----------|--------|
-| `self.assertEqual(a, b)` | `assert a == b` |
-| `self.assertTrue(x)` | `assert x` |
-| `self.assertIn(a, b)` | `assert a in b` |
-| `self.assertRaises(E)` | `pytest.raises(E)` |
-| Классы обязательны | Функции достаточно |
+| unittest                 | pytest             |
+|--------------------------|--------------------|
+| `self.assertEqual(a, b)` | `assert a == b`    |
+| `self.assertTrue(x)`     | `assert x`         |
+| `self.assertIn(a, b)`    | `assert a in b`    |
+| `self.assertRaises(E)`   | `pytest.raises(E)` |
+| Классы обязательны       | Функции достаточно |
 
 ### Фикстуры в pytest
 

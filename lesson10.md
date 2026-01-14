@@ -1124,13 +1124,260 @@ False
 > **Важно:** Генераторы могут не только возвращать значения, но и принимать их на вход через метод `send()`.
 > Это продвинутая тема, которая понадобится для понимания асинхронного программирования — рассмотрим её позже.
 
-Практика:
+---
 
-1. К созданному на прошлом занятии классу студент задаём ему имя, возраст и оценки через `__init__`
-2. Добавляем метод для добавления оценки
-3. Добавляем метод(ы) вычисления среднего балла
-4. Прописываем магический метод (или методы), которые позволяют найти студента с наилучшим средним баллом из списка
-5. Берём класс группы из прошлого занятия
-6. Добавляем возможность добавить студента к группе
-7. Добавляем возможность удалить студента из группы
-8. Добавляем возможность найти группу, в которой учится студент с самым высоким средним баллом
+## Практика на занятии
+
+### Задание 1. Расширение класса Student (магические методы)
+
+Возьмите класс `Student` из прошлого занятия и добавьте:
+
+1. Инициализация через `__init__(self, name, age, grades=None)`
+2. Метод `add_grade(grade)` — добавляет оценку
+3. Метод `average_grade()` — возвращает средний балл
+4. `__str__` — возвращает `"Student: Иван, avg: 4.5"`
+5. `__repr__` — возвращает `"Student('Иван', 20, [4, 5, 5])"`
+6. `__eq__` — два студента равны, если у них одинаковые имя и возраст
+7. `__lt__` — сравнение по среднему баллу (для сортировки)
+
+```python
+# Пример использования:
+s1 = Student("Иван", 20, [4, 5, 5])
+s2 = Student("Мария", 19, [5, 5, 5])
+s3 = Student("Пётр", 21, [3, 4, 4])
+
+print(s1)  # Student: Иван, avg: 4.67
+print(repr(s2))  # Student('Мария', 19, [5, 5, 5])
+
+# Сортировка по среднему баллу
+students = [s1, s2, s3]
+print(max(students).name)  # Мария (лучший средний балл)
+```
+
+### Задание 2. Простой итератор Countdown
+
+Создайте класс `Countdown`, который итерируется от заданного числа до 0:
+
+```python
+class Countdown:
+    def __init__(self, start: int):
+        self.start = start
+
+    def __iter__(self):
+        # Ваш код
+        pass
+
+    def __next__(self):
+        # Ваш код
+        pass
+
+# Пример использования:
+for num in Countdown(5):
+    print(num, end=" ")
+# 5 4 3 2 1 0
+```
+
+И такое же задание, но с помощью генератора!
+
+---
+
+## Домашняя работа
+
+### Задание 1. Расширение класса Group (контейнерные методы)
+
+Возьмите класс `Group` и добавьте магические методы, чтобы группа вела себя как контейнер:
+
+1. `__len__` — количество студентов в группе
+2. `__getitem__(index)` — получение студента по индексу
+3. `__setitem__(index, student)` — замена студента по индексу
+4. `__delitem__(index)` — удаление студента по индексу
+5. `__iter__` — итерация по студентам
+6. `__contains__(student)` — проверка, есть ли студент в группе
+
+```python
+# Пример использования:
+group = Group("Python-101")
+group.add_student(Student("Иван", 20, [4, 5]))
+group.add_student(Student("Мария", 19, [5, 5]))
+group.add_student(Student("Пётр", 21, [3, 4]))
+
+print(len(group))  # 3
+print(group[0].name)  # Иван
+print(Student("Мария", 19, [5, 5]) in group)  # True
+
+for student in group:
+    print(student)
+
+# Найти лучшего студента
+best = max(group)
+print(f"Лучший студент: {best.name}")
+```
+
+### Задание 2. Класс Vector (перегрузка операторов)
+
+Создайте класс `Vector` для работы с математическими векторами:
+
+```python
+class Vector:
+    def __init__(self, *components):
+        self.components = components
+
+    def __add__(self, other): ...      # v1 + v2
+    def __sub__(self, other): ...      # v1 - v2
+    def __mul__(self, scalar): ...     # v * 3 (умножение на скаляр)
+    def __rmul__(self, scalar): ...    # 3 * v
+    def __eq__(self, other): ...       # v1 == v2
+    def __abs__(self): ...             # abs(v) — длина вектора
+    def __len__(self): ...             # len(v) — размерность
+    def __getitem__(self, index): ...  # v[0]
+    def __repr__(self): ...            # Vector(1, 2, 3)
+    def __str__(self): ...             # "(1, 2, 3)"
+```
+
+```python
+# Пример использования:
+v1 = Vector(1, 2, 3)
+v2 = Vector(4, 5, 6)
+
+print(v1 + v2)      # (5, 7, 9)
+print(v1 - v2)      # (-3, -3, -3)
+print(v1 * 2)       # (2, 4, 6)
+print(3 * v1)       # (3, 6, 9)
+print(abs(v1))      # 3.7416... (sqrt(1+4+9))
+print(v1 == Vector(1, 2, 3))  # True
+print(len(v1))      # 3
+print(v1[0])        # 1
+```
+
+### Задание 3. Контекстный менеджер Timer
+
+Создайте контекстный менеджер `Timer`, который измеряет время выполнения блока кода:
+
+```python
+import time
+
+class Timer:
+    def __init__(self, name: str = "Block"):
+        self.name = name
+        self.elapsed = None
+
+    def __enter__(self):
+        # Запомнить время начала
+        pass
+
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        # Вычислить и вывести время
+        pass
+
+# Пример использования:
+with Timer("Sorting"):
+    data = [i for i in range(1000000)]
+    sorted(data, reverse=True)
+# Sorting: 0.1234 seconds
+
+with Timer("Sleeping"):
+    time.sleep(0.5)
+# Sleeping: 0.5012 seconds
+```
+
+**Бонус:** Сделайте так, чтобы `Timer` можно было использовать и как декоратор:
+
+```python
+@Timer("my_function")
+def my_function():
+    time.sleep(0.1)
+
+my_function()
+# my_function: 0.1001 seconds
+```
+
+### Задание 4. Генераторы
+
+**4.1. Генератор Fibonacci**
+
+Напишите генератор `fibonacci(n)`, который выдаёт первые `n` чисел Фибоначчи:
+
+```python
+def fibonacci(n: int):
+    # Ваш код с yield
+    pass
+
+print(list(fibonacci(10)))
+# [0, 1, 1, 2, 3, 5, 8, 13, 21, 34]
+```
+
+**4.2. Бесконечный генератор**
+
+Напишите генератор `infinite_sequence(start=0)`, который бесконечно генерирует числа:
+
+```python
+def infinite_sequence(start: int = 0):
+    # Ваш код
+    pass
+
+gen = infinite_sequence(10)
+print(next(gen))  # 10
+print(next(gen))  # 11
+print(next(gen))  # 12
+```
+
+**4.3. Генератор для чтения файла по частям**
+
+Напишите генератор `read_in_chunks(filename, chunk_size=1024)`, который читает файл порциями:
+
+```python
+def read_in_chunks(filename: str, chunk_size: int = 1024):
+    # Ваш код
+    pass
+
+for chunk in read_in_chunks("large_file.txt", 100):
+    print(len(chunk))  # Выведет размеры порций
+```
+
+### Задание 5. ⭐ Свой класс Range
+
+Создайте класс `MyRange`, который работает как встроенный `range`, но реализован вами:
+
+```python
+class MyRange:
+    def __init__(self, *args):
+        # Поддержка MyRange(stop), MyRange(start, stop), MyRange(start, stop, step)
+        pass
+
+    def __iter__(self): ...
+    def __len__(self): ...
+    def __getitem__(self, index): ...  # Поддержка индексации и срезов
+    def __contains__(self, value): ...
+    def __repr__(self): ...
+    def __eq__(self, other): ...
+    def __reversed__(self): ...
+```
+
+```python
+# Пример использования:
+r = MyRange(1, 10, 2)
+
+# Итерация
+for i in r:
+    print(i, end=" ")  # 1 3 5 7 9
+
+# Длина
+print(len(r))  # 5
+
+# Индексация
+print(r[0])   # 1
+print(r[-1])  # 9
+print(r[1:3]) # MyRange(3, 7, 2) или [3, 5]
+
+# Проверка вхождения
+print(5 in r)  # True
+print(6 in r)  # False
+
+# Сравнение
+print(r == MyRange(1, 10, 2))  # True
+
+# Обратный порядок
+print(list(reversed(r)))  # [9, 7, 5, 3, 1]
+```
+
+**Подсказка:** Изучите, как работает `range` — он не хранит все числа в памяти, а вычисляет их по формуле.

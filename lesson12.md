@@ -1270,9 +1270,332 @@ assert isinstance(DictLike(), JsonSerializable)  # True
 - ABC удобно комбинировать с миксинами; держите миксины мелкими и ортогональными.
 - Абстрактные `@property`, `@classmethod`, `@staticmethod` помогают описывать интерфейсы на уровне API, а не только реализации.
 
+---
+
+## Практика на занятии
+
+### Задание 1. Декоратор логирования
+
+Напишите декоратор `@log_calls`, который логирует вызовы функции:
+
+```python
+from functools import wraps
+
+def log_calls(func):
+    """Логирует вызов функции с аргументами и результатом."""
+    @wraps(func)
+    def wrapper(*args, **kwargs):
+        # Ваш код
+        pass
+    return wrapper
+
+@log_calls
+def add(a, b):
+    return a + b
+
+@log_calls
+def greet(name, greeting="Hello"):
+    return f"{greeting}, {name}!"
+
+add(2, 3)
+# Calling add(2, 3)
+# add returned: 5
+
+greet("Alice", greeting="Hi")
+# Calling greet('Alice', greeting='Hi')
+# greet returned: Hi, Alice!
+```
+
+### Задание 2. Декоратор замера времени
+
+Напишите декоратор `@timer`, который измеряет время выполнения функции:
+
+```python
+import time
+from functools import wraps
+
+def timer(func):
+    """Измеряет и выводит время выполнения функции."""
+    @wraps(func)
+    def wrapper(*args, **kwargs):
+        # Ваш код
+        pass
+    return wrapper
+
+@timer
+def slow_function():
+    time.sleep(0.5)
+    return "Done"
+
+slow_function()
+# slow_function executed in 0.5012 seconds
+```
+
+---
+
 ## Домашняя работа
 
-1. Создайте класс, который будет считывать файл
-2. Напишите декоратор, который будет замерять время выполнения.
-3. Напишите декоратор, который будет вызывать функцию n-раз.
-4. Воспользуйтесь декоратором для замера времени и примените его ко всем функциям в вашем модуле.
+### Задание 1. Декоратор retry
+
+Напишите декоратор `@retry`, который повторяет вызов функции при возникновении исключения:
+
+```python
+import time
+from functools import wraps
+
+def retry(max_attempts: int = 3, delay: float = 1.0, exceptions: tuple = (Exception,)):
+    """
+    Повторяет вызов функции при исключении.
+
+    Args:
+        max_attempts: максимальное количество попыток
+        delay: задержка между попытками (секунды)
+        exceptions: кортеж исключений, при которых повторять
+    """
+    def decorator(func):
+        @wraps(func)
+        def wrapper(*args, **kwargs):
+            # Ваш код
+            pass
+        return wrapper
+    return decorator
+
+# Пример использования:
+@retry(max_attempts=3, delay=0.5, exceptions=(ConnectionError, TimeoutError))
+def fetch_data(url):
+    # Имитация нестабильного соединения
+    import random
+    if random.random() < 0.7:
+        raise ConnectionError("Connection failed")
+    return {"data": "success"}
+
+result = fetch_data("http://example.com")
+# Attempt 1 failed: Connection failed. Retrying in 0.5s...
+# Attempt 2 failed: Connection failed. Retrying in 0.5s...
+# Attempt 3 succeeded!
+```
+
+### Задание 2. Декоратор cache (memoization)
+
+Напишите декоратор `@cache`, который кеширует результаты вызовов функции:
+
+```python
+from functools import wraps
+
+def cache(func):
+    """Кеширует результаты вызовов функции."""
+    # Ваш код
+    pass
+
+@cache
+def fibonacci(n):
+    if n < 2:
+        return n
+    return fibonacci(n - 1) + fibonacci(n - 2)
+
+# Без кеша: fibonacci(35) занимает несколько секунд
+# С кешем: мгновенно
+print(fibonacci(35))  # 9227465
+
+# Бонус: добавьте атрибут для просмотра статистики кеша
+print(fibonacci.cache_info())  # {'hits': 33, 'misses': 36, 'size': 36}
+```
+
+**Бонус:** Реализуйте `@cache` с ограничением размера (LRU — Least Recently Used):
+
+```python
+@cache(maxsize=100)
+def expensive_function(x):
+    return x ** 2
+```
+
+### Задание 3. Декоратор validate_types
+
+Напишите декоратор `@validate_types`, который проверяет типы аргументов по аннотациям:
+
+```python
+from functools import wraps
+
+def validate_types(func):
+    """Проверяет типы аргументов по аннотациям функции."""
+    @wraps(func)
+    def wrapper(*args, **kwargs):
+        # Используйте func.__annotations__ для получения аннотаций
+        # Ваш код
+        pass
+    return wrapper
+
+@validate_types
+def add(a: int, b: int) -> int:
+    return a + b
+
+@validate_types
+def greet(name: str, times: int = 1) -> str:
+    return (name + "! ") * times
+
+print(add(2, 3))        # 5
+print(greet("Hello", 3)) # Hello! Hello! Hello!
+
+add("2", "3")  # TypeError: Argument 'a' must be int, got str
+greet(123, 1)  # TypeError: Argument 'name' must be str, got int
+```
+
+### Задание 4. Класс Temperature с @property
+
+Создайте класс `Temperature` с использованием `@property` для автоматической конвертации:
+
+```python
+class Temperature:
+    def __init__(self, celsius: float = 0):
+        self._celsius = celsius
+
+    @property
+    def celsius(self) -> float:
+        """Температура в Цельсиях."""
+        pass
+
+    @celsius.setter
+    def celsius(self, value: float):
+        pass
+
+    @property
+    def fahrenheit(self) -> float:
+        """Температура в Фаренгейтах."""
+        pass
+
+    @fahrenheit.setter
+    def fahrenheit(self, value: float):
+        pass
+
+    @property
+    def kelvin(self) -> float:
+        """Температура в Кельвинах."""
+        pass
+
+    @kelvin.setter
+    def kelvin(self, value: float):
+        # Нельзя установить температуру ниже абсолютного нуля
+        pass
+
+# Пример использования:
+temp = Temperature(25)
+print(temp.celsius)     # 25
+print(temp.fahrenheit)  # 77.0
+print(temp.kelvin)      # 298.15
+
+temp.fahrenheit = 32
+print(temp.celsius)     # 0.0
+
+temp.kelvin = 0
+print(temp.celsius)     # -273.15
+
+temp.kelvin = -10  # ValueError: Temperature cannot be below absolute zero
+```
+
+### Задание 5. Декоратор для методов класса
+
+Напишите декоратор `@count_calls`, который считает количество вызовов метода:
+
+```python
+def count_calls(method):
+    """Считает количество вызовов метода."""
+    pass
+
+class API:
+    @count_calls
+    def get_users(self):
+        return ["Alice", "Bob"]
+
+    @count_calls
+    def get_posts(self):
+        return ["Post 1", "Post 2"]
+
+api = API()
+api.get_users()
+api.get_users()
+api.get_posts()
+
+print(api.get_users.call_count)  # 2
+print(api.get_posts.call_count)  # 1
+```
+
+### Задание 6. ⭐ Декоратор rate_limit
+
+Напишите декоратор `@rate_limit`, который ограничивает частоту вызовов функции:
+
+```python
+import time
+from functools import wraps
+
+def rate_limit(calls: int = 5, period: float = 60.0):
+    """
+    Ограничивает количество вызовов функции.
+
+    Args:
+        calls: максимальное количество вызовов
+        period: период времени в секундах
+
+    Raises:
+        RateLimitExceeded: если лимит превышен
+    """
+    def decorator(func):
+        @wraps(func)
+        def wrapper(*args, **kwargs):
+            # Ваш код
+            pass
+        return wrapper
+    return decorator
+
+class RateLimitExceeded(Exception):
+    pass
+
+@rate_limit(calls=3, period=10.0)
+def send_message(msg):
+    print(f"Sending: {msg}")
+
+# Пример использования:
+send_message("Hello")      # OK
+send_message("World")      # OK
+send_message("!")          # OK
+send_message("Too many!")  # RateLimitExceeded: Rate limit exceeded. Try again in 8.5 seconds.
+
+# Через 10 секунд лимит сбрасывается
+time.sleep(10)
+send_message("I'm back!")  # OK
+```
+
+**Бонус:** Сделайте декоратор, который можно использовать с опциональными аргументами:
+
+```python
+@rate_limit  # Использует значения по умолчанию
+def func1(): pass
+
+@rate_limit(calls=10, period=30)  # С аргументами
+def func2(): pass
+```
+
+### Задание 7. ⭐ Класс-декоратор Singleton
+
+Создайте декоратор класса `@singleton`, который гарантирует единственный экземпляр:
+
+```python
+def singleton(cls):
+    """Декоратор, превращающий класс в Singleton."""
+    pass
+
+@singleton
+class Database:
+    def __init__(self, connection_string: str):
+        self.connection_string = connection_string
+        print(f"Connecting to {connection_string}")
+
+# Пример использования:
+db1 = Database("postgresql://localhost/db1")
+# Connecting to postgresql://localhost/db1
+
+db2 = Database("postgresql://localhost/db2")
+# Ничего не выводится — возвращается существующий экземпляр
+
+print(db1 is db2)  # True
+print(db1.connection_string)  # postgresql://localhost/db1
+```

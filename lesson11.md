@@ -1072,11 +1072,319 @@ is_even = True if number % 2 == 0 else False
       ```
 
 
-В качестве домашки нужно ваш модуль разбить на небольшие логические куски.
+---
 
-Предполагаемая структура:
+## Практика на занятии
 
-`main.py` — файл, через который происходит запуск основной логики
-`files.py` — файл, куда надо переместить всю работу с файлами
-`utils.py` — файл со всеми полезными функциями
+### Задание 1. Работа с datetime
 
+Напишите функции для работы с датами:
+
+```python
+from datetime import datetime, timedelta
+
+def parse_date(date_string: str, format: str = "%d.%m.%Y") -> datetime:
+    """Парсит строку в объект datetime."""
+    pass
+
+def days_between(date1: datetime, date2: datetime) -> int:
+    """Возвращает количество дней между двумя датами."""
+    pass
+
+def add_business_days(start_date: datetime, days: int) -> datetime:
+    """Добавляет рабочие дни (пропуская субботу и воскресенье)."""
+    pass
+```
+
+```python
+# Пример использования:
+d1 = parse_date("15.01.2024")
+d2 = parse_date("20.01.2024")
+print(days_between(d1, d2))  # 5
+
+# Добавить 5 рабочих дней к пятнице 19.01.2024
+friday = parse_date("19.01.2024")
+result = add_business_days(friday, 5)
+print(result.strftime("%d.%m.%Y"))  # 26.01.2024 (пропустили выходные)
+```
+
+### Задание 2. Работа с collections
+
+Используйте модуль `collections` для решения задач:
+
+**2.1. Counter — подсчёт слов**
+
+```python
+from collections import Counter
+
+def word_frequency(text: str) -> dict:
+    """Возвращает словарь {слово: количество}, топ-10 самых частых."""
+    pass
+
+text = "the quick brown fox jumps over the lazy dog the fox"
+print(word_frequency(text))
+# {'the': 3, 'fox': 2, 'quick': 1, ...}
+```
+
+**2.2. defaultdict — группировка**
+
+```python
+from collections import defaultdict
+
+def group_by_length(words: list) -> dict:
+    """Группирует слова по длине."""
+    pass
+
+words = ["cat", "dog", "elephant", "rat", "lion", "tiger"]
+print(group_by_length(words))
+# {3: ['cat', 'dog', 'rat'], 8: ['elephant'], 4: ['lion'], 5: ['tiger']}
+```
+
+---
+
+## Домашняя работа
+
+### Задание 1. Файловый менеджер (модуль os)
+
+Напишите утилиты для работы с файловой системой:
+
+```python
+import os
+
+def find_files(directory: str, extension: str) -> list:
+    """
+    Рекурсивно находит все файлы с указанным расширением.
+
+    Args:
+        directory: путь к директории
+        extension: расширение файла (например, ".py")
+
+    Returns:
+        Список полных путей к найденным файлам
+    """
+    pass
+
+def get_directory_size(directory: str) -> int:
+    """Возвращает общий размер директории в байтах."""
+    pass
+
+def find_duplicates(directory: str) -> dict:
+    """
+    Находит файлы с одинаковыми именами в разных поддиректориях.
+
+    Returns:
+        Словарь {имя_файла: [список путей]}
+    """
+    pass
+```
+
+```python
+# Пример использования:
+py_files = find_files("/path/to/project", ".py")
+print(f"Найдено {len(py_files)} Python файлов")
+
+size = get_directory_size("/path/to/project")
+print(f"Размер: {size / 1024 / 1024:.2f} MB")
+```
+
+### Задание 2. Генератор паролей (модуль random)
+
+Создайте гибкий генератор паролей:
+
+```python
+import random
+import string
+
+def generate_password(
+    length: int = 12,
+    use_uppercase: bool = True,
+    use_lowercase: bool = True,
+    use_digits: bool = True,
+    use_special: bool = True,
+    exclude_chars: str = "",
+    must_include: str = ""
+) -> str:
+    """
+    Генерирует случайный пароль.
+
+    Args:
+        length: длина пароля
+        use_uppercase: использовать заглавные буквы
+        use_lowercase: использовать строчные буквы
+        use_digits: использовать цифры
+        use_special: использовать спецсимволы
+        exclude_chars: символы, которые нужно исключить
+        must_include: символы, которые обязательно должны быть в пароле
+    """
+    pass
+
+def check_password_strength(password: str) -> str:
+    """
+    Оценивает силу пароля.
+
+    Returns:
+        "weak", "medium", "strong" или "very strong"
+    """
+    pass
+```
+
+```python
+# Пример использования:
+pwd = generate_password(16, use_special=True)
+print(pwd)  # "Kj#9xLm$2pQw&nRt"
+
+print(check_password_strength("123456"))      # weak
+print(check_password_strength("Password1"))   # medium
+print(check_password_strength("Kj#9xLm$2p"))  # very strong
+```
+
+### Задание 3. Комбинаторика (модуль itertools)
+
+Решите задачи с использованием `itertools`:
+
+```python
+import itertools
+
+def all_combinations(items: list, min_size: int = 1, max_size: int = None) -> list:
+    """Возвращает все комбинации элементов от min_size до max_size."""
+    pass
+
+def unique_permutations(items: list) -> list:
+    """Возвращает уникальные перестановки (для списков с повторами)."""
+    pass
+
+def cartesian_product(*iterables) -> list:
+    """Возвращает декартово произведение."""
+    pass
+```
+
+```python
+# Пример использования:
+print(all_combinations([1, 2, 3], 2, 2))
+# [(1, 2), (1, 3), (2, 3)]
+
+print(unique_permutations([1, 1, 2]))
+# [(1, 1, 2), (1, 2, 1), (2, 1, 1)]
+
+print(cartesian_product([1, 2], ['a', 'b']))
+# [(1, 'a'), (1, 'b'), (2, 'a'), (2, 'b')]
+```
+
+**Практическое применение:** Напишите функцию, которая генерирует все возможные комбинации пиццы из списка топпингов (от 1 до 4 топпингов):
+
+```python
+toppings = ["pepperoni", "mushrooms", "olives", "onions", "peppers"]
+pizzas = all_pizza_combinations(toppings, max_toppings=4)
+print(f"Всего вариантов пиццы: {len(pizzas)}")
+```
+
+### Задание 4. Рефакторинг по PEP8
+
+Исправьте следующий код, чтобы он соответствовал PEP8:
+
+```python
+# bad_code.py — исправьте этот код
+
+import sys,os
+from collections import Counter,defaultdict
+import random
+
+def Calculate_Average(numbers_list):
+    """this function calculates average"""
+    if len(numbers_list)==0:return 0
+    total=0
+    for n in numbers_list:total+=n
+    return total/len(numbers_list)
+
+class user_account:
+    def __init__(self,Name,email,Age):
+        self.name=Name;self.email=email;self.age=Age
+    def GetInfo(self):
+        return f"User: {self.name}, Email: {self.email}"
+    def is_adult(self):
+        if self.age>=18:
+            return True
+        else:
+            return False
+
+def   process_data(  data,   flag=True):
+    result=[]
+    for item in data:
+        if flag==True:
+            result.append(item*2)
+        else:
+            result.append(item)
+    return result
+
+x=10
+y=20
+z=x+y
+list1=[1,2,3,4,5]
+dict1={"a":1,"b":2}
+```
+
+**Что нужно исправить:**
+- Импорты (порядок, группировка)
+- Именование (функции, классы, переменные)
+- Пробелы (вокруг операторов, после запятых)
+- Составные инструкции
+- Упрощение условий
+- Добавить docstrings
+
+### Задание 5. ⭐ Создание пакета
+
+Создайте свой Python-пакет `myutils` со следующей структурой:
+
+```
+myutils/
+├── __init__.py
+├── strings/
+│   ├── __init__.py
+│   ├── validators.py    # is_email, is_phone, is_url
+│   └── formatters.py    # to_snake_case, to_camel_case, truncate
+├── numbers/
+│   ├── __init__.py
+│   ├── statistics.py    # mean, median, mode, std_dev
+│   └── converters.py    # to_roman, from_roman, to_binary
+└── files/
+    ├── __init__.py
+    └── utils.py         # read_json, write_json, read_csv, write_csv
+```
+
+**Требования:**
+
+1. Каждый модуль должен иметь docstring
+2. Используйте относительные импорты внутри пакета
+3. В `__init__.py` экспортируйте основные функции для удобного импорта
+4. Добавьте `if __name__ == "__main__"` для тестирования модулей
+
+```python
+# Пример использования после создания пакета:
+from myutils.strings import is_email, to_snake_case
+from myutils.numbers import mean, to_roman
+from myutils import read_json  # Если экспортировано в __init__.py
+
+print(is_email("test@example.com"))  # True
+print(to_snake_case("HelloWorld"))   # hello_world
+print(mean([1, 2, 3, 4, 5]))         # 3.0
+print(to_roman(42))                  # XLII
+```
+
+### Задание 6. Рефакторинг модуля
+
+Возьмите ваш модуль из первого блока курса и разбейте его на логические части:
+
+```
+my_project/
+├── main.py      # Точка входа, основная логика
+├── files.py     # Работа с файлами
+├── utils.py     # Вспомогательные функции
+├── models.py    # Классы данных (если есть)
+└── config.py    # Константы и настройки
+```
+
+**Требования:**
+- Используйте абсолютные импорты
+- Добавьте docstrings ко всем функциям и классам
+- Проверьте код на соответствие PEP8 (можно использовать `flake8` или `pylint`)
+- Добавьте `if __name__ == "__main__"` в `main.py`
