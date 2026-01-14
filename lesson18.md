@@ -113,7 +113,7 @@
 3. **Собственная директория для пакетов**: Все установленные пакеты и зависимости хранятся в отдельной директории, что
    обеспечивает независимость от глобальных пакетов.
 
-### Создание виртуального окружения
+### Что происходит при создании
 
 При создании виртуального окружения происходит следующее:
 
@@ -466,36 +466,115 @@ trusted-host = pypi.org
 - `~/.pip/pip.conf` (для текущего пользователя)
 - в папке проекта под именем `pip.conf` или `pip.ini`
 
+## pyproject.toml — современный стандарт
+
+`pyproject.toml` — это современный стандартный файл конфигурации Python-проектов (PEP 517, 518, 621).
+Он заменяет устаревшие `setup.py`, `setup.cfg` и частично `requirements.txt`.
+
+### Зачем нужен pyproject.toml?
+
+1. **Единый файл конфигурации** — зависимости, метаданные проекта, настройки инструментов (pytest, black, ruff) в одном месте
+2. **Стандартизация** — все современные инструменты (pip, poetry, uv, hatch) понимают этот формат
+3. **Декларативность** — описываете ЧТО нужно, а не КАК это сделать (в отличие от setup.py)
+
+### Пример pyproject.toml
+
+```toml
+[project]
+name = "my-project"
+version = "1.0.0"
+description = "Описание проекта"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "requests>=2.31",
+    "django>=5.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0",
+    "ruff>=0.1",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 100
+```
+
+### Установка зависимостей из pyproject.toml
+
+```bash
+# Установить проект с зависимостями
+python -m pip install .
+
+# Установить с dev-зависимостями
+python -m pip install ".[dev]"
+
+# Или через uv (быстрее)
+uv pip install .
+uv pip install ".[dev]"
+```
+
+### requirements.txt vs pyproject.toml
+
+| Аспект                 | requirements.txt   | pyproject.toml           |
+|------------------------|--------------------|--------------------------|
+| Формат                 | Простой список     | TOML (структурированный) |
+| Метаданные проекта     | Нет                | Да                       |
+| Настройки инструментов | Нет                | Да                       |
+| Группы зависимостей    | Несколько файлов   | В одном файле            |
+| Lock-файл              | Нет (сам является) | Отдельный файл           |
+
+> **Рекомендация:** Для новых проектов используйте `pyproject.toml`. Для простых скриптов и обучения
+> `requirements.txt` по-прежнему удобен.
+
 ## Аналоги pip
 
 Кроме pip, существуют и другие системы управления пакетами для Python:
 
-1. **conda**: Инструмент для управления пакетами и окружениями, используемый в Anaconda и Miniconda. Поддерживает пакеты
-   не только для Python, но и для других языков и системных библиотек.
+1. **uv** ⭐ — самый современный и быстрый инструмент (2026). Написан на Rust, работает в 10-100 раз быстрее pip.
+   Заменяет pip, venv, pyenv, poetry — всё в одном. Подробнее см. раздел "UV — современный менеджер пакетов" ниже.
 
    ```bash
-   conda install имя_пакета
+   uv pip install имя_пакета
+   uv add имя_пакета  # для проектов с pyproject.toml
    ```
 
-2. **poetry**: Современный инструмент для управления зависимостями и упаковки проектов. Poetry включает в себя
-   функциональность для работы с виртуальными окружениями.
+2. **poetry** — популярный инструмент для управления зависимостями и упаковки проектов. Использует `pyproject.toml`
+   и создаёт lock-файлы для воспроизводимых сборок.
 
    ```bash
    poetry add имя_пакета
    ```
 
-3. **pipenv**: Инструмент, объединяющий функциональность pip и virtualenv. Pipenv упрощает создание и управление
-   виртуальными окружениями и зависимостями проекта.
+3. **pip-tools** — набор утилит для работы с requirements. `pip-compile` создаёт lock-файл из `requirements.in`,
+   `pip-sync` синхронизирует окружение с lock-файлом.
+
+   ```bash
+   pip-compile requirements.in  # создаёт requirements.txt с точными версиями
+   pip-sync requirements.txt    # устанавливает ровно то, что в файле
+   ```
+
+4. **conda** — инструмент для управления пакетами и окружениями, используемый в Anaconda и Miniconda. Поддерживает пакеты
+   не только для Python, но и для других языков и системных библиотек. Популярен в Data Science.
+
+   ```bash
+   conda install имя_пакета
+   ```
+
+5. **pipenv** — инструмент, объединяющий pip и virtualenv. Был популярен в 2018-2020, сейчас уступает poetry и uv.
 
    ```bash
    pipenv install имя_пакета
    ```
 
-4. **easy_install**: Устаревший инструмент, который входил в состав setuptools. В настоящее время рекомендуется
-   использовать pip вместо easy_install.
-
-> В реальности используется и `pip`, и `conda`, и `poetry`, и `pipenv`. Чаще я все таки пользовался `pip`, но остальные
-> мне тоже встречались. Если где-то столкнетесь, знайте это просто аналоги `pip`
+> **Что выбрать?**
+> - Для обучения и простых проектов: `pip` + `venv` + `requirements.txt`
+> - Для production-проектов: `uv` или `poetry` с lock-файлами
+> - Для Data Science: `conda`
 
 ## Устанавливаемые модули
 
@@ -616,6 +695,56 @@ except requests.exceptions.HTTPError as err:
 except requests.exceptions.RequestException as err:
     print(f"Error occurred: {err}")
 ```
+
+### httpx — современная альтернатива requests
+
+`httpx` — это современная HTTP-библиотека, которая поддерживает как синхронные, так и асинхронные запросы.
+API очень похож на `requests`, но с дополнительными возможностями.
+
+#### Установка
+
+```bash
+python -m pip install httpx
+```
+
+#### Синхронное использование (как requests)
+
+```python
+import httpx
+
+# Практически идентично requests
+response = httpx.get('https://api.example.com/data')
+print(response.status_code)
+print(response.json())
+
+# POST-запрос
+response = httpx.post('https://api.example.com/login', json={'user': 'test'})
+```
+
+#### Асинхронное использование
+
+```python
+import httpx
+import asyncio
+
+async def fetch_data():
+    async with httpx.AsyncClient() as client:
+        response = await client.get('https://api.example.com/data')
+        return response.json()
+
+# Запуск
+data = asyncio.run(fetch_data())
+```
+
+#### Когда использовать httpx вместо requests?
+
+- Нужна поддержка async/await
+- Нужен HTTP/2
+- Работаете с современным async-фреймворком (FastAPI, Starlette)
+- Хотите единый API для sync и async кода
+
+> **Совет:** Для обучения и простых скриптов `requests` по-прежнему отличный выбор.
+> Для production-проектов с async — выбирайте `httpx`.
 
 ## Просто полезные пакеты
 
@@ -1095,10 +1224,10 @@ setx PATH "%PATH%;%USERPROFILE%\.pyenv\pyenv-win\shims"
 1. **Установка Python:**
 
    ```bash
-   pyenv install 3.9.1
+   pyenv install 3.12.0
    ```
 
-   Эта команда установит Python версии 3.9.1.
+   Эта команда установит Python версии 3.12.0.
 
 2. **Просмотр доступных версий для установки:**
 
@@ -1109,7 +1238,7 @@ setx PATH "%PATH%;%USERPROFILE%\.pyenv\pyenv-win\shims"
 3. **Установка глобальной версии Python:**
 
    ```bash
-   pyenv global 3.9.1
+   pyenv global 3.12.0
    ```
 
    Эта версия будет использоваться по умолчанию.
@@ -1119,7 +1248,7 @@ setx PATH "%PATH%;%USERPROFILE%\.pyenv\pyenv-win\shims"
    Внутри каталога проекта выполните:
 
    ```bash
-   pyenv local 3.8.5
+   pyenv local 3.11.0
    ```
 
    Эта версия будет использоваться только внутри данного проекта.
@@ -1127,7 +1256,7 @@ setx PATH "%PATH%;%USERPROFILE%\.pyenv\pyenv-win\shims"
 5. **Переключение между версиями Python:**
 
    ```bash
-   pyenv shell 3.7.9
+   pyenv shell 3.13.0
    ```
 
    Эта команда переключит версию Python только для текущей сессии оболочки.
@@ -1140,22 +1269,22 @@ setx PATH "%PATH%;%USERPROFILE%\.pyenv\pyenv-win\shims"
 
 ```bash
 # Установка версий Python
-pyenv install 3.8.5
-pyenv install 3.9.1
+pyenv install 3.11.0
+pyenv install 3.12.0
 
 # Установка глобальной версии Python
-pyenv global 3.9.1
+pyenv global 3.12.0
 
 # Проверка текущей версии Python
 python --version
-# Output: Python 3.9.1
+# Output: Python 3.12.0
 
 # Переключение на другую версию Python
-pyenv shell 3.8.5
+pyenv shell 3.11.0
 
 # Проверка текущей версии Python
 python --version
-# Output: Python 3.8.5
+# Output: Python 3.11.0
 ```
 
 #### Пример 2: Локальная версия для проекта
@@ -1168,17 +1297,237 @@ mkdir my_project
 cd my_project
 
 # Установка локальной версии Python для проекта
-pyenv local 3.7.9
+pyenv local 3.12.0
 
 # Проверка текущей версии Python
 python --version
-# Output: Python 3.7.9
+# Output: Python 3.12.0
 ```
 
-## Домашка
+## UV — современный менеджер пакетов
 
-1. Создать виртуальное окружение
-2. Установить там psycopg2
-3. Для обоих ваших модулей, заменить файлы для хранения данных. На базы данных.
+![](https://github.com/astral-sh/uv/raw/main/docs/assets/logo-letter.svg)
+
+`uv` — это сверхбыстрый менеджер пакетов и проектов для Python, написанный на Rust.
+Разработан компанией Astral (создатели линтера Ruff). Выпущен в 2024 году и быстро стал
+стандартом де-факто для современной Python-разработки.
+
+### Почему UV?
+
+1. **Скорость** — в 10-100 раз быстрее pip (установка Django за 0.5 сек вместо 10 сек)
+2. **Всё в одном** — заменяет pip, venv, pyenv, pip-tools, poetry
+3. **Совместимость** — работает с существующими `requirements.txt` и `pyproject.toml`
+4. **Lock-файлы** — автоматическое создание `uv.lock` для воспроизводимых сборок
+5. **Управление Python** — установка любых версий Python без pyenv
+
+### Установка UV
+
+```bash
+# macOS / Linux
+curl -LsSf https://astral.sh/uv/install.sh | sh
+
+# Windows (PowerShell)
+powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"
+
+# Или через pip (если уже есть Python)
+pip install uv
+```
+
+### Основные команды UV
+
+#### Управление виртуальными окружениями
+
+```bash
+# Создать виртуальное окружение
+uv venv
+
+# Создать с конкретной версией Python
+uv venv --python 3.12
+
+# Активация (как обычно)
+source .venv/bin/activate  # macOS/Linux
+.\.venv\Scripts\Activate.ps1  # Windows
+```
+
+#### Установка пакетов (режим совместимости с pip)
+
+```bash
+# Установить пакет
+uv pip install requests
+
+# Установить из requirements.txt
+uv pip install -r requirements.txt
+
+# Заморозить зависимости
+uv pip freeze > requirements.txt
+```
+
+#### Управление проектом (современный подход)
+
+```bash
+# Инициализировать новый проект
+uv init my_project
+cd my_project
+
+# Добавить зависимость (обновляет pyproject.toml и uv.lock)
+uv add requests
+uv add django>=5.0
+
+# Добавить dev-зависимость
+uv add --dev pytest ruff
+
+# Удалить зависимость
+uv remove requests
+
+# Синхронизировать окружение с lock-файлом
+uv sync
+
+# Запустить скрипт в окружении проекта
+uv run python main.py
+uv run pytest
+```
+
+#### Управление версиями Python
+
+```bash
+# Посмотреть доступные версии
+uv python list
+
+# Установить конкретную версию
+uv python install 3.12
+uv python install 3.11 3.13
+
+# Закрепить версию для проекта
+uv python pin 3.12
+```
+
+### Пример: создание проекта с UV
+
+```bash
+# Создаём проект
+uv init my_web_app
+cd my_web_app
+
+# Устанавливаем Python 3.12
+uv python install 3.12
+uv python pin 3.12
+
+# Добавляем зависимости
+uv add django
+uv add requests
+uv add --dev pytest
+
+# Запускаем
+uv run python -c "import django; print(django.VERSION)"
+```
+
+После этих команд у вас будет:
+- `pyproject.toml` — конфигурация проекта
+- `uv.lock` — lock-файл с точными версиями
+- `.python-version` — закреплённая версия Python
+- `.venv/` — виртуальное окружение
+
+### UV vs другие инструменты
+
+| Возможность           | pip + venv     | poetry    | uv           |
+|-----------------------|----------------|-----------|--------------|
+| Скорость              | Медленно       | Средне    | Очень быстро |
+| Виртуальные окружения | venv отдельно  | Встроено  | Встроено     |
+| Lock-файлы            | Нет            | Да        | Да           |
+| Управление Python     | pyenv отдельно | Нет       | Встроено     |
+| pyproject.toml        | Частично       | Да        | Да           |
+| Совместимость с pip   | —              | Частичная | Полная       |
+
+> **Рекомендация:** Для новых проектов используйте `uv`. Для обучения можно начать с `pip + venv`,
+> а затем перейти на `uv` — команды очень похожи.
+
+---
+
+## Практика на занятии
+
+### Задание 1. Настройка окружения
+
+1. Создайте виртуальное окружение для проекта
+2. Активируйте его
+3. Установите пакеты: `requests`, `python-dateutil`
+4. Создайте `requirements.txt`
+5. Деактивируйте окружение
+
+### Задание 2. Работа с requests
+
+Напишите скрипт, который:
+
+```python
+import requests
+
+def get_random_joke() -> dict:
+    """Получает случайную шутку с API."""
+    # Используйте: https://official-joke-api.appspot.com/random_joke
+    pass
+
+def get_weather(city: str) -> dict:
+    """Получает погоду для города (используйте любой бесплатный API)."""
+    pass
+
+if __name__ == "__main__":
+    joke = get_random_joke()
+    print(f"{joke['setup']} — {joke['punchline']}")
+```
+
+---
+
+## Домашняя работа
+
+### Задание 1. Виртуальное окружение и зависимости
+
+1. Создайте новый проект с виртуальным окружением
+2. Установите `psycopg2-binary` и `python-dotenv`
+3. Создайте `requirements.txt` с точными версиями
+4. Добавьте `.venv/` в `.gitignore`
+
+### Задание 2. Миграция на базу данных
+
+Для вашего модуля из первого блока курса:
+1. Замените хранение данных в файлах на PostgreSQL
+2. Используйте `psycopg2` для подключения
+3. Создайте необходимые таблицы
+4. Реализуйте CRUD-операции
+
+### Задание 3. HTTP-клиент
+
+Напишите модуль для работы с публичным API:
+
+```python
+import requests
+
+class APIClient:
+    """Клиент для работы с JSONPlaceholder API."""
+
+    BASE_URL = "https://jsonplaceholder.typicode.com"
+
+    def get_users(self) -> list:
+        """Получает список пользователей."""
+        pass
+
+    def get_user(self, user_id: int) -> dict:
+        """Получает пользователя по ID."""
+        pass
+
+    def get_user_posts(self, user_id: int) -> list:
+        """Получает посты пользователя."""
+        pass
+
+    def create_post(self, user_id: int, title: str, body: str) -> dict:
+        """Создаёт новый пост (POST-запрос)."""
+        pass
+```
+
+### Задание 4. ⭐ Попробуйте UV
+
+1. Установите `uv`
+2. Создайте новый проект: `uv init uv_test`
+3. Добавьте зависимости: `uv add requests httpx`
+4. Сравните скорость установки с pip
+5. Изучите созданные файлы (`pyproject.toml`, `uv.lock`)
 
 > На этом месте мы наконец-то готовы переходить к материалу, ради которого все и затевалось.
