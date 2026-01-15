@@ -95,7 +95,7 @@
 
 ## Class View
 
-[Дока](https://ccbv.co.uk/projects/Django/)
+[Дока](https://docs.djangoproject.com/en/stable/ref/class-based-views/base/#view) | [CCBV](https://ccbv.co.uk/projects/Django/5.2/django.views.generic.base/View/)
 
 Основой всех классов, используемых во `view`, является класс `View`. Методы этого класса используются всеми остальными
 классами.
@@ -172,7 +172,7 @@ path('some-url/', MyView.as_view(), name='some-name')
 
 ## Class TemplateView
 
-[Дока](https://ccbv.co.uk/projects/Django/)
+[Дока](https://docs.djangoproject.com/en/stable/ref/class-based-views/base/#templateview) | [CCBV](https://ccbv.co.uk/projects/Django/5.2/django.views.generic.base/TemplateView/)
 
 Класс, необходимый для рендера html файлов
 
@@ -200,7 +200,7 @@ def get(self, request, *args, **kwargs):
 ```python
 from django.views.generic.base import TemplateView
 
-from articles.models import Article
+from blog.models import Article
 
 
 class HomePageView(TemplateView):
@@ -208,7 +208,9 @@ class HomePageView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['latest_articles'] = Article.objects.all()[:5]
+        context['latest_articles'] = Article.objects.filter(
+            status=Article.Status.PUBLISHED
+        )[:5]
         return context
 ```
 
@@ -220,7 +222,7 @@ class HomePageView(TemplateView):
 ```python
 from django.views.generic.base import TemplateView
 
-from articles.models import Article
+from blog.models import Article
 
 
 class HomePageView(TemplateView):
@@ -230,7 +232,7 @@ class HomePageView(TemplateView):
 
 ## Class RedirectView
 
-[Дока](https://ccbv.co.uk/projects/Django/)
+[Дока](https://docs.djangoproject.com/en/stable/ref/class-based-views/base/#redirectview) | [CCBV](https://ccbv.co.uk/projects/Django/5.2/django.views.generic.base/RedirectView/)
 
 Класс, необходимый для перенаправления запросов с одного URL на другой.
 
@@ -256,14 +258,19 @@ def delete(self, request, *args, **kwargs):
 Как пользоваться
 
 ```python
+from django.views.generic.base import RedirectView
+
+
 class ArticleRedirectView(RedirectView):
-    query_string = True
     pattern_name = 'article-detail'
+    query_string = True  # сохранить query параметры при редиректе
 ```
+
+Этот класс перенаправит запрос на URL с именем `article-detail`, передав все параметры из URL.
 
 ## Class DetailView
 
-[Дока](https://ccbv.co.uk/projects/Django/)
+[Дока](https://docs.djangoproject.com/en/stable/ref/class-based-views/generic-display/#detailview) | [CCBV](https://ccbv.co.uk/projects/Django/5.2/django.views.generic.detail/DetailView/)
 
 Класс, который необходим для того, чтобы сделать страницу для просмотра одного объекта.
 
@@ -278,17 +285,17 @@ class ArticleRedirectView(RedirectView):
 ```python
 from django.views.generic.detail import DetailView
 
-from articles.models import Article
+from blog.models import Article
 
-
-from django.utils import timezone
 
 class ArticleDetailView(DetailView):
     model = Article
+    template_name = 'blog/article_detail.html'
+    context_object_name = 'article'  # вместо стандартного 'object'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['now'] = timezone.now()  # Просто добавляем текущее время к контексту
+        context['comments'] = self.object.comments.all()
         return context
 ```
 
@@ -297,12 +304,16 @@ class ArticleDetailView(DetailView):
 ```python
 from django.urls import path
 
-from articles.views import ArticleDetailView
+from blog.views import ArticleDetailView
 
 urlpatterns = [
-    path('<int:pk>/', ArticleDetailView.as_view(), name='article-detail'),
+    path('article/<int:pk>/', ArticleDetailView.as_view(), name='article-detail'),
+    # Или по slug:
+    path('article/<slug:slug>/', ArticleDetailView.as_view(), name='article-detail'),
 ]
 ```
+
+> При использовании `slug` вместо `pk` нужно указать `slug_field` и `slug_url_kwarg` в классе, если имя поля отличается от `slug`.
 
 Этого уже достаточно, чтобы отрисовать страницу деталей объекта. Если `template_name` не указан явно, то Django будет
 пытаться отобразить `templates/app_name/model_detail.html`, где `app_name` - название приложения, `model` - название
@@ -314,9 +325,12 @@ urlpatterns = [
 
 ```python
 pk_url_kwarg = 'pk'  # Как переменная называется в urls.py, например, `<int:my_id>`
-queryset = None  # если указан, то возможность ограничить доступ только для части объектов (например, убрать из возможности обновления деактивированные объекты).
-template_name = None  # указать имя шаблона.
-model = None  # класс модели, если не указан queryset, сгенерирует queryset из модели.
+slug_field = 'slug'  # Имя поля модели для поиска по slug
+slug_url_kwarg = 'slug'  # Имя параметра в URL для slug
+context_object_name = None  # Имя переменной в контексте (по умолчанию 'object')
+queryset = None  # Ограничить доступ только для части объектов
+template_name = None  # Указать имя шаблона
+model = None  # Класс модели, если не указан queryset
 ```
 
 Важные методы:
@@ -329,7 +343,7 @@ model = None  # класс модели, если не указан queryset, с
 
 ## Class ListView
 
-[Дока](https://ccbv.co.uk/projects/Django/)
+[Дока](https://docs.djangoproject.com/en/stable/ref/class-based-views/generic-display/#listview) | [CCBV](https://ccbv.co.uk/projects/Django/5.2/django.views.generic.list/ListView/)
 
 Класс, необходимый для отображения списка объектов.
 
@@ -338,10 +352,19 @@ model = None  # класс модели, если не указан queryset, с
 Как пользоваться?
 
 ```python
-class CommentListView(ListView):
+from django.views.generic import ListView
+from blog.models import Article
+
+
+class ArticleListView(ListView):
+    model = Article
+    template_name = 'blog/article_list.html'
+    context_object_name = 'articles'
     paginate_by = 10
-    template_name = 'comments_list.html'
-    queryset = Comment.objects.filter(parent__isnull=True)
+
+    def get_queryset(self):
+        # Показываем только опубликованные статьи
+        return Article.objects.filter(status=Article.Status.PUBLISHED)
 ```
 
 ### Пагинация
@@ -397,9 +420,24 @@ ordering = None  # явно указать порядок сортировки
 
 `get_allow_empty()` - определяет логику получения переменной allow_empty
 
+### Фильтрация по текущему пользователю
+
+Частый паттерн — показывать только объекты текущего пользователя:
+
+```python
+class MyArticlesListView(LoginRequiredMixin, ListView):
+    model = Article
+    template_name = 'blog/my_articles.html'
+    context_object_name = 'articles'
+
+    def get_queryset(self):
+        # Показываем только статьи текущего пользователя
+        return Article.objects.filter(author=self.request.user)
+```
+
 ## Class FormView
 
-[Дока](https://ccbv.co.uk/projects/Django/)
+[Дока](https://docs.djangoproject.com/en/stable/ref/class-based-views/generic-editing/#formview) | [CCBV](https://ccbv.co.uk/projects/Django/5.2/django.views.generic.edit/FormView/)
 
 Не все классы предназначены только для чтения данных.
 
@@ -494,7 +532,7 @@ def post(self, request, *args, **kwargs):
 
 ## Class CreateView
 
-[Дока](https://ccbv.co.uk/projects/Django/)
+[Дока](https://docs.djangoproject.com/en/stable/ref/class-based-views/generic-editing/#createview) | [CCBV](https://ccbv.co.uk/projects/Django/5.2/django.views.generic.edit/CreateView/)
 
 Класс для создания объектов.
 
@@ -503,27 +541,37 @@ def post(self, request, *args, **kwargs):
 Во `views.py`
 
 ```python
+from django.urls import reverse_lazy
 from django.views.generic.edit import CreateView
-from myapp.models import Author
+from django.contrib.auth.mixins import LoginRequiredMixin
+
+from blog.models import Article
+from blog.forms import ArticleForm
 
 
-class AuthorCreate(CreateView):
-    template_name = 'author_create.html'
-    model = Author
-    fields = ['name']
+class ArticleCreateView(LoginRequiredMixin, CreateView):
+    model = Article
+    form_class = ArticleForm
+    template_name = 'blog/article_form.html'
+    success_url = reverse_lazy('article-list')
+
+    def form_valid(self, form):
+        form.instance.author = self.request.user  # Устанавливаем автора
+        return super().form_valid(form)
 ```
 
-В `author_create.html`:
+В `blog/article_form.html`:
 
 ```html
-
 <form method="post">{% csrf_token %}
     {{ form.as_p }}
-    <input type="submit" value="Save">
+    <input type="submit" value="Сохранить">
 </form>
 ```
 
 > В класс нужно передать либо ModelForm, либо модель и поля, чтобы класс сам сгенерировал такую форму.
+
+> **Почему `reverse_lazy`, а не `reverse`?** Атрибуты класса вычисляются при загрузке модуля, когда URL-конфигурация ещё не загружена. `reverse_lazy` откладывает вычисление URL до момента использования.
 
 Метод `get()` откроет страницу, на которой будет переменная `form`, как и другие view, к которым добавляется форма.
 
@@ -548,41 +596,75 @@ fields = None  # Поля модели, если не указана форма
 
 `form_valid()` - дополнительно выполнит такую строку `self.object = form.save()`
 
-# Class UpdateView
+`get_success_url()` - переопределить URL для редиректа после успешного сохранения
 
-[Дока](https://ccbv.co.uk/projects/Django/)
+### Динамический success_url
+
+Часто после создания объекта нужно перейти на его страницу. Для этого переопределяем `get_success_url()`:
+
+```python
+from django.urls import reverse
+
+
+class ArticleCreateView(LoginRequiredMixin, CreateView):
+    model = Article
+    form_class = ArticleForm
+
+    def form_valid(self, form):
+        form.instance.author = self.request.user
+        return super().form_valid(form)
+
+    def get_success_url(self):
+        # self.object доступен после form_valid()
+        return reverse('article-detail', kwargs={'pk': self.object.pk})
+```
+
+> Здесь используется `reverse()`, а не `reverse_lazy()`, потому что метод вызывается во время обработки запроса, когда URL-конфигурация уже загружена.
+
+## Class UpdateView
+
+[Дока](https://docs.djangoproject.com/en/stable/ref/class-based-views/generic-editing/#updateview) | [CCBV](https://ccbv.co.uk/projects/Django/5.2/django.views.generic.edit/UpdateView/)
 
 Класс для обновления объекта. Как пользоваться?
 
 Во `views.py`:
 
 ```python
+from django.urls import reverse_lazy
 from django.views.generic.edit import UpdateView
-from myapp.models import Author
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+
+from blog.models import Article
+from blog.forms import ArticleForm
 
 
-class AuthorUpdate(UpdateView):
-    model = Author
-    fields = ['name']
-    template_name_suffix = '_update_form'
+class ArticleUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
+    model = Article
+    form_class = ArticleForm
+    template_name = 'blog/article_form.html'
+    success_url = reverse_lazy('article-list')
+
+    def test_func(self):
+        # Только автор может редактировать статью
+        article = self.get_object()
+        return self.request.user == article.author
 ```
 
-В `myapp/author_update_form.html`:
+В `blog/article_form.html` (тот же шаблон, что и для CreateView):
 
 ```html
-
 <form method="post">{% csrf_token %}
     {{ form.as_p }}
-    <input type="submit" value="Update">
+    <input type="submit" value="Сохранить">
 </form>
 ```
 
 Методы и атрибуты почти полностью совпадают с CreateView, только UpdateView перед действиями вызывает
-метод `get_object()` для получения нужного объекта, и url должен принимать `pk` для определения этого объекта.
+метод `get_object()` для получения нужного объекта, и url должен принимать `pk` (или `slug`) для определения этого объекта.
 
 ## Class DeleteView
 
-[Дока](https://ccbv.co.uk/projects/Django/)
+[Дока](https://docs.djangoproject.com/en/stable/ref/class-based-views/generic-editing/#deleteview) | [CCBV](https://ccbv.co.uk/projects/Django/5.2/django.views.generic.edit/DeleteView/)
 
 Класс для удаления объектов.
 
@@ -593,30 +675,36 @@ class AuthorUpdate(UpdateView):
 ```python
 from django.urls import reverse_lazy
 from django.views.generic.edit import DeleteView
-from myapp.models import Author
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+
+from blog.models import Article
 
 
-class AuthorDelete(DeleteView):
-    model = Author
-    success_url = reverse_lazy('author-list')
+class ArticleDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
+    model = Article
+    template_name = 'blog/article_confirm_delete.html'
+    success_url = reverse_lazy('article-list')
+
+    def test_func(self):
+        article = self.get_object()
+        return self.request.user == article.author
 ```
 
-В html:
+В `blog/article_confirm_delete.html`:
 
 ```html
-
 <form method="post">{% csrf_token %}
-    <p>Are you sure you want to delete "{{ object }}"?</p>
-    <input type="submit" value="Confirm">
+    <p>Вы уверены, что хотите удалить "{{ object.title }}"?</p>
+    <input type="submit" value="Удалить">
+    <a href="{% url 'article-list' %}">Отмена</a>
 </form>
 ```
 
-Не принимает форму! Принимает модель или queryset и обязательно url, должен принимать идентификатор для определения
-объекта.
+Не принимает форму! Принимает модель или queryset и обязательно `success_url`. URL должен принимать идентификатор для определения объекта.
 
 ## Class LoginView
 
-[Дока](https://ccbv.co.uk/projects/Django/)
+[Дока](https://docs.djangoproject.com/en/stable/topics/auth/default/#django.contrib.auth.views.LoginView) | [CCBV](https://ccbv.co.uk/projects/Django/5.2/django.contrib.auth.views/LoginView/)
 
 Класс, реализующий логику логина.
 
@@ -638,7 +726,7 @@ def form_valid(self, form):
 
 ## Class LogoutView
 
-[Дока](https://ccbv.co.uk/projects/Django/)
+[Дока](https://docs.djangoproject.com/en/stable/topics/auth/default/#django.contrib.auth.views.LogoutView) | [CCBV](https://ccbv.co.uk/projects/Django/5.2/django.contrib.auth.views/LogoutView/)
 
 Класс для логаута.
 
@@ -696,8 +784,7 @@ class UserCreationForm(forms.ModelForm):
 какие пользователи могут просматривать или изменять определенные ресурсы. Django предоставляет несколько встроенных
 инструментов для управления доступом, таких как декораторы, пермишены и миксины.
 
-> Пермишены и группы мы отдельно рассматривать не будем. Но вы можете сделать это самостоятельно по
-> вот [этой](https://docs.djangoproject.com/en/stable/topics/auth/default/#permissions-and-authorization) ссылке
+> Пермишены и группы подробно рассмотрены в [лекции 23](lesson23.md#система-разрешений-permissions). Здесь мы сосредоточимся на миксинах для CBV.
 
 ### Управление доступом с использованием декораторов
 
@@ -713,13 +800,14 @@ class UserCreationForm(forms.ModelForm):
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.views.generic import ListView
-from .models import Post
+
+from blog.models import Article
 
 
 @method_decorator(login_required, name='dispatch')
-class PostListView(ListView):
-    model = Post
-    template_name = 'post_list.html'
+class ArticleListView(ListView):
+    model = Article
+    template_name = 'blog/article_list.html'
 ```
 
 Здесь `@method_decorator` оборачивает метод `dispatch`, который вызывается при каждом запросе. Это гарантирует, что
@@ -739,12 +827,13 @@ Django предоставляет несколько миксинов для у�
 ```python
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import DetailView
-from .models import Post
+
+from blog.models import Article
 
 
-class PostDetailView(LoginRequiredMixin, DetailView):
-    model = Post
-    template_name = 'post_detail.html'
+class ArticleDetailView(LoginRequiredMixin, DetailView):
+    model = Article
+    template_name = 'blog/article_detail.html'
 ```
 
 Если вам нужно указать, куда именно должен происходить редирект, вы можете указать это специальным атрибутом:
@@ -752,16 +841,17 @@ class PostDetailView(LoginRequiredMixin, DetailView):
 ```python
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import DetailView
-from .models import Post
+
+from blog.models import Article
 
 
-class PostDetailView(LoginRequiredMixin, DetailView):
-    model = Post
-    template_name = 'post_detail.html'
+class ArticleDetailView(LoginRequiredMixin, DetailView):
+    model = Article
+    template_name = 'blog/article_detail.html'
     login_url = '/login/'
 ```
 
-В данном примере `PostDetailView` будет доступен только для авторизованных пользователей. Если пользователь не
+В данном примере `ArticleDetailView` будет доступен только для авторизованных пользователей. Если пользователь не
 авторизован, он будет перенаправлен на страницу входа.
 
 #### UserPassesTestMixin
@@ -772,22 +862,24 @@ class PostDetailView(LoginRequiredMixin, DetailView):
 #### Пример:
 
 ```python
+from django.urls import reverse_lazy
 from django.contrib.auth.mixins import UserPassesTestMixin
 from django.views.generic import DeleteView
-from .models import Post
+
+from blog.models import Article
 
 
-class PostDeleteView(UserPassesTestMixin, DeleteView):
-    model = Post
-    template_name = 'post_confirm_delete.html'
-    success_url = '/'
+class ArticleDeleteView(UserPassesTestMixin, DeleteView):
+    model = Article
+    template_name = 'blog/article_confirm_delete.html'
+    success_url = reverse_lazy('article-list')
 
     def test_func(self) -> bool:
-        post = self.get_object()
-        return self.request.user == post.author
+        article = self.get_object()
+        return self.request.user == article.author
 ```
 
-Здесь пользователь сможет удалить пост только в том случае, если он является его автором.
+Здесь пользователь сможет удалить статью только в том случае, если он является её автором.
 
 ### Комбинирование миксинов
 
@@ -797,20 +889,44 @@ class PostDeleteView(UserPassesTestMixin, DeleteView):
 #### Пример:
 
 ```python
-from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.views.generic import UpdateView
+
+from blog.models import Article
+from blog.forms import ArticleForm
 
 
-class PostManageView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
-    model = Post
-    template_name = 'post_manage.html'
-    fields = ['title', 'content']
+class ArticleUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
+    model = Article
+    form_class = ArticleForm
+    template_name = 'blog/article_form.html'
 
     def test_func(self) -> bool:
-        post = self.get_object()
-        return self.request.user == post.author
+        article = self.get_object()
+        return self.request.user == article.author
 ```
 
-В этом примере `PostManageView` требует как авторизации, так и пользователь должен являться автором поста.
+В этом примере `ArticleUpdateView` требует как авторизации, так и пользователь должен являться автором статьи.
+
+#### PermissionRequiredMixin
+
+Для проверки разрешений (permissions) используется `PermissionRequiredMixin`:
+
+```python
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
+from django.views.generic import CreateView
+
+from blog.models import Article
+from blog.forms import ArticleForm
+
+
+class ArticlePublishView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
+    model = Article
+    fields = ['status']
+    permission_required = 'blog.publish_article'  # Требуется право publish_article
+    # Можно указать несколько разрешений:
+    # permission_required = ['blog.change_article', 'blog.publish_article']
+```
 
 ### Обработка отказа в доступе
 
@@ -1154,16 +1270,22 @@ class NoteCreateView(LoginRequiredMixin, CreateView):
 
 Создание готово.
 
-Как добавить удаление? Создадим новую DeleteView, она даже не требует форму.
+Как добавить удаление? Создадим новую DeleteView, она даже не требует форму. Важно добавить проверку, что пользователь может удалять только свои заметки:
 
 Во views.py
 
 ```python
 from django.urls import reverse_lazy
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 
-class NoteDeleteView(LoginRequiredMixin, DeleteView):
+
+class NoteDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Note
     success_url = reverse_lazy('index')
+
+    def test_func(self):
+        note = self.get_object()
+        return self.request.user == note.author
 ```
 
 Не забываем добавить URL
@@ -1230,10 +1352,10 @@ urlpatterns = [
     <div>
         {{ obj.text }} from {{ obj.author.username }}
         {% if obj.author == request.user %}
-        <form method="post" action="{% url 'note-delete' obj.pk %}">
-            {% csrf_token %}
-            <input type="submit" value="Delete">
-        </form>
+            <form method="post" action="{% url 'note-delete' obj.pk %}">
+                {% csrf_token %}
+                <input type="submit" value="Delete">
+            </form>
         {% endif %}
     </div>
     {% endfor %}
