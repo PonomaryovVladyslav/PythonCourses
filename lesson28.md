@@ -170,30 +170,30 @@ REST_FRAMEWORK = {
 Документация: https://www.django-rest-framework.org/api-guide/views/#api_view
 
 Для описания `endpoint` функционально нужно указать декоратор `api_view` и методы, которые он может принимать.
-Возвращает всё также объект ответа. Для использования возьмем модель `Book` и сериалайзер `BookSerializer`, из
-последнего примера прошлой лекции
+Возвращает всё также объект ответа. Для использования возьмём модель `Article` и сериалайзер `ArticleSerializer` из нашего блога:
 
 ```python
 from django.shortcuts import get_object_or_404
 from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from myapp.models import Book
-from myapp.serializers import BookSerializer
+from blog.models import Article
+from blog.serializers import ArticleSerializer
 
 
 @api_view(['GET', 'POST'])
-def book_list(request):
+def article_list(request):
     """
-    List all books, or create a new book.
+    Список всех статей или создание новой статьи.
     """
     if request.method == 'GET':
-        books = Book.objects.all()
-        serializer = BookSerializer(books, many=True)
+        # Показываем только опубликованные статьи
+        articles = Article.objects.filter(status='published')
+        serializer = ArticleSerializer(articles, many=True)
         return Response(serializer.data)
 
     elif request.method == 'POST':
-        serializer = BookSerializer(data=request.data)
+        serializer = ArticleSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         serializer.save()
         return Response(serializer.data, status=status.HTTP_201_CREATED)
@@ -209,35 +209,35 @@ def book_list(request):
 from django.shortcuts import get_object_or_404
 
 @api_view(['GET', 'PUT', 'DELETE'])
-def book_detail(request, pk):
+def article_detail(request, pk):
     """
-    Retrieve, update or delete a book.
+    Получение, обновление или удаление статьи.
     """
-    book = get_object_or_404(Book, pk=pk)
+    article = get_object_or_404(Article, pk=pk)
 
     if request.method == 'GET':
-        serializer = BookSerializer(book)
+        serializer = ArticleSerializer(article)
         return Response(serializer.data)
 
     elif request.method == 'PUT':
-        serializer = BookSerializer(book, data=request.data)
+        serializer = ArticleSerializer(article, data=request.data)
         serializer.is_valid(raise_exception=True)
         serializer.save()
         return Response(serializer.data)
 
     elif request.method == 'DELETE':
-        book.delete()
+        article.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 ```
 
-URL для таких методов описываются точно так же, как и для стандартной Django вью.
+URL для таких методов описываются точно так же, как и для стандартной Django вью:
 
 ```python
-from myapp.views import book_list, book_detail
+from blog.views import article_list, article_detail
 
 urlpatterns = [
-    path('books/', book_list),
-    path('books/<int:pk>/', book_detail),
+    path('articles/', article_list),
+    path('articles/<int:pk>/', article_detail),
 ]
 ```
 
@@ -245,15 +245,19 @@ urlpatterns = [
 
 ```json
 [
-  {
-      "title": "Harry Potter and the Philosopher's Stone",
-      "published_date": "1997-06-26",
-      "id": 1
+    {
+        "id": 1,
+        "title": "Введение в Django REST Framework",
+        "slug": "intro-to-drf",
+        "status": "published",
+        "created_at": "2024-01-15T10:30:00Z"
     },
     {
-      "title": "Harry Potter and the Chamber of Secrets",
-      "published_date": "1998-07-02",
-      "id": 2
+        "id": 2,
+        "title": "Продвинутые сериализаторы",
+        "slug": "advanced-serializers",
+        "status": "published",
+        "created_at": "2024-01-16T14:20:00Z"
     }
 ]
 ```
@@ -264,9 +268,11 @@ urlpatterns = [
 
 ```json
 {
-   "title": "test title",
-   "published_date": "1998-07-02",
-   "id": 3
+    "id": 3,
+    "title": "Новая статья",
+    "slug": "new-article",
+    "status": "draft",
+    "created_at": "2024-01-17T09:00:00Z"
 }
 ```
 
@@ -289,27 +295,26 @@ urlpatterns = [
 Также мы можем описать это же через Class-Based View, для этого нам нужно наследоваться от APIView:
 
 ```python
-from myapp.models import Book
-from myapp.serializers import BookSerializer
+from blog.models import Article
+from blog.serializers import ArticleSerializer
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
-
 from django.shortcuts import get_object_or_404
 
 
-class BookList(APIView):
+class ArticleListAPIView(APIView):
     """
-    List all books, or create a new book.
+    Список всех статей или создание новой.
     """
 
     def get(self, request, format=None):
-        books = Book.objects.all()
-        serializer = BookSerializer(books, many=True)
+        articles = Article.objects.filter(status='published')
+        serializer = ArticleSerializer(articles, many=True)
         return Response(serializer.data)
 
     def post(self, request, format=None):
-        serializer = BookSerializer(data=request.data)
+        serializer = ArticleSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         serializer.save()
         return Response(serializer.data, status=status.HTTP_201_CREATED)
@@ -320,29 +325,29 @@ class BookList(APIView):
 ```python
 from django.shortcuts import get_object_or_404
 
-class BookDetail(APIView):
+class ArticleDetailAPIView(APIView):
     """
-    Retrieve, update or delete a book instance.
+    Получение, обновление или удаление статьи.
     """
 
     def get_object(self, pk):
-        return get_object_or_404(Book, pk=pk)
+        return get_object_or_404(Article, pk=pk)
 
     def get(self, request, pk, format=None):
-        book = self.get_object(pk)
-        serializer = BookSerializer(book)
+        article = self.get_object(pk)
+        serializer = ArticleSerializer(article)
         return Response(serializer.data)
 
     def put(self, request, pk, format=None):
-        book = self.get_object(pk)
-        serializer = BookSerializer(book, data=request.data)
+        article = self.get_object(pk)
+        serializer = ArticleSerializer(article, data=request.data)
         serializer.is_valid(raise_exception=True)
         serializer.save()
         return Response(serializer.data)
 
     def delete(self, request, pk, format=None):
-        book = self.get_object(pk)
-        book.delete()
+        article = self.get_object(pk)
+        article.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 ```
 
@@ -350,8 +355,8 @@ URL описываются так же, как и для Django Class-Based View
 
 ```python
 urlpatterns = [
-    path('books/', BookList.as_view()),
-    path('books/<int:pk>/', BookDetail.as_view()),
+    path('articles/', ArticleListAPIView.as_view()),
+    path('articles/<int:pk>/', ArticleDetailAPIView.as_view()),
 ]
 ```
 
@@ -665,19 +670,43 @@ class RetrieveUpdateDestroyAPIView(mixins.RetrieveModelMixin,
         return self.destroy(request, *args, **kwargs)
 ```
 
-Допустим, мы хотим описать класс при GET запросе получение списка комментариев, в которых есть буква `w`, если у нас уже
-есть сериалайзер и модель, а при POST создание комментария.
+Допустим, мы хотим описать класс для получения списка комментариев к конкретной статье и создания новых комментариев:
 
 ```python
-class CommentListView(ListCreateAPIView):
-    queryset = Comment.objects.all()
+from rest_framework.generics import ListCreateAPIView
+from blog.models import Comment
+from blog.serializers import CommentSerializer
+
+
+class ArticleCommentListView(ListCreateAPIView):
+    """
+    Список комментариев к статье и создание нового комментария.
+    """
     serializer_class = CommentSerializer
 
     def get_queryset(self):
-        return super().get_queryset().filter(text__icontains='w')
+        # Фильтруем комментарии по статье из URL
+        article_pk = self.kwargs['article_pk']
+        return Comment.objects.filter(article_id=article_pk)
+
+    def perform_create(self, serializer):
+        # Автоматически привязываем комментарий к статье и автору
+        article_pk = self.kwargs['article_pk']
+        serializer.save(
+            article_id=article_pk,
+            author=self.request.user
+        )
 ```
 
-Всё, этого достаточно.
+URL для такого представления:
+
+```python
+urlpatterns = [
+    path('articles/<int:article_pk>/comments/', ArticleCommentListView.as_view()),
+]
+```
+
+Всё, этого достаточно для полноценного CRUD комментариев к статье!
 
 ## ViewSet
 
@@ -741,60 +770,92 @@ user_detail = UserViewSet.as_view({'get': 'retrieve'})
 выполнять любые CRUD действия. Мы можем их переопределить, или дописать еще экшенов, всё что нам может быть необходимо
 уже есть.
 
-Пример:
+### Пример ArticleViewSet
 
 ```python
-class AccountViewSet(viewsets.ModelViewSet):
-    """
-    A simple ViewSet for viewing and editing accounts.
-    """
-    queryset = Account.objects.all()
-    serializer_class = AccountSerializer
+from rest_framework import viewsets
+from blog.models import Article
+from blog.serializers import ArticleSerializer, ArticleListSerializer
 
+
+class ArticleViewSet(viewsets.ModelViewSet):
+    """
+    ViewSet для полного CRUD статей блога.
+    """
+    queryset = Article.objects.all()
+    serializer_class = ArticleSerializer
+    lookup_field = 'pk'  # можно использовать 'slug' для красивых URL
 ```
 
-Per-action поведение (разные сериалайзеры для разных действий):
+Этот простой класс уже предоставляет все CRUD операции:
+- `GET /articles/` — список статей
+- `POST /articles/` — создание статьи
+- `GET /articles/{pk}/` — детали статьи
+- `PUT /articles/{pk}/` — полное обновление
+- `PATCH /articles/{pk}/` — частичное обновление
+- `DELETE /articles/{pk}/` — удаление
+
+### Per-action поведение
+
+Разные сериалайзеры для разных действий:
+
 ```python
+class ArticleViewSet(viewsets.ModelViewSet):
+    queryset = Article.objects.all()
 
-
-class AccountViewSet(viewsets.ModelViewSet):
-    ...
     def get_serializer_class(self):
-        return PasswordSerializer if self.action == "set_password" else AccountSerializer
-
-
+        if self.action == 'list':
+            return ArticleListSerializer  # Краткая информация
+        return ArticleSerializer  # Полная информация
 ```
 
-Или если необходим такой же вьюсет только для получения объектов, то:
+### ReadOnlyModelViewSet
+
+Для ресурсов, которые можно только читать (например, темы блога):
 
 ```python
-class AccountViewSet(viewsets.ReadOnlyModelViewSet):
+from blog.models import Topic
+from blog.serializers import TopicSerializer
+
+
+class TopicViewSet(viewsets.ReadOnlyModelViewSet):
     """
-    A simple ViewSet for viewing accounts.
+    ViewSet только для чтения тем блога.
+    Доступны только list и retrieve.
     """
-    queryset = Account.objects.all()
-    serializer_class = AccountSerializer
+    queryset = Topic.objects.all()
+    serializer_class = TopicSerializer
+    lookup_field = 'slug'
 ```
 
-На самом деле, можно собрать такой же вьюсет для любых действий, добавляя и убирая миксины.
+### Кастомный ViewSet из миксинов
 
-Например:
+Можно собрать ViewSet для любых действий, комбинируя миксины:
 
 ```python
-from rest_framework import mixins
+from rest_framework import mixins, viewsets
 
 
-class CreateListRetrieveViewSet(mixins.CreateModelMixin,
-                                mixins.ListModelMixin,
-                                mixins.RetrieveModelMixin,
-                                viewsets.GenericViewSet):
+class CreateListRetrieveViewSet(
+    mixins.CreateModelMixin,
+    mixins.ListModelMixin,
+    mixins.RetrieveModelMixin,
+    viewsets.GenericViewSet
+):
     """
-    A viewset that provides `retrieve`, `create`, and `list` actions.
-
-    To use it, override the class and set the `.queryset` and
-    `.serializer_class` attributes.
+    ViewSet с операциями create, list и retrieve.
+    Без update и delete.
     """
     pass
+
+
+# Использование
+class CommentViewSet(CreateListRetrieveViewSet):
+    """
+    Комментарии можно создавать и читать, но не редактировать/удалять.
+    """
+    queryset = Comment.objects.all()
+    serializer_class = CommentSerializer
 ```
 
 Чаще всего используются обычные `ModelViewSet`.
@@ -858,53 +919,105 @@ class BillingRecordsView(generics.ListAPIView):
 
 Документация: https://www.django-rest-framework.org/api-guide/viewsets/#marking-extra-actions-for-routing
 
-Что делать, если вам нужно дополнительное действие, связанное с деталями вашей вью, но ни один из крудов не походит? Тут
+Что делать, если вам нужно дополнительное действие, связанное с деталями вашей вью, но ни один из CRUD не подходит? Тут
 можно использовать декоратор `@action`, чтобы описать новое действие в этом же вьюсете.
 
+### Пример: публикация и архивирование статей
+
 ```python
-from django.contrib.auth.models import User
 from rest_framework import status, viewsets
 from rest_framework.decorators import action
 from rest_framework.response import Response
-from myapp.serializers import UserSerializer, PasswordSerializer
+from blog.models import Article
+from blog.serializers import ArticleSerializer
 
 
-class UserViewSet(viewsets.ModelViewSet):
+class ArticleViewSet(viewsets.ModelViewSet):
     """
-    A viewset that provides the standard actions
+    ViewSet для статей с дополнительными действиями.
     """
-    queryset = User.objects.all()
-    serializer_class = UserSerializer
+    queryset = Article.objects.all()
+    serializer_class = ArticleSerializer
 
     @action(detail=True, methods=['post'])
-    def set_password(self, request, pk=None):
-        user = self.get_object()
-        serializer = PasswordSerializer(data=request.data)
-        if serializer.is_valid():
-            user.set_password(serializer.data['password'])
-            user.save()
-            return Response({'status': 'password set'})
-        else:
-            return Response(serializer.errors,
-                            status=status.HTTP_400_BAD_REQUEST)
+    def publish(self, request, pk=None):
+        """
+        Публикация статьи: POST /articles/{pk}/publish/
+        """
+        article = self.get_object()
 
-    @action(detail=False)
-    def recent_users(self, request):
-        recent_users = self.get_queryset().order_by('-last_login')
+        if article.status == 'published':
+            return Response(
+                {'error': 'Статья уже опубликована'},
+                status=status.HTTP_400_BAD_REQUEST
+            )
 
-        page = self.paginate_queryset(recent_users)
+        article.status = 'published'
+        article.save()
+
+        serializer = self.get_serializer(article)
+        return Response(serializer.data)
+
+    @action(detail=True, methods=['post'])
+    def archive(self, request, pk=None):
+        """
+        Архивирование статьи: POST /articles/{pk}/archive/
+        """
+        article = self.get_object()
+        article.status = 'archived'
+        article.save()
+
+        return Response({'status': 'Статья архивирована'})
+
+    @action(detail=False, methods=['get'])
+    def published(self, request):
+        """
+        Список опубликованных статей: GET /articles/published/
+        """
+        published = self.get_queryset().filter(status='published')
+
+        page = self.paginate_queryset(published)
         if page is not None:
             serializer = self.get_serializer(page, many=True)
             return self.get_paginated_response(serializer.data)
 
-        serializer = self.get_serializer(recent_users, many=True)
+        serializer = self.get_serializer(published, many=True)
+        return Response(serializer.data)
+
+    @action(detail=False, methods=['get'])
+    def my_articles(self, request):
+        """
+        Статьи текущего пользователя: GET /articles/my_articles/
+        """
+        my_articles = self.get_queryset().filter(author=request.user)
+        serializer = self.get_serializer(my_articles, many=True)
         return Response(serializer.data)
 ```
 
-Принимает два основных параметра: `detail` описывает должен ли этот action принимать PK (действие над всеми объектами
-или над одним конкретным), и `methods` - список HTTP методов, на которые должен срабатывать `action`.
+### Параметры @action
 
-Есть и другие параметры.
+| Параметр | Описание |
+|----------|----------|
+| `detail` | `True` — действие над одним объектом (требует pk), `False` — над коллекцией |
+| `methods` | Список HTTP методов: `['get']`, `['post']`, `['get', 'post']` |
+| `url_path` | Кастомный путь URL (по умолчанию — имя метода) |
+| `url_name` | Кастомное имя URL для `reverse()` |
+| `permission_classes` | Отдельные permissions для этого action |
+| `serializer_class` | Отдельный сериализатор для этого action |
+
+Пример с кастомным URL:
+
+```python
+@action(detail=True, methods=['post'], url_path='set-featured')
+def set_featured(self, request, pk=None):
+    """
+    URL будет: POST /articles/{pk}/set-featured/
+    """
+    article = self.get_object()
+    article.is_featured = True
+    article.save()
+    return Response({'status': 'Статья добавлена в избранное'})
+```
 
 ## Роутеры
 
@@ -912,73 +1025,358 @@ class UserViewSet(viewsets.ModelViewSet):
 
 Роутер — это автоматический генератор URL для вьюсетов.
 
+### Базовый пример для блога
+
 ```python
 from rest_framework import routers
-
-router = routers.SimpleRouter()
-router.register(r'users', UserViewSet)
-router.register(r'accounts', AccountViewSet)
-urlpatterns = router.urls
-```
-
-
-Для API root используйте DefaultRouter:
-```python
-from rest_framework import routers
-router = routers.DefaultRouter()  # API root at /
-router.register("users", UserViewSet)
-urlpatterns = router.urls
-```
-
-Если у ViewSet нет queryset, укажите basename:
-```python
-class ReportViewSet(viewsets.ViewSet):
-    ...
+from blog.views import ArticleViewSet, TopicViewSet, CommentViewSet
 
 router = routers.DefaultRouter()
-router.register("reports", ReportViewSet, basename="report")
+router.register('articles', ArticleViewSet)
+router.register('topics', TopicViewSet)
+router.register('comments', CommentViewSet)
+
+urlpatterns = router.urls
 ```
 
-В методе `register` принимает два параметра: на каком слове основывать URL и для какого вьюсета.
+### SimpleRouter vs DefaultRouter
 
-Если у вьюсета нет параметра `queryset`, то нужно указать поле `basename`, если нет, то автоматически будет использовано
-имя модели маленькими буквами.
-
-URL будут сгенерированы автоматически, и им будут автоматически присвоены имена:
-
-```
-URL pattern: ^users/$ Name: 'user-list'
-URL pattern: ^users/{pk}/$ Name: 'user-detail'
-URL pattern: ^accounts/$ Name: 'account-list'
-URL pattern: ^accounts/{pk}/$ Name: 'account-detail'
-```
-
-Чаще всего роутеры к URL добавляются вот такими способами:
+| Роутер | Особенности |
+|--------|-------------|
+| `SimpleRouter` | Базовый роутер, генерирует только URL для ViewSet |
+| `DefaultRouter` | Добавляет API root (`/api/`) со списком всех эндпоинтов |
 
 ```python
+# DefaultRouter создаёт красивую главную страницу API
+router = routers.DefaultRouter()  # GET /api/ покажет все доступные эндпоинты
+```
+
+### Параметр basename
+
+Если у ViewSet нет `queryset`, нужно указать `basename`:
+
+```python
+class ReportViewSet(viewsets.ViewSet):
+    """ViewSet без queryset — генерирует отчёты динамически."""
+
+    def list(self, request):
+        # Генерация отчётов
+        ...
+
+router = routers.DefaultRouter()
+router.register('reports', ReportViewSet, basename='report')
+```
+
+### Сгенерированные URL
+
+Для `ArticleViewSet` роутер создаст:
+
+```
+URL pattern: ^articles/$           Name: 'article-list'
+URL pattern: ^articles/{pk}/$      Name: 'article-detail'
+URL pattern: ^articles/published/$ Name: 'article-published'  # @action
+URL pattern: ^articles/{pk}/publish/$ Name: 'article-publish' # @action
+```
+
+### Подключение роутера к urls.py
+
+```python
+from django.urls import path, include
+from rest_framework import routers
+from blog.views import ArticleViewSet, TopicViewSet
+
+router = routers.DefaultRouter()
+router.register('articles', ArticleViewSet)
+router.register('topics', TopicViewSet)
+
 urlpatterns = [
-    path('forgot-password', ForgotPasswordFormView.as_view()),
     path('api/', include(router.urls)),
+    # Другие URL...
 ]
 ```
 
 ### Роутинг экстра экшенов
 
-Допустим, есть такой экстра экшен:
+Для `@action` декораторов роутер автоматически генерирует URL:
 
 ```python
-from rest_framework.decorators import action
-
-
-class UserViewSet(ModelViewSet):
+class ArticleViewSet(viewsets.ModelViewSet):
     ...
 
     @action(methods=['post'], detail=True)
-    def set_password(self, request, pk=None):
+    def publish(self, request, pk=None):
         ...
 ```
 
-Роутер автоматически сгенерирует URL `^users/{pk}/set_password/$` и имя `user-set-password`.
+Роутер создаст URL `^articles/{pk}/publish/$` и имя `article-publish`.
 
-Класс `SimpleRouter` может принимать параметр `trailing_slash=False` True или False, по дефолту True, поэтому все API,
-должны принимать URL, заканчивающиеся на `/`. Если указать явно, то будет принимать всё без `/`.
+### trailing_slash
+
+```python
+# По умолчанию URL заканчиваются на /
+router = routers.SimpleRouter()  # /articles/
+
+# Можно отключить
+router = routers.SimpleRouter(trailing_slash=False)  # /articles
+```
+
+## Вложенные роутеры (Nested Routers)
+
+Для URL вида `/articles/{article_pk}/comments/` можно использовать библиотеку `drf-nested-routers`:
+
+```bash
+pip install drf-nested-routers
+```
+
+```python
+from rest_framework_nested import routers
+from blog.views import ArticleViewSet, CommentViewSet
+
+# Основной роутер
+router = routers.DefaultRouter()
+router.register('articles', ArticleViewSet)
+
+# Вложенный роутер для комментариев
+articles_router = routers.NestedDefaultRouter(router, 'articles', lookup='article')
+articles_router.register('comments', CommentViewSet, basename='article-comments')
+
+urlpatterns = [
+    path('api/', include(router.urls)),
+    path('api/', include(articles_router.urls)),
+]
+```
+
+Это создаст URL:
+- `GET /api/articles/` — список статей
+- `GET /api/articles/{pk}/` — детали статьи
+- `GET /api/articles/{article_pk}/comments/` — комментарии к статье
+- `POST /api/articles/{article_pk}/comments/` — создать комментарий
+
+ViewSet для вложенного ресурса:
+
+```python
+class CommentViewSet(viewsets.ModelViewSet):
+    serializer_class = CommentSerializer
+
+    def get_queryset(self):
+        return Comment.objects.filter(article_id=self.kwargs['article_pk'])
+
+    def perform_create(self, serializer):
+        serializer.save(
+            article_id=self.kwargs['article_pk'],
+            author=self.request.user
+        )
+```
+
+
+## Переопределение методов ViewSet
+
+### get_queryset() — фильтрация по пользователю
+
+Метод `get_queryset()` позволяет динамически фильтровать данные:
+
+```python
+class ArticleViewSet(viewsets.ModelViewSet):
+    serializer_class = ArticleSerializer
+
+    def get_queryset(self):
+        user = self.request.user
+
+        # Для списка — только опубликованные или свои
+        if self.action == 'list':
+            if user.is_authenticated:
+                # Авторизованный видит опубликованные + свои черновики
+                return Article.objects.filter(
+                    Q(status='published') | Q(author=user)
+                )
+            # Анонимный видит только опубликованные
+            return Article.objects.filter(status='published')
+
+        # Для остальных действий — все статьи (проверка прав в permissions)
+        return Article.objects.all()
+```
+
+### perform_create() — автоматическое добавление автора
+
+Метод `perform_create()` вызывается при создании объекта:
+
+```python
+class ArticleViewSet(viewsets.ModelViewSet):
+    queryset = Article.objects.all()
+    serializer_class = ArticleSerializer
+
+    def perform_create(self, serializer):
+        """Автоматически устанавливаем автора из request.user"""
+        serializer.save(author=self.request.user)
+```
+
+### perform_update() — логика при обновлении
+
+```python
+class ArticleViewSet(viewsets.ModelViewSet):
+    queryset = Article.objects.all()
+    serializer_class = ArticleSerializer
+
+    def perform_update(self, serializer):
+        """Сбрасываем статус при редактировании опубликованной статьи"""
+        instance = serializer.instance
+        if instance.status == 'published':
+            serializer.save(status='draft')  # Требует повторной модерации
+        else:
+            serializer.save()
+```
+
+### perform_destroy() — мягкое удаление
+
+```python
+class ArticleViewSet(viewsets.ModelViewSet):
+    queryset = Article.objects.all()
+    serializer_class = ArticleSerializer
+
+    def perform_destroy(self, instance):
+        """Мягкое удаление вместо физического"""
+        instance.status = 'deleted'
+        instance.save()
+        # Или: instance.delete() для физического удаления
+```
+
+## Полный пример ArticleViewSet
+
+```python
+from django.db.models import Q
+from rest_framework import viewsets, status
+from rest_framework.decorators import action
+from rest_framework.response import Response
+from rest_framework.permissions import IsAuthenticatedOrReadOnly
+
+from blog.models import Article
+from blog.serializers import ArticleSerializer, ArticleListSerializer
+
+
+class ArticleViewSet(viewsets.ModelViewSet):
+    """
+    ViewSet для статей блога с полным CRUD и дополнительными действиями.
+    """
+    permission_classes = [IsAuthenticatedOrReadOnly]
+    lookup_field = 'pk'
+
+    def get_queryset(self):
+        """Фильтрация: опубликованные для всех, черновики только для автора."""
+        user = self.request.user
+
+        if self.action == 'list':
+            if user.is_authenticated:
+                return Article.objects.filter(
+                    Q(status='published') | Q(author=user)
+                ).select_related('author').prefetch_related('topics')
+            return Article.objects.filter(
+                status='published'
+            ).select_related('author').prefetch_related('topics')
+
+        return Article.objects.all()
+
+    def get_serializer_class(self):
+        """Разные сериализаторы для списка и деталей."""
+        if self.action == 'list':
+            return ArticleListSerializer
+        return ArticleSerializer
+
+    def perform_create(self, serializer):
+        """Автоматически устанавливаем автора."""
+        serializer.save(author=self.request.user)
+
+    @action(detail=True, methods=['post'])
+    def publish(self, request, pk=None):
+        """Публикация статьи."""
+        article = self.get_object()
+        if article.author != request.user:
+            return Response(
+                {'error': 'Только автор может публиковать статью'},
+                status=status.HTTP_403_FORBIDDEN
+            )
+        article.status = 'published'
+        article.save()
+        return Response(ArticleSerializer(article).data)
+
+    @action(detail=False, methods=['get'])
+    def my_drafts(self, request):
+        """Черновики текущего пользователя."""
+        drafts = Article.objects.filter(author=request.user, status='draft')
+        serializer = ArticleListSerializer(drafts, many=True)
+        return Response(serializer.data)
+```
+
+---
+
+## Итоги
+
+В этой лекции мы изучили:
+
+1. **Request и Response в DRF** — `request.data`, `request.query_params`, объект `Response`
+
+2. **@api_view** — декоратор для функциональных представлений API
+
+3. **APIView** — базовый класс для Class-Based Views в DRF
+
+4. **GenericAPIView и миксины** — готовые CRUD операции:
+   - `CreateModelMixin`, `ListModelMixin`, `RetrieveModelMixin`
+   - `UpdateModelMixin`, `DestroyModelMixin`
+
+5. **Generic классы** — `ListCreateAPIView`, `RetrieveUpdateDestroyAPIView` и др.
+
+6. **ViewSet и ModelViewSet** — объединение всех CRUD в одном классе
+
+7. **@action** — дополнительные действия (`publish`, `archive`, `my_drafts`)
+
+8. **Роутеры** — автоматическая генерация URL для ViewSet
+
+9. **Вложенные роутеры** — URL вида `/articles/{pk}/comments/`
+
+10. **Переопределение методов** — `get_queryset()`, `perform_create()`, `get_serializer_class()`
+
+---
+
+## Домашнее задание
+
+### Практика на занятии
+
+1. Создайте `ArticleViewSet` с полным CRUD для статей блога
+2. Добавьте `@action` для публикации статьи
+3. Настройте роутер и проверьте все эндпоинты через Browsable API
+
+### Домашняя работа
+
+1. **TopicViewSet** (ReadOnlyModelViewSet):
+   - Только чтение тем
+   - Добавьте `@action` `articles` для получения статей по теме
+
+2. **CommentViewSet**:
+   - CRUD для комментариев
+   - `perform_create()` — автоматически добавлять автора
+   - `get_queryset()` — фильтрация по статье из URL
+
+3. **Вложенный роутинг**:
+   - Настройте URL `/articles/{pk}/comments/`
+   - Используйте `drf-nested-routers` или ручную настройку URL
+
+4. **Дополнительные @action для ArticleViewSet**:
+   - `archive` — архивирование статьи
+   - `featured` — добавление в избранное
+   - `by_topic` — фильтрация по теме (query param `?topic=python`)
+
+5. **Пагинация**:
+   - Создайте `ArticlePagination` с `page_size=10`
+   - Примените к `ArticleViewSet`
+
+---
+
+## Вопросы для самопроверки
+
+1. В чём разница между `@api_view` и `APIView`?
+2. Какие миксины нужны для ViewSet только с `list` и `create`?
+3. Что делает параметр `detail=True` в декораторе `@action`?
+4. Чем `SimpleRouter` отличается от `DefaultRouter`?
+5. Когда нужно указывать `basename` при регистрации ViewSet?
+6. Как переопределить `get_queryset()` для фильтрации по текущему пользователю?
+7. Для чего используется `perform_create()`?
+8. Как создать URL вида `/articles/{pk}/comments/`?
