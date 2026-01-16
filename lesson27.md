@@ -23,7 +23,7 @@
 <details>
   <summary>Блок 3 — Python Advanced (9–14)</summary>
 
-  - [Лекция 9. Введение в ООП. Основные парадигмы ООП. Классы и объекты.](lesson09.md)
+  - [Лекция 9. Введение в ООП. Основные парадигмы ООП. Классы и объекты. Множественное наследование.](lesson09.md)
   - [Лекция 10. Magic methods. Итераторы и генераторы.](lesson10.md)
   - [Лекция 11. Imports. Standard library. PEP8](lesson11.md)
   - [Лекция 12. Декораторы. Декораторы с параметрами. Декораторы классов (staticmethod, classmethod, property)](lesson12.md)
@@ -320,18 +320,25 @@ JavaScript или Python, который затем можно использо�
 Сериалайзер в DRF - это класс для преобразования данных из того который пришел от пользователя в реквесте в понятный для
 python-а и наоборот.
 
-Допустим у нас есть такая модель:
+Мы будем использовать модели блога, которые создали в предыдущих лекциях. Вот упрощённая версия модели `Article`:
 
 ```python
 from django.db import models
+from django.contrib.auth.models import User
 
 
-class Book(models.Model):
-    title = models.CharField(max_length=255)
-    author = models.CharField(max_length=255)
-    published_date = models.DateField()
-    isbn = models.CharField(max_length=13, unique=True)
-    price = models.DecimalField(max_digits=6, decimal_places=2)
+class Article(models.Model):
+    """Статья блога"""
+    class Status(models.TextChoices):
+        DRAFT = 'draft', 'Черновик'
+        PUBLISHED = 'published', 'Опубликовано'
+
+    title = models.CharField(max_length=200)
+    slug = models.SlugField(max_length=200, unique=True)
+    content = models.TextField()
+    author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='articles')
+    status = models.CharField(max_length=20, choices=Status.choices, default=Status.DRAFT)
+    created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return self.title
@@ -346,22 +353,23 @@ class Book(models.Model):
 from rest_framework import serializers
 
 
-class BookSerializer(serializers.Serializer):
-    title = serializers.CharField(max_length=255)
-    author = serializers.CharField(max_length=255)
-    published_date = serializers.DateField()
-    isbn = serializers.CharField(max_length=13)
-    price = serializers.DecimalField(max_digits=6, decimal_places=2)
+class ArticleSerializer(serializers.Serializer):
+    id = serializers.IntegerField(read_only=True)
+    title = serializers.CharField(max_length=200)
+    slug = serializers.SlugField(max_length=200)
+    content = serializers.CharField()
+    status = serializers.ChoiceField(choices=['draft', 'published'])
+    author = serializers.PrimaryKeyRelatedField(read_only=True)
+    created_at = serializers.DateTimeField(read_only=True)
 
     def create(self, validated_data):
-        return Book.objects.create(**validated_data)
+        return Article.objects.create(**validated_data)
 
     def update(self, instance, validated_data):
         instance.title = validated_data.get('title', instance.title)
-        instance.author = validated_data.get('author', instance.author)
-        instance.published_date = validated_data.get('published_date', instance.published_date)
-        instance.isbn = validated_data.get('isbn', instance.isbn)
-        instance.price = validated_data.get('price', instance.price)
+        instance.slug = validated_data.get('slug', instance.slug)
+        instance.content = validated_data.get('content', instance.content)
+        instance.status = validated_data.get('status', instance.status)
         instance.save()
         return instance
 ```
@@ -369,8 +377,8 @@ class BookSerializer(serializers.Serializer):
 #### Сериализация данных
 
 ```python
-book = Book.objects.get(id=1)
-serializer = BookSerializer(book)
+article = Article.objects.get(id=1)
+serializer = ArticleSerializer(article)
 print(serializer.data)
 ```
 
@@ -381,11 +389,13 @@ print(serializer.data)
 
 ```python
 {
-    "title": "Example Book",
-    "author": "John Doe",
-    "published_date": "2023-08-10",
-    "isbn": "1234567890123",
-    "price": "19.99"
+    "id": 1,
+    "title": "Введение в Django REST Framework",
+    "slug": "intro-to-drf",
+    "content": "Django REST Framework — это мощный инструмент...",
+    "status": "published",
+    "author": 1,
+    "created_at": "2024-01-15T10:30:00Z"
 }
 ```
 
@@ -393,17 +403,16 @@ print(serializer.data)
 
 ```python
 data = {
-    "title": "New Book",
-    "author": "Jane Smith",
-    "published_date": "2024-08-12",
-    "isbn": "9876543210123",
-    "price": "25.50"
+    "title": "Новая статья о Python",
+    "slug": "new-python-article",
+    "content": "В этой статье мы рассмотрим...",
+    "status": "draft"
 }
 
-serializer = BookSerializer(data=data)
+serializer = ArticleSerializer(data=data)
 if serializer.is_valid():
-    book = serializer.save()
-    print(book)  # Book object
+    article = serializer.save(author=request.user)  # Передаём автора при сохранении
+    print(article)  # Article object
 else:
     print(serializer.errors)
 ```
@@ -416,27 +425,26 @@ else:
 - Нам необходимо валидировать данные. Данные полученные от пользователя обязательно нужно валидировать! (об этом дальше)
 - У сериалайзера есть метод `.save()`, который вызовет `.create()` или `.update()`, в зависимости от переданных в него
   параметров.
+- Мы передали `author=request.user` в метод `save()` — это позволяет добавить данные, которые не приходят от пользователя.
 
 > На практике: удобно валидировать с исключением и не разбирать ошибки вручную
 ```python
-serializer = BookSerializer(data=data)
+serializer = ArticleSerializer(data=data)
 serializer.is_valid(raise_exception=True)
-obj = serializer.save()
+article = serializer.save(author=request.user)
 ```
 Примеры на практике:
-```
-# Частичное обновление
-serializer = BookSerializer(instance=book, data=partial_data, partial=True)
+```python
+# Частичное обновление (например, только статус)
+serializer = ArticleSerializer(instance=article, data={'status': 'published'}, partial=True)
 serializer.is_valid(raise_exception=True)
 serializer.save()
 
-# Передача дополнительных аргументов в save (например, автор)
-serializer = BookSerializer(data=data, context={'request': request})
+# Передача контекста (например, для доступа к request в сериалайзере)
+serializer = ArticleSerializer(data=data, context={'request': request})
 serializer.is_valid(raise_exception=True)
 serializer.save(author=request.user)
 ```
-
-
 
 ### Сериалайзер на основе `ModelSerializer`
 
@@ -446,21 +454,22 @@ serializer.save(author=request.user)
 from rest_framework import serializers
 
 
-class BookModelSerializer(serializers.ModelSerializer):
+class ArticleModelSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Book
-        fields = ['title', 'author', 'published_date', 'isbn', 'price']
+        model = Article
+        fields = ['id', 'title', 'slug', 'content', 'status', 'author', 'created_at']
 ```
+
 Пример настроек Meta: read_only_fields и extra_kwargs
-```
-class BookModelSerializer(serializers.ModelSerializer):
+```python
+class ArticleModelSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Book
-        fields = ['id', 'title', 'author', 'published_date', 'isbn', 'price']
-        read_only_fields = ['id', 'published_date']
+        model = Article
+        fields = ['id', 'title', 'slug', 'content', 'status', 'author', 'created_at']
+        read_only_fields = ['id', 'author', 'created_at']
         extra_kwargs = {
-            'isbn': {'required': False},
-            'price': {'min_value': 0}
+            'slug': {'required': False},  # Можно генерировать автоматически
+            'content': {'min_length': 10}
         }
 ```
 
@@ -798,43 +807,35 @@ e.save(description='bla-bla')
 Все мы знаем, что бывают связи в базе данных. Данные нужно каким-то образом получать, но в случае сериализации нам
 часто нет необходимости получать весь объект, а нужны, допустим, только `id` или название. DRF это предусмотрел.
 
-Предположим, у нас есть вот такие модели:
+Продолжим работать с моделями нашего блога. Напомню модель `Comment`:
 
 ```python
-class Album(models.Model):
-    album_name = models.CharField(max_length=100)
-    artist = models.CharField(max_length=100)
-
-
-class Track(models.Model):
-    album = models.ForeignKey(Album, related_name='tracks', on_delete=models.CASCADE)
-    order = models.IntegerField()
-    title = models.CharField(max_length=100)
-    duration = models.IntegerField()
-
-    class Meta:
-        unique_together = ['album', 'order']
-        ordering = ['order']
+class Comment(models.Model):
+    """Комментарий к статье"""
+    article = models.ForeignKey(Article, on_delete=models.CASCADE, related_name='comments')
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    text = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return '%d: %s' % (self.order, self.title)
+        return f'Комментарий от {self.author.username}'
 ```
 
-Чтобы получить в сериалайзере альбома все его треки, мы можем сделать, например, так:
+Чтобы получить в сериалайзере статьи все её комментарии, мы можем сделать, например, так:
 
 ```python
-class TrackSerializer(serializers.ModelSerializer):
+class CommentSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Track
-        fields = ['title', 'duration']
+        model = Comment
+        fields = ['id', 'author', 'text', 'created_at']
 
 
-class AlbumSerializer(serializers.ModelSerializer):
-    tracks = TrackSerializer(many=True)
+class ArticleWithCommentsSerializer(serializers.ModelSerializer):
+    comments = CommentSerializer(many=True, read_only=True)
 
     class Meta:
-        model = Album
-        fields = ['album_name', 'artist', 'tracks']
+        model = Article
+        fields = ['id', 'title', 'slug', 'content', 'author', 'comments']
 ```
 
 Но есть и другие варианты получения данных.
@@ -842,24 +843,25 @@ class AlbumSerializer(serializers.ModelSerializer):
 ### StringRelatedField()
 
 ```python
-class AlbumSerializer(serializers.ModelSerializer):
-    tracks = serializers.StringRelatedField(many=True)
+class ArticleSerializer(serializers.ModelSerializer):
+    comments = serializers.StringRelatedField(many=True)
 
     class Meta:
-        model = Album
-        fields = ['album_name', 'artist', 'tracks']
+        model = Article
+        fields = ['id', 'title', 'author', 'comments']
 ```
 
 Вернёт значение dunder-метода `__str__` для каждого объекта:
 
 ```json
 {
-  "album_name": "Things We Lost In The Fire",
-  "artist": "Low",
-  "tracks": [
-    "1: Sunflower",
-    "2: Whitetail",
-    "3: Dinosaur Act"
+  "id": 1,
+  "title": "Введение в Django REST Framework",
+  "author": 1,
+  "comments": [
+    "Комментарий от ivan",
+    "Комментарий от maria",
+    "Комментарий от alex"
   ]
 }
 ```
@@ -867,63 +869,65 @@ class AlbumSerializer(serializers.ModelSerializer):
 ### PrimaryKeyRelatedField()
 
 ```python
-class AlbumSerializer(serializers.ModelSerializer):
-    tracks = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
+class ArticleSerializer(serializers.ModelSerializer):
+    comments = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
 
     class Meta:
-        model = Album
-        fields = ['album_name', 'artist', 'tracks']
+        model = Article
+        fields = ['id', 'title', 'author', 'comments']
 ```
 
 Вернёт `id`:
-Для записи используйте queryset:
-```
-class AlbumWriteSerializer(serializers.ModelSerializer):
-    tracks = serializers.PrimaryKeyRelatedField(many=True, queryset=Track.objects.all())
-
-    class Meta:
-        model = Album
-        fields = ['album_name', 'artist', 'tracks']
-```
-
 
 ```json
 {
-  "album_name": "Undun",
-  "artist": "The Roots",
-  "tracks": [
-    89,
-    90,
-    91
+  "id": 1,
+  "title": "Введение в Django REST Framework",
+  "author": 1,
+  "comments": [
+    15,
+    16,
+    17
   ]
 }
+```
+
+Для записи используйте queryset:
+```python
+class ArticleWriteSerializer(serializers.ModelSerializer):
+    comments = serializers.PrimaryKeyRelatedField(many=True, queryset=Comment.objects.all())
+
+    class Meta:
+        model = Article
+        fields = ['id', 'title', 'author', 'comments']
 ```
 
 ### HyperlinkedRelatedField()
 
 ```python
-class AlbumSerializer(serializers.ModelSerializer):
-    tracks = serializers.HyperlinkedRelatedField(
+class ArticleSerializer(serializers.ModelSerializer):
+    comments = serializers.HyperlinkedRelatedField(
         many=True,
         read_only=True,
-        view_name='track-detail'
+        view_name='comment-detail'
     )
 
     class Meta:
-        model = Album
-        fields = ['album_name', 'artist', 'tracks']
+        model = Article
+        fields = ['id', 'title', 'author', 'comments']
 ```
 
 Вернёт ссылку на обработку объекта. О том, как работает эта магия, поговорим на следующем занятии.
 
 ```json
 {
-  "album_name": "Graceland",
-  "artist": "Paul Simon",
-  "tracks": [
-    "http://www.example.com/api/tracks/45/",
-    "http://www.example.com/api/tracks/46/",
-    "http://www.example.com/api/tracks/47/"
+  "id": 1,
+  "title": "Введение в Django REST Framework",
+  "author": 1,
+  "comments": [
+    "http://www.example.com/api/comments/15/",
+    "http://www.example.com/api/comments/16/",
+    "http://www.example.com/api/comments/17/"
   ]
 }
 ```
@@ -933,57 +937,63 @@ class AlbumSerializer(serializers.ModelSerializer):
 ### SlugRelatedField()
 
 ```python
-class AlbumSerializer(serializers.ModelSerializer):
-    tracks = serializers.SlugRelatedField(
-        many=True,
+class ArticleSerializer(serializers.ModelSerializer):
+    # Получаем username автора вместо id
+    author = serializers.SlugRelatedField(
         read_only=True,
-        slug_field='title'
+        slug_field='username'
     )
 
     class Meta:
-        model = Album
-        fields = ['album_name', 'artist', 'tracks']
+        model = Article
+        fields = ['id', 'title', 'author', 'status']
 ```
 
 Вернёт то, что указано в атрибуте `slug_field`.
 
 ```json
 {
-  "album_name": "Dear John",
-  "artist": "Loney Dear",
-  "tracks": [
-    "Airport Surroundings",
-    "Everything Turns to You",
-    "I Was Only Going Out"
-  ]
+  "id": 1,
+  "title": "Введение в Django REST Framework",
+  "author": "ivan_petrov",
+  "status": "published"
 }
 ```
 
 ## Пример чтения и записи вложенных сериалайзеров
 
-Например, если у нас есть модели `Author` и `Book`, где каждый автор может иметь несколько книг, вложенный сериализатор
-поможет нам включить информацию о книгах автора в его сериализатор.
+Рассмотрим пример с моделями нашего блога: `Topic` (тема) и `Article` (статья). Одна тема может содержать много статей.
 
-### Пример моделей
-
-Допустим, у нас есть две модели: `Author` и `Book`.
+### Напоминание о моделях
 
 ```python
 from django.db import models
+from django.contrib.auth.models import User
 
 
-class Author(models.Model):
+class Topic(models.Model):
+    """Тема/категория для статей"""
     name = models.CharField(max_length=100)
-    birthdate = models.DateField()
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.name
 
 
-class Book(models.Model):
+class Article(models.Model):
+    """Статья блога"""
     title = models.CharField(max_length=200)
-    published_date = models.DateField()
-    author = models.ForeignKey(Author, related_name='books', on_delete=models.CASCADE)
+    slug = models.SlugField(max_length=200, unique=True)
+    content = models.TextField()
+    author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='articles')
+    topics = models.ManyToManyField(Topic, related_name='articles')
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.title
 ```
 
-Здесь у модели `Book` есть внешний ключ `author`, указывающий на модель `Author`.
+Здесь у модели `Article` есть связь ManyToMany с `Topic` — одна статья может относиться к нескольким темам.
 
 ### Чтение данных с вложенными сериализаторами
 
@@ -993,40 +1003,43 @@ class Book(models.Model):
 from rest_framework import serializers
 
 
-class BookSerializer(serializers.ModelSerializer):
+class ArticleShortSerializer(serializers.ModelSerializer):
+    """Краткая информация о статье для вложенного отображения"""
     class Meta:
-        model = Book
-        fields = ['title', 'published_date', 'id']
+        model = Article
+        fields = ['id', 'title', 'slug', 'created_at']
 
 
-class AuthorSerializer(serializers.ModelSerializer):
-    books = BookSerializer(many=True, read_only=True)  # Вложенный сериализатор
+class TopicWithArticlesSerializer(serializers.ModelSerializer):
+    articles = ArticleShortSerializer(many=True, read_only=True)  # Вложенный сериализатор
 
     class Meta:
-        model = Author
-        fields = ['name', 'birthdate', 'books']
+        model = Topic
+        fields = ['id', 'name', 'articles']
 ```
 
-Здесь мы используем `BookSerializer` внутри `AuthorSerializer`, чтобы включить список книг автора в ответ. Поле `books`
-имеет атрибут `many=True`, потому что один автор может иметь несколько книг. Кроме того, `read_only=True` говорит о том,
+Здесь мы используем `ArticleShortSerializer` внутри `TopicWithArticlesSerializer`, чтобы включить список статей темы в ответ. Поле `articles`
+имеет атрибут `many=True`, потому что одна тема может содержать несколько статей. Кроме того, `read_only=True` говорит о том,
 что это поле только для чтения.
 
-Теперь, если мы запросим данные об авторе, мы получим что-то вроде этого:
+Теперь, если мы запросим данные о теме, мы получим что-то вроде этого:
 
 ```json
 {
-  "name": "J.K. Rowling",
-  "birthdate": "1965-07-31",
-  "books": [
+  "id": 1,
+  "name": "Python",
+  "articles": [
     {
-      "title": "Harry Potter and the Philosopher's Stone",
-      "published_date": "1997-06-26",
-      "id": 1
+      "id": 1,
+      "title": "Введение в Django REST Framework",
+      "slug": "intro-to-drf",
+      "created_at": "2024-01-15T10:30:00Z"
     },
     {
-      "title": "Harry Potter and the Chamber of Secrets",
-      "published_date": "1998-07-02",
-      "id": 2
+      "id": 2,
+      "title": "Продвинутые сериализаторы в DRF",
+      "slug": "advanced-drf-serializers",
+      "created_at": "2024-01-20T14:00:00Z"
     }
   ]
 }
@@ -1034,72 +1047,275 @@ class AuthorSerializer(serializers.ModelSerializer):
 
 ### Запись данных с вложенными сериализаторами
 
-Для того чтобы создать или обновить вложенные объекты, нам нужно настроить десериализацию. В этом
-случае `BookSerializer` будет использоваться для обработки вложенных данных, когда мы создаем или обновляем автора.
+Для того чтобы создать статью с комментариями, нам нужно настроить десериализацию. Рассмотрим пример создания статьи вместе с комментариями:
 
 ```python
-class AuthorSerializer(serializers.ModelSerializer):
-    books = BookSerializer(many=True)
+class CommentCreateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Comment
+        fields = ['text']
+
+
+class ArticleWithCommentsSerializer(serializers.ModelSerializer):
+    comments = CommentCreateSerializer(many=True, required=False)
 
     class Meta:
-        model = Author
-        fields = ['name', 'birthdate', 'books']
+        model = Article
+        fields = ['title', 'slug', 'content', 'comments']
 
     def create(self, validated_data):
-        books_data = validated_data.pop('books')
-        author = Author.objects.create(**validated_data)
-        for book_data in books_data:
-            Book.objects.create(author=author, **book_data)
-        return author
+        comments_data = validated_data.pop('comments', [])
+        # author передаётся через save(author=request.user)
+        article = Article.objects.create(**validated_data)
+        for comment_data in comments_data:
+            Comment.objects.create(
+                article=article,
+                author=self.context['request'].user,
+                **comment_data
+            )
+        return article
 
     def update(self, instance, validated_data):
-        books_data = validated_data.pop('books')
-        instance.name = validated_data.get('name', instance.name)
-        instance.birthdate = validated_data.get('birthdate', instance.birthdate)
+        comments_data = validated_data.pop('comments', None)
+        instance.title = validated_data.get('title', instance.title)
+        instance.slug = validated_data.get('slug', instance.slug)
+        instance.content = validated_data.get('content', instance.content)
         instance.save()
 
-        # Удаление старых книг
-        instance.books.all().delete()
-
-        # Создание новых книг
-        for book_data in books_data:
-            Book.objects.create(author=instance, **book_data)
+        if comments_data is not None:
+            # Удаление старых комментариев и создание новых
+            instance.comments.all().delete()
+            for comment_data in comments_data:
+                Comment.objects.create(
+                    article=instance,
+                    author=self.context['request'].user,
+                    **comment_data
+                )
 
         return instance
 ```
 
-Здесь мы переопределили методы `create` и `update`, чтобы обрабатывать вложенные данные. Мы сначала создаем автора,
-затем создаем каждую книгу, связанную с этим автором. В методе `update` мы сначала удаляем старые записи книг и
-добавляем новые.
+Здесь мы переопределили методы `create` и `update`, чтобы обрабатывать вложенные данные. Мы сначала создаем статью,
+затем создаем каждый комментарий, связанный с этой статьёй.
 
-### Пример запроса на создание автора с книгами
+### Пример запроса на создание статьи с комментариями
 
-Теперь мы можем создать автора и его книги за один запрос:
+Теперь мы можем создать статью и её комментарии за один запрос:
 
 ```json
 {
-  "name": "George R. R. Martin",
-  "birthdate": "1948-09-20",
-  "books": [
+  "title": "Новая статья о Django",
+  "slug": "new-django-article",
+  "content": "В этой статье мы рассмотрим...",
+  "comments": [
     {
-      "title": "A Game of Thrones",
-      "published_date": "1996-08-06"
+      "text": "Отличная статья!"
     },
     {
-      "title": "A Clash of Kings",
-      "published_date": "1998-11-16"
+      "text": "Спасибо за подробное объяснение"
     }
   ]
 }
 ```
 
-Этот запрос будет обработан нашим `AuthorSerializer`, который создаст автора и его книги.
-Замечание про вложенные сериалайзеры:
-- DRF не выполняет сложные операции с вложенными записями «из коробки». Частичное обновление списков, сопоставление по id и удаление/создание требуют явной логики.
-- Для нетривиальных случаев рассматривайте отдельные endpoints для вложенных ресурсов или сторонние пакеты.
-- Обязательно покрывайте такие операции тестами.
+Этот запрос будет обработан нашим `ArticleWithCommentsSerializer`, который создаст статью и её комментарии.
+
+> **Замечание про вложенные сериалайзеры:**
+> - DRF не выполняет сложные операции с вложенными записями «из коробки». Частичное обновление списков, сопоставление по id и удаление/создание требуют явной логики.
+> - Для нетривиальных случаев рассматривайте отдельные endpoints для вложенных ресурсов или сторонние пакеты (например, `drf-writable-nested`).
+> - Обязательно покрывайте такие операции тестами.
+
+
+## Пример с OneToOne связью: Profile
+
+В нашем блоге у пользователя есть профиль (связь OneToOne). Рассмотрим, как сериализовать такие данные:
+
+```python
+class Profile(models.Model):
+    """Профиль пользователя"""
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile')
+    bio = models.TextField(blank=True)
+    avatar = models.ImageField(upload_to='avatars/', blank=True)
+    website = models.URLField(blank=True)
+
+    def __str__(self):
+        return f'Профиль {self.user.username}'
+```
+
+### Сериализатор профиля
+
+```python
+class ProfileSerializer(serializers.ModelSerializer):
+    username = serializers.CharField(source='user.username', read_only=True)
+    email = serializers.EmailField(source='user.email', read_only=True)
+
+    class Meta:
+        model = Profile
+        fields = ['id', 'username', 'email', 'bio', 'avatar', 'website']
+        read_only_fields = ['id']
+```
+
+Здесь мы используем `source` для доступа к полям связанной модели `User`.
+
+### Вложенный профиль в сериализаторе пользователя
+
+```python
+class UserWithProfileSerializer(serializers.ModelSerializer):
+    profile = ProfileSerializer(read_only=True)
+
+    class Meta:
+        model = User
+        fields = ['id', 'username', 'email', 'profile']
+```
+
+Результат:
+```json
+{
+  "id": 1,
+  "username": "ivan_petrov",
+  "email": "ivan@example.com",
+  "profile": {
+    "id": 1,
+    "username": "ivan_petrov",
+    "email": "ivan@example.com",
+    "bio": "Python-разработчик",
+    "avatar": "/media/avatars/ivan.jpg",
+    "website": "https://ivan.dev"
+  }
+}
+```
+
+
+## SerializerMethodField — вычисляемые поля
+
+`SerializerMethodField` позволяет добавлять вычисляемые поля, которых нет в модели:
+
+```python
+class ArticleDetailSerializer(serializers.ModelSerializer):
+    author_name = serializers.CharField(source='author.username', read_only=True)
+    comments_count = serializers.SerializerMethodField()
+    is_recent = serializers.SerializerMethodField()
+    topics_list = serializers.SerializerMethodField()
+
+    class Meta:
+        model = Article
+        fields = ['id', 'title', 'slug', 'content', 'author', 'author_name',
+                  'comments_count', 'is_recent', 'topics_list', 'created_at']
+
+    def get_comments_count(self, obj):
+        """Количество комментариев к статье"""
+        return obj.comments.count()
+
+    def get_is_recent(self, obj):
+        """Статья опубликована за последние 7 дней?"""
+        from django.utils import timezone
+        from datetime import timedelta
+        return obj.created_at >= timezone.now() - timedelta(days=7)
+
+    def get_topics_list(self, obj):
+        """Список названий тем"""
+        return list(obj.topics.values_list('name', flat=True))
+```
+
+Результат:
+```json
+{
+  "id": 1,
+  "title": "Введение в Django REST Framework",
+  "slug": "intro-to-drf",
+  "content": "...",
+  "author": 1,
+  "author_name": "ivan_petrov",
+  "comments_count": 15,
+  "is_recent": true,
+  "topics_list": ["Python", "Django", "REST API"],
+  "created_at": "2024-01-15T10:30:00Z"
+}
+```
+
+> **Важно:** `SerializerMethodField` всегда `read_only`. Для записи используйте обычные поля или переопределяйте `create`/`update`.
+
+### Оптимизация SerializerMethodField
+
+При использовании `SerializerMethodField` с запросами к БД важно избегать N+1 проблемы:
+
+```python
+# Плохо: N+1 запросов
+articles = Article.objects.all()
+serializer = ArticleDetailSerializer(articles, many=True)
+
+# Хорошо: используем annotate
+from django.db.models import Count
+
+articles = Article.objects.annotate(
+    comments_count=Count('comments')
+).prefetch_related('topics')
+
+# И в сериализаторе используем аннотированное значение:
+def get_comments_count(self, obj):
+    # Если есть аннотация — используем её
+    if hasattr(obj, 'comments_count'):
+        return obj.comments_count
+    return obj.comments.count()
+```
 
 
 ## Немного забегая вперед
 
 Давайте я покажу вам сколько нужно написать кода, что бы получить RESTful API для одной модели. (Смотрим на экран, тут кода не будет `:)`)
+
+
+## Итоги
+
+В этой лекции мы изучили:
+
+1. **Что такое REST и RESTful API** — архитектурный стиль для построения веб-сервисов
+2. **Django REST Framework** — мощный инструмент для создания API в Django
+3. **Сериализаторы** — преобразование данных между Python-объектами и JSON:
+   - `Serializer` — полный контроль, явное описание полей
+   - `ModelSerializer` — автоматическая генерация на основе модели
+4. **Валидация данных** — встроенные и кастомные валидаторы
+5. **Связи в сериализаторах** — различные способы представления связанных объектов:
+   - `PrimaryKeyRelatedField` — только id
+   - `StringRelatedField` — строковое представление
+   - `SlugRelatedField` — конкретное поле
+   - `HyperlinkedRelatedField` — ссылки на ресурсы
+   - Вложенные сериализаторы — полные данные связанных объектов
+6. **SerializerMethodField** — вычисляемые поля
+7. **Работа с OneToOne связями** — сериализация профилей пользователей
+
+
+## Домашнее задание
+
+### Практика на занятии
+
+1. Создайте `ArticleSerializer` с использованием `ModelSerializer` для модели `Article`
+2. Добавьте поле `author_name` через `source`
+3. Добавьте `SerializerMethodField` для подсчёта комментариев
+
+### Домашняя работа
+
+1. **TopicSerializer** — создайте сериализатор для модели `Topic`:
+   - Поля: `id`, `name`, `created_at`
+   - Добавьте `articles_count` через `SerializerMethodField`
+
+2. **CommentSerializer** — создайте сериализатор для модели `Comment`:
+   - Поля: `id`, `article`, `author`, `text`, `created_at`
+   - `author` должен отображаться как username (используйте `SlugRelatedField`)
+   - Добавьте валидацию: текст комментария минимум 10 символов
+
+3. **ArticleDetailSerializer** — расширенный сериализатор статьи:
+   - Все поля статьи
+   - Вложенные комментарии через `CommentSerializer`
+   - Список тем через `StringRelatedField`
+   - Поле `is_published` (True если status == 'published')
+
+4. **ProfileSerializer** — сериализатор профиля пользователя:
+   - Поля профиля + username и email из связанного User
+   - Количество статей пользователя
+   - Количество комментариев пользователя
+
+5. **Валидация** — добавьте в `ArticleSerializer`:
+   - Валидатор уникальности slug
+   - Проверку что title не содержит запрещённых слов
+   - Кросс-валидацию: если status='published', content должен быть не менее 100 символов

@@ -23,7 +23,7 @@
 <details open>
   <summary>Блок 3 — Python Advanced (9–14)</summary>
 
-  - [Лекция 9. Введение в ООП. Основные парадигмы ООП. Классы и объекты.](lesson09.md)
+  - [Лекция 9. Введение в ООП. Основные парадигмы ООП. Классы и объекты. Множественное наследование.](lesson09.md)
   - [Лекция 10. Magic methods. Итераторы и генераторы.](lesson10.md)
   - ▶ **Лекция 11. Imports. Standard library. PEP8**
   - [Лекция 12. Декораторы. Декораторы с параметрами. Декораторы классов (staticmethod, classmethod, property)](lesson12.md)
