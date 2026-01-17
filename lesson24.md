@@ -7,8 +7,8 @@
 
   - [Лекция 1. Введение. Типизации. Переменные. Строки и числа. Булева алгебра. Ветвление](lesson01.md)
   - [Лекция 2. Обработка исключений. Списки, строки детальнее, срезы, циклы.](lesson02.md)
-  - [Лекция 3: None. Range, list comprehension, sum, max, min, len, sorted, all, any. Работа с файлами](lesson03.md)
-  - [Лекция 4. Хэш таблицы. Set, frozenset. Dict. Tuple. Немного об импортах. Namedtuple, OrderedDict](lesson04.md)
+  - [Лекция 3. None. Range, list comprehension, sum, max, min, len, sorted, all, any. Работа с файлами](lesson03.md)
+  - [Лекция 4. Хеш-таблицы. Set, frozenset. Dict. Tuple. Немного об импортах. Namedtuple, OrderedDict](lesson04.md)
   - [Лекция 5. Функции, типизация, lambda. Map, zip, filter.](lesson05.md)
   - [Лекция 6. Алгоритмы и структуры данных](lesson06.md)
 </details>
@@ -25,7 +25,7 @@
 
   - [Лекция 9. Введение в ООП. Основные парадигмы ООП. Классы и объекты. Множественное наследование.](lesson09.md)
   - [Лекция 10. Magic methods. Итераторы и генераторы.](lesson10.md)
-  - [Лекция 11. Imports. Standard library. PEP8](lesson11.md)
+  - [Лекция 11. Imports. Standard library. PEP 8](lesson11.md)
   - [Лекция 12. Декораторы. Декораторы с параметрами. Декораторы классов (staticmethod, classmethod, property)](lesson12.md)
   - [Лекция 13. Тестирование](lesson13.md)
   - [Лекция 14. Проектирование. Паттерны. SOLID.](lesson14.md)
@@ -59,7 +59,7 @@
 
   - [Лекция 27. Что такое API. REST и RESTful. Django REST Framework.](lesson27.md)
   - [Лекция 28. @api_view, APIView, ViewSets, Pagination, Routers](lesson28.md)
-  - [Лекция 29. REST аутентификация. Авторизация. Permissions. Фильтрация.](lesson29.md)
+  - [Лекция 29. REST-аутентификация. Авторизация. Permissions. Фильтрация.](lesson29.md)
   - [Лекция 30. Тестирование. Django, REST API.](lesson30.md)
 </details>
 
@@ -68,13 +68,13 @@
 
   - [Лекция 31. Celery. Multithreading. GIL. Multiprocessing](lesson31.md)
   - [Лекция 32. Асинхронное программирование в Python. Корутины. Asyncio.](lesson32.md)
-  - [Лекция 33. Сокеты. Django channels.](lesson33.md)
+  - [Лекция 33. Сокеты. Django Channels.](lesson33.md)
 </details>
 
 <details>
   <summary>Блок 8 — Deployment (34–35)</summary>
 
-  - [Лекция 34. Linux. Все что нужно знать для деплоймента.](lesson34.md)
+  - [Лекция 34. Linux. Всё, что нужно знать для деплоймента.](lesson34.md)
   - [Лекция 35. Deployment](lesson35.md)
 </details>
 
@@ -108,16 +108,15 @@
 
 Основные функции:
 
-`as_view()` - метод который всегда вызывается, чтобы использовать класс в `urls.py`, внутри вызывает методы `setup`
-и `dispatch`
+`as_view()` — метод, который всегда вызывается, чтобы использовать класс в `urls.py`; внутри вызывает методы `setup`
+и `dispatch`.
 
-`setup()` - метод, который добавляет `request` в `self`, благодаря чему `request` будет доступен в абсолютно любом
-методе
-всех наших `view` классов
+`setup()` — метод, который добавляет `request` в `self`, благодаря чему `request` будет доступен в абсолютно любом
+методе всех наших view-классов.
 
-`http_method_not_allowed()` - метод, который генерирует ошибку запроса (не могу обработать, например, POST запрос).
+`http_method_not_allowed()` — метод, который генерирует ошибку запроса (не могу обработать, например, POST-запрос).
 
-`dispatch()` - метод, отвечающий за вызов обработчика при запросе.
+`dispatch()` — метод, отвечающий за вызов обработчика при запросе.
 
 ```python
 def dispatch(self, request, *args, **kwargs):
@@ -174,7 +173,7 @@ path('some-url/', MyView.as_view(), name='some-name')
 
 [Дока](https://docs.djangoproject.com/en/stable/ref/class-based-views/base/#templateview) | [CCBV](https://ccbv.co.uk/projects/Django/5.2/django.views.generic.base/TemplateView/)
 
-Класс, необходимый для рендера html файлов
+Класс, необходимый для рендера HTML-файлов.
 
 Основные атрибуты:
 
@@ -193,7 +192,7 @@ def get(self, request, *args, **kwargs):
     return self.render_to_response(context)
 ```
 
-`get_context_data()` - метод, возвращающий данные, которые будут добавлены в контекст
+`get_context_data()` — метод, возвращающий данные, которые будут добавлены в контекст.
 
 Как этим пользоваться?
 
@@ -239,7 +238,7 @@ class HomePageView(TemplateView):
 Основные атрибуты:
 
 ```python
-query_string = False  # сохранить ли квери параметры (то, что в строке браузера после ?) при редиректе
+query_string = False  # сохранить ли query-параметры (то, что в строке браузера после ?) при редиректе
 url = None  # URL, на который надо перейти
 pattern_name = None  # Имя URL, на который надо перейти
 ```
@@ -253,9 +252,9 @@ def delete(self, request, *args, **kwargs):
     return self.get(request, *args, **kwargs)
 ```
 
-Метод `get_redirect_url()` отвечает за то, чтобы получить URL, на который надо перейти
+Метод `get_redirect_url()` отвечает за то, чтобы получить URL, на который надо перейти.
 
-Как пользоваться
+Как пользоваться?
 
 ```python
 from django.views.generic.base import RedirectView
@@ -274,7 +273,7 @@ class ArticleRedirectView(RedirectView):
 
 Класс, который необходим для того, чтобы сделать страницу для просмотра одного объекта.
 
-Ему необходимо передать `pk` либо `slug`, и это позволит отобразить один объект (статью, товар и т. д.)
+Ему необходимо передать `pk` либо `slug`, и это позволит отобразить один объект (статью, товар и т. д.).
 
 Как этим пользоваться?
 
@@ -316,15 +315,15 @@ urlpatterns = [
 > При использовании `slug` вместо `pk` нужно указать `slug_field` и `slug_url_kwarg` в классе, если имя поля отличается от `slug`.
 
 Этого уже достаточно, чтобы отрисовать страницу деталей объекта. Если `template_name` не указан явно, то Django будет
-пытаться отобразить `templates/app_name/model_detail.html`, где `app_name` - название приложения, `model` - название
-модели, `detail` - константа.
+пытаться отобразить `templates/app_name/model_detail.html`, где `app_name` — название приложения, `model` — название
+модели, `detail` — константа.
 
 В контекст будет передана переменная `object`. Методы `post`, `put` и т. д. не определены.
 
-Важные параметры.
+Важные параметры:
 
 ```python
-pk_url_kwarg = 'pk'  # Как переменная называется в urls.py, например, `<int:my_id>`
+pk_url_kwarg = 'pk'  # Как переменная называется в urls.py, например `<int:my_id>`
 slug_field = 'slug'  # Имя поля модели для поиска по slug
 slug_url_kwarg = 'slug'  # Имя параметра в URL для slug
 context_object_name = None  # Имя переменной в контексте (по умолчанию 'object')
@@ -335,11 +334,11 @@ model = None  # Класс модели, если не указан queryset
 
 Важные методы:
 
-`get_queryset()` - переопределить queryset
+`get_queryset()` — переопределить queryset.
 
-`get_context_data()` - то же, что и у TemplateView
+`get_context_data()` — то же, что и у TemplateView.
 
-`get_object()` - определяет логику получения объекта
+`get_object()` — определяет логику получения объекта.
 
 ## Class ListView
 
@@ -371,8 +370,8 @@ class ArticleListView(ListView):
 
 [Дока](https://docs.djangoproject.com/en/stable/topics/pagination/)
 
-Очень часто наше приложение хранит большое количество данных, и при отображении нам не нужно показывать прям всё
-(допустим у нас блог на 1 000 000 000 статей). Логично отдавать данные порциями - это и называется пагинация,
+Очень часто наше приложение хранит большое количество данных, и при отображении нам не нужно показывать прямо всё
+(допустим, у нас блог на 1 000 000 000 статей). Логично отдавать данные порциями — это и называется пагинация,
 или разбиение на страницы.
 
 При прокрутке ленты в соцсети вы подгружаете всё новые и новые страницы, просто при помощи JavaScript это сделано
@@ -384,7 +383,7 @@ class ArticleListView(ListView):
 paginate_by = None  # можно указать, сколько должно быть объектов на одной странице
 ```
 
-В шаблон будут переданы как список объектов, так и данные по пагинации
+В шаблон будут переданы как список объектов, так и данные по пагинации:
 
 ```python
 context = {
@@ -397,28 +396,28 @@ context = {
 }
 ```
 
-Важные параметры такие же как у DetailView и еще новые
+Важные параметры такие же, как у DetailView, и ещё новые:
 
 ```python
 allow_empty = True  # разрешить ли отображение пустого списка
 ordering = None  # явно указать порядок сортировки
 ```
 
-Всё еще описан только метод `get()`. Методы `post()`, `put()` и т. д. не разрешены.
+Всё ещё описан только метод `get()`. Методы `post()`, `put()` и т. д. не разрешены.
 
 Важные методы:
 
-`get_queryset()` - переопределить queryset
+`get_queryset()` — переопределить queryset.
 
-`get_context_data()` - то же, что и у TemplateView
+`get_context_data()` — то же, что и у TemplateView.
 
-`get_paginator()` - определяет логику получения класса Paginator
+`get_paginator()` — определяет логику получения класса Paginator.
 
-`get_paginate_by()` - определяет логику получения значение paginate_by
+`get_paginate_by()` — определяет логику получения значения paginate_by.
 
-`get_ordering()` - определяет логику получения переменной ordering
+`get_ordering()` — определяет логику получения переменной ordering.
 
-`get_allow_empty()` - определяет логику получения переменной allow_empty
+`get_allow_empty()` — определяет логику получения переменной allow_empty.
 
 ### Фильтрация по текущему пользователю
 
@@ -441,7 +440,7 @@ class MyArticlesListView(LoginRequiredMixin, ListView):
 
 Не все классы предназначены только для чтения данных.
 
-FormView класс необходим для обработки формы.
+`FormView` — класс, необходимый для обработки формы.
 
 Как пользоваться?
 
@@ -491,7 +490,7 @@ class ContactView(FormView):
 
 Важные параметры:
 
-Такие же, как у TemplateView, и еще свои
+Такие же, как у TemplateView, и ещё свои:
 
 ```python
 form_class = None  # сам класс формы
@@ -516,19 +515,19 @@ def post(self, request, *args, **kwargs):
         return self.form_invalid(form)
 ```
 
-Также все методы из TemplateView
+Также все методы из TemplateView:
 
-`get_context_data()` - дополнительно добавляет переменную `form` в темплейт
+`get_context_data()` — дополнительно добавляет переменную `form` в шаблон.
 
-`get_form()` - получить объект формы
+`get_form()` — получить объект формы.
 
-`get_form_class()` - получить класс формы
+`get_form_class()` — получить класс формы.
 
-`form_valid()` - что делать, если форма валидна
+`form_valid()` — что делать, если форма валидна.
 
-`form_invalid()` - что делать, если форма не валидна
+`form_invalid()` — что делать, если форма не валидна.
 
-`get_success_url()` - переопределить генерацию URL, на который будет совершен переход, если форма валидна
+`get_success_url()` — переопределить генерацию URL, на который будет совершён переход, если форма валидна.
 
 ## Class CreateView
 
@@ -580,7 +579,7 @@ class ArticleCreateView(LoginRequiredMixin, CreateView):
 
 Важные параметры:
 
-Такие же, как у FormView, и еще свои.
+Такие же, как у FormView, и ещё свои:
 
 ```python
 form_class = None  # Должен принимать ModelForm
@@ -592,11 +591,11 @@ fields = None  # Поля модели, если не указана форма
 
 Все методы из FormView, но дополненные под создание объекта:
 
-`post()` - предварительно добавит классу атрибут `self.object = None`
+`post()` — предварительно добавит классу атрибут `self.object = None`.
 
-`form_valid()` - дополнительно выполнит такую строку `self.object = form.save()`
+`form_valid()` — дополнительно выполнит такую строку: `self.object = form.save()`.
 
-`get_success_url()` - переопределить URL для редиректа после успешного сохранения
+`get_success_url()` — переопределить URL для редиректа после успешного сохранения.
 
 ### Динамический success_url
 
@@ -735,8 +734,8 @@ def form_valid(self, form):
 
 ## Регистрация
 
-По сути регистрация - это CreateView со своими особенностями (пароль хешируется), поэтому для регистрации используют
-просто CreateView, и существует заранее описанная форма UserCreationForm()
+По сути регистрация — это CreateView со своими особенностями (пароль хешируется), поэтому для регистрации используют
+просто CreateView, и существует заранее описанная форма `UserCreationForm`:
 
 ```python
 class UserCreationForm(forms.ModelForm):
@@ -781,8 +780,8 @@ class UserCreationForm(forms.ModelForm):
 ## Управление доступом
 
 Управление доступом — это важная часть разработки любого веб-приложения. В Django этот процесс включает контроль того,
-какие пользователи могут просматривать или изменять определенные ресурсы. Django предоставляет несколько встроенных
-инструментов для управления доступом, таких как декораторы, пермишены и миксины.
+какие пользователи могут просматривать или изменять определённые ресурсы. Django предоставляет несколько встроенных
+инструментов для управления доступом, таких как декораторы, permissions и миксины.
 
 > Пермишены и группы подробно рассмотрены в [лекции 23](lesson23.md#система-разрешений-permissions). Здесь мы сосредоточимся на миксинах для CBV.
 
@@ -959,9 +958,9 @@ class CustomLoginRequiredMixin(LoginRequiredMixin):
 
 Как это сделать?
 
-Разработка всегда начинается с описания моделей, нам нужно две сущности: юзер и заметка.
+Разработка всегда начинается с описания моделей, нам нужны две сущности: пользователь и заметка.
 
-Мы не будем изменять юзера, нам подходит стандартный.
+Мы не будем изменять пользователя, нам подходит стандартный.
 
 Создадим модель заметки:
 
@@ -981,21 +980,21 @@ class Note(models.Model):
         ordering = ['-created_at', ]
 ```
 
-Не забываем про миграции, и про добавление приложения в settings.py
+Не забываем про миграции и про добавление приложения в `settings.py`.
 
 Создадим необходимые шаблоны: `base.html`, `index.html`, `login.html`, `register.html`. Пока пустые, заполним чуть
 позже.
 
-Создадим view. Для базовой страницы, на которой отображается список заметок, лучше всего подходит ListView, для логина,
-и логаута - существующие классы, для регистрации - CreateView.
+Создадим view. Для базовой страницы, на которой отображается список заметок, лучше всего подходит ListView; для логина
+и логаута — существующие классы; для регистрации — CreateView.
 
 Для логина и регистрации воспользуемся готовой формой.
 
 Базовую страницу и логаут закроем от незалогиненных пользователей.
 
-Получается как-то так:
+Получается как-то так.
 
-Во views.py
+Во `views.py`:
 
 ```python
 from django.contrib.auth.forms import UserCreationForm
@@ -1031,9 +1030,9 @@ class Logout(LoginRequiredMixin, LogoutView):
     login_url = 'login/'
 ```
 
-В urls.py проекта добавим через `include` urls.py приложения
+В `urls.py` проекта добавим через `include` `urls.py` приложения.
 
-В app/urls.py:
+В `app/urls.py`:
 
 ```python
 from django.urls import path
@@ -1048,9 +1047,9 @@ urlpatterns = [
 
 ```
 
-И заполним html файлы
+И заполним HTML-файлы.
 
-base.html
+`base.html`:
 
 ```html
 <!DOCTYPE html>
@@ -1068,7 +1067,7 @@ base.html
 </html>
 ```
 
-index.html
+`index.html`:
 
 ```html
 {% extends 'base.html' %}
@@ -1080,7 +1079,7 @@ index.html
 {% endblock %}
 ```
 
-login.html
+`login.html`:
 
 ```html
 {% extends 'base.html' %}
@@ -1096,7 +1095,7 @@ login.html
 {% endblock %}
 ```
 
-register.html
+`register.html`:
 
 ```html
 {% extends 'base.html' %}
@@ -1114,9 +1113,9 @@ register.html
 
 Структура для логина, логаута, и регистрации готова.
 
-Добавим отображение списка заметок:
+Добавим отображение списка заметок.
 
-в index.html:
+В `index.html`:
 
 ```html
 {% extends 'base.html' %}
@@ -1140,7 +1139,7 @@ register.html
 
 Нам нужна форма для создания заметок и CreateView.
 
-В forms.py
+В `forms.py`:
 
 ```python
 from django.forms import ModelForm
@@ -1160,9 +1159,9 @@ class NoteCreateForm(ModelForm):
 Будем ли мы отображать отдельную страницу для создания? Нет, значит отдельный html файл нам не нужен, а раз мы не будем
 отображать страницу, то и метод `get()` нам не нужен. Оставим только `post()`.
 
-Создадим CreateView:
+Создадим CreateView.
 
-В views.py
+В `views.py`:
 
 ```python
 class NoteCreateView(LoginRequiredMixin, CreateView):
@@ -1172,9 +1171,9 @@ class NoteCreateView(LoginRequiredMixin, CreateView):
     success_url = '/'
 ```
 
-Выведем URL под этот класс:
+Выведем URL под этот класс.
 
-В urls.py
+В `urls.py`:
 
 ```python
 from django.urls import path
@@ -1192,7 +1191,7 @@ urlpatterns = [
 Достаточно ли этого, чтобы создавать заметки? Нет, потому что мы никуда не вывели форму для создания заметок. Давайте
 выведем её на нашу основную страницу.
 
-Во views.py изменим класс `NoteListView`, добавив атрибут `extra_context = {'create_form': NoteCreateForm()}`
+Во `views.py` изменим класс `NoteListView`, добавив атрибут `extra_context = {'create_form': NoteCreateForm()}`:
 
 ```python
 class NoteListView(LoginRequiredMixin, ListView):
@@ -1202,7 +1201,7 @@ class NoteListView(LoginRequiredMixin, ListView):
     extra_context = {'create_form': NoteCreateForm()}
 ```
 
-Теперь мы можем вывести форму в шаблоне, изменим `index.html`
+Теперь мы можем вывести форму в шаблоне. Изменим `index.html`:
 
 ```html
 {% extends 'base.html' %}
@@ -1228,7 +1227,7 @@ class NoteListView(LoginRequiredMixin, ListView):
 ```
 
 Достаточно ли этого? Нет. Наша заметка должна хранить в себе пользователя, а мы нигде его не добавляем. При попытке
-вызвать `save()` мы получим ошибку, не могу сохранить без юзера.
+вызвать `save()` мы получим ошибку: не могу сохранить без пользователя.
 
 Что будем делать? Переписывать логику `form_valid()`, мы знаем, что метод `save()` для CreateView вызывается там.
 
@@ -1270,9 +1269,9 @@ class NoteCreateView(LoginRequiredMixin, CreateView):
 
 Создание готово.
 
-Как добавить удаление? Создадим новую DeleteView, она даже не требует форму. Важно добавить проверку, что пользователь может удалять только свои заметки:
+Как добавить удаление? Создадим новую DeleteView — она даже не требует форму. Важно добавить проверку, что пользователь может удалять только свои заметки.
 
-Во views.py
+Во `views.py`:
 
 ```python
 from django.urls import reverse_lazy
@@ -1288,9 +1287,9 @@ class NoteDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
         return self.request.user == note.author
 ```
 
-Не забываем добавить URL
+Не забываем добавить URL.
 
-В urls.py:
+В `urls.py`:
 
 ```python
 from django.urls import path
@@ -1308,7 +1307,7 @@ urlpatterns = [
 
 И добавляем форму для удаления в шаблон.
 
-В index.html:
+В `index.html`:
 
 ```html
 {% extends 'base.html' %}
@@ -1368,13 +1367,12 @@ urlpatterns = [
 {% endblock %}
 ```
 
-Осталась маленькая деталь, сейчас мы отображаем все существующие заметки, а что если их будет миллион? Это не
-рационально, давайте добавим пагинацию.
+Осталась маленькая деталь: сейчас мы отображаем все существующие заметки, а что, если их будет миллион? Это нерационально — давайте добавим пагинацию.
 
 ListView уже передаёт все необходимые данные, нам нужно только добавить размер страницы и добавить отображение по
 страницам в шаблоне.
 
-Во views.py изменим NoteListView
+Во `views.py` изменим `NoteListView`:
 
 ```python
 from django.urls import reverse_lazy
@@ -1391,7 +1389,7 @@ class NoteListView(LoginRequiredMixin, ListView):
         return context
 ```
 
-А в index.html:
+А в `index.html`:
 
 ```html
 {% extends 'base.html' %}
@@ -1441,8 +1439,8 @@ class NoteListView(LoginRequiredMixin, ListView):
 
 ```
 
-Профит! Всё работает. Переходим к заданию на модуль. Все задания должны быть выполнены через Class-Based View.
+Профит! Всё работает. Переходим к заданию на модуль. Все задания должны быть выполнены через Class-Based Views.
 
-## Модуль номер 3
+## Модуль № 3
 
-[Cсылка](module3.md)
+[Ссылка](module3.md)
