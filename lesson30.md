@@ -619,21 +619,21 @@ class LoginAcceptanceTest(LiveServerTestCase):
 from rest_framework.test import APIRequestFactory
 
 factory = APIRequestFactory()
-request = factory.post('/notes/', {'title': 'new idea'})
+request = factory.post('/api/articles/', {'title': 'Новая статья'})
 ```
 
 По умолчанию используется формат `multipart` (как HTML-форма). Для отправки JSON нужно указать явно:
 
 ```python
 factory = APIRequestFactory()
-request = factory.post('/notes/', {'title': 'new idea'}, format='json')
+request = factory.post('/api/articles/', {'title': 'Новая статья'}, format='json')
 ```
 
 Или указать content-type напрямую:
 
 ```python
 import json
-request = factory.post('/notes/', json.dumps({'title': 'new idea'}), content_type='application/json')
+request = factory.post('/api/articles/', json.dumps({'title': 'Новая статья'}), content_type='application/json')
 ```
 
 #### force_authenticate()
@@ -643,42 +643,48 @@ request = factory.post('/notes/', json.dumps({'title': 'new idea'}), content_typ
 ```python
 from rest_framework.test import APIRequestFactory, force_authenticate
 from django.contrib.auth.models import User
-from .views import AccountDetail
+from .views import ArticleViewSet
 
 
 factory = APIRequestFactory()
-user = User.objects.get(username='olivia')
-view = AccountDetail.as_view()
+user = User.objects.get(username='author')
+view = ArticleViewSet.as_view({'get': 'retrieve'})
 
-request = factory.get('/accounts/django-superstars/')
+request = factory.get('/api/articles/1/')
 force_authenticate(request, user=user)
-response = view(request)
+response = view(request, pk=1)
 ```
 
 #### Пример unit-теста view
 
 ```python
+from django.contrib.auth.models import User
 from rest_framework.test import APIRequestFactory, force_authenticate, APITestCase
-from .views import NoteViewSet
-from .models import Note
+from .views import ArticleViewSet
+from .models import Article
 
 
-class NoteViewUnitTest(APITestCase):
+class ArticleViewUnitTest(APITestCase):
     def setUp(self):
         self.factory = APIRequestFactory()
-        self.user = User.objects.create_user('testuser', password='testpass')
-        self.note = Note.objects.create(title='Test', owner=self.user)
+        self.user = User.objects.create_user('author', password='testpass')
+        self.article = Article.objects.create(
+            title='Тестовая статья',
+            content='Содержимое статьи',
+            author=self.user,
+            status='published'
+        )
 
-    def test_retrieve_returns_note(self):
+    def test_retrieve_returns_article(self):
         """Unit-тест: проверяем только метод retrieve"""
-        view = NoteViewSet.as_view({'get': 'retrieve'})
-        request = self.factory.get(f'/notes/{self.note.pk}/')
+        view = ArticleViewSet.as_view({'get': 'retrieve'})
+        request = self.factory.get(f'/api/articles/{self.article.pk}/')
         force_authenticate(request, user=self.user)
 
-        response = view(request, pk=self.note.pk)
+        response = view(request, pk=self.article.pk)
 
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(response.data['title'], 'Test')
+        self.assertEqual(response.data['title'], 'Тестовая статья')
 ```
 
 ### Интеграционное тестирование API
@@ -691,7 +697,7 @@ class NoteViewUnitTest(APITestCase):
 from rest_framework.test import APIClient
 
 client = APIClient()
-response = client.post('/notes/', {'title': 'new idea'}, format='json')
+response = client.post('/api/articles/', {'title': 'Новая статья'}, format='json')
 ```
 
 #### APITestCase
@@ -699,28 +705,36 @@ response = client.post('/notes/', {'title': 'new idea'}, format='json')
 Удобный базовый класс, комбинирующий `TestCase` и `APIClient`:
 
 ```python
+from django.contrib.auth.models import User
 from rest_framework.test import APITestCase
 from rest_framework import status
 from django.urls import reverse
+from .models import Article
 
 
-class NotesIntegrationTests(APITestCase):
-    def test_list_notes_anonymous(self):
-        """Интеграционный тест: полный цикл запроса"""
-        url = reverse('notes-list')
+class ArticleIntegrationTests(APITestCase):
+    def test_list_articles_anonymous(self):
+        """Интеграционный тест: анонимный пользователь видит список статей"""
+        url = reverse('article-list')
         response = self.client.get(url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
-    def test_create_note_authenticated(self):
-        """Интеграционный тест: создание заметки"""
-        user = User.objects.create_user('testuser', password='testpass')
+    def test_create_article_authenticated(self):
+        """Интеграционный тест: создание статьи авторизованным пользователем"""
+        user = User.objects.create_user('author', password='testpass')
         self.client.force_authenticate(user=user)
 
-        url = reverse('notes-list')
-        response = self.client.post(url, {'title': 'New Note'}, format='json')
+        url = reverse('article-list')
+        data = {
+            'title': 'Новая статья',
+            'content': 'Содержимое статьи',
+            'status': 'draft'
+        }
+        response = self.client.post(url, data, format='json')
 
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
-        self.assertEqual(Note.objects.count(), 1)
+        self.assertEqual(Article.objects.count(), 1)
+        self.assertEqual(Article.objects.first().author, user)
 ```
 
 #### Авторизация через APIClient
@@ -753,7 +767,7 @@ client.logout()
 
 ```python
 client = APIClient()
-client.get('/notes/', HTTP_X_CUSTOM_HEADER='value')
+client.get('/api/articles/', HTTP_X_CUSTOM_HEADER='value')
 ```
 
 #### CSRF в тестах
@@ -958,16 +972,404 @@ Faker отлично интегрируется с FactoryBoy через `factor
 ```python
 import factory
 from factory.django import DjangoModelFactory
-from myapp.models import Book
+from blog.models import Article
 
 
-class BookFactory(DjangoModelFactory):
+class ArticleFactory(DjangoModelFactory):
     class Meta:
-        model = Book
+        model = Article
 
-    title = factory.Faker('sentence', nb_words=4)
-    author_name = factory.Faker('name')
-    published_date = factory.Faker('date_this_decade')
+    title = factory.Faker('sentence', nb_words=5)
+    content = factory.Faker('paragraphs', nb=3, ext_word_list=None)
+    status = 'published'
+    author = factory.SubFactory('blog.tests.factories.UserFactory')
+```
+
+### Фабрики для моделей блога
+
+Создадим полный набор фабрик для нашего блога:
+
+```python
+# blog/tests/factories.py
+import factory
+from factory.django import DjangoModelFactory
+from django.contrib.auth import get_user_model
+from blog.models import Article, Topic, Comment
+
+User = get_user_model()
+
+
+class UserFactory(DjangoModelFactory):
+    """Фабрика для создания пользователей"""
+    class Meta:
+        model = User
+
+    username = factory.Sequence(lambda n: f'user{n}')
+    email = factory.LazyAttribute(lambda o: f'{o.username}@example.com')
+    password = factory.PostGenerationMethodCall('set_password', 'testpass123')
+
+
+class TopicFactory(DjangoModelFactory):
+    """Фабрика для создания тем"""
+    class Meta:
+        model = Topic
+
+    name = factory.Sequence(lambda n: f'Тема {n}')
+    slug = factory.LazyAttribute(lambda o: o.name.lower().replace(' ', '-'))
+
+
+class ArticleFactory(DjangoModelFactory):
+    """Фабрика для создания статей"""
+    class Meta:
+        model = Article
+
+    title = factory.Faker('sentence', nb_words=5, locale='ru_RU')
+    content = factory.Faker('text', max_nb_chars=500, locale='ru_RU')
+    status = 'published'
+    author = factory.SubFactory(UserFactory)
+
+    @factory.post_generation
+    def topics(self, create, extracted, **kwargs):
+        """Добавление тем к статье (ManyToMany)"""
+        if not create:
+            return
+        if extracted:
+            for topic in extracted:
+                self.topics.add(topic)
+
+
+class CommentFactory(DjangoModelFactory):
+    """Фабрика для создания комментариев"""
+    class Meta:
+        model = Comment
+
+    text = factory.Faker('paragraph', nb_sentences=2, locale='ru_RU')
+    author = factory.SubFactory(UserFactory)
+    article = factory.SubFactory(ArticleFactory)
+```
+
+#### Использование фабрик в тестах
+
+```python
+from blog.tests.factories import ArticleFactory, TopicFactory, UserFactory
+
+
+class ArticleTests(APITestCase):
+    def setUp(self):
+        self.author = UserFactory()
+        self.topic = TopicFactory(name='Python')
+        # Статья с конкретным автором и темой
+        self.article = ArticleFactory(
+            author=self.author,
+            topics=[self.topic]
+        )
+
+    def test_article_has_author(self):
+        self.assertEqual(self.article.author, self.author)
+
+    def test_article_has_topic(self):
+        self.assertIn(self.topic, self.article.topics.all())
+```
+
+#### Специализированные фабрики
+
+```python
+class DraftArticleFactory(ArticleFactory):
+    """Фабрика для черновиков"""
+    status = 'draft'
+
+
+class PublishedArticleFactory(ArticleFactory):
+    """Фабрика для опубликованных статей"""
+    status = 'published'
+    published_at = factory.LazyFunction(timezone.now)
+```
+
+---
+
+## Полный пример: тестирование ArticleViewSet
+
+Соберём всё вместе — полный набор тестов для API статей блога.
+
+### Структура тестов
+
+```
+blog/
+├── tests/
+│   ├── __init__.py
+│   ├── factories.py          # Фабрики (см. выше)
+│   ├── test_models.py        # Unit-тесты моделей
+│   ├── test_serializers.py   # Unit-тесты сериализаторов
+│   └── test_views.py         # Интеграционные тесты API
+```
+
+### Тесты CRUD операций
+
+```python
+# blog/tests/test_views.py
+from django.urls import reverse
+from rest_framework import status
+from rest_framework.test import APITestCase
+from blog.tests.factories import ArticleFactory, UserFactory, TopicFactory
+from blog.models import Article
+
+
+class ArticleCRUDTests(APITestCase):
+    """Тесты CRUD операций для статей"""
+
+    def setUp(self):
+        self.author = UserFactory()
+        self.other_user = UserFactory()
+        self.topic = TopicFactory(name='Django')
+        self.article = ArticleFactory(author=self.author, topics=[self.topic])
+
+    # === CREATE ===
+    def test_create_article_authenticated(self):
+        """Авторизованный пользователь может создать статью"""
+        self.client.force_authenticate(user=self.author)
+        url = reverse('article-list')
+        data = {
+            'title': 'Новая статья',
+            'content': 'Содержимое статьи',
+            'status': 'draft'
+        }
+
+        response = self.client.post(url, data, format='json')
+
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        self.assertEqual(Article.objects.count(), 2)
+        new_article = Article.objects.get(title='Новая статья')
+        self.assertEqual(new_article.author, self.author)
+
+    def test_create_article_anonymous_forbidden(self):
+        """Анонимный пользователь не может создать статью"""
+        url = reverse('article-list')
+        data = {'title': 'Статья', 'content': 'Текст'}
+
+        response = self.client.post(url, data, format='json')
+
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
+
+    # === READ ===
+    def test_list_articles_anonymous(self):
+        """Анонимный пользователь видит список опубликованных статей"""
+        ArticleFactory(status='draft', author=self.author)  # Черновик
+        ArticleFactory(status='published', author=self.author)  # Опубликована
+
+        url = reverse('article-list')
+        response = self.client.get(url)
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        # Видим только опубликованные (1 из setUp + 1 новая)
+        self.assertEqual(len(response.data['results']), 2)
+
+    def test_retrieve_article(self):
+        """Получение детальной информации о статье"""
+        url = reverse('article-detail', kwargs={'pk': self.article.pk})
+
+        response = self.client.get(url)
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(response.data['title'], self.article.title)
+
+    # === UPDATE ===
+    def test_update_own_article(self):
+        """Автор может редактировать свою статью"""
+        self.client.force_authenticate(user=self.author)
+        url = reverse('article-detail', kwargs={'pk': self.article.pk})
+        data = {'title': 'Обновлённый заголовок'}
+
+        response = self.client.patch(url, data, format='json')
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.article.refresh_from_db()
+        self.assertEqual(self.article.title, 'Обновлённый заголовок')
+
+    def test_update_other_user_article_forbidden(self):
+        """Другой пользователь не может редактировать чужую статью"""
+        self.client.force_authenticate(user=self.other_user)
+        url = reverse('article-detail', kwargs={'pk': self.article.pk})
+        data = {'title': 'Попытка изменить'}
+
+        response = self.client.patch(url, data, format='json')
+
+        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+
+    # === DELETE ===
+    def test_delete_own_article(self):
+        """Автор может удалить свою статью"""
+        self.client.force_authenticate(user=self.author)
+        url = reverse('article-detail', kwargs={'pk': self.article.pk})
+
+        response = self.client.delete(url)
+
+        self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
+        self.assertFalse(Article.objects.filter(pk=self.article.pk).exists())
+
+    def test_delete_other_user_article_forbidden(self):
+        """Другой пользователь не может удалить чужую статью"""
+        self.client.force_authenticate(user=self.other_user)
+        url = reverse('article-detail', kwargs={'pk': self.article.pk})
+
+        response = self.client.delete(url)
+
+        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+```
+
+### Тесты Permissions
+
+```python
+class ArticlePermissionTests(APITestCase):
+    """Тесты прав доступа"""
+
+    def setUp(self):
+        self.author = UserFactory()
+        self.admin = UserFactory(is_staff=True)
+        self.draft = ArticleFactory(author=self.author, status='draft')
+        self.published = ArticleFactory(author=self.author, status='published')
+
+    def test_draft_visible_only_to_author(self):
+        """Черновик виден только автору"""
+        url = reverse('article-detail', kwargs={'pk': self.draft.pk})
+
+        # Анонимный пользователь — 404
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
+
+        # Автор — 200
+        self.client.force_authenticate(user=self.author)
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_admin_can_delete_any_article(self):
+        """Администратор может удалить любую статью"""
+        self.client.force_authenticate(user=self.admin)
+        url = reverse('article-detail', kwargs={'pk': self.published.pk})
+
+        response = self.client.delete(url)
+
+        self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
+```
+
+### Тесты фильтрации и поиска
+
+```python
+class ArticleFilterTests(APITestCase):
+    """Тесты фильтрации и поиска"""
+
+    def setUp(self):
+        self.python_topic = TopicFactory(name='Python')
+        self.django_topic = TopicFactory(name='Django')
+        self.author1 = UserFactory(username='alice')
+        self.author2 = UserFactory(username='bob')
+
+        self.article1 = ArticleFactory(
+            title='Введение в Python',
+            author=self.author1,
+            topics=[self.python_topic]
+        )
+        self.article2 = ArticleFactory(
+            title='Django для начинающих',
+            author=self.author2,
+            topics=[self.django_topic, self.python_topic]
+        )
+
+    def test_filter_by_topic(self):
+        """Фильтрация по теме"""
+        url = reverse('article-list')
+
+        response = self.client.get(url, {'topics': self.django_topic.pk})
+
+        self.assertEqual(len(response.data['results']), 1)
+        self.assertEqual(response.data['results'][0]['title'], 'Django для начинающих')
+
+    def test_filter_by_author(self):
+        """Фильтрация по автору"""
+        url = reverse('article-list')
+
+        response = self.client.get(url, {'author': self.author1.pk})
+
+        self.assertEqual(len(response.data['results']), 1)
+        self.assertEqual(response.data['results'][0]['author']['username'], 'alice')
+
+    def test_search_by_title(self):
+        """Поиск по заголовку"""
+        url = reverse('article-list')
+
+        response = self.client.get(url, {'search': 'Python'})
+
+        self.assertEqual(len(response.data['results']), 1)
+        self.assertIn('Python', response.data['results'][0]['title'])
+
+    def test_ordering_by_created_at(self):
+        """Сортировка по дате создания"""
+        url = reverse('article-list')
+
+        response = self.client.get(url, {'ordering': '-created_at'})
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        # Проверяем, что статьи отсортированы по убыванию даты
+        dates = [a['created_at'] for a in response.data['results']]
+        self.assertEqual(dates, sorted(dates, reverse=True))
+```
+
+### Тесты с pytest
+
+```python
+# blog/tests/test_views_pytest.py
+import pytest
+from django.urls import reverse
+from rest_framework import status
+from blog.tests.factories import ArticleFactory, UserFactory
+
+
+@pytest.fixture
+def api_client():
+    from rest_framework.test import APIClient
+    return APIClient()
+
+
+@pytest.fixture
+def author(db):
+    return UserFactory()
+
+
+@pytest.fixture
+def article(db, author):
+    return ArticleFactory(author=author)
+
+
+@pytest.mark.django_db
+class TestArticleAPI:
+    def test_list_articles(self, api_client, article):
+        url = reverse('article-list')
+        response = api_client.get(url)
+        assert response.status_code == status.HTTP_200_OK
+
+    def test_create_article_authenticated(self, api_client, author):
+        api_client.force_authenticate(user=author)
+        url = reverse('article-list')
+        data = {'title': 'Новая статья', 'content': 'Текст', 'status': 'draft'}
+
+        response = api_client.post(url, data, format='json')
+
+        assert response.status_code == status.HTTP_201_CREATED
+        assert response.data['author']['username'] == author.username
+
+    @pytest.mark.parametrize('status_code,user_authenticated', [
+        (status.HTTP_401_UNAUTHORIZED, False),
+        (status.HTTP_201_CREATED, True),
+    ])
+    def test_create_article_auth_required(
+        self, api_client, author, status_code, user_authenticated
+    ):
+        if user_authenticated:
+            api_client.force_authenticate(user=author)
+
+        url = reverse('article-list')
+        response = api_client.post(url, {'title': 'Test', 'content': 'Text'}, format='json')
+
+        assert response.status_code == status_code
 ```
 
 #### Providers — дополнительные генераторы
@@ -1025,7 +1427,7 @@ class ThrottleTests(APITestCase):
     })
     def test_throttle_for_anon(self):
         # При необходимости подготовьте данные через фабрики (см. раздел про DjangoModelFactory)
-        url = reverse('notes-list')
+        url = reverse('article-list')
         assert self.client.get(url).status_code == status.HTTP_200_OK
         assert self.client.get(url).status_code == status.HTTP_200_OK
         assert self.client.get(url).status_code == status.HTTP_429_TOO_MANY_REQUESTS
@@ -1232,3 +1634,91 @@ def test_only_unix():
 def test_known_bug():
     assert 1 == 2
 ```
+
+---
+
+## Итоги
+
+В этой лекции мы изучили:
+
+1. **Уровни тестирования**:
+   - Unit-тесты — проверка отдельных компонентов в изоляции
+   - Интеграционные тесты — проверка взаимодействия компонентов
+   - Acceptance-тесты — имитация действий пользователя
+
+2. **Иерархия TestCase в Django**:
+   - `SimpleTestCase` — без БД, с Client
+   - `TransactionTestCase` — с реальными транзакциями
+   - `TestCase` — с откатом транзакций (рекомендуется)
+   - `LiveServerTestCase` — для Selenium-тестов
+
+3. **Инструменты Django**:
+   - `RequestFactory` — unit-тесты view без middleware
+   - `Client` — интеграционные тесты с полным циклом запроса
+
+4. **Инструменты DRF**:
+   - `APIRequestFactory` — unit-тесты API view
+   - `APIClient` / `APITestCase` — интеграционные тесты API
+   - `force_authenticate()` — авторизация без проверки пароля
+
+5. **Генерация тестовых данных**:
+   - FactoryBoy — фабрики для создания объектов
+   - Faker — генерация реалистичных данных
+   - `SubFactory`, `Sequence`, `LazyAttribute`
+
+6. **pytest и pytest-django**:
+   - Фикстуры и `conftest.py`
+   - Маркеры `@pytest.mark.django_db`
+   - Параметризация тестов
+
+---
+
+## Домашнее задание
+
+### Практика на занятии
+
+1. Создайте фабрики `UserFactory`, `ArticleFactory`, `TopicFactory` для блога
+2. Напишите тест создания статьи авторизованным пользователем
+3. Напишите тест, проверяющий, что анонимный пользователь не может создать статью
+
+### Домашняя работа
+
+1. **Полный набор CRUD-тестов для ArticleViewSet**:
+   - Тесты создания, чтения, обновления, удаления
+   - Проверка кодов ответа (200, 201, 204, 400, 401, 403, 404)
+   - Проверка данных в ответе
+
+2. **Тесты Permissions**:
+   - `IsAuthorOrReadOnly` — автор может редактировать, остальные только читать
+   - `IsPublishedOrAuthor` — черновики видит только автор
+   - Администратор может удалять любые статьи
+
+3. **Тесты фильтрации и поиска**:
+   - Фильтрация по теме, автору, статусу
+   - Поиск по заголовку и содержимому
+   - Сортировка по дате создания
+
+4. **Тесты CommentViewSet**:
+   - Создание комментария к статье
+   - Удаление своего комментария
+   - Модератор может удалять любые комментарии
+
+5. **Перевод тестов на pytest**:
+   - Создайте `conftest.py` с фикстурами
+   - Используйте `@pytest.mark.django_db`
+   - Добавьте параметризацию для тестов авторизации
+
+---
+
+## Вопросы для самопроверки
+
+1. В чём разница между `RequestFactory` и `Client`?
+2. Когда использовать `TransactionTestCase` вместо `TestCase`?
+3. Что делает `force_authenticate()` и когда его использовать?
+4. Чем `APIRequestFactory` отличается от `APIClient`?
+5. Как создать фабрику для модели со связью ManyToMany?
+6. Что такое `SubFactory` и зачем он нужен?
+7. Как использовать Faker с FactoryBoy?
+8. Что такое фикстуры в pytest и как их определять?
+9. Для чего нужен маркер `@pytest.mark.django_db`?
+10. Как тестировать throttling в DRF?
