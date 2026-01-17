@@ -425,15 +425,15 @@ urlpatterns += [
 ```
 
 ## Permissions
+
 Документация: https://www.django-rest-framework.org/api-guide/permissions/
 
-Они же права доступа.
+Permissions (права доступа) определяют, кто может выполнять какие действия с API.
 
-Задать разрешения можно на уровне проекта и на уровне ресурса.
-
-Чтобы задать на уровне проекта, в `settings.py` необходимо добавить:
+### Настройка на уровне проекта
 
 ```python
+# settings.py
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.IsAuthenticated',
@@ -441,89 +441,281 @@ REST_FRAMEWORK = {
 }
 ```
 
-- По умолчанию (если DEFAULT_PERMISSION_CLASSES не задан), действует AllowAny.
-- SAFE_METHODS = {"GET", "HEAD", "OPTIONS"} — считаются методами только для чтения.
-- 401 Unauthorized — отсутствует/невалидна аутентификация; 403 Forbidden — аутентификация есть, но прав недостаточно.
-
-
-Для описания на уровне объектов используется аргумент `permission_classes`:
+### Настройка на уровне View
 
 ```python
 from rest_framework import permissions
 from rest_framework.viewsets import ModelViewSet
+from blog.models import Article
+from blog.serializers import ArticleSerializer
 
 
-class ExampleModelViewSet(ModelViewSet):
+class ArticleViewSet(ModelViewSet):
+    queryset = Article.objects.all()
+    serializer_class = ArticleSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 ```
 
-Существует достаточно много заготовленных пермишенов.
+### Базовые permissions
 
+| Permission                  | Описание                                             |
+|-----------------------------|------------------------------------------------------|
+| `AllowAny`                  | Доступ разрешён всем (по умолчанию)                  |
+| `IsAuthenticated`           | Только аутентифицированным пользователям             |
+| `IsAdminUser`               | Только пользователям с `is_staff=True`               |
+| `IsAuthenticatedOrReadOnly` | Аутентифицированным — всё, остальным — только чтение |
+| `DjangoModelPermissions`    | Права на основе Django permissions модели            |
+| `DjangoObjectPermissions`   | Object-level permissions (требует django-guardian)   |
+
+### SAFE_METHODS
+
+DRF определяет безопасные методы, которые не изменяют данные:
+
+```python
+from rest_framework.permissions import SAFE_METHODS
+
+# SAFE_METHODS = ('GET', 'HEAD', 'OPTIONS')
+
+class IsAuthorOrReadOnly(permissions.BasePermission):
+    def has_object_permission(self, request, view, obj):
+        # Чтение разрешено всем
+        if request.method in SAFE_METHODS:
+            return True
+        # Запись — только автору
+        return obj.author == request.user
 ```
-AllowAny - можно всем
-IsAuthenticated - только аутентифицированным пользователям
-IsAdminUser - только администраторам
-IsAuthenticatedOrReadOnly - аутентифицированным пользователям или только на чтение
-```
 
-Все они изначально наследуются от `rest_framework.permissions.BasePermission`.
-
-Но если нам нужны кастомные, то мы можем создать их, отнаследовавшись от `permissions.BasePermission` и переписав один
-или оба метода `has_permission()` и `has_object_permission()`
-
-Например, владельцу можно выполнять любые действия, а остальным только чтение объекта:
+### has_permission vs has_object_permission
 
 ```python
 from rest_framework import permissions
 
 
-class IsOwnerOrReadOnly(permissions.BasePermission):
+class ArticlePermission(permissions.BasePermission):
     """
-    Custom permission to allow only owners of an object to edit it.
+    has_permission — проверяется для ВСЕХ запросов (list, create, retrieve, update, delete)
+    has_object_permission — проверяется только для действий с конкретным объектом
+    """
+
+    def has_permission(self, request, view):
+        """
+        Вызывается ПЕРВЫМ для каждого запроса.
+        Проверяет общий доступ к ресурсу.
+        """
+        # Чтение разрешено всем
+        if request.method in permissions.SAFE_METHODS:
+            return True
+        # Создание — только аутентифицированным
+        return request.user.is_authenticated
+
+    def has_object_permission(self, request, view, obj):
+        """
+        Вызывается ПОСЛЕ has_permission для retrieve, update, partial_update, destroy.
+        Проверяет доступ к конкретному объекту.
+
+        ВАЖНО: Не вызывается для list и create!
+        """
+        # Чтение разрешено всем
+        if request.method in permissions.SAFE_METHODS:
+            return True
+        # Редактирование — только автору
+        return obj.author == request.user
+```
+
+### Кастомные permissions для блога
+
+#### IsAuthorOrReadOnly — только автор может редактировать
+
+```python
+# blog/permissions.py
+from rest_framework import permissions
+
+
+class IsAuthorOrReadOnly(permissions.BasePermission):
+    """
+    Автор может редактировать и удалять свои статьи.
+    Остальные — только читать.
     """
 
     def has_object_permission(self, request, view, obj):
-        # Read permissions are allowed to any request,
-        # so we'll always allow GET, HEAD or OPTIONS requests.
         if request.method in permissions.SAFE_METHODS:
             return True
-
-        # Write permissions are only allowed to the owner of the snippet.
-        return obj.owner == request.user
-
-    def has_permission(self, request, view):
-        return True
+        return obj.author == request.user
 ```
 
-`has_permission()` - отвечает за доступ к спискам объектов
-`has_object_permission()` - отвечает за доступ к конкретному объекту
-
-Пермишены можно указывать через запятую, если их несколько:
+#### IsPublishedOrAuthor — черновики видит только автор
 
 ```python
-permission_classes = [permissions.IsAuthenticatedOrReadOnly,
-                      IsOwnerOrReadOnly]
+class IsPublishedOrAuthor(permissions.BasePermission):
+    """
+    Опубликованные статьи видят все.
+    Черновики — только автор.
+    """
+
+    def has_object_permission(self, request, view, obj):
+        if obj.status == 'published':
+            return True
+        return obj.author == request.user
 ```
 
-Пример per-action (разные права для разных действий):
+#### CanModerateComments — модератор может удалять комментарии
+
+```python
+class CanModerateComments(permissions.BasePermission):
+    """
+    Удалять комментарии может автор комментария,
+    автор статьи или модератор.
+    """
+
+    def has_object_permission(self, request, view, obj):
+        if request.method != 'DELETE':
+            return True
+
+        user = request.user
+        # Автор комментария
+        if obj.author == user:
+            return True
+        # Автор статьи
+        if obj.article.author == user:
+            return True
+        # Модератор (группа или флаг)
+        if user.groups.filter(name='moderators').exists():
+            return True
+
+        return False
+```
+
+### DjangoModelPermissions
+
+Использует стандартные Django permissions (`add_`, `change_`, `delete_`, `view_`):
+
+```python
+from rest_framework.permissions import DjangoModelPermissions
+
+
+class ArticleViewSet(ModelViewSet):
+    queryset = Article.objects.all()
+    serializer_class = ArticleSerializer
+    permission_classes = [DjangoModelPermissions]
+
+    # Требует у пользователя:
+    # - blog.view_article для GET
+    # - blog.add_article для POST
+    # - blog.change_article для PUT/PATCH
+    # - blog.delete_article для DELETE
+```
+
+### get_permissions() — разные права для разных действий
+
 ```python
 from rest_framework.permissions import AllowAny, IsAuthenticated
+from blog.permissions import IsAuthorOrReadOnly
 
-class NotesViewSet(ModelViewSet):
-    ...
+
+class ArticleViewSet(ModelViewSet):
+    queryset = Article.objects.all()
+    serializer_class = ArticleSerializer
+
     def get_permissions(self):
-        if self.action in ["list", "retrieve"]:
+        """
+        Разные permissions для разных действий.
+        """
+        if self.action in ['list', 'retrieve']:
+            # Чтение — всем
             return [AllowAny()]
-        return [IsAuthenticated(), DeleteOnlyOwner()]
+        elif self.action == 'create':
+            # Создание — только аутентифицированным
+            return [IsAuthenticated()]
+        elif self.action in ['update', 'partial_update', 'destroy']:
+            # Редактирование/удаление — только автору
+            return [IsAuthenticated(), IsAuthorOrReadOnly()]
+        elif self.action == 'publish':
+            # Публикация — только автору
+            return [IsAuthenticated(), IsAuthorOrReadOnly()]
+
+        return [IsAuthenticated()]
 ```
 
+### Комбинирование permissions
 
-Если у вас нет доступов, вы получите вот такой ответ:
+Несколько permissions работают по логике AND — все должны вернуть `True`:
 
+```python
+permission_classes = [IsAuthenticated, IsAuthorOrReadOnly]
+# Пользователь должен быть аутентифицирован И быть автором
 ```
+
+Для логики OR создайте кастомный permission:
+
+```python
+class IsAuthorOrModerator(permissions.BasePermission):
+    def has_object_permission(self, request, view, obj):
+        return (
+            obj.author == request.user or
+            request.user.groups.filter(name='moderators').exists()
+        )
+```
+
+### 401 vs 403: разница в ответах
+
+| Код                  | Когда возвращается                        | Пример                                     |
+|----------------------|-------------------------------------------|--------------------------------------------|
+| **401 Unauthorized** | Аутентификация отсутствует или невалидна  | Нет токена, токен истёк                    |
+| **403 Forbidden**    | Аутентификация есть, но прав недостаточно | Пользователь пытается удалить чужую статью |
+
+```python
+# 401 — нет токена
 {
     "detail": "Authentication credentials were not provided."
 }
+
+# 403 — нет прав
+{
+    "detail": "You do not have permission to perform this action."
+}
+```
+
+### Полный пример ArticleViewSet с permissions
+
+```python
+from rest_framework import viewsets, status
+from rest_framework.decorators import action
+from rest_framework.response import Response
+from rest_framework.permissions import IsAuthenticated, AllowAny
+
+from blog.models import Article
+from blog.serializers import ArticleSerializer
+from blog.permissions import IsAuthorOrReadOnly, IsPublishedOrAuthor
+
+
+class ArticleViewSet(viewsets.ModelViewSet):
+    serializer_class = ArticleSerializer
+
+    def get_queryset(self):
+        """Фильтрация: опубликованные для всех, черновики для автора."""
+        user = self.request.user
+        if user.is_authenticated:
+            return Article.objects.filter(
+                models.Q(status='published') | models.Q(author=user)
+            )
+        return Article.objects.filter(status='published')
+
+    def get_permissions(self):
+        if self.action in ['list', 'retrieve']:
+            return [AllowAny(), IsPublishedOrAuthor()]
+        elif self.action == 'create':
+            return [IsAuthenticated()]
+        return [IsAuthenticated(), IsAuthorOrReadOnly()]
+
+    def perform_create(self, serializer):
+        serializer.save(author=self.request.user)
+
+    @action(detail=True, methods=['post'])
+    def publish(self, request, pk=None):
+        article = self.get_object()  # Автоматически проверит permissions
+        article.status = 'published'
+        article.save()
+        return Response({'status': 'Статья опубликована'})
 ```
 
 ### Кеширование
@@ -628,128 +820,21 @@ class SomeModelViewSet(ModelViewSet):
 Таким образом, мы можем добавлять объект юзера при сохранении нашего сериалайзера.
 
 ## Фильтрация
+
 Документация:
 - Filtering: https://www.django-rest-framework.org/api-guide/filtering/
 - SearchFilter: https://www.django-rest-framework.org/api-guide/filtering/#searchfilter
 - OrderingFilter: https://www.django-rest-framework.org/api-guide/filtering/#orderingfilter
 - django-filter: https://django-filter.readthedocs.io/
 
-DRF предоставляет нам огромные возможности для фильтрации, практически не дописывая для этого специальный код.
+DRF предоставляет мощные возможности для фильтрации данных.
 
-### SearchFilter
+### Настройка фильтров
 
-Как и с другими параметрами, у нас есть два варианта указания фильтрации, общая для всего проекта или конкретная для
-определённого класса или функции.
-
-Для указания общего фильтра на весь проект необходимо добавить в `settings.py` в переменную `REST_FRAMEWORK`:
+#### На уровне проекта
 
 ```python
-REST_FRAMEWORK = {
-    ...
-'DEFAULT_FILTER_BACKENDS': ['rest_framework.filters.SearchFilter']
-}
-```
-
-Для указания в конкретном классе необходимо использовать аргумент `filter_backends`. Принимает коллекцию из фильтров,
-например:
-
-```python
-from rest_framework.filters import SearchFilter, OrderingFilter
-
-
-class GroupViewSet(ModelViewSet):
-    queryset = Group.objects.all()
-    filter_backends = [SearchFilter, OrderingFilter]
-
-```
-
-Или же соответствующий декоратор для использования в функциях.
-
-#### Как пользоваться?
-
-Для использования необходимо добавить в класс параметр `search_fields`
-
-```python
-class GroupViewSet(ModelViewSet):
-    queryset = Group.objects.all()
-    filter_backends = [SearchFilter, OrderingFilter]
-    search_fields = ['name', 'label']
-```
-
-Этот параметр также принимает коллекцию, состоящую из списка полей, по которым необходимо производить поиск.
-
-Теперь у нас есть возможность добавить query параметр `search=` (ключевое слово можно поменять через `settings.py`,
-чтобы искать по указанным полям).
-
-Например:
-
-```
-http://127.0.0.1:9000/api/group/?search=Pyt
-```
-
-Результат будет отфильтрован так, чтобы отобразить только те данные, у которых хотя бы в одном из указанных полей будет
-найдено частичное совпадение без учёта регистра (`lookup icontains`).
-
-Если нам необходим более специфический параметр поиска, существует 4 специальных настройки в параметре `search_fields`:
-
-- `^` Поиск только в начале строки
-- `=` Полное совпадение
-- `@` Поиск по полному тексту (работает на основе индексов, работает только для postgres)
-- `$` Поиск регулярного выражения
-
-Например:
-
-```python
-class GroupViewSet(ModelViewSet):
-    queryset = Group.objects.all()
-    filter_backends = [SearchFilter, OrderingFilter]
-    search_fields = ['=name', '^label']
-```
-
-### OrderingFilter
-
-Точно также можно добавить ordering фильтр для того, чтобы указывать ordering в момент запроса через query параметр
-`ordering=` (также можно заменить через `settings.py`)
-
-Необходимо указать параметр `ordering_fields`, также принимает коллекцию из полей. Также может принимать специальное
-значение `__all__` для возможности сортировать по любому полю.
-
-```python
-class GroupViewSet(ModelViewSet):
-    queryset = Group.objects.all()
-    filter_backends = [SearchFilter, OrderingFilter]
-    ordering_fields = ['name', 'label']
-```
-
-В query параметре может принимать символ `-` или список полей через запятую.
-
-Примеры:
-
-```
-http://example.com/api/users?ordering=username
-
-http://example.com/api/users?ordering=-username
-
-http://example.com/api/users?ordering=account,username
-```
-### DjangoFilterBackend (рекомендовано)
-
-Документация: https://django-filter.readthedocs.io/
-
-Установка: pip install django-filter
-
-Добавьте в INSTALLED_APPS:
-
-```python
-INSTALLED_APPS = [
-    ...,
-    'django_filters',
-]
-```
-Declarative-фильтрация без написания кода:
-
-settings.py:
-```python
+# settings.py
 REST_FRAMEWORK = {
     'DEFAULT_FILTER_BACKENDS': [
         'django_filters.rest_framework.DjangoFilterBackend',
@@ -757,58 +842,255 @@ REST_FRAMEWORK = {
         'rest_framework.filters.OrderingFilter',
     ],
 }
-
-```python
-import django_filters as df
-from .models import User
-
-class UserFilter(df.FilterSet):
-    min_age = df.NumberFilter(field_name='age', lookup_expr='gte')
-    class Meta:
-        model = User
-        fields = ['min_age', 'city']
 ```
 
-views.py:
+#### На уровне ViewSet
+
 ```python
-class GroupViewSet(ModelViewSet):
-    queryset = Group.objects.all()
-    filterset_fields = ['name', 'label']  # ?name=py&label=basic
-    search_fields = ['^name', 'label']
-    ordering_fields = ['name', 'label']
+from rest_framework.filters import SearchFilter, OrderingFilter
+from django_filters.rest_framework import DjangoFilterBackend
+
+
+class ArticleViewSet(ModelViewSet):
+    queryset = Article.objects.all()
+    serializer_class = ArticleSerializer
+    filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
 ```
 
-
-### Свой собственный фильтр
-
-Как и со всем остальным, можно написать свой собственный фильтр, для этого необходимо наследоваться от
-`rest_framework.filters.BaseFilterBackend` и описать один метод `filter_queryset`, в котором можно описать любую логику.
-
-Например, этот фильтр будет отображать только те объекты, которые принадлежат юзеру.
+### SearchFilter — полнотекстовый поиск
 
 ```python
-class IsOwnerFilterBackend(filters.BaseFilterBackend):
+class ArticleViewSet(ModelViewSet):
+    queryset = Article.objects.all()
+    serializer_class = ArticleSerializer
+    filter_backends = [SearchFilter]
+    search_fields = ['title', 'content', 'author__username']
+```
+
+Примеры запросов:
+
+```
+GET /api/articles/?search=python
+GET /api/articles/?search=django+rest
+```
+
+#### Модификаторы поиска
+
+| Префикс | Описание                           | Пример                         |
+|---------|------------------------------------|--------------------------------|
+| (без)   | `icontains` — частичное совпадение | `search_fields = ['title']`    |
+| `^`     | `istartswith` — начинается с       | `search_fields = ['^title']`   |
+| `=`     | `iexact` — точное совпадение       | `search_fields = ['=status']`  |
+| `@`     | Полнотекстовый поиск (PostgreSQL)  | `search_fields = ['@content']` |
+| `$`     | Regex поиск                        | `search_fields = ['$title']`   |
+
+```python
+class ArticleViewSet(ModelViewSet):
+    queryset = Article.objects.all()
+    search_fields = ['^title', 'content', 'author__username']
+    # title — поиск в начале, content — частичное совпадение
+```
+
+### OrderingFilter — сортировка
+
+```python
+class ArticleViewSet(ModelViewSet):
+    queryset = Article.objects.all()
+    serializer_class = ArticleSerializer
+    filter_backends = [OrderingFilter]
+    ordering_fields = ['created_at', 'title', 'author__username']
+    ordering = ['-created_at']  # Сортировка по умолчанию
+```
+
+Примеры запросов:
+
+```
+GET /api/articles/?ordering=title
+GET /api/articles/?ordering=-created_at
+GET /api/articles/?ordering=author__username,-created_at
+```
+
+### DjangoFilterBackend — точная фильтрация
+
+Установка:
+
+```bash
+pip install django-filter
+```
+
+```python
+# settings.py
+INSTALLED_APPS = [
+    ...,
+    'django_filters',
+]
+```
+
+#### Простая фильтрация через filterset_fields
+
+```python
+class ArticleViewSet(ModelViewSet):
+    queryset = Article.objects.all()
+    serializer_class = ArticleSerializer
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = ['status', 'author', 'topics']
+```
+
+Примеры запросов:
+
+```
+GET /api/articles/?status=published
+GET /api/articles/?author=1
+GET /api/articles/?topics=5&topics=7
+```
+
+#### FilterSet для статей блога
+
+```python
+# blog/filters.py
+import django_filters as filters
+from blog.models import Article
+
+
+class ArticleFilter(filters.FilterSet):
     """
-    Filter that only allows users to see their own objects.
+    Фильтр для статей блога.
+    """
+    # Фильтр по статусу
+    status = filters.ChoiceFilter(choices=Article.STATUS_CHOICES)
+
+    # Фильтр по автору (по id или username)
+    author = filters.NumberFilter(field_name='author__id')
+    author_username = filters.CharFilter(field_name='author__username', lookup_expr='iexact')
+
+    # Фильтр по темам (ManyToMany)
+    topics = filters.ModelMultipleChoiceFilter(
+        field_name='topics__slug',
+        to_field_name='slug',
+        queryset=Topic.objects.all()
+    )
+    topic_id = filters.NumberFilter(field_name='topics__id')
+
+    # Фильтр по дате
+    created_after = filters.DateFilter(field_name='created_at', lookup_expr='gte')
+    created_before = filters.DateFilter(field_name='created_at', lookup_expr='lte')
+
+    # Фильтр по году/месяцу
+    year = filters.NumberFilter(field_name='created_at', lookup_expr='year')
+    month = filters.NumberFilter(field_name='created_at', lookup_expr='month')
+
+    # Поиск в заголовке
+    title = filters.CharFilter(lookup_expr='icontains')
+
+    class Meta:
+        model = Article
+        fields = ['status', 'author', 'topics']
+```
+
+```python
+# blog/views.py
+from blog.filters import ArticleFilter
+
+
+class ArticleViewSet(ModelViewSet):
+    queryset = Article.objects.all()
+    serializer_class = ArticleSerializer
+    filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
+    filterset_class = ArticleFilter
+    search_fields = ['title', 'content']
+    ordering_fields = ['created_at', 'title']
+    ordering = ['-created_at']
+```
+
+Примеры запросов:
+
+```
+GET /api/articles/?status=published&author=1
+GET /api/articles/?topics=python&topics=django
+GET /api/articles/?created_after=2024-01-01&created_before=2024-12-31
+GET /api/articles/?year=2024&month=6
+GET /api/articles/?title=django&ordering=-created_at
+```
+
+### Полный пример ArticleViewSet с фильтрацией
+
+```python
+from rest_framework import viewsets
+from rest_framework.filters import SearchFilter, OrderingFilter
+from django_filters.rest_framework import DjangoFilterBackend
+
+from blog.models import Article
+from blog.serializers import ArticleSerializer
+from blog.filters import ArticleFilter
+from blog.permissions import IsAuthorOrReadOnly
+
+
+class ArticleViewSet(viewsets.ModelViewSet):
+    """
+    ViewSet для статей с полной фильтрацией.
+
+    Фильтры:
+    - ?status=published — по статусу
+    - ?author=1 — по автору (id)
+    - ?topics=python — по теме (slug)
+    - ?search=django — полнотекстовый поиск
+    - ?ordering=-created_at — сортировка
+    """
+    serializer_class = ArticleSerializer
+    filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
+    filterset_class = ArticleFilter
+    search_fields = ['title', 'content', 'author__username']
+    ordering_fields = ['created_at', 'updated_at', 'title']
+    ordering = ['-created_at']
+
+    def get_queryset(self):
+        """Оптимизация запросов + фильтрация по пользователю."""
+        qs = Article.objects.select_related('author').prefetch_related('topics')
+
+        user = self.request.user
+        if user.is_authenticated:
+            # Авторизованный видит опубликованные + свои черновики
+            return qs.filter(
+                models.Q(status='published') | models.Q(author=user)
+            )
+        # Анонимный видит только опубликованные
+        return qs.filter(status='published')
+
+    def get_permissions(self):
+        if self.action in ['list', 'retrieve']:
+            return []
+        return [IsAuthorOrReadOnly()]
+
+    def perform_create(self, serializer):
+        serializer.save(author=self.request.user)
+```
+
+### Кастомный фильтр
+
+```python
+from rest_framework import filters
+
+
+class IsAuthorFilterBackend(filters.BaseFilterBackend):
+    """
+    Фильтр, показывающий только объекты текущего пользователя.
     """
 
     def filter_queryset(self, request, queryset, view):
-        return queryset.filter(owner=request.user)
+        if request.user.is_authenticated:
+            return queryset.filter(author=request.user)
+        return queryset.none()
 ```
 
-## Сложные комплексные фильтры
+Использование:
 
-На самом деле, бывают и значительно более сложные фильтры, для которых существуют специальные пакеты.
-
-Например:
-
+```python
+class MyArticlesViewSet(viewsets.ReadOnlyModelViewSet):
+    """Только статьи текущего пользователя."""
+    serializer_class = ArticleSerializer
+    filter_backends = [IsAuthorFilterBackend]
+    queryset = Article.objects.all()
 ```
-pip install django-filter
-pip install djangorestframework-filters
-pip install djangorestframework-word-filter
-```
-
-Все они легко настраиваются и значительно расширяют возможность использования фильтров. Изучите их самостоятельно.
 
 ## Живой пример с заметками на DRF
 
@@ -1071,3 +1353,93 @@ urlpatterns = [
 ```
 
 Все, можно проверять, весь функционал готов!
+
+---
+
+## Итоги
+
+В этой лекции мы изучили:
+
+1. **Виды аутентификации**:
+   - Session Authentication — для браузеров, требует CSRF
+   - Basic Authentication — логин:пароль в каждом запросе
+   - Token Authentication — токен в заголовке Authorization
+   - JWT — самодостаточные токены с временем жизни
+
+2. **Настройка аутентификации в DRF**:
+   - Глобально через `DEFAULT_AUTHENTICATION_CLASSES`
+   - На уровне View через `authentication_classes`
+   - Кастомная аутентификация с временем жизни токена
+
+3. **Permissions (права доступа)**:
+   - Базовые: `AllowAny`, `IsAuthenticated`, `IsAdminUser`, `IsAuthenticatedOrReadOnly`
+   - `SAFE_METHODS` — безопасные методы (GET, HEAD, OPTIONS)
+   - `has_permission()` vs `has_object_permission()`
+   - `DjangoModelPermissions` — интеграция с Django permissions
+   - `get_permissions()` — разные права для разных действий
+
+4. **Кастомные permissions**:
+   - `IsAuthorOrReadOnly` — только автор может редактировать
+   - `IsPublishedOrAuthor` — черновики видит только автор
+   - `CanModerateComments` — модератор может удалять комментарии
+
+5. **Фильтрация**:
+   - `SearchFilter` — полнотекстовый поиск
+   - `OrderingFilter` — сортировка
+   - `DjangoFilterBackend` — точная фильтрация по полям
+   - `FilterSet` — декларативные фильтры
+
+6. **Throttling** — ограничение частоты запросов
+
+7. **Кеширование** — `cache_page` и `vary_on_cookie`
+
+---
+
+## Домашнее задание
+
+### Практика на занятии
+
+1. Настройте Token Authentication для проекта блога
+2. Создайте permission `IsAuthorOrReadOnly` и примените к `ArticleViewSet`
+3. Добавьте `ArticleFilter` с фильтрацией по статусу и темам
+
+### Домашняя работа
+
+1. **JWT аутентификация**:
+   - Установите `djangorestframework-simplejwt`
+   - Настройте эндпоинты для получения и обновления токенов
+   - Проверьте работу через Postman/curl
+
+2. **Permissions для блога**:
+   - `IsPublishedOrAuthor` — черновики видит только автор
+   - `CanModerateComments` — модератор может удалять любые комментарии
+   - Примените `get_permissions()` в `ArticleViewSet` для разных действий
+
+3. **Фильтрация статей**:
+   - Создайте `ArticleFilter` с полями: `status`, `author`, `topics`, `created_after`, `created_before`
+   - Добавьте поиск по `title` и `content`
+   - Добавьте сортировку по `created_at` и `title`
+
+4. **Throttling**:
+   - Настройте `AnonRateThrottle` (100 запросов/день)
+   - Настройте `UserRateThrottle` (1000 запросов/день)
+   - Создайте отдельный throttle для эндпоинта получения токена (10 запросов/минуту)
+
+5. **Токен с временем жизни**:
+   - Реализуйте `TokenExpireAuthentication` с временем жизни 1 час
+   - Добавьте эндпоинт для обновления токена
+
+---
+
+## Вопросы для самопроверки
+
+1. В чём разница между Session и Token аутентификацией?
+2. Что такое JWT и чем он отличается от обычного токена?
+3. Какие базовые permissions предоставляет DRF?
+4. В чём разница между `has_permission()` и `has_object_permission()`?
+5. Что такое `SAFE_METHODS` и как их использовать?
+6. Как настроить разные permissions для разных действий ViewSet?
+7. Чем отличаются коды ответа 401 и 403?
+8. Как создать FilterSet для фильтрации по связанным моделям?
+9. Для чего нужен Throttling и как его настроить?
+10. Как реализовать токен с ограниченным временем жизни?
