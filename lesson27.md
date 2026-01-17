@@ -255,6 +255,244 @@ fullstack`:)`). А только подготавливают для фронта
 
 > JSON (JavaScript Object Notation) - текстовый формат обмена данными, легко читается, очень похож на словарь в Python.
 
+---
+
+## Альтернативы REST: GraphQL и gRPC
+
+REST — не единственный способ построения API. Существуют и другие подходы, каждый со своими преимуществами. Рассмотрим два наиболее популярных.
+
+### GraphQL
+
+![](https://upload.wikimedia.org/wikipedia/commons/thumb/1/17/GraphQL_Logo.svg/220px-GraphQL_Logo.svg.png)
+
+**GraphQL** — это язык запросов для API, разработанный Facebook в 2012 году и открытый в 2015. В отличие от REST, где сервер определяет структуру ответа, в GraphQL клиент сам указывает, какие данные ему нужны.
+
+#### Как это работает
+
+В REST для получения статьи с автором и комментариями нужно несколько запросов:
+
+```
+GET /api/articles/1/
+GET /api/users/5/
+GET /api/articles/1/comments/
+```
+
+В GraphQL — один запрос:
+
+```graphql
+query {
+  article(id: 1) {
+    title
+    content
+    author {
+      username
+      email
+    }
+    comments {
+      text
+      author {
+        username
+      }
+    }
+  }
+}
+```
+
+Сервер вернёт ровно те поля, которые запросил клиент — ни больше, ни меньше.
+
+#### Ключевые концепции
+
+- **Query** — запрос данных (аналог GET)
+- **Mutation** — изменение данных (аналог POST/PUT/DELETE)
+- **Subscription** — подписка на изменения в реальном времени
+- **Schema** — строго типизированная схема API
+
+#### Пример Mutation
+
+```graphql
+mutation {
+  createArticle(input: {
+    title: "Новая статья"
+    content: "Содержимое..."
+  }) {
+    id
+    title
+    createdAt
+  }
+}
+```
+
+#### Преимущества GraphQL
+
+| Преимущество              | Описание                             |
+|---------------------------|--------------------------------------|
+| **Нет over-fetching**     | Клиент получает только нужные поля   |
+| **Нет under-fetching**    | Все связанные данные в одном запросе |
+| **Строгая типизация**     | Схема описывает все типы и их связи  |
+| **Самодокументируемость** | Схема служит документацией           |
+| **Один endpoint**         | Все запросы идут на `/graphql`       |
+
+#### Недостатки GraphQL
+
+| Недостаток                | Описание                                        |
+|---------------------------|-------------------------------------------------|
+| **Сложность кеширования** | HTTP-кеширование не работает (все запросы POST) |
+| **N+1 проблема**          | Требует DataLoader для оптимизации              |
+| **Сложнее в реализации**  | Больше кода на сервере                          |
+| **Безопасность**          | Сложные запросы могут перегрузить сервер        |
+
+#### GraphQL в Python/Django
+
+- **Graphene-Django** — популярная библиотека для Django
+- **Strawberry** — современная альтернатива с поддержкой type hints
+
+```python
+# Пример с Graphene-Django
+import graphene
+from graphene_django import DjangoObjectType
+from blog.models import Article
+
+
+class ArticleType(DjangoObjectType):
+    class Meta:
+        model = Article
+        fields = ['id', 'title', 'content', 'author', 'created_at']
+
+
+class Query(graphene.ObjectType):
+    articles = graphene.List(ArticleType)
+    article = graphene.Field(ArticleType, id=graphene.Int())
+
+    def resolve_articles(self, info):
+        return Article.objects.filter(status='published')
+
+    def resolve_article(self, info, id):
+        return Article.objects.get(pk=id)
+```
+
+---
+
+### gRPC
+
+![](https://grpc.io/img/logos/grpc-icon-color.png)
+
+**gRPC** (Google Remote Procedure Call) — это высокопроизводительный фреймворк для удалённого вызова процедур, разработанный Google. Использует Protocol Buffers (protobuf) для сериализации и HTTP/2 для транспорта.
+
+#### Как это работает
+
+В отличие от REST (ресурсо-ориентированный) и GraphQL (запросо-ориентированный), gRPC — это **процедурно-ориентированный** подход. Вы вызываете методы на удалённом сервере как локальные функции.
+
+#### Определение сервиса (Protocol Buffers)
+
+```protobuf
+// blog.proto
+syntax = "proto3";
+
+service BlogService {
+  rpc GetArticle(ArticleRequest) returns (Article);
+  rpc ListArticles(ListRequest) returns (ArticleList);
+  rpc CreateArticle(CreateArticleRequest) returns (Article);
+}
+
+message ArticleRequest {
+  int32 id = 1;
+}
+
+message Article {
+  int32 id = 1;
+  string title = 2;
+  string content = 3;
+  string author = 4;
+}
+
+message ArticleList {
+  repeated Article articles = 1;
+}
+```
+
+#### Вызов на клиенте (Python)
+
+```python
+import grpc
+import blog_pb2
+import blog_pb2_grpc
+
+# Подключение к серверу
+channel = grpc.insecure_channel('localhost:50051')
+stub = blog_pb2_grpc.BlogServiceStub(channel)
+
+# Вызов метода как локальной функции
+response = stub.GetArticle(blog_pb2.ArticleRequest(id=1))
+print(response.title)
+```
+
+#### Преимущества gRPC
+
+| Преимущество                   | Описание                                        |
+|--------------------------------|-------------------------------------------------|
+| **Высокая производительность** | Бинарный формат protobuf в 10x быстрее JSON     |
+| **HTTP/2**                     | Мультиплексирование, сжатие заголовков          |
+| **Строгая типизация**          | Контракт в .proto файле                         |
+| **Streaming**                  | Поддержка потоковой передачи данных             |
+| **Кодогенерация**              | Автоматическая генерация клиентов на 10+ языках |
+
+#### Недостатки gRPC
+
+| Недостаток           | Описание                              |
+|----------------------|---------------------------------------|
+| **Не для браузеров** | Нужен gRPC-Web прокси                 |
+| **Сложнее отладка**  | Бинарный формат не читается человеком |
+| **Инфраструктура**   | Требует дополнительных инструментов   |
+| **Кривая обучения**  | Нужно изучить protobuf                |
+
+#### Типы RPC в gRPC
+
+```protobuf
+service BlogService {
+  // Unary — один запрос, один ответ
+  rpc GetArticle(ArticleRequest) returns (Article);
+
+  // Server streaming — один запрос, поток ответов
+  rpc ListArticles(ListRequest) returns (stream Article);
+
+  // Client streaming — поток запросов, один ответ
+  rpc UploadImages(stream Image) returns (UploadResult);
+
+  // Bidirectional streaming — поток в обе стороны
+  rpc Chat(stream Message) returns (stream Message);
+}
+```
+
+---
+
+### Сравнение REST, GraphQL и gRPC
+
+| Критерий               | REST                  | GraphQL             | gRPC                |
+|------------------------|-----------------------|---------------------|---------------------|
+| **Формат данных**      | JSON (текст)          | JSON (текст)        | Protobuf (бинарный) |
+| **Протокол**           | HTTP/1.1 или HTTP/2   | HTTP/1.1 или HTTP/2 | HTTP/2              |
+| **Типизация**          | Опционально (OpenAPI) | Строгая (Schema)    | Строгая (Protobuf)  |
+| **Производительность** | Средняя               | Средняя             | Высокая             |
+| **Кеширование**        | Простое (HTTP)        | Сложное             | Сложное             |
+| **Браузеры**           | ✅ Полная поддержка    | ✅ Полная поддержка  | ⚠️ Через gRPC-Web   |
+| **Streaming**          | ❌ (нужен WebSocket)   | ✅ Subscriptions     | ✅ Встроенный        |
+| **Кривая обучения**    | Низкая                | Средняя             | Высокая             |
+
+### Когда что использовать?
+
+| Сценарий                 | Рекомендация                                 |
+|--------------------------|----------------------------------------------|
+| **Публичный API**        | REST — простой, понятный, хорошо кешируется  |
+| **Мобильное приложение** | GraphQL — экономия трафика, гибкие запросы   |
+| **Микросервисы**         | gRPC — высокая производительность, streaming |
+| **Real-time**            | GraphQL Subscriptions или gRPC Streaming     |
+| **Браузерный клиент**    | REST или GraphQL                             |
+| **IoT / Embedded**       | gRPC — компактный бинарный формат            |
+
+> **Важно:** В этом курсе мы фокусируемся на REST API с Django REST Framework, так как это наиболее распространённый подход для веб-разработки. Однако понимание альтернатив поможет вам выбрать правильный инструмент для конкретной задачи.
+
+---
+
 ## Как это работает на практике и при чём тут Django?
 
 Для Django существует несколько различных пакетов для применения REST архитектуры, но основным является **Django REST
