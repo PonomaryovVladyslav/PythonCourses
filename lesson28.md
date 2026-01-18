@@ -7,8 +7,8 @@
 
   - [Лекция 1. Введение. Типизации. Переменные. Строки и числа. Булева алгебра. Ветвление](lesson01.md)
   - [Лекция 2. Обработка исключений. Списки, строки детальнее, срезы, циклы.](lesson02.md)
-  - [Лекция 3: None. Range, list comprehension, sum, max, min, len, sorted, all, any. Работа с файлами](lesson03.md)
-  - [Лекция 4. Хэш таблицы. Set, frozenset. Dict. Tuple. Немного об импортах. Namedtuple, OrderedDict](lesson04.md)
+  - [Лекция 3. None. Range, list comprehension, sum, max, min, len, sorted, all, any. Работа с файлами](lesson03.md)
+  - [Лекция 4. Хеш-таблицы. Set, frozenset. Dict. Tuple. Немного об импортах. Namedtuple, OrderedDict](lesson04.md)
   - [Лекция 5. Функции, типизация, lambda. Map, zip, filter.](lesson05.md)
   - [Лекция 6. Алгоритмы и структуры данных](lesson06.md)
 </details>
@@ -25,7 +25,7 @@
 
   - [Лекция 9. Введение в ООП. Основные парадигмы ООП. Классы и объекты. Множественное наследование.](lesson09.md)
   - [Лекция 10. Magic methods. Итераторы и генераторы.](lesson10.md)
-  - [Лекция 11. Imports. Standard library. PEP8](lesson11.md)
+  - [Лекция 11. Imports. Standard library. PEP 8](lesson11.md)
   - [Лекция 12. Декораторы. Декораторы с параметрами. Декораторы классов (staticmethod, classmethod, property)](lesson12.md)
   - [Лекция 13. Тестирование](lesson13.md)
   - [Лекция 14. Проектирование. Паттерны. SOLID.](lesson14.md)
@@ -59,7 +59,7 @@
 
   - [Лекция 27. Что такое API. REST и RESTful. Django REST Framework](lesson27.md)
   - ▶ **Лекция 28. @api_view, APIView, ViewSets, Pagination, Routers**
-  - [Лекция 29. REST аутентификация. Авторизация. Permissions. Фильтрация.](lesson29.md)
+  - [Лекция 29. REST-аутентификация. Авторизация. Permissions. Фильтрация.](lesson29.md)
   - [Лекция 30. Тестирование. Django, REST API.](lesson30.md)
 </details>
 
@@ -68,20 +68,20 @@
 
   - [Лекция 31. Celery. Multithreading. GIL. Multiprocessing](lesson31.md)
   - [Лекция 32. Асинхронное программирование в Python. Корутины. Asyncio.](lesson32.md)
-  - [Лекция 33. Сокеты. Django channels.](lesson33.md)
+  - [Лекция 33. Сокеты. Django Channels.](lesson33.md)
 </details>
 
 <details>
   <summary>Блок 8 — Deployment (34–35)</summary>
 
-  - [Лекция 34. Linux. Все что нужно знать для деплоймента.](lesson34.md)
+  - [Лекция 34. Linux. Всё, что нужно знать для деплоймента.](lesson34.md)
   - [Лекция 35. Deployment](lesson35.md)
 </details>
 
 - [Лекция 36. Методологии разработки. CI/CD. Монолит и микросервисы. Docker](lesson36.md)
 
 
-Все мы помним, что веб в первую очередь - это Request-Response система.
+Все мы помним, что веб в первую очередь — это Request-Response система.
 
 ## Request
 
@@ -91,15 +91,15 @@
 
 Два новых параметра `.data` и `.query_params`
 
-`.data` - данные, если запрос POST, PUT или PATCH, аналог `request.POST` или `request.FILES`
+`.data` — данные, если запрос POST, PUT или PATCH, аналог `request.POST` или `request.FILES`
 
-`.query_params` - данные, если запрос GET, аналог `request.GET`
+`.query_params` — данные, если запрос GET, аналог `request.GET`
 
 Также доступны `request.user` и `request.auth`. Детали аутентификации/авторизации рассмотрим на следующей лекции.
 Практические нюансы:
-- request.data объединяет данные из JSON/формы/файлов в зависимости от подключённых парсеров (JSONParser, FormParser, MultiPartParser)
-- request.query_params — это QueryDict (поддерживает несколько значений для одного ключа)
-- Полезные атрибуты: request.content_type, request.accepted_renderer, request.accepted_media_type
+- `request.data` объединяет данные из JSON/формы/файлов в зависимости от подключённых парсеров (JSONParser, FormParser, MultiPartParser)
+- `request.query_params` — это QueryDict (поддерживает несколько значений для одного ключа)
+- Полезные атрибуты: `request.content_type`, `request.accepted_renderer`, `request.accepted_media_type`
 - Расширяйте DEFAULT_PARSER_CLASSES, если нужны формы/файлы
 
 Пример настройки парсеров (частично):
@@ -134,19 +134,19 @@ from rest_framework import status
 return Response(serializer.data, status=status.HTTP_201_CREATED, headers={"Location": obj.get_absolute_url()})
 ```
 
-где `data` - данные,
+где `data` — данные,
 
-`status` - код ответа (200, 404, 503),
+`status` — код ответа (200, 404, 503),
 
-`template_name` - возможность указать темплейт, если необходимо вернуть страницу, а не просто набор данных,
+`template_name` — возможность указать темплейт, если необходимо вернуть страницу, а не просто набор данных,
 
-`headers` и `content_type` - заголовки и тип содержимого запроса.
+`headers` и `content_type` — заголовки и тип содержимого запроса.
 
 
 ### Коротко на практике
-- request.data — тело запроса (JSON/форма/файлы)
-- request.query_params — параметры строки запроса (?page=1&search=...)
-- request.FILES — загружаемые файлы
+- `request.data` — тело запроса (JSON/форма/файлы)
+- `request.query_params` — параметры строки запроса (?page=1&search=...)
+- `request.FILES` — загружаемые файлы
 - Возвращайте Response(data, status=...) и используйте константы из rest_framework.status, например status.HTTP_201_CREATED
 - Если отключить BrowsableAPIRenderer, «Browsable API» исчезнет и ответы будут только в JSON
 
@@ -374,33 +374,33 @@ urlpatterns = [
 
 - `serializer_class` хранит сериалайзер;
 
-- `lookup_field = 'pk'` - название атрибута в модели, который будет отвечать за PK;
+- `lookup_field = 'pk'` — название атрибута в модели, который будет отвечать за PK;
 
-- `lookup_url_kwarg = None` - название атрибута в запросе, который будет отвечать за `pk`;
+- `lookup_url_kwarg = None` — название атрибута в запросе, который будет отвечать за `pk`;
 
-- `filter_backends = api_settings.DEFAULT_FILTER_BACKENDS` - фильтры запросов;
+- `filter_backends = api_settings.DEFAULT_FILTER_BACKENDS` — фильтры запросов;
 
-- `pagination_class = api_settings.DEFAULT_PAGINATION_CLASS` - пагинация запросов.
+- `pagination_class = api_settings.DEFAULT_PAGINATION_CLASS` — пагинация запросов.
 
 И методы:
 
-- `get_queryset` - получение кверисета;
+- `get_queryset` — получение кверисета;
 
-- `get_object` - получение одного объекта;
+- `get_object` — получение одного объекта;
 
-- `get_serializer` - получение объекта сериалайзера;
+- `get_serializer` — получение объекта сериалайзера;
 
-- `get_serializer_class` - получение класса сериалайзера;
+- `get_serializer_class` — получение класса сериалайзера;
 
-- `get_serializer_context` - получить контекст сериалайзера;
+- `get_serializer_context` — получить контекст сериалайзера;
 
-- `filter_queryset` - отфильтровать кверисет;
+- `filter_queryset` — отфильтровать кверисет;
 
-- `paginator` - объект пагинации;
+- `paginator` — объект пагинации;
 
-- `paginate_queryset` - пагинировать кверисет;
+- `paginate_queryset` — пагинировать кверисет;
 
-- `get_paginated_response` - получить пагинированый ответ.
+- `get_paginated_response` — получить пагинированный ответ.
 
 *Такой класс не работает самостоятельно, только вместе с определёнными миксинами*
 
@@ -458,7 +458,7 @@ class RetrieveModelMixin(object):
         return Response(serializer.data)
 ```
 
-Обратите внимание, метод называется `retrieve()` и внутри вызывает метод `get_object()`, - это миксин одиночного объекта
+Обратите внимание, метод называется `retrieve()` и внутри вызывает метод `get_object()` — это миксин одиночного объекта
 
 ```python
 class UpdateModelMixin(object):
@@ -526,7 +526,7 @@ class ListModelMixin(object):
         return Response(serializer.data)
 ```
 
-Метод `list()` получает кверисет, дальше пытается его пагинировать, если получается, возвращает страницу, если нет -
+Метод `list()` получает кверисет, дальше пытается его пагинировать, если получается, возвращает страницу, если нет —
 целый ответ.
 
 *Важно!* Ни в одном из миксинов не было методов `get()`,`post()`,`patch()`,`put()` или `delete()`, почему?
@@ -1023,7 +1023,7 @@ def set_featured(self, request, pk=None):
 
 Документация: https://www.django-rest-framework.org/api-guide/routers/
 
-Роутер — это автоматический генератор URL для вьюсетов.
+Роутер — это автоматический генератор URL-адресов для вьюсетов.
 
 ### Базовый пример для блога
 
@@ -1043,11 +1043,11 @@ urlpatterns = router.urls
 
 | Роутер | Особенности |
 |--------|-------------|
-| `SimpleRouter` | Базовый роутер, генерирует только URL для ViewSet |
-| `DefaultRouter` | Добавляет API root (`/api/`) со списком всех эндпоинтов |
+| `SimpleRouter` | Базовый роутер, генерирует только URL-адреса для ViewSet |
+| `DefaultRouter` | Добавляет API root (`/api/`) со списком всех эндпойнтов |
 
 ```python
-# DefaultRouter создаёт красивую главную страницу API
+# DefaultRouter создаёт красивую главную страницу API-интерфейса
 router = routers.DefaultRouter()  # GET /api/ покажет все доступные эндпоинты
 ```
 
@@ -1113,7 +1113,7 @@ class ArticleViewSet(viewsets.ModelViewSet):
 ### trailing_slash
 
 ```python
-# По умолчанию URL заканчиваются на /
+# По умолчанию URL-адреса заканчиваются на /
 router = routers.SimpleRouter()  # /articles/
 
 # Можно отключить
@@ -1122,7 +1122,7 @@ router = routers.SimpleRouter(trailing_slash=False)  # /articles
 
 ## Вложенные роутеры (Nested Routers)
 
-Для URL вида `/articles/{article_pk}/comments/` можно использовать библиотеку `drf-nested-routers`:
+Для URL-адресов вида `/articles/{article_pk}/comments/` можно использовать библиотеку `drf-nested-routers`:
 
 ```bash
 pip install drf-nested-routers
@@ -1146,7 +1146,7 @@ urlpatterns = [
 ]
 ```
 
-Это создаст URL:
+Это создаст URL-адреса:
 - `GET /api/articles/` — список статей
 - `GET /api/articles/{pk}/` — детали статьи
 - `GET /api/articles/{article_pk}/comments/` — комментарии к статье
@@ -1171,7 +1171,7 @@ class CommentViewSet(viewsets.ModelViewSet):
 
 ## Переопределение методов ViewSet
 
-### get_queryset() — фильтрация по пользователю
+### `get_queryset()` — фильтрация по пользователю
 
 Метод `get_queryset()` позволяет динамически фильтровать данные:
 
@@ -1196,7 +1196,7 @@ class ArticleViewSet(viewsets.ModelViewSet):
         return Article.objects.all()
 ```
 
-### perform_create() — автоматическое добавление автора
+### `perform_create()` — автоматическое добавление автора
 
 Метод `perform_create()` вызывается при создании объекта:
 
@@ -1210,7 +1210,7 @@ class ArticleViewSet(viewsets.ModelViewSet):
         serializer.save(author=self.request.user)
 ```
 
-### perform_update() — логика при обновлении
+### `perform_update()` — логика при обновлении
 
 ```python
 class ArticleViewSet(viewsets.ModelViewSet):
@@ -1226,7 +1226,7 @@ class ArticleViewSet(viewsets.ModelViewSet):
             serializer.save()
 ```
 
-### perform_destroy() — мягкое удаление
+### `perform_destroy()` — мягкое удаление
 
 ```python
 class ArticleViewSet(viewsets.ModelViewSet):
@@ -1312,27 +1312,27 @@ class ArticleViewSet(viewsets.ModelViewSet):
 
 В этой лекции мы изучили:
 
-1. **Request и Response в DRF** — `request.data`, `request.query_params`, объект `Response`
+1. **Request и Response в DRF**: `request.data`, `request.query_params`, объект `Response`
 
-2. **@api_view** — декоратор для функциональных представлений API
+2. **@api_view**: декоратор для функциональных представлений API
 
-3. **APIView** — базовый класс для Class-Based Views в DRF
+3. **APIView**: базовый класс для Class-Based Views в DRF
 
-4. **GenericAPIView и миксины** — готовые CRUD операции:
+4. **GenericAPIView и миксины**: готовые CRUD-операции:
    - `CreateModelMixin`, `ListModelMixin`, `RetrieveModelMixin`
    - `UpdateModelMixin`, `DestroyModelMixin`
 
-5. **Generic классы** — `ListCreateAPIView`, `RetrieveUpdateDestroyAPIView` и др.
+5. **Generic-классы**: `ListCreateAPIView`, `RetrieveUpdateDestroyAPIView` и др.
 
-6. **ViewSet и ModelViewSet** — объединение всех CRUD в одном классе
+6. **ViewSet и ModelViewSet**: объединение всех CRUD в одном классе
 
-7. **@action** — дополнительные действия (`publish`, `archive`, `my_drafts`)
+7. **@action**: дополнительные действия (`publish`, `archive`, `my_drafts`)
 
-8. **Роутеры** — автоматическая генерация URL для ViewSet
+8. **Роутеры**: автоматическая генерация URL-адресов для ViewSet
 
-9. **Вложенные роутеры** — URL вида `/articles/{pk}/comments/`
+9. **Вложенные роутеры**: URL-адреса вида `/articles/{pk}/comments/`
 
-10. **Переопределение методов** — `get_queryset()`, `perform_create()`, `get_serializer_class()`
+10. **Переопределение методов**: `get_queryset()`, `perform_create()`, `get_serializer_class()`
 
 ---
 
