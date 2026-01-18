@@ -1,4 +1,4 @@
-# Лекция 32. Асинхронное программирование в Python. Корутины. Asyncio.
+# Лекция 32. Asyncio. Aiohttp. Асинхронное программирование на практике.
 
 ### Оглавление курса
 
@@ -67,7 +67,7 @@
   <summary>Блок 7 — Python async (31–33)</summary>
 
   - [Лекция 31. Celery. Multithreading. GIL. Multiprocessing](lesson31.md)
-  - ▶ **Лекция 32. Асинхронное программирование в Python. Корутины. Asyncio**
+  - ▶ **Лекция 32. Asyncio. Aiohttp. Асинхронное программирование на практике.**
   - [Лекция 33. Сокеты. Django channels.](lesson33.md)
 </details>
 
@@ -80,239 +80,47 @@
 
 - [Лекция 36. Методологии разработки. CI/CD. Монолит и микросервисы. Docker](lesson36.md)
 
-> **Напоминание:** Итераторы и генераторы мы изучали в [Лекции 10](lesson10.md). Здесь мы рассмотрим, как генераторы
-> могут не только возвращать значения, но и принимать их — это основа для понимания async/await.
-
-## Корутины
-
-![](https://habrastorage.org/webt/zy/vb/px/zyvbpxrx43dnun4q8wcegtqwnn0.png)
-
-А теперь о том, ради чего это, собственно, затевалось. Оказывается, генератор может не только возвращать значения, но и
-принимать их на вход.
-
-О стандарте можно почитать тут [PEP 342](https://www.python.org/dev/peps/pep-0342/).
-
-Предлагаю сразу начать с примера. Напишем простую реализацию генератора, который может складывать два аргумента, хранить
-историю результатов и выводить историю.
-
-```python
-def calc():
-    history = []
-    while True:
-        x = yield
-        if x == 'h':
-            print(history)
-            continue
-        print(x)
-        history.append(x)
-
-
-c = calc()
-
-next(c)  # Необходимая инициация. Можно написать c.send(None)
-c.send(1)  # Выведет 1
-c.send(100)  # Выведет 100
-c.send(666)  # Выведет 666
-c.send('h')  # Выведет [1, 100, 666]
-c.close()  # Закрываем генератор, данные сотрутся, генератор необходимо будет создавать заново.
-```
-
-Пример с передачей более чем одного параметра
-
-```python
-def calc():
-    history = []
-    while True:
-        x, y = (yield)
-        if x == 'h':
-            print(history)
-            continue
-        result = x + y
-        print(result)
-        history.append(result)
-
-
-c = calc()
-
-next(c)  # Необходимая инициация. Можно написать c.send(None)
-c.send((1, 2))  # Выведет 3
-c.send((100, 30))  # Выведет 130
-c.send((666, 0))  # Выведет 666
-c.send(('h', 0))  # Выведет [3, 130, 666]
-c.close()  # Закрываем генератор, данные сотрутся, генератор необходимо будет создавать заново.
-```
-
-### send, throw, close
-
-В Python 2.5 добавили в генераторы возможность отправлять данные и `exception`.
-
-- `send` — передача данных в корутину. `send(None)` равносильно `next`.
-
-- `throw` — передача исключения в корутину. Например, `GeneratorExit` для выхода из корутины.
-
-- `close` — для «закрытия» корутины и очистки локальной памяти корутины.
-
-### Корутина как декоратор
-
-То есть мы создали генератор, проинициализировали его и подаём ему входные данные. В свою очередь он эти данные
-обрабатывает и сохраняет своё состояние между вызовами до тех пор, пока мы его не закрыли. После каждого вызова
-генератор возвращает управление туда, откуда его вызвали. Это важнейшее свойство генераторов мы и будем использовать.
-
-Теперь, когда мы разобрались с общим принципом работы, давайте теперь избавим себя от необходимости каждый раз руками
-инициализировать генератор. Решим это типичным для Python образом, с помощью декоратора.
-
-```python
-def coroutine(f):
-    def wrap(*args, **kwargs):
-        gen = f(*args, **kwargs)
-        gen.send(None)
-        return gen
-
-    return wrap
-
-
-@coroutine
-def calc():
-    history = []
-    while True:
-        x, y = (yield)
-        if x == 'h':
-            print(history)
-            continue
-        result = x + y
-        print(result)
-        history.append(result)
-```
+> **Напоминание:** Базовые концепции `async`/`await` мы рассмотрели в [Лекции 10](lesson10.md).
+> Здесь мы углубимся в практическое использование библиотеки `asyncio`.
 
 ## Asyncio
 
 ![](http://risovach.ru/upload/2020/10/mem/internet_253267592_orig_.jpg)
-Документация: https://docs.python.org/3/library/asyncio.html
 
+**Документация:** https://docs.python.org/3/library/asyncio.html
 
-Начиная с Python 3.4, существует новый модуль `asyncio`, который вводит `API` для обобщенного асинхронного
-программирования. Мы можем использовать корутины с этим модулем для простого и понятного выполнения асинхронного кода.
+`asyncio` — это стандартная библиотека Python для написания асинхронного кода с использованием синтаксиса `async`/`await`.
 
-<details>
-<summary>📜 Исторический пример (только для понимания эволюции asyncio, НЕ используйте в новом коде)</summary>
-
-До Python 3.5 корутины создавались с помощью декоратора `@asyncio.coroutine` и ключевого слова `yield from`:
-
-```python
-import asyncio
-import datetime
-import random
-
-
-@asyncio.coroutine
-def display_date(num, loop):
-    end_time = loop.time() + 50.0
-    while True:
-        print(f"Loop: {num} Time: {datetime.datetime.now()}")
-        if (loop.time() + 1.0) >= end_time:
-            break
-        yield from asyncio.sleep(random.randint(0, 5))
-
-
-loop = asyncio.get_event_loop()
-
-asyncio.ensure_future(display_date(1, loop))
-asyncio.ensure_future(display_date(2, loop))
-
-loop.run_forever()
-```
-
-Этот код показывает, как две корутины выполняются конкурентно: когда одна "спит" (`yield from asyncio.sleep`),
-event loop переключается на другую.
-
-**⚠️ Этот синтаксис устарел!** Декоратор `@asyncio.coroutine` был deprecated в Python 3.8 и **полностью удалён в Python 3.11**.
-
-</details>
-
-Современный способ (Python 3.7+) — использовать `async/await`:
-
-Документация: PEP 492 — https://peps.python.org/pep-0492/
-
-### Встроенные корутины
-
-![](https://raw.githubusercontent.com/kblok/kblok.github.io/master/img/deeper-async/bob-loves-async.jpg)
-
-Помните, мы всё ещё используем функции на основе генератора? В Python 3.5 мы получили новые встроенные корутины, которые
-используют синтаксис `async / await`. Современный вариант (Python 3.7+):
+Ключевые концепции:
+- **Корутина (coroutine)** — функция, объявленная через `async def`
+- **Event loop** — цикл событий, который управляет выполнением корутин
+- **Task** — обёртка над корутиной для параллельного выполнения
+- **await** — приостанавливает корутину до завершения асинхронной операции
 
 ```python
 import asyncio
-import datetime
-import random
 
 
-async def display_date(num, duration=10):
-    start_time = asyncio.get_event_loop().time()
-    end_time = start_time + duration
-    while True:
-        print(f"Loop: {num} Time: {datetime.datetime.now()}")
-        if asyncio.get_event_loop().time() >= end_time:
-            break
-        await asyncio.sleep(random.randint(0, 5))
+async def say_hello(name, delay):
+    await asyncio.sleep(delay)
+    print(f"Привет, {name}!")
 
 
 async def main():
+    # Запускаем две корутины параллельно
     await asyncio.gather(
-        display_date(1, 10),
-        display_date(2, 10),
+        say_hello("Мир", 2),
+        say_hello("Python", 1),
     )
 
 
 asyncio.run(main())
+
+# Вывод (через 1 сек):
+# Привет, Python!
+# (через 2 сек):
+# Привет, Мир!
 ```
-
-Для определения встроенной корутины определение функции помечается ключевым словом `async`, а вместо `yield from` используется `await`.
-
-> **Примечание:** В Python 3.10+ использование `asyncio.get_event_loop()` вне работающего event loop вызывает `DeprecationWarning`. Рекомендуется использовать `asyncio.run()` для запуска корутин.
-
-### Корутины на генераторах и встроенные корутины
-
-Функционально нет никакой разницы между корутинами на генераторах и встроенными корутинами кроме различия в синтаксисе.
-Кроме того, не допускается смешивания их синтаксисов. То есть нельзя использовать `await` внутри корутин на генераторах
-или `yield` / `yield from` внутри встроенных корутин.
-
-<details>
-<summary>📜 Исторический пример: смешивание генераторных и async корутин (Python 3.6-3.10)</summary>
-
-В переходный период можно было использовать декоратор `@types.coroutine` для совместимости старых генераторов с новым синтаксисом `async/await`:
-
-```python
-import asyncio
-import datetime
-import random
-import types
-
-
-@types.coroutine
-def my_sleep_func():
-    yield from asyncio.sleep(random.randint(0, 5))
-
-
-async def display_date(num, loop):
-    end_time = loop.time() + 50.0
-    while True:
-        print(f"Loop: {num} Time: {datetime.datetime.now()}")
-        if (loop.time() + 1.0) >= end_time:
-            break
-        await my_sleep_func()
-
-
-loop = asyncio.get_event_loop()
-
-asyncio.ensure_future(display_date(1, loop))
-asyncio.ensure_future(display_date(2, loop))
-
-loop.run_forever()
-```
-
-**⚠️ Этот подход устарел!** В современном Python используйте только `async/await`. Декоратор `@types.coroutine` и `yield from` в asyncio контексте не рекомендуются.
-
-</details>
 
 ## Asyncio. Loop, run, create_task, gather, etc.
 
@@ -875,4 +683,656 @@ asyncio.run(main())
 - Совместимость с API `requests`
 - Встроенная поддержка таймаутов
 
+### POST-запросы и отправка JSON
+
+```python
+import aiohttp
+import asyncio
+
+
+async def create_user(session, user_data):
+    async with session.post(
+        "https://httpbin.org/post",
+        json=user_data,
+        headers={"Content-Type": "application/json"}
+    ) as resp:
+        return await resp.json()
+
+
+async def main():
+    async with aiohttp.ClientSession() as session:
+        result = await create_user(session, {"name": "John", "age": 30})
+        print(result)
+
+
+asyncio.run(main())
+```
+
+### Обработка ошибок и retry-логика
+
+При работе с сетью ошибки неизбежны. Вот паттерн для обработки ошибок с повторными попытками:
+
+```python
+import aiohttp
+import asyncio
+from aiohttp import ClientError, ClientResponseError
+
+
+async def fetch_with_retry(session, url, max_retries=3, delay=1):
+    """Запрос с повторными попытками при ошибках."""
+    for attempt in range(max_retries):
+        try:
+            async with session.get(url) as resp:
+                resp.raise_for_status()  # Вызовет исключение для 4xx/5xx
+                return await resp.json()
+        except ClientResponseError as e:
+            if e.status >= 500 and attempt < max_retries - 1:
+                # Серверная ошибка — пробуем ещё раз
+                await asyncio.sleep(delay * (attempt + 1))
+                continue
+            raise
+        except ClientError as e:
+            if attempt < max_retries - 1:
+                await asyncio.sleep(delay * (attempt + 1))
+                continue
+            raise
+
+    raise Exception(f"Не удалось получить {url} после {max_retries} попыток")
+
+
+async def main():
+    timeout = aiohttp.ClientTimeout(total=10)
+    async with aiohttp.ClientSession(timeout=timeout) as session:
+        try:
+            data = await fetch_with_retry(session, "https://httpbin.org/get")
+            print(data)
+        except Exception as e:
+            print(f"Ошибка: {e}")
+
+
+asyncio.run(main())
+```
+
+## Сравнение sync vs async: бенчмарк
+
+Давайте на практике сравним синхронный и асинхронный подходы. Выполним 20 HTTP-запросов:
+
+### Синхронный вариант (requests)
+
+```python
+import requests
+import time
+
+
+def fetch_sync(url):
+    response = requests.get(url, timeout=10)
+    return response.status_code
+
+
+def main_sync():
+    urls = ["https://httpbin.org/delay/1"] * 20  # Каждый запрос занимает ~1 сек
+
+    start = time.time()
+    results = [fetch_sync(url) for url in urls]
+    elapsed = time.time() - start
+
+    print(f"Синхронно: {len(results)} запросов за {elapsed:.2f} сек")
+
+
+main_sync()
+# Синхронно: 20 запросов за ~20 сек
+```
+
+### Асинхронный вариант (aiohttp)
+
+```python
+import aiohttp
+import asyncio
+import time
+
+
+async def fetch_async(session, url):
+    async with session.get(url) as resp:
+        return resp.status
+
+
+async def main_async():
+    urls = ["https://httpbin.org/delay/1"] * 20
+
+    start = time.time()
+    async with aiohttp.ClientSession() as session:
+        tasks = [fetch_async(session, url) for url in urls]
+        results = await asyncio.gather(*tasks)
+    elapsed = time.time() - start
+
+    print(f"Асинхронно: {len(results)} запросов за {elapsed:.2f} сек")
+
+
+asyncio.run(main_async())
+# Асинхронно: 20 запросов за ~1-2 сек
+```
+
+### Результаты
+
+| Подход      | 20 запросов (delay=1s) | Ускорение  |
+|-------------|------------------------|------------|
+| Синхронный  | ~20 сек                | 1x         |
+| Асинхронный | ~1-2 сек               | **10-20x** |
+
+### Когда async даёт выигрыш?
+
+✅ **Async эффективен для I/O-bound задач:**
+- HTTP-запросы к внешним API
+- Запросы к базам данных
+- Чтение/запись файлов
+- WebSocket-соединения
+
+❌ **Async НЕ поможет для CPU-bound задач:**
+- Математические вычисления
+- Обработка изображений
+- Шифрование
+- Парсинг больших данных
+
+Для CPU-bound задач используйте `multiprocessing` или `asyncio.to_thread()`.
+
+## Async в Django
+
+Начиная с Django 3.1, появилась поддержка асинхронных view. В Django 4.1+ эта поддержка стала более зрелой.
+
+### Async Views
+
+```python
+# views.py
+import asyncio
+import aiohttp
+from django.http import JsonResponse
+
+
+async def fetch_external_api(request):
+    """Асинхронный view для запроса к внешнему API."""
+    async with aiohttp.ClientSession() as session:
+        async with session.get("https://api.example.com/data") as resp:
+            data = await resp.json()
+    return JsonResponse(data)
+
+
+# Можно использовать asyncio.gather для параллельных запросов
+async def fetch_multiple_apis(request):
+    """Параллельные запросы к нескольким API."""
+    async with aiohttp.ClientSession() as session:
+        tasks = [
+            session.get("https://api.example.com/users"),
+            session.get("https://api.example.com/products"),
+            session.get("https://api.example.com/orders"),
+        ]
+        responses = await asyncio.gather(*tasks)
+        data = {
+            "users": await responses[0].json(),
+            "products": await responses[1].json(),
+            "orders": await responses[2].json(),
+        }
+    return JsonResponse(data)
+```
+
+### Ограничения: Django ORM
+
+**⚠️ Важно:** Django ORM пока **синхронный**! Нельзя напрямую использовать ORM в async view:
+
+```python
+# ❌ НЕПРАВИЛЬНО — заблокирует event loop!
+async def bad_view(request):
+    users = User.objects.all()  # Синхронный вызов в async контексте
+    return JsonResponse({"count": len(users)})
+```
+
+### sync_to_async
+
+Для использования синхронного кода (включая ORM) в async-контексте используйте `sync_to_async`:
+
+```python
+from asgiref.sync import sync_to_async
+from django.http import JsonResponse
+from .models import User
+
+
+@sync_to_async
+def get_users_count():
+    return User.objects.count()
+
+
+@sync_to_async
+def get_user_by_id(user_id):
+    return User.objects.get(id=user_id)
+
+
+async def users_count_view(request):
+    count = await get_users_count()
+    return JsonResponse({"count": count})
+
+
+# Или inline с декоратором
+async def user_detail_view(request, user_id):
+    get_user = sync_to_async(User.objects.get, thread_sensitive=True)
+    try:
+        user = await get_user(id=user_id)
+        return JsonResponse({"name": user.name, "email": user.email})
+    except User.DoesNotExist:
+        return JsonResponse({"error": "User not found"}, status=404)
+```
+
+### async_to_sync
+
+Обратная ситуация — вызов async-кода из синхронного контекста:
+
+```python
+from asgiref.sync import async_to_sync
+import aiohttp
+
+
+async def fetch_data_async(url):
+    async with aiohttp.ClientSession() as session:
+        async with session.get(url) as resp:
+            return await resp.json()
+
+
+# В синхронном коде (например, в management command)
+def sync_function():
+    data = async_to_sync(fetch_data_async)("https://api.example.com/data")
+    print(data)
+```
+
+### Когда использовать async views в Django?
+
+✅ **Используйте async views когда:**
+- Делаете запросы к внешним API
+- Работаете с WebSocket (Django Channels)
+- Выполняете много I/O операций параллельно
+
+❌ **Не используйте async views когда:**
+- Основная работа — с Django ORM (пока он синхронный)
+- Простые CRUD-операции
+- Нет явной выгоды от параллелизма
+
+> **Примечание:** Django 5.0+ активно развивает async ORM. Следите за обновлениями!
+
+## Паттерны и best practices
+
+### Producer-Consumer
+
+Классический паттерн для обработки потока данных:
+
+```python
+import asyncio
+import random
+
+
+async def producer(queue, name):
+    """Производитель — добавляет задачи в очередь."""
+    for i in range(5):
+        await asyncio.sleep(random.uniform(0.1, 0.5))
+        item = f"{name}-item-{i}"
+        await queue.put(item)
+        print(f"[{name}] Произведено: {item}")
+    await queue.put(None)  # Сигнал завершения
+
+
+async def consumer(queue, name):
+    """Потребитель — обрабатывает задачи из очереди."""
+    while True:
+        item = await queue.get()
+        if item is None:
+            queue.task_done()
+            break
+        await asyncio.sleep(random.uniform(0.2, 0.6))  # Имитация обработки
+        print(f"[{name}] Обработано: {item}")
+        queue.task_done()
+
+
+async def main():
+    queue = asyncio.Queue(maxsize=10)
+
+    # Запускаем производителей и потребителей
+    producers = [
+        asyncio.create_task(producer(queue, f"P{i}"))
+        for i in range(2)
+    ]
+    consumers = [
+        asyncio.create_task(consumer(queue, f"C{i}"))
+        for i in range(3)
+    ]
+
+    await asyncio.gather(*producers)
+
+    # Отправляем сигналы завершения для всех потребителей
+    for _ in consumers:
+        await queue.put(None)
+
+    await asyncio.gather(*consumers)
+
+
+asyncio.run(main())
+```
+
+### Graceful Shutdown
+
+Корректное завершение при получении сигнала (Ctrl+C):
+
+```python
+import asyncio
+import signal
+
+
+async def long_running_task(name):
+    try:
+        while True:
+            print(f"[{name}] Работаю...")
+            await asyncio.sleep(1)
+    except asyncio.CancelledError:
+        print(f"[{name}] Получен сигнал отмены, завершаюсь...")
+        # Здесь можно выполнить cleanup
+        raise
+
+
+async def main():
+    tasks = [
+        asyncio.create_task(long_running_task(f"Task-{i}"))
+        for i in range(3)
+    ]
+
+    # Обработчик сигнала
+    def shutdown():
+        print("Получен сигнал завершения!")
+        for task in tasks:
+            task.cancel()
+
+    loop = asyncio.get_running_loop()
+    for sig in (signal.SIGTERM, signal.SIGINT):
+        loop.add_signal_handler(sig, shutdown)
+
+    try:
+        await asyncio.gather(*tasks)
+    except asyncio.CancelledError:
+        print("Все задачи отменены")
+
+
+# На Windows сигналы работают иначе, используйте try/except KeyboardInterrupt
+if __name__ == "__main__":
+    try:
+        asyncio.run(main())
+    except KeyboardInterrupt:
+        print("Завершено по Ctrl+C")
+```
+
+### Типичные ошибки
+
+#### 1. Забытый await
+
+```python
+# ❌ НЕПРАВИЛЬНО
+async def bad():
+    asyncio.sleep(1)  # Забыли await — ничего не произойдёт!
+    print("Готово")
+
+# ✅ ПРАВИЛЬНО
+async def good():
+    await asyncio.sleep(1)
+    print("Готово")
+```
+
+#### 2. Блокирующий код в async-функции
+
+```python
+import time
+
+# ❌ НЕПРАВИЛЬНО — блокирует весь event loop!
+async def bad():
+    time.sleep(5)  # Синхронный sleep
+    return "done"
+
+# ✅ ПРАВИЛЬНО
+async def good():
+    await asyncio.sleep(5)  # Асинхронный sleep
+    return "done"
+
+# ✅ Или используйте to_thread для блокирующего кода
+async def also_good():
+    await asyncio.to_thread(time.sleep, 5)
+    return "done"
+```
+
+#### 3. Создание задач без ожидания
+
+```python
+# ❌ НЕПРАВИЛЬНО — задача может не выполниться
+async def bad():
+    asyncio.create_task(some_coroutine())  # Задача "потеряется"
+    return "done"
+
+# ✅ ПРАВИЛЬНО — сохраняем ссылку и ждём
+async def good():
+    task = asyncio.create_task(some_coroutine())
+    # ... другой код ...
+    await task  # Ждём завершения
+    return "done"
+```
+
+#### 4. Неправильная обработка исключений в gather
+
+```python
+# ❌ Одно исключение отменит все задачи
+async def bad():
+    await asyncio.gather(task1(), task2(), task3())
+
+# ✅ return_exceptions=True — все задачи выполнятся
+async def good():
+    results = await asyncio.gather(
+        task1(), task2(), task3(),
+        return_exceptions=True
+    )
+    for result in results:
+        if isinstance(result, Exception):
+            print(f"Ошибка: {result}")
+```
+
+### Отладка async-кода
+
+Включите debug-режим asyncio для поиска проблем:
+
+```python
+import asyncio
+
+# Способ 1: через переменную окружения
+# PYTHONASYNCIODEBUG=1 python script.py
+
+# Способ 2: программно
+asyncio.run(main(), debug=True)
+```
+
+В debug-режиме asyncio:
+- Предупреждает о корутинах, которые не были awaited
+- Показывает, где были созданы задачи
+- Логирует медленные callback'и (>100ms)
+
+---
+
+## Практика на занятии
+
+### Задание 1. Параллельные запросы
+
+Напишите асинхронную функцию, которая:
+1. Принимает список URL-адресов
+2. Делает GET-запросы ко всем URL параллельно
+3. Возвращает словарь `{url: status_code}`
+4. Обрабатывает ошибки (таймаут, недоступный сервер)
+
+```python
+import aiohttp
+import asyncio
+
+
+async def fetch_all(urls: list[str], timeout: int = 10) -> dict[str, int | str]:
+    """
+    Возвращает словарь {url: status_code} или {url: "error: описание"}
+    """
+    # Ваш код здесь
+    pass
+
+
+# Пример использования:
+urls = [
+    "https://httpbin.org/get",
+    "https://httpbin.org/status/404",
+    "https://httpbin.org/delay/2",
+    "https://invalid-url-that-does-not-exist.com",
+]
+
+results = asyncio.run(fetch_all(urls))
+print(results)
+# {'https://httpbin.org/get': 200, 'https://httpbin.org/status/404': 404, ...}
+```
+
+### Задание 2. Rate Limiter
+
+Реализуйте асинхронный rate limiter, который ограничивает количество запросов в секунду:
+
+```python
+import asyncio
+import time
+
+
+class AsyncRateLimiter:
+    def __init__(self, max_requests: int, period: float = 1.0):
+        """
+        max_requests: максимальное количество запросов
+        period: период в секундах
+        """
+        # Ваш код здесь
+        pass
+
+    async def acquire(self):
+        """Ожидает, пока можно сделать запрос."""
+        # Ваш код здесь
+        pass
+
+
+# Пример использования:
+async def main():
+    limiter = AsyncRateLimiter(max_requests=5, period=1.0)
+
+    async def make_request(i):
+        await limiter.acquire()
+        print(f"[{time.strftime('%H:%M:%S')}] Запрос {i}")
+
+    tasks = [make_request(i) for i in range(15)]
+    await asyncio.gather(*tasks)
+
+
+asyncio.run(main())
+# Должно выводить по 5 запросов в секунду
+```
+
+---
+
+## Домашняя работа
+
+### Задание 1. Асинхронный веб-скрапер
+
+Напишите асинхронный скрапер, который:
+1. Получает список URL страниц
+2. Скачивает HTML каждой страницы параллельно (с ограничением в 5 одновременных запросов)
+3. Извлекает заголовок страницы (`<title>`)
+4. Возвращает словарь `{url: title}`
+
+Используйте `asyncio.Semaphore` для ограничения параллелизма.
+
+```python
+async def scrape_titles(urls: list[str], max_concurrent: int = 5) -> dict[str, str]:
+    """Возвращает {url: title} для каждой страницы."""
+    # Ваш код здесь
+    pass
+
+
+# Пример:
+urls = [
+    "https://python.org",
+    "https://docs.python.org",
+    "https://pypi.org",
+]
+titles = asyncio.run(scrape_titles(urls))
+print(titles)
+```
+
+### Задание 2. Producer-Consumer с обработкой ошибок
+
+Реализуйте систему producer-consumer, где:
+1. Producer генерирует случайные числа и кладёт их в очередь
+2. Consumer берёт числа из очереди и проверяет, простые ли они
+3. Если число простое — сохраняет в результат
+4. Обработайте graceful shutdown по Ctrl+C
+
+```python
+async def is_prime(n: int) -> bool:
+    """Проверяет, является ли число простым."""
+    # Ваш код здесь
+    pass
+
+
+async def producer(queue: asyncio.Queue, count: int):
+    """Генерирует count случайных чисел."""
+    # Ваш код здесь
+    pass
+
+
+async def consumer(queue: asyncio.Queue, results: list):
+    """Проверяет числа на простоту."""
+    # Ваш код здесь
+    pass
+
+
+async def main():
+    # Ваш код здесь
+    pass
+```
+
+### Задание 3. ⭐ Async Context Manager для API-клиента
+
+Создайте асинхронный контекстный менеджер для работы с API:
+
+```python
+class AsyncAPIClient:
+    def __init__(self, base_url: str, rate_limit: int = 10):
+        """
+        base_url: базовый URL API
+        rate_limit: максимум запросов в секунду
+        """
+        pass
+
+    async def __aenter__(self):
+        # Инициализация сессии
+        pass
+
+    async def __aexit__(self, exc_type, exc_val, exc_tb):
+        # Закрытие сессии
+        pass
+
+    async def get(self, endpoint: str) -> dict:
+        # GET-запрос с rate limiting
+        pass
+
+    async def post(self, endpoint: str, data: dict) -> dict:
+        # POST-запрос с rate limiting
+        pass
+
+
+# Пример использования:
+async def main():
+    async with AsyncAPIClient("https://httpbin.org", rate_limit=5) as client:
+        # Параллельные запросы с автоматическим rate limiting
+        tasks = [client.get("/get") for _ in range(20)]
+        results = await asyncio.gather(*tasks)
+        print(f"Получено {len(results)} ответов")
+
+
+asyncio.run(main())
+```
 

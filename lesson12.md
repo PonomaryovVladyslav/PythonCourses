@@ -66,7 +66,7 @@
   <summary>Блок 7 — Python async (31–33)</summary>
 
   - [Лекция 31. Celery. Multithreading. GIL. Multiprocessing](lesson31.md)
-  - [Лекция 32. Асинхронное программирование в Python. Корутины. Asyncio.](lesson32.md)
+  - [Лекция 32. Asyncio. Aiohttp. Асинхронное программирование на практике.](lesson32.md)
   - [Лекция 33. Сокеты. Django channels.](lesson33.md)
 </details>
 
