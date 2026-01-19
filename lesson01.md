@@ -143,7 +143,7 @@ Python — это высокоуровневый язык программиро
 
 ## Установка Python на Windows
 
-![](https://i.redd.it/i0auas97taz61.jpg)
+<img src="https://i.redd.it/i0auas97taz61.jpg" alt="drawing" width="400"/>
 
 Для операционной системы Windows необходимо скачать и установить Python с официального сайта. Перейдите
 по [ссылке](https://www.python.org/downloads/) и загрузите последнюю версию Python. Убедитесь, что во время установки вы
@@ -151,7 +151,7 @@ Python — это высокоуровневый язык программиро
 
 ## Как запустить консоль
 
-![](https://i.ytimg.com/vi/1uvr7CJazqE/maxresdefault.jpg)
+<img src="https://i.ytimg.com/vi/1uvr7CJazqE/maxresdefault.jpg" alt="drawing" width="400"/>
 
 Для запуска Python в различных операционных системах мы будем использовать консоль (командную строку/терминал):
 
