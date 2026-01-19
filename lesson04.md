@@ -80,8 +80,7 @@
 
 - [Лекция 36. Методологии разработки. CI/CD. Монолит и микросервисы. Docker](lesson36.md)
 
-
-![](https://preview.redd.it/python-meme-true-v0-g6vhhhsht6b91.jpg?auto=webp&s=21c5fc970b99544bdb2d60b760b112560709030a)
+<img src="https://preview.redd.it/python-meme-true-v0-g6vhhhsht6b91.jpg?auto=webp&s=21c5fc970b99544bdb2d60b760b112560709030a" alt="drawing" width="400"/>
 
 Да здравствуют новые типы данных!
 
@@ -200,7 +199,7 @@ a, b = b, a
 Если ваши данные — это кусок мяса, то хеш-функция — это мясорубка, которая превратит его в фарш. А фарш, как известно,
 невозможно прокрутить назад.
 
-![](https://stihi.ru/pics/2018/06/07/8243.jpg)
+<img src="https://stihi.ru/pics/2018/06/07/8243.jpg" alt="drawing" width="300"/>
 
 Что важно:
 
@@ -243,7 +242,7 @@ hash([1, 2, 3])
 
 Как это работает под капотом?
 
-![](https://upload.wikimedia.org/wikipedia/commons/thumb/7/7d/Hash_table_3_1_1_0_1_0_0_SP.svg/1200px-Hash_table_3_1_1_0_1_0_0_SP.svg.png)
+<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7d/Hash_table_3_1_1_0_1_0_0_SP.svg/1200px-Hash_table_3_1_1_0_1_0_0_SP.svg.png" alt="drawing" width="400"/>
 
 По сути, программа берёт данные, которые мы хотим указать в качестве ключа, хэширует их, и полученное значение используется
 как номер ячейки для запоминания.
@@ -589,8 +588,6 @@ Index 3: cherry
 ```
 
 ## Импорты и некоторые специфические типы данных
-
-![](https://dshacker.com/wp-content/uploads/2021/11/python-meme.png)
 
 ### Импорты
 
