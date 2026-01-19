@@ -961,8 +961,8 @@ class ArticleFilter(filters.FilterSet):
 
     # Фильтр по темам (ManyToMany)
     topics = filters.ModelMultipleChoiceFilter(
-        field_name='topics__slug',
-        to_field_name='slug',
+        field_name='topics__name',
+        to_field_name='name',
         queryset=Topic.objects.all()
     )
     topic_id = filters.NumberFilter(field_name='topics__id')
@@ -1028,7 +1028,7 @@ class ArticleViewSet(viewsets.ModelViewSet):
     Фильтры:
     - ?status=published — по статусу
     - ?author=1 — по автору (id)
-    - ?topics=python — по теме (slug)
+    - ?topics=Python — по теме (name)
     - ?search=django — полнотекстовый поиск
     - ?ordering=-created_at — сортировка
     """

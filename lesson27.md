@@ -558,7 +558,7 @@ JavaScript или Python, который затем можно использо�
 Сериалайзер в DRF — это класс для преобразования данных из того, который пришёл от пользователя в реквесте, в понятный для
 Python и наоборот.
 
-Мы будем использовать модели блога, которые создали в предыдущих лекциях. Вот упрощённая версия модели `Article`:
+Мы будем использовать модели блога, которые создали в предыдущих лекциях. Напомним модель `Article`:
 
 ```python
 from django.db import models
@@ -570,13 +570,16 @@ class Article(models.Model):
     class Status(models.TextChoices):
         DRAFT = 'draft', 'Черновик'
         PUBLISHED = 'published', 'Опубликовано'
+        ARCHIVED = 'archived', 'В архиве'
 
     title = models.CharField(max_length=200)
     slug = models.SlugField(max_length=200, unique=True)
     content = models.TextField()
     author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='articles')
     status = models.CharField(max_length=20, choices=Status.choices, default=Status.DRAFT)
+    topics = models.ManyToManyField('Topic', related_name='articles')
     created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return self.title
@@ -596,7 +599,7 @@ class ArticleSerializer(serializers.Serializer):
     title = serializers.CharField(max_length=200)
     slug = serializers.SlugField(max_length=200)
     content = serializers.CharField()
-    status = serializers.ChoiceField(choices=['draft', 'published'])
+    status = serializers.ChoiceField(choices=['draft', 'published', 'archived'])
     author = serializers.PrimaryKeyRelatedField(read_only=True)
     created_at = serializers.DateTimeField(read_only=True)
 
@@ -1220,12 +1223,19 @@ class Topic(models.Model):
 
 class Article(models.Model):
     """Статья блога"""
+    class Status(models.TextChoices):
+        DRAFT = 'draft', 'Черновик'
+        PUBLISHED = 'published', 'Опубликовано'
+        ARCHIVED = 'archived', 'В архиве'
+
     title = models.CharField(max_length=200)
     slug = models.SlugField(max_length=200, unique=True)
     content = models.TextField()
     author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='articles')
+    status = models.CharField(max_length=20, choices=Status.choices, default=Status.DRAFT)
     topics = models.ManyToManyField(Topic, related_name='articles')
     created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return self.title

@@ -825,7 +825,6 @@ class TopicViewSet(viewsets.ReadOnlyModelViewSet):
     """
     queryset = Topic.objects.all()
     serializer_class = TopicSerializer
-    lookup_field = 'slug'
 ```
 
 ### Кастомный ViewSet из миксинов

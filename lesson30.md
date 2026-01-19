@@ -670,6 +670,7 @@ class ArticleViewUnitTest(APITestCase):
         self.user = User.objects.create_user('author', password='testpass')
         self.article = Article.objects.create(
             title='Тестовая статья',
+            slug='testovaya-statya',
             content='Содержимое статьи',
             author=self.user,
             status='published'
@@ -727,6 +728,7 @@ class ArticleIntegrationTests(APITestCase):
         url = reverse('article-list')
         data = {
             'title': 'Новая статья',
+            'slug': 'novaya-statya',
             'content': 'Содержимое статьи',
             'status': 'draft'
         }
@@ -972,6 +974,7 @@ Faker отлично интегрируется с FactoryBoy через `factor
 ```python
 import factory
 from factory.django import DjangoModelFactory
+from django.utils.text import slugify
 from blog.models import Article
 
 
@@ -980,6 +983,7 @@ class ArticleFactory(DjangoModelFactory):
         model = Article
 
     title = factory.Faker('sentence', nb_words=5)
+    slug = factory.LazyAttribute(lambda o: slugify(o.title))
     content = factory.Faker('paragraphs', nb=3, ext_word_list=None)
     status = 'published'
     author = factory.SubFactory('blog.tests.factories.UserFactory')
@@ -994,6 +998,7 @@ class ArticleFactory(DjangoModelFactory):
 import factory
 from factory.django import DjangoModelFactory
 from django.contrib.auth import get_user_model
+from django.utils.text import slugify
 from blog.models import Article, Topic, Comment
 
 User = get_user_model()
@@ -1015,7 +1020,6 @@ class TopicFactory(DjangoModelFactory):
         model = Topic
 
     name = factory.Sequence(lambda n: f'Тема {n}')
-    slug = factory.LazyAttribute(lambda o: o.name.lower().replace(' ', '-'))
 
 
 class ArticleFactory(DjangoModelFactory):
@@ -1024,6 +1028,7 @@ class ArticleFactory(DjangoModelFactory):
         model = Article
 
     title = factory.Faker('sentence', nb_words=5, locale='ru_RU')
+    slug = factory.LazyAttribute(lambda o: slugify(o.title))
     content = factory.Faker('text', max_nb_chars=500, locale='ru_RU')
     status = 'published'
     author = factory.SubFactory(UserFactory)
@@ -1082,7 +1087,6 @@ class DraftArticleFactory(ArticleFactory):
 class PublishedArticleFactory(ArticleFactory):
     """Фабрика для опубликованных статей"""
     status = 'published'
-    published_at = factory.LazyFunction(timezone.now)
 ```
 
 ---
@@ -1130,6 +1134,7 @@ class ArticleCRUDTests(APITestCase):
         url = reverse('article-list')
         data = {
             'title': 'Новая статья',
+            'slug': 'novaya-statya',
             'content': 'Содержимое статьи',
             'status': 'draft'
         }
@@ -1138,13 +1143,13 @@ class ArticleCRUDTests(APITestCase):
 
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
         self.assertEqual(Article.objects.count(), 2)
-        new_article = Article.objects.get(title='Новая статья')
+        new_article = Article.objects.get(slug='novaya-statya')
         self.assertEqual(new_article.author, self.author)
 
     def test_create_article_anonymous_forbidden(self):
         """Анонимный пользователь не может создать статью"""
         url = reverse('article-list')
-        data = {'title': 'Статья', 'content': 'Текст'}
+        data = {'title': 'Статья', 'slug': 'statya', 'content': 'Текст'}
 
         response = self.client.post(url, data, format='json')
 
@@ -1349,7 +1354,7 @@ class TestArticleAPI:
     def test_create_article_authenticated(self, api_client, author):
         api_client.force_authenticate(user=author)
         url = reverse('article-list')
-        data = {'title': 'Новая статья', 'content': 'Текст', 'status': 'draft'}
+        data = {'title': 'Новая статья', 'slug': 'novaya-statya', 'content': 'Текст', 'status': 'draft'}
 
         response = api_client.post(url, data, format='json')
 
@@ -1367,7 +1372,7 @@ class TestArticleAPI:
             api_client.force_authenticate(user=author)
 
         url = reverse('article-list')
-        response = api_client.post(url, {'title': 'Test', 'content': 'Text'}, format='json')
+        response = api_client.post(url, {'title': 'Test', 'slug': 'test', 'content': 'Text'}, format='json')
 
         assert response.status_code == status_code
 ```
