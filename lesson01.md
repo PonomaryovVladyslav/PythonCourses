@@ -103,7 +103,7 @@
 
 ## Python
 
-![](https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Python-logo-notext.svg/640px-Python-logo-notext.svg.png)
+![python.png](pictures/lesson01/python.png)
 
 Python — это высокоуровневый язык программирования, который отличается простотой и читаемостью синтаксиса. Его легко
 изучить, что делает его популярным среди начинающих программистов, а также профессионалов. Python поддерживает несколько
@@ -153,7 +153,7 @@ Python — это высокоуровневый язык программиро
 
 ![](https://i.ytimg.com/vi/1uvr7CJazqE/maxresdefault.jpg)
 
-Для запуска Python в различных операционных системах:
+Для запуска Python в различных операционных системах мы будем использовать консоль (командную строку/терминал):
 
 1. **Windows:**
     - Откройте "Пуск" (либо кнопки Win + R) и введите "cmd" или "Командная строка".
@@ -177,7 +177,7 @@ Python — это высокоуровневый язык программиро
 
 ### 1. Visual Studio Code (VS Code)
 
-![VS Code](https://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/Visual_Studio_Code_1.35_icon.svg/512px-Visual_Studio_Code_1.35_icon.svg.png?20210804221519)
+<img src="pictures/lesson01/vscode.png" alt="drawing" width="200"/>
 
 **Visual Studio Code** — это бесплатный, открытый и кроссплатформенный редактор кода, разработанный Microsoft. Он
 поддерживает множество языков программирования, включая Python, и предлагает богатый набор функций:
@@ -189,7 +189,7 @@ Python — это высокоуровневый язык программиро
 
 ### 2. PyCharm
 
-![PyCharm](https://intellij-support.jetbrains.com/hc/user_images/5l0fLOoDkFwpjU_ZKu7Ofg.png)
+<img src="https://intellij-support.jetbrains.com/hc/user_images/5l0fLOoDkFwpjU_ZKu7Ofg.png" alt="drawing" width="200"/>
 
 **PyCharm** — это интегрированная среда разработки (IDE) для Python, разработанная JetBrains. PyCharm доступен в двух
 версиях: Community (бесплатная) и Professional (платная с дополнительными функциями).
@@ -202,7 +202,7 @@ Python — это высокоуровневый язык программиро
 
 ### 3. Sublime Text
 
-![Sublime Text](https://www.sublimehq.com/images/sublime_text.png)
+<img src="https://www.sublimehq.com/images/sublime_text.png" alt="drawing" width="200"/>
 
 **Sublime Text** — это лёгкий и быстрый текстовый редактор, который поддерживает различные языки программирования,
 включая Python.
@@ -214,7 +214,7 @@ Python — это высокоуровневый язык программиро
 
 ### 4. Jupyter Notebook
 
-![Jupyter Notebook](https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Jupyter_logo.svg/1767px-Jupyter_logo.svg.png)
+<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Jupyter_logo.svg/1767px-Jupyter_logo.svg.png" alt="drawing" width="200"/>
 
 **Jupyter Notebook** — это веб-приложение, которое позволяет создавать и делиться документами, содержащими живой код,
 уравнения, визуализации и текстовые пояснения. Оно широко используется в науке о данных, исследовательской и
@@ -302,8 +302,6 @@ name = "Alice"
 Коротко про стиль: будем придерживаться PEP 8 (подробнее позже в курсе). Имена переменных — в snake_case: например, `user_name`, `total_amount`.
 
 ## Использование функции `print`
-
-![](https://imgb.ifunny.co/images/797eea0107b32bed63dd37959289419e5ed25ef3cef42df6af1f6e5e4e6668ef_1.jpg)
 
 Функция `print` — это встроенная функция Python, которая используется для вывода текста и данных на экран. Она может
 принимать один или несколько аргументов и выводить их в стандартный поток вывода (обычно это консоль или терминал).
@@ -558,7 +556,7 @@ print("Вы живете в " + city + ".")
 
 # Булева алгебра и условия
 
-![](https://upload.wikimedia.org/wikipedia/commons/thumb/c/ce/George_Boole_color.jpg/274px-George_Boole_color.jpg)
+![img.png](pictures/lesson01/bool_george.png)
 
 ## Что такое булева алгебра?
 
@@ -579,7 +577,7 @@ print("Вы живете в " + city + ".")
 Эти понятия есть в каждом языке программирования (которые используются коммерчески, возможно, есть исключения для
 некоторых проектов, сделанных для веселья), которые мне известны.
 
-![](https://i.imgflip.com/55t2ce.jpg)
+<img src="https://i.imgflip.com/55t2ce.jpg" alt="drawing" width="200"/>
 
 Такой тип данных называется **булевый**, а такие переменные – **булевые**.
 
@@ -587,7 +585,8 @@ print("Вы живете в " + city + ".")
 
 Может быть только два значения: *True* и *False*.
 
-![](https://static.vecteezy.com/system/resources/previews/004/581/253/original/check-and-cross-icon-right-and-wrong-icon-yes-or-no-buttons-true-or-false-good-or-bad-selection-design-design-free-vector.jpg)
+<img src="https://static.vecteezy.com/system/resources/previews/004/581/253/original/check-and-cross-icon-right-and-wrong-icon-yes-or-no-buttons-true-or-false-good-or-bad-selection-design-design-free-vector.jpg" alt="drawing" width="400"/>
+
 Есть три способа, как переменная может быть булевым значением:
 
 1) Явное создание переменной такого типа:
