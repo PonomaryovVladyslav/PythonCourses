@@ -80,9 +80,6 @@
 
 - [Лекция 36. Методологии разработки. CI/CD. Монолит и микросервисы. Docker](lesson36.md)
 
-
-![](https://i.ytimg.com/vi/ektST9ppziE/maxresdefault.jpg)
-
 ## Magic methods (они же иногда называются dunder-методы)
 
 ![](https://files.realpython.com/media/Python-Magic-Methods_Watermarked.a69c3876000a.jpg)
