@@ -81,7 +81,7 @@
 - [Лекция 36. Методологии разработки. CI/CD. Монолит и микросервисы. Docker](lesson36.md)
 
 
-![](https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/Git-logo.svg/2560px-Git-logo.svg.png)
+<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/Git-logo.svg/2560px-Git-logo.svg.png" alt="drawing" width="500"/>
 
 Сегодня мы поговорим о системе контроля версий Git, одной из самых популярных и широко используемых систем для
 управления исходным кодом. В ходе лекции мы рассмотрим исторический контекст, который привёл к созданию Git, основные
