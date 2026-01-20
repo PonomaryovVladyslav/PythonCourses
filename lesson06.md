@@ -107,19 +107,7 @@
 
 #### Визуализация роста функций (Big-O)
 
-```text
-Рост (условный)
-|
-|           O(2^n)
-|        O(n^2)
-|     O(n log n)
-|   O(n)
-|  O(log n)
-| O(1)
-+----------------------> n (размер входа)
-```
-
-![](https://upload.wikimedia.org/wikipedia/commons/7/7e/Comparison_computational_complexity.svg)
+<img src="https://upload.wikimedia.org/wikipedia/commons/7/7e/Comparison_computational_complexity.svg" alt="drawing" width="700"/>
 
 > График выше иллюстрирует, как быстро растёт время/память в зависимости от класса сложности. Он важен для интуиции, но
 > помните: Big‑O — это оценка порядка роста, а не точное время.
@@ -527,7 +515,7 @@ print(f"Отсортированный массив: {merge_sort(arr)}")
 
 Быстрая сортировка — это ещё один эффективный алгоритм сортировки, который использует принцип «разделяй и властвуй». Он выбирает опорный элемент (пивот) и разделяет массив на две части: элементы, меньшие пивота, и элементы, большие пивота. Затем рекурсивно сортирует каждую часть.
 
-![](https://media.proglib.io/wp-uploads/-000//1/596b722a05151_A0eQUHL.gif)
+![](https://www.tutorialspoint.com/data_structures_algorithms/images/quick_sort_partition_animation.gif)
 
 ### Принцип работы:
 
@@ -581,7 +569,7 @@ students.sort(key=lambda s: (s["grade"], -s["age"]))
 
 Python использует в качестве базового алгоритма сортировки Timsort, который является гибридным алгоритмом, сочетающим в себе сортировку слиянием и вставками. Timsort был разработан Тимом Петерсом и впервые использовался в Python 2.3. Детали реализации нам не очень важны, но в реальности он работает немного быстрее, чем алгоритмы, которые мы обсудили.
 
-![](https://media2.dev.to/cdn-cgi/image/width=800%2Cheight=%2Cfit=scale-down%2Cgravity=auto%2Cformat=auto/https%3A%2F%2Fdev-to-uploads.s3.amazonaws.com%2Fi%2Fdp61xcspsu0wuoqopwub.gif)
+<img src="https://media2.dev.to/cdn-cgi/image/width=800%2Cheight=%2Cfit=scale-down%2Cgravity=auto%2Cformat=auto/https%3A%2F%2Fdev-to-uploads.s3.amazonaws.com%2Fi%2Fdp61xcspsu0wuoqopwub.gif" alt="drawing" width="400"/>
 
 ## Заключение
 
