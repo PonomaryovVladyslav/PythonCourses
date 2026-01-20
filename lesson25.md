@@ -1674,3 +1674,7 @@ def dynamic_view(request):
 - Переключите хранение сессий на Redis (`cached_db`)
 - Сравните производительность с database backend
 - Напишите management-команду для миграции существующих сессий
+
+---
+
+[← Лекция 24: ClassBaseView](lesson24.md) | [Лекция 26: Логирование. Middleware. Signals. Messages. Manage commands →](lesson26.md)

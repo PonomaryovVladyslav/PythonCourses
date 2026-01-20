@@ -1439,3 +1439,7 @@ urlpatterns = [
 8. Как создать FilterSet для фильтрации по связанным моделям?
 9. Для чего нужен Throttling и как его настроить?
 10. Как реализовать токен с ограниченным временем жизни?
+
+---
+
+[← Лекция 28: @api_view, APIView, ViewSets, Pagination, Routers](lesson28.md) | [Лекция 30: Тестирование. Django, REST API. →](lesson30.md)

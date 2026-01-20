@@ -1006,3 +1006,7 @@ urlpatterns = [
 ## Домашки на весь блок по web
 
 [Ссылка](web_homeworks.md)
+
+---
+
+[← Лекция 18: Virtual env. Pip. Устанавливаемые модули. Pyenv.](lesson18.md) | [Лекция 20: Templates. Static →](lesson20.md)

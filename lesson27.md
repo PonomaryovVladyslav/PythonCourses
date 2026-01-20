@@ -1567,3 +1567,7 @@ def get_comments_count(self, obj):
    - Валидатор уникальности slug
    - Проверку что title не содержит запрещённых слов
    - Кросс-валидацию: если status='published', content должен быть не менее 100 символов
+
+---
+
+[← Лекция 26: Логирование. Middleware. Signals. Messages. Manage commands](lesson26.md) | [Лекция 28: @api_view, APIView, ViewSets, Pagination, Routers →](lesson28.md)

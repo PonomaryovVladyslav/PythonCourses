@@ -1772,3 +1772,7 @@ def get_articles_with_info():
 - [Aggregation](https://docs.djangoproject.com/en/stable/topics/db/aggregation/)
 - [Query Expressions](https://docs.djangoproject.com/en/stable/ref/models/expressions/)
 - [Database optimization](https://docs.djangoproject.com/en/stable/topics/db/optimization/)
+
+---
+
+[← Лекция 21: Модели. Связи. Meta. Abstract, proxy.](lesson21.md) | [Лекция 23: Forms, ModelForms. User, Authentication. →](lesson23.md)

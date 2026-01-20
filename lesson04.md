@@ -676,3 +676,7 @@ d = OrderedDict(a=1, b=2)
    - студентов, которые учатся в двух и более группах;
    - студентов, которые не учатся на FrontEnd;
    - студентов, которые изучают Python или Java.
+
+---
+
+[← Лекция 3: None. Range, list comprehension, sum, max, min, len, sorted, all, any. Работа с файлами](lesson03.md) | [Лекция 5: Функции, типизация, lambda. Map, zip, filter. →](lesson05.md)

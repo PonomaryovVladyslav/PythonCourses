@@ -2010,3 +2010,7 @@ python manage.py close_orders
 7. Где правильно регистрировать сигналы и почему?
 
 8. Как добавить контекст (user_id, request_id) ко всем логам в рамках одного запроса?
+
+---
+
+[← Лекция 25: NoSQL. Куки, сессии, кеш](lesson25.md) | [Лекция 27: Что такое API. REST и RESTful. Django REST Framework. →](lesson27.md)

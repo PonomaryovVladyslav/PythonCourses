@@ -1835,3 +1835,7 @@ def edit_article(request, pk):
    - Использует `instance=request.user` для заполнения формы
 
 3. Добавьте возможность смены пароля с использованием `PasswordChangeForm`
+
+---
+
+[← Лекция 22: Django ORM.](lesson22.md) | [Лекция 24: ClassBaseView →](lesson24.md)

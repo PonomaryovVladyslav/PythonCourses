@@ -1130,3 +1130,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
 - [Django Channels Documentation](https://channels.readthedocs.io/en/stable/)
 - [channels_redis Documentation](https://github.com/django/channels_redis)
 - [Daphne Documentation](https://github.com/django/daphne)
+
+---
+
+[← Лекция 32: Asyncio. Aiohttp. Асинхронное программирование на практике.](lesson32.md) | [Лекция 34: Linux. Все что нужно знать для деплоймента. →](lesson34.md)

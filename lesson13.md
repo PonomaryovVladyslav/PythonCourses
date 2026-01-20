@@ -972,3 +972,6 @@ with patch('main.random.choice', autospec=True) as ch:
 
 В идеале вы сами должны покрыть свой модуль тестами целиком!
 
+---
+
+[← Лекция 12: Декораторы. Декораторы с параметрами. Декораторы классов (staticmethod, classmethod, property)](lesson12.md) | [Лекция 14: Проектирование. Паттерны. SOLID. →](lesson14.md)

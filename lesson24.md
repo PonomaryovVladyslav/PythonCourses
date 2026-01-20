@@ -1444,3 +1444,7 @@ class NoteListView(LoginRequiredMixin, ListView):
 ## Модуль № 3
 
 [Ссылка](module3.md)
+
+---
+
+[← Лекция 23: Forms, ModelForms. User, Authentication.](lesson23.md) | [Лекция 25: NoSQL. Куки, сессии, кеш →](lesson25.md)

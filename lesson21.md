@@ -1121,3 +1121,7 @@ class PopularArticle(Article):
 ## Домашнее задание
 
 Домашнее задание находится по ссылке: [Web Homeworks — Models](web_homeworks.md#models)
+
+---
+
+[← Лекция 20: Templates. Static](lesson20.md) | [Лекция 22: Django ORM. →](lesson22.md)

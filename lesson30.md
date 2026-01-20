@@ -1727,3 +1727,7 @@ def test_known_bug():
 8. Что такое фикстуры в pytest и как их определять?
 9. Для чего нужен маркер `@pytest.mark.django_db`?
 10. Как тестировать throttling в DRF?
+
+---
+
+[← Лекция 29: REST-аутентификация. Авторизация. Permissions. Фильтрация.](lesson29.md) | [Лекция 31: Celery. Multithreading. GIL. Multiprocessing →](lesson31.md)

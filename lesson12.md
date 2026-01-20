@@ -1600,3 +1600,7 @@ db2 = Database("postgresql://localhost/db2")
 print(db1 is db2)  # True
 print(db1.connection_string)  # postgresql://localhost/db1
 ```
+
+---
+
+[← Лекция 11: Imports. Standard library. PEP8](lesson11.md) | [Лекция 13: Тестирование →](lesson13.md)

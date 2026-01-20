@@ -1372,4 +1372,6 @@ WHERE id = 1;
 
 По умолчанию в PostgreSQL действует `NO ACTION`.
 
+---
 
+[← Лекция 14: Проектирование. Паттерны. SOLID.](lesson14.md) | [Лекция 16: СУБД. DQL. SELECT. Индексы. GROUP BY. Joins. →](lesson16.md)

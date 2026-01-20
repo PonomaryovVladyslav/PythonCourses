@@ -1336,3 +1336,6 @@ async def main():
 asyncio.run(main())
 ```
 
+---
+
+[← Лекция 31: Celery. Multithreading. GIL. Multiprocessing](lesson31.md) | [Лекция 33: Сокеты. Django Channels. →](lesson33.md)

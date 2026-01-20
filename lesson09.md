@@ -1068,3 +1068,7 @@ try:
 except InsufficientFundsError as e:
     print(e)
 ```
+
+---
+
+[← Лекция 8: Git. Удаленный репозиторий. Remote, push, pull. GitHub, Bitbucket, GitLab, etc. Pull request.](lesson08.md) | [Лекция 10: Magic methods. Итераторы и генераторы. →](lesson10.md)

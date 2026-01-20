@@ -1379,3 +1379,7 @@ class ArticleViewSet(viewsets.ModelViewSet):
 6. Как переопределить `get_queryset()` для фильтрации по текущему пользователю?
 7. Для чего используется `perform_create()`?
 8. Как создать URL вида `/articles/{pk}/comments/`?
+
+---
+
+[← Лекция 27: Что такое API. REST и RESTful. Django REST Framework.](lesson27.md) | [Лекция 29: REST-аутентификация. Авторизация. Permissions. Фильтрация. →](lesson29.md)

@@ -1179,4 +1179,8 @@ Docker Compose — это возможность запустить нескол
 
 [Докер, джанго, let's encrypt и деплоймент на AWS](https://testdriven.io/blog/django-docker-https-aws/)
 
+---
+
+[← Лекция 35: Deployment](lesson35.md)
+
 # Желаю удачи на выпуске!
