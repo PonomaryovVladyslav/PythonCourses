@@ -1715,4 +1715,18 @@ PUBLICATION my_pub;
 
 ---
 
+### Задача на нормализацию
+
+Вот пример «плохих» данных (одна таблица, без нормализации, с повторяющимися группами, списками в ячейках и смешанными сущностями):
+
+```
+OrderID | OrderDate  | CustomerName      | CustomerPhones           | CustomerAddress                  | ProductIDs        | ProductNames                     | Quantities   | Prices           | TotalAmount | ManagerName     | ManagerPhone
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+1       | 2026-03-01 | Ivan Petrov       | 123456789,987654321      | Prague, Main St 12               | 101,102           | Laptop,Mouse                    | 1,2          | 1500,20          | 1540        | Anna Novak      | 555111222
+2       | 2026-03-02 | Ivan Petrov       | 123456789                | Prague, Main St 12               | 103               | Keyboard                        | 1            | 50               | 50          | Anna Novak      | 555111222
+3       | 2026-03-03 | Maria Svobodova   | 777888999                | Brno, Freedom Sq 5               | 101,104,105       | Laptop,Monitor,HDMI Cable       | 1,2,3        | 1500,300,10      | 1810        | Petr Dvorak     | 555333444
+4       | 2026-03-04 | Jan Novak         | 222333444,555666777      | Ostrava, Green St 8              | 102               | Mouse                           | 5            | 20               | 100         | Petr Dvorak     | 555333444
+5       | 2026-03-05 | Maria Svobodova   | 777888999                | Brno, Freedom Sq 5               | 105               | HDMI Cable                      | 10           | 10               | 100         | Anna Novak      | 555111222
+```
+
 [← Лекция 16: СУБД. DQL. SELECT. Индексы. GROUP BY. Joins.](lesson16.md) | [Лекция 18: Virtual env. Pip. Устанавливаемые модули. Pyenv. →](lesson18.md)
